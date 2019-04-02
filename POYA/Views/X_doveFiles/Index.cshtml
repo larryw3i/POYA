@@ -1,0 +1,173 @@
+﻿@model IEnumerable<POYA.Models.X_doveFile>
+
+@{
+    ViewData["Title"] = Localizer["Index"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var DirId = Guid.Parse(TempData["DirId"].ToString());
+}
+
+<h5>@Localizer["Your disk"]</h5>
+
+<h3>@ViewData["DirName"]<span style="font-size:120%;"> >_ </span> </h3>
+<div id="TableDiv">
+    <table class="table">
+        <tbody>
+            @foreach (var d in ViewData["Dirs"] as List<X_doveDirectory>)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Index" asp-route-id="@(d.Id)">@Html.DisplayFor(modeld => d.Name)</a>
+                    </td>
+
+                    <td>
+                        @d.DOCreate.LocalDateTime
+                    </td>
+                    <td>
+                        @{
+                            var AllData = new Dictionary<string, string>{
+                                {nameof(d.Id),d.Id.ToString() },
+                                {"FoDName",d.Name },
+                                {"IsFile","False" },
+                                {"ReturnUrl",Context.Request.Path }
+                            };
+                        }
+                        <a asp-action="Create" asp-controller="SharedDs" asp-route-id="@(d.Id)">@Localizer["Share"]</a> |
+
+                        <a asp-action="Copy" asp-all-route-data="@AllData">@Localizer["Copy"]</a> |
+
+                        <a asp-action="Move" asp-all-route-data="@AllData">@Localizer["Move"]</a> |
+
+                        <a asp-action="Edit" asp-controller="X_doveDirectories" asp-route-id="@d.Id">@Localizer["Edit"]</a> |
+                        <a asp-action="Delete" asp-controller="X_doveDirectories" asp-route-id="@d.Id">@Localizer["Delete"]</a>
+                    </td>
+                </tr>
+            }
+
+            @foreach (var f in ViewData["Files"] as List<X_doveFile>)
+            {
+
+                <tr>
+                    @if (f.ContentType.Contains("image"))
+                    {
+                        <td id="_td_@(f.Id)" name="TriggerPrevTd">
+                            <a asp-action="GetFile" asp-route-id="@(f.Id)" style="word-break:break-all;word-wrap:break-word">@Html.DisplayFor(modelItem => f.Name)</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <a asp-action="GetFile" asp-route-id="@(f.Id)" style="word-break:break-all;word-wrap:break-word">@Html.DisplayFor(modelItem => f.Name)</a>
+                        </td>
+                    }
+                    <td>
+                        @(f.Size < 1024 ? (f.Size + "byte") : f.Size < Math.Pow(1024, 2) ? ((f.Size / 2014) + "kb") : f.Size < Math.Pow(1024, 3) ? ((f.Size / Math.Pow(1024, 2)).ToString("0.00") + "mb") : (f.Size / Math.Pow(1024, 3)).ToString("0.00") + "gb")
+                    </td>
+                    <td>
+                        @{
+                            var AllData = new Dictionary<string, string>{
+                                {nameof(f.Id),f.Id.ToString() },
+                                {"FoDName",f.Name },
+                                {"IsFile","True" },
+                                {"ReturnUrl",Context.Request.Path }
+                            };
+                        }
+                        <a asp-action="Create" asp-controller="SharedFs" asp-route-id="@(f.Id)">@Localizer["Share"]</a> |
+
+                        <a asp-action="Copy" asp-all-route-data="@AllData">@Localizer["Copy"]</a> |
+
+                        <a asp-action="Move" asp-all-route-data="@AllData">@Localizer["Move"]</a> |
+
+                        <a asp-action="Edit" asp-route-id="@f.Id">@Localizer["Edit"]</a> |
+
+
+                        <a asp-action="Details" asp-route-id="@f.Id">@Localizer["Details"]</a> |
+
+                        <a asp-action="Delete" asp-route-id="@f.Id">@Localizer["Delete"]</a>
+                    </td>
+                    @if (f.ContentType.Contains("image"))
+                    {
+                        <td id="__td_@(f.Id)" name="_TriggerPrevTd" onmouseout="javascript: $('#PrevImg').hide();" style="width:5%">@@</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div style="text-align:center">
+
+        @if (DirId != Guid.Empty)
+        {
+            <a class="btn btn-outline-info" asp-action="Index" asp-route-id=""> @Localizer["Root"]</a>
+            <a class="btn btn-outline-info" asp-action="Index" asp-route-id="@ViewData["InDirId"]"> @Localizer["Prev"]</a>
+        }
+        <a class="btn btn-outline-info" asp-action="Create" asp-route-id="@DirId" target="_blank">@Localizer["Upload"]</a>
+
+        <a class="btn btn-outline-primary" asp-controller="X_doveDirectories" asp-action="Create" asp-route-InDirId="@DirId">@Localizer["Add dir"]</a>
+
+        @*<a asp-action="GetFileOrDir" asp-controller="ShareFoDs" class="btn btn-outline-success">@Localizer["Get"]</a>*@
+
+        <a asp-action="Index" asp-controller="SharedDs" class="btn btn-outline-info">@Localizer["Sharing"]</a>
+
+    </div>
+
+
+</div>
+
+<img id="PrevImg" style="position: fixed;  top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto; max-height:40%; max-width:40%; border-radius:8px;box-shadow:2px 2px 18px firebrick;border:solid;border-width:2px;border-color:hotpink" />
+
+
+@section Scripts{
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+        var _PrevImg = $("#PrevImg");
+
+        $("td[name=TriggerPrevTd]").mouseover(
+            function () {
+                ShowPrev(String(this.id).slice(4));
+            }
+        );
+
+        $("td[name=TriggerPrevTd],td[name=_TriggerPrevTd]").mouseout(
+            function () {
+                _PrevImg.hide();
+            }
+        );
+        $("td[name=_TriggerPrevTd]").mouseover(
+            function () {
+                ShowPrev(String(this.id).slice(5));
+            }
+        );
+
+        function ShowPrev(id) {
+            id = String(id);
+            _PrevImg.show();
+            _PrevImg.attr("src", "/X_doveFiles/GetFile/" + id)
+        }
+
+        $(document).ready(
+            function () {
+                _PrevImg.hide();
+            }
+        );
+
+
+    </script>
+}
+
+@section Styles{
+    <style type="text/css">
+        td[name=_TriggerPrevTd] {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        #TableDiv {
+            border: solid;
+            border-radius: 20px;
+            border-color: coral;
+            padding: 10px;
+            box-shadow: coral 4px 6px 10px;
+        }
+    </style>
+}

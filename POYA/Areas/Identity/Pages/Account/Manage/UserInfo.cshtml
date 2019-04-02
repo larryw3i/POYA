@@ -1,0 +1,179 @@
+﻿@page
+@using POYA.Models
+@model UserInfoModel
+@{
+    ViewData["Title"] = Localizer["Your information"];
+    ViewData["ActivePage"] = ManageNavPages.UserInfo;
+    var X_DOVE_XSRF_TOKEN = Guid.NewGuid().ToString();
+    TempData[nameof(X_DOVE_XSRF_TOKEN)] = X_DOVE_XSRF_TOKEN;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<div class="row">
+    <div class="col col-4 col-sm-4 col-md-3">
+        <form id="_UserAvatarForm">
+            <img style="max-height:100px;max-width:100px;border-radius:50%;border:solid;border-color:#EE7AE9;box-shadow: 2px 2px 8px #EE7AE9;" />
+            <input id="_UserAvatarInput" type="file" accept="image/*" hidden />
+        </form>
+        <h6 style="font-size:90%" id="_UploadAvatarMsgH"></h6>
+    </div>
+    <div class=" col col-10 col-sm-8 col-md-9">
+        <form id="profile-form" method="post">
+            @*<div asp-validation-summary="All" class="text-danger"></div>*@
+            <div style="border-radius:10px;border:solid;border-color:#EE7AE9;padding:20px;box-shadow: 4px 4px 10px #EE7AE9;">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="Input.DOBirth"></label>
+                        <label asp-for="Input.IsDOBirthOvert">
+                            <input asp-for="Input.IsDOBirthOvert" />
+                            @Html.DisplayNameFor(m => m.Input.IsDOBirthOvert)
+                        </label>
+                    </div>
+                    <input asp-for="Input.DOBirth" class="form-control" type="date" value="@(Model.Input.DOBirth==null?DateTimeOffset.Now.ToString("yyyy-MM-dd"):Model.Input.DOBirth?.ToString("yyyy-MM-dd"))" />
+                    <span asp-validation-for="Input.DOBirth" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="Input.Hobby"></label>
+                        <label asp-for="Input.IsHobbyOvert">
+                            <input asp-for="Input.IsHobbyOvert" />
+                            @Html.DisplayNameFor(m => m.Input.IsHobbyOvert)
+                        </label>
+                    </div>
+                    <input asp-for="Input.Hobby" class="form-control" />
+                    <span asp-validation-for="Input.Hobby" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="Input.GraduatedFrom"></label>
+                        <label asp-for="Input.IsGraduatedFromOvert">
+                            <input asp-for="Input.IsGraduatedFromOvert" />
+                            @Html.DisplayNameFor(m => m.Input.IsGraduatedFromOvert)
+                        </label>
+                    </div>
+                    <input asp-for="Input.GraduatedFrom" class="form-control" />
+                    <span asp-validation-for="Input.GraduatedFrom" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="Input.Occupation"></label>
+                        <label asp-for="Input.IsOccupationOvert">
+                            <input asp-for="Input.IsOccupationOvert" />
+                            @Html.DisplayNameFor(m => m.Input.IsOccupationOvert)
+                        </label>
+                    </div>
+                    <input asp-for="Input.Occupation" class="form-control" />
+                    <span asp-validation-for="Input.Occupation" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="Input.Address"></label>
+                        <label asp-for="Input.IsAddressOvert">
+                            <input asp-for="Input.IsAddressOvert" />
+                            @Html.DisplayNameFor(m => m.Input.IsAddressOvert)
+                        </label>
+                    </div>
+                    <input asp-for="Input.Address" class="form-control" />
+                    <span asp-validation-for="Input.Address" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="Input.OriginalAddress"></label>
+                        <label asp-for="Input.IsOriginalAddressOvert">
+                            <input asp-for="Input.IsOriginalAddressOvert" />
+                            @Html.DisplayNameFor(m => m.Input.IsOriginalAddressOvert)
+                        </label>
+                    </div>
+                    <input asp-for="Input.OriginalAddress" class="form-control" />
+                    <span asp-validation-for="Input.OriginalAddress" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="Input.MaritalStatus"></label>
+                        <label asp-for="Input.IsMaritalStatusOvert">
+                            <input asp-for="Input.IsMaritalStatusOvert" />
+                            @Html.DisplayNameFor(m => m.Input.IsMaritalStatusOvert)
+                        </label>
+                    </div>
+                    <input asp-for="Input.MaritalStatus" class="form-control" />
+                    <span asp-validation-for="Input.MaritalStatus" class="text-danger"></span>
+                </div>
+            </div>
+
+            <button id="update-profile-button" type="submit" class="btn btn-outline-info col col-4" style="margin-top:20px">@Localizer["Save"]</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script type="text/javascript">
+        var IsAvatarUploaded = false;
+        var _X_DOVE_XSRF_TOKEN_ = "@X_DOVE_XSRF_TOKEN";
+        var _imgUrl_ = "/X_doveFiles/GetAvatar?random=" + window.cacheRefreshCode;
+        var _img_tag_ = $("#_UserAvatarForm img:first");
+        _img_tag_.attr("src", _imgUrl_);
+        _img_tag_.on("click", function () {
+            if (IsAvatarUploaded) return;
+            $('#_UserAvatarInput').click();
+            event.preventDefault();
+    });
+    $("#_UserAvatarInput").on("change", function () {
+        var _file_ = document.getElementById("_UserAvatarInput").files[0];
+        var _UploadAvatarMsgH_ = $("#_UploadAvatarMsgH");
+        //  console.log(_file_.size);
+        if (_file_.size > 1024 * 1024) {
+            _UploadAvatarMsgH_.text("@Localizer["Oops...., the size of avatar should be less than 1M"]");
+            return;
+        }
+        if ($("#_UserAvatarInput").val() == "") return;
+        var AvatarForm = new FormData();
+        AvatarForm.append("AvatarImgFile", _file_);
+        AvatarForm.append("X_DOVE-XSRF-TOKEN", _X_DOVE_XSRF_TOKEN_);
+            $.ajax({
+                url: "/X_doveFiles/UploadAvatar",
+                type: "POST",
+                data: AvatarForm,
+                contentType: false,
+                processData: false,
+                dataType:"json",
+                success: function (data) {
+                    if (data["status"] == true) {
+                        //  window.cacheRefreshCode = Math.floor(Math.random() * 100 + 1);
+                        _UploadAvatarMsgH_.text("@Localizer["Uploaded successfully"]!");
+                        UpdateCacheData();
+                        _X_DOVE_XSRF_TOKEN_ = data["x_DOVE_XSRF_TOKEN"];
+                    } else {
+                        _UploadAvatarMsgH_.text(data["msg"]);
+                    }
+                },
+                error: function (msg) {
+                    _UploadAvatarMsgH_.text("ERROR");
+                    //  console.log(msg);
+                }
+            });
+            $("#_UserAvatarInput").val(null);
+            event.preventDefault();
+        });
+
+    </script>
+}
+
+@section Styles {
+    <style>
+        .form-group .checkbox label {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+}

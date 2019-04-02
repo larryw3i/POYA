@@ -1,0 +1,61 @@
+﻿@model POYA.Models.SharedD
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _DOEnd = DateTimeOffset.Now.LocalDateTime.ToString("yyyy-MM-dd");
+    var _TellSomething = Localizer["Tell your friends"];
+}
+
+<h1>@Localizer["Share directory >_"] <spann id="_Model_Name"> @Model.Name_</spann><span id="_CursorBounce">|</span></h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="DirId" hidden />
+            <div class="form-group">
+                <label asp-for="DOEnd" class="control-label"></label>
+                <input asp-for="DOEnd" class="form-control" type="date" value="@_DOEnd" />
+                <span asp-validation-for="DOEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tip" class="control-label"></label>
+                <input asp-for="Tip" class="form-control" placeholder="@_TellSomething"/>
+                <span asp-validation-for="Tip" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-outline-info"><< @Localizer["Back"]</a>
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        var _CursorBounce = $("#_CursorBounce");
+        $(".form-group:last a:first").on("click", function(){
+            history.go(-1);
+        });
+        _CursorBounce.css({ "color": "red" });
+
+        setInterval(function CursorBounce() {
+            if (_CursorBounce.is(":visible")) {
+                _CursorBounce.hide();
+            } else {
+                _CursorBounce.show();
+            }
+        }, 600);
+    </script>
+}
+
+@section Styles{
+    <style>
+        #_Model_Name {
+            color:blue
+        }
+    </style>
+}

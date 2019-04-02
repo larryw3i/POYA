@@ -1,0 +1,682 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="privacy_policy" xml:space="preserve">
+    <value>我们承诺并保证你的个人信息不受非法侵害,我们也不会将你的个人信息和在本站的痕迹用于统计分析和数据科学,你在使用本站时请遵守所在国家或地区的法律法规</value>
+  </data>
+  <data name="Current password" xml:space="preserve">
+    <value>最近使用的密码</value>
+  </data>
+  <data name="The {0} must be at least {2} and at max {1} characters long" xml:space="preserve">
+    <value>{0} 的长度要在{2}~{1}之间哦!</value>
+  </data>
+  <data name="New password" xml:space="preserve">
+    <value>新密码</value>
+  </data>
+  <data name="Confirm new password" xml:space="preserve">
+    <value>再输一次</value>
+  </data>
+  <data name="The new password and confirmation password do not match" xml:space="preserve">
+    <value>糟糕! 两次密码不匹配, 再试试吧!</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="Verification Code" xml:space="preserve">
+    <value>验证码</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>邮箱</value>
+  </data>
+  <data name="Phone number" xml:space="preserve">
+    <value>手机号码</value>
+  </data>
+  <data name="User name" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="Remember me" xml:space="preserve">
+    <value>记住密码</value>
+  </data>
+  <data name="Authenticator code" xml:space="preserve">
+    <value>验证码</value>
+  </data>
+  <data name="Remember this machine" xml:space="preserve">
+    <value>记住我</value>
+  </data>
+  <data name="Recovery Code" xml:space="preserve">
+    <value>重置密钥</value>
+  </data>
+  <data name="Confirm password" xml:space="preserve">
+    <value>再输一次</value>
+  </data>
+  <data name="Directory Name" xml:space="preserve">
+    <value>文件夹名</value>
+  </data>
+  <data name="Date of create" xml:space="preserve">
+    <value>创建时间</value>
+  </data>
+  <data name="File name" xml:space="preserve">
+    <value>文件名</value>
+  </data>
+  <data name="Content type" xml:space="preserve">
+    <value>文件类型</value>
+  </data>
+  <data name="Date of upload" xml:space="preserve">
+    <value>上传于</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>大小</value>
+  </data>
+  <data name="Is shared" xml:space="preserve">
+    <value>分享它?</value>
+  </data>
+  <data name="Upload unsuccessfully" xml:space="preserve">
+    <value>上传失败!</value>
+  </data>
+  <data name="it's length is 0" xml:space="preserve">
+    <value>文件大小为0</value>
+  </data>
+  <data name="Upload successfully" xml:space="preserve">
+    <value>上传成功!</value>
+  </data>
+  <data name="An error has occurred, the engineer is on his way" xml:space="preserve">
+    <value>既然出错了~~, 工程师正在赶来!</value>
+  </data>
+  <data name="Reset password" xml:space="preserve">
+    <value>重置密码</value>
+  </data>
+  <data name="Reset your password" xml:space="preserve">
+    <value>重置密码</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>重置</value>
+  </data>
+  <data name="Access denied" xml:space="preserve">
+    <value>访问失败</value>
+  </data>
+  <data name="You do not have access to this resource" xml:space="preserve">
+    <value>没有权限了</value>
+  </data>
+  <data name="Confirm email" xml:space="preserve">
+    <value>确认邮箱</value>
+  </data>
+  <data name="Thank you for confirming your email" xml:space="preserve">
+    <value>邮箱确认成功 (^_^)</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>注册</value>
+  </data>
+  <data name="Associate your" xml:space="preserve">
+    <value>关联你的</value>
+  </data>
+  <data name="account" xml:space="preserve">
+    <value>账号</value>
+  </data>
+  <data name="You've successfully authenticated with" xml:space="preserve">
+    <value>成功关联 &gt;_</value>
+  </data>
+  <data name="Please enter an email address for this site below and click the Register button to finish logging in" xml:space="preserve">
+    <value>快设置一个独立账号吧</value>
+  </data>
+  <data name="Forgot your password" xml:space="preserve">
+    <value>忘记密码了</value>
+  </data>
+  <data name="Enter your email" xml:space="preserve">
+    <value>填写邮箱</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>提交</value>
+  </data>
+  <data name="Forgot password confirmation" xml:space="preserve">
+    <value>重置密码</value>
+  </data>
+  <data name="Please check your email to reset your password" xml:space="preserve">
+    <value>重置密码的链接已经发送到你的邮箱, 快去看看吧!</value>
+  </data>
+  <data name="Locked out" xml:space="preserve">
+    <value>锁住</value>
+  </data>
+  <data name="This account has been locked out, please try again later" xml:space="preserve">
+    <value>账号被锁住了, 请稍后再试吧!</value>
+  </data>
+  <data name="Log in" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="Use a local account to log in" xml:space="preserve">
+    <value>输入你的账号和密码</value>
+  </data>
+  <data name="Register as a new user" xml:space="preserve">
+    <value>还没有账号?</value>
+  </data>
+  <data name="Two-factor authentication" xml:space="preserve">
+    <value>双重保护</value>
+  </data>
+  <data name="Your login is protected with an authenticator app. Enter your authenticator code below" xml:space="preserve">
+    <value>APP已为你保驾护航了, 请输入验证码&gt;_</value>
+  </data>
+  <data name="Don't have access to your authenticator device? You can" xml:space="preserve">
+    <value>没有验证的设备? 你可以</value>
+  </data>
+  <data name="log in with a recovery code" xml:space="preserve">
+    <value>使用恢复码登录</value>
+  </data>
+  <data name="Log out" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="You have successfully logged out of the application" xml:space="preserve">
+    <value>退出成功!</value>
+  </data>
+  <data name="Reset password confirmation" xml:space="preserve">
+    <value>重置密码</value>
+  </data>
+  <data name="Your password has been reset, Please" xml:space="preserve">
+    <value>密码已重置了, 点击 &gt;_</value>
+  </data>
+  <data name="click here to log in" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>出错了~~</value>
+  </data>
+  <data name="An error occurred while processing your request" xml:space="preserve">
+    <value>出错了, 工程师正在赶来!</value>
+  </data>
+  <data name="Donate" xml:space="preserve">
+    <value>捐款</value>
+  </data>
+  <data name="Thank you very much" xml:space="preserve">
+    <value>谢谢你的支持!</value>
+  </data>
+  <data name="Home Page" xml:space="preserve">
+    <value>主页</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Hello, 欢迎</value>
+  </data>
+  <data name="Here is your WenShan University Disk" xml:space="preserve">
+    <value>这里是你的 文山学院网盘</value>
+  </data>
+  <data name="You'll enjoy" xml:space="preserve">
+    <value>在这里你可以拥有</value>
+  </data>
+  <data name="Free Storage Space" xml:space="preserve">
+    <value>免费的存储服务</value>
+  </data>
+  <data name="Personal Article Publish" xml:space="preserve">
+    <value>发表你的文章</value>
+  </data>
+  <data name="Chat With Friends" xml:space="preserve">
+    <value>和校友交流</value>
+  </data>
+  <data name="Services &amp; Help" xml:space="preserve">
+    <value>提供服务&amp;获取帮助</value>
+  </data>
+  <data name="AND MORE" xml:space="preserve">
+    <value>还有</value>
+  </data>
+  <data name="WSUDisk" xml:space="preserve">
+    <value>文山存储</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>主页</value>
+  </data>
+  <data name="Disk" xml:space="preserve">
+    <value>网盘</value>
+  </data>
+  <data name="Larry" xml:space="preserve">
+    <value>Larry</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>条款</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>创建</value>
+  </data>
+  <data name="Create directory" xml:space="preserve">
+    <value>新建文件夹</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="for" xml:space="preserve">
+    <value>&gt;_ </value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="Delete directory" xml:space="preserve">
+    <value>删除文件夹</value>
+  </data>
+  <data name="Are you sure you want to delete" xml:space="preserve">
+    <value>确定要删除 </value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="Privacy Policy" xml:space="preserve">
+    <value>隐私条款</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="Index" xml:space="preserve">
+    <value>查看</value>
+  </data>
+  <data name="Your directory" xml:space="preserve">
+    <value>你的文件夹</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>详细</value>
+  </data>
+  <data name="Upload files" xml:space="preserve">
+    <value>上传文件</value>
+  </data>
+  <data name="Select files" xml:space="preserve">
+    <value>选择文件</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>上传</value>
+  </data>
+  <data name="Delete file" xml:space="preserve">
+    <value>删除文件</value>
+  </data>
+  <data name="Details of" xml:space="preserve">
+    <value>详细 &gt;_</value>
+  </data>
+  <data name="Root directory" xml:space="preserve">
+    <value>根目录</value>
+  </data>
+  <data name="Prev directory" xml:space="preserve">
+    <value>上一级</value>
+  </data>
+  <data name="Add directory" xml:space="preserve">
+    <value>新建文件夹</value>
+  </data>
+  <data name="Copy file url" xml:space="preserve">
+    <value>复制地址</value>
+  </data>
+  <data name="Manage your account" xml:space="preserve">
+    <value>个人中心</value>
+  </data>
+  <data name="Change your account settings" xml:space="preserve">
+    <value>更改设置</value>
+  </data>
+  <data name="External logins" xml:space="preserve">
+    <value>第三方登录</value>
+  </data>
+  <data name="Personal data" xml:space="preserve">
+    <value>个人信息</value>
+  </data>
+  <data name="Change password" xml:space="preserve">
+    <value>更改密码</value>
+  </data>
+  <data name="Update password" xml:space="preserve">
+    <value>更改密码</value>
+  </data>
+  <data name="Delete Personal Data" xml:space="preserve">
+    <value>删除账号</value>
+  </data>
+  <data name="Deleting this data will permanently remove your account, and this cannot be recovered" xml:space="preserve">
+    <value>账号会被永久删除并且不能找回</value>
+  </data>
+  <data name="Delete data and close my account" xml:space="preserve">
+    <value>删除数据和账号</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>个人信息</value>
+  </data>
+  <data name="Send verification email" xml:space="preserve">
+    <value>发送验证邮件</value>
+  </data>
+  <data name="Download Your Data" xml:space="preserve">
+    <value>下载个人信息</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>下载</value>
+  </data>
+  <data name="Personal_Data" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="Your account contains personal data that you have given us. This page allows you to download or delete that data" xml:space="preserve">
+    <value>你的个人信息都在这里哦</value>
+  </data>
+  <data name="Create a new account" xml:space="preserve">
+    <value>注册你的账号(^_^)</value>
+  </data>
+  <data name="Confirm your email" xml:space="preserve">
+    <value>确认邮箱</value>
+  </data>
+  <data name="Please confirm your account by" xml:space="preserve">
+    <value>快来确认邮箱吧 &gt;_ </value>
+  </data>
+  <data name="clicking here" xml:space="preserve">
+    <value>(^_^)// 点我</value>
+  </data>
+  <data name="Your e-mail is not registered in POYA yet, register it Now" xml:space="preserve">
+    <value>你的邮箱还没有注册, 快注册吧!</value>
+  </data>
+  <data name="Unable to load user with ID" xml:space="preserve">
+    <value>加载用户信息失败了, ID &gt;_</value>
+  </data>
+  <data name="Your password has been changed" xml:space="preserve">
+    <value>更改密码成功!</value>
+  </data>
+  <data name="Password not correct" xml:space="preserve">
+    <value>密码错误</value>
+  </data>
+  <data name="Unexpected error occurred deleteing user with ID" xml:space="preserve">
+    <value>删除账号时发生异常了. . .</value>
+  </data>
+  <data name="Unexpected error occurred setting email for user with ID" xml:space="preserve">
+    <value>设置邮箱时发生异常了. . .</value>
+  </data>
+  <data name="Unexpected error occurred setting phone number for user with ID" xml:space="preserve">
+    <value>设置手机号码时发生异常了. . .</value>
+  </data>
+  <data name="Unexpected error occurred setting user name for user with ID" xml:space="preserve">
+    <value>设置用户名时发生异常了. . .</value>
+  </data>
+  <data name="Your profile has been updated" xml:space="preserve">
+    <value>你的个人信息已被更改成功</value>
+  </data>
+  <data name="Verification email sent. Please check your email" xml:space="preserve">
+    <value>邮箱已送出, 快去看看吧!</value>
+  </data>
+  <data name="Your password has been set" xml:space="preserve">
+    <value>设置密码成功!</value>
+  </data>
+  <data name="The password and confirmation password do not match" xml:space="preserve">
+    <value>糟糕! 两次密码不匹配, 再试试吧!</value>
+  </data>
+  <data name="Upload one or more files(less than 10M per file) using this form" xml:space="preserve">
+    <value>选择你要上传的文件(可选多个文件哦! 每个文件限10M, 在跟进哦! 谅解一下)</value>
+  </data>
+  <data name="Your disk" xml:space="preserve">
+    <value>你的网盘</value>
+  </data>
+  <data name="Please reset your password by" xml:space="preserve">
+    <value>重置密码? &gt;_ </value>
+  </data>
+  <data name="Invalid login attempt" xml:space="preserve">
+    <value>登录失败了. . .</value>
+  </data>
+  <data name="We have sent a confirmation email to you, you can login after confirming it" xml:space="preserve">
+    <value>用于验证身份的邮件已发送, 去确认它然后登录吧!</value>
+  </data>
+  <data name="User name is used, make another choice" xml:space="preserve">
+    <value>用户名被使用了, 试试其它的吧!</value>
+  </data>
+  <data name="Your email is already registered in POYA, log in Now" xml:space="preserve">
+    <value>你已经注册了哦, 登录吧!</value>
+  </data>
+  <data name="Request sharingcode of file" xml:space="preserve">
+    <value>共享密码</value>
+  </data>
+  <data name="GET FILE" xml:space="preserve">
+    <value>获取文件</value>
+  </data>
+  <data name="Type sharingcode of file here" xml:space="preserve">
+    <value>万水千山总是情, 要输分享码才行</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>白天</value>
+  </data>
+  <data name="Dark" xml:space="preserve">
+    <value>夜间</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>更多</value>
+  </data>
+  <data name="Care" xml:space="preserve">
+    <value>护眼</value>
+  </data>
+  <data name="zh-CN" xml:space="preserve">
+    <value>中文</value>
+  </data>
+  <data name="en-US" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>分享</value>
+  </data>
+  <data name="Tell something to your friends" xml:space="preserve">
+    <value>还要对你的朋友说什么吗?</value>
+  </data>
+  <data name="Token" xml:space="preserve">
+    <value>口令</value>
+  </data>
+  <data name="Date of finish sharing" xml:space="preserve">
+    <value>结束分享的时间</value>
+  </data>
+  <data name="Tell your friends" xml:space="preserve">
+    <value>告诉你的朋友</value>
+  </data>
+  <data name="Date of download" xml:space="preserve">
+    <value>下载的时间</value>
+  </data>
+  <data name="Feedback" xml:space="preserve">
+    <value>反馈</value>
+  </data>
+  <data name="Share your file or directory" xml:space="preserve">
+    <value>分享文件/目录</value>
+  </data>
+  <data name="Date of sharing" xml:space="preserve">
+    <value>分享的时间</value>
+  </data>
+  <data name="Unlimited when set a previous date" xml:space="preserve">
+    <value>时间小于今天的时候将是不限制的</value>
+  </data>
+  <data name="It's public if token is empty" xml:space="preserve">
+    <value>没有令牌的文件是公开的</value>
+  </data>
+  <data name="ID of file or directory" xml:space="preserve">
+    <value>文件或目录的ID</value>
+  </data>
+  <data name="The files and directories you share" xml:space="preserve">
+    <value>你分享的文件和文件夹</value>
+  </data>
+  <data name="Your sharing" xml:space="preserve">
+    <value>你的分享</value>
+  </data>
+  <data name="Enter token please" xml:space="preserve">
+    <value>输入令牌</value>
+  </data>
+  <data name="Get file or directory you friend share" xml:space="preserve">
+    <value>获取你朋友分享给你的文件或文件夹</value>
+  </data>
+  <data name="Get it" xml:space="preserve">
+    <value>获取</value>
+  </data>
+  <data name="Get file or directory" xml:space="preserve">
+    <value>获取文件或文件夹</value>
+  </data>
+  <data name="Enter the ID of file or directory" xml:space="preserve">
+    <value>输入文件或文件夹的ID</value>
+  </data>
+  <data name="The {0} should be more than {1} and less than {2}" xml:space="preserve">
+    <value>{0} 应该在 {1}~{2} 之间</value>
+  </data>
+  <data name="The {0} is required" xml:space="preserve">
+    <value>{0} 需要填哦!</value>
+  </data>
+  <data name="Type your email here" xml:space="preserve">
+    <value>输入邮箱</value>
+  </data>
+  <data name="Type your password here" xml:space="preserve">
+    <value>输入密码</value>
+  </data>
+  <data name="Type your password again" xml:space="preserve">
+    <value>确认密码</value>
+  </data>
+  <data name="The engineer is trying to solve the problem of the size of storage space" xml:space="preserve">
+    <value>稍等一下哦! 工程师正在解决储存空间大小的问题</value>
+  </data>
+  <data name="If you use our services for the first time, you can view our Privacy Policy and service statement" xml:space="preserve">
+    <value>如果你第一次使用我们的服务的话你可以查看我们的隐私政策和服务声明</value>
+  </data>
+  <data name="Learn More" xml:space="preserve">
+    <value>去看看</value>
+  </data>
+  <data name="Accept" xml:space="preserve">
+    <value>接受</value>
+  </data>
+  <data name="Sharing" xml:space="preserve">
+    <value>分享</value>
+  </data>
+  <data name="Get" xml:space="preserve">
+    <value>获取</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Tip" xml:space="preserve">
+    <value>提示</value>
+  </data>
+  <data name="Finishing date" xml:space="preserve">
+    <value>结束时间</value>
+  </data>
+  <data name="Sharing date" xml:space="preserve">
+    <value>分享时间</value>
+  </data>
+  <data name="_Name" xml:space="preserve">
+    <value>文件(夹)名</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="My sharing" xml:space="preserve">
+    <value>我分享的文件</value>
+  </data>
+  <data name="The Sharing" xml:space="preserve">
+    <value>分享的文件或文件夹</value>
+  </data>
+  <data name="Oops..., can't find the file or directory you friend share" xml:space="preserve">
+    <value>哎呀. . . 找不到文件了</value>
+  </data>
+  <data name="Shared file" xml:space="preserve">
+    <value>分享的文件</value>
+  </data>
+  <data name="Shared directory" xml:space="preserve">
+    <value>分享的文件夹</value>
+  </data>
+  <data name="DOEnd" xml:space="preserve">
+    <value>结束分享的时间</value>
+  </data>
+  <data name="file" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="directory" xml:space="preserve">
+    <value>文件夹</value>
+  </data>
+  <data name="Share your" xml:space="preserve">
+    <value>分享你的</value>
+  </data>
+  <data name="DOShare" xml:space="preserve">
+    <value>分享时间</value>
+  </data>
+  <data name="The files or directories you share" xml:space="preserve">
+    <value>你分享的文件和文件夹</value>
+  </data>
+</root>

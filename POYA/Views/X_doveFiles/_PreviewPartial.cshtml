@@ -1,0 +1,15 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model POYA.Models.X_doveFile
+
+@if (Model.ContentType.Contains("image"))
+{
+    <img src="/X_doveFiles/GetFile/@(Model.Id.ToString())" style="border-radius:8px;box-shadow:2px 2px 18px firebrick;border:solid;border-width:2px;border-color:hotpink;max-height:200px;max-width:90%" />
+}
+else
+{
+    <label style="border-radius:8px;box-shadow:2px 2px 18px firebrick;border:solid;border-width:2px;border-color:hotpink;font-size:250%">
+        @(Model.ContentType) File
+    </label>
+}

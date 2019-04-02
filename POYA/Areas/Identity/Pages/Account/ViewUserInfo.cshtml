@@ -1,0 +1,53 @@
+﻿@page
+@model POYA.Areas.Identity.Pages.Account.ViewUserInfoModel
+@using POYA.Models;
+@{
+    var _User = ViewData["_User"] as IdentityUser;    //   = _User.UserName;
+    var X_doveUserInfo = ViewData["X_doveUserInfo"] as X_doveUserInfo;  //  = await _context.x_DoveUserInfos.Select(p => new X_doveUserInfo
+    ViewData["Title"] =_User.UserName+"'s "+Localizer[ "Information"];
+}
+
+
+<div class="row">
+    <div class="col col-3 col-sm-4 col-md-3">
+        <img style="max-height:100px;max-width:100px;border-radius:50%;border:solid;border-color:#EE7AE9;box-shadow: 2px 2px 8px #EE7AE9;" src="/X_doveFiles/GetAvatar?UserId=@(_User.Id)" />
+        <ul>
+            @if (X_doveUserInfo.IsAddressOvert)
+            {
+                <li class="">@Localizer["Address"] o=> @(X_doveUserInfo.Address)</li>
+            }
+            @if (X_doveUserInfo.IsOriginalAddressOvert)
+            {
+                <li class="">@Localizer["Hometown"] o=> @(X_doveUserInfo.OriginalAddress)</li>
+            }
+            @if (X_doveUserInfo.IsDOBirthOvert && X_doveUserInfo.DOBirth != null)
+            {
+                <li class="">@Localizer["Birth date"] o=> @(X_doveUserInfo.DOBirth?.LocalDateTime.ToString("MM-dd-yyyy"))</li>
+            }
+            @if (X_doveUserInfo.IsHobbyOvert)
+            {
+                <li class="">@Localizer["Hobby"] o=> @(X_doveUserInfo.Hobby)</li>
+            }
+            @if (X_doveUserInfo.IsMaritalStatusOvert)
+            {
+                <li class="">@Localizer["Marital status"] o=> @(X_doveUserInfo.MaritalStatus)</li>
+            }
+            @if (X_doveUserInfo.IsGraduatedFromOvert)
+            {
+                <li class="">@Localizer["Graduated from"] o=> @(X_doveUserInfo.GraduatedFrom)</li>
+            }
+            @if (X_doveUserInfo.IsOccupationOvert)
+            {
+                <li class="">@Localizer["Occupation"] o=> @(X_doveUserInfo.Occupation)</li>
+            }
+        </ul>
+        @*
+        <div class="card-body">
+            <a href="#" class="card-link">Like</a>
+            <a href="#" class="card-link">Chat</a>
+        </div>
+        *@
+    </div>
+    <div class="col col-10 col-sm-8 col-md-9"> 
+    </div>
+</div>

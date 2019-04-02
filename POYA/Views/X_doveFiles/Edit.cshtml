@@ -1,0 +1,49 @@
+﻿@model POYA.Models.X_doveFile
+
+@{
+    ViewData["Title"] = Localizer["Edit"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _FileUrl = Context.Request.Scheme + "://" + Context.Request.Host + "/X_doveFiles/GetFile/" + Model.Id.ToString();
+}
+
+<h1>@Localizer["Edit"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <img src="/X_doveFiles/GetFile/@(Model.Id.ToString())" style="border-radius:8px;box-shadow:2px 2px 18px firebrick;border:solid;border-width:2px;border-color:hotpink;max-height:200px;max-width:300px" />
+        <form asp-action="Edit" style="margin-top:8%">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <a href="javascript:history.go(-1);" class="btn btn-outline-info"><< @Localizer["Back"]</a>
+                <input type="submit" value="@Localizer[ "Save"]" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    @*
+        <script type="text/javascript" src="~/lib/clipboard.js/dist/clipboard.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/lib/popper.js/popper.min.js"></script>
+        <script type="text/javascript">
+            var _CopyFileUrlA = $("#CopyFileUrlA");
+            _CopyFileUrlA.tooltip("hide");
+            var clipboard = new ClipboardJS('#CopyFileUrlA');
+            clipboard.on('success', function (e) {
+                _CopyFileUrlA.tooltip("show");
+            });
+        </script>*@
+}

@@ -1,0 +1,110 @@
+﻿
+@model GetSharedD
+@{
+    ViewData["Title"] = Localizer["View shared directories and files"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var SharedDId = ViewData["SharedDId"];
+    var LastDirId = ViewData["LastDirId"];
+    var IsModelNull = Model == null || (Model.X_DoveDirectories.Count < 1 || Model.X_DoveFiles.Count < 1);
+}
+
+<h1>GetSharedD</h1>
+@if (LastDirId != null && LastDirId?.ToString() != Guid.Empty.ToString())
+{
+    <a id="LastDir_a" asp-action="Index" asp-route-SharedDId="@SharedDId" asp-route-SubDId="@LastDirId">@Localizer["Last"]</a>
+}
+@if (IsModelNull)
+{
+    <h4>@Localizer["Can't find anything"]</h4>
+}
+else
+{
+    <table class="table">
+        <tbody>
+            @foreach (var d in Model.X_DoveDirectories)
+            {
+                <tr>
+                    <td>
+                        @* Guid? SharedDId, Guid? SubDId *@
+                        <a asp-action="Index" asp-route-SharedDId="@SharedDId" asp-route-SubDId="@(d.Id)">@Html.DisplayFor(modeld => d.Name)</a>
+                    </td>
+
+                    <td>
+                        @d.DOCreate.LocalDateTime
+                    </td>
+                </tr>
+            }
+
+            @foreach (var f in Model.X_DoveFiles)
+            {
+                <tr>
+                    @if (f.ContentType.Contains("image"))
+                    {
+                        <td id="_td_@(f.Id)" name="TriggerPrevTd">
+                            <a asp-action="Index" asp-route-SharedDId="@(SharedDId)" asp-route-SubDId="@(f.Id)" style="word-break:break-all;word-wrap:break-word">@Html.DisplayFor(modelItem => f.Name)</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <a asp-action="GetFile" asp-route-id="@(f.Id)" style="word-break:break-all;word-wrap:break-word">@Html.DisplayFor(modelItem => f.Name)</a>
+                        </td>
+                    }
+                    <td>
+                        @(f.Size < 1024 ? (f.Size + "byte") : f.Size < Math.Pow(1024, 2) ? ((f.Size / 2014) + "kb") : f.Size < Math.Pow(1024, 3) ? ((f.Size / Math.Pow(1024, 2)).ToString("0.00") + "mb") : (f.Size / Math.Pow(1024, 3)).ToString("0.00") + "gb")
+                    </td>
+                    @if (f.ContentType.Contains("image"))
+                    {
+                        <td id="__td_@(f.Id)" name="_TriggerPrevTd" onmouseout="javascript: $('#PrevImg').hide();" style="width:5%">@@</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <img id="PrevImg" style="position: fixed;  top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto; max-height:40%; max-width:40%; border-radius:8px;box-shadow:2px 2px 18px firebrick;border:solid;border-width:2px;border-color:hotpink" />
+
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        var _PrevImg = $("#PrevImg");
+
+        $("td[name=TriggerPrevTd]").mouseover(
+            function () {
+                ShowPrev(String(this.id).slice(4));
+            }
+        );
+
+        $("td[name=TriggerPrevTd],td[name=_TriggerPrevTd]").mouseout(
+            function () {
+                _PrevImg.hide();
+            });
+        $("td[name=_TriggerPrevTd]").mouseover(
+            function () {
+                ShowPrev(String(this.id).slice(5));
+        });
+
+
+        function ShowPrev(id) {
+            id = String(id);
+            _PrevImg.show();
+            _PrevImg.attr("src", "/SharedDs/Index?SharedDId=@SharedDId&SubDId=" + id)
+        }
+
+        $(document).ready(
+            function () {
+                _PrevImg.hide();
+            }
+        );
+
+
+    </script>
+}
+
+@section Styles {
+    <style>
+        #LastDir_a {
+            font-size: 200%;
+        }
+    </style>
+}

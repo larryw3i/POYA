@@ -1,0 +1,100 @@
+﻿@model IEnumerable<POYA.Models.SharedD>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var SharingStringTemplate = $"https://{Context.Request.Host}{Url.Action("Index")}?SharedDId={{0}}";
+}
+
+<div class="row">
+    <div class="col col-6 col-sm-5 col-md-4 col-lg-6">
+        <h2>@Localizer["Index of the directories you share"]</h2>
+    </div>
+    <div class="col offset-2 col-4 offset-sm-2 offset-md-4 offset-lg-4 col-lg-2">
+        <a asp-action="Index" asp-controller="SharedFs" class="btn btn-outline-info"> >_ @Localizer["Files"]<span id="_CursorBounce">|</span></a>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name_)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DOSharing)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DOEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tip)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Index" asp-controller="X_doveFiles" asp-route-id="@(item.DirId)"> @Html.DisplayFor(modelItem => item.Name_)</a>
+                </td>
+                <td>
+                    @(item.DOSharing.LocalDateTime.ToString("MM-dd-yyyy"))
+                </td>
+                <td>
+                    @((item.DOEnd == null || item.DOEnd < item.DOSharing) ? Localizer["Unlimited"] : item.DOEnd?.LocalDateTime.ToString("MM-dd-yyyy"))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tip)
+                </td>
+                <td>
+                    <a id="_Copy_@(item.Id)" name="CopySharingInfo" data-clipboard-text="@(string.Format(SharingStringTemplate,item.Id))" class="btn btn-outline-info">@Localizer["Copy"]</a> 
+                    <a class='btn btn-outline-success' asp-action="Edit"  asp-route-id="@item.Id">@Localizer["Edit"]</a> 
+                    <a class="btn btn-outline-info" asp-action="Details"  asp-route-id="@item.Id">@Localizer["Details"]</a> 
+                    <a class="btn btn-outline-danger" asp-action="Delete"  asp-route-id="@item.Id">@Localizer["Delete"]</a> 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@section Scripts{
+    <script src="~/lib/clipboard.js/dist/clipboard.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var clipboard = new ClipboardJS("a[name='CopySharingInfo']");
+
+        var _CursorBounce = $("#_CursorBounce");
+
+        _CursorBounce.css({ "color": "red" });
+
+        setInterval(function CursorBounce() {
+            if (_CursorBounce.is(":visible")) {
+                _CursorBounce.hide();
+            } else {
+                _CursorBounce.show();
+            }
+        }, 600);
+        $("a[name='CopySharingInfo']").on("click", function () {
+            var _color = '#' + (Math.random() * 0xffffff << 0).toString(16);
+            $("#" + this.id).css({ "color": _color });
+        });
+    </script>
+}
+
+@section Styles{
+    <style>
+        .tooltip-inner {
+            color: #9A32CD;
+            background-color: #9A32CD;
+        }
+
+        .tooltip.top .tooltip-arrow, .tooltip.right .tooltip-arrow, .tooltip.bottom .tooltip-arrow, .tooltip.left .tooltip-arrow {
+            border-top-color: #9A32CD;
+        }
+    </style>
+}

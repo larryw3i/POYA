@@ -1,0 +1,43 @@
+﻿@model POYA.Models.X_doveFile
+
+@{
+    ViewData["Title"] = Localizer["Create"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Localizer["Upload files"]</h1>
+
+<hr />
+
+<form method="post" id="X_doveFile_Create_Form" enctype="multipart/form-data" asp-controller="X_doveFile" asp-action="Create">
+    <div class="form-group">
+        <div class="col-md-10">
+            <p>@Localizer["Upload one or more files(less than 10M per file) using this form"] :</p>
+            <a asp-action="Index" asp-route-DirId="@ViewData["DirId"]" class="btn btn-outline-success"><< @Localizer["Back"]</a>
+            <button id="_selectFilesTrigger" class="btn btn-outline-info"  style="width:29%">@Localizer["Select files"]</button>
+            <input type="file" id="files" name="files" multiple hidden />
+            <input type="submit" class="btn btn-outline-primary" value="@Localizer["Upload"]"/>
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+</form>
+<div style="color:blue" id="MessageDiv">
+    @Html.Raw(ViewData["Message"])
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $(document).ready(
+            function () {
+                $("#files").on("change", function () {
+                    $("#MessageDiv").html($("#files").val().replace(/,/g, "<br/>"));
+                });
+                $("#_selectFilesTrigger").on("click", function () {
+                    $('#files').click();
+                    event.preventDefault();
+                });
+            });  
+    </script>
+}

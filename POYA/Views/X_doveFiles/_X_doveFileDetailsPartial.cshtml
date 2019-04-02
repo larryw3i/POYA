@@ -1,0 +1,21 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model POYA.Models.X_doveFile
+@{
+
+    var _FileUrl = Context.Request.Scheme + "://" + Context.Request.Host + "/X_doveFile/GetFile/" + Model.Id.ToString();
+}
+
+<div style="margin-left:5%;word-wrap:break-word;word-break:break-all">
+    <div><strong> @Html.DisplayNameFor(model => model.Name) >_</strong> @Model.Name </div>
+
+    <div><strong>@Html.DisplayNameFor(model => model.ContentType) >_</strong> @Model.ContentType </div>
+    <div><strong>@Html.DisplayNameFor(model => model.DOUpload) >_ </strong> @Model.DOUpload.LocalDateTime </div>
+    <div>
+        <strong>
+            @Html.DisplayNameFor(model => model.Size) >_
+        </strong>
+        @(Model.Size < 1024 ? (Model.Size + "byte") : Model.Size < Math.Pow(1024, 2) ? ((Model.Size / 2014) + "kb") : Model.Size < Math.Pow(1024, 3) ? ((Model.Size / Math.Pow(1024, 2)).ToString("0.00") + "mb") : (Model.Size / Math.Pow(1024, 3)).ToString("0.00") + "gb")
+    </div> 
+</div>

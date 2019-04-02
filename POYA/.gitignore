@@ -1,0 +1,11 @@
+﻿# Custom ignore rule of some files and directorie
+
+# Directories 
+/bin/
+/obj/
+/Migrations/
+	
+# Files
+/appsettings.json
+/app.db
+/ScaffoldingReadme.txt

@@ -1,0 +1,30 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] =Localizer[ "Donate"];
+}
+
+<div class="row" style="margin-top:2%">
+    <div class="col offset-1 col-2">
+        <img src="~/img/wechat_pay.png" title="@Localizer["Thank you very much"] !"/>
+    </div>
+    <div class="col offset-3 col-3">
+        <img src="~/img/alipay_pay.png" title="@Localizer["Thank you very much"] !" />
+    </div>
+</div>
+
+@section Styles{
+
+<style type="text/css">
+    div>img{
+        max-height:250px;
+        max-width:250px;
+        border:solid;
+        border-color:coral;
+        box-shadow:2px 2px 18px firebrick;
+        border-width:2px;
+        border-radius:12px;
+    }
+</style>
+}

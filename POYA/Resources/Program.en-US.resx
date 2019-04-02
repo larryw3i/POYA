@@ -1,0 +1,727 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="privacy_policy" xml:space="preserve">
+    <value>We promise and guarantee that your personal information will not be unlawfully infringed, and we do not use your personal information and traces of this site for statistical analysis and data science, and you are required to comply with the laws and regulations of your country or region when using this site</value>
+  </data>
+  <data name="Current password" xml:space="preserve">
+    <value>Current password</value>
+  </data>
+  <data name="The {0} must be at least {2} and at max {1} characters long" xml:space="preserve">
+    <value>The {0} must be at least {2} and at max {1} characters long</value>
+  </data>
+  <data name="New password" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="Use a local account to log in" xml:space="preserve">
+    <value>Use a local account to log in</value>
+  </data>
+  <data name="Chat With Friends" xml:space="preserve">
+    <value>Chat With Friends</value>
+  </data>
+  <data name="Free Storage Space" xml:space="preserve">
+    <value>Free Storage Space</value>
+  </data>
+  <data name="Services &amp; Help" xml:space="preserve">
+    <value>Services &amp; Help</value>
+  </data>
+  <data name="You'll enjoy" xml:space="preserve">
+    <value>You'll enjoy</value>
+  </data>
+  <data name="Personal Article Publish" xml:space="preserve">
+    <value>Personal Article Publish</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="Here is your WenShan University Disk" xml:space="preserve">
+    <value>Here is your WenShan University Disk</value>
+  </data>
+  <data name="Thank you very much" xml:space="preserve">
+    <value>Thank you very much</value>
+  </data>
+  <data name="Home Page" xml:space="preserve">
+    <value>Home Page</value>
+  </data>
+  <data name="Donate" xml:space="preserve">
+    <value>Donate</value>
+  </data>
+  <data name="AND MORE" xml:space="preserve">
+    <value>AND MORE</value>
+  </data>
+  <data name="click here to log in" xml:space="preserve">
+    <value>click here to log in</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Reset password confirmation" xml:space="preserve">
+    <value>Reset password confirmation</value>
+  </data>
+  <data name="Your password has been reset, Please" xml:space="preserve">
+    <value>Your password has been reset, Please</value>
+  </data>
+  <data name="You have successfully logged out of the application" xml:space="preserve">
+    <value>You have successfully logged out of the application</value>
+  </data>
+  <data name="log in with a recovery code" xml:space="preserve">
+    <value>log in with a recovery code</value>
+  </data>
+  <data name="Log out" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="Your login is protected with an authenticator app. Enter your authenticator code below" xml:space="preserve">
+    <value>Your login is protected with an authenticator app. Enter your authenticator code below</value>
+  </data>
+  <data name="Don't have access to your authenticator device? You can" xml:space="preserve">
+    <value>Don't have access to your authenticator device? You can</value>
+  </data>
+  <data name="Two-factor authentication" xml:space="preserve">
+    <value>Two-factor authentication</value>
+  </data>
+  <data name="Disk" xml:space="preserve">
+    <value>Disk</value>
+  </data>
+  <data name="WSUDisk" xml:space="preserve">
+    <value>WSUDisk</value>
+  </data>
+  <data name="An error occurred while processing your request" xml:space="preserve">
+    <value>An error occurred while processing your request</value>
+  </data>
+  <data name="Select files" xml:space="preserve">
+    <value>Select files</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Upload files" xml:space="preserve">
+    <value>Upload files</value>
+  </data>
+  <data name="Your directory" xml:space="preserve">
+    <value>Your directory</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Index" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="Privacy Policy" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Are you sure you want to delete" xml:space="preserve">
+    <value>Are you sure you want to delete</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Delete directory" xml:space="preserve">
+    <value>Delete directory</value>
+  </data>
+  <data name="Create directory" xml:space="preserve">
+    <value>Create directory</value>
+  </data>
+  <data name="Details of" xml:space="preserve">
+    <value>Details of</value>
+  </data>
+  <data name="You do not have access to this resource" xml:space="preserve">
+    <value>You do not have access to this resource</value>
+  </data>
+  <data name="Access denied" xml:space="preserve">
+    <value>Access denied</value>
+  </data>
+  <data name="Confirm email" xml:space="preserve">
+    <value>Confirm email</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="Thank you for confirming your email" xml:space="preserve">
+    <value>Thank you for confirming your email</value>
+  </data>
+  <data name="account" xml:space="preserve">
+    <value>account</value>
+  </data>
+  <data name="Associate your" xml:space="preserve">
+    <value>Associate your</value>
+  </data>
+  <data name="Please enter an email address for this site below and click the Register button to finish logging in" xml:space="preserve">
+    <value>Please enter an email address for this site below and click the Register button to finish logging in</value>
+  </data>
+  <data name="You've successfully authenticated with" xml:space="preserve">
+    <value>You've successfully authenticated with</value>
+  </data>
+  <data name="Enter your email" xml:space="preserve">
+    <value>Enter your email</value>
+  </data>
+  <data name="Forgot your password" xml:space="preserve">
+    <value>Forgot your password</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="Locked out" xml:space="preserve">
+    <value>Locked out</value>
+  </data>
+  <data name="This account has been locked out, please try again later" xml:space="preserve">
+    <value>This account has been locked out, please try again later</value>
+  </data>
+  <data name="Log in" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="Delete file" xml:space="preserve">
+    <value>Delete file</value>
+  </data>
+  <data name="Register as a new user" xml:space="preserve">
+    <value>Register as a new user</value>
+  </data>
+  <data name="Larry" xml:space="preserve">
+    <value>Larry</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="for" xml:space="preserve">
+    <value>for</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="Forgot password confirmation" xml:space="preserve">
+    <value>Forgot password confirmation</value>
+  </data>
+  <data name="Reset your password" xml:space="preserve">
+    <value>Reset your password</value>
+  </data>
+  <data name="Please check your email to reset your password" xml:space="preserve">
+    <value>Please check your email to reset your password</value>
+  </data>
+  <data name="An error has occurred, the engineer is on his way" xml:space="preserve">
+    <value>An error has occurred, the engineer is on his way</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="The new password and confirmation password do not match" xml:space="preserve">
+    <value>The new password and confirmation password do not match</value>
+  </data>
+  <data name="Confirm new password" xml:space="preserve">
+    <value>Confirm new password</value>
+  </data>
+  <data name="Verification Code" xml:space="preserve">
+    <value>Verification Code</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Phone number" xml:space="preserve">
+    <value>Phone number</value>
+  </data>
+  <data name="User name" xml:space="preserve">
+    <value>User name</value>
+  </data>
+  <data name="Remember me" xml:space="preserve">
+    <value>Remember me</value>
+  </data>
+  <data name="Authenticator code" xml:space="preserve">
+    <value>Authenticator code</value>
+  </data>
+  <data name="Directory Name" xml:space="preserve">
+    <value>Directory Name</value>
+  </data>
+  <data name="Content type" xml:space="preserve">
+    <value>Content type</value>
+  </data>
+  <data name="Confirm password" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="Recovery Code" xml:space="preserve">
+    <value>Recovery Code</value>
+  </data>
+  <data name="Remember this machine" xml:space="preserve">
+    <value>Remember this machine</value>
+  </data>
+  <data name="Date of upload" xml:space="preserve">
+    <value>Date of upload</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="Is shared" xml:space="preserve">
+    <value>Is shared</value>
+  </data>
+  <data name="Date of create" xml:space="preserve">
+    <value>Date of create</value>
+  </data>
+  <data name="File name" xml:space="preserve">
+    <value>File name</value>
+  </data>
+  <data name="it's length is 0" xml:space="preserve">
+    <value>it's length is 0</value>
+  </data>
+  <data name="Upload successfully" xml:space="preserve">
+    <value>Upload successfully</value>
+  </data>
+  <data name="Reset password" xml:space="preserve">
+    <value>Reset password</value>
+  </data>
+  <data name="Upload unsuccessfully" xml:space="preserve">
+    <value>Upload unsuccessfully</value>
+  </data>
+  <data name="Root directory" xml:space="preserve">
+    <value>Root directory</value>
+  </data>
+  <data name="Prev directory" xml:space="preserve">
+    <value>Prev directory</value>
+  </data>
+  <data name="Add directory" xml:space="preserve">
+    <value>Add directory</value>
+  </data>
+  <data name="Copy file url" xml:space="preserve">
+    <value>Copy file url</value>
+  </data>
+  <data name="Manage your account" xml:space="preserve">
+    <value>Manage your account</value>
+  </data>
+  <data name="Change your account settings" xml:space="preserve">
+    <value>Change your account settings</value>
+  </data>
+  <data name="External logins" xml:space="preserve">
+    <value>External logins</value>
+  </data>
+  <data name="Personal data" xml:space="preserve">
+    <value>Personal data</value>
+  </data>
+  <data name="Change password" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="Update password" xml:space="preserve">
+    <value>Update password</value>
+  </data>
+  <data name="Delete Personal Data" xml:space="preserve">
+    <value>Delete Personal Data</value>
+  </data>
+  <data name="Deleting this data will permanently remove your account, and this cannot be recovered" xml:space="preserve">
+    <value>Deleting this data will permanently remove your account, and this cannot be recovered</value>
+  </data>
+  <data name="Delete data and close my account" xml:space="preserve">
+    <value>Delete data and close my account</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="Send verification email" xml:space="preserve">
+    <value>Send verification email</value>
+  </data>
+  <data name="Download Your Data" xml:space="preserve">
+    <value>Download Your Data</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="Personal_Data" xml:space="preserve">
+    <value>Personal Data</value>
+  </data>
+  <data name="Your account contains personal data that you have given us. This page allows you to download or delete that data" xml:space="preserve">
+    <value>Your account contains personal data that you have given us. This page allows you to download or delete that data</value>
+  </data>
+  <data name="Create a new account" xml:space="preserve">
+    <value>Create a new account</value>
+  </data>
+  <data name="Confirm your email" xml:space="preserve">
+    <value>Confirm your email</value>
+  </data>
+  <data name="Please confirm your account by" xml:space="preserve">
+    <value>Please confirm your account by</value>
+  </data>
+  <data name="clicking here" xml:space="preserve">
+    <value>clicking here</value>
+  </data>
+  <data name="Your e-mail is not registered in POYA yet, register it Now" xml:space="preserve">
+    <value>Your e-mail is not registered in POYA yet, register it Now</value>
+  </data>
+  <data name="Unable to load user with ID" xml:space="preserve">
+    <value>Unable to load user with ID</value>
+  </data>
+  <data name="Your password has been changed" xml:space="preserve">
+    <value>Your password has been changed</value>
+  </data>
+  <data name="Password not correct" xml:space="preserve">
+    <value>Password not correct</value>
+  </data>
+  <data name="Unexpected error occurred deleteing user with ID" xml:space="preserve">
+    <value>Unexpected error occurred deleteing user with ID</value>
+  </data>
+  <data name="Unexpected error occurred setting email for user with ID" xml:space="preserve">
+    <value>Unexpected error occurred setting email for user with ID</value>
+  </data>
+  <data name="Unexpected error occurred setting phone number for user with ID" xml:space="preserve">
+    <value>Unexpected error occurred setting phone number for user with ID</value>
+  </data>
+  <data name="Unexpected error occurred setting user name for user with ID" xml:space="preserve">
+    <value>Unexpected error occurred setting user name for user with ID</value>
+  </data>
+  <data name="Your profile has been updated" xml:space="preserve">
+    <value>Your profile has been updated</value>
+  </data>
+  <data name="Verification email sent. Please check your email" xml:space="preserve">
+    <value>Verification email sent. Please check your email</value>
+  </data>
+  <data name="Your password has been set" xml:space="preserve">
+    <value>Your password has been set</value>
+  </data>
+  <data name="The password and confirmation password do not match" xml:space="preserve">
+    <value>The password and confirmation password do not match</value>
+  </data>
+  <data name="Upload one or more files(less than 10M per file) using this form" xml:space="preserve">
+    <value>Upload one or more files(less than 10M per file) using this form</value>
+  </data>
+  <data name="Your disk" xml:space="preserve">
+    <value>Your disk</value>
+  </data>
+  <data name="Please reset your password by" xml:space="preserve">
+    <value>Please reset your password by</value>
+  </data>
+  <data name="Invalid login attempt" xml:space="preserve">
+    <value>Invalid login attempt</value>
+  </data>
+  <data name="We have sent a confirmation email to you, you can login after confirming it" xml:space="preserve">
+    <value>We have sent a confirmation email to you, you can login after confirming it</value>
+  </data>
+  <data name="User name is used, make another choice" xml:space="preserve">
+    <value>User name is used, make another choice</value>
+  </data>
+  <data name="Your email is already registered in POYA, log in Now" xml:space="preserve">
+    <value>Your email is already registered in POYA, log in Now</value>
+  </data>
+  <data name="Request sharingcode of file" xml:space="preserve">
+    <value>Request sharingcode of file</value>
+  </data>
+  <data name="GET FILE" xml:space="preserve">
+    <value>GET FILE</value>
+  </data>
+  <data name="Type sharingcode of file here" xml:space="preserve">
+    <value>Type sharingcode of file here</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="Dark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>More</value>
+  </data>
+  <data name="Care" xml:space="preserve">
+    <value>Care</value>
+  </data>
+  <data name="zh-CN" xml:space="preserve">
+    <value>中文</value>
+  </data>
+  <data name="en-US" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="Tell something to your friends" xml:space="preserve">
+    <value>Tell something to your friends</value>
+  </data>
+  <data name="Token" xml:space="preserve">
+    <value>Token</value>
+  </data>
+  <data name="Date of finish sharing" xml:space="preserve">
+    <value>Date of finish sharing</value>
+  </data>
+  <data name="Tell your friends" xml:space="preserve">
+    <value>Tell your friends</value>
+  </data>
+  <data name="Date of download" xml:space="preserve">
+    <value>Date of download</value>
+  </data>
+  <data name="Feedback" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="Share your file or directory" xml:space="preserve">
+    <value>Share your file or directory</value>
+  </data>
+  <data name="Date of sharing" xml:space="preserve">
+    <value>Date of sharing</value>
+  </data>
+  <data name="Unlimited when set a previous date" xml:space="preserve">
+    <value>Unlimited when set a previous date</value>
+  </data>
+  <data name="It's public if token is empty" xml:space="preserve">
+    <value>It's public if token is empty</value>
+  </data>
+  <data name="ID of file or directory" xml:space="preserve">
+    <value>ID of file or directory</value>
+  </data>
+  <data name="The files and directories you share" xml:space="preserve">
+    <value>The files and directories you share</value>
+  </data>
+  <data name="Your sharing" xml:space="preserve">
+    <value>Your sharing</value>
+  </data>
+  <data name="Enter token please" xml:space="preserve">
+    <value>Enter token please</value>
+  </data>
+  <data name="Get file or directory you friend share" xml:space="preserve">
+    <value>Get file or directory you friend share</value>
+  </data>
+  <data name="Get it" xml:space="preserve">
+    <value>Get it</value>
+  </data>
+  <data name="Get file or directory" xml:space="preserve">
+    <value>Get file or directory</value>
+  </data>
+  <data name="Enter the ID of file or directory" xml:space="preserve">
+    <value>Enter the ID of file or directory</value>
+  </data>
+  <data name="The {0} should be more than {1} and less than {2}" xml:space="preserve">
+    <value>The {0} should be more than {1} and less than {2}</value>
+  </data>
+  <data name="The {0} is required" xml:space="preserve">
+    <value>The {0} is required</value>
+  </data>
+  <data name="Type your email here" xml:space="preserve">
+    <value>Type your email here</value>
+  </data>
+  <data name="Type your password here" xml:space="preserve">
+    <value>Type your password here</value>
+  </data>
+  <data name="Type your password again" xml:space="preserve">
+    <value>Type your password again</value>
+  </data>
+  <data name="The engineer is trying to solve the problem of the size of storage space" xml:space="preserve">
+    <value>The engineer is trying to solve the problem of the size of storage space</value>
+  </data>
+  <data name="If you use our services for the first time, you can view our Privacy Policy and service statement" xml:space="preserve">
+    <value>If you use our services for the first time, you can view our Privacy Policy and service statement</value>
+  </data>
+  <data name="Learn More" xml:space="preserve">
+    <value>Learn More</value>
+  </data>
+  <data name="Accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="Sharing" xml:space="preserve">
+    <value>Sharing</value>
+  </data>
+  <data name="Get" xml:space="preserve">
+    <value>Get</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Tip" xml:space="preserve">
+    <value>Tip</value>
+  </data>
+  <data name="Finishing date" xml:space="preserve">
+    <value>Finishing date</value>
+  </data>
+  <data name="Sharing date" xml:space="preserve">
+    <value>Sharing date</value>
+  </data>
+  <data name="_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="My sharing" xml:space="preserve">
+    <value>My sharing</value>
+  </data>
+  <data name="The Sharing" xml:space="preserve">
+    <value>The Sharing</value>
+  </data>
+  <data name="Oops..., can't find the file or directory you friend share" xml:space="preserve">
+    <value>Oops..., can't find the file or directory you friend share</value>
+  </data>
+  <data name="Shared file" xml:space="preserve">
+    <value>Shared file</value>
+  </data>
+  <data name="Shared directory" xml:space="preserve">
+    <value>Shared directory</value>
+  </data>
+  <data name="DOEnd" xml:space="preserve">
+    <value>DOEnd</value>
+  </data>
+  <data name="file" xml:space="preserve">
+    <value>file</value>
+  </data>
+  <data name="directory" xml:space="preserve">
+    <value>directory</value>
+  </data>
+  <data name="Share your" xml:space="preserve">
+    <value>Share your</value>
+  </data>
+  <data name="DOShare" xml:space="preserve">
+    <value>Date of sharing</value>
+  </data>
+  <data name="The files or directories you share" xml:space="preserve">
+    <value>The files and directories you share</value>
+  </data>
+  <data name="Get directory or file shared from your friend" xml:space="preserve">
+    <value>Get directory or file shared from your friend</value>
+  </data>
+  <data name="FoDId" xml:space="preserve">
+    <value>FoDId</value>
+  </data>
+  <data name="Get {0} shared from your friend" xml:space="preserve">
+    <value>Get {0} shared from your friend</value>
+  </data>
+  <data name="(^_^) You are rebot maybe! take a rest please" xml:space="preserve">
+    <value>(^_^) You are rebot maybe! take a rest please</value>
+  </data>
+  <data name="This directory is empty" xml:space="preserve">
+    <value>This directory is empty</value>
+  </data>
+  <data name="Basic Profile" xml:space="preserve">
+    <value>Basic Profile</value>
+  </data>
+  <data name="Your data. . ." xml:space="preserve">
+    <value>Your data. . .</value>
+  </data>
+  <data name="View shared file or directory" xml:space="preserve">
+    <value>View shared file or directory</value>
+  </data>
+  <data name="Your info" xml:space="preserve">
+    <value>Your info</value>
+  </data>
+  <data name="Your information" xml:space="preserve">
+    <value>Your information</value>
+  </data>
+  <data name="Your avatar upload successfully" xml:space="preserve">
+    <value>Your avatar upload successfully</value>
+  </data>
+  <data name="An error has occurred. . . , engineers are on their way" xml:space="preserve">
+    <value>An error has occurred. . . , engineers are on their way</value>
+  </data>
+  <data name="Oops...., the size of avatar should be less than 1M" xml:space="preserve">
+    <value>Oops...., the size of avatar should be less than 1M</value>
+  </data>
+  <data name="Add dir" xml:space="preserve">
+    <value>Add dir</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+</root>

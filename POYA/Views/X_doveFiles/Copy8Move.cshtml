@@ -1,0 +1,43 @@
+﻿@model POYA.Models.Copy8Move
+
+@{
+    ViewData["Title"] = "MoveFile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var X_doveDirectories = ViewData["SelectListItemsOfX_doveDirectory"] as IEnumerable<SelectListItem>;
+}
+
+
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="@(Model.IsMove?" Move":"Copy")">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" hidden />
+            <input asp-for="ReturnUrl" hidden />
+            <input asp-for="IsFile" hidden />
+            <input asp-for="IsMove" hidden />
+            <input asp-for="FoDName" hidden />
+            <h1>
+                @(Model.IsMove ? Localizer["Move"] : Localizer["Copy"])
+                @Model.FoDName (@(Model.IsFile ? Localizer["File"] : Localizer["Directory"]))
+                @Localizer["to"]
+                <span> <select asp-for="ToDirId" asp-items="X_doveDirectories"></select></span>
+            </h1>
+            <span asp-validation-for="ToDirId" class="text-danger"></span>
+            <div class="form-group">
+                <a class="btn btn-outline-info"><< @Localizer["Back"]</a>
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(".form-group a:first").on("click", function () {
+            window.history.go(-1);
+        });
+    </script>
+}
