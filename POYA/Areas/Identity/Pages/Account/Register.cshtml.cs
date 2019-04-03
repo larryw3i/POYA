@@ -99,7 +99,7 @@ namespace POYA.Areas.Identity.Pages.Account
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 var _X_doveUserInfo = new X_doveUserInfo() { UserId = user.Id };
-                await _context.x_DoveUserInfos.AddAsync(_X_doveUserInfo);
+                await _context.X_DoveUserInfos.AddAsync(_X_doveUserInfo);
                 await _context.SaveChangesAsync();
                 if (result.Succeeded)
                 {

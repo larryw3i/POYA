@@ -3,7 +3,7 @@
 @using POYA.Models;
 @{
     var _User = ViewData["_User"] as IdentityUser;    //   = _User.UserName;
-    var X_doveUserInfo = ViewData["X_doveUserInfo"] as X_doveUserInfo;  //  = await _context.x_DoveUserInfos.Select(p => new X_doveUserInfo
+    var X_doveUserInfo = ViewData["X_doveUserInfo"] as X_doveUserInfo;  //  = await _context.X_DoveUserInfos.Select(p => new X_doveUserInfo
     ViewData["Title"] =_User.UserName+"'s "+Localizer[ "Information"];
 }
 

@@ -392,7 +392,7 @@ namespace POYA.Controllers
                 return NoContent();
             }
 
-            var Buffer_UserId = await _context.x_DoveUserInfos.Select(p => new { p.AvatarBuffer, p.UserId }).FirstOrDefaultAsync(p => p.UserId == UserId);
+            var Buffer_UserId = await _context.X_DoveUserInfos.Select(p => new { p.AvatarBuffer, p.UserId }).FirstOrDefaultAsync(p => p.UserId == UserId);
 
             if ((IsRegisteredUser && (Buffer_UserId == null)) || Buffer_UserId?.AvatarBuffer == null || Buffer_UserId?.AvatarBuffer.Length < 1)
             {
@@ -424,7 +424,7 @@ namespace POYA.Controllers
             var memoryStream = new MemoryStream();
             await avatarForm.AvatarImgFile.CopyToAsync(memoryStream);
             var AvatarBuffer = MakeCircleImage(memoryStream);//  memoryStream.ToArray();
-            var _X_doveUserInfo = await _context.x_DoveUserInfos.FirstOrDefaultAsync(p => p.UserId == _UserId);
+            var _X_doveUserInfo = await _context.X_DoveUserInfos.FirstOrDefaultAsync(p => p.UserId == _UserId);
 
             if (_X_doveUserInfo != null && AvatarBuffer == _X_doveUserInfo.AvatarBuffer)
                 return Json(new { status = true, X_DOVE_XSRF_TOKEN });
@@ -436,7 +436,7 @@ namespace POYA.Controllers
             else
             {
                 _X_doveUserInfo = new X_doveUserInfo() { UserId = _UserId, AvatarBuffer = AvatarBuffer };
-                await _context.x_DoveUserInfos.AddAsync(_X_doveUserInfo);
+                await _context.X_DoveUserInfos.AddAsync(_X_doveUserInfo);
             }
             await _context.SaveChangesAsync();
             X_DOVE_XSRF_TOKEN = Guid.NewGuid().ToString();

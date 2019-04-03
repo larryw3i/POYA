@@ -44,11 +44,13 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
                         </li>
+                        @*
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="X_doveFiles" asp-action="Index">@Localizer["Disk"]</a>
                         </li>
+                        *@
                         <li class="nav-item">
-                            <a class="nav-link " href="https://blog.csdn.net/LingHuChong20">@Localizer["Larry"]</a>
+                            <a class="nav-link" href="https://blog.csdn.net/LingHuChong20">@Localizer["Larry"]</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Donate">@Localizer["Donate"]</a>
@@ -61,8 +63,7 @@
                                 <select id="Theme" name="Theme">
                                     <option value="Light">@(Localizer["Light"]) </option>
                                     <option value="Dark" selected>@(Localizer["Dark"])</option>
-                                    <option value="Care">@(Localizer["Care"])</option>
-                                    @*<option value="Care">@(Localizer["Auto"])</option>*@
+                                    <option value="Care">@(Localizer["Care"])</option> 
                                 </select>
                             </div>
 

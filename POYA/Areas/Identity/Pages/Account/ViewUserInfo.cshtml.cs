@@ -55,7 +55,7 @@ namespace POYA.Areas.Identity.Pages.Account
             }
             var _User = await _context.Users.FirstOrDefaultAsync(p => p.Id == UserId);
             ViewData[nameof(_User)] = _User;
-            ViewData[nameof(X_doveUserInfo)] = await _context.x_DoveUserInfos.Select(p => new X_doveUserInfo
+            ViewData[nameof(X_doveUserInfo)] = await _context.X_DoveUserInfos.Select(p => new X_doveUserInfo
             {
                 #region
                 Address = p.Address,

@@ -122,7 +122,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"{_localizer["Unable to load user with ID"]} '{_userManager.GetUserId(User)}'");
             }
-            var _X_doveUserInfo = await _context.x_DoveUserInfos.Select(
+            var _X_doveUserInfo = await _context.X_DoveUserInfos.Select(
                 p => new X_doveUserInfo
                 {
                     #region
@@ -172,7 +172,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
             var user = await _userManager.GetUserAsync(User);
-            var _X_doveUserInfo = await _context.x_DoveUserInfos.FirstOrDefaultAsync(p => p.UserId == user.Id);
+            var _X_doveUserInfo = await _context.X_DoveUserInfos.FirstOrDefaultAsync(p => p.UserId == user.Id);
             if (_X_doveUserInfo != null)
             {
                 #region
@@ -214,7 +214,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
                     UserId = user.Id, 
                     #endregion
                 };
-                await _context.x_DoveUserInfos.AddAsync(_X_doveUserInfo_);
+                await _context.X_DoveUserInfos.AddAsync(_X_doveUserInfo_);
             }
             await _context.SaveChangesAsync();
 

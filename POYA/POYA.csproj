@@ -10,14 +10,39 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Views\SharedDs\**" />
+    <Compile Remove="Views\SharedFs\**" />
     <Compile Remove="Views\ShareFoDs\**" />
+    <Compile Remove="Views\X_doveDirectories\**" />
+    <Compile Remove="Views\X_doveFiles\**" />
+    <Content Remove="Views\SharedDs\**" />
+    <Content Remove="Views\SharedFs\**" />
     <Content Remove="Views\ShareFoDs\**" />
+    <Content Remove="Views\X_doveDirectories\**" />
+    <Content Remove="Views\X_doveFiles\**" />
+    <EmbeddedResource Remove="Views\SharedDs\**" />
+    <EmbeddedResource Remove="Views\SharedFs\**" />
     <EmbeddedResource Remove="Views\ShareFoDs\**" />
+    <EmbeddedResource Remove="Views\X_doveDirectories\**" />
+    <EmbeddedResource Remove="Views\X_doveFiles\**" />
+    <None Remove="Views\SharedDs\**" />
+    <None Remove="Views\SharedFs\**" />
     <None Remove="Views\ShareFoDs\**" />
+    <None Remove="Views\X_doveDirectories\**" />
+    <None Remove="Views\X_doveFiles\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Controllers\SharedDsController.cs" />
+    <Compile Remove="Controllers\SharedFsController.cs" />
     <Compile Remove="Controllers\ShareFoDsController.cs" />
+    <Compile Remove="Controllers\X_doveDirectoriesController.cs" />
+    <Compile Remove="Controllers\X_doveFilesController.cs" />
+    <Compile Remove="Models\LDirViewModel.cs" />
+    <Compile Remove="Models\LFileViewModel.cs" />
+    <Compile Remove="Models\SharedFDViewModel.cs" />
     <Compile Remove="Models\ShareFoDViewModel.cs" />
+    <Compile Remove="Models\X_DoveDirectoryViewModel.cs" />
+    <Compile Remove="Models\X_doveFileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.3.1" />
