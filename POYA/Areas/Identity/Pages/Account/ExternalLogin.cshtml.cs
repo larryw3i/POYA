@@ -14,8 +14,6 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Localization;
 using POYA.Data;
 using POYA.Unities.Helpers;
-
-
 namespace POYA.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
@@ -30,7 +28,6 @@ namespace POYA.Areas.Identity.Pages.Account
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ExternalLoginModel> _logger;
-
         public ExternalLoginModel(
             ILogger<ExternalLoginModel> logger,
             SignInManager<IdentityUser> signInManager,
@@ -52,19 +49,12 @@ namespace POYA.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
         }
-
-       
-
         [BindProperty]
         public InputModel Input { get; set; }
-
         public string LoginProvider { get; set; }
-
         public string ReturnUrl { get; set; }
-
         [TempData]
         public string ErrorMessage { get; set; }
-
         public class InputModel
         {
             [Required]
@@ -72,12 +62,10 @@ namespace POYA.Areas.Identity.Pages.Account
             [Display(Name ="Email")]
             public string Email { get; set; }
         }
-
         public IActionResult OnGetAsync()
         {
             return RedirectToPage("./Login");
         }
-
         public IActionResult OnPost(string provider, string returnUrl = null)
         {
             // Request a redirect to the external login provider.
@@ -85,7 +73,6 @@ namespace POYA.Areas.Identity.Pages.Account
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return new ChallengeResult(provider, properties);
         }
-
         public async Task<IActionResult> OnGetCallbackAsync(string returnUrl = null, string remoteError = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
@@ -100,7 +87,6 @@ namespace POYA.Areas.Identity.Pages.Account
                 ErrorMessage = "Error loading external login information.";
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
-
             // Sign in the user with this external login provider if the user already has a login.
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor : true);
             if (result.Succeeded)
@@ -127,7 +113,6 @@ namespace POYA.Areas.Identity.Pages.Account
                 return Page();
             }
         }
-
         public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
@@ -138,7 +123,6 @@ namespace POYA.Areas.Identity.Pages.Account
                 ErrorMessage = "Error loading external login information during confirmation.";
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
-
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
@@ -158,7 +142,6 @@ namespace POYA.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
             LoginProvider = info.LoginProvider;
             ReturnUrl = returnUrl;
             return Page();

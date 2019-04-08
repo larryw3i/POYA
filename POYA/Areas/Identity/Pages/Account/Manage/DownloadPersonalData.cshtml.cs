@@ -13,7 +13,6 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using POYA.Data;
 using POYA.Unities.Helpers;
-
 namespace POYA.Areas.Identity.Pages.Account.Manage
 {
     public class DownloadPersonalDataModel : PageModel
@@ -28,7 +27,6 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ExternalLoginModel> _logger;
-
         public DownloadPersonalDataModel(
             ILogger<ExternalLoginModel> logger,
             SignInManager<IdentityUser> signInManager,
@@ -51,7 +49,6 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             _logger = logger;
         }
         #endregion
-
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -59,9 +56,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"{_localizer[ "Unable to load user with ID"]} '{_userManager.GetUserId(User)}'");
             }
-
             _logger.LogInformation("User with ID '{UserId}' asked for their personal data.", _userManager.GetUserId(User));
-
             // Only include personal data for download
             var personalData = new Dictionary<string, string>();
             var personalDataProps = typeof(IdentityUser).GetProperties().Where(
@@ -70,7 +65,6 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             {
                 personalData.Add(p.Name, p.GetValue(user)?.ToString() ?? "null");
             }
-
             Response.Headers.Add("Content-Disposition", "attachment; filename=PersonalData.json");
             return new FileContentResult(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(personalData)), "text/json");
         }

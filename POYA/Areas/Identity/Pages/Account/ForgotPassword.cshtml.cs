@@ -5,7 +5,6 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks; 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
 using Microsoft.AspNetCore.Hosting; 
 using Microsoft.Extensions.Localization;
 using POYA.Data;
@@ -14,7 +13,6 @@ using POYA.Unities.Helpers;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-
 namespace POYA.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
@@ -30,7 +28,6 @@ namespace POYA.Areas.Identity.Pages.Account
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ExternalLoginModel> _logger;
-
         public ForgotPasswordModel(
             ILogger<ExternalLoginModel> logger,
             SignInManager<IdentityUser> signInManager,
@@ -53,10 +50,8 @@ namespace POYA.Areas.Identity.Pages.Account
             _logger = logger;
         }
         #endregion
-
         [BindProperty]
         public InputModel Input { get; set; }
-
         public class InputModel
         {
             [Required]
@@ -64,7 +59,6 @@ namespace POYA.Areas.Identity.Pages.Account
             [Display(Name ="Email")]
             public string Email { get; set; }
         }
-
         public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
@@ -75,7 +69,6 @@ namespace POYA.Areas.Identity.Pages.Account
                     // Don't reveal that the user does not exist or is not confirmed
                     return RedirectToPage("./ForgotPasswordConfirmation");
                 }
-
                 // For more information on how to enable account confirmation and password reset please 
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -84,15 +77,12 @@ namespace POYA.Areas.Identity.Pages.Account
                     pageHandler: null,
                     values: new { code },
                     protocol: Request.Scheme);
-
                 await _emailSender.SendEmailAsync(
                     Input.Email,
                    _localizer["Reset password"],
                     $"{_localizer[ "Please reset your password by"]} <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> {_localizer[ "clicking here"]}</a>");
-
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
-
             return Page();
         }
     }

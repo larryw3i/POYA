@@ -9,13 +9,11 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace POYA.Unities.Services
 {
     public class EmailSender : IEmailSender //  Controllers
     {
         private readonly IHostingEnvironment _hostingEnv;
-
         public EmailSender(IHostingEnvironment hostingEnv)
         {
             _hostingEnv = hostingEnv;
@@ -26,13 +24,10 @@ namespace POYA.Unities.Services
             var reader = new JsonTextReader(file);
             var jsonObject = (JObject)JToken.ReadFrom(reader);
             file.Close(); 
-
             var userName =(string)jsonObject[nameof(EmailSender)]["userName"];
             var host = (string)jsonObject[nameof(EmailSender)]["host"];
             var password = (string)jsonObject[nameof(EmailSender)]["password"];
-
             var port =(short)jsonObject[nameof(EmailSender)]["port"];
-
             var smtpClient = new SmtpClient(host: host, port: port)
             {
                 EnableSsl = false,
@@ -47,6 +42,5 @@ namespace POYA.Unities.Services
             return smtpClient.SendMailAsync(mailMessage);
             //throw new NotImplementedException();
         }
-
     }
 }

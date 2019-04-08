@@ -12,12 +12,10 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using POYA.Data;
 using POYA.Unities.Helpers;
-
 namespace POYA.Areas.Identity.Pages.Account.Manage
 {
     public class SetPasswordModel : PageModel
     {
-
         #region
         private readonly IHostingEnvironment _hostingEnv;
         private readonly IStringLocalizer<Program> _localizer;
@@ -28,7 +26,6 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ExternalLoginModel> _logger;
-
         public SetPasswordModel(
             ILogger<ExternalLoginModel> logger,
             SignInManager<IdentityUser> signInManager,
@@ -51,14 +48,10 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             _logger = logger;
         }
         #endregion
-
-
         [BindProperty]
         public InputModel Input { get; set; }
-
         [TempData]
         public string StatusMessage { get; set; }
-
         public class InputModel
         {
             [Required]
@@ -66,13 +59,11 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             [DataType(DataType.Password)]
             [Display(Name = "New password")]
             public string NewPassword { get; set; }
-
             [DataType(DataType.Password)]
             [Display(Name = "Confirm new password")]
             [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match")]
             public string ConfirmPassword { get; set; }
         }
-
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -80,30 +71,24 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"{_localizer[ "Unable to load user with ID"]} '{_userManager.GetUserId(User)}'");
             }
-
             var hasPassword = await _userManager.HasPasswordAsync(user);
-
             if (hasPassword)
             {
                 return RedirectToPage("./ChangePassword");
             }
-
             return Page();
         }
-
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return NotFound($"{_localizer[ "Unable to load user with ID"]} '{_userManager.GetUserId(User)}'");
             }
-
             var addPasswordResult = await _userManager.AddPasswordAsync(user, Input.NewPassword);
             if (!addPasswordResult.Succeeded)
             {
@@ -113,10 +98,8 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
                 }
                 return Page();
             }
-
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage =_localizer["Your password has been set"];
-
             return RedirectToPage();
         }
     }

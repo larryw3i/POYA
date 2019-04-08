@@ -13,7 +13,6 @@ using Microsoft.Extensions.Localization;
 using POYA.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using POYA.Unities.Helpers;
- 
 namespace POYA.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
@@ -28,7 +27,6 @@ namespace POYA.Areas.Identity.Pages.Account
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ExternalLoginModel> _logger;
-
         public LoginWithRecoveryCodeModel(
             ILogger<ExternalLoginModel> logger,
             SignInManager<IdentityUser> signInManager,
@@ -50,13 +48,9 @@ namespace POYA.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
         }
-
-
         [BindProperty]
         public InputModel Input { get; set; }
-
         public string ReturnUrl { get; set; }
-
         public class InputModel
         {
             [BindProperty]
@@ -65,7 +59,6 @@ namespace POYA.Areas.Identity.Pages.Account
             [Display(Name = "Recovery Code")]
             public string RecoveryCode { get; set; }
         }
-
         public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
             // Ensure the user has gone through the username & password screen first
@@ -74,29 +67,22 @@ namespace POYA.Areas.Identity.Pages.Account
             {
                 throw new InvalidOperationException($"Unable to load two-factor authentication user.");
             }
-
             ReturnUrl = returnUrl;
-
             return Page();
         }
-
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
                 throw new InvalidOperationException($"Unable to load two-factor authentication user.");
             }
-
             var recoveryCode = Input.RecoveryCode.Replace(" ", string.Empty);
-
             var result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
-
             if (result.Succeeded)
             {
                 _logger.LogInformation("User with ID '{UserId}' logged in with a recovery code.", user.Id);

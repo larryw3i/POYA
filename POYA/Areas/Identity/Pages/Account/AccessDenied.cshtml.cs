@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using POYA.Data;
 using POYA.Unities.Helpers;
-
 namespace POYA.Areas.Identity.Pages.Account
 {
     public class AccessDeniedModel : PageModel
@@ -22,7 +21,6 @@ namespace POYA.Areas.Identity.Pages.Account
         private readonly ApplicationDbContext _context;
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
-
         public AccessDeniedModel(
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
@@ -44,7 +42,6 @@ namespace POYA.Areas.Identity.Pages.Account
         }
         public void OnGet()
         {
-
         }
     }
 }

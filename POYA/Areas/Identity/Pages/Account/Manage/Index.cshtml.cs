@@ -49,20 +49,16 @@ using POYA.Unities.Helpers;
         #endregion
         // public string Username { get; set; }
         public bool IsEmailConfirmed { get; set; }
-
          [TempData]
          public string StatusMessage { get; set; }
-
          [BindProperty]
          public InputModel Input { get; set; }
-
          public class InputModel
          {
              [Required]
              [EmailAddress]
              [Display(Name = "Email")]
              public string Email { get; set; }
-
              [Phone]
              [Display(Name = "Phone number")]
              public string PhoneNumber { get; set; }
@@ -89,7 +85,6 @@ using POYA.Unities.Helpers;
              IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
              return Page();
          }
-
          public async Task<IActionResult> OnPostAsync()
          {
              if (!ModelState.IsValid)

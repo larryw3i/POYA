@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Localization;
 using POYA.Data;
@@ -12,7 +11,6 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using POYA.Unities.Helpers;
 using Microsoft.Extensions.Logging; 
 using Microsoft.AspNetCore.Identity;
-
 namespace POYA.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
@@ -27,7 +25,6 @@ namespace POYA.Areas.Identity.Pages.Account
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ExternalLoginModel> _logger;
-
         public ResetPasswordConfirmationModel(
             ILogger<ExternalLoginModel> logger,
             SignInManager<IdentityUser> signInManager,
@@ -51,7 +48,6 @@ namespace POYA.Areas.Identity.Pages.Account
         }
         public void OnGet()
         {
-
         }
     }
 }

@@ -6,14 +6,12 @@
     _THEME = _THEME == "Light" ? "white" :
         _THEME == "Dark" ? "black" : "#C7EDCC";
 }
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - @Localizer["WSUDisk"]</title>
-
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     </environment>
@@ -40,15 +38,12 @@
                 <div class="collapse navbar-collapse d-sm-inline-flex flex-sm-row-reverse" id="navbarSupportedContent">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
-
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
                         </li>
-                        @*
                         <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="X_doveFiles" asp-action="Index">@Localizer["Disk"]</a>
+                            <a class="nav-link " asp-area="" asp-controller="X_doveUserFileTag" asp-action="Index">@Localizer["Storage"]</a>
                         </li>
-                        *@
                         <li class="nav-item">
                             <a class="nav-link" href="https://blog.csdn.net/LingHuChong20">@Localizer["Larry"]</a>
                         </li>
@@ -66,7 +61,6 @@
                                     <option value="Care">@(Localizer["Care"])</option> 
                                 </select>
                             </div>
-
                         </li>
                     </ul>
                 </div>
@@ -89,7 +83,6 @@
             <a asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Privacy"]</a> - @Localizer["More"]
         </div>
     </footer>
-
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
@@ -108,11 +101,9 @@
                 integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
         </script>
     </environment>
-
     <script src="~/lib/js-cookie/js.cookie.js"></script>
     @*<script src="~/lib/jquery/dist/jquery.min.js"></script> *@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
-
 </body>
 </html>

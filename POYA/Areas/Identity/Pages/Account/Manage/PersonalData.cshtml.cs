@@ -8,7 +8,6 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using POYA.Data;
 using POYA.Unities.Helpers;
-
 namespace POYA.Areas.Identity.Pages.Account.Manage
 {
     public class PersonalDataModel : PageModel
@@ -23,7 +22,6 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ExternalLoginModel> _logger;
-
         public PersonalDataModel(
             ILogger<ExternalLoginModel> logger,
             SignInManager<IdentityUser> signInManager,
@@ -46,8 +44,6 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             _logger = logger;
         }
         #endregion 
-       
-
         public async Task<IActionResult> OnGet()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -55,7 +51,6 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"{_localizer[ "Unable to load user with ID"]} '{_userManager.GetUserId(User)}'");
             }
-
             return Page();
         }
     }

@@ -1,14 +1,13 @@
 ﻿@{
     ViewData["Title"] = Localizer["Home Page"];
 }
-
 <div class="text-center">
     <h1 class="display-4">@Localizer[ "Welcome"] (^_^)//</h1>
     <div>
         <h4 style="color:blue">@Localizer["Here is your WenShan University Disk"]<br/> (<span style="color:coral">＞</span>ω<span style="color:coral">＜</span>)</h4>
         <h3>@Localizer[ "You'll enjoy"] >_</h3>
         <div class="row text-center">
-            <div class="col-3 col-lg-3 col-md-3 col-sm-3 col-xl-3" onclick="window.location.href='@(Url.Action(action:"Index",controller:"X_doveFiles"))'">
+            <div class="col-3 col-lg-3 col-md-3 col-sm-3 col-xl-3" onclick="window.location.href='@(Url.Action(action:"Index", controller: "X_doveUserFileTag"))'">
                 <img src="~/img/udisk_ico.png" />
                 <h6>@Localizer["Free Storage Space"]</h6>
             </div>
@@ -28,34 +27,28 @@
         <h4>@Localizer["AND MORE"]. . .</h4>
     </div>
 </div>
-
 @section Styles{
-
     <style type="text/css">
         .text-center .row > .col-3 {
             text-align: center;
             user-select: none;
             margin-top: 2%;
         }
-
         .text-center h4 {
             text-align: center;
             user-select: none;
             margin-top: 2%;
         }
-
         .text-center .row > .col-3:hover {
             transform: translateY(-8px);
             transform: scale(0.9);
         }
-
         .text-center .row > .col-3 > img {
             height: 80px;
             max-width: 80px;
         }
     </style>
 }
-
 @*
     <p>@Localizer["Learn about"] <a href="https://docs.microsoft.com/aspnet/core">@Localizer["building Web apps with ASP.NET Core"]</a></p>
         box-shadow: 2px 4px 20px #ff6a00;

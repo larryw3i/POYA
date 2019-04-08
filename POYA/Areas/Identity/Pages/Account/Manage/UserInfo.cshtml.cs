@@ -15,7 +15,6 @@ using POYA.Data;
 using POYA.Models;
 using POYA.Unities.Attributes;
 using POYA.Unities.Helpers;
-
 namespace POYA.Areas.Identity.Pages.Account.Manage
 {
     public partial class UserInfoModel : PageModel
@@ -29,7 +28,6 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
         private readonly ApplicationDbContext _context;
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
-
         public UserInfoModel(
         SignInManager<IdentityUser> signInManager,
         X_DOVEHelper x_DOVEHelper,
@@ -51,7 +49,6 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
         }
         #endregion
         // public string Username { get; set; }
-
         public bool IsEmailConfirmed { get; set; }
         [TempData]
         public string StatusMessage { get; set; }
@@ -65,51 +62,37 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
         [DOBirth(IsValueNullable = true)]
         [Display(Name = "Birth date")]
         public DateTimeOffset? DOBirth { get; set; }
-
         [Display(Name = "Overt")]
         public bool IsDOBirthOvert { get; set; } = false;
-
         [Display(Name = "Hobby")]
         [StringLength(maximumLength: 50)]
         public string Hobby { get; set; }
-
         [Display(Name = "Overt")]
         public bool IsHobbyOvert { get; set; } = false;
-
         [Display(Name = "Your hometown")]
         [StringLength(maximumLength: 100)]
         public string OriginalAddress { get; set; }
-
         [Display(Name = "Overt")]
         public bool IsOriginalAddressOvert { get; set; } = false;
-
         [Display(Name = "Your address")]
         [StringLength(maximumLength: 100)]
         public string Address { get; set; }
-
         [Display(Name = "Overt")]
         public bool IsAddressOvert { get; set; } = false;
-
         [Display(Name = "Marital status")]
         [StringLength(maximumLength: 10)]
         public string MaritalStatus { get; set; }
-
         [Display(Name = "Overt")]
         public bool IsMaritalStatusOvert { get; set; }
-
         [Display(Name = "Graduated from")]
         [StringLength(maximumLength: 50)]
         public string GraduatedFrom { get; set; }
-
         [Display(Name = "Overt")]
         public bool IsGraduatedFromOvert { get; set; } = false;
-
         [Display(Name = "Occupation")]
         [StringLength(maximumLength: 50)]
         public string Occupation { get; set; }
-
         [Display(Name = "Overt")]
-
         public bool IsOccupationOvert { get; set; } = false;
         #endregion
     }
@@ -217,11 +200,9 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
                 await _context.X_DoveUserInfos.AddAsync(_X_doveUserInfo_);
             }
             await _context.SaveChangesAsync();
-
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = _localizer["Your profile has been updated"];
             return RedirectToPage();
         }
-
     }
 }

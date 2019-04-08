@@ -9,14 +9,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Localization;
 using POYA.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using POYA.Unities.Helpers;
 using System.Text.Encodings.Web;
-
 namespace POYA.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
@@ -31,7 +29,6 @@ namespace POYA.Areas.Identity.Pages.Account
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ExternalLoginModel> _logger;
-
         public LoginModel(
             ILogger<ExternalLoginModel> logger,
             SignInManager<IdentityUser> signInManager,
@@ -53,35 +50,25 @@ namespace POYA.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
         }
-
-
-
         [BindProperty]
         public InputModel Input { get; set; }
-
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
         public string ReturnUrl { get; set; }
-
         [TempData]
         public string ErrorMessage { get; set; }
-
         public class InputModel
         {
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
-
             [Required]
             [DataType(DataType.Password)]
             [Display(Name ="Password")]
             public string Password { get; set; }
-
             [Display(Name = "Remember me")]
             public bool RememberMe { get; set; }
         }
-
         public async Task OnGetAsync(string returnUrl = null, bool IsFromRegister = false, bool IsEmailConfirmed = true)
         {
             if (!string.IsNullOrEmpty(ErrorMessage))
@@ -93,21 +80,15 @@ namespace POYA.Areas.Identity.Pages.Account
                 ModelState.AddModelError(nameof(Input.Email),_localizer[ "We have sent a confirmation email to you, you can login after confirming it"]);
             }
             else if (IsFromRegister) ModelState.AddModelError(nameof(Input.Email),_localizer[ "Your email is already registered in POYA, log in Now"]+" (^_^)");
-
             returnUrl = returnUrl ?? Url.Content("~/");
-
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
             ReturnUrl = returnUrl;
         }
-
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-
             if (ModelState.IsValid)
             {
                 var _user = await _userManager.FindByEmailAsync(Input.Email);
@@ -123,14 +104,11 @@ namespace POYA.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { userId = _user.Id, code },
                         protocol: Request.Scheme);
-
                     await _emailSender.SendEmailAsync(Input.Email, _localizer["Confirm your email"],
                         $"{_localizer["Please confirm your account by"]} <a href='" + HtmlEncoder.Default.Encode(callbackUrl) + $"'>{_localizer["clicking here"]}</a>");
-
                     ModelState.AddModelError(string.Empty, _localizer["We have sent a confirmation email to you, you can login after confirming it"]);
                     return Page();
                 }
-
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(
@@ -156,7 +134,6 @@ namespace POYA.Areas.Identity.Pages.Account
                     return Page();
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return Page();
         }

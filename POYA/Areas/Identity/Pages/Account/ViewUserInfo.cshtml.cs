@@ -12,7 +12,6 @@ using Microsoft.Extensions.Localization;
 using POYA.Data;
 using POYA.Models;
 using POYA.Unities.Helpers;
-
 namespace POYA.Areas.Identity.Pages.Account
 {
     public class ViewUserInfoModel : PageModel
@@ -26,7 +25,6 @@ namespace POYA.Areas.Identity.Pages.Account
         private readonly ApplicationDbContext _context;
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
-
         public ViewUserInfoModel(
         SignInManager<IdentityUser> signInManager,
         X_DOVEHelper x_DOVEHelper,
@@ -76,7 +74,6 @@ namespace POYA.Areas.Identity.Pages.Account
                 UserId = p.UserId
                 #endregion
             }).FirstOrDefaultAsync(p => p.UserId == UserId);
-
             return Page();
         }
     }

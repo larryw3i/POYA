@@ -1,0 +1,223 @@
+﻿@model POYA.Models.X_doveUserFileTag
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Localizer["Upload files"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col col-md-10" id="FileInfoDIV">
+        <p>Upload one or more files using this form:</p>
+    </div>
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+                <div class="input-group mb-3" id="SelectFileDIV" style="margin-top:20px">
+                    <input type="text" class="form-control" placeholder="@Localizer["Select your file"]" aria-label="@Localizer["Select your file"]" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-info" type="button">@Localizer["Select"]</button>
+                    </div>
+                </div>
+            </div>
+            <a class="btn btn-outline-info" id="UploadA">@Localizer["Upload"]</a>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/js-spark-md5/spark-md5.min.js"></script>
+    <script>
+        var FileInput8IdArray = new Array();
+        var FileInputPrefix = "FileInput_";
+        var ProgressPrefix = "Progress_";
+
+        /**
+         * Return the file input string
+         * @@param Id{number} the id of file input
+         */
+        var FileInput = (Id = $.guid++) =>
+            '\
+                <input type="file" name="LFiles" id="'+ FileInputPrefix + String(Id)+ '" onchange="ShowFileInfo8AddArray('+ Id +')" hidden/>\
+            ';
+
+        /**
+         * Return the file_name_h6 tag and the boostrap progress string
+         * @@param Id {number} The id of file
+         * @@param FileName {string} The name of file
+         */
+        var FileInfo8Progress = (Id = 0, FileName = "") =>
+            '   <h6>' + FileName +'<h6/>\
+                <div class="progress col col-8" style="height: 8px;" id="'+ ProgressPrefix + String( Id) +'">\
+                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>\
+                </div>\
+            ';
+
+
+        $("#SelectFileDIV").on("click", function () {
+            AddFileInput8Click();
+        });
+
+        $("#UploadA").on("click", function () {
+
+            event.preventDefault();
+        });
+
+        /**
+         * Show the file info after selectting
+         * @@param Id {number} The id of file input
+         */
+        function ShowFileInfo8AddArray(Id) {
+            var FileName = $("#"+FileInputPrefix + String(Id)).val();
+            $(FileInfo8Progress(Id, FileName)).insertAfter("#" + FileInputPrefix + String(Id));
+            FileInput8IdArray[Id] = FileName;
+        }
+
+        /**
+         *  Add file input and click it
+         */
+        function AddFileInput8Click() {
+            $(FileInput($.guid++)).insertBefore("#SelectFileDIV");
+            $("#SelectFileDIV").prev("input").click();
+        }
+
+
+        /**
+         *  Get the md5 from file
+         *  @@param _File {File}  The file selected
+         *  @@param ToDo {Function}:   The function, it's param: the md5 and the file name
+         *  FROM    https://www.cnblogs.com/linyihai/p/7040786.html
+         *  THANK   https://www.cnblogs.com/fengxuehuanlin/
+         *  FROM    https://github.com/satazor/js-spark-md5
+         *  THANK   https://github.com/satazor/js-spark-md5/commits?author=satazor
+         */
+        function calcFileMD58Upload(_File, FileName = "", ToDo = ContrastMD58Upload) {
+            var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
+                chunkSize = 2097152 * 10, // Read in chunks of 2MB
+                chunks = Math.ceil(_File.size / chunkSize),
+                currentChunk = 0,
+                fileReader = new FileReader(),
+                spark = new SparkMD5.ArrayBuffer();
+            fileReader.onload = function (e) {
+                spark.append(e.target.result);
+                currentChunk++;
+                if (currentChunk < chunks) {
+                    loadNext();
+                } else {
+                    ToDo(String(spark.end()), FileName)
+                }
+            };
+            function loadNext() {
+                var start = currentChunk * chunkSize,
+                    end = ((start + chunkSize) >= _File.size) ? _File.size : start + chunkSize;
+                fileReader.readAsArrayBuffer(blobSlice.call(_File, start, end));
+            }
+            loadNext();
+        }
+
+        function ContrastMD58Upload(MD5 = "", FileName = "") {
+
+        }
+
+    </script>
+}
+
+@section Styles{
+    <style>
+    </style>
+}
+
+@*
+
+
+        var FileNameArray = new Array();
+        $("#UploadA").on("click", function () {
+            $("form>div>input[type='file']").each(function (index, element) {
+                calcFileMD58Upload(this.files[0], $(element).val());
+            });
+            event.preventDefault();
+        });
+
+        $("#SelectFileDIV").on("click", function () {
+            $("<input type='file' hidden/>").insertBefore("#SelectFileDIV");
+            $("input[type='file']:last").click();
+        });
+
+        $("form>div").delegate("input[type='file']:last", "change", function () {
+            var FileName = $("input[type='file']:last").val();
+            if (!IsFileSelected(FileName)) {
+                $("<h6 style='margin-top:20px'>" + FileName + "</h6>\
+                    <div class='progress col col-5' style='height:8px'>\
+                        <div class='progress-bar' role='progressbar' style='width: 0%' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'></div>\
+                    </div>\
+                    ").insertAfter("#FileInfoDIV>div:last");
+                FileNameArray.push( FileName);
+            } else {
+                $("input[type='file']:last").remove();
+            }
+        });
+        function IsFileSelected(FileName) {
+            return FileNameArray.some(function (value) {
+                return value == FileName;
+            });
+        }
+
+
+    id='H6_" + FileName.replace(/\s/g, "_") + "'
+
+                var H6Id = GetKeyInFileName8IdArray($(element).val());
+                console.log("++>" + H6Id);
+                $(' <h5>@Localizer["Reading..."]</h5>\
+                    <div class= "progress">\
+                        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>\
+                    </div>\
+                        ').insertAfter("#" + H6Id + "");
+
+                <div class="col-md-10">
+                    <input type="file" name="files" multiple />
+                </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="submit" value="Upload" />
+                </div>
+            </div>
+
+    <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileId" class="control-label"></label>
+                <input asp-for="FileId" class="form-control" />
+                <span asp-validation-for="FileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DOGeneration" class="control-label"></label>
+                <input asp-for="DOGeneration" class="form-control" />
+                <span asp-validation-for="DOGeneration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InTagId" class="control-label"></label>
+                <input asp-for="InTagId" class="form-control" />
+                <span asp-validation-for="InTagId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+*@

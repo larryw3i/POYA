@@ -13,7 +13,6 @@ using Microsoft.Extensions.Localization;
 using POYA.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using POYA.Unities.Helpers; 
-
 namespace POYA.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
@@ -28,7 +27,6 @@ namespace POYA.Areas.Identity.Pages.Account
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ExternalLoginModel> _logger;
-
         public LoginWith2faModel(
             ILogger<ExternalLoginModel> logger,
             SignInManager<IdentityUser> signInManager,
@@ -50,15 +48,10 @@ namespace POYA.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
         }
-
-
         [BindProperty]
         public InputModel Input { get; set; }
-
         public bool RememberMe { get; set; }
-
         public string ReturnUrl { get; set; }
-
         public class InputModel
         {
             [Required]
@@ -66,46 +59,35 @@ namespace POYA.Areas.Identity.Pages.Account
             [DataType(DataType.Text)]
             [Display(Name = "Authenticator code")]
             public string TwoFactorCode { get; set; }
-
             [Display(Name = "Remember this machine")]
             public bool RememberMachine { get; set; }
         }
-
         public async Task<IActionResult> OnGetAsync(bool rememberMe, string returnUrl = null)
         {
             // Ensure the user has gone through the username & password screen first
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-
             if (user == null)
             {
                 throw new InvalidOperationException($"Unable to load two-factor authentication user.");
             }
-
             ReturnUrl = returnUrl;
             RememberMe = rememberMe;
-
             return Page();
         }
-
         public async Task<IActionResult> OnPostAsync(bool rememberMe, string returnUrl = null)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
             returnUrl = returnUrl ?? Url.Content("~/");
-
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
                 throw new InvalidOperationException($"Unable to load two-factor authentication user.");
             }
-
             var authenticatorCode = Input.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
-
             var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, Input.RememberMachine);
-
             if (result.Succeeded)
             {
                 _logger.LogInformation("User with ID '{UserId}' logged in with 2fa.", user.Id);

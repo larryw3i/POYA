@@ -12,7 +12,6 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using POYA.Data;
 using POYA.Unities.Helpers;
-
 namespace POYA.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
@@ -27,7 +26,6 @@ namespace POYA.Areas.Identity.Pages.Account
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ExternalLoginModel> _logger;
-
         public LogoutModel(
             ILogger<ExternalLoginModel> logger,
             SignInManager<IdentityUser> signInManager,
@@ -52,7 +50,6 @@ namespace POYA.Areas.Identity.Pages.Account
         public void OnGet()
         {
         }
-
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();

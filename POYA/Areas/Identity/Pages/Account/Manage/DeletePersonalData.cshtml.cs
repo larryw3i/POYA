@@ -10,7 +10,6 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using POYA.Data;
 using POYA.Unities.Helpers;
-
 namespace POYA.Areas.Identity.Pages.Account.Manage
 {
     public class DeletePersonalDataModel : PageModel
@@ -25,7 +24,6 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ExternalLoginModel> _logger;
-
         public DeletePersonalDataModel(
             ILogger<ExternalLoginModel> logger,
             SignInManager<IdentityUser> signInManager,
@@ -48,10 +46,8 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             _logger = logger;
         }
         #endregion
-
         [BindProperty]
         public InputModel Input { get; set; }
-
         public class InputModel
         {
             [Required]
@@ -59,9 +55,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             [Display(Name ="Password")]
             public string Password { get; set; }
         }
-
         public bool RequirePassword { get; set; }
-
         public async Task<IActionResult> OnGet()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -69,11 +63,9 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"{_localizer[ "Unable to load user with ID"]} '{_userManager.GetUserId(User)}'");
             }
-
             RequirePassword = await _userManager.HasPasswordAsync(user);
             return Page();
         }
-
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -81,7 +73,6 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"{_localizer[ "Unable to load user with ID "]}'{_userManager.GetUserId(User)}'");
             }
-
             RequirePassword = await _userManager.HasPasswordAsync(user);
             if (RequirePassword)
             {
@@ -91,18 +82,14 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
                     return Page();
                 }
             }
-
             var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
             {
                 throw new InvalidOperationException($"{_localizer[ "Unexpected error occurred deleteing user with ID"]} '{userId}'");
             }
-
             await _signInManager.SignOutAsync();
-
             _logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
-
             return Redirect("~/");
         }
     }

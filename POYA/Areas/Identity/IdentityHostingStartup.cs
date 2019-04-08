@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using POYA.Data;
-
 [assembly: HostingStartup(typeof(POYA.Areas.Identity.IdentityHostingStartup))]
 namespace POYA.Areas.Identity
 {

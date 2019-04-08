@@ -1,5 +1,4 @@
-﻿
-function MakePopper(MainElementString, PopperElementString) {
+﻿function MakePopper(MainElementString, PopperElementString) {
     var MainElement = $("#" + MainElementString);
     var PopperElement = $("#" + PopperElementString);
     MainElement.on("click", function () {
@@ -12,12 +11,10 @@ function MakePopper(MainElementString, PopperElementString) {
             if ((MainElement.offset().left + PopperElement.width) > $(document).width) {
                 PopperElement.offset().left = MainElement.offset().left - PopperElement.width;
             }
-
             PopperElement.show();
         } else {
             PopperElement.hide();
         }
     });
-
 }
  

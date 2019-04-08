@@ -22,7 +22,6 @@ using POYA.Unities.Services;
 using Microsoft.AspNetCore.Diagnostics;
 using Ganss.XSS;
 using Microsoft.AspNetCore.Identity.UI;
-
 namespace POYA
 {
     public class Startup
@@ -33,9 +32,7 @@ namespace POYA
             IConfiguration configuration)
         {
             Configuration = configuration;
-
         }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -45,7 +42,6 @@ namespace POYA
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -53,12 +49,10 @@ namespace POYA
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             */
-
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
             services.Configure<IdentityOptions>(
                 options =>
                 {
@@ -70,29 +64,22 @@ namespace POYA
                     options.Password.RequireUppercase = true;
                     options.Password.RequiredLength = 8;
                     options.Password.RequiredUniqueChars = 1;
-
                     // Lockout settings.
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                     options.Lockout.MaxFailedAccessAttempts = 5;
                     options.Lockout.AllowedForNewUsers = true;
-
                     options.User.AllowedUserNameCharacters = null;
-
-
                     options.User.RequireUniqueEmail = true;
                 });
-
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(18);
-
                 options.LoginPath = "/Identity/Account/Login";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
-
             services.AddMvc()
                 .AddDataAnnotationsLocalization(options =>
                 {
@@ -101,10 +88,7 @@ namespace POYA
                 })
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-
             services.Configure<RequestLocalizationOptions>(opts =>
             {
                 var supportedCultures = new List<CultureInfo>
@@ -119,7 +103,6 @@ namespace POYA
                       new   X_DOVERequestCultureProvider()
                   };
             });
-
             #region
             /*
             services.Configure<FormOptions>(options =>
@@ -128,29 +111,20 @@ namespace POYA
             });
             */
             #endregion
-
             // using Microsoft.AspNetCore.Identity.UI.Services;
             services.AddSingleton<IEmailSender, EmailSender>();
-
             services.AddSingleton<HtmlSanitizer>(new HtmlSanitizer());
-
             services.AddSingleton<X_DOVEHelper>(x_DOVEHelper);
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
             services.AddSession();
-
-
             //  services.Configure<HtmlSanitizer>(opts => {  });
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)     //  , IServiceProvider serviceProvider
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
                 app.UseDatabaseErrorPage();
                 //  app.UseExceptionHandler(builder => builder.Run(async context => await x_DOVEHelper.ErrorEventAsync(context, env)));
             }
@@ -161,16 +135,12 @@ namespace POYA
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
             app.UseAuthentication();
-
             app.UseRequestLocalization();
             app.UseSession();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -182,7 +152,5 @@ namespace POYA
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
-
     }
-
 }

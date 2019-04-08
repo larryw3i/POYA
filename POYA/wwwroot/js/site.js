@@ -1,12 +1,8 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
-
 // Write your JavaScript code.
-
 $("table tbody tr td a,table thead tr th").css({ "word-break": "break-all", "word-wrap": "break-word" });
-
 $(document).ready(function () {
-
     var _CULTURE = window.CULTURE;
     if (_CULTURE === undefined) {
         _CULTURE = Cookies.get("CULTURE");
@@ -23,10 +19,7 @@ $(document).ready(function () {
         }
         window.THEME = _THEME;
     }
-
-
     ChangeTheme(_THEME);
-
     $('#Language  option[value=' + _CULTURE + ']').attr("selected", true);
     $("#Language").on("change", function () {
         var _language = $('#Language  option:selected').val();
@@ -34,37 +27,30 @@ $(document).ready(function () {
         window.location.href = UpdateQueryString(window.location.href, "culture", _language);
     });
     $('#Theme  option[value=' + _THEME + ']').attr("selected", true);
-
     $("#Theme").on("change", function () {
         var _theme_ = $('#Theme  option:selected').val();
         ChangeTheme(_theme_);
         Cookies.set("THEME", _theme_, { expires: 365 });
     });
-
     window.cacheRefreshCode = Cookies.get("cacheRefreshCode");
     if (window.cacheRefreshCode === undefined) {
         window.cacheRefreshCode = Math.floor(Math.random() * 100 + 1);
         Cookies.set("cacheRefreshCode", window.cacheRefreshCode);
     }
     SetSrc();
-
     $(".table tbody tr td a").css({ "word-wrap": "word-wrap", "word-break": "break-all" });
 });
-
 function UpdateCacheData() {
-
     window.cacheRefreshCode = Math.floor(Math.random() * 100 + 1);
     Cookies.set("cacheRefreshCode", window.cacheRefreshCode);
     SetSrc();
 }
-
 function SetSrc() {
     var _UserAvatarImg = $(".nav-item .nav-link img");
     var _img_tag_ = $("#_UserAvatarForm img:first");
-    _imgUrl_ = "/X_doveFiles/GetAvatar?random=" + String(window.cacheRefreshCode);
+    _imgUrl_ = "/Home/GetAvatar?random=" + String(window.cacheRefreshCode);
     _UserAvatarImg.attr("src", _imgUrl_);
     _img_tag_.attr("src", _imgUrl_);
-
     _UserAvatarImg.on("error", function () {
         _UserAvatarImg.attr("src", "/img/chat_with_friends_ico.png");
         return true;
@@ -74,7 +60,7 @@ function SetSrc() {
         return true;
     });
 }
-function ChangeTheme(_theme_) {
+function ChangeTheme(_theme_="Light") {
     switch (_theme_) {
         case "Dark":
             $("#_body,footer").css({ "background-color": "black", "color": "#C7EDCC" });
@@ -99,7 +85,6 @@ function ChangeTheme(_theme_) {
             break;
     }
 }
-
 /*
  * FROM     https://stackoverflow.com/questions/5999118/how-can-i-add-or-update-a-query-string-parameter
  * THANK    https://stackoverflow.com/users/184/niyaz
@@ -107,14 +92,11 @@ function ChangeTheme(_theme_) {
  * @param {any} key
  * @param {any} value
  */
-function UpdateQueryString(uri, key, value) {
+function UpdateQueryString(uri = String(window.location.href), key="", value="") {
     var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-    uri = String(uri);
     var separator = uri.indexOf('?') !== -1 ? "&" : "?";
     if (uri.match(re)) {
         return uri.replace(re, '$1' + key + "=" + value + '$2');
     }
     return uri + separator + key + "=" + value;
-
 }
-

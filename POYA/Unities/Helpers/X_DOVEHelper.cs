@@ -10,7 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
 namespace POYA.Unities.Helpers
 {
     public class X_DOVEHelper
@@ -19,12 +18,10 @@ namespace POYA.Unities.Helpers
         {
             var feature = context.Features.Get<IExceptionHandlerFeature>();
             var error = feature?.Error;
-
             var file = File.OpenText(env.ContentRootPath+"/appsettings.json");
             var reader = new JsonTextReader(file);
             var jsonObject = (JObject)JToken.ReadFrom(reader);
             file.Close();
-
             var MarkLineReg = new Regex("(:line\\s?\\d+)");
             var _stackTrace = error.StackTrace; 
             var MarkLineMatchs = MarkLineReg.Matches(_stackTrace); 
@@ -32,7 +29,6 @@ namespace POYA.Unities.Helpers
             {
                 _stackTrace= _stackTrace.Replace(oldValue:i.ToString(),newValue: $"<span style='color:red'><strong>{i}</strong></span>"); 
             }
-
             await new EmailSender(env).SendEmailAsync(
                 email: (string)jsonObject[nameof(X_DOVEHelper)]["email"],
                 subject: "X_DOVE_ERROR",
@@ -75,7 +71,6 @@ namespace POYA.Unities.Helpers
                     </table>"
             #endregion
                 );
-
             #region
             /*
              * * LogHelper.Write("Global\\Error", error.Message, error.StackTrace);
@@ -88,6 +83,5 @@ namespace POYA.Unities.Helpers
              */
             #endregion
         }
-
     }
 }

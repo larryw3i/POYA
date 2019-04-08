@@ -6,11 +6,9 @@
     var X_doveUserInfo = ViewData["X_doveUserInfo"] as X_doveUserInfo;  //  = await _context.X_DoveUserInfos.Select(p => new X_doveUserInfo
     ViewData["Title"] =_User.UserName+"'s "+Localizer[ "Information"];
 }
-
-
 <div class="row">
     <div class="col col-3 col-sm-4 col-md-3">
-        <img style="max-height:100px;max-width:100px;border-radius:50%;border:solid;border-color:#EE7AE9;box-shadow: 2px 2px 8px #EE7AE9;" src="/X_doveFiles/GetAvatar?UserId=@(_User.Id)" />
+        <img style="max-height:100px;max-width:100px;border-radius:50%;border:solid;border-color:#EE7AE9;box-shadow: 2px 2px 8px #EE7AE9;" src="/Home/GetAvatar?UserId=@(_User.Id)" />
         <ul>
             @if (X_doveUserInfo.IsAddressOvert)
             {
