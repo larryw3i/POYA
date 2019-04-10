@@ -22,6 +22,8 @@ using POYA.Unities.Services;
 using Microsoft.AspNetCore.Diagnostics;
 using Ganss.XSS;
 using Microsoft.AspNetCore.Identity.UI;
+using Newtonsoft.Json.Serialization;
+
 namespace POYA
 {
     public class Startup
@@ -81,6 +83,7 @@ namespace POYA
                 options.SlidingExpiration = true;
             });
             services.AddMvc()
+                .AddJsonOptions(options => { options.SerializerSettings.ContractResolver = new DefaultContractResolver(); })
                 .AddDataAnnotationsLocalization(options =>
                 {
                     options.DataAnnotationLocalizerProvider = (type, factory) =>
