@@ -29,5 +29,4 @@ it is like:
 *Open your **Visual Studio**  
 *Find your **SQL Server Object Explorer** and open it    
 *You'll find it after you right click your database and click **Properties**  
-**[VIEW MORE](链接网址 "VIEW MORE")**
  
