@@ -38,7 +38,6 @@
     <Compile Remove="Controllers\X_doveDirectoriesController.cs" />
     <Compile Remove="Controllers\X_doveFilesController.cs" />
     <Compile Remove="Models\LDirViewModel.cs" />
-    <Compile Remove="Models\LFileViewModel.cs" />
     <Compile Remove="Models\SharedFDViewModel.cs" />
     <Compile Remove="Models\ShareFoDViewModel.cs" />
     <Compile Remove="Models\X_DoveDirectoryViewModel.cs" />
