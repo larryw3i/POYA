@@ -1,0 +1,236 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model UploadFile
+@{
+
+    ViewData["Title"] = "UploadFile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-12" id="UploadDIV">
+    <div class="row">
+        <div id="SelectTriggerDIV" class="col col-7 col-lg-8">
+            <strong>@Localizer["Select you file to upload"]</strong>
+        </div>
+        <div id="UploadFileTriggerDIV" class="col offset-1 col-2 col-sm-2 col-md-2 col-lg-1">
+            &radic;
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/lib/js-spark-md5/spark-md5.min.js"></script>
+    <script>
+        var Token = "@(Model.Token)";
+        var InDirId = "@Model.InDirId";
+        var _Strings =new Strings();
+        var _HandleUI =new HandleUI();
+        var _HandleData = new HandleData();
+        var MD5Array = new Array();
+        var FileInfo = (Id = $.guid++) => '\
+            <div id="'+ Id + '" name="' + _Strings.FileDIV +'">\
+                <h6>\
+                    <span name="'+ _Strings.FileNameDIV + '"></span>\
+                    <span name="'+ _Strings.ShowProgressDIV +'"></span>\
+                    <span name="'+ _Strings.RemoveItemDIV + '" onclick="_HandleUI.RemoveDIV(' + Id + ')"><strong>&times;</strong></span>\
+                </h6>\
+                <input type="file" id="'+ _Strings.FileInputId(Id) + '" onchange="_HandleUI.ShowFileName(' + Id +')" hidden/>\
+            </div>\
+        ';
+
+        $(document).ready(function () {
+            $("#SelectTriggerDIV").on("click", function () {
+                var IsLastInputFileSelected = $("div[name='FileDIV']:last input").val() != "";
+                if (IsLastInputFileSelected) {
+                    $("#UploadDIV").append(FileInfo());
+                    $("div[name='FileDIV']:last input").click();
+                } else {
+                    $("div[name='FileDIV']:last input").click();
+                }
+                $("div[name='FileDIV']:last").hide();
+            });
+
+            $("#UploadFileTriggerDIV").on("click", function () {
+                _HandleData.ContrastMD58GenerateCopy();
+                _HandleData.UploadFile();
+            });
+        });
+
+        function Strings() {
+            this.RemoveItemDIV = "RemoveItemDIV";
+            this.ShowProgressDIV = "ShowProgressDIV";
+            this.FileNameDIV = "FileNameDIV";
+            this.FileDIV = "FileDIV";
+            this.FileInputId = (Id) => "FileInput_" + Id;
+        }
+
+        function HandleUI() {
+            /**
+             * Show the name of file in FileNameDIV
+             * Get MD5 and add it to array here
+             * @@param Id {number} The id of FileDIV
+             */
+            this.ShowFileName = (Id) => {
+                $("#" + Id + " [name='" + _Strings.FileNameDIV + "']")
+                    .text($("#" + Id + " input").val());
+                $("div[name='FileDIV']:last").show();
+                _HandleData.GetMD58AddToArray(Id);
+            };
+            /**
+             * Update the progress
+             * @@param Id{number} the Id of FileDIV
+             * @@param Progress_ {number} The value of progress
+             */
+            this.UploadProgress = (Id, Progress_) => {
+                $("#" + Id + " [name='" + _Strings.ShowProgressDIV + "']").text(Progress_);
+            };
+            /**
+             * Remove input specified id
+             * @@param Id {number} The id of div
+             */
+            this.RemoveDIV = (Id) => {
+                $("#" + Id).remove();
+                MD5Array.forEach(function (value, index, array) {
+                    if (value["Id"] == Id) {
+                        array.splice(index, 1);
+                    }
+                });
+                console.log(MD5Array);
+            };
+
+        }
+
+        function HandleData() {
+            /**
+             * Get md5 of file and add it to array
+             * REFERENCE    https://blog.csdn.net/liguoqingxjxcc/article/details/81664245
+             * THRNK        https://blog.csdn.net/liguoqingxjxcc
+             * @@param Id{number} The id of file
+             */
+            this.GetMD58AddToArray = (Id) => {
+                var File_ = document.getElementById(_Strings.FileInputId(Id)).files[0];
+                var BlobSlice_ = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
+                    ChunkSize = 20*1024*1024,
+                    Chunks = Math.ceil(File_.size / ChunkSize),
+                    CurrentChunk = 0,
+                    Spark_ = new SparkMD5.ArrayBuffer(),
+                    FileReader_ = new FileReader();
+
+                FileReader_.onload = function (e) {
+                    Spark_.append(e.target.result);
+                    CurrentChunk++;
+                    if (CurrentChunk < Chunks) {
+                        loadNext();
+                    } else {
+                        MD5Array.push({ Id: Id, MD5: Spark_.end() });
+                        console.log(MD5Array);
+                    }
+                };
+
+                FileReader_.onerror = function () {
+                    console.warn('oops, something went wrong');
+                };
+
+                function loadNext() {
+                    var Start = CurrentChunk * ChunkSize,
+                        End = ((Start + ChunkSize) >= File_.size) ? File_.size : Start + ChunkSize;
+                    FileReader_.readAsArrayBuffer(BlobSlice_.call(File_, Start, End));
+                }
+                loadNext();
+            }
+            /**
+             * Send MD5 array and contrast it in server-slide, generate copy for usr if file was has been uploaded and update progress from callback 
+             */
+            this.ContrastMD58GenerateCopy = () => {
+                var FileMD5s_ = new Array();
+                MD5Array.forEach(function (value, index, array) {
+                    var FileName_ = document.getElementById(_Strings.FileInputId(value["Id"])).files[0].name;
+                    FileMD5s_.push({
+                        FileName: FileName_, MD5: value["MD5"], IsUploaded: false
+                    });
+                });
+                $.ajax({
+                    url: "@Url.Action("ContrastMD5")",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        ContrastMD5_: {
+                            Token: Token, FileMD5s_: FileMD5s_, InDirId: InDirId
+                        }
+                    },
+                    /**
+                     * @@param UploadedFileMD5s {Array<string>} The MD5 array of file has been upload,
+                     * test it after file upload api is finish, some input will be removed here
+                     */
+                    success: function (UploadedFileMD5s) {
+                    },
+                    error: function () {
+
+                    }
+                });
+            };
+            /**
+             * Upload other files and update progress
+             */
+            this.UploadFile = () => {
+                // HERE
+            };
+        }
+
+    </script>
+}
+
+@section styles  {
+    <style>
+        #UploadDIV {
+        }
+
+        #UploadFileTriggerDIV {
+            border: solid;
+            border-color:brown;
+            padding:10px;
+            border-radius: 9px 9px;
+            font-size: 120%;
+            color:blueviolet;
+            text-align: center;
+            word-wrap:break-word;
+        }
+
+            #UploadFileTriggerDIV:active {
+                background-color:cornflowerblue;
+            }
+
+            #UploadFileTriggerDIV:hover {
+                color:blue;
+            }
+
+        #SelectTriggerDIV {
+            border: solid;
+            border-color: coral;
+            padding:10px;
+            border-radius: 9px 9px;
+            font-size: 160%;
+            color: darkmagenta;
+            text-align: center;
+        }
+
+            #SelectTriggerDIV:hover {
+                background-color: bisque;
+            }
+
+            #SelectTriggerDIV:active {
+                background-color: burlywood;
+            }
+
+        [name='RemoveItemDIV'] {
+            font-size: 120%;
+        }
+
+            [name='RemoveItemDIV']:hover {
+                color: red;
+            }
+    </style>
+}

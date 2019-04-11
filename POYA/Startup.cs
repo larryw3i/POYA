@@ -47,10 +47,12 @@ namespace POYA
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
+            #region
             /*
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             */
+            #endregion
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -92,7 +94,7 @@ namespace POYA
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.Configure<RequestLocalizationOptions>(opts =>
+            services.Configure<RequestLocalizationOptions>( opts =>
             {
                 var supportedCultures = new List<CultureInfo>
                 {
@@ -120,7 +122,13 @@ namespace POYA
             services.AddSingleton<X_DOVEHelper>(x_DOVEHelper);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSession();
+            #region
             //  services.Configure<HtmlSanitizer>(opts => {  });
+            #endregion
+            services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = FormOptions.DefaultMultipartBodyLengthLimit;
+            });
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)     //  , IServiceProvider serviceProvider
