@@ -3,6 +3,7 @@
 /bin/
 /obj/
 /Migrations/
+/Data/LFiles/
 # Files
 /appsettings.json
 /app.db
