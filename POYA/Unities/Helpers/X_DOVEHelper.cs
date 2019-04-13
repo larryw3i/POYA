@@ -1,13 +1,20 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using POYA.Unities.Services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 namespace POYA.Unities.Helpers
@@ -18,16 +25,16 @@ namespace POYA.Unities.Helpers
         {
             var feature = context.Features.Get<IExceptionHandlerFeature>();
             var error = feature?.Error;
-            var file = File.OpenText(env.ContentRootPath+"/appsettings.json");
+            var file = File.OpenText(env.ContentRootPath + "/appsettings.json");
             var reader = new JsonTextReader(file);
             var jsonObject = (JObject)JToken.ReadFrom(reader);
             file.Close();
             var MarkLineReg = new Regex("(:line\\s?\\d+)");
-            var _stackTrace = error.StackTrace; 
-            var MarkLineMatchs = MarkLineReg.Matches(_stackTrace); 
-            foreach(var i in MarkLineMatchs)
+            var _stackTrace = error.StackTrace;
+            var MarkLineMatchs = MarkLineReg.Matches(_stackTrace);
+            foreach (var i in MarkLineMatchs)
             {
-                _stackTrace= _stackTrace.Replace(oldValue:i.ToString(),newValue: $"<span style='color:red'><strong>{i}</strong></span>"); 
+                _stackTrace = _stackTrace.Replace(oldValue: i.ToString(), newValue: $"<span style='color:red'><strong>{i}</strong></span>");
             }
             await new EmailSender(env).SendEmailAsync(
                 email: (string)jsonObject[nameof(X_DOVEHelper)]["email"],
@@ -83,5 +90,18 @@ namespace POYA.Unities.Helpers
              */
             #endregion
         }
+        public string GetFileMD5(byte[] FileBytes)
+        {
+            var Md5_ = MD5.Create();
+            var MD5Bytes = Md5_.ComputeHash(FileBytes);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < MD5Bytes.Length; i++)
+            {
+                sb.Append(MD5Bytes[i].ToString("x2"));
+            }
+            return sb.ToString();
+        }
+
     }
+
 }

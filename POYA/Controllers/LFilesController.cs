@@ -51,7 +51,6 @@ namespace POYA.Controllers
             _signInManager = signInManager;
         }
         #endregion
-
         // GET: LFiles
         public async Task<IActionResult> Index()
         {

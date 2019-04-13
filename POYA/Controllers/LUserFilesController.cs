@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using POYA.Data;
 using POYA.Models;
 using POYA.Unities.Helpers;
@@ -51,6 +54,7 @@ namespace POYA.Controllers
             _signInManager = signInManager;
         }
         #endregion
+
         // GET: LUserFiles
         public async Task<IActionResult> Index()
         {
@@ -76,8 +80,9 @@ namespace POYA.Controllers
         }
 
         // GET: LUserFiles/Create
-        public IActionResult Create()
+        public IActionResult Create(Guid? InDirId)
         {
+            ViewData[nameof(InDirId)] = InDirId ?? Guid.Empty;
             return View();
         }
 
@@ -85,9 +90,41 @@ namespace POYA.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,MD5,UserId,SharedCode,DOGenerating,FileName")] LUserFile lUserFile)
+        //  [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([FromForm]LFilePost  LFilePost_)
+        //[Bind("Id,MD5,UserId,SharedCode,DOGenerating,Name,InDirId")] LUserFile lUserFile)
         {
+            if (LFilePost_.LFile_.Length > 0)
+            {
+
+                var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+                var MemoryStream_ = new MemoryStream();
+                await LFilePost_.LFile_.CopyToAsync(MemoryStream_);
+                var FileBytes = MemoryStream_.ToArray();
+                var MD5_ = _x_DOVEHelper.GetFileMD5(FileBytes);
+                var FilePath = _hostingEnv.ContentRootPath + $"/Data/LFiles/{MD5_}";
+                //  System.IO.File.Create(FilePath);
+                await System.IO.File.WriteAllBytesAsync(FilePath, FileBytes);
+                await _context.LFile.AddAsync(new Models.LFile
+                {
+                    MD5 = MD5_,
+                    UserId = UserId_
+                });
+                await _context.LUserFile.AddAsync(new LUserFile
+                {
+                    UserId = UserId_,
+                    MD5 = MD5_,
+                    InDirId = LFilePost_.InDirId,
+                    Name = LFilePost_.LFile_.FileName
+                });
+                await _context.SaveChangesAsync();
+            }
+            // process uploaded files
+            // Don't rely on or trust the FileName property without validation.
+
+            return Ok();
+            #region
+            /*
             if (ModelState.IsValid)
             {
                 lUserFile.Id = Guid.NewGuid();
@@ -95,7 +132,29 @@ namespace POYA.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(lUserFile);
+            */
+            //      return Ok();     //   View(lUserFile);
+            #endregion
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ContrastMD5(ContrastMD5 ContrastMD5_)
+        {
+            System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject( ContrastMD5_));
+            var ContrastResult = new List<int>();
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            foreach (var i in ContrastMD5_.File8MD5s)
+            {
+                if(await _context.LFile.AnyAsync(p => p.MD5 ==i.MD5))
+                {
+                    await _context.LUserFile.AddAsync(
+                        new LUserFile {  InDirId=ContrastMD5_.InDirId, MD5=i.MD5, Name=i.FileName, UserId=UserId_}
+                        );
+                    ContrastResult.Add(i.Id);
+                }
+                await _context.SaveChangesAsync();
+            }
+            return Json(ContrastResult);
         }
 
         // GET: LUserFiles/Edit/5
@@ -119,7 +178,7 @@ namespace POYA.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,MD5,UserId,SharedCode,DOGenerating,FileName")] LUserFile lUserFile)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,MD5,UserId,SharedCode,DOGenerating,Name,InDirId")] LUserFile lUserFile)
         {
             if (id != lUserFile.Id)
             {
@@ -176,36 +235,6 @@ namespace POYA.Controllers
             _context.LUserFile.Remove(lUserFile);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult UploadFile(Guid? InDirId)
-        {
-            return View(new UploadFile { InDirId = InDirId ??Guid.Empty, Token = Guid.NewGuid() });
-        }
-
-        [HttpPost]
-        public IActionResult UploadFile()
-        {
-            return Json(new { });
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> ContrastMD5(ContrastMD5 ContrastMD5_)
-        {
-            var UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var UploadedFileMD5s = new List<string>();
-            foreach(var i in ContrastMD5_.FileMD5s_)
-            {
-                if(await _context.LFile.AnyAsync(p => p.MD5 == i.MD5))
-                {
-                    await _context.LUserFile.AddAsync(
-                        new LUserFile {   UserId=UserId, Name=i.FileName, InDirId=ContrastMD5_.InDirId}
-                        );
-                    UploadedFileMD5s.Add(i.MD5);
-                }
-            }
-            await _context.SaveChangesAsync();
-            return Json(UploadedFileMD5s);
         }
 
         private bool LUserFileExists(Guid id)

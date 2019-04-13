@@ -10,45 +10,248 @@
 <h4>LUserFile</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="MD5" class="control-label"></label>
-                <input asp-for="MD5" class="form-control" />
-                <span asp-validation-for="MD5" class="text-danger"></span>
+    <div class="col-md-5">
+        <div class="form-group">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <a id="BackA" class="btn btn-outline-info"><< @Localizer["Back"]</a>
+                </div>
+                <input type="text" id="SelectFileInput" class="form-control" placeholder="@Localizer["Select file"]" aria-label="@Localizer["Select file"]">
+                <div class="input-group-append">
+                    <a id="SelectFileA" class="btn btn-outline-info">@Localizer["Select file"]</a>
+                    <a id="UploadA" class="btn btn-outline-info">@Localizer["Upload"]</a>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SharedCode" class="control-label"></label>
-                <input asp-for="SharedCode" class="form-control" />
-                <span asp-validation-for="SharedCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DOGenerating" class="control-label"></label>
-                <input asp-for="DOGenerating" class="form-control" />
-                <span asp-validation-for="DOGenerating" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/js-spark-md5/spark-md5.min.js"></script>
+    <script>
+        var _Strings = new Strings();
+        var _HandleData = new HandleData();
+        var _UpdateUI = new UpdateUI();
+        var MD5Array = new Array();
+        var InDirId="@ViewData["InDirId"]"
+
+        var FileInfo = (Id = $.guid++) => '\
+                                <div class="rounded-circle" id='+ Id + '>\
+                                    <input id="'+ _Strings.FileInput(Id) + '" name="FileInput" type="file" onchange="_HandleData.GetMD58AddToArray(' + Id + ')" hidden/>\
+                                    <span>\
+                                        <span id="'+ _Strings.RemoveDIV(Id) + '" onclick="_UpdateUI.RemoveDIV(' + Id + ')">&times</span>\
+                                        <span id="'+ _Strings.UploadProgress(Id) + '"></span>\
+                                        <span id="'+ _Strings.FileName(Id) + '" name="FileName"></span>\
+                                    </span>\
+                                </div>\
+                            ';
+
+        $(document).ready(function () {
+            $("#SelectFileInput,#SelectFileA").on("click", function () {
+                _UpdateUI.SelectFile();
+                event.preventDefault();
+            });
+            $("#BackA").on("click", function () {
+                window.history.go(-1);
+                event.preventDefault();
+            });
+            $("#UploadA").on("click", function () {
+                if ($("[name='FileInput']").length < 1) return;
+                _HandleData.ContrastMD5InServerSide();
+                event.preventDefault();
+            });
+        });
+
+        function UpdateUI() {
+            this.ShoeLastFileInfo = (Id = $.guid++) => {
+                $("#" + _Strings.FileName(Id)).text($("input[name='FileInput']:last").val());
+                $("#" + Id).show();
+
+            };
+            this.SelectFile = () => {
+                if ($("input[name='FileInput']:last").val() == "") {
+                    $("input[name='FileInput']:last").click();
+                } else {
+                    $(".form-group").append(FileInfo());
+                    $(".form-group>div:last").hide();
+                    $("input[name='FileInput']:last").click();
+                }
+            };
+            this.RemoveDIV = (Id = $.guid++) => {
+                _HandleData.RemoveItemInMD5Array(Id);
+                $("#" + Id).remove();
+            };
+        }
+
+        function HandleData() {
+            this.UploadFile = () => {
+                $("[name='FileInput']").each(function (index, element) {
+                    var Id_ = String(this.id).split("_")[1];
+                    var File_ = document.getElementById(this.id).files[0];
+                    var FormData_ = new FormData();
+                    FormData_.append("LFile_", File_, File_.name);
+                    FormData_.append("InDirId", InDirId);
+                    $.ajax({
+                        url: "@(Url.Action("Create"))",
+                        type:"POST",
+                        data:FormData_,
+                        processData: false, 
+                        contentType:false, 
+                        /**
+                         * REFERENCE    https://www.jianshu.com/p/eb119affdc25
+                         * THANK        https://www.jianshu.com/u/9ca9c65ce397
+                         */
+                        xhr: function() {       
+                            var xhr = $.ajaxSettings.xhr();
+                            if (xhr.upload) {
+                                xhr.upload.addEventListener("progress", function (e) {
+                                    var loaded = e.loaded; 
+                                    var tot = e.total; 
+                                    var per = Math.floor(100 * loaded / tot);
+                                    $("#" + _Strings.UploadProgress(Id_)).text(per + "%");
+                                }, false);
+                                return xhr;
+                            }
+                        },
+                        success: function () {
+                                    $("#" + _Strings.UploadProgress(this.id)).text("&#10003;");
+                        }
+                    });
+                });
+            };
+            this.ContrastMD5InServerSide = () => {
+                var File8MD5s = new Array();
+                MD5Array.forEach(function (value, index, array) {
+                    var Id_ = value["Id"];
+                    var FileName_ = document.getElementById(_Strings.FileInput(Id_)).files[0].name;
+                    File8MD5s.push({ Id: Id_, FileName: FileName_, MD5: value["MD5"] });
+                });
+                console.log(File8MD5s);
+                $.ajax({
+                    url: "@(Url.Action("ContrastMD5"))",
+                    type: "POST",
+                    data: {
+                        ContrastMD5_: {
+                            InDirId: InDirId, File8MD5s: File8MD5s
+                        }
+                    },
+                    dataType: "json",
+                    /**
+                     * Return the Id of uploaded file
+                     * @@param IdArray{Array<number>}
+                     */
+                    success: function (IdArray) {
+                        IdArray.forEach(function (value) {
+                            _UpdateUI.RemoveDIV(value);
+                        });
+                            console.log(">>>>>>");
+                            _HandleData.UploadFile();
+                    }
+                });
+            };
+            this.RemoveItemInMD5Array = (Id = $.guid++) => {
+                MD5Array.forEach(function (value, index, array) {
+                    console.log(value + ">>" + value["Id"] + ">>" + Id);
+                    if (value["Id"] == Id) {
+                        MD5Array.splice(index, 1);
+                    }
+                });
+                console.log(MD5Array);
+            };
+            /**
+            * Get md5 of file and add it to array
+            * REFERENCE    https://blog.csdn.net/liguoqingxjxcc/article/details/81664245
+            * THRNK        https://blog.csdn.net/liguoqingxjxcc
+            * @@param Id{number} The id of file
+            */
+            this.GetMD58AddToArray = (Id) => {
+                var File_ = document.getElementById(_Strings.FileInput(Id)).files[0];
+                var BlobSlice_ = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
+                    ChunkSize = 20 * 1024 * 1024,
+                    Chunks = Math.ceil(File_.size / ChunkSize),
+                    CurrentChunk = 0,
+                    Spark_ = new SparkMD5.ArrayBuffer(),
+                    FileReader_ = new FileReader();
+                FileReader_.onload = function (e) {
+                    Spark_.append(e.target.result);
+                    CurrentChunk++;
+                    if (CurrentChunk < Chunks) {
+                        loadNext();
+                    } else {
+                        var MD5 = String(Spark_.end());
+                        var IsSelected = false;
+                        MD5Array.forEach(function (value, index, array) {
+                            if (value["MD5"] == MD5) {
+                                IsSelected = true;
+                            }
+                        });
+                        if (IsSelected) {
+                            _UpdateUI.RemoveDIV(Id);
+                        } else {
+                            MD5Array.push({ Id: Id, MD5: MD5 });
+                            _UpdateUI.ShoeLastFileInfo(Id);
+                        }
+                    }
+                };
+                FileReader_.onerror = function () {
+                    console.warn('oops, something went wrong');
+                };
+                function loadNext() {
+                    var Start = CurrentChunk * ChunkSize,
+                        End = ((Start + ChunkSize) >= File_.size) ? File_.size : Start + ChunkSize;
+                    FileReader_.readAsArrayBuffer(BlobSlice_.call(File_, Start, End));
+                }
+                loadNext();
+            }
+        }
+
+        function Strings() {
+            this.FileName = (Id = $.guid++) => 'FileName_' + Id;
+            this.UploadProgress = (Id = $.guid++) => 'UploadProgress' + Id;
+            this.RemoveDIV = (Id = $.guid++) => "RemoveDIV" + Id;
+            this.FileInput = (Id = $.guid++) => "FileInput_" + Id;
+        }
+    </script>
 }
+
+@section Styles{
+    <style>
+    </style>
+}
+
+@*
+
+
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            </div>
+        </form>
+
+    <div class="form-group">
+        <label asp-for="UserId" class="control-label"></label>
+        <input asp-for="UserId" class="form-control" />
+        <span asp-validation-for="UserId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SharedCode" class="control-label"></label>
+        <input asp-for="SharedCode" class="form-control" />
+        <span asp-validation-for="SharedCode" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DOGenerating" class="control-label"></label>
+        <input asp-for="DOGenerating" class="form-control" />
+        <span asp-validation-for="DOGenerating" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="InDirId" class="control-label"></label>
+        <input asp-for="InDirId" class="form-control" />
+        <span asp-validation-for="InDirId" class="text-danger"></span>
+    </div>
+*@

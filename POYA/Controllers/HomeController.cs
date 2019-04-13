@@ -12,11 +12,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using POYA.Data;
 using POYA.Models;
+using POYA.Unities.Attributes;
 using POYA.Unities.Helpers;
 namespace POYA.Controllers
 {
@@ -67,10 +69,7 @@ namespace POYA.Controllers
         {
             return View();
         }
-        public IActionResult Test()
-        {
-            return View();
-        }
+
         public async Task<IActionResult> GetAvatar(string UserId="")
         {
             var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);

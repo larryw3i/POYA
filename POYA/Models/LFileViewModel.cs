@@ -9,9 +9,6 @@ namespace POYA.Models
     public class LUserFile  //  ViewModel
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        /// <summary>
-        /// The MD5 string, it equal the file name in specified directory, and set to null after finishing slice file upload 
-        /// </summary>
         public string MD5 { get; set; } = string.Empty;
         public string UserId { get; set; }
         /// <summary>
@@ -42,33 +39,23 @@ namespace POYA.Models
         /// </summary>
         public string MD5 { get; set; }
     }
-    public class UploadFile //  ViewModel
-    {
-        public Guid InDirId { get; set; } = Guid.Empty;
-        public Guid Token { get; set; } = Guid.NewGuid();
-        public IFormFile LFormFile { get; set; }
-        /// <summary>
-        /// The MD5 of whole file, it'll be calculated if IsLast is true again
-        /// </summary>
-        public string MD5 { get; set; }
-        public bool IsLast { get; set; }
-        /// <summary>
-        /// For updating the upload progress
-        /// </summary>
-        public int Progress { get; set; }
-    }
-
-    public class FileMD5
-    {
-        public string FileName { get; set; }
-        public string MD5 { get; set; }
-        public bool IsUploaded { get; set; } = false;
-    }
 
     public class ContrastMD5
     {
-        public Guid Token { get; set; }
+        public Guid InDirId { get; set; } = Guid.Empty;
+        public IEnumerable<File8MD5> File8MD5s { get; set; }
+    }
+
+    public class File8MD5
+    {
+        public int Id { get; set; }
+        public string FileName { get; set; }
+        public string MD5 { get; set; }
+    }
+
+    public class LFilePost
+    {
+        public IFormFile LFile_ { get; set; }
         public Guid InDirId { get; set; }
-        public IEnumerable<FileMD5> FileMD5s_ { get; set; }
     }
 }
