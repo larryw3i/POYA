@@ -1,0 +1,40 @@
+﻿@model POYA.Models.LDir
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>LDir</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DOCreate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DOCreate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.InDirId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.InDirId)
+        </dd>
+    </dl>
+</div>
+<div>
+    @*
+                    <a asp-action="Edit" asp-controller="LDirs"  asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@d.Id" title="@Localizer["Edit"]">&#9997;</a>    
+    *@
+    <a asp-action="Edit" asp-route-id="@Model.Id" asp-route-ReturnUrl="@Model.ReturnUrl"  title="@Localizer["Edit"]">Edit</a> |
+    <a asp-action="Index" asp-controller="LUserFiles" asp-route-InDirId="@(Model.InDirId)">Back to List</a>
+</div>

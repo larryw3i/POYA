@@ -77,7 +77,7 @@ namespace POYA.Controllers
             var _X_doveUserInfo=await _context.X_DoveUserInfos.Where(p => p.UserId == UserId).FirstOrDefaultAsync();
             if (_X_doveUserInfo == null || _X_doveUserInfo.AvatarBuffer.Length<1)
             {
-                var DefauleAvatar = await System.IO.File.ReadAllBytesAsync(_hostingEnv + @"\img\article_publish_ico.png");
+                var DefauleAvatar = await System.IO.File.ReadAllBytesAsync(_hostingEnv.WebRootPath + @"/img/article_publish_ico.png");
                 return File(DefauleAvatar, "image/png");
             }
             return File(_X_doveUserInfo.AvatarBuffer, "image/png");

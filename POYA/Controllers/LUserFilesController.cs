@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -33,7 +34,9 @@ namespace POYA.Controllers
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LUserFilesController> _logger;
+        private readonly IAntiforgery _antiforgery;
         public LUserFilesController(
+            IAntiforgery antiforgery,
             ILogger<LUserFilesController> logger,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
@@ -56,9 +59,40 @@ namespace POYA.Controllers
         #endregion
 
         // GET: LUserFiles
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Guid? InDirId)
         {
-            return View(await _context.LUserFile.ToListAsync());
+            InDirId = InDirId ?? Guid.Empty;
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
+            var _FileNames = new DirectoryInfo(_x_DOVEHelper.FileStoragePath(_hostingEnv)).GetFiles().Select(p => p.Name);
+            //  Console.WriteLine("FileName >> "+JsonConvert.SerializeObject(_FileNames));
+            var _LFiles = await _context.LFile.ToListAsync();
+            var _LUserFiles = await _context.LUserFile.ToListAsync();
+            //  Console.WriteLine("File >> "+JsonConvert.SerializeObject(_LFiles));
+            _LFiles.ForEach(f=> {
+                if (!_FileNames.Contains(f.MD5))
+                {
+                    _context.LFile.Remove(f);
+                }
+            });
+            _LUserFiles.ForEach(f => {
+                if (!_FileNames.Contains(f.MD5))
+                {
+                    _context.LUserFile.Remove(f);
+                }
+            });
+            await _context.SaveChangesAsync();
+
+            var LUserFile_ = await _context.LUserFile.Where(p => p.UserId == UserId_ && p.InDirId == InDirId).OrderBy(p => p.DOGenerating).ToListAsync();
+            var InDirName = (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? "root";
+            //  LUserFile_.ForEach(m => { m.InDirName = InDirName; });
+            ViewData[nameof(InDirName)] = InDirName;
+            ViewData[nameof(InDirId)] = InDirId;
+            ViewData["LastDirId"] = InDirId == Guid.Empty ? InDirId
+                : await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.InDirId).FirstOrDefaultAsync();
+            var LDirs = await _context.LDir.Where(p => p.InDirId == InDirId && p.UserId == UserId_).ToListAsync();
+            ViewData[nameof(LDirs)] = LDirs;
+            return View(LUserFile_);
         }
 
         // GET: LUserFiles/Details/5
@@ -69,8 +103,7 @@ namespace POYA.Controllers
                 return NotFound();
             }
 
-            var lUserFile = await _context.LUserFile
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var lUserFile = await _context.LUserFile.FirstOrDefaultAsync(m => m.Id == id);
             if (lUserFile == null)
             {
                 return NotFound();
@@ -79,10 +112,32 @@ namespace POYA.Controllers
             return View(lUserFile);
         }
 
+        public async Task<IActionResult> GetFile(Guid? id)
+        {
+            if (id == null)
+            {
+                return NoContent();
+            }
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var _LUserFile = await _context.LUserFile.Select(p => new { p.MD5, p.Id, p.SharedCode, p.Name, p.UserId, p.ContentType })
+                .FirstOrDefaultAsync(p => (p.Id == id && p.UserId == _UserId) || p.SharedCode == id);
+            if (_LUserFile == null )
+            {
+                return NoContent();
+            }
+            var _FilePath = _x_DOVEHelper.FileStoragePath(_hostingEnv) + _LUserFile.MD5;
+            if (!System.IO.File.Exists(_FilePath))
+            {
+                return NoContent();
+            }
+            var FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath);
+            return File(FileBytes, _LUserFile.ContentType ,_LUserFile.Name);
+        }
+
         // GET: LUserFiles/Create
         public IActionResult Create(Guid? InDirId)
         {
-            ViewData[nameof(InDirId)] = InDirId ?? Guid.Empty;
+            ViewData[nameof(InDirId)] = InDirId?? Guid.Empty;
             return View();
         }
 
@@ -90,19 +145,18 @@ namespace POYA.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        //  [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([FromForm]LFilePost  LFilePost_)
-        //[Bind("Id,MD5,UserId,SharedCode,DOGenerating,Name,InDirId")] LUserFile lUserFile)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([FromForm]LFilePost _LFilePost)
         {
-            if (LFilePost_.LFile_.Length > 0)
+            //  [Bind("Id,MD5,UserId,SharedCode,DOGenerating,Name,InDirId")] LUserFile lUserFile)
+            if (_LFilePost._LFile.Length > 0)
             {
-
                 var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                 var MemoryStream_ = new MemoryStream();
-                await LFilePost_.LFile_.CopyToAsync(MemoryStream_);
+                await _LFilePost._LFile.CopyToAsync(MemoryStream_);
                 var FileBytes = MemoryStream_.ToArray();
                 var MD5_ = _x_DOVEHelper.GetFileMD5(FileBytes);
-                var FilePath = _hostingEnv.ContentRootPath + $"/Data/LFiles/{MD5_}";
+                var FilePath = _x_DOVEHelper.FileStoragePath(_hostingEnv) + MD5_;
                 //  System.IO.File.Create(FilePath);
                 await System.IO.File.WriteAllBytesAsync(FilePath, FileBytes);
                 await _context.LFile.AddAsync(new Models.LFile
@@ -114,15 +168,16 @@ namespace POYA.Controllers
                 {
                     UserId = UserId_,
                     MD5 = MD5_,
-                    InDirId = LFilePost_.InDirId,
-                    Name = LFilePost_.LFile_.FileName
+                    InDirId = _LFilePost.InDirId,
+                    Name = _LFilePost._LFile.FileName, 
+                     ContentType=_LFilePost._LFile.ContentType
                 });
                 await _context.SaveChangesAsync();
             }
             // process uploaded files
             // Don't rely on or trust the FileName property without validation.
 
-            return Ok();
+            return Ok(_LFilePost.Id);
             #region
             /*
             if (ModelState.IsValid)
@@ -138,17 +193,19 @@ namespace POYA.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ContrastMD5(ContrastMD5 ContrastMD5_)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ContrastMD5(ContrastMD5 _ContrastMD5)
         {
-            System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject( ContrastMD5_));
+            Console.WriteLine(">>>>"+JsonConvert.SerializeObject(_ContrastMD5));
+            //  System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(_ContrastMD5));
             var ContrastResult = new List<int>();
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            foreach (var i in ContrastMD5_.File8MD5s)
+            foreach (var i in _ContrastMD5.File8MD5s)
             {
-                if(await _context.LFile.AnyAsync(p => p.MD5 ==i.MD5))
+                if (await _context.LFile.AnyAsync(p => p.MD5 == i.MD5))
                 {
                     await _context.LUserFile.AddAsync(
-                        new LUserFile {  InDirId=ContrastMD5_.InDirId, MD5=i.MD5, Name=i.FileName, UserId=UserId_}
+                        new LUserFile { InDirId = _ContrastMD5.InDirId, MD5 = i.MD5, Name = i.FileName, UserId = UserId_ }
                         );
                     ContrastResult.Add(i.Id);
                 }
@@ -208,33 +265,41 @@ namespace POYA.Controllers
             return View(lUserFile);
         }
 
-        // GET: LUserFiles/Delete/5
+        // GET: LUserFiles/Delete/5 //
+        //  [HttpPost]
+        //  [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
-            var lUserFile = await _context.LUserFile
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var lUserFile = await _context.LUserFile.Where(p => p.Id == id && p.UserId == UserId_).FirstOrDefaultAsync();
             if (lUserFile == null)
             {
                 return NotFound();
             }
 
-            return View(lUserFile);
+            return PartialView(lUserFile);
         }
 
         // POST: LUserFiles/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost,ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var lUserFile = await _context.LUserFile.FindAsync(id);
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var lUserFile = await _context.LUserFile.Where(p => p.Id == id && p.UserId == UserId_).FirstOrDefaultAsync();
+            if (lUserFile == null)
+            {
+                return NotFound();
+            }
             _context.LUserFile.Remove(lUserFile);
+
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));   //  Ok();     // 
         }
 
         private bool LUserFileExists(Guid id)

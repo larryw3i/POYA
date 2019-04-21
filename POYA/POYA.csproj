@@ -8,6 +8,8 @@
     <Win32Resource />
     <TypeScriptToolsVersion>3.3</TypeScriptToolsVersion>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <OutputType>Exe</OutputType>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Views\SharedDs\**" />
@@ -15,21 +17,25 @@
     <Compile Remove="Views\ShareFoDs\**" />
     <Compile Remove="Views\X_doveDirectories\**" />
     <Compile Remove="Views\X_doveFiles\**" />
+    <Compile Remove="Views\__LUserFiles\**" />
     <Content Remove="Views\SharedDs\**" />
     <Content Remove="Views\SharedFs\**" />
     <Content Remove="Views\ShareFoDs\**" />
     <Content Remove="Views\X_doveDirectories\**" />
     <Content Remove="Views\X_doveFiles\**" />
+    <Content Remove="Views\__LUserFiles\**" />
     <EmbeddedResource Remove="Views\SharedDs\**" />
     <EmbeddedResource Remove="Views\SharedFs\**" />
     <EmbeddedResource Remove="Views\ShareFoDs\**" />
     <EmbeddedResource Remove="Views\X_doveDirectories\**" />
     <EmbeddedResource Remove="Views\X_doveFiles\**" />
+    <EmbeddedResource Remove="Views\__LUserFiles\**" />
     <None Remove="Views\SharedDs\**" />
     <None Remove="Views\SharedFs\**" />
     <None Remove="Views\ShareFoDs\**" />
     <None Remove="Views\X_doveDirectories\**" />
     <None Remove="Views\X_doveFiles\**" />
+    <None Remove="Views\__LUserFiles\**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\SharedDsController.cs" />
@@ -37,6 +43,7 @@
     <Compile Remove="Controllers\ShareFoDsController.cs" />
     <Compile Remove="Controllers\X_doveDirectoriesController.cs" />
     <Compile Remove="Controllers\X_doveFilesController.cs" />
+    <Compile Remove="Controllers\__LUserFilesController.cs" />
     <Compile Remove="Models\LDirViewModel.cs" />
     <Compile Remove="Models\SharedFDViewModel.cs" />
     <Compile Remove="Models\ShareFoDViewModel.cs" />
@@ -45,19 +52,19 @@
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.3.1" />
     <PackageReference Include="HtmlSanitizer" Version="4.0.210" />
-    <PackageReference Include="Microsoft.AspNet.SignalR" Version="2.4.0" />
-    <PackageReference Include="Microsoft.AspNet.SignalR.Client" Version="2.4.0" />
+    <PackageReference Include="Microsoft.AspNet.SignalR" Version="2.4.1" />
+    <PackageReference Include="Microsoft.AspNet.SignalR.Client" Version="2.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="2.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="2.2.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.3">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -65,7 +72,7 @@
     <PackageReference Include="Microsoft.jQuery.Unobtrusive.Validation" Version="3.2.11" />
     <PackageReference Include="Microsoft.ML" Version="0.11.0" />
     <PackageReference Include="Microsoft.ML.TensorFlow" Version="0.11.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.4.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.5.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="QRCoder" Version="1.3.5" />

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,16 +17,36 @@ namespace POYA.Models
         /// It is shared if SharedCode isn't Guid.Empty
         /// </summary>
         public Guid SharedCode { get; set; } = Guid.Empty;
+        [Display(Name="Date")]
         public DateTimeOffset DOGenerating { get; set; } = DateTimeOffset.Now;
+        [Display(Name="Name")]
         public string Name { get; set; }
-        public Guid InDirId { get; set; }
+        public Guid InDirId { get; set; } = Guid.Empty;
+        public string ContentType { get; set; }
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        [NotMapped]
+        public string InDirName { get; set; }
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        [NotMapped]
+        public IFormFile LFormFile { get; set; }
     }
     public class LDir
     {
         public Guid Id { get; set; } = Guid.NewGuid();
+        [Display(Name="Directory")]
         public string Name { get; set; }
+        [Display(Name ="Date")]
         public DateTimeOffset DOCreate { get; set; } = DateTimeOffset.Now;
-        public Guid InDirId { get; set; }
+        public Guid InDirId { get; set; } = Guid.Empty;
+        public string UserId { get; set; }
+        [NotMapped]
+        public string InDirName { get; set; }
+        [NotMapped]
+        public string ReturnUrl { get; set; } = null;
     }
     public class LFile
     {
@@ -39,6 +61,8 @@ namespace POYA.Models
         /// </summary>
         public string MD5 { get; set; }
     }
+
+    //<<<<<<<<<<<<<<<<<<<<<<<<<<<SEPARATOR>>>>>>>>>>>>>>>>>>>//
 
     public class ContrastMD5
     {
@@ -55,7 +79,11 @@ namespace POYA.Models
 
     public class LFilePost
     {
-        public IFormFile LFile_ { get; set; }
+        /// <summary>
+        /// The id for callback
+        /// </summary>
+        public int Id { get; set; }
+        public IFormFile _LFile { get; set; }
         public Guid InDirId { get; set; }
     }
 }

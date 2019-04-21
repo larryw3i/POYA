@@ -1,66 +1,305 @@
 ﻿@model IEnumerable<POYA.Models.LUserFile>
+@using Microsoft.AspNetCore.Http.Extensions
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var InDirId = ViewData["InDirId"];
+    var InDirName = ViewData["InDirName"];
+    var ReturnUrl = Context.Request.Path+Context.Request.QueryString;
+    var LastDirId=ViewData["LastDirId"];
 }
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<div class="row">
+    <div class="col col-8">
+        <span>@(InDirName)</span>(
+        @if (InDirId.ToString() != Guid.Empty.ToString())
+        {
+            <a asp-action="Index" asp-route-InDirId="@Guid.Empty">@Localizer["Root"]</a>
+            <a asp-action="Index" asp-route-InDirId="@(LastDirId)">@Localizer["Last"]</a>
+        }
+        <a asp-action="Create" asp-route-InDirId="@InDirId">@Localizer["Upload"]</a>
+        <a asp-action="Create" asp-controller="LDirs" asp-route-InDirId="@InDirId" asp-route-ReturnUrl="@ReturnUrl">@Localizer["New"]</a> )
+    </div>
+
+</div>
+
+
+
+<table class="table" name="FilesTABLE">
     <thead>
         <tr>
+            @*
+                <th>
+                    <input name="AllFilesCheckBox" id="AllFilesCheckBox" class=".Zoom150p" type="checkbox" />
+                </th>
+            *@
             <th>
-                @Html.DisplayNameFor(model => model.MD5)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SharedCode)
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DOGenerating)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InDirId)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MD5)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SharedCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DOGenerating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InDirId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var d in ViewData["LDirs"] as IEnumerable<LDir>)
+        {
+            <tr>
+                @*
+                    <td>
+                        <input name="FilCheckBox" id="FilCheckBox_@(d.Id)" class=".Zoom190p" type="checkbox" value="@(d.Id)" />
+                    </td>
+                *@
+                <td>
+                    <a asp-action="Index" asp-route-InDirId="@(d.Id)"> @(Html.DisplayFor(modelItem => d.Name))</a>
+                    <span style="font-size:60%;color:blue">d</span>
+                </td>
+                <td>
+                    @(d.DOCreate.LocalDateTime.ToShortDateString())
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@d.Id" title="@Localizer["Edit"]">&#9997;</a>
+                    <a asp-action="Details" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@d.Id" title="@Localizer["Details"]">&#9749;</a>
+                    <a asp-action="Delete" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@d.Id" title="@Localizer["Delete"]">&#10008;</a>
+                    @*
+                    <a asp-action="Move" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@(d.Id)" title="@Localizer["Move"]">&#9986;</a>
+                    <a asp-action="Copy" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@(d.Id)" title="@Localizer["Copy"]">&#9903;</a>  
+                    *@
+                </td>
+            </tr>
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*
+                    <td>
+                        <input name="FilCheckBox" id="FilCheckBox_@(item.Id)" class=".Zoom190p" type="checkbox" value="@(item.Id)" />
+                    </td>
+                *@
+                <td>
+                    <a asp-action="GetFile" asp-route-id="@(item.Id)">@(Html.DisplayFor(modelItem => item.Name))</a>
+                    <span style="font-size:60%;color:red">f</span>
+                </td>
+                <td>
+                    @(item.DOGenerating.LocalDateTime.ToShortDateString())
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" title="@Localizer["Edit"]">&#9997;</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" title="@Localizer["Details"]">&#9749;</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" title="@Localizer["Delete"]">&#10008;</a>
+                    @*
+        <a asp-action="Move" asp-route-id="@(item.Id)" title="@Localizer["Move"]">&#9986;</a>
+        <a asp-action="Copy" asp-route-id="@(item.Id)" title="@Localizer["Copy"]">&#9903;</a>
+                        *@
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@section Scripts{
+    <script>
+        var SelectedIdArray = new Array();
+        var _Service = new Service();
+        var _Value = new Value();
+        var _Data = new Data();
+        var _UI = new UI();
+
+        $(document).ready(function () {
+            $("#AllFilesCheckBox").on("change", function () {
+                if ($(this).is(':checked')) {
+                    _Data.SelectAllFiles();
+                } else {
+                    _Data.UnselectAllFiles();
+                }
+            });
+            $("[name='DeleteA']").on("click", function () {
+                _Service.DeleteFiles(this);
+            });
+            $("[name='FilCheckBox']").on("change", function () {
+                _Data.HandleIdArray(this);
+            } );
+        });
+        function Service() {
+            this.DeleteFilesConfirmed = () => {
+                $.ajax({
+                    url: "@(Url.Action("DeleteConfirmed"))",
+                    type: "POST",
+                    data: {
+                        ids:SelectedIdArray
+                    },
+                    headers: {
+                        "L-XSRF-TOKEN": _Value.L_XSRF_TOKEN
+                    },
+                    success: function () {
+                        //  _HandleUI.RemovePopup();
+                         location.reload();
+                    }
+                });
+            };
+            /**
+             * Send id array to server-slide
+             * @@param element {HTMLElement} The FilCheckBox
+             */
+            this.DeleteFiles = (element) => {
+                var FileIdOfElement = _HandleData.GetFileIdForDMC(element);
+                _HandleData.AddId(FileIdOfElement);
+                console.log(SelectedIdArray);
+                $.ajax({
+                    url: "@(Url.Action("Delete"))",
+                    type: "POST",
+                    data: {
+                        ids: SelectedIdArray
+                    },
+                    dataType: "html",
+                    headers: {
+                        "L-XSRF-TOKEN": _Value.L_XSRF_TOKEN
+                    },
+                    success: function (Response) {
+                        _UI.MakePopup(Response);
+                    }
+                });
+
+            };
+
+        }
+        function UI() {
+            /**
+             * Remove popup after files is deleted
+             */
+            this.RemovePopup = () => {
+                $(_Value.Pop_upId).remove();
+            };
+            /**
+             * The html string for popupping
+             * @@param HtmlContent{string} The html string
+             */
+            this.MakePopup = (HtmlContent) => {
+                $(_Value.Pop_up(HtmlContent)).insertAfter("[name='FilesTABLE']:first");
+            };
+        }
+        function Data() {
+            /*
+            this.UnselectAllFiles = () => {
+                $("[name='FilCheckBox']").attr("checked", false);
+                SelectedIdArray = new Array();
+                console.log(SelectedIdArray);
+            };
+            this.SelectAllFiles = () => {
+                $("[name='FilCheckBox']").attr("checked", true);
+                $("[name='FilCheckBox']").each(function (index, element) {
+                    _Data.AddId($(element).val());
+                });
+                console.log(SelectedIdArray);
+            };
+            */
+            /**
+             * Add or remove id in SelectedIdArray
+             * @@param element {HTMLElement} The FilCheckBox
+             */
+            this.HandleIdArray = (element) => {
+                if ($(element).is(':checked')) {
+                    _Data.AddId($(element).val());
+                } else {
+                    _Data.RemoveId($(element).val());
+                }
+                console.log(SelectedIdArray);
+            };
+            /**
+             * Get the file id after Delete/Move/Copy is clicked
+             * @@param element{HTMLElement} The Delete/Move/Copy HTMLElement
+             */
+            this.GetFileIdForDMC = (element) => $(element).parent().attr("id").split("_")[1];
+
+            /**
+             * add a id to SelectedIdArray
+             * @@param Id{string} The id of file
+             */
+            this.AddId = (Id) => {
+                if (!SelectedIdArray.some((value, index, array) => value == Id)) {
+                    SelectedIdArray.push(Id);
+                }
+            };
+            /**
+             * Remove a id from SelectedIdArray
+             * @@param Id{string} The id of file
+             */
+            this.RemoveId = (Id) => {
+                SelectedIdArray.forEach(function (value, index, array) {
+                    if (value == Id) {
+                        SelectedIdArray.splice(index, 1);
+                    }
+                });
+            };
+        }
+        function Value() {
+            this.Pop_upId = "#PopupDIV";
+            this.FilCheckBox = "FilCheckBox";
+            this.InDirId = "@InDirId";
+            this.L_XSRF_TOKEN = "@(csrf.GetAndStoreTokens(Context).RequestToken)";
+            /**
+             * Pop up the content
+             * @@param PopupContent {string} The html string
+             */
+            this.Pop_up =(PopupContent)=> '\
+                            <div id="PopupDIV">\
+                                <div onclick="_UI.RemovePopup()">&times;</div>\
+                                '+ PopupContent +'\
+                            </div>\
+                        ';
+        }
+    </script>
+}
+
+@section Styles{
+    <style>
+        .row span {
+            font-size: 200%;
+        }
+
+        #CreateDir {
+            cursor: pointer;
+        }
+        /**
+         *  REFERENCE   https://blog.csdn.net/xuehu837769474/article/details/80413281
+         *  THANK       https://blog.csdn.net/xuehu837769474
+         */
+        #PopupDIV {
+            width: 650px;
+            height: 383px;
+            position: fixed;
+            background-color: rosybrown;
+            margin: auto;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            border-radius: 10px;
+            padding: 20px;
+            overflow-y: scroll;
+        }
+
+            #PopupDIV > div:first-child {
+                zoom: 250%;
+                cursor: pointer;
+            }
+
+        [name='FileName'] {
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+
+        .Zoom190p, Zoom190p > a {
+            zoom: 190%;
+        }
+    </style>
+}
+
+@*
+    asp-action="Create" asp-controller="LDirs" asp-route-InDirId="@ViewData["InDirId"]"
+*@

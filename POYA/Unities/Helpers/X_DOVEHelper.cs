@@ -21,6 +21,15 @@ namespace POYA.Unities.Helpers
 {
     public class X_DOVEHelper
     {
+
+        /// <summary>
+        /// env.ContentRootPath + $"/Data/LFiles/"
+        /// </summary>
+        /// <param name="env">The HostingEnvironment</param>
+        /// <returns></returns>
+        public string FileStoragePath(IHostingEnvironment env) {
+            return env.ContentRootPath + $"/Data/LFiles/";
+        }
         public async Task ErrorEventAsync(HttpContext context, IHostingEnvironment env)
         {
             var feature = context.Features.Get<IExceptionHandlerFeature>();

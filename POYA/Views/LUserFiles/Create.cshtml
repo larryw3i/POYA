@@ -9,19 +9,17 @@
 
 <h4>LUserFile</h4>
 <hr />
-<div class="row">
-    <div class="col-md-5">
+<div class="row" name="FileUploadROW">
+    <div class="col col-sm-10 col-md-8 col-lg-8">
         <div class="form-group">
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <a id="BackA" class="btn btn-outline-info"><< @Localizer["Back"]</a>
-                </div>
+            <div class="input-group">
                 <input type="text" id="SelectFileInput" class="form-control" placeholder="@Localizer["Select file"]" aria-label="@Localizer["Select file"]">
                 <div class="input-group-append">
                     <a id="SelectFileA" class="btn btn-outline-info">@Localizer["Select file"]</a>
                     <a id="UploadA" class="btn btn-outline-info">@Localizer["Upload"]</a>
                 </div>
             </div>
+            <a id="BackA" class="btn btn-outline-info"><< @Localizer["Back"]</a>
         </div>
     </div>
 </div>
@@ -30,26 +28,15 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/lib/js-spark-md5/spark-md5.min.js"></script>
     <script>
-        var _Strings = new Strings();
-        var _HandleData = new HandleData();
-        var _UpdateUI = new UpdateUI();
+        var _Value = new Value();
+        var _Data = new Data();
+        var _UI = new UI();
+        var _Service = new Service();
         var MD5Array = new Array();
-        var InDirId="@ViewData["InDirId"]"
-
-        var FileInfo = (Id = $.guid++) => '\
-                                <div class="rounded-circle" id='+ Id + '>\
-                                    <input id="'+ _Strings.FileInput(Id) + '" name="FileInput" type="file" onchange="_HandleData.GetMD58AddToArray(' + Id + ')" hidden/>\
-                                    <span>\
-                                        <span id="'+ _Strings.RemoveDIV(Id) + '" onclick="_UpdateUI.RemoveDIV(' + Id + ')">&times</span>\
-                                        <span id="'+ _Strings.UploadProgress(Id) + '"></span>\
-                                        <span id="'+ _Strings.FileName(Id) + '" name="FileName"></span>\
-                                    </span>\
-                                </div>\
-                            ';
 
         $(document).ready(function () {
             $("#SelectFileInput,#SelectFileA").on("click", function () {
-                _UpdateUI.SelectFile();
+                _UI.SelectFile();
                 event.preventDefault();
             });
             $("#BackA").on("click", function () {
@@ -58,73 +45,92 @@
             });
             $("#UploadA").on("click", function () {
                 if ($("[name='FileInput']").length < 1) return;
-                _HandleData.ContrastMD5InServerSide();
+                _Service.ContrastMD58UploadFiles();
                 event.preventDefault();
             });
         });
 
-        function UpdateUI() {
-            this.ShoeLastFileInfo = (Id = $.guid++) => {
-                $("#" + _Strings.FileName(Id)).text($("input[name='FileInput']:last").val());
-                $("#" + Id).show();
+
+        function UI() {
+            /**
+             * Make a alert
+             * @@param ClassType {string} The class type >_
+             *  primary/secondary/success/info/danger/warning/dark/light
+             * @@param Message {string} The alert message
+             * @@param CloseAfter{number} Close it after {}  millisecond, default value is 2500
+             */
+            this.MakeAlert = (ClassType,Message,CloseAfter=2500) => {
+                $(_Value.AlertDIV(ClassType, Message)).insertBefore("[name='FileUploadROW']:last");
+                window.setTimeout(function () {
+                    $('.alert').alert('close');
+                }, CloseAfter);
+            };
+            this.RemoveFileDIV = (Id = $.guid++) => {
+                $("#" + Id).remove();
+                _Data.RemoveItemInMD5Array(Id); //  !!
+            };
+            this.FileTooLargeRemoveFileDIV = () => {
+                $("[name='FileDIV']:last").remove();
+                _UI.MakeAlert("warning", _Value.FileIsTooLarge);
+            };
+            this.ReadMD5Tip = (Id = $.guid++) => {
+                    _UI.UpdateProgress(Id,"@(Localizer["Reading..."])");
+            };
+            /**
+             * Update progress
+             * @@param Id{number} The id of main div
+             * @@param Progress_{string} The progress , the percentage and the tip of finish
+             */
+            this.UpdateProgress = (Id = $.guid++, Progress_) => {
+                $("#" + _Value.UploadProgress(Id)).html(Progress_);
+            };
+            this.ShowLastFilePath = (Id = $.guid++) => {
+                $("#" + _Value.FileName(Id)).text($("input[name='FileInput']:last").val());
+                //  $("#" + Id).show();
+
+            };
+            this.ReadMD5FinishTip=(Id = $.guid++) => {
+                    _UI.UpdateProgress(Id,"");
 
             };
             this.SelectFile = () => {
                 if ($("input[name='FileInput']:last").val() == "") {
                     $("input[name='FileInput']:last").click();
                 } else {
-                    $(".form-group").append(FileInfo());
-                    $(".form-group>div:last").hide();
+                    $(".form-group").append(_Value.FileInfo());
+                    _UI.ShowOrHideLastRemoveFileDIV(false);
                     $("input[name='FileInput']:last").click();
                 }
             };
-            this.RemoveDIV = (Id = $.guid++) => {
-                _HandleData.RemoveItemInMD5Array(Id);
-                $("#" + Id).remove();
+            /**
+             * Show or hide last RemoveFileDIV, or it leads to a poor user experience
+             * @@param IsShow{boolean} show or hide
+             */
+            this.ShowOrHideLastRemoveFileDIV = (IsShow) => {
+                if (IsShow) {
+                    $("[name='RemoveFileDIV']:last").show();
+                    return;
+                }
+                $("[name='RemoveFileDIV']:last").hide();
+            };
+            /**
+             * Remove file input after file is "upload"
+             * @@param Id {number} The id of file div
+             */
+            this.RemoveUploadedFileInput = (Id = $.guid++) => {
+                $("#" + _Value.FileInput(Id)).remove();
             };
         }
 
-        function HandleData() {
-            this.UploadFile = () => {
-                $("[name='FileInput']").each(function (index, element) {
-                    var Id_ = String(this.id).split("_")[1];
-                    var File_ = document.getElementById(this.id).files[0];
-                    var FormData_ = new FormData();
-                    FormData_.append("LFile_", File_, File_.name);
-                    FormData_.append("InDirId", InDirId);
-                    $.ajax({
-                        url: "@(Url.Action("Create"))",
-                        type:"POST",
-                        data:FormData_,
-                        processData: false, 
-                        contentType:false, 
-                        /**
-                         * REFERENCE    https://www.jianshu.com/p/eb119affdc25
-                         * THANK        https://www.jianshu.com/u/9ca9c65ce397
-                         */
-                        xhr: function() {       
-                            var xhr = $.ajaxSettings.xhr();
-                            if (xhr.upload) {
-                                xhr.upload.addEventListener("progress", function (e) {
-                                    var loaded = e.loaded; 
-                                    var tot = e.total; 
-                                    var per = Math.floor(100 * loaded / tot);
-                                    $("#" + _Strings.UploadProgress(Id_)).text(per + "%");
-                                }, false);
-                                return xhr;
-                            }
-                        },
-                        success: function () {
-                                    $("#" + _Strings.UploadProgress(this.id)).text("&#10003;");
-                        }
-                    });
-                });
-            };
-            this.ContrastMD5InServerSide = () => {
+        function Service() {
+
+            this.ContrastMD58UploadFiles = () => {
+                if (MD5Array.length < 1) return;
+                if (document.getElementsByName("FileInput").length < 1) return;
                 var File8MD5s = new Array();
                 MD5Array.forEach(function (value, index, array) {
                     var Id_ = value["Id"];
-                    var FileName_ = document.getElementById(_Strings.FileInput(Id_)).files[0].name;
+                    var FileName_ = document.getElementById(_Value.FileInput(Id_)).files[0].name;
                     File8MD5s.push({ Id: Id_, FileName: FileName_, MD5: value["MD5"] });
                 });
                 console.log(File8MD5s);
@@ -132,32 +138,92 @@
                     url: "@(Url.Action("ContrastMD5"))",
                     type: "POST",
                     data: {
-                        ContrastMD5_: {
-                            InDirId: InDirId, File8MD5s: File8MD5s
+                        _ContrastMD5: {
+                            InDirId: _Value.InDirId, File8MD5s: File8MD5s
                         }
                     },
                     dataType: "json",
+                    headers: {
+                        "L-XSRF-TOKEN": _Value.L_XSRF_TOKEN
+                    },
                     /**
                      * Return the Id of uploaded file
-                     * @@param IdArray{Array<number>}
+                     * @@param IdArray{Array<number>} Uploaded id array
                      */
                     success: function (IdArray) {
+                        console.log("Contrast>>"+IdArray);
                         IdArray.forEach(function (value) {
-                            _UpdateUI.RemoveDIV(value);
+                            _Data.RemoveItemInMD5Array(value);
+                            _UI.RemoveUploadedFileInput(value);
+                            _UI.UpdateProgress(value,"&radic;" )
                         });
-                            console.log(">>>>>>");
-                            _HandleData.UploadFile();
+                        _Service.UploadFile();
                     }
                 });
             };
+            this.UploadFile = () => {
+                if ($("[name='FileInput']").length < 1) return;
+                //  console.log(">>>>>>>>>>>>>>>");
+                $("[name='FileInput']").each(function (index, element) {
+                    if ($(element).val() == "") return;
+                    var Id_ = Number(this.id.split("_")[1]);
+                    var File_ = document.getElementById(this.id).files[0];
+                    var _FormData = new FormData();
+                    _FormData.append("_LFile", File_, File_.name);
+                    _FormData.append("InDirId", _Value.InDirId);
+                    _FormData.append("Id", Id_);
+                    $.ajax({
+                        url: "@(Url.Action("Create"))",
+                        type:"POST",
+                        data:_FormData,
+                        processData: false,
+                        contentType: false,
+                        headers: {
+                            "L-XSRF-TOKEN": _Value.L_XSRF_TOKEN
+                        },
+                        /**
+                         * REFERENCE    https://www.jianshu.com/p/eb119affdc25
+                         * THANK        https://www.jianshu.com/u/9ca9c65ce397
+                         */
+                        xhr: function () {
+                            var xhr = $.ajaxSettings.xhr();
+                            if (xhr.upload) {
+                                xhr.upload.addEventListener("progress", function (e) {
+                                    var loaded = e.loaded;
+                                    var tot = e.total;
+                                    //  console.log(">>"+Id_);
+                                    var per = Math.floor(100 * loaded / tot);
+                                    _UI.UpdateProgress(Id_, per + "%");
+                                }, false);
+                                return xhr;
+                            }
+                        },
+                        /**
+                         * Retuen the id
+                         * @@param Id id
+                         */
+                        success: function (Id) {
+                            console.log("Upload file>>"+Id);
+                            _UI.UpdateProgress(Id, "&radic;");
+                            _Data.RemoveItemInMD5Array(Id);
+                            _UI.RemoveUploadedFileInput(Id);
+                        }
+                    });
+                });
+            };
+        }
+
+        function Data() {
+            /**
+             * Remove the item in MD5Array
+             * @@param Id{number} The id of item(it is the id of Value.FileInfo())
+             */
             this.RemoveItemInMD5Array = (Id = $.guid++) => {
                 MD5Array.forEach(function (value, index, array) {
-                    console.log(value + ">>" + value["Id"] + ">>" + Id);
                     if (value["Id"] == Id) {
                         MD5Array.splice(index, 1);
                     }
                 });
-                console.log(MD5Array);
             };
             /**
             * Get md5 of file and add it to array
@@ -166,7 +232,12 @@
             * @@param Id{number} The id of file
             */
             this.GetMD58AddToArray = (Id) => {
-                var File_ = document.getElementById(_Strings.FileInput(Id)).files[0];
+                var File_ = document.getElementById(_Value.FileInput(Id)).files[0];
+                if (File_.size > (_Value.FileLimit) * 1024 * 1024) {
+                    _UI.FileTooLargeRemoveFileDIV();
+                    return;
+                }
+                _UI.ReadMD5Tip(Id);
                 var BlobSlice_ = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
                     ChunkSize = 20 * 1024 * 1024,
                     Chunks = Math.ceil(File_.size / ChunkSize),
@@ -187,10 +258,15 @@
                             }
                         });
                         if (IsSelected) {
-                            _UpdateUI.RemoveDIV(Id);
+                            _UI.RemoveFileDIV(Id);
+                            _UI.MakeAlert("warning", _Value.FileIsSelected);
+                            //  _UI
                         } else {
                             MD5Array.push({ Id: Id, MD5: MD5 });
-                            _UpdateUI.ShoeLastFileInfo(Id);
+                            _UI.ReadMD5FinishTip(Id);
+                            _UI.ShowLastFilePath(Id);
+                            _UI.ShowOrHideLastRemoveFileDIV(true);
+                            console.log(MD5);
                         }
                     }
                 };
@@ -206,17 +282,66 @@
             }
         }
 
-        function Strings() {
+        function Value() {
+
+            this.InDirId = "@ViewData["InDirId"]";
+            this.L_XSRF_TOKEN = "@(csrf.GetAndStoreTokens(Context).RequestToken)";
+            this.FileIsSelected = "The file is selected";
+            /**
+             * In M byte
+             */
+            this.FileLimit =200;
+            this.FileIsTooLarge = "<strong>Oops. . .</strong> File is limit to less than " + this.FileLimit+"M";
+            this.RemoveFileDIV = (Id = $.guid++) => "RemoveFileDIV" + Id;
             this.FileName = (Id = $.guid++) => 'FileName_' + Id;
             this.UploadProgress = (Id = $.guid++) => 'UploadProgress' + Id;
-            this.RemoveDIV = (Id = $.guid++) => "RemoveDIV" + Id;
+            this.RemoveUploadedFileInput = (Id = $.guid++) => "RemoveUploadedFileInput" + Id;
             this.FileInput = (Id = $.guid++) => "FileInput_" + Id;
+            /**
+             * Return the alert html string
+             * @@param ClassType {string} The class type >_
+             *      primary/secondary/success/info/danger/warning/dark/light
+             * @@param Message {string} The message
+             */
+            this.AlertDIV = (ClassType, Message) => '\
+                                    <div class="alert alert-'+ (ClassType) + ' alert-dismissible fade show" role="alert">' + Message +'\
+                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
+                                        <span aria-hidden="true">&times;</span>\
+                                      </button>\
+                                    </div>\
+                                    ';
+            
+            /**
+             * Return the file div message
+             * @@param Id {number} The id
+             */
+            this.FileInfo = (Id = $.guid++) => '\
+                                <div id='+ Id + ' name="FileDIV">\
+                                    <input id="'+ _Value.FileInput(Id) + '" name="FileInput" type="file" onchange="_Data.GetMD58AddToArray(' + Id + ')" hidden/>\
+                                    <span>\
+                                        <span id="'+ _Value.RemoveFileDIV(Id) + '" name="RemoveFileDIV" onclick="_UI.RemoveFileDIV(' + Id + ')">&times</span>\
+                                        <span id="'+ _Value.UploadProgress(Id) + '"></span>\
+                                        <span id="'+ _Value.FileName(Id) + '" name="FileName"></span>\
+                                    </span>\
+                                </div>\
+                            ';
         }
     </script>
 }
 
 @section Styles{
     <style>
+        .form-group{
+        }
+        #BackA {
+            margin-top: 10px;
+        }
+        [name='FileDIV']{
+            border:solid;
+            border-color:violet;
+            border-radius:20px;
+            margin-top:4px;
+        }
     </style>
 }
 
