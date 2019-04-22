@@ -50,6 +50,14 @@
     <Compile Remove="Models\X_DoveDirectoryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="wwwroot\lib\video-js-7.5.4\LICENSE" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\lib\video-js-7.5.4\LICENSE">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.3.1" />
     <PackageReference Include="HtmlSanitizer" Version="4.0.210" />
     <PackageReference Include="Microsoft.AspNet.SignalR" Version="2.4.1" />
@@ -74,7 +82,8 @@
     <PackageReference Include="Microsoft.ML.TensorFlow" Version="0.11.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.5.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Nukepayload2.Csv" Version="1.3.3" />
     <PackageReference Include="QRCoder" Version="1.3.5" />
     <PackageReference Include="Selenium.Chrome.WebDriver" Version="2.45.0" />
     <PackageReference Include="Selenium.Support" Version="3.141.0" />
@@ -90,5 +99,55 @@
   <ItemGroup>
     <Folder Include="Data\LFiles\" />
     <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\lib\video-js-7.5.4\alt\video.core.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\alt\video.core.min.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\alt\video.core.novtt.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\alt\video.core.novtt.min.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\alt\video.novtt.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\alt\video.novtt.min.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\font\VideoJS.svg" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\ar.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\ba.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\bg.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\ca.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\cs.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\cy.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\da.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\de.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\el.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\en.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\es.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\fa.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\fi.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\fr.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\gl.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\he.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\hr.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\hu.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\it.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\ja.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\ko.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\nb.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\nl.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\nn.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\oc.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\pl.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\pt-BR.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\pt-PT.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\ru.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\sk.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\sr.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\sv.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\tr.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\uk.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\vi.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\zh-CN.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\lang\zh-TW.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\video.cjs.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\video.es.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\video.js" />
+    <None Include="wwwroot\lib\video-js-7.5.4\video.min.js" />
   </ItemGroup>
 </Project>

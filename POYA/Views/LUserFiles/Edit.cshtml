@@ -14,6 +14,7 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            @*
             <div class="form-group">
                 <label asp-for="MD5" class="control-label"></label>
                 <input asp-for="MD5" class="form-control" />
@@ -35,24 +36,25 @@
                 <span asp-validation-for="DOGenerating" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="InDirId" class="control-label"></label>
+                <input asp-for="InDirId" class="form-control" />
+                <span asp-validation-for="InDirId" class="text-danger"></span>
+            </div>
+                *@
+            <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="InDirId" class="control-label"></label>
-                <input asp-for="InDirId" class="form-control" />
-                <span asp-validation-for="InDirId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <a class="btn btn-outline-info" asp-action="Index"><< @Localizer["Back"]</a>
+                <input type="submit" value="@Localizer["Save"]" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

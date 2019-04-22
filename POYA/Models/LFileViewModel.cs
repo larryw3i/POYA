@@ -17,10 +17,16 @@ namespace POYA.Models
         /// It is shared if SharedCode isn't Guid.Empty
         /// </summary>
         public Guid SharedCode { get; set; } = Guid.Empty;
+        /// <summary>
+        /// The default value is DateTimeOffset.Now
+        /// </summary>
         [Display(Name="Date")]
         public DateTimeOffset DOGenerating { get; set; } = DateTimeOffset.Now;
         [Display(Name="Name")]
         public string Name { get; set; }
+        /// <summary>
+        /// The defaut value is Guid.Empty
+        /// </summary>
         public Guid InDirId { get; set; } = Guid.Empty;
         public string ContentType { get; set; }
         /// <summary>
@@ -39,8 +45,14 @@ namespace POYA.Models
         public Guid Id { get; set; } = Guid.NewGuid();
         [Display(Name="Directory")]
         public string Name { get; set; }
+        /// <summary>
+        /// The default value is DateTimeOffset.Now
+        /// </summary>
         [Display(Name ="Date")]
         public DateTimeOffset DOCreate { get; set; } = DateTimeOffset.Now;
+        /// <summary>
+        /// The default value is Guid.Empty
+        /// </summary>
         public Guid InDirId { get; set; } = Guid.Empty;
         public string UserId { get; set; }
         [NotMapped]
@@ -63,7 +75,13 @@ namespace POYA.Models
     }
 
     //<<<<<<<<<<<<<<<<<<<<<<<<<<<SEPARATOR>>>>>>>>>>>>>>>>>>>//
-
+    public class MediaType
+    {
+        //  Name,Template,Reference
+        public string Name { get; set; }
+        public string Template { get; set; }
+        public string Reference { get; set; }
+    }
     public class ContrastMD5
     {
         public Guid InDirId { get; set; } = Guid.Empty;

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Nukepayload2.Csv;
+using POYA.Models;
 using POYA.Unities.Services;
 using System;
 using System.Collections.Generic;
@@ -111,6 +113,12 @@ namespace POYA.Unities.Helpers
             return sb.ToString();
         }
 
+        public string GetMime(string FileExtension, IHostingEnvironment env)
+        {
+            var _CSV =  System.IO.File.ReadAllTextAsync(env.ContentRootPath+"/Data/MIME").GetAwaiter().GetResult();
+            var converted = CsvConvert.DeserializeObject<MediaType>(csv);
+
+        }
     }
 
 }

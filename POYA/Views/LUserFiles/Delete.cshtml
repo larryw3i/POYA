@@ -12,6 +12,7 @@
     <h4>LUserFile</h4>
     <hr />
     <dl class="row">
+        @*
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.MD5)
         </dt>
@@ -30,6 +31,7 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.SharedCode)
         </dd>
+            *@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DOGenerating)
         </dt>
@@ -42,18 +44,20 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
+        @*
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.InDirId)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.InDirId)
         </dd>
+            *@
     </dl>
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index"><< @Localizer["Back"]</a>
+        <input type="submit" value="Delete" class="btn btn-danger" /> 
     </form>
 </div>
 

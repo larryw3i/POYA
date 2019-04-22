@@ -69,13 +69,15 @@ namespace POYA.Controllers
             var _LFiles = await _context.LFile.ToListAsync();
             var _LUserFiles = await _context.LUserFile.ToListAsync();
             //  Console.WriteLine("File >> "+JsonConvert.SerializeObject(_LFiles));
-            _LFiles.ForEach(f=> {
+            _LFiles.ForEach(f =>
+            {
                 if (!_FileNames.Contains(f.MD5))
                 {
                     _context.LFile.Remove(f);
                 }
             });
-            _LUserFiles.ForEach(f => {
+            _LUserFiles.ForEach(f =>
+            {
                 if (!_FileNames.Contains(f.MD5))
                 {
                     _context.LUserFile.Remove(f);
@@ -112,32 +114,10 @@ namespace POYA.Controllers
             return View(lUserFile);
         }
 
-        public async Task<IActionResult> GetFile(Guid? id)
-        {
-            if (id == null)
-            {
-                return NoContent();
-            }
-            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var _LUserFile = await _context.LUserFile.Select(p => new { p.MD5, p.Id, p.SharedCode, p.Name, p.UserId, p.ContentType })
-                .FirstOrDefaultAsync(p => (p.Id == id && p.UserId == _UserId) || p.SharedCode == id);
-            if (_LUserFile == null )
-            {
-                return NoContent();
-            }
-            var _FilePath = _x_DOVEHelper.FileStoragePath(_hostingEnv) + _LUserFile.MD5;
-            if (!System.IO.File.Exists(_FilePath))
-            {
-                return NoContent();
-            }
-            var FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath);
-            return File(FileBytes, _LUserFile.ContentType ,_LUserFile.Name);
-        }
-
         // GET: LUserFiles/Create
         public IActionResult Create(Guid? InDirId)
         {
-            ViewData[nameof(InDirId)] = InDirId?? Guid.Empty;
+            ViewData[nameof(InDirId)] = InDirId ?? Guid.Empty;
             return View();
         }
 
@@ -169,15 +149,15 @@ namespace POYA.Controllers
                     UserId = UserId_,
                     MD5 = MD5_,
                     InDirId = _LFilePost.InDirId,
-                    Name = _LFilePost._LFile.FileName, 
-                     ContentType=_LFilePost._LFile.ContentType
+                    Name = _LFilePost._LFile.FileName,
+                    ContentType = _LFilePost._LFile.ContentType ?? "text/plain"
                 });
                 await _context.SaveChangesAsync();
+                return Ok(_LFilePost.Id);
             }
             // process uploaded files
             // Don't rely on or trust the FileName property without validation.
-
-            return Ok(_LFilePost.Id);
+            return Ok();
             #region
             /*
             if (ModelState.IsValid)
@@ -190,28 +170,6 @@ namespace POYA.Controllers
             */
             //      return Ok();     //   View(lUserFile);
             #endregion
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ContrastMD5(ContrastMD5 _ContrastMD5)
-        {
-            Console.WriteLine(">>>>"+JsonConvert.SerializeObject(_ContrastMD5));
-            //  System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(_ContrastMD5));
-            var ContrastResult = new List<int>();
-            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            foreach (var i in _ContrastMD5.File8MD5s)
-            {
-                if (await _context.LFile.AnyAsync(p => p.MD5 == i.MD5))
-                {
-                    await _context.LUserFile.AddAsync(
-                        new LUserFile { InDirId = _ContrastMD5.InDirId, MD5 = i.MD5, Name = i.FileName, UserId = UserId_ }
-                        );
-                    ContrastResult.Add(i.Id);
-                }
-                await _context.SaveChangesAsync();
-            }
-            return Json(ContrastResult);
         }
 
         // GET: LUserFiles/Edit/5
@@ -235,7 +193,7 @@ namespace POYA.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,MD5,UserId,SharedCode,DOGenerating,Name,InDirId")] LUserFile lUserFile)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name")] LUserFile lUserFile)
         {
             if (id != lUserFile.Id)
             {
@@ -246,7 +204,11 @@ namespace POYA.Controllers
             {
                 try
                 {
-                    _context.Update(lUserFile);
+                    var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+                    var _lUserFile = await _context.LUserFile.FirstOrDefaultAsync(p=>p.Id==lUserFile.Id && p.UserId==UserId_);
+                    _lUserFile.Name = lUserFile.Name;
+                    //  _lUserFile.ContentType = new Mime().Lookup(lUserFile.Name);
+                    _context.Update(_lUserFile);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -286,7 +248,7 @@ namespace POYA.Controllers
         }
 
         // POST: LUserFiles/Delete/5
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
@@ -306,5 +268,78 @@ namespace POYA.Controllers
         {
             return _context.LUserFile.Any(e => e.Id == id);
         }
+
+        #region DEPOLLUTION
+
+        #region INDEX
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ContrastMD5(ContrastMD5 _ContrastMD5)
+        {
+            Console.WriteLine(">>>>" + JsonConvert.SerializeObject(_ContrastMD5));
+            //  System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(_ContrastMD5));
+            var ContrastResult = new List<int>();
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            foreach (var i in _ContrastMD5.File8MD5s)
+            {
+                if (await _context.LFile.AnyAsync(p => p.MD5 == i.MD5))
+                {
+                    await _context.LUserFile.AddAsync(
+                        new LUserFile {
+                            InDirId = _ContrastMD5.InDirId,
+                            MD5 = i.MD5,
+                            Name = i.FileName,
+                            UserId = UserId_ ,
+                            //  ContentType =new Mime().Lookup(i.FileName)
+                        });
+                    ContrastResult.Add(i.Id);
+                }
+                await _context.SaveChangesAsync();
+            }
+            return Json(ContrastResult);
+        }
+
+
+        public async Task<IActionResult> GetFile(Guid? id)
+        {
+            if (id == null)
+            {
+                return NoContent();
+            }
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var _LUserFile = await _context.LUserFile.Select(p => new { p.MD5, p.Id, p.SharedCode, p.Name, p.UserId, p.ContentType })
+                .FirstOrDefaultAsync(p => (p.Id == id && p.UserId == _UserId) || p.SharedCode == id);
+            if (_LUserFile == null)
+            {
+                return NoContent();
+            }
+            var _FilePath = _x_DOVEHelper.FileStoragePath(_hostingEnv) + _LUserFile.MD5;
+            if (!System.IO.File.Exists(_FilePath))
+            {
+                return NoContent();
+            }
+            var FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath);
+            return File(FileBytes, _LUserFile.ContentType, _LUserFile.Name, true);
+        }
+
+        #endregion
+        #region CREATE
+        /// <summary>
+        /// The new upload interface, be aimed at more simple, more effectivity
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> UploadFile()
+        {
+            return NoContent();
+        }
+
+        #endregion
+        #region EDIT
+        #endregion
+        #region DELETE
+        #endregion
+
+        #endregion
     }
 }
