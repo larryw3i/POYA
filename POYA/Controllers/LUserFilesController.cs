@@ -35,7 +35,9 @@ namespace POYA.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LUserFilesController> _logger;
         private readonly IAntiforgery _antiforgery;
+        private readonly MimeHelper _mimeHelper;
         public LUserFilesController(
+            MimeHelper mimeHelper,
             IAntiforgery antiforgery,
             ILogger<LUserFilesController> logger,
             SignInManager<IdentityUser> signInManager,
@@ -55,6 +57,7 @@ namespace POYA.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
+            _mimeHelper = mimeHelper;
         }
         #endregion
 
@@ -202,14 +205,17 @@ namespace POYA.Controllers
 
             if (ModelState.IsValid)
             {
+                var InDirId = Guid.Empty;
                 try
                 {
                     var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-                    var _lUserFile = await _context.LUserFile.FirstOrDefaultAsync(p=>p.Id==lUserFile.Id && p.UserId==UserId_);
+                    var _lUserFile = await _context.LUserFile.FirstOrDefaultAsync(p => p.Id == lUserFile.Id && p.UserId == UserId_);
                     _lUserFile.Name = lUserFile.Name;
+                    _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name, _hostingEnv).Last();
                     //  _lUserFile.ContentType = new Mime().Lookup(lUserFile.Name);
                     _context.Update(_lUserFile);
                     await _context.SaveChangesAsync();
+                    InDirId = _lUserFile.InDirId;
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -222,7 +228,7 @@ namespace POYA.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { InDirId});
             }
             return View(lUserFile);
         }
@@ -244,7 +250,7 @@ namespace POYA.Controllers
                 return NotFound();
             }
 
-            return PartialView(lUserFile);
+            return View(lUserFile);
         }
 
         // POST: LUserFiles/Delete/5
@@ -258,10 +264,11 @@ namespace POYA.Controllers
             {
                 return NotFound();
             }
+            var InDirId = lUserFile.InDirId;
             _context.LUserFile.Remove(lUserFile);
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));   //  Ok();     // 
+            return RedirectToAction(nameof(Index),new { InDirId});   //  Ok();     // 
         }
 
         private bool LUserFileExists(Guid id)
@@ -291,7 +298,7 @@ namespace POYA.Controllers
                             MD5 = i.MD5,
                             Name = i.FileName,
                             UserId = UserId_ ,
-                            //  ContentType =new Mime().Lookup(i.FileName)
+                            ContentType =_mimeHelper.GetMime(i.FileName,_hostingEnv).Last()
                         });
                     ContrastResult.Add(i.Id);
                 }

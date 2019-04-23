@@ -113,12 +113,26 @@ namespace POYA.Unities.Helpers
             return sb.ToString();
         }
 
-        public string GetMime(string FileExtension, IHostingEnvironment env)
+        
+    }
+    public class MimeHelper
+    {
+        public List<string> GetMime(string FileExtension, IHostingEnvironment env)
         {
-            var _CSV =  System.IO.File.ReadAllTextAsync(env.ContentRootPath+"/Data/MIME").GetAwaiter().GetResult();
-            var converted = CsvConvert.DeserializeObject<MediaType>(csv);
-
+            var _CSV = System.IO.File.ReadAllTextAsync(env.ContentRootPath + "/Data/MIME/all_mime.csv").GetAwaiter().GetResult();
+            var MediaTypes = CsvConvert.DeserializeObject<MediaType>(_CSV);
+            FileExtension = FileExtension.Contains(".") ? FileExtension.Split(".").LastOrDefault() : FileExtension;
+            //  Console.WriteLine(JsonConvert.SerializeObject(MediaTypes));
+            var MediaTypeList = MediaTypes.ToList();
+            var _MediaTypes = MediaTypeList.Where(p => p.Name == FileExtension).Select(p => p.Template).ToList(); // "text/plain";
+            //  _MediaTypes = _MediaTypes.Count() < 1 ? "text/plain" : _MediaTypes;
+            if (_MediaTypes.Count() < 1)
+            {
+                _MediaTypes.Add("text/plain");
+            }
+            return _MediaTypes;
         }
+
     }
 
 }

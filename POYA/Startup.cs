@@ -120,6 +120,7 @@ namespace POYA
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddSingleton<HtmlSanitizer>(new HtmlSanitizer());
             services.AddSingleton<X_DOVEHelper>(x_DOVEHelper);
+            services.AddSingleton<MimeHelper>(new MimeHelper());
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSession();
             #region
