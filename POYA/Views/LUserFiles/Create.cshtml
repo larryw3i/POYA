@@ -45,7 +45,7 @@
             });
             $("#UploadA").on("click", function () {
                 if ($("[name='FileInput']").length < 1) return;
-                _Service.ContrastMD58UploadFiles();
+                _Service.CheckMD58UploadFiles();
                 event.preventDefault();
             });
         });
@@ -124,7 +124,7 @@
 
         function Service() {
 
-            this.ContrastMD58UploadFiles = () => {
+            this.CheckMD58UploadFiles = () => {
                 if (MD5Array.length < 1) return;
                 if (document.getElementsByName("FileInput").length < 1) return;
                 var File8MD5s = new Array();
@@ -135,7 +135,7 @@
                 });
                 console.log(File8MD5s);
                 $.ajax({
-                    url: "@(Url.Action("ContrastMD5"))",
+                    url: "@(Url.Action("CheckMD5"))",
                     type: "POST",
                     data: {
                         _ContrastMD5: {
@@ -158,6 +158,9 @@
                             _UI.UpdateProgress(value,"&radic;" )
                         });
                         _Service.UploadFile();
+                    },
+                    error: function () {
+                        _UI.MakeAlert();
                     }
                 });
             };
@@ -234,7 +237,7 @@
             */
             this.GetMD58AddToArray = (Id) => {
                 var File_ = document.getElementById(_Value.FileInput(Id)).files[0];
-                if (File_.size > (_Value.FileLimit) * 1024 * 1024) {
+                if (File_.size > 134217728) {   //  (_Value.FileLimit) * 1024 * 1024
                     _UI.FileTooLargeRemoveFileDIV();
                     return;
                 }

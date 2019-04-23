@@ -212,7 +212,7 @@ namespace POYA.Controllers
                     var _lUserFile = await _context.LUserFile.FirstOrDefaultAsync(p => p.Id == lUserFile.Id && p.UserId == UserId_);
                     _lUserFile.Name = lUserFile.Name;
                     _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name, _hostingEnv).Last();
-                    //  _lUserFile.ContentType = new Mime().Lookup(lUserFile.Name);
+                    //  _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name).Last();   // new Mime().Lookup(lUserFile.Name);
                     _context.Update(_lUserFile);
                     await _context.SaveChangesAsync();
                     InDirId = _lUserFile.InDirId;
@@ -282,9 +282,9 @@ namespace POYA.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ContrastMD5(ContrastMD5 _ContrastMD5)
+        public async Task<IActionResult> CheckMD5(ContrastMD5 _ContrastMD5)
         {
-            Console.WriteLine(">>>>" + JsonConvert.SerializeObject(_ContrastMD5));
+            //  Console.WriteLine(">>>>" + JsonConvert.SerializeObject(_ContrastMD5));
             //  System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(_ContrastMD5));
             var ContrastResult = new List<int>();
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
@@ -330,16 +330,39 @@ namespace POYA.Controllers
             return File(FileBytes, _LUserFile.ContentType, _LUserFile.Name, true);
         }
 
-        #endregion
-        #region CREATE
+        /*
         /// <summary>
-        /// The new upload interface, be aimed at more simple, more effectivity
+        /// The new interface of Contrastting MD5,  be aimed at more simple, more effectivity
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> UploadFile()
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> CheckMd5()
         {
             return NoContent();
         }
+        */
+        #endregion
+        #region CREATE
+
+        /*
+        public async Task<IActionResult> UploadFile(Guid? InDirId)
+        {
+            InDirId = InDirId ?? Guid.Empty;
+            return NoContent();
+        }
+
+        /// <summary>
+        /// The new upload file interface, be aimed at more simple, more effectivity
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> UploadFile([FromForm] LUserFile lUserFile)
+        {
+            return NoContent();
+        }
+        */
 
         #endregion
         #region EDIT

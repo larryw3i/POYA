@@ -23,6 +23,7 @@
               integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/img/chat_with_friends_ico.png" rel="icon" type="image/x-ico">
     @RenderSection("Styles", required: false)
 </head>
 <body id="_body" style="background-color:@_THEME">
@@ -40,6 +41,9 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " asp-area="" asp-controller="EduHub" asp-action="Index">@Localizer["EduHub"]</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="LUserFiles" asp-action="Index">@Localizer["Storage"]</a>

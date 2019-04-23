@@ -33,8 +33,8 @@
 </div>
 <div>
     @*
-                    <a asp-action="Edit" asp-controller="LDirs"  asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@d.Id" title="@Localizer["Edit"]">&#9997;</a>    
+        <a asp-action="Edit" asp-controller="LDirs"  asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@d.Id" title="@Localizer["Edit"]">&#9997;</a>
     *@
-    <a asp-action="Edit" asp-route-id="@Model.Id" asp-route-ReturnUrl="@Model.ReturnUrl"  title="@Localizer["Edit"]">Edit</a> |
-    <a asp-action="Index" asp-controller="LUserFiles" asp-route-InDirId="@(Model.InDirId)">Back to List</a>
+    <a asp-action="Index" asp-controller="LUserFiles" asp-route-InDirId="@(Model.InDirId)" class="btn btn-outline-info"><< @Localizer["Back"]</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" asp-route-ReturnUrl="@Model.ReturnUrl" title="@Localizer["Edit"]" class="btn btn-outline-primary">Edit</a>
 </div>

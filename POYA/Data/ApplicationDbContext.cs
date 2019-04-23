@@ -16,6 +16,11 @@ namespace POYA.Data
         public DbSet<POYA.Models.LUserFile> LUserFile { get; set; }
         public DbSet<POYA.Models.LFile> LFile { get; set; }
         public DbSet<POYA.Models.LDir> LDir { get; set; }
+        public DbSet<POYA.Models.EduHubArticle> EduHubArticle { get; set; }
+        public DbSet<POYA.Models.EduHubVideo> EduHubVideo { get; set; }
+        public DbSet<POYA.Models.EduHubSubject> EduHubSubject { get; set; }
+        public DbSet<POYA.Models.EduHubType> EduHubType { get; set; }
+        public DbSet<POYA.Models.EduHubGrade> EduHubGrade { get; set; }
         /*
         public DbSet<POYA.Models.X_doveUserFileTag> X_doveUserFileTag { get; set; }
         public DbSet<POYA.Models.X_doveFile>  X_DoveFiles { get; set; }

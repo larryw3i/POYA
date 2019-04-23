@@ -668,4 +668,85 @@
   <data name="The files or directories you share" xml:space="preserve">
     <value>你分享的文件和文件夹</value>
   </data>
+  <data name="Storage" xml:space="preserve">
+    <value>储存</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>查看</value>
+  </data>
+  <data name="Add dir" xml:space="preserve">
+    <value>添加目录</value>
+  </data>
+  <data name="Oops...., the size of avatar should be less than 1M" xml:space="preserve">
+    <value>头像要小于1M哦</value>
+  </data>
+  <data name="An error has occurred. . . , engineers are on their way" xml:space="preserve">
+    <value>哎呀! 出错了... 工程师正在赶来</value>
+  </data>
+  <data name="Your avatar upload successfully" xml:space="preserve">
+    <value>头像上传成功</value>
+  </data>
+  <data name="Your information" xml:space="preserve">
+    <value>个人简介</value>
+  </data>
+  <data name="Your info" xml:space="preserve">
+    <value>个人简介</value>
+  </data>
+  <data name="View shared file or directory" xml:space="preserve">
+    <value>查看你分享的文件和目录</value>
+  </data>
+  <data name="Your data. . ." xml:space="preserve">
+    <value>你的数据</value>
+  </data>
+  <data name="Basic Profile" xml:space="preserve">
+    <value>基础信息</value>
+  </data>
+  <data name="This directory is empty" xml:space="preserve">
+    <value>文件夹是空的</value>
+  </data>
+  <data name="(^_^) You are rebot maybe! take a rest please" xml:space="preserve">
+    <value>($_$), 不行, 好像你是机械人, 休息一下吧!</value>
+  </data>
+  <data name="Get {0} shared from your friend" xml:space="preserve">
+    <value>你朋友分享的{0}</value>
+  </data>
+  <data name="FoDId" xml:space="preserve">
+    <value>文件/目录ID</value>
+  </data>
+  <data name="Get directory or file shared from your friend" xml:space="preserve">
+    <value>获取分享的文件/目录</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>新建</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>日期</value>
+  </data>
+  <data name="Birth date" xml:space="preserve">
+    <value>出生日期</value>
+  </data>
+  <data name="Overt" xml:space="preserve">
+    <value>公开</value>
+  </data>
+  <data name="Hobby" xml:space="preserve">
+    <value>爱好</value>
+  </data>
+  <data name="Your hometown" xml:space="preserve">
+    <value>家乡</value>
+  </data>
+  <data name="Your address" xml:space="preserve">
+    <value>联系地址</value>
+  </data>
+  <data name="Marital status" xml:space="preserve">
+    <value>婚姻状况</value>
+  </data>
+  <data name="Graduated from" xml:space="preserve">
+    <value>毕业自</value>
+  </data>
+  <data name="Occupation" xml:space="preserve">
+    <value>工作</value>
+  </data>
 </root>

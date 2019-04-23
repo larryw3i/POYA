@@ -1,33 +1,33 @@
-﻿@model POYA.Models.LDir
+﻿@model POYA.Models.EduHubGrade
 
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h1>Create</h1>
 
-<h4>@string.Format(Localizer["Create directory for {0}"],Model.InDirName)</h4>
+<h4>EduHubGrade</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" id="CreateDirForm">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="InDirId" hidden />
-            <input asp-for="ReturnUrl" hidden />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <a asp-action="Index" asp-route-InDirId="@(Model.InDirId)" asp-controller="LUserFiles" class="btn btn-outline-info"><< @Localizer["Back"]</a>
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
-        </form> 
+        </form>
     </div>
 </div>
 
-
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

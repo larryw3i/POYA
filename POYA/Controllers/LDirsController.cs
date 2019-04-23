@@ -127,7 +127,8 @@ namespace POYA.Controllers
             }
             
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var lDir = await _context.LDir.Select(p=>new LDir { Id=p.Id, Name=p.Name,ReturnUrl=ReturnUrl ,UserId=p.UserId}).FirstOrDefaultAsync(p=>p.UserId==UserId_ && p.Id==id);
+            var lDir = await _context.LDir.Select(p=>new LDir { Id=p.Id, Name=p.Name,ReturnUrl=ReturnUrl ,UserId=p.UserId,InDirId=p.InDirId})
+                .FirstOrDefaultAsync(p=>p.UserId==UserId_ && p.Id==id);
             if (lDir == null)
             {
                 return NotFound();

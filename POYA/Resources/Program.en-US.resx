@@ -713,4 +713,40 @@
   <data name="View" xml:space="preserve">
     <value>View</value>
   </data>
+  <data name="Storage" xml:space="preserve">
+    <value>Storage</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Birth date" xml:space="preserve">
+    <value>Birth date</value>
+  </data>
+  <data name="Overt" xml:space="preserve">
+    <value>Overt</value>
+  </data>
+  <data name="Hobby" xml:space="preserve">
+    <value>Hobby</value>
+  </data>
+  <data name="Your hometown" xml:space="preserve">
+    <value>Your hometown</value>
+  </data>
+  <data name="Your address" xml:space="preserve">
+    <value>Your address</value>
+  </data>
+  <data name="Marital status" xml:space="preserve">
+    <value>Marital status</value>
+  </data>
+  <data name="Graduated from" xml:space="preserve">
+    <value>Graduated from</value>
+  </data>
+  <data name="Occupation" xml:space="preserve">
+    <value>Occupation</value>
+  </data>
 </root>

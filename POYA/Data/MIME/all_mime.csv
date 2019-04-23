@@ -1789,3 +1789,5 @@ vnd.vivo,video/vnd.vivo,[John_Wolfe]
 VP8,video/VP8,[RFC7741]
 
 webm,video/webm,[custom]
+mkv,video/x-matroska,[custom]
+md,text/markdown,[custom]

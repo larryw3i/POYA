@@ -39,6 +39,7 @@ namespace POYA.Models
         /// </summary>
         [NotMapped]
         public IFormFile LFormFile { get; set; }
+        public bool IsLegal { get; set; } = true;
     }
     public class LDir
     {
@@ -74,6 +75,8 @@ namespace POYA.Models
         public string MD5 { get; set; }
     }
 
+    #region DEPOLLUTION
+
     //<<<<<<<<<<<<<<<<<<<<<<<<<<<SEPARATOR>>>>>>>>>>>>>>>>>>>//
     public class MediaType
     {
@@ -104,4 +107,5 @@ namespace POYA.Models
         public IFormFile _LFile { get; set; }
         public Guid InDirId { get; set; }
     }
+    #endregion
 }
