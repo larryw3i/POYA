@@ -237,7 +237,7 @@
             */
             this.GetMD58AddToArray = (Id) => {
                 var File_ = document.getElementById(_Value.FileInput(Id)).files[0];
-                if (File_.size > 134217728) {   //  (_Value.FileLimit) * 1024 * 1024
+                if (File_.size > _Value.MaxMultipartBodyLength) {   //  (_Value.FileLimit) * 1024 * 1024
                     _UI.FileTooLargeRemoveFileDIV();
                     return;
                 }
@@ -287,15 +287,15 @@
         }
 
         function Value() {
-
+            this.MaxMultipartBodyLength = 134217728;
             this.InDirId = "@ViewData["InDirId"]";
             this.L_XSRF_TOKEN = "@(csrf.GetAndStoreTokens(Context).RequestToken)";
             this.FileIsSelected = "The file is selected";
             /**
              * In M byte
              */
-            this.FileLimit =200;
-            this.FileIsTooLarge = "<strong>Oops. . .</strong> File is limit to less than " + this.FileLimit+"M";
+            this.FileLimit = 200;
+            this.FileIsTooLarge = "<strong>Oops. . .</strong> File is limit to less than " + this.MaxMultipartBodyLength/(1024*1024) + "M";
             this.RemoveFileDIV = (Id = $.guid++) => "RemoveFileDIV" + Id;
             this.FileName = (Id = $.guid++) => 'FileName_' + Id;
             this.UploadProgress = (Id = $.guid++) => 'UploadProgress' + Id;

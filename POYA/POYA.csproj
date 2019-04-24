@@ -12,24 +12,44 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Views\EduHubArticles\**" />
+    <Compile Remove="Views\EduHubGrades\**" />
+    <Compile Remove="Views\EduHubSubjects\**" />
+    <Compile Remove="Views\EduHubTypes\**" />
+    <Compile Remove="Views\EduHubVideos\**" />
     <Compile Remove="Views\SharedDs\**" />
     <Compile Remove="Views\SharedFs\**" />
     <Compile Remove="Views\ShareFoDs\**" />
     <Compile Remove="Views\X_doveDirectories\**" />
     <Compile Remove="Views\X_doveFiles\**" />
     <Compile Remove="Views\__LUserFiles\**" />
+    <Content Remove="Views\EduHubArticles\**" />
+    <Content Remove="Views\EduHubGrades\**" />
+    <Content Remove="Views\EduHubSubjects\**" />
+    <Content Remove="Views\EduHubTypes\**" />
+    <Content Remove="Views\EduHubVideos\**" />
     <Content Remove="Views\SharedDs\**" />
     <Content Remove="Views\SharedFs\**" />
     <Content Remove="Views\ShareFoDs\**" />
     <Content Remove="Views\X_doveDirectories\**" />
     <Content Remove="Views\X_doveFiles\**" />
     <Content Remove="Views\__LUserFiles\**" />
+    <EmbeddedResource Remove="Views\EduHubArticles\**" />
+    <EmbeddedResource Remove="Views\EduHubGrades\**" />
+    <EmbeddedResource Remove="Views\EduHubSubjects\**" />
+    <EmbeddedResource Remove="Views\EduHubTypes\**" />
+    <EmbeddedResource Remove="Views\EduHubVideos\**" />
     <EmbeddedResource Remove="Views\SharedDs\**" />
     <EmbeddedResource Remove="Views\SharedFs\**" />
     <EmbeddedResource Remove="Views\ShareFoDs\**" />
     <EmbeddedResource Remove="Views\X_doveDirectories\**" />
     <EmbeddedResource Remove="Views\X_doveFiles\**" />
     <EmbeddedResource Remove="Views\__LUserFiles\**" />
+    <None Remove="Views\EduHubArticles\**" />
+    <None Remove="Views\EduHubGrades\**" />
+    <None Remove="Views\EduHubSubjects\**" />
+    <None Remove="Views\EduHubTypes\**" />
+    <None Remove="Views\EduHubVideos\**" />
     <None Remove="Views\SharedDs\**" />
     <None Remove="Views\SharedFs\**" />
     <None Remove="Views\ShareFoDs\**" />
@@ -38,12 +58,18 @@
     <None Remove="Views\__LUserFiles\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Controllers\EduHubArticlesController.cs" />
+    <Compile Remove="Controllers\EduHubGradesController.cs" />
+    <Compile Remove="Controllers\EduHubSubjectsController.cs" />
+    <Compile Remove="Controllers\EduHubTypesController.cs" />
+    <Compile Remove="Controllers\EduHubVideosController.cs" />
     <Compile Remove="Controllers\SharedDsController.cs" />
     <Compile Remove="Controllers\SharedFsController.cs" />
     <Compile Remove="Controllers\ShareFoDsController.cs" />
     <Compile Remove="Controllers\X_doveDirectoriesController.cs" />
     <Compile Remove="Controllers\X_doveFilesController.cs" />
     <Compile Remove="Controllers\__LUserFilesController.cs" />
+    <Compile Remove="Models\EduHubViewModel.cs" />
     <Compile Remove="Models\LDirViewModel.cs" />
     <Compile Remove="Models\SharedFDViewModel.cs" />
     <Compile Remove="Models\ShareFoDViewModel.cs" />
@@ -99,6 +125,7 @@
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\EduHub\Data\" />
     <Folder Include="Data\LFiles\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>

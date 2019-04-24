@@ -761,4 +761,10 @@
   <data name="Select file" xml:space="preserve">
     <value>Select file</value>
   </data>
+  <data name="Root" xml:space="preserve">
+    <value>Root</value>
+  </data>
+  <data name="Last" xml:space="preserve">
+    <value>Last</value>
+  </data>
 </root>

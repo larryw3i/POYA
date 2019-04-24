@@ -7,10 +7,15 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+
 namespace POYA
 {
     public class Program
     {
+        /**
+         * DOT1     FINISH ONE THING WELL BEFORE YOU DO ANOTHER
+         */
+
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
