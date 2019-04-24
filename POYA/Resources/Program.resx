@@ -749,4 +749,16 @@
   <data name="Occupation" xml:space="preserve">
     <value>Occupation</value>
   </data>
+  <data name="Your storage" xml:space="preserve">
+    <value>Your storage</value>
+  </data>
+  <data name="EduHub" xml:space="preserve">
+    <value>EduHub</value>
+  </data>
+  <data name="Developers" xml:space="preserve">
+    <value>Developers</value>
+  </data>
+  <data name="Select file" xml:space="preserve">
+    <value>Select file</value>
+  </data>
 </root>

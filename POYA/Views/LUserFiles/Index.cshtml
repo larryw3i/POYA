@@ -2,12 +2,13 @@
 @using Microsoft.AspNetCore.Http.Extensions
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = @Localizer["Your storage"]; //    "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var InDirId = ViewData["InDirId"];
     var InDirName = ViewData["InDirName"];
     var ReturnUrl = Context.Request.Path+Context.Request.QueryString;
     var LastDirId=ViewData["LastDirId"];
+
 }
 
 <h1>@Localizer["Your storage"]</h1>
