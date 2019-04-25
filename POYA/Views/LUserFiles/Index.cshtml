@@ -145,7 +145,7 @@
             };
             /**
              * Send id array to server-slide
-             * @@param element {HTMLElement} The FilCheckBox
+             * @@param {HTMLElement} element - The FilCheckBox
              */
             this.DeleteFiles = (element) => {
                 var FileIdOfElement = _HandleData.GetFileIdForDMC(element);
@@ -178,7 +178,7 @@
             };
             /**
              * The html string for popupping
-             * @@param HtmlContent{string} The html string
+             * @@param {string}  HtmlContent The html string
              */
             this.MakePopup = (HtmlContent) => {
                 $(_Value.Pop_up(HtmlContent)).insertAfter("[name='FilesTABLE']:first");
@@ -201,7 +201,7 @@
             */
             /**
              * Add or remove id in SelectedIdArray
-             * @@param element {HTMLElement} The FilCheckBox
+             * @@param {HTMLElement} element The FilCheckBox
              */
             this.HandleIdArray = (element) => {
                 if ($(element).is(':checked')) {
@@ -213,13 +213,13 @@
             };
             /**
              * Get the file id after Delete/Move/Copy is clicked
-             * @@param element{HTMLElement} The Delete/Move/Copy HTMLElement
+             * @@param {HTMLElement}  element The Delete/Move/Copy HTMLElement
              */
             this.GetFileIdForDMC = (element) => $(element).parent().attr("id").split("_")[1];
 
             /**
              * add a id to SelectedIdArray
-             * @@param Id{string} The id of file
+             * @@param {string}  Id The id of file
              */
             this.AddId = (Id) => {
                 if (!SelectedIdArray.some((value, index, array) => value == Id)) {
@@ -228,7 +228,7 @@
             };
             /**
              * Remove a id from SelectedIdArray
-             * @@param Id{string} The id of file
+             * @@param {string}  Id The id of file
              */
             this.RemoveId = (Id) => {
                 SelectedIdArray.forEach(function (value, index, array) {
@@ -245,7 +245,7 @@
             this.L_XSRF_TOKEN = "@(csrf.GetAndStoreTokens(Context).RequestToken)";
             /**
              * Pop up the content
-             * @@param PopupContent {string} The html string
+             * @@param {string}  PopupContent The html string
              */
             this.Pop_up =(PopupContent)=> '\
                             <div id="PopupDIV">\

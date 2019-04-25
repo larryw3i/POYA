@@ -1787,7 +1787,6 @@ vnd.sealedmedia.softseal.mov,video/vnd.sealedmedia.softseal.mov,[David_Petersen]
 vnd.uvvu.mp4,video/vnd.uvvu.mp4,[Michael_A_Dolan]
 vnd.vivo,video/vnd.vivo,[John_Wolfe]
 VP8,video/VP8,[RFC7741]
-
 webm,video/webm,[custom]
 mkv,video/x-matroska,[custom]
 md,text/markdown,[custom]

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace POYA.Areas.EduHub.Models
 {
-    public class EduHubVideo //  ViewModel
+    public class EVideo //  ViewModel
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public Guid UseFileId { get; set; }
@@ -14,7 +14,7 @@ namespace POYA.Areas.EduHub.Models
         public string Title { get; set; }
         public DateTimeOffset DOPublish { get; set; }
     }
-    public class EduHubArticle
+    public class EArticle
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string UserId { get; set; }
@@ -35,18 +35,18 @@ namespace POYA.Areas.EduHub.Models
     }
 
     #region DEPOLLUTION
-    public class EduHubSubject
+    public class ESubject
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; }
 
     }
-    public class EduHubGrade
+    public class EGrade
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; }
     }
-    public class EduHubType
+    public class EType
     {
         public Guid Id { get; set; } = Guid.Empty;
         public string Name { get; set; }

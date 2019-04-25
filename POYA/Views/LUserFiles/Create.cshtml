@@ -54,10 +54,10 @@
         function UI() {
             /**
              * Make a alert
-             * @@param ClassType {string} The class type >_
+             * @@param  {string}  ClassType The class type >_
              *  primary/secondary/success/info/danger/warning/dark/light
-             * @@param Message {string} The alert message
-             * @@param CloseAfter{number} Close it after {}  millisecond, default value is 2500
+             * @@param {string}  Message The alert message
+             * @@param {number}  CloseAfter Close it after {}  millisecond, default value is 2500
              */
             this.MakeAlert = (ClassType,Message,CloseAfter=2500) => {
                 $(_Value.AlertDIV(ClassType, Message)).insertBefore("[name='FileUploadROW']:last");
@@ -78,8 +78,8 @@
             };
             /**
              * Update progress
-             * @@param Id{number} The id of main div
-             * @@param Progress_{string} The progress , the percentage and the tip of finish
+             * @@param {number}  Id The id of main div
+             * @@param {string} Progress_ The progress , the percentage and the tip of finish
              */
             this.UpdateProgress = (Id = $.guid++, Progress_) => {
                 $("#" + _Value.UploadProgress(Id)).html(Progress_);
@@ -104,7 +104,7 @@
             };
             /**
              * Show or hide last RemoveFileDIV, or it leads to a poor user experience
-             * @@param IsShow{boolean} show or hide
+             * @@param {boolean} IsShow show or hide
              */
             this.ShowOrHideLastRemoveFileDIV = (IsShow) => {
                 if (IsShow) {
@@ -115,7 +115,7 @@
             };
             /**
              * Remove file input after file is "upload"
-             * @@param Id {number} The id of file div
+             * @@param  {number}  Id The id of file div
              */
             this.RemoveUploadedFileInput = (Id = $.guid++) => {
                 $("#" + _Value.FileInput(Id)).remove();
@@ -148,7 +148,7 @@
                     },
                     /**
                      * Return the Id of uploaded file
-                     * @@param IdArray{Array<number>} Uploaded id array
+                     * @@param {Array<number>} IdArray Uploaded id array
                      */
                     success: function (IdArray) {
                         console.log("Contrast>>"+IdArray);
@@ -204,7 +204,7 @@
                         },
                         /**
                          * Retuen the id
-                         * @@param Id id
+                         * @@param {number} Id The id
                          */
                         success: function (Id) {
                             console.log("Upload file>>"+Id);
@@ -220,7 +220,7 @@
         function Data() {
             /**
              * Remove the item in MD5Array
-             * @@param Id{number} The id of item(it is the id of Value.FileInfo())
+             * @@param {number} Id The id of item(it is the id of Value.FileInfo())
              */
             this.RemoveItemInMD5Array = (Id = $.guid++) => {
                 MD5Array.forEach(function (value, index, array) {
@@ -233,7 +233,7 @@
             * Get md5 of file and add it to array
             * REFERENCE    https://blog.csdn.net/liguoqingxjxcc/article/details/81664245
             * THRNK        https://blog.csdn.net/liguoqingxjxcc
-            * @@param Id{number} The id of file
+            * @@param {number} Id The id of file
             */
             this.GetMD58AddToArray = (Id) => {
                 var File_ = document.getElementById(_Value.FileInput(Id)).files[0];
@@ -303,9 +303,9 @@
             this.FileInput = (Id = $.guid++) => "FileInput_" + Id;
             /**
              * Return the alert html string
-             * @@param ClassType {string} The class type >_
+             * @@param {string} ClassType The class type >_
              *      primary/secondary/success/info/danger/warning/dark/light
-             * @@param Message {string} The message
+             * @@param  {string} Message The message
              */
             this.AlertDIV = (ClassType, Message) => '\
                                     <div class="alert alert-'+ (ClassType) + ' alert-dismissible fade show" role="alert">' + Message +'\
@@ -317,7 +317,7 @@
             
             /**
              * Return the file div message
-             * @@param Id {number} The id
+             * @@param  {number} Id The id
              */
             this.FileInfo = (Id = $.guid++) => '\
                                 <div id='+ Id + ' name="FileDIV">\

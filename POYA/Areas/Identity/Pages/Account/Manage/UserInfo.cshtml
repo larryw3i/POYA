@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col col-4 col-sm-4 col-md-3">
         <form id="_UserAvatarForm">
-            <img style="max-height:100px;max-width:100px;border-radius:50%;border:solid;border-color:#EE7AE9;box-shadow: 2px 2px 8px #EE7AE9;" />
+            <img name="UserAvatarImg" style="max-height:100px;max-width:100px;border-radius:50%;border:solid;border-color:#EE7AE9;box-shadow: 2px 2px 8px #EE7AE9;" />
             <input id="_UserAvatarInput" type="file" accept="image/*" hidden />
         </form>
         <h6 style="font-size:90%" id="_UploadAvatarMsgH"></h6>
@@ -108,38 +108,41 @@
     <script type="text/javascript">
         var IsAvatarUploaded = false;
         var _X_DOVE_XSRF_TOKEN_ = "@X_DOVE_XSRF_TOKEN";
+        @*
         var _imgUrl_ = "/Home/GetAvatar?random=" + window.cacheRefreshCode;
         var _img_tag_ = $("#_UserAvatarForm img:first");
         _img_tag_.attr("src", _imgUrl_);
-        _img_tag_.on("click", function () {
+            *@
+        $("#_UserAvatarForm img:first").on("click", function () {
             if (IsAvatarUploaded) return;
             $('#_UserAvatarInput').click();
             event.preventDefault();
-    });
-    $("#_UserAvatarInput").on("change", function () {
-        var _file_ = document.getElementById("_UserAvatarInput").files[0];
-        var _UploadAvatarMsgH_ = $("#_UploadAvatarMsgH");
-        //  console.log(_file_.size);
-        if (_file_.size > 1024 * 1024) {
-            _UploadAvatarMsgH_.text("@Localizer["Oops...., the size of avatar should be less than 1M"]");
-            return;
-        }
-        if ($("#_UserAvatarInput").val() == "") return;
-        var AvatarForm = new FormData();
-        AvatarForm.append("AvatarImgFile", _file_);
-        AvatarForm.append("X_DOVE-XSRF-TOKEN", _X_DOVE_XSRF_TOKEN_);
+        });
+        $("#_UserAvatarInput").on("change", function () {
+            var _file_ = document.getElementById("_UserAvatarInput").files[0];
+            var _UploadAvatarMsgH_ = $("#_UploadAvatarMsgH");
+            //  console.log(_file_.size);
+            if (_file_.size > 1024 * 1024) {
+                _UploadAvatarMsgH_.text("@Localizer["Oops...., the size of avatar should be less than 1M"]");
+                return;
+            }
+            if ($("#_UserAvatarInput").val() == "") return;
+            var AvatarForm = new FormData();
+            AvatarForm.append("AvatarImgFile", _file_);
+            AvatarForm.append("X_DOVE-XSRF-TOKEN", _X_DOVE_XSRF_TOKEN_);
             $.ajax({
                 url: "/Home/UploadAvatar",
                 type: "POST",
                 data: AvatarForm,
                 contentType: false,
                 processData: false,
-                dataType:"json",
+                dataType: "json",
                 success: function (data) {
                     if (data["status"] == true) {
                         //  window.cacheRefreshCode = Math.floor(Math.random() * 100 + 1);
                         _UploadAvatarMsgH_.text("@Localizer["Uploaded successfully"]!");
-                        UpdateCacheData();
+                        //  UpdateCacheData();
+                        _UI_.RefreshUserAvatar();
                         _X_DOVE_XSRF_TOKEN_ = data["x_DOVE_XSRF_TOKEN"];
                     } else {
                         _UploadAvatarMsgH_.text(data["msg"]);
@@ -152,7 +155,8 @@
             });
             $("#_UserAvatarInput").val(null);
             event.preventDefault();
-        });
+        }
+        );
     </script>
 }
 @section Styles {
