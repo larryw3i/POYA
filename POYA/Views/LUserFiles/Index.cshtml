@@ -15,7 +15,7 @@
 
 <div class="row">
     <div class="col col-8">
-        <span>@(InDirName)</span>(
+        <span class="InDirNameSpan">@(InDirName)</span>(
         @if (InDirId.ToString() != Guid.Empty.ToString())
         {
             <a asp-action="Index" asp-route-InDirId="@Guid.Empty">@Localizer["Root"]</a>
@@ -23,6 +23,8 @@
         }
         <a asp-action="Create" asp-route-InDirId="@InDirId">@Localizer["Upload"]</a>
         <a asp-action="Create" asp-controller="LDirs" asp-route-InDirId="@InDirId" asp-route-ReturnUrl="@ReturnUrl">@Localizer["New"]</a> )
+        <br />
+        <span class="_PathSpan">@ViewData["_Path"]</span>
     </div>
 
 </div>
@@ -259,10 +261,12 @@
 
 @section Styles{
     <style>
-        .row span {
+        .InDirNameSpan {
             font-size: 200%;
         }
-
+        ._PathSpan{
+            font-size: 120%;
+        }
         #CreateDir {
             cursor: pointer;
         }

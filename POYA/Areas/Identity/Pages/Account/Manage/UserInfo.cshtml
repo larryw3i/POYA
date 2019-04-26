@@ -142,7 +142,7 @@
                         //  window.cacheRefreshCode = Math.floor(Math.random() * 100 + 1);
                         _UploadAvatarMsgH_.text("@Localizer["Uploaded successfully"]!");
                         //  UpdateCacheData();
-                        _UI_.RefreshUserAvatar();
+                        _UI_.SetUserAvatar();
                         _X_DOVE_XSRF_TOKEN_ = data["x_DOVE_XSRF_TOKEN"];
                     } else {
                         _UploadAvatarMsgH_.text(data["msg"]);

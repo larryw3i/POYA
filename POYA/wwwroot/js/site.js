@@ -52,20 +52,24 @@ class UI_ {
      * - Set the src value of user avatar img tag
      * */
     SetUserAvatar() {
-        $("[name='UserAvatarImg']").attr("src", "/Home/GetAvatar?random=" + window.CacheRefreshCode);
+        //  console.log(">_ "+window.CacheRefreshCode);
+        $("[name='UserAvatarImg']").attr("src", "/Home/GetAvatar?random=" + Math.floor(Math.random() * 100 + 1));//  ?random=" + window.CacheRefreshCode);
     }
+
     /**
      * Set the value of theme select tag
      * */
     ChangeThemeTagShow() {
         $('#Theme  option[value=' + _Value_.GetTheme() + ']').attr("selected", true);
     }
+
     /**
      * Set the value of languge select tag
      * */
     ChangeLanguageTagShow() {
         $('#Language  option[value=' + _Value_.GetCulture() + ']').attr("selected", true);
     }
+
     /**
      * Change the theme
      * @param {boolean} IsGetValueFromSelectTag - Determine get the theme value from theme select tag or not, the default value is false
@@ -99,15 +103,9 @@ class UI_ {
                 break;
         }
     }
-    /**
-     * - Refresh the user avatar
-     * */
-    RefreshUserAvatar() {
-        window.CacheRefreshCode = Math.floor(Math.random() * 100 + 1);
-        $("[name='UserAvatarImg']").attr("src", "/Home/GetAvatar?random=" + window.CacheRefreshCode);
-    }
 
 }
+
 /**
  * The network access service
  * */
@@ -116,7 +114,8 @@ class Service_ {
      * - Change the language by cluture
      * */
     ChangeLanguage() {
-        var _language = $(_Value_.LanguageId + '  option:selected').val();
+        //  console.log();
+        var _language = $(_Value_.Language + " option:selected").val();
         window.CULTURE = _language;
         //  Cookies is reset after href is changed
         window.location.href = _Data_.SetQueryString(window.location.href, "culture", _language);
@@ -129,18 +128,21 @@ class Service_ {
  * */
 class Value_ {
     //  #region PROPERTY
+    constructor() {
+
     /**
-     *  "#Language"
+     *  "#Language" 
      */
-    LanguageId = "#Language";
+    this.Language = "#Language";
     /**
      * "THEME"
      */
-    THEME = "THEME";
+    this.THEME = "THEME";
     /**
      * "CULTURE"
      */
-    CULTURE = "CULTURE";
+    this.CULTURE = "CULTURE";
+    }
     //  #endregion
 
     //  #region METHOD
@@ -190,71 +192,18 @@ class Value_ {
 }
 
 
+var _Value_ = new Value_();
 var _Data_ = new Data_();
 var _UI_ = new UI_();
-var _Value_ = new Value_();
 var _Service_ = new Service_();
 
-//  $("table tbody tr td a,table thead tr th").css({ "word-break": "break-all", "word-wrap": "break-word" });
 
 $(document).ready(function () {
     _UI_.Initial();
     $("#Language").on("change", function () {
         _Service_.ChangeLanguage();
     });
-    //  $('#Theme  option[value=' + _THEME + ']').attr("selected", true);
     $("#Theme").on("change", function () {
-        _UI_.ChangeTheme(true); //  var _theme_ = $('#Theme  option:selected').val();  //  ChangeTheme(_theme_);
+        _UI_.ChangeTheme(true); 
     });
 });
-
-
-//  #region TEMPORARY
-/*
- * 
-
-
-function _UpdateCacheData() {
-    window.cacheRefreshCode = Math.floor(Math.random() * 100 + 1);
-    Cookies.set("cacheRefreshCode", window.cacheRefreshCode);
-    SetSrc();
-}
-
-function SetSrc() {
-    var _UserAvatarImg = $(".nav-item .nav-link img");
-    var _img_tag_ = $("#_UserAvatarForm img:first");
-    _imgUrl_ = "/Home/GetAvatar?random=" + String(window.cacheRefreshCode);
-    _UserAvatarImg.attr("src", _imgUrl_);
-    _img_tag_.attr("src", _imgUrl_);
-    _UserAvatarImg.on("error", function () {
-        _UserAvatarImg.attr("src", "/img/chat_with_friends_ico.png");
-        return true;
-    });
-    _img_tag_.on("error", function () {
-        _img_tag_.attr("src", "/img/chat_with_friends_ico.png");
-        return true;
-    });
-}
-
- *
-    /
-    window.cacheRefreshCode = Cookies.get("cacheRefreshCode");
-    if (window.cacheRefreshCode === undefined) {
-        window.cacheRefreshCode = Math.floor(Math.random() * 100 + 1);
-        Cookies.set("cacheRefreshCode", window.cacheRefreshCode);
-    }
-    SetSrc();
-    $(".table tbody tr td a").css({ "word-wrap": "word-wrap", "word-break": "break-all" });
-    
- * 
-var _CULTURE = window.CULTURE;
-    if (_CULTURE === undefined) {
-        _CULTURE = Cookies.get("CULTURE");
-        if (_CULTURE === undefined) {
-            _CULTURE = "zh-CN";
-        }
-        window.CULTURE = _CULTURE;
-    }
-
- */
-//  #endregion

@@ -34,7 +34,7 @@
                     @Localizer["WSUDisk"]
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span>(^_^)</span>
+                    <span><img src="~/img/collapse.webp"  style="width:28px;height:15px"/></span>
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex flex-sm-row-reverse" id="navbarSupportedContent">
                     <partial name="_LoginPartial" />
@@ -54,9 +54,11 @@
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Donate">@Localizer["Donate"]</a>
                         </li>
+                        @*
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Privacy"]</a>
                         </li>
+                        *@
                         <li class="nav-item">
                             <div class="nav-link ">
                                 <select id="Theme" name="Theme">
