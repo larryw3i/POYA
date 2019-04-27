@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Nukepayload2.Csv;
+using POYA.Data;
 using POYA.Models;
 using POYA.Unities.Services;
 using System;
@@ -32,6 +34,7 @@ namespace POYA.Unities.Helpers
         public string FileStoragePath(IHostingEnvironment env) {
             return env.ContentRootPath + $"/Data/LFiles/";
         }
+
         public async Task ErrorEventAsync(HttpContext context, IHostingEnvironment env)
         {
             var feature = context.Features.Get<IExceptionHandlerFeature>();
@@ -101,6 +104,14 @@ namespace POYA.Unities.Helpers
              */
             #endregion
         }
+
+        /// <summary>
+        /// Get the md5 of file byte array
+        /// </summary>
+        /// <param name="FileBytes">
+        /// File byte array
+        /// </param>
+        /// <returns></returns>
         public string GetFileMD5(byte[] FileBytes)
         {
             var Md5_ = MD5.Create();
@@ -113,7 +124,24 @@ namespace POYA.Unities.Helpers
             return sb.ToString();
         }
 
-        
+        /// <summary>
+        /// Get the full path of file or directory, the id is ignored if InDirId is passed
+        /// </summary>
+        /// <param name="id">The id of file or directory</param>
+        /// <param name="context">The context</param>
+        /// <param name="InDirId">The id of directory contain file or directory</param>
+        /// <returns></returns>
+        public string GetFullPathOfFileOrDir(ApplicationDbContext context, Guid InDirId)
+        {
+            var FullPath = string.Empty;
+            for (var i = 0; i < 30 && InDirId != Guid.Empty; i++)
+            {
+                var InDir =  context.LDir.Where(p => p.Id == InDirId).Select(p => new { p.InDirId, p.Name }).FirstOrDefaultAsync().GetAwaiter().GetResult();
+                FullPath = $"{InDir.Name}/{FullPath}";
+                InDirId = InDir.InDirId;
+            }
+            return $"root/{FullPath}";
+        }
     }
     public class MimeHelper
     {

@@ -5,9 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<h1>@(string.Format(Localizer["Rename for {0}"], Model.Name))<span class="directorySpan">&#128448;</span></h1>
 
-<h4>LDir</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -16,34 +15,42 @@
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="ReturnUrl" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                @*<label asp-for="Name" class="control-label"></label>*@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             @*
-            <div class="form-group">
-                <label asp-for="DOCreate" class="control-label"></label>
-                <input asp-for="DOCreate" class="form-control" />
-                <span asp-validation-for="DOCreate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InDirId" class="control-label"></label>
-                <input asp-for="InDirId" class="form-control" />
-                <span asp-validation-for="InDirId" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="DOCreate" class="control-label"></label>
+                    <input asp-for="DOCreate" class="form-control" />
+                    <span asp-validation-for="DOCreate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="InDirId" class="control-label"></label>
+                    <input asp-for="InDirId" class="form-control" />
+                    <span asp-validation-for="InDirId" class="text-danger"></span>
+                </div>
             *@
-        <div class="form-group">
-            <a asp-action="Index" asp-controller="LUserFiles" asp-route-InDirId="@(Model.InDirId)" class="btn btn-outline-info"><< @Localizer["Back"]</a>
-            <input type="submit" value="Save" class="btn btn-primary" />
-        </div>
+            <div class="form-group">
+                <a asp-action="Index" asp-controller="LUserFiles" asp-route-InDirId="@(Model.InDirId)" class="btn btn-outline-info"><< @Localizer["Back"]</a>
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
         </form>
     </div>
 </div>
 @*
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 *@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@section Styles{ 
+<style>
+    .directorySpan{
+        font-size:50%;
+    }
+</style>
 }

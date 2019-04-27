@@ -23,7 +23,7 @@
               integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
-    <link href="~/img/chat_with_friends_ico.png" rel="icon" type="image/x-ico">
+    <link href="~/img/chat_with_friends_ico.webp" rel="icon" type="image/webp">
     @RenderSection("Styles", required: false)
 </head>
 <body id="_body" style="background-color:@_THEME">
@@ -31,6 +31,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="display:inline;word-break:keep-all;white-space:nowrap">
+                    <img id="navbarMainIcon" src="~/img/chat_with_friends_ico.webp" width="30" height="30" class="d-inline-block align-top" >
                     @Localizer["WSUDisk"]
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,23 +49,23 @@
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="LUserFiles" asp-action="Index">@Localizer["Storage"]</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">@Localizer["Developers"]</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @Localizer["More"] @*<img src="~/img/collapse.webp" style="width:28px;height:15px" />*@
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">@Localizer["Developers"]</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Donate">@Localizer["Donate"]</a>
+                                <a class="dropdown-divider"></a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Privacy"]</a>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Donate">@Localizer["Donate"]</a>
-                        </li>
-                        
-                        <li class="nav-item d-none d-md-block">
-                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Privacy"]</a>
-                        </li>
-                        
                         <li class="nav-item">
                             <div class="nav-link ">
                                 <select id="Theme" name="Theme">
                                     <option value="Light">@(Localizer["Light"]) </option>
                                     <option value="Dark" selected>@(Localizer["Dark"])</option>
-                                    <option value="Care">@(Localizer["Care"])</option> 
+                                    <option value="Care">@(Localizer["Care"])</option>
                                 </select>
                             </div>
                         </li>

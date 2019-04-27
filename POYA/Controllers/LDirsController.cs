@@ -75,6 +75,8 @@ namespace POYA.Controllers
                 return NotFound();
             }
             lDir.ReturnUrl = ReturnUrl ?? Url.Content("~/"); ;
+            lDir.InDirName= (await _context.LDir.Select(p => new { p.Id, p.Name }).FirstOrDefaultAsync(p => p.Id == lDir.InDirId))?.Name ?? "root";
+            lDir.InFullPath = _x_DOVEHelper.GetFullPathOfFileOrDir(_context, lDir.InDirId);
             return View(lDir);  //   LocalRedirect(ReturnUrl); //  View(lDir);
         }
 
@@ -194,6 +196,8 @@ namespace POYA.Controllers
             {
                 return NotFound();
             }
+            lDir.InDirName = (await _context.LDir.Select(p => new { p.Id, p.Name }).FirstOrDefaultAsync(p => p.Id == lDir.InDirId))?.Name ?? "root";
+            lDir.InFullPath = _x_DOVEHelper.GetFullPathOfFileOrDir(_context, lDir.InDirId);
 
             return View(lDir);
         }
@@ -219,5 +223,9 @@ namespace POYA.Controllers
         {
             return _context.LDir.Any(e => e.Id == id);
         }
+
+        #region DEPOLLUTION
+
+        #endregion
     }
 }

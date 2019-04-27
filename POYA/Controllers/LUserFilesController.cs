@@ -98,13 +98,7 @@ namespace POYA.Controllers
                 : await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.InDirId).FirstOrDefaultAsync();
             var LDirs = await _context.LDir.Where(p => p.InDirId == InDirId && p.UserId == UserId_).ToListAsync();
             ViewData[nameof(LDirs)] = LDirs;
-            for(var i = 0; i < 30 && InDirId != Guid.Empty; i++)
-            {
-                var InDir = await _context.LDir.Where(p => p.Id == InDirId).Select(p => new { p.InDirId, p.Name }).FirstOrDefaultAsync();
-                _Path = $"{InDir.Name}/{_Path}";
-                InDirId = InDir.InDirId;
-            }
-            ViewData[nameof(_Path)] = $"root/{_Path}";
+            ViewData[nameof(_Path)] = _x_DOVEHelper.GetFullPathOfFileOrDir(context: _context,InDirId: InDirId??Guid.Empty);    //    $"root/{_Path}";
             return View(LUserFile_);
         }
 

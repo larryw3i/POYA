@@ -44,12 +44,12 @@ namespace POYA.Models
     public class LDir
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        [Display(Name="Directory")]
+        [Display(Name = "Directory")]
         public string Name { get; set; }
         /// <summary>
         /// The default value is DateTimeOffset.Now
         /// </summary>
-        [Display(Name ="Date")]
+        [Display(Name = "Date")]
         public DateTimeOffset DOCreate { get; set; } = DateTimeOffset.Now;
         /// <summary>
         /// The default value is Guid.Empty
@@ -60,6 +60,8 @@ namespace POYA.Models
         public string InDirName { get; set; }
         [NotMapped]
         public string ReturnUrl { get; set; } = null;
+        [NotMapped]
+        public string InFullPath { get; set; } = "root";
     }
     public class LFile
     {

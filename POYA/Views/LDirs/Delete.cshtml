@@ -7,44 +7,48 @@
 
 <h1>Delete</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>@(string.Format(Localizer["Are you sure you want to delete {0}"], Model.Name))<span class="directorySpan">&#128448;</span>?</h3>
 <div>
-    <h4>LDir</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DOCreate)
+        <dt class="col-sm-2">
+            @*@Html.DisplayNameFor(model => model.DOCreate)*@
+            @Localizer["Date of making"]
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DOCreate)
+        <dd class="col-sm-10">
+            @(Model.DOCreate.ToLocalTime())
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.InDirId)
+        <dt class="col-sm-2">
+            @(Localizer["In directory"])
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.InDirId)
+        <dd class="col-sm-10">
+            @(Html.DisplayFor(model => model.InDirName)) ( <span class="InFullPathSpan">@Model.InFullPath</span> )
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="ReturnUrl" />
-        <a class="btn btn-outline-info" id="Back"><< @Localizer["Back"]</a>   
-        <input type="submit" value="Delete" class="btn btn-danger" /> 
+        <a class="btn btn-outline-info" id="Back"><< @Localizer["Back"]</a>
+        <input type="submit" value="Delete" class="btn btn-danger" />
         @*<a asp-action="Index">Back to List</a>*@
     </form>
 </div>
 
-@section Scripts{ 
-<script>
-    $("#Back").on("click", function () {
-        window.history.go(-1);
-    });
-</script>
+@section Scripts{
+    <script>
+        $("#Back").on("click", function () {
+            window.history.go(-1);
+        });
+    </script>
+}
+@section Styles{
+    <style>
+    </style>
 }
