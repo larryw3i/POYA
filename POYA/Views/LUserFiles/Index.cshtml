@@ -6,8 +6,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var InDirId = ViewData["InDirId"];
     var InDirName = ViewData["InDirName"];
-    var ReturnUrl = Context.Request.Path+Context.Request.QueryString;
-    var LastDirId=ViewData["LastDirId"];
+    var ReturnUrl = Context.Request.Path + Context.Request.QueryString;
+    var LastDirId = ViewData["LastDirId"];
 
 }
 
@@ -70,8 +70,8 @@
                     <a asp-action="Details" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@d.Id" title="@Localizer["Details"]">&#9749;</a>
                     <a asp-action="Delete" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@d.Id" title="@Localizer["Delete"]">&#10008;</a>
                     @*
-                    <a asp-action="Move" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@(d.Id)" title="@Localizer["Move"]">&#9986;</a>
-                    <a asp-action="Copy" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@(d.Id)" title="@Localizer["Copy"]">&#9903;</a>  
+                        <a asp-action="Move" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@(d.Id)" title="@Localizer["Move"]">&#9986;</a>
+                        <a asp-action="Copy" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@(d.Id)" title="@Localizer["Copy"]">&#9903;</a>
                     *@
                 </td>
             </tr>
@@ -96,9 +96,9 @@
                     <a asp-action="Details" asp-route-id="@item.Id" title="@Localizer["Details"]">&#9749;</a>
                     <a asp-action="Delete" asp-route-id="@item.Id" title="@Localizer["Delete"]">&#10008;</a>
                     @*
-        <a asp-action="Move" asp-route-id="@(item.Id)" title="@Localizer["Move"]">&#9986;</a>
-        <a asp-action="Copy" asp-route-id="@(item.Id)" title="@Localizer["Copy"]">&#9903;</a>
-                        *@
+                        <a asp-action="Move" asp-route-id="@(item.Id)" title="@Localizer["Move"]">&#9986;</a>
+                        <a asp-action="Copy" asp-route-id="@(item.Id)" title="@Localizer["Copy"]">&#9903;</a>
+                    *@
                 </td>
             </tr>
         }
@@ -264,9 +264,11 @@
         .InDirNameSpan {
             font-size: 200%;
         }
-        ._PathSpan{
+
+        ._PathSpan {
             font-size: 120%;
         }
+
         #CreateDir {
             cursor: pointer;
         }

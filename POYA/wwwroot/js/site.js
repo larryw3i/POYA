@@ -39,15 +39,18 @@ class Data_ {
  * Handle UI
  * */
 class UI_ {
+
     /**
      * - Initialize some UI
      * */
     Initial() {
-        this.ChangeTheme(false);    //    _Value_.GetTheme());
+        this.ChangeTheme(false); 
         this.ChangeLanguageTagShow();
         this.ChangeThemeTagShow();
         this.SetUserAvatar();
+        this.SetTableContentWrapBreak();
     }
+
     /**
      * - Set the src value of user avatar img tag
      * */
@@ -57,14 +60,14 @@ class UI_ {
     }
 
     /**
-     * Set the value of theme select tag
+     * - Set the value of theme select tag
      * */
     ChangeThemeTagShow() {
         $('#Theme  option[value=' + _Value_.GetTheme() + ']').attr("selected", true);
     }
 
     /**
-     * Set the value of languge select tag
+     * - Set the value of languge select tag
      * */
     ChangeLanguageTagShow() {
         $('#Language  option[value=' + _Value_.GetCulture() + ']').attr("selected", true);
@@ -74,7 +77,7 @@ class UI_ {
      * Change the theme
      * @param {boolean} IsGetValueFromSelectTag - Determine get the theme value from theme select tag or not, the default value is false
      * */
-    ChangeTheme(IsGetValueFromSelectTag = false) { //  _theme_ = "Light"  // * @param {string} _theme_ -The theme >_ "Light" | "Dark" | "Care", The default value is "Light"
+    ChangeTheme(IsGetValueFromSelectTag = false) {
         var _theme_ = IsGetValueFromSelectTag ? _Value_.GetThemeInSelectTag() : _Value_.GetTheme();
         if (IsGetValueFromSelectTag) {
             Cookies.set(_Value_.THEME, _theme_, { expires: 365 });
@@ -104,6 +107,12 @@ class UI_ {
         }
     }
 
+    /**
+     * - Set the table content wrap break
+     * */
+    SetTableContentWrapBreak() {
+        $("td,td *,th,th *").css({ "word-wrap": "break-word", "break-word":"break-word"});
+    }
 }
 
 /**
@@ -114,10 +123,8 @@ class Service_ {
      * - Change the language by cluture
      * */
     ChangeLanguage() {
-        //  console.log();
         var _language = $(_Value_.Language + " option:selected").val();
         window.CULTURE = _language;
-        //  Cookies is reset after href is changed
         window.location.href = _Data_.SetQueryString(window.location.href, "culture", _language);
         return;
     }
@@ -127,21 +134,22 @@ class Service_ {
  * Some values
  * */
 class Value_ {
+
     //  #region PROPERTY
     constructor() {
 
-    /**
-     *  "#Language" 
-     */
-    this.Language = "#Language";
-    /**
-     * "THEME"
-     */
-    this.THEME = "THEME";
-    /**
-     * "CULTURE"
-     */
-    this.CULTURE = "CULTURE";
+        /**
+         *  "#Language" 
+         */
+        this.Language = "#Language";
+        /**
+         * "THEME"
+         */
+        this.THEME = "THEME";
+        /**
+         * "CULTURE"
+         */
+        this.CULTURE = "CULTURE";
     }
     //  #endregion
 
