@@ -57,7 +57,7 @@ namespace POYA.Areas.Identity.Pages.Account
             {
                 #region
                 Address = p.Address,
-                AvatarBuffer = null,
+                //  AvatarBuffer = null,
                 DOBirth = p.DOBirth,
                 GraduatedFrom = p.GraduatedFrom,
                 Hobby = p.Hobby,

@@ -33,7 +33,7 @@
 
 <table class="table" name="FilesTABLE">
     <thead>
-        <tr> 
+        <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -47,7 +47,7 @@
     <tbody>
         @foreach (var d in ViewData["LDirs"] as IEnumerable<LDir>)
         {
-            <tr> 
+            <tr>
                 <td>
                     <a asp-action="Index" asp-route-InDirId="@(d.Id)"> @(Html.DisplayFor(modelItem => d.Name))</a>
                     <span style="font-size:60%;color:blue">d</span>
@@ -58,11 +58,9 @@
                 <td>
                     <a asp-action="Edit" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@d.Id" title="@Localizer["Rename"]">&#9997;</a>
                     <a asp-action="Details" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@d.Id" title="@Localizer["Details"]">&#9749;</a>
+                    <a asp-action="Move" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@(d.Id)" title="@Localizer["Move"]">&#9986;</a>
+                    <a asp-action="Copy" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@(d.Id)" title="@Localizer["Copy"]">&#9903;</a>
                     <a asp-action="Delete" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@d.Id" title="@Localizer["Delete"]">&#10008;</a>
-                    @*
-                        <a asp-action="Move" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@(d.Id)" title="@Localizer["Move"]">&#9986;</a>
-                        <a asp-action="Copy" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@(d.Id)" title="@Localizer["Copy"]">&#9903;</a>
-                    *@
                 </td>
             </tr>
         }
@@ -84,11 +82,9 @@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" title="@Localizer["Rename"]">&#9997;</a>
                     <a asp-action="Details" asp-route-id="@item.Id" title="@Localizer["Details"]">&#9749;</a>
+                    <a asp-action="Move" asp-route-id="@(item.Id)" title="@Localizer["Move"]">&#9986;</a>
+                    <a asp-action="Copy" asp-route-id="@(item.Id)" title="@Localizer["Copy"]">&#9903;</a>
                     <a asp-action="Delete" asp-route-id="@item.Id" title="@Localizer["Delete"]">&#10008;</a>
-                    @*
-                        <a asp-action="Move" asp-route-id="@(item.Id)" title="@Localizer["Move"]">&#9986;</a>
-                        <a asp-action="Copy" asp-route-id="@(item.Id)" title="@Localizer["Copy"]">&#9903;</a>
-                    *@
                 </td>
             </tr>
         }

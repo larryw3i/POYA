@@ -127,7 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\EduHub\Data\" />
-    <Folder Include="Data\LFiles\" />
+    <Folder Include="Data\LFiles\Avatars\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\lib\video-js-7.5.4\alt\video.core.js" />

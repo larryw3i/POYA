@@ -84,24 +84,23 @@ class UI_ {
         }
         switch (_theme_) {
             case "Dark":
-                $("#_body,footer").css({ "background-color": "black", "color": "#C7EDCC" });
+                $("#_body,footer,.dropdown *,select").css({ "background-color": "black", "color": "blue" });
                 $(".table").css("color", "#C7EDCC");
                 $("input[class=form-control],textarea[class=form-control]").css({ "background-color": "#C7EDCC" });
                 $("button").css({ "color": "#C7EDCC" });
                 $("select").css({ "background-color": "black", "color": "#C7EDCC" });
                 break;
             case "Light":
-                $("#_body,footer").css({ "background-color": "white", "color": "black" });
+                $("#_body,footer,.dropdown *,select").css({ "background-color": "white", "color": "blue" });
                 $(".table").css("color", "black");
                 $("input[class=form-control],textarea[class=form-control]").css({ "background-color": "white" });
                 $("button").css({ "color": "black" });
                 $("select").css({ "background-color": "white" });
                 break;
             default:
-                $("#_body,footer").css({ "background-color": "#C7EDCC", "color": "black" });
+                $("#_body,footer,.dropdown *,select").css({ "background-color": "#C7EDCC", "color": "blue" });
                 $(".table").css("color", "black");
                 $("button").css({ "color": "black" });
-                $("select").css({ "background-color": "#C7EDCC", "color": "black" });
                 $("input[type!='submit']").css({ "background-color": "white", "color": "black" });
                 break;
         }

@@ -14,7 +14,7 @@ namespace POYA.Models
     {
         [Key]
         public string UserId { get; set; }
-        public byte[] AvatarBuffer { get; set; } = new byte[0];
+        //  public byte[] AvatarBuffer { get; set; } = new byte[0];
         [DOBirth(IsValueNullable = true)]
         [Display(Name = "Birth date")]
         public DateTimeOffset? DOBirth { get; set; }

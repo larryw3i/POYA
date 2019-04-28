@@ -110,7 +110,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
                 {
                     #region
                     Address = p.Address,
-                    AvatarBuffer = null,
+                    //  AvatarBuffer = null,
                     DOBirth = p.DOBirth,
                     Hobby = p.Hobby, 
                     IsAddressOvert = p.IsAddressOvert,
