@@ -3,9 +3,10 @@
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var UserAllSubDirs = ViewData["UserAllSubDirs"] as List<SelectListItem>;
 }
 
-<h1>@(string.Format(Localizer["Rename for {0}"], Model.Name)) </h1>
+<h1>@(string.Format(Localizer["Edit for {0}"], Model.Name)) </h1>
 
 <hr />
 <div class="row">
@@ -13,39 +14,20 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            @*
-                <div class="form-group">
-                    <label asp-for="MD5" class="control-label"></label>
-                    <input asp-for="MD5" class="form-control" />
-                    <span asp-validation-for="MD5" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="UserId" class="control-label"></label>
-                    <input asp-for="UserId" class="form-control" />
-                    <span asp-validation-for="UserId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="SharedCode" class="control-label"></label>
-                    <input asp-for="SharedCode" class="form-control" />
-                    <span asp-validation-for="SharedCode" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DOGenerating" class="control-label"></label>
-                    <input asp-for="DOGenerating" class="form-control" />
-                    <span asp-validation-for="DOGenerating" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="InDirId" class="control-label"></label>
-                    <input asp-for="InDirId" class="form-control" />
-                    <span asp-validation-for="InDirId" class="text-danger"></span>
-                </div>
-            *@
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <div class="row">
+                    <input asp-for="Name" class="form-control col-7" />
+                    <select asp-for="CopyOrMove" asp-items="Model.CopyOrMoveSelectListItems" class=" form-control col-4"></select>
+                </div>
                 <span asp-validation-for="Name" class="text-danger"></span>
+                <span asp-validation-for="CopyOrMove" class="text-danger"></span>
+                <div class="row" style="margin-top:20px">
+                    <select asp-for="InDirId" asp-items="Model.UserAllSubDirSelectListItems" class="form-control col-11"></select>
+                </div>
+                <span asp-validation-for="InDirId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-top:20px">
                 <a class="btn btn-outline-info" asp-action="Index" asp-route-InDirId="@(Model.InDirId)"><< @Localizer["Back"]</a>
                 <input type="submit" value="@Localizer["Save"]" class="btn btn-primary" />
             </div>
@@ -58,4 +40,45 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $("#InDirId").hide();
+            $("#CopyOrMove").on("change", function () {
+                if ($("#CopyOrMove option:selected").val() != 0) {
+                    $("#InDirId").show();
+                } else {
+                    $("#InDirId").hide();
+                }
+            });
+        });
+    </script>
 }
+
+@*
+    @*
+        <div class="form-group">
+            <label asp-for="MD5" class="control-label"></label>
+            <input asp-for="MD5" class="form-control" />
+            <span asp-validation-for="MD5" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="UserId" class="control-label"></label>
+            <input asp-for="UserId" class="form-control" />
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="SharedCode" class="control-label"></label>
+            <input asp-for="SharedCode" class="form-control" />
+            <span asp-validation-for="SharedCode" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DOGenerating" class="control-label"></label>
+            <input asp-for="DOGenerating" class="form-control" />
+            <span asp-validation-for="DOGenerating" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="InDirId" class="control-label"></label>
+            <input asp-for="InDirId" class="form-control" />
+            <span asp-validation-for="InDirId" class="text-danger"></span>
+        </div>
+*@    

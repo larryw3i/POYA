@@ -84,7 +84,7 @@ class UI_ {
         }
         switch (_theme_) {
             case "Dark":
-                $("#_body,footer,.dropdown *,select").css({ "background-color": "black", "color": "blue" });
+                $("#_body,footer,.dropdown *,select").css({ "background-color": "black", "color": "#C7EDCC" });
                 $(".table").css("color", "#C7EDCC");
                 $("input[class=form-control],textarea[class=form-control]").css({ "background-color": "#C7EDCC" });
                 $("button").css({ "color": "#C7EDCC" });

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,55 +12,100 @@ namespace POYA.Models
     public class LUserFile  //  ViewModel
     {
         public Guid Id { get; set; } = Guid.NewGuid();
+
         public string MD5 { get; set; } = string.Empty;
+
         public string UserId { get; set; }
+
         /// <summary>
         /// It is shared if SharedCode isn't Guid.Empty
         /// </summary>
         public Guid SharedCode { get; set; } = Guid.Empty;
+
         /// <summary>
         /// The default value is DateTimeOffset.Now
         /// </summary>
         [Display(Name="Date")]
         public DateTimeOffset DOGenerating { get; set; } = DateTimeOffset.Now;
+
         [Display(Name="Name")]
         public string Name { get; set; }
+
         /// <summary>
         /// The defaut value is Guid.Empty
         /// </summary>
         public Guid InDirId { get; set; } = Guid.Empty;
+
+        //  public string ContentType { get; set; }
+
+        public bool IsLegal { get; set; } = true;
+
+        #region DEPOLLUTION
+
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        [NotMapped]
         public string ContentType { get; set; }
+
         /// <summary>
         /// [NotMapped]
         /// </summary>
         [NotMapped]
         public string InDirName { get; set; }
+
         /// <summary>
         /// [NotMapped]
         /// </summary>
         [NotMapped]
         public IFormFile LFormFile { get; set; }
-        public bool IsLegal { get; set; } = true;
+
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        [NotMapped]
+        public List<SelectListItem> UserAllSubDirSelectListItems { get; set; }
+
+        /// <summary>
+        /// [NotMapped]
+        /// Determine is coping(is 1) file to directory or moving(is 2), do nothing if it is 0
+        /// </summary>
+        [NotMapped]
+        public int CopyOrMove { get; set; } = 0;
+
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        [NotMapped]
+        public List<SelectListItem> CopyOrMoveSelectListItems { get; set; }
+        #endregion
     }
     public class LDir
     {
         public Guid Id { get; set; } = Guid.NewGuid();
+
         [Display(Name = "Directory")]
         public string Name { get; set; }
+
         /// <summary>
         /// The default value is DateTimeOffset.Now
         /// </summary>
         [Display(Name = "Date")]
         public DateTimeOffset DOCreate { get; set; } = DateTimeOffset.Now;
+
         /// <summary>
         /// The default value is Guid.Empty
         /// </summary>
         public Guid InDirId { get; set; } = Guid.Empty;
+
         public string UserId { get; set; }
+
         [NotMapped]
         public string InDirName { get; set; }
+
         [NotMapped]
         public string ReturnUrl { get; set; } = null;
+
         [NotMapped]
         public string InFullPath { get; set; } = "root";
     }

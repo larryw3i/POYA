@@ -142,7 +142,9 @@ namespace POYA.Unities.Helpers
             var FullPath = string.Empty;
             for (var i = 0; i < 30 && InDirId != Guid.Empty; i++)
             {
-                var InDir =  context.LDir.Where(p => p.Id == InDirId).Select(p => new { p.InDirId, p.Name }).FirstOrDefaultAsync().GetAwaiter().GetResult();
+                var InDir =  context.LDir.Where(p => p.Id == InDirId).Select(p => new { p.InDirId, p.Name }).FirstOrDefaultAsync()
+                    .GetAwaiter().GetResult();
+                if (InDir?.InDirId== null) break;
                 FullPath = $"{InDir.Name}/{FullPath}";
                 InDirId = InDir.InDirId;
             }

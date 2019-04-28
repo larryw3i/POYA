@@ -95,7 +95,7 @@ namespace POYA.Controllers
             ViewData[nameof(InDirName)] = InDirName;
             ViewData[nameof(InDirId)] = InDirId;
             ViewData["LastDirId"] = InDirId == Guid.Empty ? InDirId
-                : await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.InDirId).FirstOrDefaultAsync();
+                : await _context.LDir.Where(p => p.Id == InDirId && p.UserId==UserId_).Select(p => p.InDirId).FirstOrDefaultAsync();
             var LDirs = await _context.LDir.Where(p => p.InDirId == InDirId && p.UserId == UserId_).ToListAsync();
             ViewData[nameof(LDirs)] = LDirs;
             ViewData[nameof(_Path)] = _x_DOVEHelper.GetFullPathOfFileOrDir(context: _context,InDirId: InDirId??Guid.Empty);    //    $"root/{_Path}";
@@ -116,6 +116,7 @@ namespace POYA.Controllers
                 return NotFound();
             }
 
+            lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name, _hostingEnv).Last();
             return View(lUserFile);
         }
 
@@ -155,7 +156,7 @@ namespace POYA.Controllers
                     MD5 = MD5_,
                     InDirId = _LFilePost.InDirId,
                     Name = _LFilePost._LFile.FileName,
-                    ContentType = _LFilePost._LFile.ContentType ?? "text/plain"
+                    //  ContentType = _LFilePost._LFile.ContentType ?? "text/plain"
                 });
                 await _context.SaveChangesAsync();
                 return Ok(_LFilePost.Id);
@@ -185,11 +186,25 @@ namespace POYA.Controllers
                 return NotFound();
             }
 
-            var lUserFile = await _context.LUserFile.FindAsync(id);
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var lUserFile = await _context.LUserFile.FirstOrDefaultAsync(p => p.Id == id && p.UserId == UserId_);
             if (lUserFile == null)
             {
                 return NotFound();
             }
+            var AllUserSubDirs = await _context.LDir.Where(p => p.Id != Guid.Empty && p.UserId == UserId_).ToListAsync();
+
+            #region MOVE AND COPY
+            lUserFile.UserAllSubDirSelectListItems = new List<SelectListItem>();
+            //  lUserFile.UserAllSubDirSelectListItems.Add(new SelectListItem {  Text="root/",Value=Guid.Empty.ToString()});
+            lUserFile.UserAllSubDirSelectListItems.AddRange( AllUserSubDirs.Select(p => new SelectListItem { Text = $"{_x_DOVEHelper.GetFullPathOfFileOrDir(_context, p.InDirId)}{p.Name}", Value = p.Id.ToString() }).OrderBy(p=>p.Text).ToList());
+            lUserFile.CopyOrMoveSelectListItems = new List<SelectListItem>() {
+                new SelectListItem{Text="Rename only",Value="0",Selected=true},
+                new SelectListItem{  Text="Copy to", Value="1"},
+                new SelectListItem{Text="Move to", Value="2"}
+            };
+            #endregion
+
             return View(lUserFile);
         }
 
@@ -198,7 +213,7 @@ namespace POYA.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name")] LUserFile lUserFile)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,CopyOrMove,InDirId")] LUserFile lUserFile)
         {
             if (id != lUserFile.Id)
             {
@@ -212,12 +227,41 @@ namespace POYA.Controllers
                 {
                     var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                     var _lUserFile = await _context.LUserFile.FirstOrDefaultAsync(p => p.Id == lUserFile.Id && p.UserId == UserId_);
-                    _lUserFile.Name = lUserFile.Name;
-                    _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name, _hostingEnv).Last();
-                    //  _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name).Last();   // new Mime().Lookup(lUserFile.Name);
-                    _context.Update(_lUserFile);
-                    await _context.SaveChangesAsync();
-                    InDirId = _lUserFile.InDirId;
+                    if (_lUserFile == null)
+                    {
+                        return NotFound();
+                    }
+                    if (!await _context.LDir.AnyAsync(p => p.Id == lUserFile.InDirId && p.UserId == UserId_))
+                    {
+                        ModelState.AddModelError(nameof(lUserFile.InDirId), "&#128557;");
+                        return View(lUserFile);
+                    }
+                    //  Copy
+                    if (lUserFile.CopyOrMove == 1)
+                    {
+                        await _context.LUserFile.AddAsync(
+                            new LUserFile {
+                                InDirId = lUserFile.InDirId, MD5 = _lUserFile.MD5, Name = _lUserFile.Name, UserId=UserId_,   Id=Guid.NewGuid()
+                            });
+                        await _context.SaveChangesAsync();
+                        InDirId = lUserFile.InDirId;
+                    }
+                    //  Move
+                    else if (lUserFile.CopyOrMove == 2)
+                    {
+                        _lUserFile.InDirId = lUserFile.InDirId;
+                        await _context.SaveChangesAsync();
+                        InDirId = lUserFile.InDirId;
+                    }
+                    else
+                    {
+                        _lUserFile.Name = lUserFile.Name;
+                        //  _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name, _hostingEnv).Last();
+                        //  _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name).Last();   // new Mime().Lookup(lUserFile.Name);
+                        _context.Update(_lUserFile);
+                        await _context.SaveChangesAsync();
+                        InDirId = _lUserFile.InDirId;
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -251,7 +295,7 @@ namespace POYA.Controllers
             {
                 return NotFound();
             }
-
+            lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name,_hostingEnv).Last();
             return View(lUserFile);
         }
 
@@ -300,7 +344,7 @@ namespace POYA.Controllers
                             MD5 = i.MD5,
                             Name = i.FileName,
                             UserId = UserId_ ,
-                            ContentType =_mimeHelper.GetMime(i.FileName,_hostingEnv).Last()
+                            //  ContentType =_mimeHelper.GetMime(i.FileName,_hostingEnv).Last()
                         });
                     ContrastResult.Add(i.Id);
                 }
@@ -317,7 +361,7 @@ namespace POYA.Controllers
                 return NoContent();
             }
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var _LUserFile = await _context.LUserFile.Select(p => new { p.MD5, p.Id, p.SharedCode, p.Name, p.UserId, p.ContentType })
+            var _LUserFile = await _context.LUserFile.Select(p => new { p.MD5, p.Id, p.SharedCode, p.Name, p.UserId })
                 .FirstOrDefaultAsync(p => (p.Id == id && p.UserId == _UserId) || p.SharedCode == id);
             if (_LUserFile == null)
             {
@@ -329,7 +373,7 @@ namespace POYA.Controllers
                 return NoContent();
             }
             var FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath);
-            return File(FileBytes, _LUserFile.ContentType, _LUserFile.Name, true);
+            return File(FileBytes, _mimeHelper.GetMime(_LUserFile.Name,_hostingEnv).Last(), _LUserFile.Name, true);
         }
 
         /*
