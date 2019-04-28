@@ -60,11 +60,13 @@ namespace POYA.Controllers
             //  throw new Exception("TEST"); 
             return View();
         }
+
         //  [Authorize]
         public IActionResult Privacy()
         {
             return View();
         }
+
         public IActionResult Donate()
         {
             return View();
@@ -80,8 +82,9 @@ namespace POYA.Controllers
                 var DefauleAvatar = await System.IO.File.ReadAllBytesAsync(_hostingEnv.WebRootPath + @"/img/article_publish_ico.webp");
                 return File(DefauleAvatar, "image/webp");
             }
-            return File(_X_doveUserInfo.AvatarBuffer, "image/png");
+            return File(_X_doveUserInfo.AvatarBuffer, "image/jpg");
         }
+
         [HttpPost]
         public async Task<IActionResult> UploadAvatar([FromForm]AvatarForm avatarForm)
         {
@@ -115,6 +118,7 @@ namespace POYA.Controllers
             TempData["X_DOVE_XSRF_TOKEN"] = X_DOVE_XSRF_TOKEN;
             return Json(new { status = true, X_DOVE_XSRF_TOKEN });
         }
+
         /// <summary>
         /// PART FROM   https://www.cnblogs.com/wjshan0808/p/5909174.html
         /// THANK       https://www.cnblogs.com/wjshan0808/
@@ -149,9 +153,21 @@ namespace POYA.Controllers
                     g.DrawEllipse(p, 0, 0, _min, _min);
             }
             var ms = new MemoryStream();
-            b.Save(ms, ImageFormat.Png);
+
+            #region COMPRESS
+            /**
+             * We had to make some sacrifices in order to the load faster
+             * REFERENCE    https://docs.microsoft.com/en-us/dotnet/framework/winforms/advanced/how-to-set-jpeg-compression-level
+             * THANK        https://github.com/dotnet/docs/blob/master/docs/framework/winforms/advanced/how-to-set-jpeg-compression-level.md
+             */
+            var AvatarEncoderParameters = new EncoderParameters(1);
+            AvatarEncoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, 5L);
+            #endregion
+
+            b.Save( ms, ImageCodecInfo.GetImageDecoders().FirstOrDefault(p=>p.FormatID==ImageFormat.Jpeg.Guid), AvatarEncoderParameters);
             return ms.ToArray();
         }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
