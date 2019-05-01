@@ -66,8 +66,21 @@ body {
     text-align: right
 }
 
-
 /*
+[name='UserAvatarImg'], [name='LogoutImg'] {
+    position: absolute;
+}
+
+[name='UserAvatarImg'] {
+    max-height: 50px;
+    max-width: 50px;
+}
+
+[name='LogoutImg'] {
+    width: 18px;
+    height: 20px
+}
+
 case "Dark":
         $("#_body,footer").css({ "background-color": "black", "color": "#C7EDCC" });
         $(".table").css("color", "#C7EDCC");

@@ -128,13 +128,13 @@ namespace POYA.Unities.Helpers
         }
 
         /// <summary>
-        /// Get the full path of file or directory, the id is ignored if InDirId is passed
+        /// Get the full path of the dir file or directory is included
         /// </summary>
         /// <param name="id">The id of file or directory</param>
         /// <param name="context">The context</param>
         /// <param name="InDirId">The id of directory contain file or directory</param>
         /// <returns></returns>
-        public string GetFullPathOfFileOrDir(ApplicationDbContext context, Guid InDirId)
+        public string GetInPathOfFileOrDir(ApplicationDbContext context, Guid InDirId)
         {
             var FullPath = string.Empty;
             for (var i = 0; i < 30 && InDirId != Guid.Empty; i++)

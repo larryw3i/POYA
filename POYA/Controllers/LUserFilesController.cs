@@ -96,7 +96,7 @@ namespace POYA.Controllers
             ViewData["LastDirId"] = InDirId == Guid.Empty ? InDirId
                 : await _context.LDir.Where(p => p.Id == InDirId && p.UserId == UserId_).Select(p => p.InDirId).FirstOrDefaultAsync();
             ViewData["LDirs"] = await _context.LDir.Where(p => p.InDirId == InDirId && p.UserId == UserId_ && !LUserFileIds.Contains(p.Id)).ToListAsync(); ;
-            ViewData["_Path"] = _x_DOVEHelper.GetFullPathOfFileOrDir(context: _context,InDirId: InDirId??Guid.Empty);    //    $"root/{_Path}";
+            ViewData["_Path"] = _x_DOVEHelper.GetInPathOfFileOrDir(context: _context,InDirId: InDirId??Guid.Empty);    //    $"root/{_Path}";
             return View(LUserFile_);
         }
 
@@ -195,7 +195,7 @@ namespace POYA.Controllers
 
             lUserFile.UserAllSubDirSelectListItems = new List<SelectListItem>();
             //  lUserFile.UserAllSubDirSelectListItems.Add(new SelectListItem {  Text="root/",Value=Guid.Empty.ToString()});
-            lUserFile.UserAllSubDirSelectListItems.AddRange( AllUserSubDirs.Select(p => new SelectListItem { Text = $"{_x_DOVEHelper.GetFullPathOfFileOrDir(_context, p.InDirId)}{p.Name}", Value = p.Id.ToString() }).OrderBy(p=>p.Text).ToList());
+            lUserFile.UserAllSubDirSelectListItems.AddRange( AllUserSubDirs.Select(p => new SelectListItem { Text = $"{_x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId)}{p.Name}", Value = p.Id.ToString() }).OrderBy(p=>p.Text).ToList());
             lUserFile.CopyMoveSelectListItems = new List<SelectListItem>() {
                 new SelectListItem{Text="Rename",Value="0",Selected=true},
                 new SelectListItem{  Text="Also copy", Value="1"},

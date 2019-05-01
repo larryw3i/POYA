@@ -75,7 +75,7 @@ namespace POYA.Controllers
                 return NotFound();
             }   //  lDir.ReturnUrl = ReturnUrl ?? Url.Content("~/");
             lDir.InDirName= (await _context.LDir.Select(p => new { p.Id, p.Name }).FirstOrDefaultAsync(p => p.Id == lDir.InDirId))?.Name ?? "root";
-            lDir.InFullPath = _x_DOVEHelper.GetFullPathOfFileOrDir(_context, lDir.InDirId);
+            lDir.InFullPath = _x_DOVEHelper.GetInPathOfFileOrDir(_context, lDir.InDirId);
             return View(lDir);  //   LocalRedirect(ReturnUrl); //  View(lDir);
         }
 
@@ -134,16 +134,26 @@ namespace POYA.Controllers
             }
             #region MOVE AND COPY
 
-            var AllUserSubDirs = await _context.LDir.Where(p => p.Id != Guid.Empty && p.UserId == UserId_).ToListAsync();
-            AllUserSubDirs.Remove(lDir);
+            //  var UserSubDirs = await _context.LDir.Where(p => p.Id != Guid.Empty && p.UserId == UserId_).ToListAsync();
+            var UserDirs = await _context.LDir.Where(p => p.UserId == UserId_).ToListAsync();
+
+            foreach(var i in GetAllSubDirs(UserDirs, lDir.Id))
+            {
+                UserDirs.Remove(i);
+            }
+            UserDirs.Remove(lDir);
+
             lDir.UserAllSubDirSelectListItems = new List<SelectListItem>();
-            //  lUserFile.UserAllSubDirSelectListItems.Add(new SelectListItem {  Text="root/",Value=Guid.Empty.ToString()});
-            lDir.UserAllSubDirSelectListItems.AddRange(AllUserSubDirs.Select(p => new SelectListItem { Text = $"{_x_DOVEHelper.GetFullPathOfFileOrDir(_context, p.InDirId)}{p.Name}", Value = p.Id.ToString() }).OrderBy(p => p.Text).ToList());
+
+            lDir.UserAllSubDirSelectListItems.AddRange(UserDirs.Select(p => new SelectListItem { Text = $"{_x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId)}{p.Name}", Value = p.Id.ToString() }).OrderBy(p => p.Text).ToList());
+
             lDir.CopyMoveSelectListItems = new List<SelectListItem>() {
-                new SelectListItem{Text="Rename",Value="0",Selected=true},
-                new SelectListItem{Text="Also copy", Value="1"}
+                new SelectListItem{Text=_localizer[ "Rename"],Value=((int)CopyMove.DoNoThing).ToString(),Selected=true},
+                new SelectListItem{Text=_localizer[ "Also move"], Value=((int)CopyMove.Move).ToString()}
             };
+
             #endregion
+            lDir.InFullPath = _x_DOVEHelper.GetInPathOfFileOrDir(_context,lDir.InDirId);
 
             return View(lDir);
         }
@@ -181,7 +191,7 @@ namespace POYA.Controllers
                     //  Move
                     if (lDir.CopyMove == CopyMove.Move)
                     {
-                        lDir.InDirId = lDir.InDirId;
+                        _LDir.InDirId = lDir.InDirId;
                     }
                     /*
                     //  Copy
@@ -243,7 +253,7 @@ namespace POYA.Controllers
                 return NotFound();
             }
             lDir.InDirName = (await _context.LDir.Select(p => new { p.Id, p.Name }).FirstOrDefaultAsync(p => p.Id == lDir.InDirId))?.Name ?? "root";
-            lDir.InFullPath = _x_DOVEHelper.GetFullPathOfFileOrDir(_context, lDir.InDirId);
+            lDir.InFullPath = _x_DOVEHelper.GetInPathOfFileOrDir(_context, lDir.InDirId);
 
             return View(lDir);
         }
@@ -260,24 +270,11 @@ namespace POYA.Controllers
                 return NotFound();
             }
             var InDirId = lDir.InDirId;
-            var _RemoveDirs = new List<LDir>() { lDir };
-            #region ADD_ALL_INCLUDED_DIRS_TO_LIST
             var UserDirs = await _context.LDir.Where(p => p.UserId == UserId_).ToListAsync();
-            foreach(var d in UserDirs)
-            {
-                var _InDirId = d.InDirId;
-                while (_InDirId != Guid.Empty)
-                {
-                    if (_InDirId == null|| _InDirId==id || !UserDirs.Select(p => p.Id).Contains(_InDirId))
-                    {
-                        _RemoveDirs.Add(d);
-                        break;
-                    }
-                    _InDirId = UserDirs.Where(p => p.Id == _InDirId).Select(p => p.InDirId).FirstOrDefault();
-                    
-                }
-            }
-            #endregion
+            var _RemoveDirs = new List<LDir>() { lDir};
+
+            _RemoveDirs.AddRange(GetAllSubDirs(UserDirs, id));
+
             _context.LDir.RemoveRange(_RemoveDirs);
             await _context.SaveChangesAsync();
             return RedirectToAction(actionName:"Index",controllerName:"LUserFiles",routeValues:new { InDirId});  //   LocalRedirect(ReturnUrl??Url.Content("~/"));
@@ -291,21 +288,17 @@ namespace POYA.Controllers
         #region DEPOLLUTION
         private bool IsFileOrDirInDir(List<LDir> UserDirs, Guid id, Guid DirId)
         {
-            var IdArray = UserDirs.Select(p => p.Id);
-            if (!IdArray.Contains(id)) return false;
-            foreach (var d in UserDirs)
+            if (!UserDirs.Select(p => p.Id).Contains(id)) return false;
+            var _InDirId = UserDirs.FirstOrDefault(p => p.Id == id).InDirId;
+            var _i = 0;
+            while (_InDirId != Guid.Empty && _i < 30)
             {
-                var _InDirId = d.InDirId;
-                var _i = 0;
-                while (_InDirId != Guid.Empty && _i < 30)
+                if (_InDirId == DirId)
                 {
-                    if (_InDirId == DirId)
-                    {
-                        return true;
-                    }
-                    _InDirId = UserDirs.Where(p => p.Id == _InDirId).Select(p => p.InDirId).FirstOrDefault();
-                    _i++;
+                    return true;
                 }
+                _InDirId = UserDirs.Where(p => p.Id == _InDirId).Select(p => p.InDirId).FirstOrDefault();
+                _i++;
             }
             return false;
         }

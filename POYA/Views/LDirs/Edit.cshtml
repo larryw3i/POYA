@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@(string.Format(Localizer["Rename for {0}"], Model.Name))<span class="directorySpan">&#128448;</span></h1>
+<h1>@(string.Format(Localizer["Edit for {0}"], Model.Name))<span class="directorySpan">&#128448;(@Model.InFullPath)</span></h1>
 
 <hr />
 <div class="row">
