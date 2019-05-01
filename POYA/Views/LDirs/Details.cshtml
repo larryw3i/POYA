@@ -7,43 +7,18 @@
 
 <h1>@(string.Format(Localizer["Details for {0}"], Model.Name))<span class="directorySpan">&#128448;</span></h1>
 
+<partial name="_DetailsPartial" model="Model" />
+
 <div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @*@Html.DisplayNameFor(model => model.DOCreate)*@
-            @Localizer["Date of making"]
-        </dt>
-        <dd class="col-sm-10">
-            @(Model.DOCreate.ToLocalTime())
-        </dd>
-        <dt class="col-sm-2">
-            @(Localizer["In directory"])
-        </dt>
-        <dd class="col-sm-10">
-            @(Html.DisplayFor(model => model.InDirName)) ( <span class="InFullPathSpan">@Model.InFullPath</span> ) 
-        </dd>
-    </dl>
-</div>
-<div>
-    @*
-        <a asp-action="Edit" asp-controller="LDirs"  asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@d.Id" title="@Localizer["Edit"]">&#9997;</a>
-    *@
     <a asp-action="Index" asp-controller="LUserFiles" asp-route-InDirId="@(Model.InDirId)" class="btn btn-outline-info"><< @Localizer["Back"]</a>
-    <a asp-action="Edit" asp-route-id="@Model.Id" asp-route-ReturnUrl="@Model.ReturnUrl" title="@Localizer["Edit"]" class="btn btn-outline-primary">Edit</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" title="@Localizer["Edit"]" class="btn btn-outline-primary">@Localizer["Edit"]</a>
 </div>
 
 @section Styles{
     <style>
-        .InFullPathSpan{
-            font-size:80%;
-            color:blue;
+        .InFullPathSpan {
+            font-size: 80%;
+            color: blue;
         }
     </style>
 }

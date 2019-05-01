@@ -6,8 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var InDirId = ViewData["InDirId"];
     var InDirName = ViewData["InDirName"];
-    var ReturnUrl = Context.Request.Path + Context.Request.QueryString;
-    var LastDirId = ViewData["LastDirId"];  //<<<<<<BUG>>>>>>/
+    var LastDirId = ViewData["LastDirId"];  //  BUG >_  DELETE DIR
 
 }
 
@@ -22,7 +21,7 @@
             <a asp-action="Index" asp-route-InDirId="@(LastDirId)">@Localizer["Last"]</a>
         }
         <a asp-action="Create" asp-route-InDirId="@InDirId">@Localizer["Upload"]</a>
-        <a asp-action="Create" asp-controller="LDirs" asp-route-InDirId="@InDirId" asp-route-ReturnUrl="@ReturnUrl">@Localizer["New"]</a> )
+        <a asp-action="Create" asp-controller="LDirs" asp-route-InDirId="@InDirId">@Localizer["New"]</a> )
         <br />
         <span class="_PathSpan">@ViewData["_Path"]</span>
     </div>
@@ -38,7 +37,7 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DOGenerating)
+                @Html.DisplayNameFor(model => model.DOCreate)
             </th>
             <th>
             </th>
@@ -56,38 +55,25 @@
                     @(d.DOCreate.LocalDateTime.ToShortDateString())
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@d.Id" title="@Localizer["Rename"]">&#9997;</a>
-                    <a asp-action="Details" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@d.Id" title="@Localizer["Details"]">&#9749;</a>
-                    @*
-                        <a asp-action="Move" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@(d.Id)" title="@Localizer["Move"]">&#9986;</a>
-                        <a asp-action="Copy" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@(d.Id)" title="@Localizer["Copy"]">&#9903;</a>
-                    *@
-                    <a asp-action="Delete" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@d.Id" title="@Localizer["Delete"]">&#10008;</a>
+                    <a asp-action="Edit" asp-controller="LDirs" asp-route-id="@d.Id" title="@Localizer["Rename"]">&#9997;</a>
+                    <a asp-action="Details" asp-controller="LDirs" asp-route-id="@d.Id" title="@Localizer["Details"]">&#9749;</a>
+                    <a asp-action="Delete" asp-controller="LDirs" asp-route-id="@d.Id" title="@Localizer["Delete"]">&#10008;</a>
                 </td>
             </tr>
         }
         @foreach (var item in Model)
         {
             <tr>
-                @*
-                    <td>
-                        <input name="FilCheckBox" id="FilCheckBox_@(item.Id)" class=".Zoom190p" type="checkbox" value="@(item.Id)" />
-                    </td>
-                *@
                 <td>
                     <a asp-action="GetFile" asp-route-id="@(item.Id)">@(Html.DisplayFor(modelItem => item.Name))</a>
                     <span style="font-size:60%;color:red">f</span>
                 </td>
                 <td>
-                    @(item.DOGenerating.LocalDateTime.ToShortDateString())
+                    @(item.DOCreate.LocalDateTime.ToShortDateString())
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" title="@Localizer["Rename"]">&#9997;</a>
                     <a asp-action="Details" asp-route-id="@item.Id" title="@Localizer["Details"]">&#9749;</a>
-                    @*
-                        <a asp-action="Move" asp-route-id="@(item.Id)" title="@Localizer["Move"]">&#9986;</a>
-                        <a asp-action="Copy" asp-route-id="@(item.Id)" title="@Localizer["Copy"]">&#9903;</a>
-                    *@
                     <a asp-action="Delete" asp-route-id="@item.Id" title="@Localizer["Delete"]">&#10008;</a>
                 </td>
             </tr>
@@ -146,5 +132,16 @@
 }
 
 @*
+    
+                    <td>
+                        <input name="FilCheckBox" id="FilCheckBox_@(item.Id)" class=".Zoom190p" type="checkbox" value="@(item.Id)" />
+                    </td>
+    
+                        <a asp-action="Move" asp-route-id="@(item.Id)" title="@Localizer["Move"]">&#9986;</a>
+                        <a asp-action="Copy" asp-route-id="@(item.Id)" title="@Localizer["Copy"]">&#9903;</a>
+
+    <a asp-action="Move" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@(d.Id)" title="@Localizer["Move"]">&#9986;</a>
+    <a asp-action="Copy" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@(d.Id)" title="@Localizer["Copy"]">&#9903;</a>
+
     asp-action="Create" asp-controller="LDirs" asp-route-InDirId="@ViewData["InDirId"]"
 *@

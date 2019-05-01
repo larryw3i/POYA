@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -41,14 +42,21 @@ namespace POYA.Unities.Helpers
         /// <returns></returns>
         public string FileStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/";
 
-        public async Task ErrorEventAsync(HttpContext context, IHostingEnvironment env)
+        /// <summary>
+        /// Send error log to email
+        /// REFERENCE   https://blog.csdn.net/confused_kitten/article/details/81702861
+        /// THANK       https://blog.csdn.net/confused_kitten
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="env"></param>
+        /// <returns></returns>
+        public async Task ErrorEventAsync(
+            IConfiguration configuration,
+            HttpContext context
+            )
         {
             var feature = context.Features.Get<IExceptionHandlerFeature>();
             var error = feature?.Error;
-            var file = File.OpenText(env.ContentRootPath + "/appsettings.json");
-            var reader = new JsonTextReader(file);
-            var jsonObject = (JObject)JToken.ReadFrom(reader);
-            file.Close();
             var MarkLineReg = new Regex("(:line\\s?\\d+)");
             var _stackTrace = error.StackTrace;
             var MarkLineMatchs = MarkLineReg.Matches(_stackTrace);
@@ -56,11 +64,11 @@ namespace POYA.Unities.Helpers
             {
                 _stackTrace = _stackTrace.Replace(oldValue: i.ToString(), newValue: $"<span style='color:red'><strong>{i}</strong></span>");
             }
-            await new EmailSender(env).SendEmailAsync(
-                email: (string)jsonObject[nameof(X_DOVEHelper)]["email"],
+            await new EmailSender(configuration).SendEmailAsync(
+                email: configuration["ErrorLogHandle:ReceiveLogEmailAddress"],//   (string)jsonObject[nameof(X_DOVEHelper)]["email"],
                 subject: "X_DOVE_ERROR",
                 htmlMessage:
-            #region
+            #region     HTMLMESSAGE
                 @"
                     <table border='1'>
                         <tr>
@@ -98,17 +106,6 @@ namespace POYA.Unities.Helpers
                     </table>"
             #endregion
                 );
-            #region
-            /*
-             * * LogHelper.Write("Global\\Error", error.Message, error.StackTrace);
-             * * return context.Response.WriteAsync(JsonHelper.ToJson(new RequestResult(444, "系统未知异常，请联系管理员")), Encoding.GetEncoding("GBK")); 
-             * * --------------------- 
-             * * 作者：confused_kitten
-             * * 来源：CSDN
-             * * 原文：https://blog.csdn.net/confused_kitten/article/details/81702861 
-             * * 版权声明：本文为博主原创文章，转载请附上博文链接！
-             */
-            #endregion
         }
 
         /// <summary>
@@ -142,9 +139,9 @@ namespace POYA.Unities.Helpers
             var FullPath = string.Empty;
             for (var i = 0; i < 30 && InDirId != Guid.Empty; i++)
             {
-                var InDir =  context.LDir.Where(p => p.Id == InDirId).Select(p => new { p.InDirId, p.Name }).FirstOrDefaultAsync()
+                var InDir = context.LDir.Where(p => p.Id == InDirId).Select(p => new { p.InDirId, p.Name }).FirstOrDefaultAsync()
                     .GetAwaiter().GetResult();
-                if (InDir?.InDirId== null) break;
+                if (InDir?.InDirId == null) break;
                 FullPath = $"{InDir.Name}/{FullPath}";
                 InDirId = InDir.InDirId;
             }

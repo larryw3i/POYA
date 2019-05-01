@@ -5,9 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>LUserFile</h4>
+<h1>@Localizer["Select files you want to upload"]</h1>
 <hr />
 <div class="row" name="FileUploadROW">
     <div class="col col-sm-10 col-md-8 col-lg-8">
@@ -28,30 +26,7 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/lib/js-spark-md5/spark-md5.min.js"></script>
     <script>
-        var _Value = new Value();
-        var _Data = new Data();
-        var _UI = new UI();
-        var _Service = new Service();
-        var MD5Array = new Array();
-
-        $(document).ready(function () {
-            $("#SelectFileInput,#SelectFileA").on("click", function () {
-                _UI.SelectFile();
-                event.preventDefault();
-            });
-            $("#BackA").on("click", function () {
-                window.history.go(-1);
-                event.preventDefault();
-            });
-            $("#UploadA").on("click", function () {
-                if ($("[name='FileInput']").length < 1) return;
-                _Service.CheckMD58UploadFiles();
-                event.preventDefault();
-            });
-        });
-
-
-        function UI() {
+        class UI {
             /**
              * Make a alert
              * @@param  {string}  ClassType The class type >_
@@ -59,72 +34,83 @@
              * @@param {string}  Message The alert message
              * @@param {number}  CloseAfter Close it after {}  millisecond, default value is 2500
              */
-            this.MakeAlert = (ClassType,Message,CloseAfter=2500) => {
+            MakeAlert (ClassType,Message,CloseAfter=2500) {
                 $(_Value.AlertDIV(ClassType, Message)).insertBefore("[name='FileUploadROW']:last");
                 window.setTimeout(function () {
                     $('.alert').alert('close');
                 }, CloseAfter);
-            };
-            this.RemoveFileDIV = (Id = $.guid++) => {
+            }
+
+            RemoveFileDIV  (Id = $.guid++)  {
                 $("#" + Id).remove();
                 _Data.RemoveItemInMD5Array(Id); //  !!
-            };
-            this.FileTooLargeRemoveFileDIV = () => {
+            }
+
+            FileTooLargeRemoveFileDIV  ()  {
                 $("[name='FileDIV']:last").remove();
                 _UI.MakeAlert("warning", _Value.FileIsTooLarge);
-            };
-            this.ReadMD5Tip = (Id = $.guid++) => {
+            }
+
+            ReadMD5Tip  (Id = $.guid++) {
                     _UI.UpdateProgress(Id,"@(Localizer["Reading..."])");
-            };
+            }
+
             /**
              * Update progress
              * @@param {number}  Id The id of main div
              * @@param {string} Progress_ The progress , the percentage and the tip of finish
              */
-            this.UpdateProgress = (Id = $.guid++, Progress_) => {
-                $("#" + _Value.UploadProgress(Id)).html(Progress_);
-            };
-            this.ShowLastFilePath = (Id = $.guid++) => {
+            UpdateProgress  (Id = $.guid++, Progress_) {
+                $("#" + _Value.UploadProgress(Id)).html(Progress_)
+            }
+
+            ShowLastFilePath  (Id = $.guid++)  {
                 $("#" + _Value.FileName(Id)).text($("input[name='FileInput']:last").val());
                 //  $("#" + Id).show();
 
-            };
-            this.ReadMD5FinishTip=(Id = $.guid++) => {
+            }
+
+            ReadMD5FinishTip(Id = $.guid++) {
                     _UI.UpdateProgress(Id,"");
 
-            };
-            this.SelectFile = () => {
+            }
+
+            SelectFile () {
                 if ($("input[name='FileInput']:last").val() == "") {
+                    //  $("input[name='FileInput']:last").hide();
                     $("input[name='FileInput']:last").click();
                 } else {
                     $(".form-group").append(_Value.FileInfo());
                     _UI.ShowOrHideLastRemoveFileDIV(false);
+                    /// $("input[name='FileInput']:last").hide();
                     $("input[name='FileInput']:last").click();
                 }
-            };
+            }
+
             /**
              * Show or hide last RemoveFileDIV, or it leads to a poor user experience
              * @@param {boolean} IsShow show or hide
              */
-            this.ShowOrHideLastRemoveFileDIV = (IsShow) => {
+            ShowOrHideLastRemoveFileDIV (IsShow) {
                 if (IsShow) {
                     $("[name='RemoveFileDIV']:last").show();
                     return;
                 }
                 $("[name='RemoveFileDIV']:last").hide();
-            };
+            }
+
             /**
              * Remove file input after file is "upload"
              * @@param  {number}  Id The id of file div
              */
-            this.RemoveUploadedFileInput = (Id = $.guid++) => {
+            RemoveUploadedFileInput  (Id = $.guid++)  {
                 $("#" + _Value.FileInput(Id)).remove();
             };
         }
 
-        function Service() {
+        class Service {
 
-            this.CheckMD58UploadFiles = () => {
+            CheckMD58UploadFiles () {
                 if (MD5Array.length < 1) return;
                 if (document.getElementsByName("FileInput").length < 1) return;
                 var File8MD5s = new Array();
@@ -146,6 +132,7 @@
                     headers: {
                         "L-XSRF-TOKEN": _Value.L_XSRF_TOKEN
                     },
+
                     /**
                      * Return the Id of uploaded file
                      * @@param {Array<number>} IdArray Uploaded id array
@@ -163,10 +150,10 @@
                         _UI.MakeAlert();
                     }
                 });
-            };
-            this.UploadFile = () => {
+            }
+
+            UploadFile () {
                 if ($("[name='FileInput']").length < 1) return;
-                //  console.log(">>>>>>>>>>>>>>>");
                 $("[name='FileInput']").each(function (index, element) {
                     if ($(element).val() == "") return;
                     var Id_ = Number(this.id.split("_")[1]);
@@ -214,28 +201,31 @@
                         }
                     });
                 });
-            };
+            }
         }
 
-        function Data() {
+        class Data {
+
             /**
              * Remove the item in MD5Array
              * @@param {number} Id The id of item(it is the id of Value.FileInfo())
              */
-            this.RemoveItemInMD5Array = (Id = $.guid++) => {
+            RemoveItemInMD5Array  (Id = $.guid++) {
                 MD5Array.forEach(function (value, index, array) {
                     if (value["Id"] == Id) {
                         MD5Array.splice(index, 1);
                     }
                 });
-            };
+            }
+
             /**
             * Get md5 of file and add it to array
             * REFERENCE    https://blog.csdn.net/liguoqingxjxcc/article/details/81664245
             * THRNK        https://blog.csdn.net/liguoqingxjxcc
             * @@param {number} Id The id of file
             */
-            this.GetMD58AddToArray = (Id) => {
+            GetMD58AddToArray (Id)  {
+                $("#" + Id).show(); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                 var File_ = document.getElementById(_Value.FileInput(Id)).files[0];
                 if (File_.size > _Value.MaxMultipartBodyLength) {   //  (_Value.FileLimit) * 1024 * 1024
                     _UI.FileTooLargeRemoveFileDIV();
@@ -286,40 +276,41 @@
             }
         }
 
-        function Value() {
-            this.MaxMultipartBodyLength = 134217728;
-            this.InDirId = "@ViewData["InDirId"]";
-            this.L_XSRF_TOKEN = "@(csrf.GetAndStoreTokens(Context).RequestToken)";
-            this.FileIsSelected = "The file is selected";
-            /**
-             * In M byte
-             */
-            this.FileLimit = 200;
-            this.FileIsTooLarge = "<strong>Oops. . .</strong> File is limit to less than " + this.MaxMultipartBodyLength/(1024*1024) + "M";
-            this.RemoveFileDIV = (Id = $.guid++) => "RemoveFileDIV" + Id;
-            this.FileName = (Id = $.guid++) => 'FileName_' + Id;
-            this.UploadProgress = (Id = $.guid++) => 'UploadProgress' + Id;
-            this.RemoveUploadedFileInput = (Id = $.guid++) => "RemoveUploadedFileInput" + Id;
-            this.FileInput = (Id = $.guid++) => "FileInput_" + Id;
-            /**
-             * Return the alert html string
-             * @@param {string} ClassType The class type >_
-             *      primary/secondary/success/info/danger/warning/dark/light
-             * @@param  {string} Message The message
-             */
-            this.AlertDIV = (ClassType, Message) => '\
-                                    <div class="alert alert-'+ (ClassType) + ' alert-dismissible fade show" role="alert">' + Message +'\
+        class Value {
+            constructor() {
+                this.MaxMultipartBodyLength = 134217728;
+                this.InDirId = "@ViewData["InDirId"]";
+                this.L_XSRF_TOKEN = "@(csrf.GetAndStoreTokens(Context).RequestToken)";
+                this.FileIsSelected = "The file is selected";
+                /**
+                 * In M byte
+                 */
+                this.FileLimit = 200;
+                this.FileIsTooLarge = "<strong>Oops. . .</strong> File is limit to less than " + this.MaxMultipartBodyLength / (1024 * 1024) + "M";
+                this.RemoveFileDIV = (Id = $.guid++) => "RemoveFileDIV" + Id;
+                this.FileName = (Id = $.guid++) => 'FileName_' + Id;
+                this.UploadProgress = (Id = $.guid++) => 'UploadProgress' + Id;
+                this.RemoveUploadedFileInput = (Id = $.guid++) => "RemoveUploadedFileInput" + Id;
+                this.FileInput = (Id = $.guid++) => "FileInput_" + Id;
+                /**
+                 * Return the alert html string
+                 * @@param {string} ClassType The class type >_
+                 *      primary/secondary/success/info/danger/warning/dark/light
+                 * @@param  {string} Message The message
+                 */
+                this.AlertDIV = (ClassType, Message) => '\
+                                    <div class="alert alert-'+ (ClassType) + ' alert-dismissible fade show" role="alert">' + Message + '\
                                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
                                         <span aria-hidden="true">&times;</span>\
                                       </button>\
                                     </div>\
                                     ';
-            
-            /**
-             * Return the file div message
-             * @@param  {number} Id The id
-             */
-            this.FileInfo = (Id = $.guid++) => '\
+
+                /**
+                 * Return the file div message
+                 * @@param  {number} Id The id
+                 */
+                this.FileInfo = (Id = $.guid++) => '\
                                 <div id='+ Id + ' name="FileDIV">\
                                     <input id="'+ _Value.FileInput(Id) + '" name="FileInput" type="file" onchange="_Data.GetMD58AddToArray(' + Id + ')" hidden/>\
                                     <span>\
@@ -329,7 +320,32 @@
                                     </span>\
                                 </div>\
                             ';
+            }
         }
+
+            var _Value = new Value();
+            var _Data = new Data();
+            var _UI = new UI();
+            var _Service = new Service();
+            var MD5Array = new Array();
+
+        $(document).ready(function () {
+            $("#SelectFileInput,#SelectFileA").on("click", function () {
+                _UI.SelectFile();
+                event.preventDefault();
+            });
+            $("#BackA").on("click", function () {
+                window.history.go(-1);
+                event.preventDefault();
+            });
+            $("#UploadA").on("click", function () {
+                if ($("[name='FileInput']").length < 1) return;
+                _Service.CheckMD58UploadFiles();
+                event.preventDefault();
+            });
+        });
+
+
     </script>
 }
 
@@ -341,17 +357,16 @@
             margin-top: 10px;
         }
         [name='FileDIV']{
-            border:solid;
-            border-color:violet;
-            border-radius:20px;
-            margin-top:4px;
+            font-size:120%;
         }
     </style>
 }
 
+            
 @*
 
-
+    
+        [name='FileDIV']:after {
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 

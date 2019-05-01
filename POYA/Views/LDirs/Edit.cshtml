@@ -13,24 +13,20 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="ReturnUrl" />
+
             <div class="form-group">
-                @*<label asp-for="Name" class="control-label"></label>*@
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Name" class="control-label"></label>
+                <div class="row">
+                    <input asp-for="Name" class="form-control col-7" />
+                    <select asp-for="CopyMove" asp-items="Model.CopyMoveSelectListItems" class=" form-control col-4"></select>
+                </div>
+                <span asp-validation-for="Name" data-interval="5000" class="text-danger"></span>
+                <span asp-validation-for="CopyMove" data-interval="5000" class="text-danger"></span> @*   Should be enum  *@
+                <div class="row" style="margin-top:20px">
+                    <select asp-for="InDirId" asp-items="Model.UserAllSubDirSelectListItems" class="form-control col-11"></select>
+                </div>
+                <span asp-validation-for="InDirId" data-interval="5000" class="text-danger"></span>
             </div>
-            @*
-                <div class="form-group">
-                    <label asp-for="DOCreate" class="control-label"></label>
-                    <input asp-for="DOCreate" class="form-control" />
-                    <span asp-validation-for="DOCreate" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="InDirId" class="control-label"></label>
-                    <input asp-for="InDirId" class="form-control" />
-                    <span asp-validation-for="InDirId" class="text-danger"></span>
-                </div>
-            *@
             <div class="form-group">
                 <a asp-action="Index" asp-controller="LUserFiles" asp-route-InDirId="@(Model.InDirId)" class="btn btn-outline-info"><< @Localizer["Back"]</a>
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -38,19 +34,28 @@
         </form>
     </div>
 </div>
-@*
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
-*@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+            $("#InDirId").hide();
+            $("#CopyMove").on("change", function () {
+                if ($("#CopyMove option:selected").val() != 0) {
+                    $("#InDirId").show();
+                } else {
+                    $("#InDirId").hide();
+                }
+            });
+        });
+    </script>
+
 }
 
-@section Styles{ 
-<style>
-    .directorySpan{
-        font-size:50%;
-    }
-</style>
+@section Styles{
+    <style>
+        .directorySpan {
+            font-size: 50%;
+        }
+    </style>
 }

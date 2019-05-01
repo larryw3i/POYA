@@ -9,13 +9,9 @@ using System.Threading.Tasks;
 
 namespace POYA.Models
 {
-    public class LUserFile  //  ViewModel
+    public class LUserFile: FileDirCommon  //  ViewModel
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
-
         public string MD5 { get; set; } = string.Empty;
-
-        public string UserId { get; set; }
 
         /// <summary>
         /// It is shared if SharedCode isn't Guid.Empty
@@ -25,28 +21,52 @@ namespace POYA.Models
         /// <summary>
         /// The default value is DateTimeOffset.Now
         /// </summary>
-        [Display(Name="Date")]
-        public DateTimeOffset DOGenerating { get; set; } = DateTimeOffset.Now;
-
-        [Display(Name="Name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// The defaut value is Guid.Empty
-        /// </summary>
-        public Guid InDirId { get; set; } = Guid.Empty;
-
-        //  public string ContentType { get; set; }
-
-        public bool IsLegal { get; set; } = true;
+        [Display(Name = "Date")]
+        public DateTimeOffset DOCreate { get; set; } = DateTimeOffset.Now;
 
         #region DEPOLLUTION
-
         /// <summary>
         /// [NotMapped]
         /// </summary>
         [NotMapped]
         public string ContentType { get; set; }
+
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        [NotMapped]
+        public IFormFile LFormFile { get; set; }
+        #endregion
+    }
+
+    public class LDir:FileDirCommon
+    {
+        /// <summary>
+        /// The default value is DateTimeOffset.Now
+        /// </summary>
+        [Display(Name = "Date")]
+        public DateTimeOffset DOCreate { get; set; } = DateTimeOffset.Now;
+
+
+    }
+    public class FileDirCommon
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();
+
+        public string UserId { get; set; }
+
+        /// <summary>
+        /// The default value is Guid.Empty
+        /// </summary>
+        public Guid InDirId { get; set; } = Guid.Empty;
+
+        public bool IsLegal { get; set; } = true;
+
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+
+
+        #region DEPOLLUTION
 
         /// <summary>
         /// [NotMapped]
@@ -58,7 +78,7 @@ namespace POYA.Models
         /// [NotMapped]
         /// </summary>
         [NotMapped]
-        public IFormFile LFormFile { get; set; }
+        public string InFullPath { get; set; } = "root";
 
         /// <summary>
         /// [NotMapped]
@@ -71,61 +91,44 @@ namespace POYA.Models
         /// Determine is coping(is 1) file to directory or moving(is 2), do nothing if it is 0
         /// </summary>
         [NotMapped]
-        public int CopyOrMove { get; set; } = 0;
+        public CopyMove CopyMove { get; set; } = CopyMove.DoNoThing;
 
         /// <summary>
         /// [NotMapped]
         /// </summary>
         [NotMapped]
-        public List<SelectListItem> CopyOrMoveSelectListItems { get; set; }
+        public List<SelectListItem> CopyMoveSelectListItems { get; set; }
+
         #endregion
-    }
-    public class LDir
-    {
-        public Guid Id { get; set; } = Guid.NewGuid();
 
-        [Display(Name = "Directory")]
-        public string Name { get; set; }
 
-        /// <summary>
-        /// The default value is DateTimeOffset.Now
-        /// </summary>
-        [Display(Name = "Date")]
-        public DateTimeOffset DOCreate { get; set; } = DateTimeOffset.Now;
-
-        /// <summary>
-        /// The default value is Guid.Empty
-        /// </summary>
-        public Guid InDirId { get; set; } = Guid.Empty;
-
-        public string UserId { get; set; }
-
-        [NotMapped]
-        public string InDirName { get; set; }
-
-        [NotMapped]
-        public string ReturnUrl { get; set; } = null;
-
-        [NotMapped]
-        public string InFullPath { get; set; } = "root";
     }
     public class LFile
     {
         public Guid Id { get; set; } = Guid.Empty;
+
         /// <summary>
         /// The id of the first user upload this file
         /// </summary>
         public string UserId { get; set; }
+
         public DateTimeOffset DOUpload { get; set; } = DateTimeOffset.Now;
+
         /// <summary>
         /// The MD5 string, it equal the file name in specified directory
         /// </summary>
         public string MD5 { get; set; }
     }
 
+
     #region DEPOLLUTION
 
-    //<<<<<<<<<<<<<<<<<<<<<<<<<<<SEPARATOR>>>>>>>>>>>>>>>>>>>//
+    public enum CopyMove {
+        Copy = 1,
+        Move = 2,
+        DoNoThing = 0
+    };
+
     public class MediaType
     {
         //  Name,Template,Reference
@@ -133,6 +136,7 @@ namespace POYA.Models
         public string Template { get; set; }
         public string Reference { get; set; }
     }
+
     public class ContrastMD5
     {
         public Guid InDirId { get; set; } = Guid.Empty;
@@ -156,4 +160,5 @@ namespace POYA.Models
         public Guid InDirId { get; set; }
     }
     #endregion
+
 }

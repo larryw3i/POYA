@@ -45,7 +45,7 @@ namespace POYA
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
+                options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             #region
             /*
@@ -145,7 +145,7 @@ namespace POYA
             else
             {
                 //  app.UseDeveloperExceptionPage();
-                app.UseExceptionHandler(builder => builder.Run(async context => await x_DOVEHelper.ErrorEventAsync(context, env)));
+                app.UseExceptionHandler(builder => builder.Run(async context => await x_DOVEHelper.ErrorEventAsync(Configuration,context)));
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }

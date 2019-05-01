@@ -18,14 +18,14 @@
                 <label asp-for="Name" class="control-label"></label>
                 <div class="row">
                     <input asp-for="Name" class="form-control col-7" />
-                    <select asp-for="CopyOrMove" asp-items="Model.CopyOrMoveSelectListItems" class=" form-control col-4"></select>
+                    <select asp-for="CopyMove" asp-items="Model.CopyMoveSelectListItems" class=" form-control col-4"></select>
                 </div>
-                <span asp-validation-for="Name" class="text-danger"></span>
-                <span asp-validation-for="CopyOrMove" class="text-danger"></span>
+                <span asp-validation-for="Name" data-interval="5000" class="text-danger"></span>
+                <span asp-validation-for="CopyMove" data-interval="5000" class="text-danger"></span>
                 <div class="row" style="margin-top:20px">
                     <select asp-for="InDirId" asp-items="Model.UserAllSubDirSelectListItems" class="form-control col-11"></select>
                 </div>
-                <span asp-validation-for="InDirId" class="text-danger"></span>
+                <span asp-validation-for="InDirId" data-interval="5000" class="text-danger"></span>
             </div>
             <div class="form-group" style="margin-top:20px">
                 <a class="btn btn-outline-info" asp-action="Index" asp-route-InDirId="@(Model.InDirId)"><< @Localizer["Back"]</a>
@@ -43,8 +43,8 @@
     <script>
         $(document).ready(function () {
             $("#InDirId").hide();
-            $("#CopyOrMove").on("change", function () {
-                if ($("#CopyOrMove option:selected").val() != 0) {
+            $("#CopyMove").on("change", function () {
+                if ($("#CopyMove option:selected").val() != 0) {
                     $("#InDirId").show();
                 } else {
                     $("#InDirId").hide();
@@ -53,6 +53,7 @@
         });
     </script>
 }
+
 
 @*
     @*

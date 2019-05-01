@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -13,21 +14,18 @@ namespace POYA.Unities.Services
 {
     public class EmailSender : IEmailSender //  Controllers
     {
-        private readonly IHostingEnvironment _hostingEnv;
-        public EmailSender(IHostingEnvironment hostingEnv)
+        public IConfiguration _configuration { get; }
+        public EmailSender(
+            IConfiguration configuration)
         {
-            _hostingEnv = hostingEnv;
+            _configuration=configuration ;
         }
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            var file = File.OpenText(_hostingEnv.ContentRootPath+ "/appsettings.json");
-            var reader = new JsonTextReader(file);
-            var jsonObject = (JObject)JToken.ReadFrom(reader);
-            file.Close(); 
-            var userName =(string)jsonObject[nameof(EmailSender)]["userName"];
-            var host = (string)jsonObject[nameof(EmailSender)]["host"];
-            var password = (string)jsonObject[nameof(EmailSender)]["password"];
-            var port =(short)jsonObject[nameof(EmailSender)]["port"];
+            var userName = _configuration["EmailSender:userName"]; //(string)jsonObject[nameof(EmailSender)]["userName"];
+            var host = _configuration["EmailSender:host"];// (string)jsonObject[nameof(EmailSender)]["host"];
+            var password = _configuration["EmailSender:password"];//     (string)jsonObject[nameof(EmailSender)]["password"];
+            var port = Convert.ToInt32( _configuration["EmailSender:port"]);//    (short)jsonObject[nameof(EmailSender)]["port"];
             var smtpClient = new SmtpClient(host: host, port: port)
             {
                 EnableSsl = false,

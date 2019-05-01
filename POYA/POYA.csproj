@@ -69,6 +69,8 @@
     <Compile Remove="Controllers\X_doveDirectoriesController.cs" />
     <Compile Remove="Controllers\X_doveFilesController.cs" />
     <Compile Remove="Controllers\__LUserFilesController.cs" />
+    <Compile Remove="Migrations\20190429173732_l043020190137.cs" />
+    <Compile Remove="Migrations\20190429173732_l043020190137.Designer.cs" />
     <Compile Remove="Models\EduHubViewModel.cs" />
     <Compile Remove="Models\LDirViewModel.cs" />
     <Compile Remove="Models\SharedFDViewModel.cs" />
@@ -76,7 +78,11 @@
     <Compile Remove="Models\X_DoveDirectoryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="Views\LUserFiles\__Index.cshtml" />
     <Content Remove="wwwroot\lib\video-js-7.5.4\LICENSE" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="app.db" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\lib\video-js-7.5.4\LICENSE">
@@ -92,11 +98,14 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="2.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="2.2.4" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="2.2.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="2.2.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="2.2.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.4">
       <PrivateAssets>all</PrivateAssets>

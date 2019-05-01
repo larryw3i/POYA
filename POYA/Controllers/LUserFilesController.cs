@@ -88,17 +88,15 @@ namespace POYA.Controllers
             });
             await _context.SaveChangesAsync();
 
-            var LUserFile_ = await _context.LUserFile.Where(p => p.UserId == UserId_ && p.InDirId == InDirId).OrderBy(p => p.DOGenerating).ToListAsync();
-            var InDirName = (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? "root";
-            var _Path = string.Empty;   //InDirName;
-            //  LUserFile_.ForEach(m => { m.InDirName = InDirName; });
-            ViewData[nameof(InDirName)] = InDirName;
+            var LUserFile_ = await _context.LUserFile.Where(p => p.UserId == UserId_ && p.InDirId == InDirId && !string.IsNullOrWhiteSpace(p.MD5)).OrderBy(p => p.DOCreate).ToListAsync();
+            var LUserFileIds = LUserFile_.Select(p => p.Id);
+            //  var InDirName = //  var _Path = string.Empty;   //InDirName;    //  LUserFile_.ForEach(m => { m.InDirName = InDirName; });
             ViewData[nameof(InDirId)] = InDirId;
+            ViewData["InDirName"] = (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? "root";
             ViewData["LastDirId"] = InDirId == Guid.Empty ? InDirId
-                : await _context.LDir.Where(p => p.Id == InDirId && p.UserId==UserId_).Select(p => p.InDirId).FirstOrDefaultAsync();
-            var LDirs = await _context.LDir.Where(p => p.InDirId == InDirId && p.UserId == UserId_).ToListAsync();
-            ViewData[nameof(LDirs)] = LDirs;
-            ViewData[nameof(_Path)] = _x_DOVEHelper.GetFullPathOfFileOrDir(context: _context,InDirId: InDirId??Guid.Empty);    //    $"root/{_Path}";
+                : await _context.LDir.Where(p => p.Id == InDirId && p.UserId == UserId_).Select(p => p.InDirId).FirstOrDefaultAsync();
+            ViewData["LDirs"] = await _context.LDir.Where(p => p.InDirId == InDirId && p.UserId == UserId_ && !LUserFileIds.Contains(p.Id)).ToListAsync(); ;
+            ViewData["_Path"] = _x_DOVEHelper.GetFullPathOfFileOrDir(context: _context,InDirId: InDirId??Guid.Empty);    //    $"root/{_Path}";
             return View(LUserFile_);
         }
 
@@ -192,16 +190,16 @@ namespace POYA.Controllers
             {
                 return NotFound();
             }
+            #region MOVE AND COPY
             var AllUserSubDirs = await _context.LDir.Where(p => p.Id != Guid.Empty && p.UserId == UserId_).ToListAsync();
 
-            #region MOVE AND COPY
             lUserFile.UserAllSubDirSelectListItems = new List<SelectListItem>();
             //  lUserFile.UserAllSubDirSelectListItems.Add(new SelectListItem {  Text="root/",Value=Guid.Empty.ToString()});
             lUserFile.UserAllSubDirSelectListItems.AddRange( AllUserSubDirs.Select(p => new SelectListItem { Text = $"{_x_DOVEHelper.GetFullPathOfFileOrDir(_context, p.InDirId)}{p.Name}", Value = p.Id.ToString() }).OrderBy(p=>p.Text).ToList());
-            lUserFile.CopyOrMoveSelectListItems = new List<SelectListItem>() {
-                new SelectListItem{Text="Rename only",Value="0",Selected=true},
-                new SelectListItem{  Text="Copy to", Value="1"},
-                new SelectListItem{Text="Move to", Value="2"}
+            lUserFile.CopyMoveSelectListItems = new List<SelectListItem>() {
+                new SelectListItem{Text="Rename",Value="0",Selected=true},
+                new SelectListItem{  Text="Also copy", Value="1"},
+                new SelectListItem{Text="Also move", Value="2"}
             };
             #endregion
 
@@ -213,7 +211,7 @@ namespace POYA.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,CopyOrMove,InDirId")] LUserFile lUserFile)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,CopyMove,InDirId")] LUserFile lUserFile)
         {
             if (id != lUserFile.Id)
             {
@@ -237,7 +235,7 @@ namespace POYA.Controllers
                         return View(lUserFile);
                     }
                     //  Copy
-                    if (lUserFile.CopyOrMove == 1)
+                    if (lUserFile.CopyMove == CopyMove.Copy)
                     {
                         await _context.LUserFile.AddAsync(
                             new LUserFile {
@@ -247,7 +245,7 @@ namespace POYA.Controllers
                         InDirId = lUserFile.InDirId;
                     }
                     //  Move
-                    else if (lUserFile.CopyOrMove == 2)
+                    else if (lUserFile.CopyMove == CopyMove.Move)
                     {
                         _lUserFile.InDirId = lUserFile.InDirId;
                         await _context.SaveChangesAsync();
