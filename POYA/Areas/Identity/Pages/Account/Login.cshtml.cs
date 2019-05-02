@@ -20,6 +20,7 @@ namespace POYA.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
+        #region
         private readonly IHostingEnvironment _hostingEnv;
         private readonly IStringLocalizer<Program> _localizer;
         private readonly UserManager<IdentityUser> _userManager;
@@ -50,6 +51,8 @@ namespace POYA.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
         }
+        #endregion
+
         [BindProperty]
         public InputModel Input { get; set; }
         public IList<AuthenticationScheme> ExternalLogins { get; set; }

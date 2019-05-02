@@ -67,6 +67,11 @@ namespace POYA.Controllers
             InDirId = InDirId ?? Guid.Empty;
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
+            if (!System.IO.Directory.Exists(_x_DOVEHelper.AvatarStoragePath(_hostingEnv)))
+            {
+                Directory.CreateDirectory(_x_DOVEHelper.AvatarStoragePath(_hostingEnv));
+            }
+
             var _FileNames = new DirectoryInfo(_x_DOVEHelper.FileStoragePath(_hostingEnv)).GetFiles().Select(p => p.Name);
             //  Console.WriteLine("FileName >> "+JsonConvert.SerializeObject(_FileNames));
             var _LFiles = await _context.LFile.ToListAsync();

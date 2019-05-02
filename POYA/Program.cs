@@ -23,6 +23,7 @@ namespace POYA
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
             //  .UseUrls("http://*:5432")
+            .UseKestrel()
             .UseStartup<Startup>();
     }
 }
