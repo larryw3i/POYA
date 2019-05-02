@@ -198,7 +198,7 @@ namespace POYA.Controllers
             #region MOVE AND COPY
             var AllUserSubDirs = await _context.LDir.Where(p => p.Id != Guid.Empty && p.UserId == UserId_).ToListAsync();
 
-            lUserFile.UserAllSubDirSelectListItems = new List<SelectListItem>();
+            lUserFile.UserAllSubDirSelectListItems = new List<SelectListItem>() { new SelectListItem {  Text="root/",Value=Guid.Empty.ToString()} };
             //  lUserFile.UserAllSubDirSelectListItems.Add(new SelectListItem {  Text="root/",Value=Guid.Empty.ToString()});
             lUserFile.UserAllSubDirSelectListItems.AddRange( AllUserSubDirs.Select(p => new SelectListItem { Text = $"{_x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId)}{p.Name}", Value = p.Id.ToString() }).OrderBy(p=>p.Text).ToList());
             lUserFile.CopyMoveSelectListItems = new List<SelectListItem>() {
@@ -234,9 +234,9 @@ namespace POYA.Controllers
                     {
                         return NotFound();
                     }
-                    if (!await _context.LDir.AnyAsync(p => p.Id == lUserFile.InDirId && p.UserId == UserId_))
+                    if (lUserFile.InDirId!=Guid.Empty && !await _context.LDir.AnyAsync(p => p.Id == lUserFile.InDirId && p.UserId == UserId_))
                     {
-                        ModelState.AddModelError(nameof(lUserFile.InDirId), "&#128557;");
+                        ModelState.AddModelError(nameof(lUserFile.InDirId), _localizer["Sorry! the directory can't be found"]);
                         return View(lUserFile);
                     }
                     //  Copy
@@ -259,8 +259,10 @@ namespace POYA.Controllers
                     else
                     {
                         _lUserFile.Name = lUserFile.Name;
+                        #region
                         //  _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name, _hostingEnv).Last();
                         //  _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name).Last();   // new Mime().Lookup(lUserFile.Name);
+                        #endregion
                         _context.Update(_lUserFile);
                         await _context.SaveChangesAsync();
                         InDirId = _lUserFile.InDirId;

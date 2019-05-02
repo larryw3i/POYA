@@ -164,7 +164,7 @@ namespace POYA.Controllers
              * THANK        https://github.com/dotnet/docs/blob/master/docs/framework/winforms/advanced/how-to-set-jpeg-compression-level.md
              */
             var AvatarEncoderParameters = new EncoderParameters(1);
-            AvatarEncoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, 5L);
+            AvatarEncoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, 8L);
             #endregion
 
             b.Save( ms, ImageCodecInfo.GetImageDecoders().FirstOrDefault(p=>p.FormatID==ImageFormat.Jpeg.Guid), AvatarEncoderParameters);

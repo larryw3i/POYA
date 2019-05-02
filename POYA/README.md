@@ -20,12 +20,14 @@ it is like:
     "host": "xxxxxx.xxxxxx.xxx",
     "password": "xxxxxx"
   }, 
-  "X_DOVEHelper": {
-    "email": "xxxxxxx@xxx.xxx"
+  "ErrorLogHandle": {
+    "ReceiveLogEmailAddress": "xxxxxxx@xxx.xxx"
   }
 } 
 ```   
-??HOW TO FIND MY ConnectionStrings?? >_  
+The DefaultConnection is following if you use MSSQL  
+**"Server=(localdb)\\\\mssqllocaldb;Database=aspnet-POYA-0E28E843-176D-49F3-9739-6D5E6F1BC3F5;Trusted_Connection=True;MultipleActiveResultSets=true"**  
+??HOW TO FIND MY MSSQL ConnectionStrings?? >_  
 *Open your **Visual Studio**  
 *Find your **SQL Server Object Explorer** and open it    
 *You'll find it after you right click your database and click **Properties**  

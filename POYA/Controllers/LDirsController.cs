@@ -143,7 +143,7 @@ namespace POYA.Controllers
             }
             UserDirs.Remove(lDir);
 
-            lDir.UserAllSubDirSelectListItems = new List<SelectListItem>();
+            lDir.UserAllSubDirSelectListItems = new List<SelectListItem>() { new SelectListItem {  Value=Guid.Empty.ToString(),Text="root/"} };
 
             lDir.UserAllSubDirSelectListItems.AddRange(UserDirs.Select(p => new SelectListItem { Text = $"{_x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId)}{p.Name}", Value = p.Id.ToString() }).OrderBy(p => p.Text).ToList());
 
@@ -181,9 +181,9 @@ namespace POYA.Controllers
                         return NotFound();
                     }
 
-                    if (!await _context.LDir.AnyAsync(p => p.Id == lDir.InDirId && p.UserId == UserId_))
+                    if (lDir.InDirId!=Guid.Empty &&!await _context.LDir.AnyAsync(p => p.Id == lDir.InDirId && p.UserId == UserId_))
                     {
-                        ModelState.AddModelError(nameof(lDir.InDirId), "&#128557;");
+                        ModelState.AddModelError(nameof(lDir.InDirId), _localizer["Sorry! the directory can't be found"]);
                         return View(lDir);
                     }
 
