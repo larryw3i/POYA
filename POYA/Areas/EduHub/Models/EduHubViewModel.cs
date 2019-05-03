@@ -28,7 +28,7 @@ namespace POYA.Areas.EduHub.Models
         public string Title { get; set; }
         public string Content { get; set; }
         /// <summary>
-        /// text/html | text/markdown
+        /// text/html || text/markdown
         /// </summary>
         public string ContentType { get; set; } = "text/html";
         public bool IsLegal { get; set; } = true;

@@ -5,59 +5,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>@Localizer["Write your article"]</h1>
 
-<h4>EArticle</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SubjectId" class="control-label"></label>
-                <input asp-for="SubjectId" class="form-control" />
-                <span asp-validation-for="SubjectId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GradeId" class="control-label"></label>
-                <input asp-for="GradeId" class="form-control" />
-                <span asp-validation-for="GradeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TypeId" class="control-label"></label>
-                <input asp-for="TypeId" class="form-control" />
-                <span asp-validation-for="TypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VideoId" class="control-label"></label>
-                <input asp-for="VideoId" class="form-control" />
-                <span asp-validation-for="VideoId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
+
+            <div class="form-group ">
+                <input asp-for="Title" class="form-control col offset-3 col-6"  placeholder="@Localizer["Title"]"/>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
+                <input asp-for="Content" class="form-control" hidden />
+                <div id="ContentEditor"></div>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ContentType" class="control-label"></label>
-                <input asp-for="ContentType" class="form-control" />
-                <span asp-validation-for="ContentType" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsLegal" /> @Html.DisplayNameFor(model => model.IsLegal)
-                </label>
-            </div>
+                <label asp-for="SubjectId" class="control-label"></label>
+                <div class="row col-6">
+                    <input asp-for="SubjectId" class="col col-2 form-control" />
+                    <input asp-for="GradeId" class="col col-2 form-control" />
+                    <input asp-for="TypeId" class="col col-2 form-control" />
+                </div>
+                <span asp-validation-for="SubjectId" class="text-danger"></span>
+                <span asp-validation-for="GradeId" class="text-danger"></span>
+                <span asp-validation-for="TypeId" class="text-danger"></span>
+            </div> 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -71,4 +46,18 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/wangEditor-3.1.1/release/wangEditor.min.js"></script>
+    <script>
+        var _Editor = window.wangEditor;
+        var Editor = new _Editor("#ContentEditor");
+        Editor.create();
+    </script>
+}
+
+@section Styles {
+<style>
+    #Title{
+        text-align:center;
+    }
+</style>
 }

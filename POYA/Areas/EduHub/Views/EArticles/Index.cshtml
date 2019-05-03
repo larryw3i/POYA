@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<POYA.Areas.EduHub.Models.EArticle>
 
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -33,10 +34,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Content)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContentType)
-            </th>
+            </th> 
             <th>
                 @Html.DisplayNameFor(model => model.IsLegal)
             </th>
@@ -66,10 +64,7 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContentType)
-            </td>
+            </td> 
             <td>
                 @Html.DisplayFor(modelItem => item.IsLegal)
             </td>

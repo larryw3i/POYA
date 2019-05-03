@@ -56,7 +56,8 @@ namespace POYA.Controllers
         // GET: LDirs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.LDir.ToListAsync());
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            return View(await _context.LDir.Where(p=>p.UserId==UserId_).ToListAsync());
         }
 
         // GET: LDirs/Details/5

@@ -139,7 +139,10 @@
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\EduHub\Controllers\" />
     <Folder Include="Areas\EduHub\Data\" />
+    <Folder Include="Areas\EduHub\Data\" />
+    <Folder Include="Areas\EduHub\Views\" />
     <Folder Include="Data\LFiles\Avatars\" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +194,10 @@
     <None Include="wwwroot\lib\video-js-7.5.4\video.es.js" />
     <None Include="wwwroot\lib\video-js-7.5.4\video.js" />
     <None Include="wwwroot\lib\video-js-7.5.4\video.min.js" />
+    <None Include="wwwroot\lib\wangEditor-3.1.1\LICENSE" />
+    <None Include="wwwroot\lib\wangEditor-3.1.1\release\wangEditor.js" />
+    <None Include="wwwroot\lib\wangEditor-3.1.1\release\wangEditor.min.js" />
+    <None Include="wwwroot\lib\wangEditor-3.1.1\release\wangEditor.min.js.map" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES2017</TypeScriptTarget>

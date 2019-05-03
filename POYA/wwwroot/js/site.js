@@ -86,14 +86,14 @@ class UI_ {
             case "Dark":
                 $("#_body,footer,.dropdown *,select").css({ "background-color": "black", "color": "#C7EDCC" });
                 $(".table").css("color", "#C7EDCC");
-                $("input[class=form-control],textarea[class=form-control]").css({ "background-color": "#C7EDCC" });
+                $("input[class=form-control]").css({ "background-color": "#C7EDCC" });
                 $("button").css({ "color": "#C7EDCC" });
                 $("select").css({ "background-color": "black", "color": "#C7EDCC" });
                 break;
             case "Light":
                 $("#_body,footer,.dropdown *,select").css({ "background-color": "white", "color": "blue" });
                 $(".table").css("color", "black");
-                $("input[class=form-control],textarea[class=form-control]").css({ "background-color": "white" });
+                $("input[class=form-control]").css({ "background-color": "white" });
                 $("button").css({ "color": "black" });
                 $("select").css({ "background-color": "white" });
                 break;

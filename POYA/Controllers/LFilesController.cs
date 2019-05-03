@@ -54,7 +54,8 @@ namespace POYA.Controllers
         // GET: LFiles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.LFile.ToListAsync());
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            return View(await _context.LFile.Where(p=>p.UserId==UserId_).ToListAsync());
         }
 
         // GET: LFiles/Details/5
@@ -65,7 +66,9 @@ namespace POYA.Controllers
                 return NotFound();
             }
 
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var lFile = await _context.LFile
+                .Where(p=>p.UserId==UserId_)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (lFile == null)
             {
@@ -90,7 +93,9 @@ namespace POYA.Controllers
         {
             if (ModelState.IsValid)
             {
+                var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                 lFile.Id = Guid.NewGuid();
+                lFile.UserId = UserId_;
                 _context.Add(lFile);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -98,6 +103,8 @@ namespace POYA.Controllers
             return View(lFile);
         }
 
+        #region BASIC FILE UNEDITED
+        /*
         // GET: LFiles/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
@@ -106,7 +113,8 @@ namespace POYA.Controllers
                 return NotFound();
             }
 
-            var lFile = await _context.LFile.FindAsync(id);
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var lFile = await _context.LFile.FirstOrDefaultAsync(p=>p.UserId==UserId_ && p.Id==id);
             if (lFile == null)
             {
                 return NotFound();
@@ -130,7 +138,13 @@ namespace POYA.Controllers
             {
                 try
                 {
-                    _context.Update(lFile);
+                    var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+                    var _lFile = await _context.LFile.FirstOrDefaultAsync(p => p.UserId == UserId_ && p.Id == lFile.Id);
+                    if (_lFile == null)
+                    {
+                        return View(lFile);
+                    }
+                    //  _lFile
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -148,6 +162,8 @@ namespace POYA.Controllers
             }
             return View(lFile);
         }
+        */
+        #endregion
 
         // GET: LFiles/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
@@ -157,8 +173,9 @@ namespace POYA.Controllers
                 return NotFound();
             }
 
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var lFile = await _context.LFile
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id && m.UserId==UserId_);
             if (lFile == null)
             {
                 return NotFound();
@@ -172,7 +189,12 @@ namespace POYA.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var lFile = await _context.LFile.FindAsync(id);
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var lFile = await _context.LFile.FirstOrDefaultAsync(p=>p.UserId==UserId_ &&p.Id==id);
+            if (lFile == null)
+            {
+                return NotFound();
+            }
             _context.LFile.Remove(lFile);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
