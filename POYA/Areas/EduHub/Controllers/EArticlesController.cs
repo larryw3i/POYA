@@ -57,7 +57,7 @@ namespace POYA.Areas.EduHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,SubjectId,GradeId,TypeId,VideoId,Title,Content,ContentType,IsLegal")] EArticle eArticle)
+        public async Task<IActionResult> Create([Bind("Id,UserId,SubjectId,GradeId,TypeId,Title,Content,ContentType,IsLegal")] EArticle eArticle)
         {
             if (ModelState.IsValid)
             {

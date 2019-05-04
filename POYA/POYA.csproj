@@ -78,11 +78,15 @@
     <Compile Remove="Models\X_DoveDirectoryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="bundleconfig.json" />
     <Content Remove="Views\LUserFiles\__Index.cshtml" />
     <Content Remove="wwwroot\lib\video-js-7.5.4\LICENSE" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="app.db" />
+  </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="bundleconfig.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\lib\video-js-7.5.4\LICENSE">
@@ -146,6 +150,7 @@
     <Folder Include="Data\LFiles\Avatars\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bundleconfig.json" />
     <None Include="wwwroot\lib\video-js-7.5.4\alt\video.core.js" />
     <None Include="wwwroot\lib\video-js-7.5.4\alt\video.core.min.js" />
     <None Include="wwwroot\lib\video-js-7.5.4\alt\video.core.novtt.js" />
