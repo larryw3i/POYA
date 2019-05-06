@@ -1,4 +1,7 @@
-﻿@model IEnumerable<POYA.Areas.EduHub.Models.EArticle>
+﻿@*
+    @model IEnumerable<POYA.Areas.EduHub.Models.EArticle>
+*@
+@using POYA.Areas.EduHub.Models;
 
 
 @{
@@ -6,13 +9,89 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>@Localizer["Current publishing"]</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="row">
+    <a class="col offset-8 col-2" asp-action="Create">@Localizer["Publish new"]</a>
+    <div class="col-2">
+        <select id="AuthorTypeSelect">
+            <option value="false">View all</option>
+            <option value="true">Just me</option>
+        </select>
+    </div>
+</div>
+    
+
 <table class="table">
-    <thead>
+
+    <tbody>
+        @foreach (var item in ViewData["EArticles"] as IPagedList<EArticle>)
+        {
+            <tr>
+                <td>
+                    <span class="title">@Html.DisplayFor(modelItem => item.Title) </span> 
+                    <span class="author">
+                        (@($"{item.UserName}") &#9998; @($"{item.DOPublishing.LocalDateTime.ToShortDateString()}")
+                        @if (item.DOUpdating != null)
+                        {
+                            <span>&#10226;</span>
+                            <span>@(item.DOUpdating?.LocalDateTime.ToShortDateString())</span>
+                        }
+                        )
+                    </span>
+                </td> 
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" title="@Localizer["Edit"]">&#9997;</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" title="@Localizer["Details"]">&#9749;</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" title="@Localizer["Delete"]">&#10008;</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@(Html.PagedListPager((IPagedList<EArticle>)ViewData["EArticles"], _page => Url.Action("Index", new {  _page=_page }),
+    PagedListRenderOptions.OnlyShowFivePagesAtATime))
+
+@section Scripts{ 
+<script>
+    class Service {
+
+        /**
+         * View all or just me
+         * @@param {boolean} IsIndividual - view user's article only or view all
+         */
+        ChangeAuthorType(IsIndividual) {
+            window.location.href = "@(Url.Action("Index"))"+"?IsIndividual="+IsIndividual;
+        }
+    }
+    var _Service = new Service();
+
+    $(document).ready(function () {
+        $("#AuthorTypeSelect option[value='@(ViewData["IsIndividual"].ToString().ToLower())']").attr( "selected", true );
+        $("#AuthorTypeSelect").on("change", function () {
+            _Service.ChangeAuthorType($("#AuthorTypeSelect option:selected").val())
+        });
+    });
+</script>
+}
+
+@section Styles{
+    <link href="~/css/PagedList.css" rel="stylesheet" type="text/css" />
+    <style>
+        .author {
+            font-size: 80%;
+            color:blue;
+        }
+        .title{
+            font-size:120%;
+            font-weight:bold;
+            color:coral;
+        }
+    </style>
+}
+
+@*
+     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.UserId)
@@ -31,43 +110,11 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Content)
-            </th> 
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.IsLegal)
             </th>
             <th></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubjectId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GradeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td> 
-            <td>
-                @Html.DisplayFor(modelItem => item.IsLegal)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+*@

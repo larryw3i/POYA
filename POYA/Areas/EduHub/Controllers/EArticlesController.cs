@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using POYA.Areas.EduHub.Models;
 using POYA.Data;
 using POYA.Unities.Helpers;
+using X.PagedList;
 
 namespace POYA.Areas.EduHub.Controllers
 {
@@ -58,10 +59,33 @@ namespace POYA.Areas.EduHub.Controllers
         #endregion
 
         // GET: EduHub/EArticles
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(bool? IsIndividual ,int _page = 1 )
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            return View(await _context.EArticle.ToListAsync());
+
+            #region CONTRAST IsIndividual
+            if (IsIndividual == null)
+            {
+                    IsIndividual = (bool)(TempData[nameof(IsIndividual)] ?? false);
+            }
+            else
+            {
+                TempData[nameof(IsIndividual)] = IsIndividual;
+            }
+            #endregion
+
+            var _EArticle = _context.EArticle.Where(p => IsIndividual==true ? (p.UserId == UserId_) : true)
+               .OrderBy(p => p.DOPublishing);
+            if (IsIndividual==false)
+            {
+                var _User = await _context.Users.Where(p=>p.EmailConfirmed).Select(p=>new { p.UserName,p.Id}).ToListAsync();
+                await _EArticle.ForEachAsync(p=> {
+                    p.UserName = _User.FirstOrDefault(o => o.Id == p.UserId)?.UserName;
+                });
+            }
+            ViewData["EArticles"] = _EArticle.OrderByDescending(p=>p.DOPublishing).ToPagedList(_page, 8);
+            ViewData[nameof(IsIndividual)] = IsIndividual;
+            return View();
         }
 
         // GET: EduHub/EArticles/Details/5
@@ -132,7 +156,7 @@ namespace POYA.Areas.EduHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,UserId,SubjectId,GradeId,TypeId,VideoId,Title,Content,ContentType,IsLegal")] EArticle eArticle)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,VideoId,Title,Content")] EArticle eArticle)
         {
             if (id != eArticle.Id)
             {
@@ -144,7 +168,13 @@ namespace POYA.Areas.EduHub.Controllers
                 try
                 {
                     var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-                    _context.Update(eArticle);
+                    var _EArticle = await _context.EArticle.Where(p => p.Id == eArticle.Id && p.UserId == UserId_).FirstOrDefaultAsync();
+                    #region UPDATE
+                    _EArticle.Content = eArticle.Content;
+                    _EArticle.DOUpdating = DateTimeOffset.Now;
+                    _EArticle.VideoId = eArticle.VideoId;
+                    _EArticle.Title = eArticle.Title;
+                    #endregion
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

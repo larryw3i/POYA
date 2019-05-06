@@ -6,6 +6,7 @@
 /Migrations/
 #	!/Data/
 /Data/LFiles/
+/Data/Database/
 
 # Files
 /appsettings.json

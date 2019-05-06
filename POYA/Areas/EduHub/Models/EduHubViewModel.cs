@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -49,6 +50,15 @@ namespace POYA.Areas.EduHub.Models
         /// Determine the article is legal or not by Content appraiser, the default value is <see langword="true"/>
         /// </summary>
         public bool IsLegal { get; set; } = true;
+        public DateTimeOffset DOPublishing { get; set; } = DateTimeOffset.Now;
+        public DateTimeOffset? DOUpdating { get; set; }
+        #region DEPOLLUTION
+        /// <summary>
+        /// <see cref="NotMappedAttribute" />
+        /// </summary>
+        [NotMapped]
+        public string UserName { get; set; }
+        #endregion
     }
 
     #region DEPOLLUTION

@@ -5,61 +5,119 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<h1>@(Localizer["Edit"]) <span class="EditArticleSpan">@Localizer["your article"]</span> </h1>
 
-<h4>EArticle</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+    <div class="col">
+        <form asp-action="Edit" id="EArticles_Edit_Form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SubjectId" class="control-label"></label>
-                <input asp-for="SubjectId" class="form-control" />
-                <span asp-validation-for="SubjectId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GradeId" class="control-label"></label>
-                <input asp-for="GradeId" class="form-control" />
-                <span asp-validation-for="GradeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
+                <input asp-for="Title" class="form-control  col offset-3 col-6" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
+                <div id="ContentEditor"></div>
+                <input asp-for="Content" hidden />
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ContentType" class="control-label"></label>
-                <input asp-for="ContentType" class="form-control" />
-                <span asp-validation-for="ContentType" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsLegal" /> @Html.DisplayNameFor(model => model.IsLegal)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-outline-primary"><< @Localizer["Back"]</a>
+                <a class="btn btn-primary" id="EArticles_Edit_Form_Submit_A">@Localizer["Save"]</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/wangEditor-3.1.1/release/wangEditor.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            //  #region CONTENT_EDITOR
+            var _Editor = window.wangEditor;
+            var Editor = new _Editor("#ContentEditor");
+            Editor.customConfig.menus = [
+                'head',
+                'bold',
+                'fontSize',
+                'italic',
+                'underline',
+                'strikeThrough',
+                'foreColor',
+                'backColor',
+                'link',
+                'list',
+                'justify',
+                'quote',
+                'emoticon',
+                'image',
+                'table',
+                'code',
+                'undo',
+                'redo'
+            ];
+            Editor.customConfig.lang = {
+                '\u8bbe\u7f6e\u6807\u9898': '@Localizer["Title"]',
+                '\u6b63\u6587': '@Localizer["Paragraph"]',
+                '\u94fe\u63a5\u6587\u5b57': '@Localizer["Link text"]',
+                "\u56fe\u7247\u94fe\u63a5": "@Localizer["Image link"]",
+                '\u94fe\u63a5': '@Localizer["Link"]',
+                '\u4e0a\u4f20\u56fe\u7247': '@Localizer["Upload image"]',
+                '\u4e0a\u4f20': '@Localizer["Upload"]',
+                '\u521b\u5efa': '@Localizer["Initial"]',
+                "\u63d2\u5165\u4ee3\u7801": "@Localizer["Insert code"]",
+                "\u7f51\u7edc\u56fe\u7247": "@Localizer["Image url"]",
+                "\u63d2\u5165\u8868\u683c": "@Localizer["Table"]",
+                "\u884c": "@Localizer["line"]",
+                "\u5217\u7684\u8868\u683c": "@Localizer["col"]",
+                "\u63d2\u5165": "@Localizer["Insert"]",
+                "\u5bf9\u9f50\u65b9\u5f0f": "@Localizer["Align"]",
+                "\u5b57\u53f7": "@Localizer["Font size"]",
+                "\u5b57\u4f53": "@Localizer["Font"]",
+                "\u5b8b\u4f53": "@Localizer["Simsun"]",
+                "\u5fae\u8f6f\u96c5\u9ed1": "@Localizer["Microsoft YaHei"]",
+                "\u6587\u5b57\u989c\u8272": "@Localizer["Font color"]",
+                "\u80cc\u666f\u8272": "@Localizer["background color"]",
+                "\u8bbe\u7f6e\u5217\u8868": "@Localizer["List"]",
+                "\u6709\u5e8f\u5217\u8868": "@Localizer["ordered list"]",
+                "\u65e0\u5e8f\u5217\u8868": "@Localizer["unordered list"]",
+                "\u9760\u5de6": "@Localizer["Left"]",
+                "\u5c45\u4e2d": "@Localizer["Center"]",
+                "\u9760\u53f3": "@Localizer["Right"]",
+                "\u9ed8\u8ba4": "@Localizer["Default"]",
+                "\u65b0\u6d6a": "@Localizer["Sina"]"
+            };
+            Editor.create();
+            Editor.txt.html('@(Html.Raw( Model.Content))');
+            //  #endregion
+
+            $("#EArticles_Edit_Form_Submit_A").on("click", function () {
+                $("#Content").val(Editor.txt.html());
+                $("#EArticles_Edit_Form").submit();
+                event.preventDefault();
+            });
+        });
+    </script>
+}
+
+@section Styles {
+    <style>
+        #Title {
+            text-align: center;
+        }
+
+        .w-e-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .EditArticleSpan{
+            font-size:70%;
+        }
+    </style>
 }
