@@ -25,6 +25,9 @@
                 <input asp-for="Content" hidden />
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
+
+            <partial name="_VideoSelectPartial" model="Model" />
+
             <div class="form-group">
                 <a asp-action="Index" class="btn btn-outline-primary">&laquo; @Localizer["Back"]</a>
                 <a class="btn btn-primary" id="EArticles_Edit_Form_Submit_A">@Localizer["Save"]</a>

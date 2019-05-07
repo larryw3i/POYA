@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -35,9 +36,9 @@ namespace POYA.Areas.EduHub.Models
         /// </summary>
         public Guid TypeId { get; set; } = Guid.Empty;
         /// <summary>
-        /// The id of video file, the default value is <see langword="Guid.Empty"/>
+        /// The SharedCode of user's video file, the default value is <see langword="Guid.Empty"/>
         /// </summary>
-        public Guid VideoId { get; set; } = Guid.Empty;
+        public Guid VideoSharedCode { get; set; } = Guid.Empty;
         [StringLength(maximumLength: 50)]
         public string Title { get; set; }
         [StringLength(maximumLength:2048)]
@@ -58,6 +59,8 @@ namespace POYA.Areas.EduHub.Models
         /// </summary>
         [NotMapped]
         public string UserName { get; set; }
+        [NotMapped]
+        public List<SelectListItem> VideoSharedCodeSelectListItems { get; set; }
         #endregion
     }
 

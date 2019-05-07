@@ -109,10 +109,13 @@ namespace POYA.Areas.EduHub.Controllers
         }
 
         // GET: EduHub/EArticles/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            return View();
+            var _LUserFile = await _context.LUserFile.Where(p => p.UserId == UserId_ && p.SharedCode != Guid.Empty).ToListAsync();
+             
+            var _EArticle = new EArticle { VideoSharedCodeSelectListItems = await GetVideoSharedCodeSelectListItemsForUser()};
+            return View(_EArticle);
         }
 
         // POST: EduHub/EArticles/Create
@@ -149,6 +152,8 @@ namespace POYA.Areas.EduHub.Controllers
             {
                 return NotFound();
             }
+             
+            eArticle.VideoSharedCodeSelectListItems = await GetVideoSharedCodeSelectListItemsForUser();
             return View(eArticle);
         }
 
@@ -157,7 +162,7 @@ namespace POYA.Areas.EduHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,VideoId,Title,Content")] EArticle eArticle)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,VideoSharedCode,Title,Content")] EArticle eArticle)
         {
             if (id != eArticle.Id)
             {
@@ -173,7 +178,7 @@ namespace POYA.Areas.EduHub.Controllers
                     #region UPDATE
                     _EArticle.Content =_htmlSanitizer.Sanitize( eArticle.Content);
                     _EArticle.DOUpdating = DateTimeOffset.Now;
-                    _EArticle.VideoId = eArticle.VideoId;
+                    _EArticle.VideoSharedCode = eArticle.VideoSharedCode;
                     _EArticle.Title = eArticle.Title;
                     #endregion
                     await _context.SaveChangesAsync();
@@ -229,5 +234,24 @@ namespace POYA.Areas.EduHub.Controllers
         {
             return _context.EArticle.Any(e => e.Id == id);
         }
+
+
+        #region DEPOLLUTION
+        private async Task<List<SelectListItem>> GetVideoSharedCodeSelectListItemsForUser()
+        {
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id; 
+
+            var _LUserFile = await _context.LUserFile.Where(p => p.UserId == UserId_ && p.SharedCode != Guid.Empty).ToListAsync();
+            var _VideoSharedCodeSelectListItems = new List<SelectListItem>() {
+                new SelectListItem{  Value=Guid.Empty.ToString(), Text="Select your video file",Selected=true}
+            };
+            _LUserFile.ForEach(p => {
+                _VideoSharedCodeSelectListItems.Add(
+                    new SelectListItem { Text = _x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId) + "/" + p.Name, Value = p.SharedCode.ToString() }
+                    );
+            });
+            return _VideoSharedCodeSelectListItems;
+        }
+        #endregion
     }
 }

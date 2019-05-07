@@ -13,10 +13,12 @@ namespace POYA.Models
     {
         public string MD5 { get; set; } = string.Empty;
 
+        /*
         /// <summary>
         /// It is shared if SharedCode isn't Guid.Empty
         /// </summary>
         public Guid SharedCode { get; set; } = Guid.Empty;
+        */
 
         /// <summary>
         /// The default value is DateTimeOffset.Now
@@ -122,6 +124,13 @@ namespace POYA.Models
 
 
     #region DEPOLLUTION
+
+    public class LUserSharedDirs
+    {
+        public Guid Id { get; set; }
+        public string UserId { get; set;}
+        public String Name { get; set; }///////////////////////////<<<<<<<<<<<<<<<<<<<<
+    }
 
     public enum CopyMove {
         Copy = 1,

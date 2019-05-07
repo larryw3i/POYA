@@ -25,6 +25,7 @@
                 <div id="ContentEditor"></div>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
+            <partial name="_VideoSelectPartial" model="Model" />
 
             <div class="form-group">
                 <a asp-action="Index" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
