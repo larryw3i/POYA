@@ -85,6 +85,7 @@ namespace POYA.Areas.EduHub.Controllers
             }
             ViewData["EArticles"] = _EArticle.OrderByDescending(p=>p.DOPublishing).ToPagedList(_page, 8);
             ViewData[nameof(IsIndividual)] = IsIndividual;
+            ViewData["UserId"] = UserId_; 
             return View();
         }
 
@@ -143,7 +144,7 @@ namespace POYA.Areas.EduHub.Controllers
             }
 
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var eArticle = await _context.EArticle.FindAsync(id);
+            var eArticle = await _context.EArticle.FirstOrDefaultAsync(p=>p.Id==id && p.UserId==UserId_);
             if (eArticle == null)
             {
                 return NotFound();
@@ -170,7 +171,7 @@ namespace POYA.Areas.EduHub.Controllers
                     var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                     var _EArticle = await _context.EArticle.Where(p => p.Id == eArticle.Id && p.UserId == UserId_).FirstOrDefaultAsync();
                     #region UPDATE
-                    _EArticle.Content = eArticle.Content;
+                    _EArticle.Content =_htmlSanitizer.Sanitize( eArticle.Content);
                     _EArticle.DOUpdating = DateTimeOffset.Now;
                     _EArticle.VideoId = eArticle.VideoId;
                     _EArticle.Title = eArticle.Title;
@@ -203,7 +204,7 @@ namespace POYA.Areas.EduHub.Controllers
 
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var eArticle = await _context.EArticle
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id && m.UserId==UserId_);
             if (eArticle == null)
             {
                 return NotFound();
@@ -218,7 +219,7 @@ namespace POYA.Areas.EduHub.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var eArticle = await _context.EArticle.FindAsync(id);
+            var eArticle = await _context.EArticle.FirstOrDefaultAsync(p=>p.Id==id && p.UserId==UserId_);
             _context.EArticle.Remove(eArticle);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

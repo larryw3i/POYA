@@ -13,17 +13,20 @@
         <form asp-action="Edit" id="EArticles_Edit_Form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <input asp-for="Title" class="form-control  col offset-3 col-6" />
+            <div class="form-group ">
+                <div class="row">
+                    <input asp-for="Title" class="form-control col offset-3 col-6" placeholder="@Localizer["Title"]" />
+                    <a class="col offset-2 col-1" style="font-size:150%">&#127866;</a>
+                </div>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <div id="ContentEditor"></div>
+                <div id="Edit_ContentEditor"></div>
                 <input asp-for="Content" hidden />
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <a asp-action="Index" class="btn btn-outline-primary"><< @Localizer["Back"]</a>
+                <a asp-action="Index" class="btn btn-outline-primary">&laquo; @Localizer["Back"]</a>
                 <a class="btn btn-primary" id="EArticles_Edit_Form_Submit_A">@Localizer["Save"]</a>
             </div>
         </form>
@@ -41,7 +44,8 @@
 
             //  #region CONTENT_EDITOR
             var _Editor = window.wangEditor;
-            var Editor = new _Editor("#ContentEditor");
+            var Editor = new _Editor("#Edit_ContentEditor");
+
             Editor.customConfig.menus = [
                 'head',
                 'bold',
@@ -93,6 +97,7 @@
                 "\u9ed8\u8ba4": "@Localizer["Default"]",
                 "\u65b0\u6d6a": "@Localizer["Sina"]"
             };
+
             Editor.create();
             Editor.txt.html('@(Html.Raw( Model.Content))');
             //  #endregion

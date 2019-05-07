@@ -7,6 +7,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var UserId = ViewData["UserId"].ToString();
 }
 
 <h1>@Localizer["Current publishing"]</h1>
@@ -34,16 +35,19 @@
                         (@($"{item.UserName}") &#9998; @($"{item.DOPublishing.LocalDateTime.ToShortDateString()}")
                         @if (item.DOUpdating != null)
                         {
-                            <span>&#10226;</span>
+                            <span style="font-size:150%">&#10226;</span>
                             <span>@(item.DOUpdating?.LocalDateTime.ToShortDateString())</span>
                         }
                         )
                     </span>
                 </td> 
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" title="@Localizer["Edit"]">&#9997;</a>
                     <a asp-action="Details" asp-route-id="@item.Id" title="@Localizer["Details"]">&#9749;</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" title="@Localizer["Delete"]">&#10008;</a>
+                    @if (UserId==item.UserId)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" title="@Localizer["Edit"]">&#9997;</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" title="@Localizer["Delete"]">&#10008;</a>
+                    }
                 </td>
             </tr>
         }

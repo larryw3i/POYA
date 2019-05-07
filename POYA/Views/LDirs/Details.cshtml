@@ -10,7 +10,7 @@
 <partial name="_DetailsPartial" model="Model" />
 
 <div>
-    <a asp-action="Index" asp-controller="LUserFiles" asp-route-InDirId="@(Model.InDirId)" class="btn btn-outline-info"><< @Localizer["Back"]</a>
+    <a asp-action="Index" asp-controller="LUserFiles" asp-route-InDirId="@(Model.InDirId)" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
     <a asp-action="Edit" asp-route-id="@Model.Id" title="@Localizer["Edit"]" class="btn btn-outline-primary">@Localizer["Edit"]</a>
 </div>
 

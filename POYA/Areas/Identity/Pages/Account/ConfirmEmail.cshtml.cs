@@ -9,11 +9,14 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Localization;
 using POYA.Data;
 using POYA.Unities.Helpers;
+using POYA.Models;
+
 namespace POYA.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class ConfirmEmailModel : PageModel
     {
+        #region
         private readonly IHostingEnvironment _hostingEnv;
         private readonly IStringLocalizer<Program> _localizer;
         private readonly UserManager<IdentityUser> _userManager;
@@ -41,6 +44,8 @@ namespace POYA.Areas.Identity.Pages.Account
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
         }
+        #endregion
+
         public async Task<IActionResult> OnGetAsync(string userId, string code)
         {
             if (userId == null || code == null)
@@ -57,6 +62,11 @@ namespace POYA.Areas.Identity.Pages.Account
             {
                 throw new InvalidOperationException($"Error confirming email for user with ID '{userId}':");
             }
+            #region     INITIAL ACCOUNT DATA
+            var _X_doveUserInfo = new X_doveUserInfo() { UserId = user.Id };
+            await _context.X_DoveUserInfos.AddAsync(_X_doveUserInfo);
+            await _context.SaveChangesAsync();
+            #endregion
             return Page();
         }
     }

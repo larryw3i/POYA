@@ -14,7 +14,10 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group ">
-                <input asp-for="Title" class="form-control col offset-3 col-6" placeholder="@Localizer["Title"]" />
+                <div class="row">
+                    <input asp-for="Title" class="form-control col offset-3 col-6" placeholder="@Localizer["Title"]" />
+                    <a class="col offset-2 col-1" style="font-size:150%">&#127866;</a>  @*<<<<<<<<<<<<<<<<<<*@
+                </div>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -24,7 +27,7 @@
             </div>
 
             <div class="form-group">
-                <a asp-action="Index" class="btn btn-outline-info"><< @Localizer["Back"]</a>
+                <a asp-action="Index" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
                 <a id="EArticles_Create_Form_Submit_A" class="btn btn-primary">@Localizer["Create"]</a>
             </div>
         </form>
@@ -42,6 +45,7 @@
             //  #region CONTENT_EDITOR
             var _Editor = window.wangEditor;
             var Editor = new _Editor("#ContentEditor");
+
             Editor.customConfig.menus = [
                 'head',
                 'bold',
@@ -93,6 +97,7 @@
                 "\u9ed8\u8ba4": "@Localizer["Default"]",
                 "\u65b0\u6d6a": "@Localizer["Sina"]"
             };
+
             Editor.create();
             //  #endregion
 
