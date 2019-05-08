@@ -29,6 +29,7 @@ namespace POYA
     public class Startup
     {
         public IConfiguration Configuration { get; }
+
         public X_DOVEHelper x_DOVEHelper = new X_DOVEHelper();
         public Startup(
             IConfiguration configuration)
@@ -44,19 +45,23 @@ namespace POYA
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
             #region
             /*
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             */
             #endregion
+
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
             services.Configure<IdentityOptions>(
                 options =>
                 {
@@ -75,6 +80,7 @@ namespace POYA
                     options.User.AllowedUserNameCharacters = null;
                     options.User.RequireUniqueEmail = true;
                 });
+
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings
@@ -84,6 +90,7 @@ namespace POYA
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
+
             services.AddMvc()
                 .AddJsonOptions(options => { options.SerializerSettings.ContractResolver = new DefaultContractResolver(); })
                 .AddDataAnnotationsLocalization(options =>
@@ -93,7 +100,9 @@ namespace POYA
                 })
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
             services.AddLocalization(options => options.ResourcesPath = "Resources");
+
             services.Configure<RequestLocalizationOptions>( opts =>
             {
                 var supportedCultures = new List<CultureInfo>
@@ -108,6 +117,7 @@ namespace POYA
                       new   X_DOVERequestCultureProvider()
                   };
             });
+
             #region
             /*
             services.Configure<FormOptions>(options =>
@@ -116,13 +126,20 @@ namespace POYA
             });
             */
             #endregion
+
             // using Microsoft.AspNetCore.Identity.UI.Services;
             services.AddSingleton<IEmailSender, EmailSender>();
+
             services.AddSingleton<HtmlSanitizer>(new HtmlSanitizer());
+
             services.AddSingleton<X_DOVEHelper>(x_DOVEHelper);
+
             services.AddSingleton<MimeHelper>(new MimeHelper());
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddSession();
+
             #region
             //  services.Configure<HtmlSanitizer>(opts => {  });
             #endregion
@@ -149,12 +166,21 @@ namespace POYA
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            ServiceLocator.Instance = app.ApplicationServices;
+
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
+
             app.UseCookiePolicy();
+
             app.UseAuthentication();
+
             app.UseRequestLocalization();
+
             app.UseSession();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

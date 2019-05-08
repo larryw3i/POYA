@@ -112,7 +112,7 @@ namespace POYA.Areas.EduHub.Controllers
         public async Task<IActionResult> Create()
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var _LUserFile = await _context.LUserFile.Where(p => p.UserId == UserId_ && p.SharedCode != Guid.Empty).ToListAsync();
+            var _LUserFile = await _context.LUserFile.Where(p => p.UserId == UserId_  ).ToListAsync();  //<<<<<<<<
              
             var _EArticle = new EArticle { VideoSharedCodeSelectListItems = await GetVideoSharedCodeSelectListItemsForUser()};
             return View(_EArticle);
@@ -241,13 +241,13 @@ namespace POYA.Areas.EduHub.Controllers
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id; 
 
-            var _LUserFile = await _context.LUserFile.Where(p => p.UserId == UserId_ && p.SharedCode != Guid.Empty).ToListAsync();
+            var _LUserFile = await _context.LUserFile.Where(p => p.UserId == UserId_ ).ToListAsync();   //  <<<<<<<<
             var _VideoSharedCodeSelectListItems = new List<SelectListItem>() {
                 new SelectListItem{  Value=Guid.Empty.ToString(), Text="Select your video file",Selected=true}
             };
             _LUserFile.ForEach(p => {
                 _VideoSharedCodeSelectListItems.Add(
-                    new SelectListItem { Text = _x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId) + "/" + p.Name, Value = p.SharedCode.ToString() }
+                    new SelectListItem { Text = _x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId) + "/" + p.Name, Value = p.Id.ToString() }   //<<<<<<<<
                     );
             });
             return _VideoSharedCodeSelectListItems;

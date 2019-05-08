@@ -72,6 +72,10 @@ namespace POYA.Controllers
             return View();
         }
 
+
+        #region DEPOLLUTION
+
+
         public async Task<IActionResult> GetAvatar(string UserId="")
         {
             var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -176,5 +180,8 @@ namespace POYA.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        #endregion
+
     }
 }

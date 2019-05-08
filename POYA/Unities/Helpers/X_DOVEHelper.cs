@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,14 @@ namespace POYA.Unities.Helpers
 {
     public class X_DOVEHelper
     {
+        
+        #region SOME VALUES
+
+        /// <summary>
+        /// The Guid of public directory
+        /// </summary>
+        public Guid PublicDirId = Guid.Parse("E1F500C2-FCF4-4BD8-B54A-A2A7A41F793C");
+
         /// <summary>
         /// env.ContentRootPath + $"/Data/LFiles/Avatars/"
         /// </summary>
@@ -41,6 +50,65 @@ namespace POYA.Unities.Helpers
         /// <param name="env">The HostingEnvironment</param>
         /// <returns></returns>
         public string FileStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/";
+
+        /// <summary>
+        /// Get the md5 of file byte array
+        /// </summary>
+        /// <param name="FileBytes">
+        /// File byte array
+        /// </param>
+        /// <returns></returns>
+        public string GetFileMD5(byte[] FileBytes)
+        {
+            var Md5_ = MD5.Create();
+            var MD5Bytes = Md5_.ComputeHash(FileBytes);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < MD5Bytes.Length; i++)
+            {
+                sb.Append(MD5Bytes[i].ToString("x2"));
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Get the full path of the dir file or directory is included
+        /// </summary>
+        /// <param name="id">The id of file or directory</param>
+        /// <param name="context">The context</param>
+        /// <param name="InDirId">The id of directory contain file or directory</param>
+        /// <returns></returns>
+        public string GetInPathOfFileOrDir(ApplicationDbContext context, Guid InDirId)
+        {
+            var FullPath = string.Empty;
+            for (var i = 0; i < 30 && InDirId != Guid.Empty; i++)
+            {
+                var InDir = context.LDir.Where(p => p.Id == InDirId).Select(p => new { p.InDirId, p.Name }).FirstOrDefaultAsync()
+                    .GetAwaiter().GetResult();
+                if (InDir?.InDirId == null) break;
+                FullPath = $"{InDir.Name}/{FullPath}";
+                InDirId = InDir.InDirId;
+            }
+            return $"root/{FullPath}";
+        }
+
+        #endregion
+
+        #region SOME METHODS
+
+        /// <summary>
+        /// Initial account data for user
+        /// </summary>
+        /// <param name="context">The ApplicationDbContext</param>
+        /// <param name="user">The User</param>
+        /// <returns></returns>
+        public async Task InitialAccountData(ApplicationDbContext context, IdentityUser user)
+        {
+            //  var context = ServiceLocator.Instance.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+            var _X_doveUserInfo = new X_doveUserInfo() { UserId = user.Id };
+            await context.X_DoveUserInfos.AddAsync(_X_doveUserInfo);
+            await context.LUserMainSharedDirs.AddAsync(new LUserMainSharedDir {UserId=user.Id});
+            await context.SaveChangesAsync();
+        }
 
         /// <summary>
         /// Send error log to email
@@ -107,46 +175,7 @@ namespace POYA.Unities.Helpers
             #endregion
                 );
         }
-
-        /// <summary>
-        /// Get the md5 of file byte array
-        /// </summary>
-        /// <param name="FileBytes">
-        /// File byte array
-        /// </param>
-        /// <returns></returns>
-        public string GetFileMD5(byte[] FileBytes)
-        {
-            var Md5_ = MD5.Create();
-            var MD5Bytes = Md5_.ComputeHash(FileBytes);
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < MD5Bytes.Length; i++)
-            {
-                sb.Append(MD5Bytes[i].ToString("x2"));
-            }
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Get the full path of the dir file or directory is included
-        /// </summary>
-        /// <param name="id">The id of file or directory</param>
-        /// <param name="context">The context</param>
-        /// <param name="InDirId">The id of directory contain file or directory</param>
-        /// <returns></returns>
-        public string GetInPathOfFileOrDir(ApplicationDbContext context, Guid InDirId)
-        {
-            var FullPath = string.Empty;
-            for (var i = 0; i < 30 && InDirId != Guid.Empty; i++)
-            {
-                var InDir = context.LDir.Where(p => p.Id == InDirId).Select(p => new { p.InDirId, p.Name }).FirstOrDefaultAsync()
-                    .GetAwaiter().GetResult();
-                if (InDir?.InDirId == null) break;
-                FullPath = $"{InDir.Name}/{FullPath}";
-                InDirId = InDir.InDirId;
-            }
-            return $"root/{FullPath}";
-        }
+        #endregion
     }
     public class MimeHelper
     {
@@ -167,5 +196,15 @@ namespace POYA.Unities.Helpers
         }
 
     }
+
+    /// <summary>
+    /// FROM    https://www.cnblogs.com/xishuai/p/asp-net-core-ioc-di-get-service.html
+    /// THANK   https://www.cnblogs.com/xishuai/
+    /// </summary>
+    public static class ServiceLocator
+    {
+        public static IServiceProvider Instance { get; set; }
+    }
+
 
 }

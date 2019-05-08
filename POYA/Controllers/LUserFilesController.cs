@@ -58,6 +58,7 @@ namespace POYA.Controllers
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
             _mimeHelper = mimeHelper;
+
         }
         #endregion
 
@@ -67,10 +68,18 @@ namespace POYA.Controllers
             InDirId = InDirId ?? Guid.Empty;
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
-            if (!System.IO.Directory.Exists(_x_DOVEHelper.AvatarStoragePath(_hostingEnv)))
+            #region REBARBATIVE INITIALIZATION
+            if (!Directory.Exists(_x_DOVEHelper.AvatarStoragePath(_hostingEnv)))
             {
                 Directory.CreateDirectory(_x_DOVEHelper.AvatarStoragePath(_hostingEnv));
             }
+            if(!await _context.LUserMainSharedDirs.AnyAsync(p => p.UserId == UserId_))
+            {
+                await _context.LUserMainSharedDirs.AddAsync(new LUserMainSharedDir { UserId =UserId_ });
+                await _context.SaveChangesAsync();  ///////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            }
+            #endregion
+
 
             var _FileNames = new DirectoryInfo(_x_DOVEHelper.FileStoragePath(_hostingEnv)).GetFiles().Select(p => p.Name);
             //  Console.WriteLine("FileName >> "+JsonConvert.SerializeObject(_FileNames));
@@ -366,8 +375,8 @@ namespace POYA.Controllers
                 return NoContent();
             }
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var _LUserFile = await _context.LUserFile.Select(p => new { p.MD5, p.Id, p.SharedCode, p.Name, p.UserId })
-                .FirstOrDefaultAsync(p => (p.Id == id && p.UserId == _UserId) || p.SharedCode == id);
+            var _LUserFile = await _context.LUserFile.Select(p => new { p.MD5, p.Id, p.Name, p.UserId })
+                .FirstOrDefaultAsync(p => (p.Id == id && p.UserId == _UserId) );
             if (_LUserFile == null)
             {
                 return NoContent();

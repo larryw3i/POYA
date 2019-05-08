@@ -25,6 +25,7 @@ namespace POYA.Models
         /// </summary>
         [Display(Name = "Date")]
         public DateTimeOffset DOCreate { get; set; } = DateTimeOffset.Now;
+        public bool IsLegal { get; set; } = true;
 
         #region DEPOLLUTION
         /// <summary>
@@ -62,7 +63,6 @@ namespace POYA.Models
         /// </summary>
         public Guid InDirId { get; set; } = Guid.Empty;
 
-        public bool IsLegal { get; set; } = true;
 
         [Display(Name = "Name")]
         public string Name { get; set; }
@@ -122,16 +122,23 @@ namespace POYA.Models
         public string MD5 { get; set; }
     }
 
-
-    #region DEPOLLUTION
-
-    public class LUserSharedDirs
+    public class LUserMainSharedDir:FileDirCommon
     {
-        public Guid Id { get; set; }
-        public string UserId { get; set;}
-        public String Name { get; set; }///////////////////////////<<<<<<<<<<<<<<<<<<<<
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        [NotMapped]
+        public new Guid InDirId { get; } = Guid.Empty;
+
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        [NotMapped]
+        public new string Name { get; } = "Public";
     }
 
+    #region DEPOLLUTION
+    
     public enum CopyMove {
         Copy = 1,
         Move = 2,
