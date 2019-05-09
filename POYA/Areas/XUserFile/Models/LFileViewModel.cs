@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace POYA.Models
+namespace POYA.Areas.XUserFile.Models
 {
     public class LUserFile: FileDirCommon  //  ViewModel
     {
@@ -49,9 +49,9 @@ namespace POYA.Models
         /// </summary>
         [Display(Name = "Date")]
         public DateTimeOffset DOCreate { get; set; } = DateTimeOffset.Now;
-
-
+        
     }
+
     public class FileDirCommon
     {
         public Guid Id { get; set; } = Guid.NewGuid();
@@ -66,7 +66,6 @@ namespace POYA.Models
 
         [Display(Name = "Name")]
         public string Name { get; set; }
-
 
         #region DEPOLLUTION
 
@@ -103,8 +102,8 @@ namespace POYA.Models
 
         #endregion
 
-
     }
+
     public class LFile
     {
         public Guid Id { get; set; } = Guid.Empty;
@@ -121,22 +120,7 @@ namespace POYA.Models
         /// </summary>
         public string MD5 { get; set; }
     }
-
-    public class LUserMainSharedDir:FileDirCommon
-    {
-        /// <summary>
-        /// [NotMapped]
-        /// </summary>
-        [NotMapped]
-        public new Guid InDirId { get; } = Guid.Empty;
-
-        /// <summary>
-        /// [NotMapped]
-        /// </summary>
-        [NotMapped]
-        public new string Name { get; } = "Public";
-    }
-
+    
     #region DEPOLLUTION
     
     public enum CopyMove {
@@ -178,3 +162,5 @@ namespace POYA.Models
     #endregion
 
 }
+
+// A NEW DATA MODEL FOR SHARING FILE

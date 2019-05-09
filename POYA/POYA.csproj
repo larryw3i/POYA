@@ -79,7 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="bundleconfig.json" />
-    <Content Remove="Views\LUserFiles\__Index.cshtml" />
+    <Content Remove="Areas\XUserFile\Views\LUserFiles\__Index.cshtml" />
     <Content Remove="wwwroot\lib\video-js-7.5.4\LICENSE" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +147,7 @@
     <Folder Include="Areas\EduHub\Controllers\" />
     <Folder Include="Areas\EduHub\Data\" />
     <Folder Include="Areas\EduHub\Data\" />
+    <Folder Include="Areas\XUserFile\Data\" />
     <Folder Include="Data\LFiles\Avatars\" />
   </ItemGroup>
   <ItemGroup>
@@ -202,7 +203,7 @@
     <None Include="wwwroot\lib\wangEditor-3.1.1\LICENSE" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <TypeScriptTarget>ES2017</TypeScriptTarget>
+    <TypeScriptTarget>ESNext</TypeScriptTarget>
     <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
     <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>

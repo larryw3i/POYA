@@ -15,12 +15,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using POYA.Areas.XUserFile.Models;
 using POYA.Data;
 using POYA.Models;
 using POYA.Unities.Helpers;
 
-namespace POYA.Controllers
+namespace POYA.Areas.XUserFile.Controllers
 {
+
+    [Area("LUserFile")]
     [Authorize]
     public class LUserFilesController : Controller
     {
@@ -72,11 +75,6 @@ namespace POYA.Controllers
             if (!Directory.Exists(_x_DOVEHelper.AvatarStoragePath(_hostingEnv)))
             {
                 Directory.CreateDirectory(_x_DOVEHelper.AvatarStoragePath(_hostingEnv));
-            }
-            if(!await _context.LUserMainSharedDirs.AnyAsync(p => p.UserId == UserId_))
-            {
-                await _context.LUserMainSharedDirs.AddAsync(new LUserMainSharedDir { UserId =UserId_ });
-                await _context.SaveChangesAsync();  ///////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             }
             #endregion
 
@@ -157,11 +155,12 @@ namespace POYA.Controllers
                 var FilePath = _x_DOVEHelper.FileStoragePath(_hostingEnv) + MD5_;
                 //  System.IO.File.Create(FilePath);
                 await System.IO.File.WriteAllBytesAsync(FilePath, FileBytes);
-                await _context.LFile.AddAsync(new Models.LFile
+                await _context.LFile.AddAsync(new LFile
                 {
                     MD5 = MD5_,
                     UserId = UserId_
                 });
+
                 await _context.LUserFile.AddAsync(new LUserFile
                 {
                     UserId = UserId_,

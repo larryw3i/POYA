@@ -1,4 +1,4 @@
-﻿@model POYA.Models.LUserFile
+﻿@model POYA.Areas.XUserFile.Models.LUserFile
 
 @{
     ViewData["Title"] = "Create";
@@ -280,7 +280,7 @@
             constructor() {
                 this.MaxMultipartBodyLength = 134217728;
                 this.InDirId = "@ViewData["InDirId"]";
-                this.L_XSRF_TOKEN = "@(csrf.GetAndStoreTokens(Context).RequestToken)";
+                this.L_XSRF_TOKEN = "@(CSRF.GetAndStoreTokens(Context).RequestToken)";
                 this.FileIsSelected = "The file is selected";
                 /**
                  * In M byte

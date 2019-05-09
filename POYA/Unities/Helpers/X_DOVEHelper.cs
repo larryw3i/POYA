@@ -11,6 +11,7 @@ using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Nukepayload2.Csv;
+using POYA.Areas.XUserFile.Models;
 using POYA.Data;
 using POYA.Models;
 using POYA.Unities.Services;
@@ -106,7 +107,7 @@ namespace POYA.Unities.Helpers
             //  var context = ServiceLocator.Instance.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
             var _X_doveUserInfo = new X_doveUserInfo() { UserId = user.Id };
             await context.X_DoveUserInfos.AddAsync(_X_doveUserInfo);
-            await context.LUserMainSharedDirs.AddAsync(new LUserMainSharedDir {UserId=user.Id});
+            //  await context.LUserMainSharedDirs.AddAsync(new LUserMainSharedDir {UserId=user.Id});
             await context.SaveChangesAsync();
         }
 

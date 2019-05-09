@@ -1,11 +1,11 @@
-﻿@model POYA.Models.LUserFile
+﻿@model POYA.Areas.XUserFile.Models.LUserFile
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@(string.Format(Localizer["Details for {0}"],Model.Name)) </h1>
+<h1>@(string.Format(Localizer["Details for {0}"], Model.Name)) </h1>
 
 <partial name="_DetailsPartial" model="Model" />
 
@@ -22,7 +22,7 @@
 
 @section Styles{
     <style>
-        video,img {
+        video, img {
             max-width: 90%;
         }
     </style>

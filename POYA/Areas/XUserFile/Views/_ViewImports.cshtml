@@ -1,5 +1,4 @@
 ﻿@using POYA;
-@using POYA.Models;
 @using POYA.Areas.XUserFile.Models;
 @using Microsoft.Extensions.Localization;
 @using X.PagedList.Mvc.Core;
@@ -8,6 +7,6 @@
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery csrf
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery CSRF
 @inject IStringLocalizer<Program> Localizer
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor

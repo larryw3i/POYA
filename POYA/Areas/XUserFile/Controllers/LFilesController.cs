@@ -11,12 +11,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using POYA.Areas.XUserFile.Models;
 using POYA.Data;
 using POYA.Models;
 using POYA.Unities.Helpers;
 
-namespace POYA.Controllers
+namespace POYA.Areas.XUserFile.Controllers
 {
+
+    [Area("LUserFile")]
     [Authorize]
     public class LFilesController : Controller
     {
