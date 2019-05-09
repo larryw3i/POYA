@@ -73,10 +73,10 @@ namespace POYA.Areas.XUserFile.Models
 
     #region DEPOLLUTION
 
-    public class ID8InDirId
+    public class ID8NewID
     {
         public Guid Id { get; set; }
-        public Guid InDirId { get; set; }
+        public Guid NewId { get; set; }
     }
 
 

@@ -205,15 +205,20 @@ namespace POYA.Areas.XUserFile.Controllers
                         var IncludedDirs = _AllUserDirs.Where(p => IsFileOrDirInDir(_AllUserDirs, p.Id, lDir.Id)).ToList();
                         var IncludedFiles = _AllUserFiles.Where(p => IsFileOrDirInDir(_AllUserDirs, p.Id, lDir.Id)).ToList();
                         //  The first value is the new id 
-                        var IDMap = new Dictionary<Guid, Guid>();
+                        var IDMap = new List<ID8NewID> ();
                         var NewDirs = new List<LDir>();
+
                         IncludedDirs.ForEach(d => {
                             var _d = new LDir {  Id=Guid.NewGuid(), Name=d.Name, UserId=UserId_ };
-                            IDMap.Add(_d.Id,d.Id);
+                            IDMap.Add(new ID8NewID {  Id=d.Id, NewId=_d.Id});
                         });
                         NewDirs.ForEach(_d => {
-                            ////////////
+                            // You don't need to know here maybe, because I don't know what I'm writing too
+                            var OrginalId = IDMap.FirstOrDefault(p => p.NewId == _d.Id).Id;
+                            var CopiedDirInDirId_ = _AllUserDirs.FirstOrDefault(p => p.Id ==OrginalId).InDirId;
+                            _d.InDirId = IDMap.FirstOrDefault(p => p.Id == CopiedDirInDirId_).NewId;
                         });
+
                         #endregion
 
                     }
