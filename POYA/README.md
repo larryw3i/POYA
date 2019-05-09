@@ -37,7 +37,7 @@ The contents of **appsettings.json** are:
 **EmailSender>_** It is the configuration of the mail service(you need to change its value in order to the project to work properly), it plays a key role in user registration and user receiving notifications
 **ReceiveLogEmailAddress** This e-mail address is used to receive error messages    
 #### 1(inessential)    
-You can try it after your appsettings.json is OK **>_**  
+You can try it after your appsettings.json is 👌 **>_**  
 **dotnet build**  
 **dotnet run**
 

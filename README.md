@@ -1,9 +1,7 @@
-﻿**Hello, here is WSUDisk, I'm Larry Wei, Welcome you**  
-you can storage file in WSUDisk, and publish article, chat with friends, and so on. . .  
-if you need use source code DO IT AFTER CLONE IT TO LOCAL >_  
-#### 0  
-add appsettings.json file in root directory  
-it is like:   
-........   
+﻿
+This is a **C#/.NET Core MVC** project   
+(I'm a beginner, bored and uninterested? Actually, it's **[easy](https://docs.microsoft.com/en-us/aspnet/?view=aspnetcore-2.2#pivot=core "easy")**)  
+**. . .** , There should be a lot of things to write here, I don't write it much😅, I think you must know a lot more than I do  
+**........**   
 **[VIEW MORE >> ](https://github.com/linghuchong123/POYA/blob/master/POYA/README.md "VIEW MORE")**
  
