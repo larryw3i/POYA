@@ -197,6 +197,10 @@ namespace POYA.Unities.Helpers
         }
 
     }
+    public class Unities
+    {
+
+    }
 
     /// <summary>
     /// FROM    https://www.cnblogs.com/xishuai/p/asp-net-core-ioc-di-get-service.html

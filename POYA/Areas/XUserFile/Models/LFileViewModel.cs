@@ -9,16 +9,9 @@ using System.Threading.Tasks;
 
 namespace POYA.Areas.XUserFile.Models
 {
-    public class LUserFile: FileDirCommon  //  ViewModel
+    public class LUserFile : FileDirCommon  //  ViewModel
     {
         public string MD5 { get; set; } = string.Empty;
-
-        /*
-        /// <summary>
-        /// It is shared if SharedCode isn't Guid.Empty
-        /// </summary>
-        public Guid SharedCode { get; set; } = Guid.Empty;
-        */
 
         /// <summary>
         /// The default value is DateTimeOffset.Now
@@ -42,15 +35,50 @@ namespace POYA.Areas.XUserFile.Models
         #endregion
     }
 
-    public class LDir:FileDirCommon
+    public class LDir : FileDirCommon
     {
         /// <summary>
         /// The default value is DateTimeOffset.Now
         /// </summary>
         [Display(Name = "Date")]
         public DateTimeOffset DOCreate { get; set; } = DateTimeOffset.Now;
-        
+
     }
+
+
+    public class LFile
+    {
+        public Guid Id { get; set; } = Guid.Empty;
+
+        /// <summary>
+        /// The id of the first user upload this file
+        /// </summary>
+        public string UserId { get; set; }
+
+        public DateTimeOffset DOUpload { get; set; } = DateTimeOffset.Now;
+
+        /// <summary>
+        /// The MD5 string, it equal the file name in specified directory
+        /// </summary>
+        public string MD5 { get; set; }
+    }
+
+    public class LUserSharingFile   //  BEGIN IT AFTER COPYING DIR FUNCATION IS FINISH
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid FileId { get; set; }
+        public string SharingCode { get; set; }
+        public string Comment { get; set; }
+    }
+
+    #region DEPOLLUTION
+
+    public class ID8InDirId
+    {
+        public Guid Id { get; set; }
+        public Guid InDirId { get; set; }
+    }
+
 
     public class FileDirCommon
     {
@@ -103,26 +131,6 @@ namespace POYA.Areas.XUserFile.Models
         #endregion
 
     }
-
-    public class LFile
-    {
-        public Guid Id { get; set; } = Guid.Empty;
-
-        /// <summary>
-        /// The id of the first user upload this file
-        /// </summary>
-        public string UserId { get; set; }
-
-        public DateTimeOffset DOUpload { get; set; } = DateTimeOffset.Now;
-
-        /// <summary>
-        /// The MD5 string, it equal the file name in specified directory
-        /// </summary>
-        public string MD5 { get; set; }
-    }
-    
-    #region DEPOLLUTION
-    
     public enum CopyMove {
         Copy = 1,
         Move = 2,
@@ -163,4 +171,4 @@ namespace POYA.Areas.XUserFile.Models
 
 }
 
-// A NEW DATA MODEL FOR SHARING FILE
+

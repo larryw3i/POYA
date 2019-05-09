@@ -196,21 +196,28 @@ namespace POYA.Areas.XUserFile.Controllers
                     {
                         _LDir.InDirId = lDir.InDirId;
                     }
-                    /*
                     //  Copy
                     else if (lDir.CopyMove == CopyMove.Copy)
                     {
-                        await _context.LDir.AddAsync(
-                            new LDir
-                            {
-                                InDirId = lDir.InDirId,
-                                //  MD5 = lDir.MD5,
-                                Name =lDir.Name,
-                                UserId = UserId_,
-                                Id = Guid.NewGuid()
-                            });
+                        var _AllUserDirs = await _context.LDir.Where(p => p.UserId == UserId_).ToListAsync();
+                        var _AllUserFiles = await _context.LUserFile.Where(p => p.UserId == UserId_).ToListAsync();
+                        #region GET A MAP
+                        var IncludedDirs = _AllUserDirs.Where(p => IsFileOrDirInDir(_AllUserDirs, p.Id, lDir.Id)).ToList();
+                        var IncludedFiles = _AllUserFiles.Where(p => IsFileOrDirInDir(_AllUserDirs, p.Id, lDir.Id)).ToList();
+                        //  The first value is the new id 
+                        var IDMap = new Dictionary<Guid, Guid>();
+                        var NewDirs = new List<LDir>();
+                        IncludedDirs.ForEach(d => {
+                            var _d = new LDir {  Id=Guid.NewGuid(), Name=d.Name, UserId=UserId_ };
+                            IDMap.Add(_d.Id,d.Id);
+                        });
+                        NewDirs.ForEach(_d => {
+                            ////////////
+                        });
+                        #endregion
+
                     }
-                    */
+
                     #endregion
 
                     else
@@ -289,6 +296,16 @@ namespace POYA.Areas.XUserFile.Controllers
         }
 
         #region DEPOLLUTION
+        /// <summary>
+        /// Get a copy of dir with new id and includ files and directories
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private async Task GetDirCopy(Guid id)
+        {
+            
+        }
+
         private bool IsFileOrDirInDir(List<LDir> UserDirs, Guid id, Guid DirId)
         {
             if (!UserDirs.Select(p => p.Id).Contains(id)) return false;
