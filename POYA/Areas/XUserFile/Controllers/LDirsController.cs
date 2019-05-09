@@ -204,53 +204,43 @@ namespace POYA.Areas.XUserFile.Controllers
                         var _AllUserDirs = await _context.LDir.Where(p => p.UserId == UserId_).ToListAsync();
                         var _AllUserFiles = await _context.LUserFile.Where(p => p.UserId == UserId_).ToListAsync();
                         var _ID8InDirIds = _AllUserDirs.Select(p => new ID8InDirId { InDirId = p.InDirId, Id = p.Id }).Union(_AllUserFiles.Select(p=>new ID8InDirId {  Id=p.Id, InDirId=p.InDirId  }));
-
                         var IncludedDirs = _AllUserDirs.Where(p => IsFileOrDirInDir(_ID8InDirIds, p.Id, lDir.Id)).ToList();
                         var IncludedFiles = _AllUserFiles.Where(p => IsFileOrDirInDir(_ID8InDirIds, p.Id, lDir.Id)).ToList();
-
                         var IDMap = new List<ID8NewID> ();
                         var NewDirs = new List<LDir>();
                         var NewUserFiles= new List<LUserFile>();
-
                         IncludedDirs.ForEach(d => {
                             var _d = new LDir {  Id=Guid.NewGuid(), Name=d.Name, UserId=UserId_ };
                             NewDirs.Add(_d);
                             IDMap.Add(new ID8NewID {  Id=d.Id, NewId=_d.Id});
                         });
+                        //  Add the main directory (Copy of lDir)
+                        var MainDir = new LDir { Id = Guid.NewGuid(), InDirId = lDir.InDirId, Name = lDir.Name, UserId = UserId_ };
+                        NewDirs.Add(MainDir);
+                        //  Add it here or UserFile copy in the root of main directory(lDir) can't find it's InDirId
+                        IDMap.Add(new ID8NewID { Id = lDir.Id, NewId = MainDir.Id });
                         NewDirs.ForEach(_d => {
                             // You don't need to know here maybe, because I don't know what I'm writing too
                             var OrginalId = IDMap.FirstOrDefault(p => p.NewId == _d.Id).Id;
                             var CopiedDirInDirId_ = _AllUserDirs.FirstOrDefault(p => p.Id ==OrginalId).InDirId;
-                            _d.InDirId = IDMap.FirstOrDefault(p => p.Id == CopiedDirInDirId_).NewId;
+                            _d.InDirId = IDMap.FirstOrDefault(p => p.Id == CopiedDirInDirId_)?.NewId??Guid.Empty;
                         });
-
-
-                        //  Add the main directory (Copy of lDir)
-                        var MainDir = new LDir { Id = Guid.NewGuid(), InDirId = lDir.InDirId, Name = lDir.Name, UserId = UserId_ };
-                        NewDirs.Add(MainDir);
-                        IDMap.Add(new ID8NewID { Id = lDir.Id, NewId = MainDir.Id });
-
                         IncludedFiles.ForEach(f => {
                             var _f = new LUserFile { Id=Guid.NewGuid(), MD5=f.MD5, Name=f.Name, UserId=UserId_ };
                             NewUserFiles.Add(_f);
                             IDMap.Add(new ID8NewID { Id = f.Id, NewId = _f.Id });
                         });
                         NewUserFiles.ForEach(_f => {
-
                             var OrginalFileId = IDMap.FirstOrDefault(p => p.NewId == _f.Id).Id;
                             var CopiedDirInDirId_ = _AllUserFiles.FirstOrDefault(p => p.Id == OrginalFileId).InDirId;
                             _f.InDirId = IDMap.FirstOrDefault(p => p.Id == CopiedDirInDirId_).NewId;
 
                         });
-
-
                         await _context.LDir.AddRangeAsync(NewDirs);
                         await _context.LUserFile.AddRangeAsync(NewUserFiles);
                         //  await _context.SaveChangesAsync();
                         #endregion
-
                     }
-
                     #endregion
 
                     else
