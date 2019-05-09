@@ -1,4 +1,4 @@
-﻿[中文文档]( "中文文档")  
+﻿[English](https://github.com/linghuchong123/POYA/blob/master/POYA/README.md "中文文档") 中文    
 **Hello, here is WSUDisk, I'm Larry Wei, Welcome you**  
 you can storage file in WSUDisk, and publish article, chat with friends, and so on. . .  
 if you need use source code DO IT AFTER CLONE IT TO LOCAL >_  
