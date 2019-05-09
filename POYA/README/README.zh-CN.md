@@ -43,3 +43,9 @@ git clone它以后, 在项目的根目录添加 **appsettings.json** 文件
 **dotnet build**  
 **dotnet run**
 
+
+ ####  2
+***     
+Copyright (c) 2019 Larry Wei
+
+Licensed under the [MIT](https://github.com/linghuchong123/POYA/blob/master/LICENSE "MIT License") License

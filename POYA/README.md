@@ -3,12 +3,12 @@
 **❤ Welcome!! ❤**  
 In fact, my definition of this project is vague, but I have implemented the function of file storage and article publishing in the project, and I would like to add many functions in the future. If you like my project and want to contribute your code **>_**   
 ####  null  
-
+***  
 This is a **C#/.NET Core MVC** project   
 (I'm a beginner, bored and uninterested? Actually, it's **[easy](https://docs.microsoft.com/en-us/aspnet/?view=aspnetcore-2.2#pivot=core "easy")**)  
 **. . .** , There should be a lot of things to write here, I don't write it much😅, I think you must know a lot more than I do
 #### 0  
-
+***  
 Add the **appsettings.json** file to the root directory of the project after **git clone** it   
 The contents of **appsettings.json** are:  
 ```json
@@ -37,8 +37,13 @@ The contents of **appsettings.json** are:
 **EmailSender>_** It is the configuration of the mail service(you need to change its value in order to the project to work properly), it plays a key role in user registration and user receiving notifications
 **ReceiveLogEmailAddress** This e-mail address is used to receive error messages    
 #### 1(inessential)    
+***  
 You can try it after your appsettings.json is 👌 **>_**  
 **dotnet build**  
 **dotnet run**
 
- 
+ ####  2
+***     
+Copyright (c) 2019 Larry Wei
+
+Licensed under the [MIT](https://github.com/linghuchong123/POYA/blob/master/LICENSE "MIT License") License
