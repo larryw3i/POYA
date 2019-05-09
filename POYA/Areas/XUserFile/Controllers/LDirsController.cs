@@ -214,11 +214,14 @@ namespace POYA.Areas.XUserFile.Controllers
                             NewDirs.Add(_d);
                             IDMap.Add(new ID8NewID {  Id=d.Id, NewId=_d.Id});
                         });
+
                         //  Add the main directory (Copy of lDir)
                         var MainDir = new LDir { Id = Guid.NewGuid(), InDirId = lDir.InDirId, Name = lDir.Name, UserId = UserId_ };
                         NewDirs.Add(MainDir);
                         //  Add it here or UserFile copy in the root of main directory(lDir) can't find it's InDirId
+
                         IDMap.Add(new ID8NewID { Id = lDir.Id, NewId = MainDir.Id });
+
                         NewDirs.ForEach(_d => {
                             // You don't need to know here maybe, because I don't know what I'm writing too
                             var OrginalId = IDMap.FirstOrDefault(p => p.NewId == _d.Id).Id;
