@@ -18,7 +18,7 @@ using POYA.Unities.Helpers;
 namespace POYA.Areas.XUserFile.Controllers
 {
 
-    [Area("LUserFile")]
+    [Area("XUserFile")]
     [Authorize]
     public class LDirsController : Controller
     {
@@ -152,7 +152,8 @@ namespace POYA.Areas.XUserFile.Controllers
 
             lDir.CopyMoveSelectListItems = new List<SelectListItem>() {
                 new SelectListItem{Text=_localizer[ "Rename"],Value=((int)CopyMove.DoNoThing).ToString(),Selected=true},
-                new SelectListItem{Text=_localizer[ "Also move"], Value=((int)CopyMove.Move).ToString()}
+                new SelectListItem{Text=_localizer[ "Also move"], Value=((int)CopyMove.Move).ToString()},
+                new SelectListItem{Text=_localizer["Also copy"], Value=((int)CopyMove.Copy).ToString()}
             };
 
             #endregion
@@ -199,17 +200,21 @@ namespace POYA.Areas.XUserFile.Controllers
                     //  Copy
                     else if (lDir.CopyMove == CopyMove.Copy)
                     {
+                        #region COPY DIRECTORY
                         var _AllUserDirs = await _context.LDir.Where(p => p.UserId == UserId_).ToListAsync();
                         var _AllUserFiles = await _context.LUserFile.Where(p => p.UserId == UserId_).ToListAsync();
-                        #region GET A MAP
-                        var IncludedDirs = _AllUserDirs.Where(p => IsFileOrDirInDir(_AllUserDirs, p.Id, lDir.Id)).ToList();
-                        var IncludedFiles = _AllUserFiles.Where(p => IsFileOrDirInDir(_AllUserDirs, p.Id, lDir.Id)).ToList();
-                        //  The first value is the new id 
+                        var _ID8InDirIds = _AllUserDirs.Select(p => new ID8InDirId { InDirId = p.InDirId, Id = p.Id }).Union(_AllUserFiles.Select(p=>new ID8InDirId {  Id=p.Id, InDirId=p.InDirId  }));
+
+                        var IncludedDirs = _AllUserDirs.Where(p => IsFileOrDirInDir(_ID8InDirIds, p.Id, lDir.Id)).ToList();
+                        var IncludedFiles = _AllUserFiles.Where(p => IsFileOrDirInDir(_ID8InDirIds, p.Id, lDir.Id)).ToList();
+
                         var IDMap = new List<ID8NewID> ();
                         var NewDirs = new List<LDir>();
+                        var NewUserFiles= new List<LUserFile>();
 
                         IncludedDirs.ForEach(d => {
                             var _d = new LDir {  Id=Guid.NewGuid(), Name=d.Name, UserId=UserId_ };
+                            NewDirs.Add(_d);
                             IDMap.Add(new ID8NewID {  Id=d.Id, NewId=_d.Id});
                         });
                         NewDirs.ForEach(_d => {
@@ -219,6 +224,29 @@ namespace POYA.Areas.XUserFile.Controllers
                             _d.InDirId = IDMap.FirstOrDefault(p => p.Id == CopiedDirInDirId_).NewId;
                         });
 
+
+                        //  Add the main directory (Copy of lDir)
+                        var MainDir = new LDir { Id = Guid.NewGuid(), InDirId = lDir.InDirId, Name = lDir.Name, UserId = UserId_ };
+                        NewDirs.Add(MainDir);
+                        IDMap.Add(new ID8NewID { Id = lDir.Id, NewId = MainDir.Id });
+
+                        IncludedFiles.ForEach(f => {
+                            var _f = new LUserFile { Id=Guid.NewGuid(), MD5=f.MD5, Name=f.Name, UserId=UserId_ };
+                            NewUserFiles.Add(_f);
+                            IDMap.Add(new ID8NewID { Id = f.Id, NewId = _f.Id });
+                        });
+                        NewUserFiles.ForEach(_f => {
+
+                            var OrginalFileId = IDMap.FirstOrDefault(p => p.NewId == _f.Id).Id;
+                            var CopiedDirInDirId_ = _AllUserFiles.FirstOrDefault(p => p.Id == OrginalFileId).InDirId;
+                            _f.InDirId = IDMap.FirstOrDefault(p => p.Id == CopiedDirInDirId_).NewId;
+
+                        });
+
+
+                        await _context.LDir.AddRangeAsync(NewDirs);
+                        await _context.LUserFile.AddRangeAsync(NewUserFiles);
+                        //  await _context.SaveChangesAsync();
                         #endregion
 
                     }
@@ -231,11 +259,11 @@ namespace POYA.Areas.XUserFile.Controllers
                         //  _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name, _hostingEnv).Last();
                         //  _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name).Last();   // new Mime().Lookup(lUserFile.Name);
                         _context.Update(_LDir);
-                        await _context.SaveChangesAsync();
+                        //  await _context.SaveChangesAsync();
                     }
 
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(actionName: "Index", controllerName: "LUserFiles", routeValues: new { _LDir.InDirId });
+                    return RedirectToAction(actionName: "Index", controllerName: "LUserFiles", routeValues: new { lDir.InDirId });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -311,10 +339,10 @@ namespace POYA.Areas.XUserFile.Controllers
             
         }
 
-        private bool IsFileOrDirInDir(List<LDir> UserDirs, Guid id, Guid DirId)
+        private bool IsFileOrDirInDir(IEnumerable<ID8InDirId>  ID8InDirIds, Guid id, Guid DirId)
         {
-            if (!UserDirs.Select(p => p.Id).Contains(id)) return false;
-            var _InDirId = UserDirs.FirstOrDefault(p => p.Id == id).InDirId;
+            if (!ID8InDirIds.Select(p => p.Id).Contains(id)) return false;
+            var _InDirId = ID8InDirIds.FirstOrDefault(p => p.Id == id).InDirId;
             var _i = 0;
             while (_InDirId != Guid.Empty && _i < 30)
             {
@@ -322,7 +350,7 @@ namespace POYA.Areas.XUserFile.Controllers
                 {
                     return true;
                 }
-                _InDirId = UserDirs.Where(p => p.Id == _InDirId).Select(p => p.InDirId).FirstOrDefault();
+                _InDirId = ID8InDirIds.Where(p => p.Id == _InDirId).Select(p => p.InDirId).FirstOrDefault();
                 _i++;
             }
             return false;
@@ -330,8 +358,9 @@ namespace POYA.Areas.XUserFile.Controllers
         private List<LDir> GetAllSubDirs(List<LDir> UserDirs ,Guid DirId)
         {
             var SubDirs = new List<LDir>();
-            foreach(var i in UserDirs) {
-                if (IsFileOrDirInDir(UserDirs, i.Id, DirId))
+            var _ID8InDirIds = UserDirs.Select(p => new ID8InDirId { Id = p.Id, InDirId = p.InDirId });
+            foreach (var i in UserDirs) {
+                if (IsFileOrDirInDir(_ID8InDirIds, i.Id, DirId))
                 {
                     SubDirs.Add(i);
                 }

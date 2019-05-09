@@ -23,7 +23,7 @@ using POYA.Unities.Helpers;
 namespace POYA.Areas.XUserFile.Controllers
 {
 
-    [Area("LUserFile")]
+    [Area("XUserFile")]
     [Authorize]
     public class LUserFilesController : Controller
     {

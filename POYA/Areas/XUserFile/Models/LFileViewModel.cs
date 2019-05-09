@@ -72,6 +72,12 @@ namespace POYA.Areas.XUserFile.Models
     }
 
     #region DEPOLLUTION
+    
+    public class ID8InDirId
+    {
+        public Guid Id { get; set; }
+        public Guid InDirId { get; set; }
+    }
 
     public class ID8NewID
     {
@@ -131,6 +137,7 @@ namespace POYA.Areas.XUserFile.Models
         #endregion
 
     }
+
     public enum CopyMove {
         Copy = 1,
         Move = 2,
