@@ -1,14 +1,21 @@
 ﻿[English](https://github.com/linghuchong123/POYA/blob/master/POYA/README.md "中文文档") 中文    
 **我是韦云清, 这里是POYA项目**   
-其实我对这个项目没有什么太大的定义, 但是我做了文件储存, 文章发表的功能, 以后可能还会添加很多功能, 如果你喜欢我的项目并且想使用我的源码, 你要做下面的事情在git它以后 >_   
-
+其实我对这个项目没有什么太大的定义, 但是我做了文件储存, 文章发表的功能, 以后可能还会添加很多功能, 
+ 如果你喜欢我的项目并且想使用我的源码, 你要 **>_**   
+####  null  
+这里假设你有很高的 **[C#](https://docs.microsoft.com/en-us/dotnet/csharp/  "C#")** 和   **[dotnet](https://dotnet.microsoft.com/  "dotnet")**  基础(0基础也是可以的)  
+(我的IDE是 **[Visual Studio](https://docs.microsoft.com/en-us/dotnet/csharp/  "Visual Studio")** , 如果你喜欢你也可以使用 **[Visual Studio Code](https://code.visualstudio.com/  "Visual Studio Code")** , 或是你实在是骨灰级开发者, 只要你喜欢, 你使用最常用的文本编辑器都可以为项目做出巨大贡献)  
+**. . .** , 还有很多东西, 我就不说了, 反正你肯定比我懂得多很多
 #### 0  
-添加 appsettings.json 文件在项目的根目录   
+
+做下面的事情在git它以后 >_     
+
+添加 **appsettings.json** 文件在项目的根目录   
 这是它的内容:  
 ```json
 {
   "ConnectionStrings": { 
-    "DefaultConnection": "Data Source=app.db"
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=aspnet-POYA-0E28E843-176D-49F3-9739-6D5E6F1BC3F5;Trusted_Connection=True;MultipleActiveResultSets=true"
   },
   "Logging": {
     "LogLevel": {
@@ -27,7 +34,12 @@
   }
 } 
 ```     
-**DefaultConnection** 是数据库的连接字符串, 上面的值是SQLite的连接字符串, 如果你使用MSSQL, 那么它的DefaultConnection是  **"Server=(localdb)\\\\mssqllocaldb;Database=aspnet-POYA-0E28E843-176D-49F3-9739-6D5E6F1BC3F5;Trusted_Connection=True;MultipleActiveResultSets=true"**   , 当然了, 你可以更改成你喜欢的数据库和相应的连接字符串, 然后在  **Startup.cs** 中修改  **services.AddDbContext**  里面的相应内容   
-**EmailSender** 是你的邮件服务相关配置, 它在用户注册和用户接受通知中起关键作用 **userName** 是你的  **smtp** 用户名, 其它的三个你熟悉 **smtp** 的话你应该很容易明白它   
-**ReceiveLogEmailAddress** 邮箱地址是用来接收错误信息的(未医先治)
+**DefaultConnection** 是数据库的连接字符串, 上面的值是MSSQL的连接字符串, 如果你使用SQLite, 那么它的DefaultConnection是  **"Data Source=app.db**   , 当然了, 你可以更改成你喜欢的数据库和相应的连接字符串, 然后在  **Startup.cs** 中修改  **services.AddDbContext**  里面的相应内容   
+**EmailSender** 是你的邮件服务相关配置, 它在用户注册和用户接受通知中起关键作用,  **userName** 是你的  **smtp** 用户名, 其它的三个你熟悉 **smtp** 的话你应该很容易明白它   
+**ReceiveLogEmailAddress** 邮箱地址是用来接收错误信息的(未医先治)    
+#### 1(多余的)    
+完成 **appsettings.json** 后你可以试试项目能否 **RUN**  
+在项目的根目录 **>_**  
+**dotnet build**  
+**dotnet run**
 
