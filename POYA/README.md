@@ -1,5 +1,5 @@
 ﻿English      <a href="./README/README.zh-CN.md">中文</a>   
-**Hello, here is X-DOVE project, I'm Larry Wei**  
+**Hello, here is POYA project, I'm Larry Wei**  
 **❤ Welcome!! ❤**  
 >In fact, my definition of this project is vague, but I have implemented the function of file storage and article publishing in the project, and I would like to add many functions in the future. If you like my project and want to contribute your code (<a href="#2">succinctly</a>) **>_**   
 ####  null  
@@ -33,9 +33,9 @@ The contents of **appsettings.json** are:
   }
 } 
 ```     
->**DefaultConnection >_** The connection string of database, the above is the connection string of the MSSQL, the  connection string is **"Data Source=app.db** if you use **SQLite**. You can customize your connection string and modify **services.AddDbContext**  in **Startup.cs** file accordingly  
-**EmailSender>_** It is the configuration of the mail service(you need to change its value in order to the project to work properly), it plays a key role in user registration and user receiving notifications      
-**ReceiveLogEmailAddress** This e-mail address is used to receive error messages    
+>🧧**DefaultConnection >_** The connection string of database, the above is the connection string of the MSSQL, the  connection string is **"Data Source=app.db** if you use **SQLite**. You can customize your connection string and modify **services.AddDbContext**  in **Startup.cs** file accordingly  
+🧧**EmailSender>_** It is the configuration of the mail service(you need to change its value in order to the project to work properly), it plays a key role in user registration and user receiving notifications      
+🧧**ReceiveLogEmailAddress** This e-mail address is used to receive error messages    
 #### 1(inessential)    
 ***  
 >You can try it after your appsettings.json is 👌 **>_**  
