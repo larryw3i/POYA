@@ -1,7 +1,7 @@
 ﻿<a href="../README.md">English</a>   中文    
 **我是韦云清, 这里是POYA项目**   
 >其实我对这个项目没有什么太大的定义, 但是我做了文件储存, 文章发表的功能, 以后可能还会添加很多功能, 
- 如果你喜欢我的项目并且想使用我的源码, 你可以 <a href="#2">简明扼要</a> **>_**   
+ 如果你喜欢我的项目并且想使用我的源码, 你可以 (<a href="#2">简明扼要</a>) **>_**   
 ####  null  
 >这是一个 **C#/.NET Core MVC** 项目   
 (我是新手, 并且我并不喜欢.NET Core MVC? 其实它很 **[简单](https://docs.microsoft.com/en-us/aspnet/?view=aspnetcore-2.2#pivot=core "简单")**)   
@@ -63,5 +63,5 @@ dotnet run
 
  ####  ∞
 ***      
->Copyright (c) 2019 Larry Wei
+>Copyright (c) 2019 Larry Wei   
 Licensed under the [MIT](https://github.com/linghuchong123/POYA/blob/master/LICENSE "MIT License") License
