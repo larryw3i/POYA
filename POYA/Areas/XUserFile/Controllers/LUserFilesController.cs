@@ -216,6 +216,15 @@ namespace POYA.Areas.XUserFile.Controllers
             };
             #endregion
 
+            #region SHARING
+
+            lUserFile.IsSharedSelectListItems = new List<SelectListItem> {
+                new SelectListItem{ Text=_localizer["Private"], Value=Boolean.FalseString.ToLower(),Selected=!lUserFile.IsShared },
+                new SelectListItem{ Text=_localizer["Share"],Value=Boolean.TrueString.ToLower(),Selected=lUserFile.IsShared }
+            };
+            //  lUserFile.SharingCode = new Random().Next(100_000, 999_999).ToString();
+            #endregion
+
             return View(lUserFile);
         }
 
@@ -224,7 +233,7 @@ namespace POYA.Areas.XUserFile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,CopyMove,InDirId")] LUserFile lUserFile)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,CopyMove,InDirId,IsShared,SharingCode")] LUserFile lUserFile)
         {
             if (id != lUserFile.Id)
             {
@@ -242,30 +251,42 @@ namespace POYA.Areas.XUserFile.Controllers
                     {
                         return NotFound();
                     }
+
+
                     if (lUserFile.InDirId!=Guid.Empty && !await _context.LDir.AnyAsync(p => p.Id == lUserFile.InDirId && p.UserId == UserId_))
                     {
                         ModelState.AddModelError(nameof(lUserFile.InDirId), _localizer["Sorry! the directory can't be found"]);
                         return View(lUserFile);
                     }
-                    //  Copy
+
+                    #region COPY
                     if (lUserFile.CopyMove == CopyMove.Copy)
                     {
                         await _context.LUserFile.AddAsync(
                             new LUserFile {
-                                InDirId = lUserFile.InDirId, MD5 = _lUserFile.MD5, Name = _lUserFile.Name, UserId=UserId_,   Id=Guid.NewGuid()
+                                InDirId = lUserFile.InDirId, MD5 = _lUserFile.MD5, Name = _lUserFile.Name, UserId = UserId_, Id = Guid.NewGuid(), IsShared =_lUserFile.IsShared, SharingCode=_lUserFile.SharingCode
                             });
                         await _context.SaveChangesAsync();
                         InDirId = lUserFile.InDirId;
                     }
-                    //  Move
+                    #endregion
+
+                    #region MOVE
                     else if (lUserFile.CopyMove == CopyMove.Move)
                     {
-                        _lUserFile.InDirId = lUserFile.InDirId;
+                        _lUserFile.IsShared = lUserFile.IsShared;
                         await _context.SaveChangesAsync();
                         InDirId = lUserFile.InDirId;
                     }
+                    #endregion
+
+                    #region RENAME ONLY
                     else
                     {
+                        #region SHARING
+                        if (lUserFile.IsShared) _lUserFile.SharingCode = lUserFile.SharingCode;
+                        _lUserFile.IsShared = lUserFile.IsShared;
+                        #endregion
                         _lUserFile.Name = lUserFile.Name;
                         #region
                         //  _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name, _hostingEnv).Last();
@@ -275,6 +296,7 @@ namespace POYA.Areas.XUserFile.Controllers
                         await _context.SaveChangesAsync();
                         InDirId = _lUserFile.InDirId;
                     }
+                    #endregion
                 }
                 catch (DbUpdateConcurrencyException)
                 {

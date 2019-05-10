@@ -12,6 +12,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Areas\XUserFile\Views\LUserSharingFiles\**" />
     <Compile Remove="Views\EduHubArticles\**" />
     <Compile Remove="Views\EduHubGrades\**" />
     <Compile Remove="Views\EduHubSubjects\**" />
@@ -23,6 +24,7 @@
     <Compile Remove="Views\X_doveDirectories\**" />
     <Compile Remove="Views\X_doveFiles\**" />
     <Compile Remove="Views\__LUserFiles\**" />
+    <Content Remove="Areas\XUserFile\Views\LUserSharingFiles\**" />
     <Content Remove="Views\EduHubArticles\**" />
     <Content Remove="Views\EduHubGrades\**" />
     <Content Remove="Views\EduHubSubjects\**" />
@@ -34,6 +36,7 @@
     <Content Remove="Views\X_doveDirectories\**" />
     <Content Remove="Views\X_doveFiles\**" />
     <Content Remove="Views\__LUserFiles\**" />
+    <EmbeddedResource Remove="Areas\XUserFile\Views\LUserSharingFiles\**" />
     <EmbeddedResource Remove="Views\EduHubArticles\**" />
     <EmbeddedResource Remove="Views\EduHubGrades\**" />
     <EmbeddedResource Remove="Views\EduHubSubjects\**" />
@@ -45,6 +48,7 @@
     <EmbeddedResource Remove="Views\X_doveDirectories\**" />
     <EmbeddedResource Remove="Views\X_doveFiles\**" />
     <EmbeddedResource Remove="Views\__LUserFiles\**" />
+    <None Remove="Areas\XUserFile\Views\LUserSharingFiles\**" />
     <None Remove="Views\EduHubArticles\**" />
     <None Remove="Views\EduHubGrades\**" />
     <None Remove="Views\EduHubSubjects\**" />
@@ -58,6 +62,7 @@
     <None Remove="Views\__LUserFiles\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Areas\XUserFile\Controllers\LUserSharingFilesController.cs" />
     <Compile Remove="Controllers\EduHubArticlesController.cs" />
     <Compile Remove="Controllers\EduHubGradesController.cs" />
     <Compile Remove="Controllers\EduHubSubjectsController.cs" />

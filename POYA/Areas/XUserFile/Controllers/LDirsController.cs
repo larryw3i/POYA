@@ -135,20 +135,24 @@ namespace POYA.Areas.XUserFile.Controllers
             {
                 return NotFound();
             }
+            
             #region MOVE AND COPY
 
             //  var UserSubDirs = await _context.LDir.Where(p => p.Id != Guid.Empty && p.UserId == UserId_).ToListAsync();
             var UserDirs = await _context.LDir.Where(p => p.UserId == UserId_).ToListAsync();
-
+            #region
+            /*
             foreach(var i in GetAllSubDirs(UserDirs, lDir.Id))
             {
                 UserDirs.Remove(i);
             }
+            */
+            #endregion
             UserDirs.Remove(lDir);
 
             lDir.UserAllSubDirSelectListItems = new List<SelectListItem>() { new SelectListItem {  Value=Guid.Empty.ToString(),Text="root/"} };
 
-            lDir.UserAllSubDirSelectListItems.AddRange(UserDirs.Select(p => new SelectListItem { Text = $"{_x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId)}{p.Name}", Value = p.Id.ToString() }).OrderBy(p => p.Text).ToList());
+            lDir.UserAllSubDirSelectListItems.AddRange(UserDirs.Select(p => new SelectListItem { Text = $"{_x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId)}{p.Name}/", Value = p.Id.ToString() }).OrderBy(p => p.Text).ToList());
 
             lDir.CopyMoveSelectListItems = new List<SelectListItem>() {
                 new SelectListItem{Text=_localizer[ "Rename"],Value=((int)CopyMove.DoNoThing).ToString(),Selected=true},
@@ -157,6 +161,14 @@ namespace POYA.Areas.XUserFile.Controllers
             };
 
             #endregion
+
+            #region SHARING
+            lDir.IsSharedSelectListItems = new List<SelectListItem> {
+                new SelectListItem{ Text=_localizer["Private"], Value=Boolean.FalseString.ToLower(),Selected=!lDir.IsShared },
+                new SelectListItem{ Text=_localizer["Share"],Value=Boolean.TrueString.ToLower(),Selected=lDir.IsShared }
+            };
+            #endregion
+
             lDir.InFullPath = _x_DOVEHelper.GetInPathOfFileOrDir(_context,lDir.InDirId);
 
             return View(lDir);
@@ -167,7 +179,7 @@ namespace POYA.Areas.XUserFile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,DOCreate,InDirId,CopyMove")] LDir lDir)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,DOCreate,InDirId,CopyMove,IsShared,SharingCode")] LDir lDir)
         {
             if (id != lDir.Id)
             {
@@ -180,7 +192,9 @@ namespace POYA.Areas.XUserFile.Controllers
                 {
                     var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                     var _LDir = await _context.LDir.FirstOrDefaultAsync(p => p.Id == lDir.Id && p.UserId == UserId_);
-                    if(_LDir==null)
+
+
+                    if (_LDir==null)
                     {
                         return NotFound();
                     }
@@ -191,69 +205,90 @@ namespace POYA.Areas.XUserFile.Controllers
                         return View(lDir);
                     }
 
-                    #region COPY AND MOVE
+                    #region MOVE
                     //  Move
                     if (lDir.CopyMove == CopyMove.Move)
                     {
                         _LDir.InDirId = lDir.InDirId;
                     }
+                    #endregion
+
+                    #region COPY
                     //  Copy
                     else if (lDir.CopyMove == CopyMove.Copy)
                     {
-                        #region COPY DIRECTORY
+                        #region COPY DIRECTORY 01
+
                         var _AllUserDirs = await _context.LDir.Where(p => p.UserId == UserId_).ToListAsync();
                         var _AllUserFiles = await _context.LUserFile.Where(p => p.UserId == UserId_).ToListAsync();
-                        var _ID8InDirIds = _AllUserDirs.Select(p => new ID8InDirId { InDirId = p.InDirId, Id = p.Id }).Union(_AllUserFiles.Select(p=>new ID8InDirId {  Id=p.Id, InDirId=p.InDirId  }));
+                        var _ID8InDirIds = _AllUserDirs.Select(p => new ID8InDirId { InDirId = p.InDirId, Id = p.Id })
+                            .Union(_AllUserFiles.Select(p=>new ID8InDirId {  Id=p.Id, InDirId=p.InDirId  }));
                         var IncludedDirs = _AllUserDirs.Where(p => IsFileOrDirInDir(_ID8InDirIds, p.Id, lDir.Id)).ToList();
                         var IncludedFiles = _AllUserFiles.Where(p => IsFileOrDirInDir(_ID8InDirIds, p.Id, lDir.Id)).ToList();
+
                         var IDMap = new List<ID8NewID> ();
                         var NewDirs = new List<LDir>();
                         var NewUserFiles= new List<LUserFile>();
+
                         IncludedDirs.ForEach(d => {
                             var _d = new LDir {  Id=Guid.NewGuid(), Name=d.Name, UserId=UserId_ };
                             NewDirs.Add(_d);
-                            IDMap.Add(new ID8NewID {  Id=d.Id, NewId=_d.Id});
+                            IDMap.Add(new ID8NewID {  OriginalId=d.Id, NewId=_d.Id, OriginalInDirId=d.InDirId});
                         });
 
                         //  Add the main directory (Copy of lDir)
-                        var MainDir = new LDir { Id = Guid.NewGuid(), InDirId = lDir.InDirId, Name = lDir.Name, UserId = UserId_ };
+                        var MainDir = new LDir { Id = Guid.NewGuid(), InDirId = lDir.InDirId, Name = lDir.Name, UserId = UserId_, IsShared=lDir.IsShared, SharingCode=lDir.SharingCode };
                         NewDirs.Add(MainDir);
                         //  Add it here or UserFile copy in the root of main directory(lDir) can't find it's InDirId
 
-                        IDMap.Add(new ID8NewID { Id = lDir.Id, NewId = MainDir.Id });
+                        IDMap.Add(new ID8NewID { OriginalId = lDir.Id, NewId = MainDir.Id , OriginalInDirId=lDir.InDirId});
 
                         NewDirs.ForEach(_d => {
-                            // You don't need to know here maybe, because I don't know what I'm writing too
-                            var OrginalId = IDMap.FirstOrDefault(p => p.NewId == _d.Id).Id;
-                            var CopiedDirInDirId_ = _AllUserDirs.FirstOrDefault(p => p.Id ==OrginalId).InDirId;
-                            _d.InDirId = IDMap.FirstOrDefault(p => p.Id == CopiedDirInDirId_)?.NewId??Guid.Empty;
+                            #region
+                            //  You don't need to know here maybe, because I don't know what I'm writing too
+                            //  var OrginalId = IDMap.FirstOrDefault(p => p.NewId == _d.Id).Id;
+                            //  var CopiedDirInDirId_ = _AllUserDirs.FirstOrDefault(p => p.Id ==OrginalId).InDirId;
+                            #endregion
+                            var _OriginalInDirId = IDMap.FirstOrDefault(p => p.NewId == _d.Id).OriginalInDirId;
+                            _d.InDirId = IDMap.FirstOrDefault(p => p.OriginalId == _OriginalInDirId)?.NewId ?? lDir.InDirId; // IDMap.FirstOrDefault(p => p.Id == CopiedDirInDirId_)?.NewId??lDir.InDirId;
                         });
+
                         IncludedFiles.ForEach(f => {
                             var _f = new LUserFile { Id=Guid.NewGuid(), MD5=f.MD5, Name=f.Name, UserId=UserId_ };
                             NewUserFiles.Add(_f);
-                            IDMap.Add(new ID8NewID { Id = f.Id, NewId = _f.Id });
+                            IDMap.Add(new ID8NewID { OriginalId = f.Id, NewId = _f.Id, OriginalInDirId=f.InDirId });
                         });
+
                         NewUserFiles.ForEach(_f => {
-                            var OrginalFileId = IDMap.FirstOrDefault(p => p.NewId == _f.Id).Id;
-                            var CopiedDirInDirId_ = _AllUserFiles.FirstOrDefault(p => p.Id == OrginalFileId).InDirId;
-                            _f.InDirId = IDMap.FirstOrDefault(p => p.Id == CopiedDirInDirId_).NewId;
+
+                            var _OriginalInDirId = IDMap.FirstOrDefault(p => p.NewId == _f.Id).OriginalInDirId;
+                            _f.InDirId = IDMap.FirstOrDefault(p => p.OriginalId == _OriginalInDirId).NewId;
 
                         });
+
                         await _context.LDir.AddRangeAsync(NewDirs);
                         await _context.LUserFile.AddRangeAsync(NewUserFiles);
                         //  await _context.SaveChangesAsync();
                         #endregion
+
                     }
                     #endregion
 
+                    #region RENAME ONLY
+
                     else
                     {
+                        #region SHARING
+                        _LDir.IsShared = lDir.IsShared;
+                        _LDir.SharingCode = lDir.SharingCode;
+                        #endregion
                         _LDir.Name = lDir.Name;
                         //  _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name, _hostingEnv).Last();
                         //  _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name).Last();   // new Mime().Lookup(lUserFile.Name);
                         _context.Update(_LDir);
                         //  await _context.SaveChangesAsync();
                     }
+                    #endregion
 
                     await _context.SaveChangesAsync();
                     return RedirectToAction(actionName: "Index", controllerName: "LUserFiles", routeValues: new { lDir.InDirId });

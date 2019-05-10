@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/img/chat_with_friends_ico.webp" rel="icon" type="image/webp">
 </head>
+@RenderSection("Styles", required: false)
 <body id="_body" style="background-color:@_THEME">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
@@ -108,10 +109,8 @@
         </script>
     </environment>
     <script src="~/lib/js-cookie/js.cookie.min.js"></script>
-    @*<script src="~/lib/jquery/dist/jquery.min.js"></script> *@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
-    @RenderSection("Styles", required: false)
 </body>
 </html>
 

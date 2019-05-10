@@ -50,7 +50,7 @@
             <tr>
                 <td>
                     <a asp-action="Index" asp-route-InDirId="@(d.Id)"> @(Html.DisplayFor(modelItem => d.Name))</a>
-                    <span style="font-size:60%;color:blue">d</span>
+                    <span style="font-size:60%;color:blue">d  @if (d.IsShared){<span>&#128226;</span>}</span>
                 </td>
                 <td>
                     @(d.DOCreate.LocalDateTime.ToShortDateString())
@@ -67,7 +67,7 @@
             <tr>
                 <td>
                     <a asp-action="GetFile" asp-route-id="@(item.Id)">@(Html.DisplayFor(modelItem => item.Name))</a>
-                    <span style="font-size:60%;color:red">f</span>
+                    <span style="font-size:60%;color:red">f @if(item.IsShared){ <span>&#128226;</span> }</span>
                 </td>
                 <td>
                     @(item.DOCreate.LocalDateTime.ToShortDateString())

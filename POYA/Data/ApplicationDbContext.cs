@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using POYA.Models;
 using POYA.Areas.EduHub.Models;
+using POYA.Areas.XUserFile.Models;
 namespace POYA.Data
 {
     public class ApplicationDbContext : IdentityDbContext
@@ -22,6 +23,7 @@ namespace POYA.Data
         public DbSet<POYA.Areas.EduHub.Models.ESubject> ESubject { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.EType> EType { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.EVideo> EVideo { get; set; }
+        public DbSet<POYA.Areas.XUserFile.Models.LUserSharingFile> LUserSharingFile { get; set; }
         /*
         public DbSet<POYA.Areas.EduHub.Models.Video> Video { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.Type> Type { get; set; }

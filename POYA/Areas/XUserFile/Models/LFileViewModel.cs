@@ -63,16 +63,17 @@ namespace POYA.Areas.XUserFile.Models
         public string MD5 { get; set; }
     }
 
+    #region DEPOLLUTION
+
     public class LUserSharingFile   //  BEGIN IT AFTER COPYING DIR FUNCATION IS FINISH
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public Guid FileId { get; set; }
         public string SharingCode { get; set; }
+            = new Random().Next(100000, 999999).ToString();
         public string Comment { get; set; }
     }
 
-    #region DEPOLLUTION
-    
     public class ID8InDirId
     {
         public Guid Id { get; set; }
@@ -81,8 +82,10 @@ namespace POYA.Areas.XUserFile.Models
 
     public class ID8NewID
     {
-        public Guid Id { get; set; }
         public Guid NewId { get; set; }
+        //  public Guid NewInDirId { get; set; }
+        public Guid OriginalId { get; set; }
+        public Guid OriginalInDirId { get; set; }
     }
 
 
@@ -97,9 +100,30 @@ namespace POYA.Areas.XUserFile.Models
         /// </summary>
         public Guid InDirId { get; set; } = Guid.Empty;
 
-
         [Display(Name = "Name")]
         public string Name { get; set; }
+
+        #region SHARING
+
+        /// <summary>
+        /// Gets or sets a flag indicating if <see cref="LUserFile"/> or <see cref="LDir"/>. Defaults to true
+        /// </summary>
+        [Display(Name="Is shared")]
+        public bool IsShared { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets the code of shared <see cref="LUserFile"/>, defaults to [100_000, 999_999]
+        /// </summary>
+        [Display(Name="Sharing code")]
+        [StringLength(maximumLength:50,MinimumLength =6)]
+        public string SharingCode { get; set; }
+
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        [NotMapped]
+        public List<SelectListItem> IsSharedSelectListItems { get; set; }
+        #endregion
 
         #region DEPOLLUTION
 
