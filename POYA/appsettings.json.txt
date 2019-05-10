@@ -1,0 +1,20 @@
+﻿{
+  "ConnectionStrings": { 
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=aspnet-POYA-0E28E843-176D-49F3-9739-6D5E6F1BC3F5;Trusted_Connection=True;MultipleActiveResultSets=true"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "EmailSender": {
+    "userName": "xxxxxx@xxxxxx.xxx",
+    "host": "xxxxxx.xxxxxx.xxx",
+    "password": "xxxxxx",
+    "port": "xx"
+  }, 
+  "ErrorLogHandle": {
+    "ReceiveLogEmailAddress": "xxxxxxx@xxx.xxx"
+  }
+} 
