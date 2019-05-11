@@ -180,9 +180,9 @@ namespace POYA.Unities.Helpers
     }
     public class MimeHelper
     {
-        public List<string> GetMime(string FileExtension, IHostingEnvironment env)
+        public List<string> GetMimes(string FileExtension, IHostingEnvironment env)
         {
-            var _CSV = System.IO.File.ReadAllTextAsync(env.ContentRootPath + "/Data/MIME/all_mime.csv").GetAwaiter().GetResult();
+            var _CSV = File.ReadAllTextAsync(env.ContentRootPath + "/Data/MIME/all_mime.csv").GetAwaiter().GetResult();
             var MediaTypes = CsvConvert.DeserializeObject<MediaType>(_CSV);
             FileExtension = FileExtension.Contains(".") ? FileExtension.Split(".").LastOrDefault() : FileExtension;
             //  Console.WriteLine(JsonConvert.SerializeObject(MediaTypes));
@@ -195,7 +195,21 @@ namespace POYA.Unities.Helpers
             }
             return _MediaTypes;
         }
-
+        public List<string> GetExtensions(string Mime, IHostingEnvironment env)
+        {
+            var _CSV = File.ReadAllTextAsync(env.ContentRootPath + "/Data/MIME/all_mime.csv").GetAwaiter().GetResult();
+            var MediaTypes = CsvConvert.DeserializeObject<MediaType>(_CSV);
+            var MediaTypeList = MediaTypes.ToList();
+            var _Extensions = new List<string>();
+            foreach(var i in MediaTypeList)
+            {
+                if (i.Template.StartsWith(Mime))
+                {
+                    _Extensions.Add(i.Name);
+                }
+            }
+            return _Extensions;
+        }
     }
     public class Unities
     {

@@ -65,6 +65,16 @@ namespace POYA.Areas.XUserFile.Controllers
         }
         #endregion
 
+        [ActionName("GetSharedImages")]
+        public async Task<IActionResult> Index()
+        {
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var _Extensions = _mimeHelper.GetExtensions("image", _hostingEnv);
+            var _LUserFiles = await _context.LUserFile.Where(p=>p.UserId==UserId_ && p.IsLegal).ToListAsync();
+            _LUserFiles = _LUserFiles.Where(p => _Extensions.Contains(p.Name.Split('.').LastOrDefault())).ToList();
+            return View("GetSharedImages", _LUserFiles);
+        }
+
         // GET: LUserFiles
         public async Task<IActionResult> Index(Guid? InDirId)
         {
@@ -100,15 +110,17 @@ namespace POYA.Areas.XUserFile.Controllers
             });
             await _context.SaveChangesAsync();
 
-            var LUserFile_ = await _context.LUserFile.Where(p => p.UserId == UserId_ && p.InDirId == InDirId && !string.IsNullOrWhiteSpace(p.MD5)).OrderBy(p => p.DOCreate).ToListAsync();
+            var LUserFile_ = await _context.LUserFile.Where(p => p.UserId == UserId_ && p.InDirId == InDirId && !string.IsNullOrWhiteSpace(p.MD5))
+                .OrderBy(p => p.DOCreate).ToListAsync();
             var LUserFileIds = LUserFile_.Select(p => p.Id);
-            //  var InDirName = //  var _Path = string.Empty;   //InDirName;    //  LUserFile_.ForEach(m => { m.InDirName = InDirName; });
+
             ViewData[nameof(InDirId)] = InDirId;
             ViewData["InDirName"] = (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? "root";
             ViewData["LastDirId"] = InDirId == Guid.Empty ? InDirId
                 : await _context.LDir.Where(p => p.Id == InDirId && p.UserId == UserId_).Select(p => p.InDirId).FirstOrDefaultAsync();
-            ViewData["LDirs"] = await _context.LDir.Where(p => p.InDirId == InDirId && p.UserId == UserId_ && !LUserFileIds.Contains(p.Id)).ToListAsync(); ;
-            ViewData["_Path"] = _x_DOVEHelper.GetInPathOfFileOrDir(context: _context,InDirId: InDirId??Guid.Empty);    //    $"root/{_Path}";
+            ViewData["LDirs"] = await _context.LDir.Where(p => p.InDirId == InDirId && p.UserId == UserId_ && !LUserFileIds.Contains(p.Id))
+                .ToListAsync(); ;
+            ViewData["_Path"] = _x_DOVEHelper.GetInPathOfFileOrDir(context: _context,InDirId: InDirId??Guid.Empty);  
             return View(LUserFile_);
         }
 
@@ -126,7 +138,7 @@ namespace POYA.Areas.XUserFile.Controllers
                 return NotFound();
             }
 
-            lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name, _hostingEnv).Last();
+            lUserFile.ContentType = _mimeHelper.GetMimes(lUserFile.Name, _hostingEnv).Last();
             return View(lUserFile);
         }
 
@@ -331,7 +343,7 @@ namespace POYA.Areas.XUserFile.Controllers
             {
                 return NotFound();
             }
-            lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name,_hostingEnv).Last();
+            lUserFile.ContentType = _mimeHelper.GetMimes(lUserFile.Name,_hostingEnv).Last();
             return View(lUserFile);
         }
 
@@ -390,7 +402,7 @@ namespace POYA.Areas.XUserFile.Controllers
         }
 
 
-        public async Task<IActionResult> GetFile(Guid? id)
+        public async Task<IActionResult> GetFile(Guid? id, string SharingCode="")
         {
             if (id == null)
             {
@@ -409,7 +421,7 @@ namespace POYA.Areas.XUserFile.Controllers
                 return NoContent();
             }
             var FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath);
-            return File(FileBytes, _mimeHelper.GetMime(_LUserFile.Name,_hostingEnv).Last(), _LUserFile.Name, true);
+            return File(FileBytes, _mimeHelper.GetMimes(_LUserFile.Name,_hostingEnv).Last(), _LUserFile.Name, true);
         }
 
         /*

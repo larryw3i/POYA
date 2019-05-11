@@ -34,7 +34,9 @@ namespace POYA.Areas.EduHub.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<EArticlesController> _logger;
         private readonly HtmlSanitizer _htmlSanitizer;
+        private readonly MimeHelper _mimeHelper;
         public EArticlesController(
+            MimeHelper mimeHelper,
             HtmlSanitizer htmlSanitizer,
             ILogger<EArticlesController> logger,
             SignInManager<IdentityUser> signInManager,
@@ -55,6 +57,7 @@ namespace POYA.Areas.EduHub.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
+            _mimeHelper = mimeHelper;
         }
         #endregion
 
@@ -246,9 +249,11 @@ namespace POYA.Areas.EduHub.Controllers
                 new SelectListItem{  Value=Guid.Empty.ToString(), Text="Select your video file",Selected=true}
             };
             _LUserFile.ForEach(p => {
+                if (_mimeHelper.GetMimes(p.Name.Split(".").LastOrDefault(), _hostingEnv).LastOrDefault().StartsWith("video")) { 
                 _VideoSharedCodeSelectListItems.Add(
-                    new SelectListItem { Text = _x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId) + "/" + p.Name, Value = p.Id.ToString() }   //<<<<<<<<
+                    new SelectListItem { Text = _x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId) + p.Name, Value = p.Id.ToString() }   //<<<<<<<<
                     );
+                }
             });
             return _VideoSharedCodeSelectListItems;
         }
