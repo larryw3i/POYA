@@ -59,5 +59,6 @@ dotnet run
  ####  ∞    
 ***     
 >Copyright (c) 2019 Larry Wei    
-Licensed under the [MIT](https://github.com/linghuchong123/POYA/blob/master/LICENSE "MIT License") License
+Licensed under the <a href="./LICENSE">MIT</a>  License
+
 
