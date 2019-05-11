@@ -9,7 +9,7 @@
 这里假设你有很高的 **[C#](https://docs.microsoft.com/en-us/dotnet/csharp/  "C#")** 和   **[dotnet](https://dotnet.microsoft.com/  "dotnet")**  基础(**0基础也是可以的**)  
 (我使用的IDE是 **[Visual Studio 2019](https://visualstudio.microsoft.com/  "Visual Studio 2019")**, 如果你喜欢你也可以使用 **[Visual Studio Code](https://code.visualstudio.com/  "Visual Studio Code")** , 或是你实在是骨灰级开发者, 你都可以使用文本编辑器为这个项目做出巨大贡献)  
 **. . .** , 还有很多东西, 我就不说了, 反正你肯定比我懂得多很多
-#### <span id="null">null</span>  
+#### <span id="0">0</span>  
 ***  
 >git clone它以后, 在项目的根目录重命名 **appsettings.json.txt** 文件为 **appsettings.json**     
 这是它的内容:  
