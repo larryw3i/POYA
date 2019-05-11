@@ -111,7 +111,10 @@ namespace POYA.Areas.XUserFile.Models
         [Display(Name="Is shared")]
         public bool IsShared { get; set; } = false;
 
-        public Guid SharingId { get; set; }
+        /// <summary>
+        /// Gets or sets a id for <see cref="LUserFile"/> when it's shared to prevent id of <see cref="LUserFile"/> is exposed, defaults to <see cref="Guid.NewGuid()"/>
+        /// </summary>
+        public Guid SharingId { get; set; } = Guid.Empty;
 
         /// <summary>
         /// Gets or sets the code of shared <see cref="LUserFile"/>, defaults to [100_000, 999_999]
