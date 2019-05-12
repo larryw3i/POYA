@@ -229,14 +229,7 @@ namespace POYA.Areas.XUserFile.Controllers
             };
             #endregion
 
-            #region SHARING
-
-            lUserFile.IsSharedSelectListItems = new List<SelectListItem> {
-                new SelectListItem{ Text=_localizer["Private"], Value=Boolean.FalseString.ToLower(),Selected=!lUserFile.IsShared },
-                new SelectListItem{ Text=_localizer["Share"],Value=Boolean.TrueString.ToLower(),Selected=lUserFile.IsShared }
-            };
-            //  lUserFile.SharingCode = new Random().Next(100_000, 999_999).ToString();
-            #endregion
+           
 
             return View(lUserFile);
         }
@@ -277,7 +270,7 @@ namespace POYA.Areas.XUserFile.Controllers
                     {
                         await _context.LUserFile.AddAsync(
                             new LUserFile {
-                                InDirId = lUserFile.InDirId, MD5 = _lUserFile.MD5, Name = _lUserFile.Name, UserId = UserId_, Id = Guid.NewGuid(), IsShared =_lUserFile.IsShared, SharingCode=_lUserFile.SharingCode
+                                InDirId = lUserFile.InDirId, MD5 = _lUserFile.MD5, Name = _lUserFile.Name, UserId = UserId_, Id = Guid.NewGuid()
                             });
                         await _context.SaveChangesAsync();
                         InDirId = lUserFile.InDirId;
@@ -287,7 +280,6 @@ namespace POYA.Areas.XUserFile.Controllers
                     #region MOVE
                     else if (lUserFile.CopyMove == CopyMove.Move)
                     {
-                        _lUserFile.IsShared = lUserFile.IsShared;
                         await _context.SaveChangesAsync();
                         InDirId = lUserFile.InDirId;
                     }
@@ -296,10 +288,6 @@ namespace POYA.Areas.XUserFile.Controllers
                     #region RENAME ONLY
                     else
                     {
-                        #region SHARING
-                        if (lUserFile.IsShared) _lUserFile.SharingCode = lUserFile.SharingCode;
-                        _lUserFile.IsShared = lUserFile.IsShared;
-                        #endregion
                         _lUserFile.Name = lUserFile.Name;
                         #region
                         //  _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name, _hostingEnv).Last();

@@ -162,12 +162,7 @@ namespace POYA.Areas.XUserFile.Controllers
 
             #endregion
 
-            #region SHARING
-            lDir.IsSharedSelectListItems = new List<SelectListItem> {
-                new SelectListItem{ Text=_localizer["Private"], Value=Boolean.FalseString.ToLower(),Selected=!lDir.IsShared },
-                new SelectListItem{ Text=_localizer["Share"],Value=Boolean.TrueString.ToLower(),Selected=lDir.IsShared }
-            };
-            #endregion
+           
 
             lDir.InFullPath = _x_DOVEHelper.GetInPathOfFileOrDir(_context,lDir.InDirId);
 
@@ -237,7 +232,7 @@ namespace POYA.Areas.XUserFile.Controllers
                         });
 
                         //  Add the main directory (Copy of lDir)
-                        var MainDir = new LDir { Id = Guid.NewGuid(), InDirId = lDir.InDirId, Name = lDir.Name, UserId = UserId_, IsShared=lDir.IsShared, SharingCode=lDir.SharingCode };
+                        var MainDir = new LDir { Id = Guid.NewGuid(), InDirId = lDir.InDirId, Name = lDir.Name, UserId = UserId_ };
                         NewDirs.Add(MainDir);
                         //  Add it here or UserFile copy in the root of main directory(lDir) can't find it's InDirId
 
@@ -278,10 +273,6 @@ namespace POYA.Areas.XUserFile.Controllers
 
                     else
                     {
-                        #region SHARING
-                        _LDir.IsShared = lDir.IsShared;
-                        _LDir.SharingCode = lDir.SharingCode;
-                        #endregion
                         _LDir.Name = lDir.Name;
                         //  _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name, _hostingEnv).Last();
                         //  _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name).Last();   // new Mime().Lookup(lUserFile.Name);

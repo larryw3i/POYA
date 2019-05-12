@@ -12,9 +12,11 @@ namespace POYA
 {
     public class Program
     {
+        #region 
         /**
          * DOT1     FINISH ONE THING WELL BEFORE YOU DO ANOTHER
          */
+         #endregion
 
         public static void Main(string[] args)
         {
@@ -24,6 +26,7 @@ namespace POYA
             WebHost.CreateDefaultBuilder(args)
             //  .UseUrls("http://*:5432")
             .UseKestrel()
+            .UseIISIntegration()
             .UseStartup<Startup>();
     }
 }

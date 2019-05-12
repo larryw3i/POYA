@@ -26,10 +26,7 @@
                     <select asp-for="InDirId" asp-items="Model.UserAllSubDirSelectListItems" class="form-control col-11" ></select>
                 </div>
                 <span asp-validation-for="InDirId" data-interval="5000" class="text-danger"></span>
-                <div class="row">
-                    <select asp-for="IsShared" asp-items="@Model.IsSharedSelectListItems" class="form-control col-4"></select>
-                    <input asp-for="SharingCode" class="form-control col-6" />
-                </div>
+             
             </div>
             <div class="form-group" style="margin-top:20px">
                 <a class="btn btn-outline-info" asp-action="Index" asp-route-InDirId="@(Model.InDirId)">&laquo; @Localizer["Back"]</a>
@@ -51,29 +48,12 @@
             $("#SharingCode").hide();
             */
 
-            //#region
-             if ("@(Model.IsShared)" =="True") {
-                    $("#SharingCode").show();
-                } else {
-                    $("#SharingCode").hide();
-                }
-            //#endregion
             $("#CopyMove").on("change", function () {
                 if ($("#CopyMove option:selected").val() != 0) {
                     $("#InDirId").show();
                 } else {
                     $("#InDirId").hide();
                 }
-            });
-            $("#IsShared").on("change", function () {
-                if ($("#IsShared option:selected").val() =="true") {
-                    $("#SharingCode").show();
-                } else {
-                    $("#SharingCode").hide();
-                }
-            });
-            $("#SharingCode").on("click", function () {
-                $("#SharingCode").val(parseInt(100000+Math.random()*899999));   //  100_000   999_999
             });
         });
     </script>

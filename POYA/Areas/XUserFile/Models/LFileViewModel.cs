@@ -103,32 +103,7 @@ namespace POYA.Areas.XUserFile.Models
         [Display(Name = "Name")]
         public string Name { get; set; }
 
-        #region SHARING
-
-        /// <summary>
-        /// Gets or sets a flag indicating if <see cref="LUserFile"/> or <see cref="LDir"/>. Defaults to true
-        /// </summary>
-        [Display(Name="Is shared")]
-        public bool IsShared { get; set; } = false;
-
-        /// <summary>
-        /// Gets or sets a id for <see cref="LUserFile"/> when it's shared to prevent id of <see cref="LUserFile"/> is exposed, defaults to <see cref="Guid.NewGuid()"/>
-        /// </summary>
-        public Guid SharingId { get; set; } = Guid.Empty;
-
-        /// <summary>
-        /// Gets or sets the code of shared <see cref="LUserFile"/>, defaults to [100_000, 999_999]
-        /// </summary>
-        [Display(Name="Sharing code")]
-        [StringLength(maximumLength:50,MinimumLength =6)]
-        public string SharingCode { get; set; }
-
-        /// <summary>
-        /// [NotMapped]
-        /// </summary>
-        [NotMapped]
-        public List<SelectListItem> IsSharedSelectListItems { get; set; }
-        #endregion
+        
 
         #region DEPOLLUTION
 

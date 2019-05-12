@@ -62,7 +62,6 @@
     <None Remove="Views\__LUserFiles\**" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Areas\XUserFile\Controllers\LUserSharingFilesController.cs" />
     <Compile Remove="Controllers\EduHubArticlesController.cs" />
     <Compile Remove="Controllers\EduHubGradesController.cs" />
     <Compile Remove="Controllers\EduHubSubjectsController.cs" />
@@ -156,6 +155,11 @@
     <Folder Include="Data\LFiles\Avatars\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Areas\XUserFile\Views\LUserSharingFiles\Create.cshtml" />
+    <None Include="Areas\XUserFile\Views\LUserSharingFiles\Delete.cshtml" />
+    <None Include="Areas\XUserFile\Views\LUserSharingFiles\Details.cshtml" />
+    <None Include="Areas\XUserFile\Views\LUserSharingFiles\Edit.cshtml" />
+    <None Include="Areas\XUserFile\Views\LUserSharingFiles\Index.cshtml" />
     <None Include="bundleconfig.json" />
     <None Include="wwwroot\lib\video-js-7.5.4\alt\video.core.js" />
     <None Include="wwwroot\lib\video-js-7.5.4\alt\video.core.min.js" />
