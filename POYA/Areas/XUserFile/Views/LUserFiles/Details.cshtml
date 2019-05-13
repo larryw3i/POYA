@@ -15,11 +15,11 @@
     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">@Localizer["Edit"]</a>
 </div>
 
-@section Scripts{ 
-        <script>
-            $("#BackA").on("click", function () {
-                history.go(-1);
-            });
+@section Scripts{
+    <script>
+        $("#BackA").on("click", function () {
+            history.go(-1);
+        });
     </script>
 }
 
