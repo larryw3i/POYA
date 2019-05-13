@@ -56,6 +56,7 @@
                     @(d.DOCreate.LocalDateTime.ToShortDateString())
                 </td>
                 <td>
+                    <a asp-action="Create" asp-route-_id="@d.Id" asp-controller="LSharingFiles" title="@Localizer["Share"]">&#128226;</a>
                     <a asp-action="Edit" asp-controller="LDirs" asp-route-id="@d.Id" title="@Localizer["Rename"]">&#9997;</a>
                     <a asp-action="Details" asp-controller="LDirs" asp-route-id="@d.Id" title="@Localizer["Details"]">&#9749;</a>
                     <a asp-action="Delete" asp-controller="LDirs" asp-route-id="@d.Id" title="@Localizer["Delete"]">&#10008;</a>
@@ -73,6 +74,7 @@
                     @(item.DOCreate.LocalDateTime.ToShortDateString())
                 </td>
                 <td>
+                    <a asp-action="Create" asp-route-_id="@item.Id" asp-controller="LSharingFiles" title="@Localizer["Share"]">&#128226;</a>
                     <a asp-action="Edit" asp-route-id="@item.Id" title="@Localizer["Rename"]">&#9997;</a>
                     <a asp-action="Details" asp-route-id="@item.Id" title="@Localizer["Details"]">&#9749;</a>
                     <a asp-action="Delete" asp-route-id="@item.Id" title="@Localizer["Delete"]">&#10008;</a>

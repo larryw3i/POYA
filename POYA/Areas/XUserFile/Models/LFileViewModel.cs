@@ -64,15 +64,7 @@ namespace POYA.Areas.XUserFile.Models
     }
 
     #region DEPOLLUTION
-
-    public class LUserSharingFile   //  BEGIN IT AFTER COPYING DIR FUNCATION IS FINISH
-    {
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public Guid FileId { get; set; }
-        public string SharingCode { get; set; }
-            = new Random().Next(100000, 999999).ToString();
-        public string Comment { get; set; }
-    }
+    
 
     public class ID8InDirId
     {

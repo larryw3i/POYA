@@ -26,7 +26,7 @@ namespace POYA
             WebHost.CreateDefaultBuilder(args)
             //  .UseUrls("http://*:5432")
             .UseKestrel()
-            .UseIISIntegration()
+            //  .UseIISIntegration()
             .UseStartup<Startup>();
     }
 }

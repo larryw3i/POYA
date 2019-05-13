@@ -65,6 +65,7 @@ namespace POYA.Areas.XUserFile.Controllers
         }
         #endregion
 
+        /*
         [ActionName("GetSharedImages")]
         public async Task<IActionResult> Index()
         {
@@ -74,6 +75,7 @@ namespace POYA.Areas.XUserFile.Controllers
             _LUserFiles = _LUserFiles.Where(p => _Extensions.Contains(p.Name.Split('.').LastOrDefault())).ToList();
             return View("GetSharedImages", _LUserFiles);
         }
+        */
 
         // GET: LUserFiles
         public async Task<IActionResult> Index(Guid? InDirId)
@@ -239,7 +241,8 @@ namespace POYA.Areas.XUserFile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,CopyMove,InDirId,IsShared,SharingCode")] LUserFile lUserFile)
+        public async Task<IActionResult> Edit(Guid id,
+            [Bind("Id,Name,CopyMove,InDirId,IsShared,SharingCode")] LUserFile lUserFile)
         {
             if (id != lUserFile.Id)
             {

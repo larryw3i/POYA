@@ -12,7 +12,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Areas\XUserFile\Views\LUserSharingFiles\**" />
     <Compile Remove="Views\EduHubArticles\**" />
     <Compile Remove="Views\EduHubGrades\**" />
     <Compile Remove="Views\EduHubSubjects\**" />
@@ -24,7 +23,6 @@
     <Compile Remove="Views\X_doveDirectories\**" />
     <Compile Remove="Views\X_doveFiles\**" />
     <Compile Remove="Views\__LUserFiles\**" />
-    <Content Remove="Areas\XUserFile\Views\LUserSharingFiles\**" />
     <Content Remove="Views\EduHubArticles\**" />
     <Content Remove="Views\EduHubGrades\**" />
     <Content Remove="Views\EduHubSubjects\**" />
@@ -36,7 +34,6 @@
     <Content Remove="Views\X_doveDirectories\**" />
     <Content Remove="Views\X_doveFiles\**" />
     <Content Remove="Views\__LUserFiles\**" />
-    <EmbeddedResource Remove="Areas\XUserFile\Views\LUserSharingFiles\**" />
     <EmbeddedResource Remove="Views\EduHubArticles\**" />
     <EmbeddedResource Remove="Views\EduHubGrades\**" />
     <EmbeddedResource Remove="Views\EduHubSubjects\**" />
@@ -48,7 +45,6 @@
     <EmbeddedResource Remove="Views\X_doveDirectories\**" />
     <EmbeddedResource Remove="Views\X_doveFiles\**" />
     <EmbeddedResource Remove="Views\__LUserFiles\**" />
-    <None Remove="Areas\XUserFile\Views\LUserSharingFiles\**" />
     <None Remove="Views\EduHubArticles\**" />
     <None Remove="Views\EduHubGrades\**" />
     <None Remove="Views\EduHubSubjects\**" />
@@ -84,18 +80,12 @@
   <ItemGroup>
     <Content Remove="bundleconfig.json" />
     <Content Remove="Areas\XUserFile\Views\LUserFiles\__Index.cshtml" />
-    <Content Remove="wwwroot\lib\video-js-7.5.4\LICENSE" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="app.db" />
   </ItemGroup>
   <ItemGroup>
     <_ContentIncludedByDefault Remove="bundleconfig.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="wwwroot\lib\video-js-7.5.4\LICENSE">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.3.1" />
@@ -155,60 +145,23 @@
     <Folder Include="Data\LFiles\Avatars\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Areas\XUserFile\Views\LUserSharingFiles\Create.cshtml" />
-    <None Include="Areas\XUserFile\Views\LUserSharingFiles\Delete.cshtml" />
-    <None Include="Areas\XUserFile\Views\LUserSharingFiles\Details.cshtml" />
-    <None Include="Areas\XUserFile\Views\LUserSharingFiles\Edit.cshtml" />
-    <None Include="Areas\XUserFile\Views\LUserSharingFiles\Index.cshtml" />
     <None Include="bundleconfig.json" />
-    <None Include="wwwroot\lib\video-js-7.5.4\alt\video.core.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\alt\video.core.min.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\alt\video.core.novtt.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\alt\video.core.novtt.min.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\alt\video.novtt.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\alt\video.novtt.min.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\font\VideoJS.svg" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\ar.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\ba.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\bg.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\ca.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\cs.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\cy.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\da.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\de.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\el.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\en.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\es.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\fa.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\fi.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\fr.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\gl.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\he.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\hr.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\hu.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\it.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\ja.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\ko.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\nb.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\nl.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\nn.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\oc.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\pl.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\pt-BR.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\pt-PT.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\ru.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\sk.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\sr.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\sv.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\tr.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\uk.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\vi.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\zh-CN.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\lang\zh-TW.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\video.cjs.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\video.es.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\video.js" />
-    <None Include="wwwroot\lib\video-js-7.5.4\video.min.js" />
+    <None Include="wwwroot\lib\vue-dev\dist\README.md" />
+    <None Include="wwwroot\lib\vue-dev\dist\vue.common.dev.js" />
+    <None Include="wwwroot\lib\vue-dev\dist\vue.common.js" />
+    <None Include="wwwroot\lib\vue-dev\dist\vue.common.prod.js" />
+    <None Include="wwwroot\lib\vue-dev\dist\vue.esm.browser.js" />
+    <None Include="wwwroot\lib\vue-dev\dist\vue.esm.browser.min.js" />
+    <None Include="wwwroot\lib\vue-dev\dist\vue.esm.js" />
+    <None Include="wwwroot\lib\vue-dev\dist\vue.js" />
+    <None Include="wwwroot\lib\vue-dev\dist\vue.min.js" />
+    <None Include="wwwroot\lib\vue-dev\dist\vue.runtime.common.dev.js" />
+    <None Include="wwwroot\lib\vue-dev\dist\vue.runtime.common.js" />
+    <None Include="wwwroot\lib\vue-dev\dist\vue.runtime.common.prod.js" />
+    <None Include="wwwroot\lib\vue-dev\dist\vue.runtime.esm.js" />
+    <None Include="wwwroot\lib\vue-dev\dist\vue.runtime.js" />
+    <None Include="wwwroot\lib\vue-dev\dist\vue.runtime.min.js" />
+    <None Include="wwwroot\lib\vue-dev\LICENSE" />
     <None Include="wwwroot\lib\wangEditor-3.1.1\LICENSE" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
