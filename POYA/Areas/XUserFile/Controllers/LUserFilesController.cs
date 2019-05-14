@@ -36,13 +36,13 @@ namespace POYA.Areas.XUserFile.Controllers
         private readonly ApplicationDbContext _context;
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<LUserFilesController> _logger;
+        private readonly ILogger<Program> _logger;
         private readonly IAntiforgery _antiforgery;
         private readonly MimeHelper _mimeHelper;
         public LUserFilesController(
             MimeHelper mimeHelper,
             IAntiforgery antiforgery,
-            ILogger<LUserFilesController> logger,
+            ILogger<Program> logger,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
             RoleManager<IdentityRole> roleManager,
@@ -80,6 +80,16 @@ namespace POYA.Areas.XUserFile.Controllers
         // GET: LUserFiles
         public async Task<IActionResult> Index(Guid? InDirId)
         {
+            #region SHARING
+            var _InDirId = await _context.LSharings.Where(p => p.Id == InDirId).Select(p => p.LUserFileOrDirId).FirstOrDefaultAsync();
+            var IsShared = false;
+            if (_InDirId != Guid.Empty && _InDirId!=null)
+            {
+                IsShared = true;
+                InDirId = _InDirId;
+            }
+            #endregion
+
             InDirId = InDirId ?? Guid.Empty;
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
@@ -88,8 +98,6 @@ namespace POYA.Areas.XUserFile.Controllers
             {
                 Directory.CreateDirectory(_x_DOVEHelper.AvatarStoragePath(_hostingEnv));
             }
-            #endregion
-
 
             var _FileNames = new DirectoryInfo(_x_DOVEHelper.FileStoragePath(_hostingEnv)).GetFiles().Select(p => p.Name);
             //  Console.WriteLine("FileName >> "+JsonConvert.SerializeObject(_FileNames));
@@ -104,6 +112,7 @@ namespace POYA.Areas.XUserFile.Controllers
                     _context.LFile.Remove(f);
                 }
             });
+
             _LUserFiles.ForEach(f =>
             {
                 if (!_FileNames.Contains(f.MD5))
@@ -113,20 +122,23 @@ namespace POYA.Areas.XUserFile.Controllers
             });
 
             await _context.SaveChangesAsync();
+            #endregion
 
-            var LUserFile_ = await _context.LUserFile.Where(p => p.UserId == UserId_ && p.InDirId == InDirId && !string.IsNullOrWhiteSpace(p.MD5))
+
+            var LUserFile_ = await _context.LUserFile
+                .Where(p => (IsShared ? true : (p.UserId == UserId_)) && p.InDirId == InDirId && !string.IsNullOrWhiteSpace(p.MD5))
                 .OrderBy(p => p.DOCreate).ToListAsync();
             var LUserFileIds = LUserFile_.Select(p => p.Id);
 
             #region VIEWDATA
             ViewData[nameof(InDirId)] = InDirId;
-            ViewData["InDirName"] = (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? "root";
-            ViewData["LastDirId"] = InDirId == Guid.Empty ? InDirId
+            ViewData["InDirName"] = IsShared ? "sharing" : (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? "root";
+            ViewData["LastDirId"] =IsShared?Guid.Empty: InDirId == Guid.Empty ? InDirId
                 : await _context.LDir.Where(p => p.Id == InDirId && p.UserId == UserId_).Select(p => p.InDirId).FirstOrDefaultAsync();
-            ViewData["LDirs"] = await _context.LDir.Where(p => p.InDirId == InDirId && p.UserId == UserId_ && !LUserFileIds.Contains(p.Id))
-                .ToListAsync(); ;
-            ViewData["_Path"] = _x_DOVEHelper.GetInPathOfFileOrDir(context: _context,InDirId: InDirId??Guid.Empty);
-            TempData["Hello"] = "Hello!!!!!!";
+            ViewData["LDirs"] = await _context.LDir.Where(p => (IsShared ? true : (p.UserId == UserId_) && p.InDirId == InDirId && !LUserFileIds.Contains(p.Id)))
+                .ToListAsync();
+            ViewData["_Path"] =IsShared?"sharing": _x_DOVEHelper.GetInPathOfFileOrDir(context: _context,InDirId: InDirId??Guid.Empty);
+            //  TempData["Hello"] = "Hello!!!!!!";
             #endregion
 
             return View(LUserFile_);
@@ -139,12 +151,17 @@ namespace POYA.Areas.XUserFile.Controllers
             {
                 return NotFound();
             }
-            Console.WriteLine(">>>>>>>>>>>>>"+TempData["Hello"]);
+            //  Console.WriteLine(">>>>>>>>>>>>>"+TempData["Hello"]);
 
             var lUserFile = await _context.LUserFile.FirstOrDefaultAsync(m => m.Id == id);
             if (lUserFile == null)
             {
-                return NotFound();
+                var _Id_ = await _context.LSharings.Where(p => p.Id == id).Select(p => p.LUserFileOrDirId).FirstOrDefaultAsync();
+                lUserFile = await _context.LUserFile.FirstOrDefaultAsync(p => p.Id == _Id_);
+                if (lUserFile == null)
+                {
+                    return NotFound();
+                }
             }
 
             lUserFile.ContentType = _mimeHelper.GetMimes(lUserFile.Name, _hostingEnv).Last();

@@ -32,9 +32,10 @@ namespace POYA.Areas.XUserFile.Controllers
         private readonly ApplicationDbContext _context;
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<LSharingsController> _logger;
+        private readonly ILogger<Program> _logger;
         private readonly IAntiforgery _antiforgery;
         private readonly MimeHelper _mimeHelper;
+        //  private readonly LUserFilesController _lUserFilesController;
         public LSharingsController(
             MimeHelper mimeHelper,
             IAntiforgery antiforgery,
@@ -57,6 +58,7 @@ namespace POYA.Areas.XUserFile.Controllers
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
             _mimeHelper = mimeHelper;
+            //  _lUserFilesController = new LUserFilesController(_mimeHelper, _antiforgery,_logger,_signInManager, _x_DOVEHelper,_roleManager,_emailSender,_userManager, _context,_hostingEnv,_localizer);
 
         }
         #endregion
@@ -91,14 +93,23 @@ namespace POYA.Areas.XUserFile.Controllers
             }
 
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var _Id = await _context.LSharings.Where(p => p.Id == id).Select(p => p.LUserFileOrDirId).FirstOrDefaultAsync();
+            if (_Id == null)
+            {
+                return NotFound();
+            }
+            //  return await _lUserFilesController.Details(_Id);
+            return RedirectToAction("Details", "LUserFiles", new { id = _Id });
+            /*
             var LSharings = await _context.LSharings
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (LSharings == null)
             {
                 return NotFound();
             }
+            */
 
-            return View(LSharings);
+            //  return View(LSharings);
         }
 
         // GET: XUserFile/LSharingss/Create
