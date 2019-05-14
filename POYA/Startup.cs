@@ -99,6 +99,7 @@ namespace POYA
                         factory.Create(typeof(Program));
                 })
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddSessionStateTempDataProvider()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");

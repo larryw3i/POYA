@@ -1,10 +1,13 @@
-﻿@model IEnumerable<POYA.Areas.XUserFile.Models.LSharingFile>
+﻿@model IEnumerable<POYA.Areas.XUserFile.Models.LSharing>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h4>@Localizer["All files you share is here"]</h4>
+
+
+<img src="~/img/share.bmp" class="ss-icon" title="@Localizer["Click to your storage"]" />
+@TempData["Hello"]
 <hr />
 <table class="table">
     <thead>
@@ -14,7 +17,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Comment)
-            </th> 
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -49,20 +52,31 @@
     </tbody>
 </table>
 
-@section Scripts{ 
-
+@section Scripts{
+    <script>
+     $(document).ready(function () {
+            $(".ss-icon").on("click", function () {
+                window.location.href = "@Url.Action(action:"Index",controller:"LUserFiles")";
+            });
+        });
+    </script>
 }
 
-@section Styles{ 
+@section Styles{
     <style>
-        .d-tip{
-            color:blue;
-            font-size:80%;
-
+        .d-tip {
+            color: blue;
+            font-size: 80%;
         }
-        .f-tip{
-            color:red;
-            font-size:80%;
+
+        .f-tip {
+            color: red;
+            font-size: 80%;
+        }
+
+        .ss-icon {
+            max-height: 80px;
+            max-width: 80px;
         }
     </style>
 }

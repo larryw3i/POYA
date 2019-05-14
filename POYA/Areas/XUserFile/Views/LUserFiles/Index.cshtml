@@ -11,7 +11,7 @@
 
 }
 
-<h1>@Localizer["Your storage"]</h1>
+    <img src="~/img/storage.bmp" class="ss-icon" title="@Localizer["Click to your sharing"]"/>
 
 <div class="row">
     <div class="col col-8">
@@ -56,7 +56,7 @@
                     @(d.DOCreate.LocalDateTime.ToShortDateString())
                 </td>
                 <td>
-                    <a asp-action="Create" asp-route-_id="@d.Id" asp-controller="LSharingFiles" title="@Localizer["Share"]">&#128226;</a>
+                    <a asp-action="Create" asp-route-_id="@d.Id" asp-controller="LSharings" title="@Localizer["Share"]">&#128226;</a>
                     <a asp-action="Edit" asp-controller="LDirs" asp-route-id="@d.Id" title="@Localizer["Rename"]">&#9997;</a>
                     <a asp-action="Details" asp-controller="LDirs" asp-route-id="@d.Id" title="@Localizer["Details"]">&#9749;</a>
                     <a asp-action="Delete" asp-controller="LDirs" asp-route-id="@d.Id" title="@Localizer["Delete"]">&#10008;</a>
@@ -67,14 +67,14 @@
         {
             <tr>
                 <td>
-                    <a asp-action="GetFile" asp-route-id="@(item.Id)">@(Html.DisplayFor(modelItem => item.Name))</a>
+                    <a asp-action="GetFile" asp-route-id="@(item.Id)" title="@Localizer["Details"]">@(Html.DisplayFor(modelItem => item.Name))</a>
                     <span style="font-size:60%;color:red">f</span>
                 </td>
                 <td>
                     @(item.DOCreate.LocalDateTime.ToShortDateString())
                 </td>
                 <td>
-                    <a asp-action="Create" asp-route-_id="@item.Id" asp-controller="LSharingFiles" title="@Localizer["Share"]">&#128226;</a>
+                    <a asp-action="Create" asp-route-_id="@item.Id" asp-controller="LSharings" title="@Localizer["Share"]">&#128226;</a>
                     <a asp-action="Edit" asp-route-id="@item.Id" title="@Localizer["Rename"]">&#9997;</a>
                     <a asp-action="Details" asp-route-id="@item.Id" title="@Localizer["Details"]">&#9749;</a>
                     <a asp-action="Delete" asp-route-id="@item.Id" title="@Localizer["Delete"]">&#10008;</a>
@@ -99,6 +99,7 @@
 
             }
         }
+
         class Data {
             constructor() {
 
@@ -117,7 +118,9 @@
         var _UI = new UI();
 
         $(document).ready(function () {
-
+            $(".ss-icon").on("click", function () {
+                window.location.href = "@Url.Action(action:"Index",controller:"LSharings")";
+            });
         });
     </script>
 }
@@ -131,15 +134,20 @@
         ._PathSpan {
             font-size: 90%;
         }
+
+        .ss-icon {
+            max-height: 80px;
+            max-width: 80px;
+        }
     </style>
 }
 
 @*
-    
+
                     <td>
                         <input name="FilCheckBox" id="FilCheckBox_@(item.Id)" class=".Zoom190p" type="checkbox" value="@(item.Id)" />
                     </td>
-    
+
                         <a asp-action="Move" asp-route-id="@(item.Id)" title="@Localizer["Move"]">&#9986;</a>
                         <a asp-action="Copy" asp-route-id="@(item.Id)" title="@Localizer["Copy"]">&#9903;</a>
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace POYA.Areas.XUserFile.Models
 {
-    public class LSharingFile   //  ViewModel
+    public class LSharing   //  File   //  ViewModel
     {
         [Display(Name ="Give it a id for sharing")]
         public Guid Id { get; set; } = Guid.NewGuid();

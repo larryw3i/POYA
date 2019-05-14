@@ -23,7 +23,7 @@ namespace POYA.Data
         public DbSet<POYA.Areas.EduHub.Models.ESubject> ESubject { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.EType> EType { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.EVideo> EVideo { get; set; }
-        public DbSet<POYA.Areas.XUserFile.Models.LSharingFile> LSharingFile { get; set; }
+        public DbSet<POYA.Areas.XUserFile.Models.LSharing> LSharings { get; set; }
         /*
         public DbSet<POYA.Areas.XUserFile.Models.LUserSharingFile> LUserSharingFile { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.Video> Video { get; set; }
