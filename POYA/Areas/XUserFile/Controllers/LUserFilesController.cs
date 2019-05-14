@@ -82,6 +82,12 @@ namespace POYA.Areas.XUserFile.Controllers
         {
             #region SHARING
             var _InDirId = await _context.LSharings.Where(p => p.Id == InDirId).Select(p => p.LUserFileOrDirId).FirstOrDefaultAsync();
+            var _SubSharingTemp = TempData[nameof(SubSharingTemp)] as SubSharingTemp;
+            TempData.Keep();
+            if (_SubSharingTemp != null)
+            {
+                _InDirId = _InDirId == Guid.Empty ? _SubSharingTemp.SubSharings.Where(p => p.NewId == InDirId).Select(o => o.OriginalId).FirstOrDefault() : _InDirId;
+            }
             var IsShared = false;
             if (_InDirId != Guid.Empty && _InDirId!=null)
             {
@@ -89,7 +95,7 @@ namespace POYA.Areas.XUserFile.Controllers
                 InDirId = _InDirId;
             }
             #endregion
-
+            /////////////// IF IS SHARED.. .
             InDirId = InDirId ?? Guid.Empty;
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
@@ -133,10 +139,11 @@ namespace POYA.Areas.XUserFile.Controllers
             #region VIEWDATA
             ViewData[nameof(InDirId)] = InDirId;
             ViewData["InDirName"] = IsShared ? "sharing" : (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? "root";
-            ViewData["LastDirId"] =IsShared?Guid.Empty: InDirId == Guid.Empty ? InDirId
+            ViewData["LastDirId"] = IsShared ? Guid.Empty : InDirId == Guid.Empty ? InDirId
                 : await _context.LDir.Where(p => p.Id == InDirId && p.UserId == UserId_).Select(p => p.InDirId).FirstOrDefaultAsync();
-            ViewData["LDirs"] = await _context.LDir.Where(p => (IsShared ? true : (p.UserId == UserId_) && p.InDirId == InDirId && !LUserFileIds.Contains(p.Id)))
+            var _LDirs=await _context.LDir.Where(p => (IsShared ? true : (p.UserId == UserId_) && p.InDirId == InDirId && !LUserFileIds.Contains(p.Id)))
                 .ToListAsync();
+            ViewData["LDirs"] = _LDirs;
             ViewData["_Path"] =IsShared?"sharing": _x_DOVEHelper.GetInPathOfFileOrDir(context: _context,InDirId: InDirId??Guid.Empty);
             //  TempData["Hello"] = "Hello!!!!!!";
             #endregion

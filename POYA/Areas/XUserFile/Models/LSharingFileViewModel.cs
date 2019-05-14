@@ -37,4 +37,19 @@ namespace POYA.Areas.XUserFile.Models
 
         #endregion
     }
+
+    public class SubSharingTemp
+    {
+        public Guid LSharingDirId { get; set; }
+        public Guid LUserFileOrDirId { get; set; }
+        public List<SubSharing> SubSharings { get; set; }
+    }
+    public class SubSharing
+    {
+        public Guid OriginalId { get; set; }
+        public Guid NewId { get; set; } = Guid.NewGuid();
+        public Guid OriginalInDirId { get; set;}
+        public Guid NewInDirId { get; set; } = Guid.NewGuid();
+        public bool IsFile { get; set; }
+    }
 }
