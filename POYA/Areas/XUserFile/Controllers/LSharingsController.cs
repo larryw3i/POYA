@@ -36,6 +36,7 @@ namespace POYA.Areas.XUserFile.Controllers
         private readonly IAntiforgery _antiforgery;
         private readonly MimeHelper _mimeHelper;
         //  private readonly LUserFilesController _lUserFilesController;
+        private readonly XUserFileHelper _xUserFileHelper = new XUserFileHelper();
         public LSharingsController(
             MimeHelper mimeHelper,
             IAntiforgery antiforgery,
@@ -144,8 +145,18 @@ namespace POYA.Areas.XUserFile.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(!await IsUserShareAsync(lSharing.Id)) {
-                    return NotFound();
+                var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+                var _LUserFiles_ = await _context.LUserFile.Where(p => p.IsLegal && p.UserId == UserId_).ToListAsync();
+                var _LDirs_ = await _context.LDir.Where(p => p.UserId == UserId_).ToListAsync();
+                var _LUserFile_ = _LUserFiles_.FirstOrDefault(p => p.Id == lSharing.LUserFileOrDirId && p.UserId == UserId_);
+                var _LDir_ = _LDirs_.FirstOrDefault(p => p.UserId == UserId_ && p.Id == lSharing.LUserFileOrDirId);
+                if (_LDir_ == null && _LUserFile_ == null) return NotFound();
+
+                if (_LDir_ != null)
+                {
+
+                    var _lSharingDirMaps=_xUserFileHelper.MakeSubFDCopy(_LDirs_, _LUserFiles_, lSharing.LUserFileOrDirId);
+                    await _context.LSharedDirMaps.AddRangeAsync(_lSharingDirMaps);
                 }
 
                 _context.Add(lSharing);
