@@ -260,10 +260,7 @@ namespace POYA.Areas.XUserFile.Controllers
             return !(_LDir_ == null && _LUserFile_ == null);
         }
 
-        private void MakeSubCopy(Guid InDirId)
-        {
-
-        }
+        
         #endregion
     }
 }

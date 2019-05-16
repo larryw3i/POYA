@@ -47,8 +47,8 @@ namespace POYA.Areas.XUserFile.Models
         /// <summary>
         /// The id of shared file or directory
         /// </summary>
-        public Guid NewSharingId { get; set; }
-        public Guid NewInDirId { get; set; }
+        public Guid NewSharingId { get; set; } = Guid.NewGuid();
+        //  public Guid NewInDirId { get; set; }
         /// <summary>
         /// The orginal id of shared file or directory
         /// </summary>

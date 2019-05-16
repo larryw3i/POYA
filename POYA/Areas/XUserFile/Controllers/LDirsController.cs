@@ -33,6 +33,7 @@ namespace POYA.Areas.XUserFile.Controllers
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LDirsController> _logger;
+        private readonly XUserFileHelper _xUserFileHelper = new XUserFileHelper();
         public LDirsController(
             ILogger<LDirsController> logger,
             SignInManager<IdentityUser> signInManager,
@@ -217,9 +218,10 @@ namespace POYA.Areas.XUserFile.Controllers
                         var _AllUserDirs = await _context.LDir.Where(p => p.UserId == UserId_).ToListAsync();
                         var _AllUserFiles = await _context.LUserFile.Where(p => p.UserId == UserId_).ToListAsync();
                         var _ID8InDirIds = _AllUserDirs.Select(p => new ID8InDirId { InDirId = p.InDirId, Id = p.Id })
-                            .Union(_AllUserFiles.Select(p=>new ID8InDirId {  Id=p.Id, InDirId=p.InDirId  }));
-                        var IncludedDirs = _AllUserDirs.Where(p => IsFileOrDirInDir(_ID8InDirIds, p.Id, lDir.Id)).ToList();
-                        var IncludedFiles = _AllUserFiles.Where(p => IsFileOrDirInDir(_ID8InDirIds, p.Id, lDir.Id)).ToList();
+                            .Union(_AllUserFiles.Select(p=>new ID8InDirId {  Id=p.Id, InDirId=p.InDirId  }).ToList());
+
+                        var IncludedDirs = _AllUserDirs.Where(p =>_xUserFileHelper.IsFileOrDirInDir(_ID8InDirIds, p.Id, lDir.Id)).ToList();
+                        var IncludedFiles = _AllUserFiles.Where(p =>_xUserFileHelper.IsFileOrDirInDir(_ID8InDirIds, p.Id, lDir.Id)).ToList();
 
                         var IDMap = new List<ID8NewID> ();
                         var NewDirs = new List<LDir>();
@@ -335,7 +337,7 @@ namespace POYA.Areas.XUserFile.Controllers
             var UserDirs = await _context.LDir.Where(p => p.UserId == UserId_).ToListAsync();
             var _RemoveDirs = new List<LDir>() { lDir};
 
-            _RemoveDirs.AddRange(GetAllSubDirs(UserDirs, id));
+            _RemoveDirs.AddRange(_xUserFileHelper.GetAllSubDirs(UserDirs, id));
 
             _context.LDir.RemoveRange(_RemoveDirs);
             await _context.SaveChangesAsync();
@@ -348,6 +350,8 @@ namespace POYA.Areas.XUserFile.Controllers
         }
 
         #region DEPOLLUTION
+
+        /*
         /// <summary>
         /// Get a copy of dir with new id and includ files and directories
         /// </summary>
@@ -357,7 +361,8 @@ namespace POYA.Areas.XUserFile.Controllers
         {
             
         }
-
+        */
+        /*
         private bool IsFileOrDirInDir(IEnumerable<ID8InDirId>  ID8InDirIds, Guid id, Guid DirId)
         {
             if (!ID8InDirIds.Select(p => p.Id).Contains(id)) return false;
@@ -386,6 +391,8 @@ namespace POYA.Areas.XUserFile.Controllers
             }
             return SubDirs;
         }
+        */
+        
         #endregion
     }
 }
