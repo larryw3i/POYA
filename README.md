@@ -10,7 +10,9 @@
 **. . .** , There should be a lot of things to write here, I don't write it much😅, I think you must know a lot more than I do
 #### 0  
 ***  
->Rename the **appsettings.json.text**  file to **appsettings.json** after **git clone** it    
+>Rename the **appsettings.json.text** 
+>(<a href="./POYA/">where?</a>)
+> file to **appsettings.json** after **git clone** it    
 The contents of **appsettings.json** are:  
 ```json
 {

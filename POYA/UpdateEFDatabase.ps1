@@ -9,4 +9,4 @@ dotnet ef migrations add $_datetime
 $_L+"dotnet ef migrations add "+$_datetime
 dotnet ef database update
 $_L+"dotnet ef database update"
-">>>>🎁🎁🎁🎁🎁🎁🎁🎁🎁<<<<"
+">>>>(^_^)(^_^)(^_^)(^_^)<<<<"

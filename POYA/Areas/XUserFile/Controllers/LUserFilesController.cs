@@ -80,26 +80,6 @@ namespace POYA.Areas.XUserFile.Controllers
         // GET: LUserFiles
         public async Task<IActionResult> Index(Guid? InDirId)
         {
-            #region SHARING
-            /*
-            var _InDirId = await _context.LSharings.Where(p => p.Id == InDirId).Select(p => p.LUserFileOrDirId).FirstOrDefaultAsync();
-            var _SubSharingTemp = TempData[nameof(SubSharingTemp)] as SubSharingTemp;
-            TempData.Keep();
-            if (_SubSharingTemp != null)
-            {
-                _InDirId = _InDirId == Guid.Empty ? _SubSharingTemp.SubSharings.Where(p => p.NewId == InDirId).Select(o => o.OriginalId).FirstOrDefault() : _InDirId;
-            }
-            var IsShared = false;
-            if (_InDirId != Guid.Empty && _InDirId!=null)
-            {
-                IsShared = true;
-                InDirId = _InDirId;
-            }
-            */
-            #endregion
-            /////////////// IF IS SHARED.. .
-            InDirId = InDirId ?? Guid.Empty;
-            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
             #region REBARBATIVE INITIALIZATION
             if (!Directory.Exists(_x_DOVEHelper.AvatarStoragePath(_hostingEnv)))
@@ -130,7 +110,15 @@ namespace POYA.Areas.XUserFile.Controllers
             });
 
             await _context.SaveChangesAsync();
+
             #endregion
+
+            #region SHARING
+
+            #endregion
+
+            InDirId = InDirId ?? Guid.Empty;
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
             var LUserFile_ = await _context.LUserFile
                 .Where(p => p.UserId == UserId_ && p.InDirId == InDirId && !string.IsNullOrWhiteSpace(p.MD5))

@@ -11,7 +11,9 @@
 **. . .** , 还有很多东西, 我就不说了, 反正你肯定比我懂得多很多
 #### <span id="0">0</span>  
 ***  
->git clone它以后, 在项目的根目录重命名 **appsettings.json.txt** 文件为 **appsettings.json**     
+>git clone它以后, 在项目的
+> <a href="../">根目录</a> 
+>重命名 **appsettings.json.txt** 文件为 **appsettings.json**     
 这是它的内容:  
 ```json
 {

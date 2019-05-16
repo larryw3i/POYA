@@ -63,7 +63,6 @@ namespace POYA.Areas.XUserFile.Controllers
         }
         #endregion
 
-
         // GET: XUserFile/LSharingss
         public async Task<IActionResult> Index()
         {
@@ -100,6 +99,7 @@ namespace POYA.Areas.XUserFile.Controllers
             }
             //  return await _lUserFilesController.Details(_Id);
             return RedirectToAction("Details", "LUserFiles", new { id = _Id });
+            #region
             /*
             var LSharings = await _context.LSharings
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -110,6 +110,7 @@ namespace POYA.Areas.XUserFile.Controllers
             */
 
             //  return View(LSharings);
+            #endregion
         }
 
         // GET: XUserFile/LSharingss/Create
@@ -139,16 +140,19 @@ namespace POYA.Areas.XUserFile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,LUserFileOrDirId,Comment")] LSharing LSharing)
+        public async Task<IActionResult> Create([Bind("Id,LUserFileOrDirId,Comment")] LSharing lSharing)
         {
             if (ModelState.IsValid)
             {
-                var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-                _context.Add(LSharing);
+                if(!await IsUserShareAsync(lSharing.Id)) {
+                    return NotFound();
+                }
+
+                _context.Add(lSharing);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(LSharing);
+            return View(lSharing);
         }
 
         // GET: XUserFile/LSharingss/Edit/5
@@ -173,7 +177,7 @@ namespace POYA.Areas.XUserFile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,LUserFileOrDirId,Comment,IsLegal")] LSharing LSharing)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,LUserFileOrDirId,Comment")] LSharing LSharing)
         {
             if (id != LSharing.Id)
             {
@@ -241,8 +245,25 @@ namespace POYA.Areas.XUserFile.Controllers
         }
 
         #region DEPOLLUTION
-        
 
+        /// <summary>
+        /// Determine a sharingid is belong to current user or not
+        /// </summary>
+        /// <param name="id">The id of <see cref="LSharing"/></param>
+        /// <returns></returns>
+        private async Task<bool> IsUserShareAsync(Guid id)
+        {
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            id = await _context.LSharings.Where(p => p.Id == id).Select(p => p.LUserFileOrDirId).FirstOrDefaultAsync();
+            var _LUserFile_ = await _context.LUserFile.FirstOrDefaultAsync(p => p.Id == id && p.UserId == UserId_);
+            var _LDir_ = await _context.LDir.FirstOrDefaultAsync(p => p.UserId == UserId_ && p.Id == id);
+            return !(_LDir_ == null && _LUserFile_ == null);
+        }
+
+        private void MakeSubCopy(Guid InDirId)
+        {
+
+        }
         #endregion
     }
 }

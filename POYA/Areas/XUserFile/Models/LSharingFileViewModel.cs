@@ -9,15 +9,15 @@ namespace POYA.Areas.XUserFile.Models
 {
     public class LSharing   //  File   //  ViewModel
     {
-        [Display(Name ="Give it a id for sharing")]
+        [Display(Name = "Give it a id for sharing")]
         public Guid Id { get; set; } = Guid.NewGuid();
 
         public Guid LUserFileOrDirId { get; set; }
 
-        [StringLength(maximumLength:50)]
-        [Display(Name ="Say to receiver")]
+        [StringLength(maximumLength: 50)]
+        [Display(Name = "Say to receiver")]
         public string Comment { get; set; }
-        
+
         public bool IsLegal { get; set; } = true;
 
         #region DEPOLLUTION
@@ -32,24 +32,27 @@ namespace POYA.Areas.XUserFile.Models
         public bool IsFile_ { get; set; }
 
         [NotMapped]
-        [Display(Name ="Name")]
+        [Display(Name = "Name")]
         public string LUserFileOrDirName_ { get; set; }
 
         #endregion
     }
 
-    public class SubSharingTemp
+    /// <summary>
+    /// A copy will be made when you share a directory, and the mapping relation will be recorded by <see cref="LSharedDirMap"/>
+    /// </summary>
+    public class LSharingDirMap
     {
-        public Guid LSharingDirId { get; set; }
-        public Guid LUserFileOrDirId { get; set; }
-        public List<SubSharing> SubSharings { get; set; }
-    }
-    public class SubSharing
-    {
-        public Guid OriginalId { get; set; }
-        public Guid NewId { get; set; } = Guid.NewGuid();
-        public Guid OriginalInDirId { get; set;}
-        public Guid NewInDirId { get; set; } = Guid.NewGuid();
-        public bool IsFile { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
+        /// <summary>
+        /// The id of shared file or directory
+        /// </summary>
+        public Guid NewSharingId { get; set; }
+        public Guid NewInDirId { get; set; }
+        /// <summary>
+        /// The orginal id of shared file or directory
+        /// </summary>
+        public Guid OrginalId { get; set; }
+        public Guid OrginalInDirId { get; set; }
     }
 }
