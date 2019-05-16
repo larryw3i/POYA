@@ -81,6 +81,7 @@ namespace POYA.Areas.XUserFile.Controllers
         public async Task<IActionResult> Index(Guid? InDirId)
         {
             #region SHARING
+            /*
             var _InDirId = await _context.LSharings.Where(p => p.Id == InDirId).Select(p => p.LUserFileOrDirId).FirstOrDefaultAsync();
             var _SubSharingTemp = TempData[nameof(SubSharingTemp)] as SubSharingTemp;
             TempData.Keep();
@@ -94,6 +95,7 @@ namespace POYA.Areas.XUserFile.Controllers
                 IsShared = true;
                 InDirId = _InDirId;
             }
+            */
             #endregion
             /////////////// IF IS SHARED.. .
             InDirId = InDirId ?? Guid.Empty;
@@ -130,21 +132,20 @@ namespace POYA.Areas.XUserFile.Controllers
             await _context.SaveChangesAsync();
             #endregion
 
-
             var LUserFile_ = await _context.LUserFile
-                .Where(p => (IsShared ? true : (p.UserId == UserId_)) && p.InDirId == InDirId && !string.IsNullOrWhiteSpace(p.MD5))
+                .Where(p => p.UserId == UserId_ && p.InDirId == InDirId && !string.IsNullOrWhiteSpace(p.MD5))
                 .OrderBy(p => p.DOCreate).ToListAsync();
             var LUserFileIds = LUserFile_.Select(p => p.Id);
 
             #region VIEWDATA
             ViewData[nameof(InDirId)] = InDirId;
-            ViewData["InDirName"] = IsShared ? "sharing" : (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? "root";
-            ViewData["LastDirId"] = IsShared ? Guid.Empty : InDirId == Guid.Empty ? InDirId
+            ViewData["InDirName"] =  (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? "root";
+            ViewData["LastDirId"] =  InDirId == Guid.Empty ? InDirId
                 : await _context.LDir.Where(p => p.Id == InDirId && p.UserId == UserId_).Select(p => p.InDirId).FirstOrDefaultAsync();
-            var _LDirs=await _context.LDir.Where(p => (IsShared ? true : (p.UserId == UserId_) && p.InDirId == InDirId && !LUserFileIds.Contains(p.Id)))
+            var _LDirs=await _context.LDir.Where(p =>  p.UserId == UserId_ && p.InDirId == InDirId && !LUserFileIds.Contains(p.Id))
                 .ToListAsync();
             ViewData["LDirs"] = _LDirs;
-            ViewData["_Path"] =IsShared?"sharing": _x_DOVEHelper.GetInPathOfFileOrDir(context: _context,InDirId: InDirId??Guid.Empty);
+            ViewData["_Path"] = _x_DOVEHelper.GetInPathOfFileOrDir(context: _context,InDirId: InDirId??Guid.Empty);
             //  TempData["Hello"] = "Hello!!!!!!";
             #endregion
 
