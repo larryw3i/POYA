@@ -154,7 +154,6 @@ namespace POYA.Areas.XUserFile.Controllers
 
                 if (_LDir_ != null)
                 {
-
                     var _lSharingDirMaps=_xUserFileHelper.MakeSubFDCopy(_LDirs_, _LUserFiles_, lSharing.LUserFileOrDirId);
                     await _context.LSharedDirMaps.AddRangeAsync(_lSharingDirMaps);
                 }

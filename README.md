@@ -11,8 +11,8 @@
 #### 0  
 ***  
 >Rename the **appsettings.json.text** 
->(<a href="./POYA/">where?</a>)
-> file to **appsettings.json** after **git clone** it    
+> file 
+>(<a href="./POYA/">where?</a>) to **appsettings.json** after **git clone** it    
 The contents of **appsettings.json** are:  
 ```json
 {

@@ -36,7 +36,6 @@
                         @*<a asp-action="Index" asp-route-InDirId="@(d.Id)"> @(Html.DisplayFor(modelItem => d.Name))</a>*@
                         <a asp-action="Index" asp-controller="LUserFiles" asp-route-InDirId="@item.Id" title="@Localizer["Details"]">@(Html.DisplayFor(modelItem => item.LUserFileOrDirName_))</a>
                         <span class="d-tip">d</span>
-
                     }
 
                 </td>

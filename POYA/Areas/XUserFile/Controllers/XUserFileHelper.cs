@@ -16,11 +16,11 @@ namespace POYA.Areas.XUserFile.Controllers
         /// <returns>
         /// Return <see cref="true"/> if the id is included in DirId, or <see cref="false"/>
         /// </returns>
-        public bool IsFileOrDirInDir(IEnumerable<ID8InDirId>  iD8InDirIds, Guid id, Guid DirId)
+        public bool IsFileOrDirInDir(IEnumerable<ID8InDirId> iD8InDirIds, Guid id, Guid DirId)
         {
             var _InDirId = iD8InDirIds.Where(p => p.Id == id).Select(p => p.InDirId).FirstOrDefault();
             if (_InDirId == null || _InDirId == Guid.Empty) return false;
-            while (_InDirId != Guid.Empty )
+            while (_InDirId != Guid.Empty)
             {
                 if (_InDirId == DirId)
                 {
@@ -50,7 +50,7 @@ namespace POYA.Areas.XUserFile.Controllers
             return SubDirs;
         }
 
-        public List<LUserFile> GetAllSubFiles(List<LDir> lSubDirs,List<LUserFile> lUserFiles, Guid DirId)
+        public List<LUserFile> GetAllSubFiles(List<LDir> lSubDirs, List<LUserFile> lUserFiles, Guid DirId)
         {
             var _DirIDs = lSubDirs.Select(p => p.Id).ToList();
             _DirIDs.Add(DirId);
@@ -66,12 +66,16 @@ namespace POYA.Areas.XUserFile.Controllers
             }
             var _AllSubDs = GetAllSubDirs(lDirs, InDirId);
             var _AllSubFs = GetAllSubFiles(_AllSubDs, lUserFiles, InDirId);
-            return _AllSubDs.Select(p=>new LSharingDirMap {
-                OrginalId =p.Id,
-                OrginalInDirId =p.InDirId})
-                .Union(_AllSubFs.Select(p => new LSharingDirMap {
-                    OrginalInDirId = p.InDirId,
-                    OrginalId = p.Id })).ToList();
+            var _LSharingDirMap = _AllSubDs.Select(p => new LSharingDirMap
+            {
+                OrginalId = p.Id,
+                OrginalInDirId = p.InDirId
+            }).Union(_AllSubFs.Select(p => new LSharingDirMap
+            {
+                OrginalInDirId = p.InDirId,
+                OrginalId = p.Id
+            })).ToList();
+            return _LSharingDirMap;
         }
     }
 }

@@ -113,31 +113,55 @@ namespace POYA.Areas.XUserFile.Controllers
 
             #endregion
 
-            #region SHARING
+            var _LSharing = await _context.LSharings.Where(p => p.Id == InDirId).FirstOrDefaultAsync();
 
-            #endregion
+            var _InDirName = "root";
+            var _LastDirId = Guid.Empty;
+            var _LDirs = new List<LDir>();
+            var _Path = string.Empty;
 
-            InDirId = InDirId ?? Guid.Empty;
-            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            if (_LSharing != null)
+            {
 
-            var LUserFile_ = await _context.LUserFile
-                .Where(p => p.UserId == UserId_ && p.InDirId == InDirId && !string.IsNullOrWhiteSpace(p.MD5))
-                .OrderBy(p => p.DOCreate).ToListAsync();
-            var LUserFileIds = LUserFile_.Select(p => p.Id);
+                #region SHARING
 
-            #region VIEWDATA
-            ViewData[nameof(InDirId)] = InDirId;
-            ViewData["InDirName"] =  (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? "root";
-            ViewData["LastDirId"] =  InDirId == Guid.Empty ? InDirId
-                : await _context.LDir.Where(p => p.Id == InDirId && p.UserId == UserId_).Select(p => p.InDirId).FirstOrDefaultAsync();
-            var _LDirs=await _context.LDir.Where(p =>  p.UserId == UserId_ && p.InDirId == InDirId && !LUserFileIds.Contains(p.Id))
-                .ToListAsync();
-            ViewData["LDirs"] = _LDirs;
-            ViewData["_Path"] = _x_DOVEHelper.GetInPathOfFileOrDir(context: _context,InDirId: InDirId??Guid.Empty);
-            //  TempData["Hello"] = "Hello!!!!!!";
-            #endregion
+                #endregion
+            }
+            else
+            {
+                InDirId = InDirId ?? Guid.Empty;
+                var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
-            return View(LUserFile_);
+                var LUserFile_ = await _context.LUserFile
+                    .Where(p => p.UserId == UserId_ && p.InDirId == InDirId && !string.IsNullOrWhiteSpace(p.MD5))
+                    .OrderBy(p => p.DOCreate).ToListAsync();
+                var LUserFileIds = LUserFile_.Select(p => p.Id);
+
+                #region VIEWDATA
+                #region
+                //  (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? "root";
+                // InDirId == Guid.Empty ? InDirId
+                //    : await _context.LDir.Where(p => p.Id == InDirId && p.UserId == UserId_).Select(p => p.InDirId).FirstOrDefaultAsync();
+                #endregion
+
+                _InDirName = (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? _InDirName;
+                _LastDirId = await _context.LDir.Where(p => p.Id == InDirId && p.UserId == UserId_).Select(p => p.InDirId).FirstOrDefaultAsync();
+                _LDirs = await _context.LDir.Where(p => p.UserId == UserId_ && p.InDirId == InDirId && !LUserFileIds.Contains(p.Id))
+                    .ToListAsync();
+                _Path = _x_DOVEHelper.GetInPathOfFileOrDir(context: _context, InDirId: InDirId ?? Guid.Empty);
+
+                ViewData[nameof(_Path)] = _Path;
+                ViewData[nameof(_LDirs)] = _LDirs;
+                ViewData[nameof(_LastDirId)] = _LastDirId;
+                ViewData[nameof(_InDirName)] = _InDirName;
+                ViewData[nameof(InDirId)] = InDirId;
+                #endregion
+
+
+                return View(LUserFile_);
+            }
+
+            return View();
         }
 
         // GET: LUserFiles/Details/5
