@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Ganss.XSS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using POYA.Areas.EduHub.Models;
+using POYA.Areas.XUserFile.Models;
 using POYA.Data;
 using POYA.Unities.Helpers;
 using X.PagedList;
@@ -240,6 +243,78 @@ namespace POYA.Areas.EduHub.Controllers
 
 
         #region DEPOLLUTION
+        [HttpPost]
+        public async Task<IActionResult> UploadEArticleImage([FromForm]IEnumerable<IFormFile> EArticleImages)
+        {
+            ///  MD5 should be checked first
+            if (EArticleImages.Count() > 0)
+            {
+                var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+                var _data = new List<string>();
+                var _MD5s =await  System.IO.Directory.GetFiles(_x_DOVEHelper.FileStoragePath(_hostingEnv)).Select(p => p.Split(new char[]{ '\\', '/' }).LastOrDefault()).ToListAsync();
+                foreach (var img in EArticleImages)
+                {
+                    var MemoryStream_ = new MemoryStream();
+                    await img.CopyToAsync(MemoryStream_);
+                    var FileBytes = MemoryStream_.ToArray();
+                    var MD5_ = _x_DOVEHelper.GetFileMD5(FileBytes);
+                    var FilePath = _x_DOVEHelper.FileStoragePath(_hostingEnv) + MD5_;
+                    //  System.IO.File.Create(FilePath);
+                    if (!_MD5s.Contains(MD5_))
+                    {
+                        await System.IO.File.WriteAllBytesAsync(FilePath, FileBytes);
+                        await _context.LFile.AddAsync(new LFile
+                        {
+                            MD5 = MD5_,
+                            UserId = UserId_
+                        });
+                    }
+
+                    var _LUserFile = new LUserFile
+                    {
+                        UserId = UserId_,
+                        MD5 = MD5_,
+                        InDirId = LValue.PublicDirId,
+                        Name = img.FileName,
+                        IsEArticleFile = true
+                        //  ContentType = _LFilePost._LFile.ContentType ?? "text/plain"
+                    };
+                    _data.Add(Url.Action("GetEArticleImage", new { id = _LUserFile.Id }));
+                    await _context.LUserFile.AddAsync(_LUserFile);
+                }
+                await _context.SaveChangesAsync();
+
+                //  see https://www.kancloud.cn/wangfupeng/wangeditor3/335782
+                return Ok(new { errno = 0, data = _data.ToArray() });
+            }
+            // process uploaded files
+            // Don't rely on or trust the FileName property without validation.
+            return Ok(new { errno = 1 });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetEArticleImage(Guid? id)
+        {
+            if (id == null)
+            {
+                return NoContent();
+            }
+            //  var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var _LUserFile = await _context.LUserFile
+                .FirstOrDefaultAsync(p =>p.IsEArticleFile&&p.IsLegal && p.Id==id);
+            if (_LUserFile == null)
+            {
+                return NoContent();
+            }
+            var _FilePath = _x_DOVEHelper.FileStoragePath(_hostingEnv) + _LUserFile.MD5;
+            if (!System.IO.File.Exists(_FilePath))
+            {
+                return NoContent();
+            }
+            var FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath);
+            return File(FileBytes, _mimeHelper.GetMimes(_LUserFile.Name, _hostingEnv).Last(), _LUserFile.Name, true);
+        }
+
         private async Task<List<SelectListItem>> GetVideoSharedCodeSelectListItemsForUser()
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id; 

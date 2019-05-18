@@ -178,6 +178,7 @@ namespace POYA.Unities.Helpers
         }
         #endregion
     }
+
     public class MimeHelper
     {
         public List<string> GetMimes(string FileExtension, IHostingEnvironment env)
@@ -211,6 +212,7 @@ namespace POYA.Unities.Helpers
             return _Extensions;
         }
     }
+
     public class Unities
     {
 
@@ -225,5 +227,8 @@ namespace POYA.Unities.Helpers
         public static IServiceProvider Instance { get; set; }
     }
 
-
+    public static class LValue
+    {
+        public static Guid PublicDirId { get; } = Guid.Parse("75EAD9A8-31C0-4491-8D8B-431A506C6567");
+    }
 }

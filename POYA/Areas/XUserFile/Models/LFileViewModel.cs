@@ -18,6 +18,9 @@ namespace POYA.Areas.XUserFile.Models
         /// </summary>
         [Display(Name = "Date")]
         public DateTimeOffset DOCreate { get; set; } = DateTimeOffset.Now;
+
+        public bool IsEArticleFile { get; set; } = false;
+
         public bool IsLegal { get; set; } = true;
 
         #region DEPOLLUTION
