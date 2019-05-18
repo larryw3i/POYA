@@ -3,95 +3,53 @@
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var _LUserFile = ViewData["_LUserFile"] as LUserFile;
+    var _LDir = ViewData["_LDir"] as LDir;
 }
-
-<h4>
-    @Localizer["Share"]
-    @if (Model.LUserFile_ != null)
+    <h4>@(string.Format(Localizer["Share"]))  @(_LDir?.Name??_LUserFile.Name)
+    @if (_LUserFile != null)
     {
-        <span>@Model.LUserFile_.Name</span>
-        <span class="file-tip">f</span>
+        <span class="f-span">f</span>
     }
     else
     {
-        <span>@Model.LDir_.Name</span>
-        <span class="directory-tip">d</span>
+        <span class="d-span">d</span>
     }
-</h4>
-
+    </h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="LUserFileOrDirId" class="form-control" hidden />
-
+            <input asp-for="OrginalId" type="hidden" />
             <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" readonly/>
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Comment" class="control-label"></label>
-                <input asp-for="Comment" class="form-control" />
+                <textarea asp-for="Comment" class="form-control" placeholder="@Localizer["Say something. . ."]"></textarea>
                 <span asp-validation-for="Comment" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <a id="BackA" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
+                <input type="submit" value="@Localizer["Share"]" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
-        class Value {
-            constructor() {
-                //  #region
-                /**
-                 * Generate guid by javascript
-                 * FROM     http://guid.us/GUID/JavaScript
-                 * */
-                //  #endregion
-                this.Guid =()=>  (this.GUID_S4() + this.GUID_S4() + "-" + this.GUID_S4() + "-4" + this.GUID_S4().substr(0, 3) + "-" + this.GUID_S4() + "-" + this.GUID_S4() + this.GUID_S4() + this.GUID_S4()).toLowerCase();
-            }
+<script>
 
-            /**
-             * Generate guid by javascript
-             * FROM     http://guid.us/GUID/JavaScript
-             * */
-            GUID_S4() {
-                return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-            }
-        }
-        var _Value =new Value();
-        $(document).ready(function () {
-            $("#Id").on("click", function () {
-                $("#Id").val(_Value.Guid);
-            });
-        });
-    </script>
+</script>
 }
 
-@section Styles  {
-    <style>
-        .file-tip {
-            font-size: 50%;
-            color: red;
-        }
-
-        .directory-tip {
-            font-size: 50%;
-            color: blue;
-        }
-        #Id{
-            
-        }
-    </style>
+@section Styles{ 
+<style>
+    .f-span{
+        font-size:70%;
+       color:red;
+    }
+    .d-span{
+        font-size:70%;
+        color:blue;
+    }
+</style>
 }

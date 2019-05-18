@@ -11,7 +11,7 @@
 
 }
 
-    <img src="~/img/storage.bmp" class="ss-icon" title="@Localizer["Click to your sharing"]"/>
+<img src="~/img/storage.bmp" class="ss-icon" title="@Localizer["Click to your sharing"]" />
 
 <div class="row">
     <div class="col col-8">
@@ -29,8 +29,6 @@
 
 </div>
 
-
-
 <table class="table" name="FilesTABLE">
     <thead>
         <tr>
@@ -45,7 +43,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var d in ViewData["LDirs"] as IEnumerable<LDir>)
+        @foreach (var d in ViewData["_LDirs"] as IEnumerable<LDir>)
         {
             <tr>
                 <td>
@@ -119,7 +117,7 @@
 
         $(document).ready(function () {
             $(".ss-icon").on("click", function () {
-                window.location.href = "@Url.Action(action:"Index",controller:"LSharings")";
+                //  window.location.href = "@Url.Action(action:"Index",controller:"LSharings")";
             });
         });
     </script>

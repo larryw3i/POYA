@@ -5,15 +5,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h1>Index</h1>
 
-<img src="~/img/share.bmp" class="ss-icon" title="@Localizer["Click to your storage"]" />
-@TempData["Hello"]
-<hr />
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.LUserFileOrDirName_)
+                @Html.DisplayNameFor(model => model.OrginalId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Comment)
@@ -22,61 +23,20 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @if (item.IsFile_)
-                    {
-                        <a asp-action="Details" asp-controller="LUserFiles" asp-route-id="@(item.Id)" title="@Localizer["Details"]">@(Html.DisplayFor(modelItem => item.LUserFileOrDirName_))</a>
-                        <span class="f-tip">f</span>
-                    }
-                    else
-                    {
-                        @*<a asp-action="Index" asp-route-InDirId="@(d.Id)"> @(Html.DisplayFor(modelItem => d.Name))</a>*@
-                        <a asp-action="Index" asp-controller="LUserFiles" asp-route-InDirId="@item.Id" title="@Localizer["Details"]">@(Html.DisplayFor(modelItem => item.LUserFileOrDirName_))</a>
-                        <span class="d-tip">d</span>
-                    }
-
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Comment)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrginalId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>
-
-@section Scripts{
-    <script>
-     $(document).ready(function () {
-            $(".ss-icon").on("click", function () {
-                window.location.href = "@Url.Action(action:"Index",controller:"LUserFiles")";
-            });
-        });
-    </script>
-}
-
-@section Styles{
-    <style>
-        .d-tip {
-            color: blue;
-            font-size: 80%;
-        }
-
-        .f-tip {
-            color: red;
-            font-size: 80%;
-        }
-
-        .ss-icon {
-            max-height: 80px;
-            max-width: 80px;
-        }
-    </style>
-}

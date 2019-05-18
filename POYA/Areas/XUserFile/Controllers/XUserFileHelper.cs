@@ -56,7 +56,7 @@ namespace POYA.Areas.XUserFile.Controllers
             _DirIDs.Add(DirId);
             return lUserFiles.Where(o => _DirIDs.Contains(o.InDirId)).ToList();
         }
-
+        /*
         public List<LSharingDirMap> MakeSubFDCopy(List<LDir> lDirs, List<LUserFile> lUserFiles, Guid InDirId)
         {
             var _InDir = lDirs.Where(p => p.Id == InDirId).FirstOrDefault();
@@ -77,5 +77,6 @@ namespace POYA.Areas.XUserFile.Controllers
             })).ToList();
             return _LSharingDirMap;
         }
+        */
     }
 }

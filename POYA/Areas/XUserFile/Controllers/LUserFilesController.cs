@@ -113,18 +113,22 @@ namespace POYA.Areas.XUserFile.Controllers
 
             #endregion
 
-            var _LSharing = await _context.LSharings.Where(p => p.Id == InDirId).FirstOrDefaultAsync();
+            var IsSharing = false;
+
+            #region DETERMINE SHARING
+
+
+            #endregion
 
             var _InDirName = "root";
             var _LastDirId = Guid.Empty;
             var _LDirs = new List<LDir>();
             var _Path = string.Empty;
 
-            if (_LSharing != null)
+            if (IsSharing)
             {
-
                 #region SHARING
-
+                return View();
                 #endregion
             }
             else
@@ -161,7 +165,6 @@ namespace POYA.Areas.XUserFile.Controllers
                 return View(LUserFile_);
             }
 
-            return View();
         }
 
         // GET: LUserFiles/Details/5
@@ -171,9 +174,9 @@ namespace POYA.Areas.XUserFile.Controllers
             {
                 return NotFound();
             }
-            //  Console.WriteLine(">>>>>>>>>>>>>"+TempData["Hello"]);
 
             var lUserFile = await _context.LUserFile.FirstOrDefaultAsync(m => m.Id == id);
+            /*
             if (lUserFile == null)
             {
                 var _Id_ = await _context.LSharings.Where(p => p.Id == id).Select(p => p.LUserFileOrDirId).FirstOrDefaultAsync();
@@ -183,6 +186,7 @@ namespace POYA.Areas.XUserFile.Controllers
                     return NotFound();
                 }
             }
+            */
 
             lUserFile.ContentType = _mimeHelper.GetMimes(lUserFile.Name, _hostingEnv).Last();
             return View(lUserFile);
@@ -408,6 +412,7 @@ namespace POYA.Areas.XUserFile.Controllers
         #region DEPOLLUTION
 
         #region INDEX
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

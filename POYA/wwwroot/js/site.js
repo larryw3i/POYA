@@ -213,4 +213,7 @@ $(document).ready(function () {
     $("#Theme").on("change", function () {
         _UI_.ChangeTheme(true); 
     });
+    $("#BackA").on("click", function () {
+        history.go(-1);
+    });
 });

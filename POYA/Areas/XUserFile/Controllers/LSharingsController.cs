@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Antiforgery;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -19,10 +17,8 @@ using POYA.Unities.Helpers;
 namespace POYA.Areas.XUserFile.Controllers
 {
     [Area("XUserFile")]
-    [Authorize]
     public class LSharingsController : Controller
     {
-
         #region
         private readonly IHostingEnvironment _hostingEnv;
         private readonly IStringLocalizer<Program> _localizer;
@@ -32,15 +28,10 @@ namespace POYA.Areas.XUserFile.Controllers
         private readonly ApplicationDbContext _context;
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<Program> _logger;
-        private readonly IAntiforgery _antiforgery;
-        private readonly MimeHelper _mimeHelper;
-        //  private readonly LUserFilesController _lUserFilesController;
+        private readonly ILogger<LSharingsController> _logger;
         private readonly XUserFileHelper _xUserFileHelper = new XUserFileHelper();
         public LSharingsController(
-            MimeHelper mimeHelper,
-            IAntiforgery antiforgery,
-            ILogger<LUserFilesController> logger,
+            ILogger<LDirsController> logger,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
             RoleManager<IdentityRole> roleManager,
@@ -58,33 +49,19 @@ namespace POYA.Areas.XUserFile.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
-            _mimeHelper = mimeHelper;
-            //  _lUserFilesController = new LUserFilesController(_mimeHelper, _antiforgery,_logger,_signInManager, _x_DOVEHelper,_roleManager,_emailSender,_userManager, _context,_hostingEnv,_localizer);
-
         }
         #endregion
 
-        // GET: XUserFile/LSharingss
+        // GET: XUserFile/LSharings
         public async Task<IActionResult> Index()
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var _LUserFiles = await _context.LUserFile.Where(p => p.UserId == UserId_ && p.IsLegal).ToListAsync();
-            var _LUserDirs = await _context.LDir.Where(p => p.UserId == UserId_ ).ToListAsync();
-            var IDs = _LUserDirs.Select(p=>p.Id).Union(_LUserFiles.Select(p=>p.Id));
-            var _LSharings = await _context.LSharings
-                .Where(p => IDs.Contains(p.LUserFileOrDirId))
-                .Select(p => new LSharing
-                {
-                    Comment = p.Comment,
-                    Id = p.Id,
-                    IsFile_ = _LUserFiles.Select(c => c.Id).Contains(p.LUserFileOrDirId),
-                    LUserFileOrDirId = p.LUserFileOrDirId,
-                    LUserFileOrDirName_ = _LUserFiles.FirstOrDefault(z => z.Id == p.LUserFileOrDirId).Name ?? _LUserDirs.FirstOrDefault(c => c.Id == p.LUserFileOrDirId).Name,
-                }).ToListAsync();
-            return View(_LSharings);
+            
+            //  var _LSharings=await _context.LSharings.Where()
+            return View(await _context.LSharings.ToListAsync());
         }
 
-        // GET: XUserFile/LSharingss/Details/5
+        // GET: XUserFile/LSharings/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -93,71 +70,77 @@ namespace POYA.Areas.XUserFile.Controllers
             }
 
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var _Id = await _context.LSharings.Where(p => p.Id == id).Select(p => p.LUserFileOrDirId).FirstOrDefaultAsync();
-            if (_Id == null)
-            {
-                return NotFound();
-            }
-            //  return await _lUserFilesController.Details(_Id);
-            return RedirectToAction("Details", "LUserFiles", new { id = _Id });
-            #region
-            /*
-            var LSharings = await _context.LSharings
+            var lSharing = await _context.LSharings
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (LSharings == null)
+            if (lSharing == null)
             {
                 return NotFound();
             }
-            */
 
-            //  return View(LSharings);
-            #endregion
+            return View(lSharing);
         }
 
-        // GET: XUserFile/LSharingss/Create
-        public async Task<IActionResult> Create(Guid _id)
+        // GET: XUserFile/LSharings/Create
+        public async Task<IActionResult> Create(Guid? _id)
         {
+            if (_id == null)
+            {
+                return NotFound();
+            }
+
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var _LUserFile = await _context.LUserFile.FirstOrDefaultAsync(p => p.UserId == UserId_ && p.Id == _id);
-            var _LSharings = new LSharing() { LUserFileOrDirId = _id};
-            if (_LUserFile != null)
+            var _lUserFile = await _context.LUserFile.Where(p => p.Id == _id && p.UserId == UserId_).FirstOrDefaultAsync();
+            var _LDir = await _context.LDir.Where(p => p.UserId == UserId_ && p.Id == _id).FirstOrDefaultAsync();
+            if(_lUserFile==null && _LDir == null)
             {
-                _LSharings.LUserFile_ = _LUserFile;
+                return NotFound();
             }
-            else
-            {
-                var _LDir = await _context.LDir.FirstOrDefaultAsync(p => p.UserId == UserId_ && p.Id == _id);
-                if (_LDir == null)
-                {
-                    return NotFound();
-                }
-                _LSharings.LDir_ = _LDir;
-            }
-            return View(_LSharings);
+            ViewData[nameof(_lUserFile)] = _lUserFile;
+            ViewData[nameof(_LDir)] = _LDir;
+            var _lSharing = new LSharing { OrginalId = _id ?? Guid.NewGuid() };
+            return View(_lSharing);
         }
 
-        // POST: XUserFile/LSharingss/Create
+        // POST: XUserFile/LSharings/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,LUserFileOrDirId,Comment")] LSharing lSharing)
+        public async Task<IActionResult> Create([Bind("Id,OrginalId,Comment")] LSharing lSharing)
         {
             if (ModelState.IsValid)
             {
+                #region DETERMINE A SHARED FILE OR DIRECTORY IS BELONG TO CURRENT USER OR NOT
                 var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-                var _LUserFiles_ = await _context.LUserFile.Where(p => p.IsLegal && p.UserId == UserId_).ToListAsync();
-                var _LDirs_ = await _context.LDir.Where(p => p.UserId == UserId_).ToListAsync();
-                var _LUserFile_ = _LUserFiles_.FirstOrDefault(p => p.Id == lSharing.LUserFileOrDirId && p.UserId == UserId_);
-                var _LDir_ = _LDirs_.FirstOrDefault(p => p.UserId == UserId_ && p.Id == lSharing.LUserFileOrDirId);
-                if (_LDir_ == null && _LUserFile_ == null) return NotFound();
 
-                if (_LDir_ != null)
+                var _AllUserFiles = await _context.LUserFile.Where(p => p.UserId == UserId_).ToListAsync();
+                var _AllLDirs = await _context.LDir.Where(p => p.UserId == UserId_).ToListAsync();
+
+                var _lUserFile =_AllUserFiles.Where(p => p.Id == lSharing.OrginalId && p.UserId == UserId_).FirstOrDefault();
+                var _LDir = _AllLDirs.Where(p => p.UserId == UserId_ && p.Id == lSharing.OrginalId).FirstOrDefault();
+                if (_lUserFile == null && _LDir == null)
                 {
-                    var _lSharingDirMaps=_xUserFileHelper.MakeSubFDCopy(_LDirs_, _LUserFiles_, lSharing.LUserFileOrDirId);
-                    await _context.LSharedDirMaps.AddRangeAsync(_lSharingDirMaps);
+                    return NotFound();
                 }
+                #endregion
 
+                #region MAKE SUB DIRECTORY COPY IF SHARE A DIRECTORY
+                if (_LDir != null)
+                {
+                    var _SubFiles = _xUserFileHelper.GetAllSubFiles(_AllLDirs, _AllUserFiles, lSharing.OrginalId);
+                    var _SubDirs = _xUserFileHelper.GetAllSubDirs(_AllLDirs, lSharing.OrginalId);
+                    var _LSharings = new List<LSharing>();
+                    _SubDirs.ForEach(p => {
+                        _LSharings.Add(new LSharing {  OrginalId=p.Id});
+                    });
+                    _SubFiles.ForEach(p => {
+                        _LSharings.Add(new LSharing {  OrginalId=p.Id});
+                    });
+                    await _context.LSharings.AddRangeAsync(_LSharings);
+                }
+                #endregion
+
+                lSharing.Id = Guid.NewGuid();
                 _context.Add(lSharing);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -165,7 +148,7 @@ namespace POYA.Areas.XUserFile.Controllers
             return View(lSharing);
         }
 
-        // GET: XUserFile/LSharingss/Edit/5
+        // GET: XUserFile/LSharings/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -174,22 +157,22 @@ namespace POYA.Areas.XUserFile.Controllers
             }
 
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var LSharings = await _context.LSharings.FindAsync(id);
-            if (LSharings == null)
+            var lSharing = await _context.LSharings.FindAsync(id);
+            if (lSharing == null)
             {
                 return NotFound();
             }
-            return View(LSharings);
+            return View(lSharing);
         }
 
-        // POST: XUserFile/LSharingss/Edit/5
+        // POST: XUserFile/LSharings/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,LUserFileOrDirId,Comment")] LSharing LSharing)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,OrginalId,Comment")] LSharing lSharing)
         {
-            if (id != LSharing.Id)
+            if (id != lSharing.Id)
             {
                 return NotFound();
             }
@@ -199,12 +182,12 @@ namespace POYA.Areas.XUserFile.Controllers
                 try
                 {
                     var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-                    _context.Update(LSharing);
+                    _context.Update(lSharing);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LSharingsExists(LSharing.Id))
+                    if (!LSharingExists(lSharing.Id))
                     {
                         return NotFound();
                     }
@@ -215,10 +198,10 @@ namespace POYA.Areas.XUserFile.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(LSharing);
+            return View(lSharing);
         }
 
-        // GET: XUserFile/LSharingss/Delete/5
+        // GET: XUserFile/LSharings/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -227,50 +210,35 @@ namespace POYA.Areas.XUserFile.Controllers
             }
 
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var LSharings = await _context.LSharings
+            var lSharing = await _context.LSharings
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (LSharings == null)
+            if (lSharing == null)
             {
                 return NotFound();
             }
 
-            return View(LSharings);
+            return View(lSharing);
         }
 
-        // POST: XUserFile/LSharingss/Delete/5
+        // POST: XUserFile/LSharings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var LSharings = await _context.LSharings.FindAsync(id);
-            _context.LSharings.Remove(LSharings);
+            var lSharing = await _context.LSharings.FindAsync(id);
+            _context.LSharings.Remove(lSharing);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LSharingsExists(Guid id)
+        private bool LSharingExists(Guid id)
         {
             return _context.LSharings.Any(e => e.Id == id);
         }
 
         #region DEPOLLUTION
 
-        /// <summary>
-        /// Determine a sharingid is belong to current user or not
-        /// </summary>
-        /// <param name="id">The id of <see cref="LSharing"/></param>
-        /// <returns></returns>
-        private async Task<bool> IsUserShareAsync(Guid id)
-        {
-            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            id = await _context.LSharings.Where(p => p.Id == id).Select(p => p.LUserFileOrDirId).FirstOrDefaultAsync();
-            var _LUserFile_ = await _context.LUserFile.FirstOrDefaultAsync(p => p.Id == id && p.UserId == UserId_);
-            var _LDir_ = await _context.LDir.FirstOrDefaultAsync(p => p.UserId == UserId_ && p.Id == id);
-            return !(_LDir_ == null && _LUserFile_ == null);
-        }
-
-        
         #endregion
     }
 }
