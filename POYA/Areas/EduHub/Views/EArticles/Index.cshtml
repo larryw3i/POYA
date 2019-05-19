@@ -10,18 +10,21 @@
     var UserId = ViewData["UserId"].ToString();
 }
 
-<h1>@Localizer["Current publishing"]</h1>
-
 <div class="row">
-    <a class="col offset-8 col-2" asp-action="Create">@Localizer["Publish new"]</a>
-    <div class="col-2">
-        <select id="AuthorTypeSelect">
-            <option value="false">View all</option>
-            <option value="true">Just me</option>
-        </select>
+    <div class="col col-4">
+        <img src="~/img/article.bmp" class=" main-icon" title="@Localizer["Article"]" />
+        <span style="font-size:200%">@Localizer["Article"]</span>
     </div>
+    <a class="col offset-4 col-1" asp-action="Create" title="@Localizer["Add"]">
+        <img src="~/img/add.bmp" style="max-height:50px;" />
+    </a>
+    <a class="col col-1" asp-action="Index" asp-route-IsIndividual="@((bool)ViewData["IsIndividual"]?"false":"true")"
+       title="@((bool)ViewData["IsIndividual"]?Localizer["View all"]:Localizer["Just me"])">
+        <img src="~/img/@((bool)ViewData["IsIndividual"]?"total.bmp":"individual.bmp")" style="max-height:50px;" />
+    </a>
+
 </div>
-    
+
 
 <table class="table">
 
@@ -30,66 +33,75 @@
         {
             <tr>
                 <td>
-                    <span class="title">@Html.DisplayFor(modelItem => item.Title) </span> 
+                    <a asp-action="Details" asp-route-id="@item.Id" title="@(item.Title)" class="title">@Html.DisplayFor(modelItem => item.Title)</a>
                     <span class="author">
-                        (@($"{item.UserName}") &#9998; @($"{item.DOPublishing.LocalDateTime.ToShortDateString()}")
+                        @($"{item.UserName}") &#9998; @($"{item.DOPublishing.LocalDateTime.ToShortDateString()}")
                         @if (item.DOUpdating != null)
                         {
                             <span style="font-size:150%">&#10226;</span>
                             <span>@(item.DOUpdating?.LocalDateTime.ToShortDateString())</span>
                         }
-                        )
+
+
                     </span>
-                </td> 
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" title="@Localizer["Details"]">&#9749;</a>
-                    @if (UserId==item.UserId)
+                    @if (UserId == item.UserId)
                     {
                         <a asp-action="Edit" asp-route-id="@item.Id" title="@Localizer["Edit"]">&#9997;</a>
                         <a asp-action="Delete" asp-route-id="@item.Id" title="@Localizer["Delete"]">&#10008;</a>
                     }
                 </td>
+
             </tr>
         }
     </tbody>
 </table>
-@(Html.PagedListPager((IPagedList<EArticle>)ViewData["EArticles"], _page => Url.Action("Index", new {  _page=_page }),
+@(Html.PagedListPager((IPagedList<EArticle>)ViewData["EArticles"], _page => Url.Action("Index", new { _page = _page }),
     PagedListRenderOptions.OnlyShowFivePagesAtATime))
 
-@section Scripts{ 
-<script>
-    class Service {
+@section Scripts{
+    <script>
+        class Service {
 
-        /**
-         * View all or just me
-         * @@param {boolean} IsIndividual - view user's article only or view all
-         */
-        ChangeAuthorType(IsIndividual) {
-            window.location.href = "@(Url.Action("Index"))"+"?IsIndividual="+IsIndividual;
+            /**
+             * View all or just me
+             * param {boolean} IsIndividual - view user's article only or view all
+             */
+            /*
+            ChangeAuthorType(IsIndividual) {
+                window.location.href = "@@(Url.Action("Index"))"+"?IsIndividual="+IsIndividual;
+            }
+            */
         }
-    }
-    var _Service = new Service();
+        var _Service = new Service();
 
-    $(document).ready(function () {
-        $("#AuthorTypeSelect option[value='@(ViewData["IsIndividual"].ToString().ToLower())']").attr( "selected", true );
-        $("#AuthorTypeSelect").on("change", function () {
-            _Service.ChangeAuthorType($("#AuthorTypeSelect option:selected").val())
+        $(document).ready(function () {
+            /*
+            $("#AuthorTypeSelect option[value='@@(ViewData["IsIndividual"].ToString().ToLower())']").attr( "selected", true );
+            $("#AuthorTypeSelect").on("change", function () {
+                _Service.ChangeAuthorType($("#AuthorTypeSelect option:selected").val())
+            });
+                */
         });
-    });
-</script>
+    </script>
 }
 
 @section Styles{
     <link href="~/css/PagedList.css" rel="stylesheet" type="text/css" />
     <style>
         .author {
-            font-size: 80%;
-            color:blue;
+            font-size: 60%;
+            color: blue;
         }
-        .title{
-            font-size:120%;
-            font-weight:bold;
-            color:coral;
+
+        .title {
+            font-size: 120%;
+            font-weight: bold;
+            color: coral;
+        }
+
+        .main-icon {
+            max-height: 80px;
+            max-width: 80px;
         }
     </style>
 }
