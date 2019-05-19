@@ -39,7 +39,7 @@ namespace POYA.Areas.EduHub.Models
         /// The SharedCode of user's video file, the default value is <see langword="Guid.Empty"/>
         /// </summary>
         public Guid VideoSharedCode { get; set; } = Guid.Empty;
-        [StringLength(maximumLength: 50)]
+        [StringLength(maximumLength: 50,MinimumLength =2)]
         public string Title { get; set; }
         [StringLength(maximumLength:16384)]
         public string Content { get; set; }
