@@ -41,7 +41,7 @@ namespace POYA.Areas.EduHub.Models
         public Guid VideoSharedCode { get; set; } = Guid.Empty;
         [StringLength(maximumLength: 50)]
         public string Title { get; set; }
-        [StringLength(maximumLength:2048)]
+        [StringLength(maximumLength:16384)]
         public string Content { get; set; }
         /// <summary>
         /// "text/html" or "text/markdown", the default is "text/html"

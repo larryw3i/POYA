@@ -244,6 +244,7 @@ namespace POYA.Areas.EduHub.Controllers
 
         #region DEPOLLUTION
         [HttpPost]
+        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> UploadEArticleImage([FromForm]IEnumerable<IFormFile> EArticleImages)
         {
             ///  MD5 should be checked first
