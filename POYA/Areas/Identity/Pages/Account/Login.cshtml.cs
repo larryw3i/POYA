@@ -80,7 +80,7 @@ namespace POYA.Areas.Identity.Pages.Account
             }
             if (IsFromRegister && !IsEmailConfirmed)
             {
-                ModelState.AddModelError(nameof(Input.Email),_localizer[ "We have sent a confirmation email to you, you can login after confirming it"]);
+                ModelState.AddModelError(nameof(Input.Email),_localizer["We have sent a confirmation email to you, you can login after confirming it (Didn't you get the email? check it in spam)"]);
             }
             else if (IsFromRegister) ModelState.AddModelError(nameof(Input.Email),_localizer[ "Your email is already registered in POYA, log in Now"]+" (^_^)");
             returnUrl = returnUrl ?? Url.Content("~/");
