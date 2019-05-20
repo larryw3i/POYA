@@ -66,40 +66,47 @@ namespace POYA.Areas.EduHub.Controllers
 
         // GET: EduHub/EArticles
         [AllowAnonymous]
-        public async Task<IActionResult> Index(bool? IsIndividual=false ,int _page = 1 )
+        public async Task<IActionResult> Index(bool? IsIndividual, int _page = 1)
         {
             if (IsIndividual == true && !_signInManager.IsSignedIn(User))
             {
-                return RedirectToPage(pageName: "/Account/Login", routeValues:new { area= "Identity" });
+                return RedirectToPage(pageName: "/Account/Login", routeValues: new { area = "Identity" });
             }
 
-            var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id??string.Empty;
+            var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id ?? string.Empty;
 
             #region CONTRAST IsIndividual
+            var _IsIndividual =TempData[nameof(IsIndividual)];
+            TempData.Keep();
             if (IsIndividual == null)
             {
-                IsIndividual = (bool)(TempData[nameof(IsIndividual)] ?? false);
-            }
-            else
-            {
-                TempData[nameof(IsIndividual)] = IsIndividual;
+                if (!string.IsNullOrWhiteSpace(_IsIndividual?.ToString()))
+                {
+                    IsIndividual = (bool)_IsIndividual;
+                }
+                else
+                {
+                    IsIndividual = false;
+                }
             }
             #endregion
 
-            var _EArticle = _context.EArticle.Where(p => IsIndividual==true ? (p.UserId == UserId_) : true)
+            var _EArticle = _context.EArticle.Where(p => IsIndividual == true ? (p.UserId == UserId_) : true)
                .OrderBy(p => p.DOPublishing);
-            if (IsIndividual==false)
+            if (IsIndividual == false)
             {
-                var _User = await _context.Users.Where(p=>p.EmailConfirmed).Select(p=>new { p.UserName,p.Id}).ToListAsync();
-                await _EArticle.ForEachAsync(p=> {
+                var _User = await _context.Users.Where(p => p.EmailConfirmed).Select(p => new { p.UserName, p.Id }).ToListAsync();
+                await _EArticle.ForEachAsync(p =>
+                {
                     p.UserName = _User.FirstOrDefault(o => o.Id == p.UserId)?.UserName;
                 });
             }
-            ViewData["EArticles"] = _EArticle.OrderByDescending(p=>p.DOPublishing).ToPagedList(_page, 8);
-            ViewData[nameof(IsIndividual)] = IsIndividual;
+            ViewData["EArticles"] = _EArticle.OrderByDescending(p => p.DOPublishing).ToPagedList(_page, 8);
+            //  ViewData[nameof(IsIndividual)] = IsIndividual;
             ViewData["UserId"] = UserId_;
             TempData[nameof(_page)] = _page;
-            ViewData[nameof(IsIndividual)] = IsIndividual;
+            TempData[nameof(IsIndividual)] = IsIndividual;
+            //  ViewData[nameof(IsIndividual)] = IsIndividual;
             return View();
         }
 

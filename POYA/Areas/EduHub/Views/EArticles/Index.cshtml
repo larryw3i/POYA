@@ -8,6 +8,8 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var UserId = ViewData["UserId"].ToString();
+    var IsIndividual = (bool)TempData["IsIndividual"];
+    TempData.Keep();
 }
 
 <div class="row">
@@ -18,9 +20,9 @@
     <a class="col offset-4 offset-md-2 offset-sm-2 offset-lg-4 col-2 col-lg-1" asp-action="Create" title="@Localizer["Add"]">
         <img src="~/img/add.bmp" style="max-height:50px;" />
     </a>
-    <a class="col col-2 col-lg-1" asp-action="Index" asp-route-IsIndividual="@((bool)ViewData["IsIndividual"]?"false":"true")"
-       title="@((bool)ViewData["IsIndividual"]?Localizer["View all"]:Localizer["Just me"])">
-        <img src="~/img/@((bool)ViewData["IsIndividual"]?"total.bmp":"individual.bmp")" style="max-height:50px;" />
+    <a class="col col-2 col-lg-1" asp-action="Index" asp-route-IsIndividual="@(IsIndividual?"false":"true")"
+       title="@(IsIndividual?Localizer["View all"]:Localizer["Just me"])">
+        <img src="~/img/@(IsIndividual?"total.bmp":"individual.bmp")" style="max-height:50px;" />
     </a>
 
 </div>
