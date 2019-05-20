@@ -19,12 +19,13 @@ namespace POYA.Data
         public DbSet<POYA.Areas.XUserFile.Models.LFile> LFile { get; set; }
         public DbSet<POYA.Areas.XUserFile.Models.LDir> LDir { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.EArticle> EArticle { get; set; }
+        public DbSet<POYA.Areas.EduHub.Models.EArticleComment> EArticleComment { get; set; }
+        public DbSet<POYA.Areas.EduHub.Models.EArticleClick>  EArticleClicks { get; set; }
+        /*
         public DbSet<POYA.Areas.EduHub.Models.EGrade> EGrade { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.ESubject> ESubject { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.EType> EType { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.EVideo> EVideo { get; set; }
-
-        /*
         public DbSet<POYA.Areas.XUserFile.Models.LSharing> LSharings { get; set; }
         //  public DbSet<POYA.Areas.XUserFile.Models.LSharingDirMap> LSharedDirMaps { get; set; }
         public DbSet<POYA.Areas.XUserFile.Models.LUserSharingFile> LUserSharingFile { get; set; }

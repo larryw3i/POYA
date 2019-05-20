@@ -65,6 +65,7 @@ namespace POYA.Areas.EduHub.Controllers
         #endregion
 
         // GET: EduHub/EArticles
+        //  [AllowAnonymous]
         public async Task<IActionResult> Index(bool? IsIndividual ,int _page = 1 )
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
@@ -96,6 +97,7 @@ namespace POYA.Areas.EduHub.Controllers
         }
 
         // GET: EduHub/EArticles/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -103,7 +105,7 @@ namespace POYA.Areas.EduHub.Controllers
                 return NotFound();
             }
 
-            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id??string.Empty;
             var eArticle = await _context.EArticle
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (eArticle == null)
@@ -111,6 +113,10 @@ namespace POYA.Areas.EduHub.Controllers
                 return NotFound();
             }
 
+            ViewData["Click"] = await _context.EArticleClicks.Where(p => p.EArticleId == eArticle.Id).CountAsync();
+            ViewData["UserRead"] = await _context.EArticleClicks.Where(p => p.EArticleId == eArticle.Id && !string.IsNullOrWhiteSpace(p.UserId)).CountAsync();
+            await _context.EArticleClicks.AddAsync(new EArticleClick {  EArticleId=eArticle.Id, UserId=UserId_});
+            await _context.SaveChangesAsync();
             return View(eArticle);
         }
 
@@ -120,7 +126,7 @@ namespace POYA.Areas.EduHub.Controllers
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var _LUserFile = await _context.LUserFile.Where(p => p.UserId == UserId_  ).ToListAsync();  //<<<<<<<<
              
-            var _EArticle = new EArticle { VideoSharedCodeSelectListItems = await GetVideoSharedCodeSelectListItemsForUser()};
+            var _EArticle = new EArticle ();
             return View(_EArticle);
         }
 
@@ -159,7 +165,7 @@ namespace POYA.Areas.EduHub.Controllers
                 return NotFound();
             }
              
-            eArticle.VideoSharedCodeSelectListItems = await GetVideoSharedCodeSelectListItemsForUser();
+            //  eArticle.VideoSharedCodeSelectListItems = await GetVideoSharedCodeSelectListItemsForUser();
             return View(eArticle);
         }
 
@@ -184,7 +190,7 @@ namespace POYA.Areas.EduHub.Controllers
                     #region UPDATE
                     _EArticle.Content =_htmlSanitizer.Sanitize( eArticle.Content);
                     _EArticle.DOUpdating = DateTimeOffset.Now;
-                    _EArticle.VideoSharedCode = eArticle.VideoSharedCode;
+                    //  _EArticle.VideoSharedCode = eArticle.VideoSharedCode;
                     _EArticle.Title = eArticle.Title;
                     #endregion
                     await _context.SaveChangesAsync();

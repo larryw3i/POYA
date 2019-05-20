@@ -767,4 +767,28 @@
   <data name="Last" xml:space="preserve">
     <value>Last</value>
   </data>
+  <data name="Article" xml:space="preserve">
+    <value>Article</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Just me" xml:space="preserve">
+    <value>Just me</value>
+  </data>
+  <data name="View all" xml:space="preserve">
+    <value>View all</value>
+  </data>
+  <data name="Set password" xml:space="preserve">
+    <value>Set password</value>
+  </data>
+  <data name="your article" xml:space="preserve">
+    <value>your article</value>
+  </data>
+  <data name="Are you sure you want to delete {0}" xml:space="preserve">
+    <value>Are you sure you want to delete {0}</value>
+  </data>
+  <data name="Write your article" xml:space="preserve">
+    <value>Write your article</value>
+  </data>
 </root>

@@ -12,6 +12,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Areas\EduHub\Views\EGrades\**" />
+    <Compile Remove="Areas\EduHub\Views\ESubjects\**" />
+    <Compile Remove="Areas\EduHub\Views\ETypes\**" />
+    <Compile Remove="Areas\EduHub\Views\EVideos\**" />
     <Compile Remove="Views\EduHubArticles\**" />
     <Compile Remove="Views\EduHubGrades\**" />
     <Compile Remove="Views\EduHubSubjects\**" />
@@ -23,6 +27,10 @@
     <Compile Remove="Views\X_doveDirectories\**" />
     <Compile Remove="Views\X_doveFiles\**" />
     <Compile Remove="Views\__LUserFiles\**" />
+    <Content Remove="Areas\EduHub\Views\EGrades\**" />
+    <Content Remove="Areas\EduHub\Views\ESubjects\**" />
+    <Content Remove="Areas\EduHub\Views\ETypes\**" />
+    <Content Remove="Areas\EduHub\Views\EVideos\**" />
     <Content Remove="Views\EduHubArticles\**" />
     <Content Remove="Views\EduHubGrades\**" />
     <Content Remove="Views\EduHubSubjects\**" />
@@ -34,6 +42,10 @@
     <Content Remove="Views\X_doveDirectories\**" />
     <Content Remove="Views\X_doveFiles\**" />
     <Content Remove="Views\__LUserFiles\**" />
+    <EmbeddedResource Remove="Areas\EduHub\Views\EGrades\**" />
+    <EmbeddedResource Remove="Areas\EduHub\Views\ESubjects\**" />
+    <EmbeddedResource Remove="Areas\EduHub\Views\ETypes\**" />
+    <EmbeddedResource Remove="Areas\EduHub\Views\EVideos\**" />
     <EmbeddedResource Remove="Views\EduHubArticles\**" />
     <EmbeddedResource Remove="Views\EduHubGrades\**" />
     <EmbeddedResource Remove="Views\EduHubSubjects\**" />
@@ -45,6 +57,10 @@
     <EmbeddedResource Remove="Views\X_doveDirectories\**" />
     <EmbeddedResource Remove="Views\X_doveFiles\**" />
     <EmbeddedResource Remove="Views\__LUserFiles\**" />
+    <None Remove="Areas\EduHub\Views\EGrades\**" />
+    <None Remove="Areas\EduHub\Views\ESubjects\**" />
+    <None Remove="Areas\EduHub\Views\ETypes\**" />
+    <None Remove="Areas\EduHub\Views\EVideos\**" />
     <None Remove="Views\EduHubArticles\**" />
     <None Remove="Views\EduHubGrades\**" />
     <None Remove="Views\EduHubSubjects\**" />
@@ -58,6 +74,10 @@
     <None Remove="Views\__LUserFiles\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Areas\EduHub\Controllers\EGradesController.cs" />
+    <Compile Remove="Areas\EduHub\Controllers\ESubjectsController.cs" />
+    <Compile Remove="Areas\EduHub\Controllers\ETypesController.cs" />
+    <Compile Remove="Areas\EduHub\Controllers\EVideosController.cs" />
     <Compile Remove="Controllers\EduHubArticlesController.cs" />
     <Compile Remove="Controllers\EduHubGradesController.cs" />
     <Compile Remove="Controllers\EduHubSubjectsController.cs" />
@@ -139,7 +159,6 @@
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\EduHub\Controllers\" />
     <Folder Include="Areas\EduHub\Data\" />
     <Folder Include="Areas\EduHub\Data\" />
     <Folder Include="Areas\XUserFile\Data\" />

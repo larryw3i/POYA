@@ -767,4 +767,28 @@
   <data name="Last" xml:space="preserve">
     <value>上一级</value>
   </data>
+  <data name="Article" xml:space="preserve">
+    <value>短文</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="Just me" xml:space="preserve">
+    <value>只看我的</value>
+  </data>
+  <data name="View all" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="Set password" xml:space="preserve">
+    <value>设置密码</value>
+  </data>
+  <data name="your article" xml:space="preserve">
+    <value>你的短文</value>
+  </data>
+  <data name="Are you sure you want to delete {0}" xml:space="preserve">
+    <value>确定要删除 {0}</value>
+  </data>
+  <data name="Write your article" xml:space="preserve">
+    <value>写你的短文</value>
+  </data>
 </root>
