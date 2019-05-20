@@ -65,15 +65,20 @@ namespace POYA.Areas.EduHub.Controllers
         #endregion
 
         // GET: EduHub/EArticles
-        //  [AllowAnonymous]
-        public async Task<IActionResult> Index(bool? IsIndividual ,int _page = 1 )
+        [AllowAnonymous]
+        public async Task<IActionResult> Index(bool? IsIndividual=false ,int _page = 1 )
         {
-            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            if (IsIndividual == true && !_signInManager.IsSignedIn(User))
+            {
+                return RedirectToPage(pageName: "/Account/Login", routeValues:new { area= "Identity" });
+            }
+
+            var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id??string.Empty;
 
             #region CONTRAST IsIndividual
             if (IsIndividual == null)
             {
-                    IsIndividual = (bool)(TempData[nameof(IsIndividual)] ?? false);
+                IsIndividual = (bool)(TempData[nameof(IsIndividual)] ?? false);
             }
             else
             {
@@ -92,7 +97,9 @@ namespace POYA.Areas.EduHub.Controllers
             }
             ViewData["EArticles"] = _EArticle.OrderByDescending(p=>p.DOPublishing).ToPagedList(_page, 8);
             ViewData[nameof(IsIndividual)] = IsIndividual;
-            ViewData["UserId"] = UserId_; 
+            ViewData["UserId"] = UserId_;
+            TempData[nameof(_page)] = _page;
+            ViewData[nameof(IsIndividual)] = IsIndividual;
             return View();
         }
 
@@ -113,9 +120,15 @@ namespace POYA.Areas.EduHub.Controllers
                 return NotFound();
             }
 
-            ViewData["Click"] = await _context.EArticleClicks.Where(p => p.EArticleId == eArticle.Id).CountAsync();
-            ViewData["UserRead"] = await _context.EArticleClicks.Where(p => p.EArticleId == eArticle.Id && !string.IsNullOrWhiteSpace(p.UserId)).CountAsync();
-            await _context.EArticleClicks.AddAsync(new EArticleClick {  EArticleId=eArticle.Id, UserId=UserId_});
+            //  ViewData["Click"] = await _context.EArticleClicks.Where(p => p.EArticleId == eArticle.Id).CountAsync();
+            eArticle.ClickCount += 1;
+            ViewData["UserRead"] = await _context.EArticleUserReadRecords.Where(p=>p.EArticleId==eArticle.Id).Select(p=>p.UserId)
+                .Distinct()
+                .CountAsync();
+            if (!string.IsNullOrWhiteSpace(UserId_)&&!await _context.EArticleUserReadRecords.AnyAsync(p => p.UserId == UserId_ && p.EArticleId == eArticle.Id))
+            {
+                await _context.EArticleUserReadRecords.AddAsync(new EArticleUserReadRecord { EArticleId = eArticle.Id, UserId = UserId_ });
+            }
             await _context.SaveChangesAsync();
             return View(eArticle);
         }
@@ -158,6 +171,7 @@ namespace POYA.Areas.EduHub.Controllers
                 return NotFound();
             }
 
+            TempData.Keep();
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var eArticle = await _context.EArticle.FirstOrDefaultAsync(p=>p.Id==id && p.UserId==UserId_);
             if (eArticle == null)
@@ -187,12 +201,14 @@ namespace POYA.Areas.EduHub.Controllers
                 {
                     var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                     var _EArticle = await _context.EArticle.Where(p => p.Id == eArticle.Id && p.UserId == UserId_).FirstOrDefaultAsync();
+
                     #region UPDATE
-                    _EArticle.Content =_htmlSanitizer.Sanitize( eArticle.Content);
+                    _EArticle.Content = _htmlSanitizer.Sanitize(eArticle.Content);
                     _EArticle.DOUpdating = DateTimeOffset.Now;
                     //  _EArticle.VideoSharedCode = eArticle.VideoSharedCode;
                     _EArticle.Title = eArticle.Title;
                     #endregion
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -206,7 +222,7 @@ namespace POYA.Areas.EduHub.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { _page=TempData["_page"], IsIndividual =TempData["IsIndividual"] });
             }
             return View(eArticle);
         }
@@ -300,6 +316,7 @@ namespace POYA.Areas.EduHub.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetEArticleImage(Guid? id)
         {
             if (id == null)

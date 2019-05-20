@@ -334,10 +334,12 @@
                 _UI.SelectFile();
                 event.preventDefault();
             });
+            /*
             $("#BackA").on("click", function () {
                 window.history.go(-1);
                 event.preventDefault();
             });
+            */
             $("#UploadA").on("click", function () {
                 if ($("[name='FileInput']").length < 1) return;
                 _Service.CheckMD58UploadFiles();

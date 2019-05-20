@@ -30,10 +30,10 @@ namespace POYA.Areas.EduHub.Models
 
         public Guid ClassId { get; set; }
 
-        [StringLength(maximumLength: 50,MinimumLength =2)]
+        [StringLength(maximumLength: 50, MinimumLength = 2)]
         public string Title { get; set; }
 
-        [StringLength(maximumLength:16384)]
+        [StringLength(maximumLength: 16384)]
         public string Content { get; set; }
 
         /// <summary>
@@ -49,6 +49,7 @@ namespace POYA.Areas.EduHub.Models
         public DateTimeOffset DOPublishing { get; set; } = DateTimeOffset.Now;
 
         public DateTimeOffset? DOUpdating { get; set; }
+        public long ClickCount { get; set; } = 0;
         #region DEPOLLUTION
         /// <summary>
         /// <see cref="NotMappedAttribute" />

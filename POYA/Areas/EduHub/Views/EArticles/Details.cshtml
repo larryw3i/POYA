@@ -8,8 +8,8 @@
 <h4 class="col offset-1">
     @(Html.DisplayFor(model => model.Title))
     <span style="font-size:60%">
-        @ViewData["Click"] <span>&#128064;</span> 
-        @(ViewData["UserRead"])  <span>&#128521;</span>
+        @(Model.ClickCount) <span title="@Localizer["click"]">&#128064;</span> 
+        @(ViewData["UserRead"])  <span title="@($"{ViewData["UserRead"]} {Localizer["people viewed"]}")">&#128521;</span>
     </span>
 </h4>
 
@@ -22,6 +22,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Index" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
+    <a id="BackA" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">@Localizer["Edit"]</a>
 </div>

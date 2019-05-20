@@ -15,10 +15,10 @@
         <img src="~/img/article.bmp" class=" main-icon" title="@Localizer["Article"]" />
         <span style="font-size:200%">@Localizer["Article"]</span>
     </div>
-    <a class="col offset-4 col-1" asp-action="Create" title="@Localizer["Add"]">
+    <a class="col offset-4 offset-md-2 offset-sm-2 offset-lg-4 col-2 col-lg-1" asp-action="Create" title="@Localizer["Add"]">
         <img src="~/img/add.bmp" style="max-height:50px;" />
     </a>
-    <a class="col col-1" asp-action="Index" asp-route-IsIndividual="@((bool)ViewData["IsIndividual"]?"false":"true")"
+    <a class="col col-2 col-lg-1" asp-action="Index" asp-route-IsIndividual="@((bool)ViewData["IsIndividual"]?"false":"true")"
        title="@((bool)ViewData["IsIndividual"]?Localizer["View all"]:Localizer["Just me"])">
         <img src="~/img/@((bool)ViewData["IsIndividual"]?"total.bmp":"individual.bmp")" style="max-height:50px;" />
     </a>
