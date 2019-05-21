@@ -23,6 +23,7 @@ namespace POYA.Data
         public DbSet<POYA.Areas.EduHub.Models.EArticleComment> EArticleComment { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.EArticleUserReadRecord>   EArticleUserReadRecords { get; set; }
         public DbSet<POYA.Areas.XLaw.Models.Complaint> Complaint { get; set; }
+        public DbSet<POYA.Areas.XLaw.Models.Arbitrament> Arbitrament { get; set; }
         /*
         public DbSet<POYA.Areas.EduHub.Models.EGrade> EGrade { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.ESubject> ESubject { get; set; }

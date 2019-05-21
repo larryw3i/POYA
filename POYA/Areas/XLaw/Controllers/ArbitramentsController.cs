@@ -18,7 +18,7 @@ using POYA.Unities.Helpers;
 namespace POYA.Areas.XLaw.Controllers
 {
     [Area("XLaw")]
-    public class ComplaintsController : Controller
+    public class ArbitramentsController : Controller
     {
 
         #region
@@ -30,13 +30,13 @@ namespace POYA.Areas.XLaw.Controllers
         private readonly ApplicationDbContext _context;
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<ComplaintsController> _logger;
+        private readonly ILogger<ArbitramentsController> _logger;
         private readonly HtmlSanitizer _htmlSanitizer;
         private readonly MimeHelper _mimeHelper;
-        public ComplaintsController(
+        public ArbitramentsController(
             MimeHelper mimeHelper,
             HtmlSanitizer htmlSanitizer,
-            ILogger<ComplaintsController> logger,
+            ILogger<ArbitramentsController> logger,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
             RoleManager<IdentityRole> roleManager,
@@ -59,14 +59,14 @@ namespace POYA.Areas.XLaw.Controllers
         }
         #endregion
 
-        // GET: XLaw/Complaints
+        // GET: XLaw/Arbitraments
         public async Task<IActionResult> Index()
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            return View(await _context.Complaint.ToListAsync());
+            return View(await _context.Arbitrament.ToListAsync());
         }
 
-        // GET: XLaw/Complaints/Details/5
+        // GET: XLaw/Arbitraments/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -74,40 +74,40 @@ namespace POYA.Areas.XLaw.Controllers
                 return NotFound();
             }
 
-            var complaint = await _context.Complaint
+            var arbitrament = await _context.Arbitrament
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (complaint == null)
+            if (arbitrament == null)
             {
                 return NotFound();
             }
 
-            return View(complaint);
+            return View(arbitrament);
         }
 
-        // GET: XLaw/Complaints/Create
+        // GET: XLaw/Arbitraments/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: XLaw/Complaints/Create
+        // POST: XLaw/Arbitraments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ToId,FromUserId,Comment,DOSubmitting")] Complaint complaint)
+        public async Task<IActionResult> Create([Bind("Id,ComplaintId,AdminId,DOArbitrament,AdminComment,IsComplaintContentLegal")] Arbitrament arbitrament)
         {
             if (ModelState.IsValid)
             {
-                complaint.Id = Guid.NewGuid();
-                _context.Add(complaint);
+                arbitrament.Id = Guid.NewGuid();
+                _context.Add(arbitrament);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(complaint);
+            return View(arbitrament);
         }
 
-        // GET: XLaw/Complaints/Edit/5
+        // GET: XLaw/Arbitraments/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -115,22 +115,22 @@ namespace POYA.Areas.XLaw.Controllers
                 return NotFound();
             }
 
-            var complaint = await _context.Complaint.FindAsync(id);
-            if (complaint == null)
+            var arbitrament = await _context.Arbitrament.FindAsync(id);
+            if (arbitrament == null)
             {
                 return NotFound();
             }
-            return View(complaint);
+            return View(arbitrament);
         }
 
-        // POST: XLaw/Complaints/Edit/5
+        // POST: XLaw/Arbitraments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ToId,FromUserId,Comment,DOSubmitting")] Complaint complaint)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ComplaintId,AdminId,DOArbitrament,AdminComment,IsComplaintContentLegal")] Arbitrament arbitrament)
         {
-            if (id != complaint.Id)
+            if (id != arbitrament.Id)
             {
                 return NotFound();
             }
@@ -139,12 +139,12 @@ namespace POYA.Areas.XLaw.Controllers
             {
                 try
                 {
-                    _context.Update(complaint);
+                    _context.Update(arbitrament);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ComplaintExists(complaint.Id))
+                    if (!ArbitramentExists(arbitrament.Id))
                     {
                         return NotFound();
                     }
@@ -155,10 +155,10 @@ namespace POYA.Areas.XLaw.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(complaint);
+            return View(arbitrament);
         }
 
-        // GET: XLaw/Complaints/Delete/5
+        // GET: XLaw/Arbitraments/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -166,30 +166,30 @@ namespace POYA.Areas.XLaw.Controllers
                 return NotFound();
             }
 
-            var complaint = await _context.Complaint
+            var arbitrament = await _context.Arbitrament
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (complaint == null)
+            if (arbitrament == null)
             {
                 return NotFound();
             }
 
-            return View(complaint);
+            return View(arbitrament);
         }
 
-        // POST: XLaw/Complaints/Delete/5
+        // POST: XLaw/Arbitraments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var complaint = await _context.Complaint.FindAsync(id);
-            _context.Complaint.Remove(complaint);
+            var arbitrament = await _context.Arbitrament.FindAsync(id);
+            _context.Arbitrament.Remove(arbitrament);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ComplaintExists(Guid id)
+        private bool ArbitramentExists(Guid id)
         {
-            return _context.Complaint.Any(e => e.Id == id);
+            return _context.Arbitrament.Any(e => e.Id == id);
         }
     }
 }
