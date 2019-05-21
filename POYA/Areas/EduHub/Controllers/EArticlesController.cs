@@ -70,7 +70,7 @@ namespace POYA.Areas.EduHub.Controllers
         {
             if (IsIndividual == true && !_signInManager.IsSignedIn(User))
             {
-                return RedirectToPage(pageName: "/Account/Login", routeValues: new { area = "Identity" });
+                return RedirectToPage(pageName: "/Account/Login", routeValues: new { area = "Identity", ReturnUrl=Request.Path });
             }
 
             var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id ?? string.Empty;
@@ -132,7 +132,8 @@ namespace POYA.Areas.EduHub.Controllers
             ViewData["UserRead"] = await _context.EArticleUserReadRecords.Where(p=>p.EArticleId==eArticle.Id).Select(p=>p.UserId)
                 .Distinct()
                 .CountAsync();
-            if (!string.IsNullOrWhiteSpace(UserId_)&&!await _context.EArticleUserReadRecords.AnyAsync(p => p.UserId == UserId_ && p.EArticleId == eArticle.Id))
+            ViewData[nameof(UserId_)] = UserId_;
+            if (!string.IsNullOrWhiteSpace(UserId_)&& !await _context.EArticleUserReadRecords.AnyAsync(p => p.UserId == UserId_ && p.EArticleId == eArticle.Id))
             {
                 await _context.EArticleUserReadRecords.AddAsync(new EArticleUserReadRecord { EArticleId = eArticle.Id, UserId = UserId_ });
             }
