@@ -791,4 +791,7 @@
   <data name="Write your article" xml:space="preserve">
     <value>写你的短文</value>
   </data>
+  <data name="Forget password" xml:space="preserve">
+    <value>忘记密码</value>
+  </data>
 </root>

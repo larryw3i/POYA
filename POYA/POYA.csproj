@@ -237,9 +237,7 @@
   <ItemGroup>
     <Folder Include="Areas\EduHub\Data\" />
     <Folder Include="Areas\EduHub\Data\" />
-    <Folder Include="Areas\XLaw\Controllers\" />
     <Folder Include="Areas\XLaw\Data\" />
-    <Folder Include="Areas\XLaw\Models\" />
     <Folder Include="Areas\XUserFile\Data\" />
     <Folder Include="Data\LFiles\Avatars\" />
   </ItemGroup>
