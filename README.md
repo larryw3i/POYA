@@ -47,7 +47,7 @@ The contents of **appsettings.json** are:
 ```powershell    
 #ps1
 cd yourdir
-git clone https://github.com/linghuchong123/POYA.git
+git clone https://github.com/1arrywei/POYA.git
 cd POYA
 cd POYA
 rename appsettings.json.txt appsettings.json
