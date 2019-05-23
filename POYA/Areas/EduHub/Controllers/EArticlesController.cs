@@ -66,7 +66,7 @@ namespace POYA.Areas.EduHub.Controllers
 
         // GET: EduHub/EArticles
         [AllowAnonymous]
-        public async Task<IActionResult> Index(bool? IsIndividual, int _page = 1)
+        public async Task<IActionResult> Index(bool? IsIndividual,int? SortBy, int _page = 1)
         {
             if (IsIndividual == true && !_signInManager.IsSignedIn(User))
             {
@@ -91,6 +91,15 @@ namespace POYA.Areas.EduHub.Controllers
             }
             #endregion
 
+
+            #region CONTRAST SORTBY
+            if (SortBy == null)
+            {
+                var _SortBy = (int)(TempData[nameof(SortBy)] ?? 1);
+                SortBy = _SortBy;
+            }
+            #endregion
+
             var _EArticle = _context.EArticle.Where(p => IsIndividual == true ? (p.UserId == UserId_) : true)
                .OrderBy(p => p.DOPublishing);
             if (IsIndividual == false)
@@ -101,11 +110,24 @@ namespace POYA.Areas.EduHub.Controllers
                     p.UserName = _User.FirstOrDefault(o => o.Id == p.UserId)?.UserName;
                 });
             }
-            ViewData["EArticles"] = _EArticle.OrderByDescending(p => p.DOPublishing).ToPagedList(_page, 8);
+            var _EArticleUserReadRecords = await _context.EArticleUserReadRecords.ToListAsync();
+            await _EArticle.ForEachAsync(p=> {
+                p.ReaderCount = _EArticleUserReadRecords.Where(o => o.EArticleId == p.Id).Count();
+            });
+            if (SortBy == (int)EArticleSortBy.Buzz)
+            {
+                _EArticle= _EArticle.OrderBy(p => p.ReaderCount);
+            }
+            else
+            {
+                _EArticle =_EArticle.OrderByDescending(p => p.DOPublishing);
+            }
+            ViewData["EArticles"] =_EArticle.ToPagedList(_page, 8);
             //  ViewData[nameof(IsIndividual)] = IsIndividual;
             ViewData["UserId"] = UserId_;
             TempData[nameof(_page)] = _page;
             TempData[nameof(IsIndividual)] = IsIndividual;
+            TempData[nameof(SortBy)] = SortBy;
             //  ViewData[nameof(IsIndividual)] = IsIndividual;
             return View();
         }

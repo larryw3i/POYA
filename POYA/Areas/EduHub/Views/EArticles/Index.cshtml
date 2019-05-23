@@ -9,6 +9,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var UserId = ViewData["UserId"].ToString();
     var IsIndividual = (bool)TempData["IsIndividual"];
+    var SortBy = (int)TempData["SortBy"];
     TempData.Keep();
 }
 
@@ -17,13 +18,19 @@
         <img src="~/img/article.bmp" class=" main-icon" title="@Localizer["Article"]" />
         <span style="font-size:200%">@Localizer["Article"]</span>
     </div>
-    <a class="col offset-4 offset-md-2 offset-sm-2 offset-lg-4 col-2 col-lg-1" asp-action="Create" title="@Localizer["Add"]">
+    <a class="col offset-2 offset-md-2 offset-sm-2 offset-lg-4 col-2 col-lg-1" asp-action="Create" title="@Localizer["Add"]">
         <img src="~/img/add.bmp" style="max-height:50px;" />
     </a>
     <a class="col col-2 col-lg-1" asp-action="Index" asp-route-IsIndividual="@(IsIndividual?"false":"true")"
        title="@(IsIndividual?Localizer["View all"]:Localizer["Just me"])">
         <img src="~/img/@(IsIndividual?"total.bmp":"individual.bmp")" style="max-height:50px;" />
     </a>
+    <div class="col>">
+        <select id="SortBySelect" name="SortBySelect">
+            <option value="0">@Localizer["buzz"]</option>
+            <option value="1" selected>@Localizer["time"]</option>
+        </select>
+    </div>
 
 </div>
 
@@ -63,7 +70,14 @@
 @section Scripts{
     <script>
         class Service {
+            ChangeSort() {
+                $("#SortBySelect").on("change", function () {
+                    let url = _Data_.SetQueryString(window.location.href, "SortBy", $("#SortBySelect option:selected").val().toString());
+                    window.location.href = url;
+                });
+            }
 
+            //  #region
             /**
              * View all or just me
              * param {boolean} IsIndividual - view user's article only or view all
@@ -73,16 +87,28 @@
                 window.location.href = "@@(Url.Action("Index"))"+"?IsIndividual="+IsIndividual;
             }
             */
+            //  #endregion
+        }
+
+        class Data {
+            Initial() {
+                $("#SortBySelect option[value='@(SortBy)']").attr("selected", true);
+            }
         }
         var _Service = new Service();
+        var _Data = new Data();
 
         $(document).ready(function () {
+            _Service.ChangeSort();
+            _Data_.Initial();
+            //  #region
             /*
             $("#AuthorTypeSelect option[value='@@(ViewData["IsIndividual"].ToString().ToLower())']").attr( "selected", true );
             $("#AuthorTypeSelect").on("change", function () {
                 _Service.ChangeAuthorType($("#AuthorTypeSelect option:selected").val())
             });
                 */
+            //  #endregion
         });
     </script>
 }
@@ -104,6 +130,11 @@
         .main-icon {
             max-height: 80px;
             max-width: 80px;
+        }
+
+        #SortBySelect {
+            zoom: 120%;
+            margin-top: 10px;
         }
     </style>
 }

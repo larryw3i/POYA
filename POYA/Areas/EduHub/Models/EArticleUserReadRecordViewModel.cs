@@ -25,6 +25,12 @@ namespace POYA.Areas.EduHub.Models
         public bool IsLegal { get; set; } = true;
     }
 
+    public enum EArticleSortBy
+    {
+        Buzz=0,
+        Time=1,
+    }
+
     #region DUMPED
    
     #endregion

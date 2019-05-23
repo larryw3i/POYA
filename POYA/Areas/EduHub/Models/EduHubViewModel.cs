@@ -56,6 +56,9 @@ namespace POYA.Areas.EduHub.Models
         /// </summary>
         [NotMapped]
         public string UserName { get; set; }
+
+        [NotMapped]
+        public long ReaderCount { get; set; } = 0;
         #endregion
     }
 
