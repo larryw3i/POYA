@@ -8,9 +8,8 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var UserId = ViewData["UserId"].ToString();
-    var IsIndividual = (bool)TempData["IsIndividual"];
-    var SortBy = (int)TempData["SortBy"];
-    TempData.Keep();
+    var IsIndividual = (bool)ViewData["IsIndividual"];
+    var SortBy = (int)ViewData["SortBy"];
 }
 
 <div class="row">
@@ -100,7 +99,7 @@
 
         $(document).ready(function () {
             _Service.ChangeSort();
-            _Data_.Initial();
+            _Data.Initial();
             //  #region
             /*
             $("#AuthorTypeSelect option[value='@@(ViewData["IsIndividual"].ToString().ToLower())']").attr( "selected", true );

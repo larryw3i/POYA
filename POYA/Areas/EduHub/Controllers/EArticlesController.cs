@@ -96,6 +96,7 @@ namespace POYA.Areas.EduHub.Controllers
             if (SortBy == null)
             {
                 var _SortBy = (int)(TempData[nameof(SortBy)] ?? 1);
+                TempData.Keep();
                 SortBy = _SortBy;
             }
             #endregion
@@ -116,7 +117,7 @@ namespace POYA.Areas.EduHub.Controllers
             });
             if (SortBy == (int)EArticleSortBy.Buzz)
             {
-                _EArticle= _EArticle.OrderBy(p => p.ReaderCount);
+                _EArticle= _EArticle.OrderByDescending(p => p.ReaderCount);
             }
             else
             {
@@ -127,7 +128,9 @@ namespace POYA.Areas.EduHub.Controllers
             ViewData["UserId"] = UserId_;
             TempData[nameof(_page)] = _page;
             TempData[nameof(IsIndividual)] = IsIndividual;
+            ViewData[nameof(IsIndividual)] = IsIndividual;
             TempData[nameof(SortBy)] = SortBy;
+            ViewData[nameof(SortBy)] = SortBy;
             //  ViewData[nameof(IsIndividual)] = IsIndividual;
             return View();
         }
