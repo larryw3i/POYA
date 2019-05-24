@@ -794,4 +794,19 @@
   <data name="Forget password" xml:space="preserve">
     <value>Forget password</value>
   </data>
+  <data name="Access to knowledge in an infinite number of ways" xml:space="preserve">
+    <value>Access to knowledge in an infinite number of ways</value>
+  </data>
+  <data name="The feasibility of knowledge dissemination" xml:space="preserve">
+    <value>The feasibility of knowledge dissemination</value>
+  </data>
+  <data name="A little spark can burn down the whole prairie" xml:space="preserve">
+    <value>A little spark can burn down the whole prairie</value>
+  </data>
+  <data name="Another way of presenting knowledge" xml:space="preserve">
+    <value>Another way of presenting knowledge</value>
+  </data>
+  <data name="Another solution for rendering knowledge" xml:space="preserve">
+    <value>Another solution for rendering knowledge</value>
+  </data>
 </root>

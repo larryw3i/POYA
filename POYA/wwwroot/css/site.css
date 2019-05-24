@@ -66,7 +66,16 @@ body {
     text-align: right
 }
 
+
 /*
+.home-carousel {
+    background-color: black;
+    opacity: 0.2;
+}
+.carousel-caption h5, .carousel-caption p{
+    color:blue;
+}
+
 [name='UserAvatarImg'], [name='LogoutImg'] {
     position: absolute;
 }

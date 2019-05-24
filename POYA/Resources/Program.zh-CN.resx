@@ -794,4 +794,19 @@
   <data name="Forget password" xml:space="preserve">
     <value>忘记密码</value>
   </data>
+  <data name="Access to knowledge in an infinite number of ways" xml:space="preserve">
+    <value>获取知识的无限种可能</value>
+  </data>
+  <data name="The feasibility of knowledge dissemination" xml:space="preserve">
+    <value>传播知识, 势在必行</value>
+  </data>
+  <data name="A little spark can burn down the whole prairie" xml:space="preserve">
+    <value>星星之火, 可以燎原</value>
+  </data>
+  <data name="Another way of presenting knowledge" xml:space="preserve">
+    <value>呈现知识的另一种方式</value>
+  </data>
+  <data name="Another solution for rendering knowledge" xml:space="preserve">
+    <value>呈现知识的另一种解决方案</value>
+  </data>
 </root>
