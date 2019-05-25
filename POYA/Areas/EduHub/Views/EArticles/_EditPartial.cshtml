@@ -18,7 +18,7 @@
                 <div class="row">
                     <input asp-for="Title" class="form-control col offset-3 col-6" placeholder="@(Localizer["Title"])" />
                     @*
-                        <a asp-action="GetSharedImages" asp-controller="LUserFiles" asp-area="XUserFile" target="ImageSelectTab" class="col  col-1 col-sm-3 LookForImageIcon">&#128443;</a>
+                <a asp-action="GetSharedImages" asp-controller="LUserFiles" asp-area="XUserFile" target="ImageSelectTab" class="col  col-1 col-sm-3 LookForImageIcon">&#128443;</a>
                     *@
                 </div>
                 <span asp-validation-for="Title" class="text-danger"></span>
@@ -35,6 +35,23 @@
                 <input asp-for="Content" hidden />
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
+
+            <div class="form-group row">
+                <div class="col col-4">
+                    <span class="row">@Localizer["Upload videos for your article"]</span>
+                    <div class="row">
+
+                    </div>
+                </div>
+                <div class="col col-4">
+                    <span class="row">@Localizer["Upload attachments for your article"]</span>
+                    <div class="row">
+                        
+                    </div>
+
+                </div>
+            </div>
+
 
             @*<partial name="_VideoSelectPartial" model="Model" />*@
 
@@ -158,18 +175,6 @@
             $(".w-e-text").focus();
         });
 
-        /*
-         * $(".w-e-text").keyup(function () {
-                window.scrollTo(0, document.documentElement.clientHeight);
-        });
-
-
-        $('..w-e-text').focus(function () { $('html,body').animate({ scrollTop: $('.bottom').offset().top }, 800); });
-        $(".w-e-text").on("focus", function () {
-            //  document.body.scrollTop =  document.body.scrollHeight;
-            window.scrollTo(0, document.documentElement.clientHeight);
-        });
-        */
     });
 </script>
 <style>
@@ -181,7 +186,7 @@
     #_ContentEditor {
         height: 500px;
         border: dotted;
-        border-radius: 20px;
+        border-radius: 10px;
         overflow: hidden;
     }
 

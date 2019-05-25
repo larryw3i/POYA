@@ -237,8 +237,7 @@
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\EduHub\Data\" />
-    <Folder Include="Areas\EduHub\Data\" />
+    <Folder Include="Areas\EduHub\Data\EArticleFiles\" />
     <Folder Include="Areas\XLaw\Data\" />
     <Folder Include="Areas\XUserFile\Data\" />
     <Folder Include="Data\LFiles\Avatars\" />

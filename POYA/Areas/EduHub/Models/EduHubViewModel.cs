@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -59,11 +60,23 @@ namespace POYA.Areas.EduHub.Models
 
         [NotMapped]
         public long ReaderCount { get; set; } = 0;
+
+        [NotMapped]
+        public IEnumerable<IFormFile> LFormFiles { get; set; }
         #endregion
     }
 
+    public class EArticleFile
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid EArticleId { get; set; }
+        public string FileMD5 { get; set; }
+        public string FileName { get; set; }
+        public bool IsEArticleVideo { get; set; } = false;
+    }
+
     #region DEPOLLUTION
-    
+
 
     #endregion
 }
