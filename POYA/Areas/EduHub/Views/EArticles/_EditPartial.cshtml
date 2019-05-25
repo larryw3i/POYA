@@ -4,8 +4,8 @@
 
 @model POYA.Areas.EduHub.Models.EArticle
 
-@{ 
-    var IsEdit=(bool)ViewData["IsEdit"];
+@{
+    var IsEdit = (bool)ViewData["IsEdit"];
 }
 
 <hr />
@@ -40,7 +40,7 @@
 
             <div class="form-group">
                 <a asp-action="Index" class="btn btn-outline-primary">&laquo; @Localizer["Back"]</a>
-                <a class="btn btn-primary" id="EArticles_Form_Submit_A">@Localizer["Save"]</a>
+                <a class="btn btn-outline-info" id="EArticles_Form_Submit_A">@Localizer["Save"]</a>
             </div>
         </form>
     </div>
@@ -52,7 +52,7 @@
 
     class _EditPartial_Data{
         /**
-         * 
+         *
          * @@param {any} Editor - The Editor
          */
         ReadyEditor(Editor) {
@@ -79,7 +79,8 @@
                 'undo',
                 'redo',
             ];
-            //  #endregion 
+            //  #endregion
+
 
             // #region  LANGUAGE CONFIGURE
 
@@ -137,7 +138,7 @@
 
         }
     }
-    
+
     var _Editor = window.wangEditor;
     var Editor = new _Editor("#MenuToolbar","#_ContentEditor");
 
@@ -156,8 +157,8 @@
         $("#_ContentEditor").on("click", function () {
             $(".w-e-text").focus();
         });
-       
-        /* 
+
+        /*
          * $(".w-e-text").keyup(function () {
                 window.scrollTo(0, document.documentElement.clientHeight);
         });
@@ -172,27 +173,28 @@
     });
 </script>
 <style>
-    
-        #Title {
-            text-align: center;
-        }
 
-        #_ContentEditor{
-            height:500px;
-            border:dotted;
-            border-radius:20px;
-            overflow:hidden;
-        }
-        .w-e-text{
-            overflow-y:scroll;
+    #Title {
+        text-align: center;
+    }
 
-        }
+    #_ContentEditor {
+        height: 500px;
+        border: dotted;
+        border-radius: 20px;
+        overflow: hidden;
+    }
 
-        .w-e-toolbar {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .LookForImageIcon{
-            zoom:200%;
-        }
+    .w-e-text {
+        overflow-y: scroll;
+    }
+
+    .w-e-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .LookForImageIcon {
+        zoom: 200%;
+    }
 </style>

@@ -1,83 +1,138 @@
 ﻿@{
     ViewData["Title"] = Localizer["Home Page"];
-    
+
 }
-    <div class="col col-12">
-        <div class="home-carousel">
-            <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="~/img/article.bmp" class="d-block" alt="...">
-                        <div class="carousel-caption  d-block">
-                            <h5>@Localizer["Access to knowledge in an infinite number of ways"]</h5>
-                            <p>@*Nulla vitae elit libero, a pharetra augue mollis interdum.*@</p>
-                        </div>
+<div class="col col-12">
+    <div class="home-carousel">
+        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+                <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="~/img/writing.webp" class="d-block zoom-out-img" alt="...">
+                    <div class="carousel-caption  d-block">
+                        <h5>@Localizer["Access to knowledge in an infinite number of ways"]</h5>
+                        <p>@*Nulla vitae elit libero, a pharetra augue mollis interdum.*@</p>
                     </div>
-                    <div class="carousel-item">
-                        <img src="~/img/udisk_ico.webp" class="d-block" alt="...">
-                        <div class="carousel-caption  d-block">
-                            <h5>@Localizer["A little spark can burn down the whole prairie"]</h5>
-                            <p>@*Lorem ipsum dolor sit amet, consectetur adipiscing elit.*@</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="~/img/share.bmp" class="d-block" alt="...">
-                        <div class="carousel-caption d-block">
-                            <h5>@Localizer["Another solution for rendering knowledge"]</h5>
-                            <p> @*Praesent commodo cursus magna, vel scelerisque nisl consectetur.*@</p>
-                        </div>
+                </div>  
+                <div class="carousel-item">
+                    <img src="~/img/correlation.webp" class="d-block zoom-in-img" alt="...">
+                    <div class="carousel-caption d-block">
+                        <h5>@Localizer["Another solution for rendering knowledge"]</h5>
+                        <p> @*Praesent commodo cursus magna, vel scelerisque nisl consectetur.*@</p>
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+                <div class="carousel-item">
+                    <img src="~/img/penrose_stairs.webp" class="d-block rotate-img" alt="...">
+                    <div class="carousel-caption  d-block">
+                        <h5>@Localizer["A little spark can burn down the whole prairie"]</h5>
+                        <p>@*Lorem ipsum dolor sit amet, consectetur adipiscing elit.*@</p>
+                    </div>
+                </div>
+
             </div>
+            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
     </div>
+</div>
 
-@section Scripts{ 
+@section Scripts{
 
 
 }
 
-@section Styles{ 
-<style>
-    .home-carousel{
-        background-color:rgba(25,25,112,0.1);
-        margin-top:20px;
-        border-radius:10px;
-    }
+@section Styles{
+    <style>
+        .home-carousel {
+            background-color: rgba(25,25,112,0.1);
+            margin-top: 20px;
+            border-radius: 10px;
+        }
 
-    .carousel-caption h5, .carousel-caption p{
-        color:blue;
-    }
-    .carousel-caption h5{
-        zoom:150%;
-        font-weight:bold;
-    }
-    .carousel-item img{
-        height:500px;
-        max-width:100%;
-        margin:auto;
-    }
-    
-</style>
+        .carousel-caption h5, .carousel-caption p {
+            color: blue;
+            text-shadow: 1px 1px 2px #CDB5CD;
+        }
+
+        .carousel-caption h5 {
+            zoom: 150%;
+            font-weight: bold;
+        }
+         .carousel-item{
+            height: 500px;
+            overflow:hidden;
+         }
+
+            .carousel-item img {
+                margin: auto;
+                object-fit: cover;
+            }
+
+        /*
+         *  FROM    https://blog.csdn.net/ly305750665/article/details/71499497
+         *  THANK   https://blog.csdn.net/ly305750665
+         */
+        .rotate-img {
+            animation: rotateImg 50s linear infinite;
+            vertical-align: middle;
+        }
+        .zoom-out-img{
+                max-width:100%;
+             animation: zoomOutImg 20s linear infinite;
+            vertical-align: middle;
+        }
+        .zoom-in-img {
+            animation: zoomInImg 20s linear infinite;
+            vertical-align: middle;
+        }
+
+        @@keyframes zoomOutImg{
+            0% {
+                height:150%;
+            }
+
+            100% {
+                height:100%;
+            }
+        }
+
+        @@keyframes zoomInImg {
+            0% {
+                width:50%;
+            }
+
+            100% {
+                width:150%;
+            }
+        }
+
+        @@keyframes rotateImg {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        /*--------*/
+    </style>
 }
 
 @*
     List<String>  mPermissionList = new ArrayList<>();
 
-   
+
       String[] permissions = new String[]{Manifest.permission.CAMERA,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
