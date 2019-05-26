@@ -109,7 +109,7 @@ namespace POYA.Controllers
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var memoryStream = new MemoryStream();
             await avatarForm.AvatarImgFile.CopyToAsync(memoryStream);
-            var AvatarBuffer = MakeCircleImage(memoryStream);//  memoryStream.ToArray();
+            var AvatarBuffer =memoryStream.ToArray();   //   MakeCircleImage(memoryStream);//  
             var AvatarFilePath = _x_DOVEHelper.AvatarStoragePath(_hostingEnv) + _UserId;
             if (System.IO.File.Exists(AvatarFilePath))
             {

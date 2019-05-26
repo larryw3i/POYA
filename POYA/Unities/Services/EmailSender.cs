@@ -26,9 +26,10 @@ namespace POYA.Unities.Services
             var host = _configuration["EmailSender:host"];// (string)jsonObject[nameof(EmailSender)]["host"];
             var password = _configuration["EmailSender:password"];//     (string)jsonObject[nameof(EmailSender)]["password"];
             var port = Convert.ToInt32( _configuration["EmailSender:port"]);//    (short)jsonObject[nameof(EmailSender)]["port"];
+            var enableSsl=Convert.ToBoolean( _configuration["EmailSender:enableSsl"]);
             var smtpClient = new SmtpClient(host: host, port: port)
             {
-                EnableSsl = false,
+                EnableSsl = enableSsl,
                 Credentials = new System.Net.NetworkCredential(userName: userName, password: password),
             };
             var mailMessage = new MailMessage(subject: subject, body: htmlMessage, from: userName, to: email)
