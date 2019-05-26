@@ -11,14 +11,14 @@
 <hr />
 <div class="row">
     <div class="col">
-        <form asp-action='@(IsEdit?"Edit":"Create")' id="EArticles_Form">
+        <form asp-action='@(IsEdit?"Edit":"Create")' id="EArticles_Form" name="EArticles_Form" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group ">
                 <div class="row">
                     <input asp-for="Title" class="form-control col offset-3 col-6" placeholder="@(Localizer["Title"])" />
                     @*
-                <a asp-action="GetSharedImages" asp-controller="LUserFiles" asp-area="XUserFile" target="ImageSelectTab" class="col  col-1 col-sm-3 LookForImageIcon">&#128443;</a>
+                        <a asp-action="GetSharedImages" asp-controller="LUserFiles" asp-area="XUserFile" target="ImageSelectTab" class="col  col-1 col-sm-3 LookForImageIcon">&#128443;</a>
                     *@
                 </div>
                 <span asp-validation-for="Title" class="text-danger"></span>
@@ -37,16 +37,18 @@
             </div>
 
             <div class="form-group row">
-                <div class="col col-4">
+                <div class="col col-4" id="video_div">
                     <span class="row">@Localizer["Upload videos for your article"]</span>
-                    <div class="row">
-
+                    <div class="row" id="video_list_div"></div>
+                    <div class="row" id="video_row_div">
+                        <a class="btn btn-outline-info" id="VideoSelectBtn">@Localizer["Select video"]</a>
                     </div>
                 </div>
-                <div class="col col-4">
+                <div class="col col-4" id="attachment_div">
                     <span class="row">@Localizer["Upload attachments for your article"]</span>
-                    <div class="row">
-                        
+                    <div class="row" id="attachment_list_div"></div>
+                    <div class="row" id="attachment_row_div">
+                        <a class="btn btn-outline-info" id="AttachmentSelectBtn">@Localizer["Select attachment"]</a>
                     </div>
 
                 </div>
@@ -58,6 +60,7 @@
             <div class="form-group">
                 <a asp-action="Index" class="btn btn-outline-primary">&laquo; @Localizer["Back"]</a>
                 <a class="btn btn-outline-info" id="EArticles_Form_Submit_A">@Localizer["Save"]</a>
+                <span id="SaveProgressSpan"></span>
             </div>
         </form>
     </div>
@@ -66,6 +69,7 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/wangEditor-3.1.1/release/wangEditor.min.js"></script>
 <script>
+
 
     class _EditPartial_Data{
         /**
@@ -153,26 +157,150 @@
             @*Editor.txt.html('@(Html.Raw( Model.Content))');*@
             //  #endregion
 
+
+        }
+
+        /**
+         *
+         * @@param {string} id -The id
+         * @@param IsVideoFileInput
+         */
+        RemoveFile(id,IsVideoFileInput=false) {
+            $(`#${_EditPartial_Value_.FileRemoveBtnId(id)}`).remove();
+            if (IsVideoFileInput) {
+                $(`#${_EditPartial_Value_.LVideoFileInputId(id)}`).remove();
+            } else {
+                $(`#${_EditPartial_Value_.LAttachmentFileInputId(id)}`).remove();
+            }
+        }
+
+        LAttachmentsOnChange(id) {
+            let _Value = $(`#LAttachments_${id}`).val();
+            let _Content = `<a class="btn btn-outline-danger" id="FileRemove_${id}" onclick="_EditPartial_Data_.RemoveFile('${id}')">${_Value} x</a>`;
+            $("#attachment_list_div").append(_Content);
+        }
+
+        LVideosOnChange(id) {
+            let _Value = $(`#LVideos_${id}`).val();
+            let _Content = `<a class="btn btn-outline-danger" id="FileRemove_${id}"  onclick="_EditPartial_Data_.RemoveFile('${id}',true)">${_Value} x</a>`;
+            $("#video_list_div").append(_Content);
+        }
+    }
+    class _EditPartial_Value {
+        constructor() {
+            this.LAttachmentFileInputId = (id) => `LAttachments_${id}`;
+            this.FileRemoveBtnId = (id)=>`FileRemove_${id}`;
+            this.LVideoFileInputId = (id) => `LVideos_${id}`;
+            this.LAttachmentFileInput = (id) => `<input type='file' form='EArticles_Form' hidden name='LAttachments' id='${_EditPartial_Value_.LAttachmentFileInputId(id)}' onchange='_EditPartial_Data_.LAttachmentsOnChange("${id}")'/>`;
+
+            this.LVideoFileInput = (id) => `<input type='file' form='EArticles_Form'  hidden name='LVideos' id='${_EditPartial_Value_.LVideoFileInputId(id)}' accept='video/*'  onchange='_EditPartial_Data_.LVideosOnChange("${id}")'/>`;
+        }
+
+    }
+
+    class _EditPartial_UI {
+
+    }
+
+    class _EditPartial_Service {
+        SubmitForm(Editor) {
+            $("#Content").val(Editor.txt.html());
+            $.ajax({
+                url: "@(Url.Action(IsEdit?"Edit":"Create"))",
+                type: "POST",
+                data: new FormData($("#EArticles_Form")),
+                processData: false,
+                contentType: false,
+                async: false,  
+                //  contentType: "multipart/form-data",
+                headers: {
+                    "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
+                },
+                /**
+                 * REFERENCE    https://www.jianshu.com/p/eb119affdc25
+                 * THANK        https://www.jianshu.com/u/9ca9c65ce397
+                 */
+                xhr: function () {
+                    var xhr = $.ajaxSettings.xhr();
+                    if (xhr.upload) {
+                        xhr.upload.addEventListener("progress", function (e) {
+                            var loaded = e.loaded;
+                            var tot = e.total;
+                            //  console.log(">>"+Id_);
+                            var per = Math.floor(100 * loaded / tot);
+                            $("#SaveProgressSpan").val(per + "%");
+                        }, false);
+                        return xhr;
+                    }
+                },
+                /**
+                 * Retuen the id
+                 * @@param {number} Id The id
+                 */
+                success: function () {
+                    history.go(-1);
+                }
+            });
         }
     }
 
     var _Editor = window.wangEditor;
     var Editor = new _Editor("#MenuToolbar","#_ContentEditor");
 
-    var _EditPartial_Data_ =new _EditPartial_Data();
+    var _EditPartial_Data_ = new _EditPartial_Data();
+    var _EditPartial_Value_ = new _EditPartial_Value();
+    var _EditPartial_Service_ = new _EditPartial_Service();
 
     $(document).ready(function () {
 
         _EditPartial_Data_.ReadyEditor(Editor);
 
         $("#EArticles_Form_Submit_A").on("click", function () {
-            $("#Content").val(Editor.txt.html());
-            $("#EArticles_Form").submit();
+            _EditPartial_Service_.SubmitForm(Editor);
             event.preventDefault();
         });
 
         $("#_ContentEditor").on("click", function () {
             $(".w-e-text").focus();
+        });
+
+        $("#VideoSelectBtn").on("click", function () {
+            if ($("#video_row_div input:last").val() != "") {
+                let _LVideoFileInput = _EditPartial_Value_.LVideoFileInput(_Data_.NewGuid());
+                                $(_LVideoFileInput).attr("form", "EArticles_Form");
+                $("#video_row_div").append(_LVideoFileInput);
+            }
+            $("#video_row_div input:last").click();
+            event.preventDefault();
+        });
+        $("#AttachmentSelectBtn").on("click", function () {
+            if ($("#attachment_row_div input:last").val() != "") {
+                let _LAttachmentFileInput = _EditPartial_Value_.LAttachmentFileInput(_Data_.NewGuid());
+                $(_LAttachmentFileInput).attr("form", "EArticles_Form");
+                $("#attachment_row_div").append(_LAttachmentFileInput);
+            }
+            $("#attachment_row_div input:last").click();
+            event.preventDefault();
+        });
+
+        $("#attachment_div").mouseover(function () {
+            $("#attachment_list_div").show();
+        });
+
+
+        $("#attachment_div").mouseout(function () {
+
+            $("#attachment_list_div").hide();
+        });
+
+        $("#video_div").mouseover(function () {
+
+            $("#video_list_div").show();
+        });
+
+        $("#video_div").mouseout(function () {
+
+            $("#video_list_div").hide();
         });
 
     });

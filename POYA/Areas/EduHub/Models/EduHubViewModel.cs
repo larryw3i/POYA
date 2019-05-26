@@ -62,7 +62,9 @@ namespace POYA.Areas.EduHub.Models
         public long ReaderCount { get; set; } = 0;
 
         [NotMapped]
-        public IEnumerable<IFormFile> LFormFiles { get; set; }
+        public IEnumerable<IFormFile> LVideos { get; set; }
+        [NotMapped]
+        public IEnumerable<IFormFile> LAttachments { get; set; }
         #endregion
     }
 

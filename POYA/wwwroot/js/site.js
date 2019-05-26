@@ -33,6 +33,18 @@ class Data_ {
         return uri + separator + key + "=" + value;
     }
 
+    /**
+     * FROM         http://guid.us/GUID/JavaScript
+     * @returns {string} -Return the new guid
+     * */
+    NewGuid() {
+        return `${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}-${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}-4${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1).substr(0, 3)}-${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}-${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}`.toLowerCase();
+        //  (S4() + S4() + "-" + S4() + "-4" + S4().substr(0, 3) + "-" + S4() + "-" + S4() + S4() + S4()).toLowerCase();
+        //  lert(guid);
+        //  return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    }
+
+
 }
 
 /**
