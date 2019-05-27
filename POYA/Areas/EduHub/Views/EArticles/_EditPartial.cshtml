@@ -62,7 +62,7 @@
                 <a class="btn btn-outline-info" id="EArticles_Form_Submit_A">@Localizer["Save"]</a>
                 <span id="SaveProgressSpan"></span>
             </div>
-        </form>
+          </form>
     </div>
 </div>
 
@@ -154,7 +154,7 @@
 
 
             Editor.create();
-            @*Editor.txt.html('@(Html.Raw( Model.Content))');*@
+            @*Editor.txt.html('@(Html.Raw(Model.Content))');*@
             //  #endregion
 
 
@@ -205,10 +205,26 @@
     class _EditPartial_Service {
         SubmitForm(Editor) {
             $("#Content").val(Editor.txt.html());
+            let _EArticles_Form_Data_=new FormData();
+            _EArticles_Form_Data_.append("@(nameof(Model.Title))",$("#@nameof(Model.Title)").val());
+            _EArticles_Form_Data_.append("@(nameof(Model.Content))",Editor.txt.html());
+            $("input[name='LAttachments']").each(function(index,elem){
+                let _id=this.id;
+                console.log(_id);
+                var _File=document.getElementById(_id).files[0];
+                    _EArticles_Form_Data_.append("LAttachments",_File,_File.name);
+            });
+            $("input[name='LVideos']").each(function(index,elem){
+
+                let _id=this.id;
+                console.log(_id);
+                var _File=document.getElementById(_id).files[0];
+                    _EArticles_Form_Data_.append("LVideos",_File,_File.name);
+            });
             $.ajax({
                 url: "@(Url.Action(IsEdit?"Edit":"Create"))",
                 type: "POST",
-                data: new FormData($("#EArticles_Form")),
+                data: _EArticles_Form_Data_,
                 processData: false,
                 contentType: false,
                 async: false,  

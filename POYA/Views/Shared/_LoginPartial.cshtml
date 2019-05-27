@@ -6,7 +6,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="@(User.Identity.Name)(@Localizer["Manage"])">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title='@(User.Identity.Name)(@Localizer[$"Manage"])'>
                 <img name="UserAvatarImg"  class="rounded-circle" style="height:50px;width:50px;position:absolute;"/>
             </a>
         </li>
@@ -28,9 +28,3 @@
         </li>
     }
 </ul>
-
-<style>
-    img[name='UserAvatarImg']:hover{
-        zoom: 120%;
-    }
-</style>
