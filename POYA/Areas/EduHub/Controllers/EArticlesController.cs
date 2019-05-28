@@ -171,13 +171,13 @@ namespace POYA.Areas.EduHub.Controllers
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var _LUserFile = await _context.LUserFile.Where(p => p.UserId == UserId_  ).ToListAsync();  //<<<<<<<<
-             
+
             var _EArticle = new EArticle ();
             return View(_EArticle);
         }
 
         // POST: EduHub/EArticles/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -190,6 +190,16 @@ namespace POYA.Areas.EduHub.Controllers
                 eArticle.UserId = UserId_;
                 eArticle.Content = _htmlSanitizer.Sanitize(eArticle.Content);
                 _context.Add(eArticle);
+                #region     SAVE_FILES
+                if (eArticle.LAttachments.Count()>0|| eArticle.LVideos.Count()>0) {
+                    foreach(var i in eArticle.LAttachments){
+
+                    }
+                    foreach(var i in eArticle.LVideos){
+                        
+                    }
+                }
+                #endregion
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -211,13 +221,13 @@ namespace POYA.Areas.EduHub.Controllers
             {
                 return NotFound();
             }
-             
+
             //  eArticle.VideoSharedCodeSelectListItems = await GetVideoSharedCodeSelectListItemsForUser();
             return View(eArticle);
         }
 
         // POST: EduHub/EArticles/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -374,14 +384,14 @@ namespace POYA.Areas.EduHub.Controllers
 
         private async Task<List<SelectListItem>> GetVideoSharedCodeSelectListItemsForUser()
         {
-            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id; 
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
             var _LUserFile = await _context.LUserFile.Where(p => p.UserId == UserId_ ).ToListAsync();   //  <<<<<<<<
             var _VideoSharedCodeSelectListItems = new List<SelectListItem>() {
                 new SelectListItem{  Value=Guid.Empty.ToString(), Text="Select your video file",Selected=true}
             };
             _LUserFile.ForEach(p => {
-                if (_mimeHelper.GetMimes(p.Name.Split(".").LastOrDefault(), _hostingEnv).LastOrDefault().StartsWith("video")) { 
+                if (_mimeHelper.GetMimes(p.Name.Split(".").LastOrDefault(), _hostingEnv).LastOrDefault().StartsWith("video")) {
                 _VideoSharedCodeSelectListItems.Add(
                     new SelectListItem { Text = _x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId) + p.Name, Value = p.Id.ToString() }   //<<<<<<<<
                     );

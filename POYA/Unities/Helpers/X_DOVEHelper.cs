@@ -45,12 +45,20 @@ namespace POYA.Unities.Helpers
         /// <returns></returns>
         public string AvatarStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/Avatars/";
 
+        
+        /// <summary>
+        /// env.ContentRootPath+$"/Data/LFiles/EduHub/"
+        /// </summary>
+        /// <param name="env">The HostingEnvironment</param>
+        /// <returns>env.ContentRootPath+$"/Data/LFiles/EduHub/"</returns>
+        public string EdduHubFileStoragePath(IHostingEnvironment env)=>env.ContentRootPath+$"/Data/LFiles/EduHub/";
+
         /// <summary>
         /// env.ContentRootPath + $"/Data/LFiles/"
         /// </summary>
         /// <param name="env">The HostingEnvironment</param>
         /// <returns></returns>
-        public string FileStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/";
+        public string FileStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/XUserFile/";
 
         /// <summary>
         /// Get the md5 of file byte array
