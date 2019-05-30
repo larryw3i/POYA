@@ -80,7 +80,7 @@ namespace POYA.Controllers
         {
             var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             UserId =  string.IsNullOrWhiteSpace(UserId) ? CurrentUserId : UserId;
-            var AvatarFilePath = _x_DOVEHelper.AvatarStoragePath(_hostingEnv) + UserId;
+            var AvatarFilePath = X_DOVEValues.AvatarStoragePath(_hostingEnv) + UserId;
             //  var _X_doveUserInfo=await _context.X_DoveUserInfos.Where(p => p.UserId == UserId).FirstOrDefaultAsync();
             if (System.IO.File.Exists(AvatarFilePath))
             {
@@ -110,7 +110,7 @@ namespace POYA.Controllers
             var memoryStream = new MemoryStream();
             await avatarForm.AvatarImgFile.CopyToAsync(memoryStream);
             var AvatarBuffer =memoryStream.ToArray();   //   MakeCircleImage(memoryStream);//  
-            var AvatarFilePath = _x_DOVEHelper.AvatarStoragePath(_hostingEnv) + _UserId;
+            var AvatarFilePath = X_DOVEValues.AvatarStoragePath(_hostingEnv) + _UserId;
             if (System.IO.File.Exists(AvatarFilePath))
             {
                 var AvatarFileBytes = await System.IO.File.ReadAllBytesAsync(AvatarFilePath);
@@ -120,7 +120,7 @@ namespace POYA.Controllers
                     return Json(new { status = true, X_DOVE_XSRF_TOKEN });
                 }
             } 
-            await System.IO.File.WriteAllBytesAsync(_x_DOVEHelper.AvatarStoragePath(_hostingEnv)+_UserId, AvatarBuffer);
+            await System.IO.File.WriteAllBytesAsync(X_DOVEValues.AvatarStoragePath(_hostingEnv)+_UserId, AvatarBuffer);
             X_DOVE_XSRF_TOKEN = Guid.NewGuid().ToString();
             TempData["X_DOVE_XSRF_TOKEN"] = X_DOVE_XSRF_TOKEN;
             return Json(new { status = true, X_DOVE_XSRF_TOKEN });

@@ -31,53 +31,7 @@ namespace POYA.Unities.Helpers
         
         #region SOME VALUES
 
-        /// <summary>
-        /// The Guid of public directory
-        /// </summary>
-        public Guid PublicDirId = Guid.Parse("E1F500C2-FCF4-4BD8-B54A-A2A7A41F793C");
-
-        /// <summary>
-        /// env.ContentRootPath + $"/Data/LFiles/Avatars/"
-        /// </summary>
-        /// <param name="env">
-        /// The HostingEnvironment
-        /// </param>
-        /// <returns></returns>
-        public string AvatarStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/Avatars/";
-
-        
-        /// <summary>
-        /// env.ContentRootPath+$"/Data/LFiles/EduHub/"
-        /// </summary>
-        /// <param name="env">The HostingEnvironment</param>
-        /// <returns>env.ContentRootPath+$"/Data/LFiles/EduHub/"</returns>
-        public string EdduHubFileStoragePath(IHostingEnvironment env)=>env.ContentRootPath+$"/Data/LFiles/EduHub/";
-
-        /// <summary>
-        /// env.ContentRootPath + $"/Data/LFiles/"
-        /// </summary>
-        /// <param name="env">The HostingEnvironment</param>
-        /// <returns></returns>
-        public string FileStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/XUserFile/";
-
-        /// <summary>
-        /// Get the md5 of file byte array
-        /// </summary>
-        /// <param name="FileBytes">
-        /// File byte array
-        /// </param>
-        /// <returns></returns>
-        public string GetFileMD5(byte[] FileBytes)
-        {
-            var Md5_ = MD5.Create();
-            var MD5Bytes = Md5_.ComputeHash(FileBytes);
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < MD5Bytes.Length; i++)
-            {
-                sb.Append(MD5Bytes[i].ToString("x2"));
-            }
-            return sb.ToString();
-        }
+      
 
         /// <summary>
         /// Get the full path of the dir file or directory is included
@@ -221,8 +175,37 @@ namespace POYA.Unities.Helpers
         }
     }
 
-    public class Unities
+    public static class X_DOVEValues
     {
+        /// <summary>
+        /// The Guid of public directory
+        /// </summary>
+        public static Guid PublicDirId = Guid.Parse("E1F500C2-FCF4-4BD8-B54A-A2A7A41F793C");
+
+        /// <summary>
+        /// env.ContentRootPath + $"/Data/LFiles/Avatars/"
+        /// </summary>
+        /// <param name="env">
+        /// The HostingEnvironment
+        /// </param>
+        /// <returns></returns>
+        public static string AvatarStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/Avatars/";
+
+
+        /// <summary>
+        /// env.ContentRootPath+$"/Data/LFiles/EduHub/"
+        /// </summary>
+        /// <param name="env">The HostingEnvironment</param>
+        /// <returns>env.ContentRootPath+$"/Data/LFiles/EduHub/"</returns>
+        public static string EduHubFileStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/EduHub/";
+
+        /// <summary>
+        /// env.ContentRootPath + $"/Data/LFiles/"
+        /// </summary>
+        /// <param name="env">The HostingEnvironment</param>
+        /// <returns></returns>
+        public static string FileStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/XUserFile/";
+
 
     }
 

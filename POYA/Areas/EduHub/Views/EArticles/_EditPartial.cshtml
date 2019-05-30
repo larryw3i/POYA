@@ -32,7 +32,7 @@
                     </p>
                 </div>
                 @*<div id="_ContentEditor"></div>*@
-                <input asp-for="Content" hidden />
+                @*<input asp-for="Content" hidden />*@
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
 
@@ -62,7 +62,7 @@
                 <a class="btn btn-outline-info" id="EArticles_Form_Submit_A">@Localizer["Save"]</a>
                 <span id="SaveProgressSpan"></span>
             </div>
-          </form>
+        </form>
     </div>
 </div>
 
@@ -72,6 +72,42 @@
 
 
     class _EditPartial_Data{
+
+        /**
+         * Get MD5 of file input and execute a function
+         * @@param {string} Id -The id of file input
+         * @@param {Function} ToDo - Execute a function(pass Id and md5) after finishing computing md5
+         */
+        GetMD5(Id, ToDo) {
+            var File_ = document.getElementById(_Value.FileInput(Id)).files[0];
+            
+            var BlobSlice_ = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
+                ChunkSize = 20 * 1024 * 1024,
+                Chunks = Math.ceil(File_.size / ChunkSize),
+                CurrentChunk = 0,
+                Spark_ = new SparkMD5.ArrayBuffer(),
+                FileReader_ = new FileReader();
+            FileReader_.onload = function (e) {
+                Spark_.append(e.target.result);
+                CurrentChunk++;
+                if (CurrentChunk < Chunks) {
+                    loadNext();
+                } else {
+                    let MD5 = String(Spark_.end());
+                    ToDo(Id,MD5);
+                }
+            };
+            FileReader_.onerror = function () {
+                console.warn('oops, something went wrong');
+            };
+            function loadNext() {
+                var Start = CurrentChunk * ChunkSize,
+                    End = ((Start + ChunkSize) >= File_.size) ? File_.size : Start + ChunkSize;
+                FileReader_.readAsArrayBuffer(BlobSlice_.call(File_, Start, End));
+            }
+            loadNext();
+        }
+
         /**
          *
          * @@param {any} Editor - The Editor
@@ -203,7 +239,33 @@
     }
 
     class _EditPartial_Service {
-        SubmitForm(Editor) {
+        async CheckMD5() {
+            await $("input[name='LAttachments']").each(function (index, elem) {
+                let _id = this.id;
+                _EditPartial_Data_.GetMD5(_id, AddId8MD5);
+            });
+            let ID8MD5Form = new FormData();
+            ID8MD5Form.append("");//////////////////////////////
+            $.ajax({
+
+            });
+        }
+        async SubmitForm() {
+
+        }
+
+        /**
+         * (Id ,MD5) ===> ID8MD5Array
+         * @@param {string}Id -The id of file input element
+         * @@param {string}MD5 -The MD5 string
+         */
+        AddId8MD5(Id, MD5) {
+            if (!ID8MD5Array.some((value, index, array) => { value["ID"] == Id && value["MD5"] == MD5 })) {
+                ID8MD5Array.push({ ID: Id, MD5:MD5 });
+            }
+        }
+
+        FormSubmitClick(Editor) {
             $("#Content").val(Editor.txt.html());
             let _EArticles_Form_Data_=new FormData();
             _EArticles_Form_Data_.append("@(nameof(Model.Title))",$("#@nameof(Model.Title)").val());
@@ -211,23 +273,24 @@
             $("input[name='LAttachments']").each(function(index,elem){
                 let _id=this.id;
                 console.log(_id);
-                var _File=document.getElementById(_id).files[0];
+                let _File=document.getElementById(_id).files[0];
                     _EArticles_Form_Data_.append("LAttachments",_File,_File.name);
             });
             $("input[name='LVideos']").each(function(index,elem){
 
                 let _id=this.id;
                 console.log(_id);
-                var _File=document.getElementById(_id).files[0];
+                let _File=document.getElementById(_id).files[0];
                     _EArticles_Form_Data_.append("LVideos",_File,_File.name);
             });
             $.ajax({
+                //  #region
                 url: "@(Url.Action(IsEdit?"Edit":"Create"))",
                 type: "POST",
                 data: _EArticles_Form_Data_,
                 processData: false,
                 contentType: false,
-                async: false,  
+                async: false,
                 //  contentType: "multipart/form-data",
                 headers: {
                     "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
@@ -256,6 +319,7 @@
                 success: function () {
                     history.go(-1);
                 }
+                //  #endregion
             });
         }
     }
@@ -266,13 +330,14 @@
     var _EditPartial_Data_ = new _EditPartial_Data();
     var _EditPartial_Value_ = new _EditPartial_Value();
     var _EditPartial_Service_ = new _EditPartial_Service();
+    var ID8MD5Array = new Array();
 
     $(document).ready(function () {
 
         _EditPartial_Data_.ReadyEditor(Editor);
 
         $("#EArticles_Form_Submit_A").on("click", function () {
-            _EditPartial_Service_.SubmitForm(Editor);
+            _EditPartial_Service_.FormSubmitClick(Editor);
             event.preventDefault();
         });
 

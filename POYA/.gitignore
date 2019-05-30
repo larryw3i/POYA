@@ -5,8 +5,10 @@
 /obj/
 /Migrations/
 #	!/Data/
-/Data/LFiles/
-/Data/Database/
+/Data/LFiles/Avatars/*
+/Data/LFiles/XUserFile/*
+/Data/Database/*
+/Areas/EduHub/Data/EArticleFiles/*
 
 # Files
 /appsettings.json

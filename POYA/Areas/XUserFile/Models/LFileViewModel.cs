@@ -173,6 +173,18 @@ namespace POYA.Areas.XUserFile.Models
         public IFormFile _LFile { get; set; }
         public Guid InDirId { get; set; }
     }
+
+    /// <summary>
+    /// For LCheckMD5
+    /// </summary>
+    public class LMD5
+    {
+        public string FileMD5 { get; set; }
+        /// <summary>
+        /// The default is <see langword="false"/>
+        /// </summary>
+        public bool IsUploaded { get; set; } = false;
+    }
     #endregion
 
 }

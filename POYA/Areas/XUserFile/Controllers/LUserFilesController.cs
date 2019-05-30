@@ -37,6 +37,7 @@ namespace POYA.Areas.XUserFile.Controllers {
         private readonly ILogger<Program> _logger;
         private readonly IAntiforgery _antiforgery;
         private readonly MimeHelper _mimeHelper;
+        private readonly XUserFileHelper _xUserFileHelper;
         public LUserFilesController (
             MimeHelper mimeHelper,
             IAntiforgery antiforgery,
@@ -58,6 +59,7 @@ namespace POYA.Areas.XUserFile.Controllers {
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
             _mimeHelper = mimeHelper;
+            _xUserFileHelper = new XUserFileHelper();
 
         }
         #endregion
@@ -78,11 +80,11 @@ namespace POYA.Areas.XUserFile.Controllers {
         public async Task<IActionResult> Index (Guid? InDirId) {
 
             #region REBARBATIVE INITIALIZATION
-            if (!Directory.Exists (_x_DOVEHelper.AvatarStoragePath (_hostingEnv))) {
-                Directory.CreateDirectory (_x_DOVEHelper.AvatarStoragePath (_hostingEnv));
+            if (!Directory.Exists (X_DOVEValues.AvatarStoragePath (_hostingEnv))) {
+                Directory.CreateDirectory (X_DOVEValues.AvatarStoragePath (_hostingEnv));
             }
 
-            var _FileNames = new DirectoryInfo (_x_DOVEHelper.FileStoragePath (_hostingEnv)).GetFiles ().Select (p => p.Name);
+            var _FileNames = new DirectoryInfo (X_DOVEValues.FileStoragePath (_hostingEnv)).GetFiles ().Select (p => p.Name);
             //  Console.WriteLine("FileName >> "+JsonConvert.SerializeObject(_FileNames));
             var _LFiles = await _context.LFile.ToListAsync ();
             var _LUserFiles = await _context.LUserFile.ToListAsync ();
@@ -171,8 +173,8 @@ namespace POYA.Areas.XUserFile.Controllers {
                 var MemoryStream_ = new MemoryStream ();
                 await _LFilePost._LFile.CopyToAsync (MemoryStream_);
                 var FileBytes = MemoryStream_.ToArray ();
-                var MD5_ = _x_DOVEHelper.GetFileMD5 (FileBytes);
-                var FilePath = _x_DOVEHelper.FileStoragePath (_hostingEnv) + MD5_;
+                var MD5_ = _xUserFileHelper.GetFileMD5 (FileBytes);
+                var FilePath = X_DOVEValues.FileStoragePath (_hostingEnv) + MD5_;
                 //  System.IO.File.Create(FilePath);
                 await System.IO.File.WriteAllBytesAsync (FilePath, FileBytes);
                 await _context.LFile.AddAsync (new LFile {
@@ -383,7 +385,7 @@ namespace POYA.Areas.XUserFile.Controllers {
             if (_LUserFile == null) {
                 return NoContent ();
             }
-            var _FilePath = _x_DOVEHelper.FileStoragePath (_hostingEnv) + _LUserFile.MD5;
+            var _FilePath = X_DOVEValues.FileStoragePath (_hostingEnv) + _LUserFile.MD5;
             if (!System.IO.File.Exists (_FilePath)) {
                 return NoContent ();
             }

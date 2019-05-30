@@ -6,10 +6,10 @@
     <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <Win32Resource />
-    <TypeScriptToolsVersion>3.3</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <OutputType>Exe</OutputType>
-    <StartupObject />
+    <StartupObject>POYA.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Areas\EduHub\Views\EGrades\**" />
@@ -237,9 +237,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\EduHub\Data\EArticleFiles\" />
+    <Folder Include="Areas\EduHub\Data\EArticleFiles\" />
     <Folder Include="Areas\XLaw\Data\" />
     <Folder Include="Areas\XUserFile\Data\" />
+    <Folder Include="Areas\XUserFile\Data\" />
     <Folder Include="Data\LFiles\Avatars\" />
+    <Folder Include="Data\LFiles\XUserFile\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bundleconfig.json" />
@@ -262,7 +265,7 @@
     <None Include="wwwroot\lib\wangEditor-3.1.1\LICENSE" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <TypeScriptTarget>ESNext</TypeScriptTarget>
+    <TypeScriptTarget>ES2018</TypeScriptTarget>
     <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
     <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>

@@ -70,6 +70,9 @@ namespace POYA.Areas.EduHub.Models
 
     public class EArticleFile
     {
+        /// <summary>
+        /// The default is  Guid.NewGuid()
+        /// </summary>
         public Guid Id { get; set; } = Guid.NewGuid();
         public Guid EArticleId { get; set; }
         public string FileMD5 { get; set; }

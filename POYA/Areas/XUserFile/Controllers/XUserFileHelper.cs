@@ -1,15 +1,58 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using POYA.Areas.XUserFile.Models;
 using POYA.Data;
+using POYA.Unities.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace POYA.Areas.XUserFile.Controllers
 {
     public class XUserFileHelper
     {
+        /// <summary>
+        /// determine the MD5 in IEnumerableLMD5 is match the MD5 of uploaded files or not
+        /// </summary>
+        /// <param name="env">The IHostingEnvironment for getting FileStoragePath</param>
+        /// <param name="lMD5s">The IEnumerableLMD5</param>
+        /// <returns></returns>
+        public IEnumerable<LMD5> LCheckMD5(IHostingEnvironment env,IEnumerable<LMD5> lMD5s)
+        { 
+            
+            var UploadFileMD5s =System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(env))
+                .Select(p => System.IO.Path.GetFileNameWithoutExtension(p)).ToList();
+
+            foreach (var m in lMD5s)
+                if (UploadFileMD5s.Contains(m.FileMD5))
+                    m.IsUploaded = true;
+
+            return lMD5s;
+        }
+
+        /// <summary>
+        /// Get the md5 of file byte array
+        /// </summary>
+        /// <param name="FileBytes">
+        /// File byte array
+        /// </param>
+        /// <returns></returns>
+        public string GetFileMD5(byte[] FileBytes)
+        {
+            var Md5_ = MD5.Create();
+            var MD5Bytes = Md5_.ComputeHash(FileBytes);
+            var sb = new StringBuilder();
+            for (int i = 0; i < MD5Bytes.Length; i++)
+            {
+                sb.Append(MD5Bytes[i].ToString("x2"));
+            }
+            return sb.ToString();
+        }
+
         /// <summary>
         /// Determine a id of <see cref="LUserFile"/> or <see cref="LDir"/> is included in a directory
         /// </summary>
@@ -56,6 +99,7 @@ namespace POYA.Areas.XUserFile.Controllers
             _DirIDs.Add(DirId);
             return lUserFiles.Where(o => _DirIDs.Contains(o.InDirId)).ToList();
         }
+        #region
         /*
         public List<LSharingDirMap> MakeSubFDCopy(List<LDir> lDirs, List<LUserFile> lUserFiles, Guid InDirId)
         {
@@ -78,5 +122,6 @@ namespace POYA.Areas.XUserFile.Controllers
             return _LSharingDirMap;
         }
         */
+        #endregion
     }
 }

@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using POYA.Areas.EduHub.Models;
+using POYA.Areas.XUserFile.Controllers;
 using POYA.Areas.XUserFile.Models;
 using POYA.Data;
 using POYA.Unities.Helpers;
@@ -38,6 +39,7 @@ namespace POYA.Areas.EduHub.Controllers
         private readonly ILogger<EArticlesController> _logger;
         private readonly HtmlSanitizer _htmlSanitizer;
         private readonly MimeHelper _mimeHelper;
+        private readonly XUserFileHelper _xUserFileHelper;
         public EArticlesController(
             MimeHelper mimeHelper,
             HtmlSanitizer htmlSanitizer,
@@ -61,6 +63,7 @@ namespace POYA.Areas.EduHub.Controllers
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
             _mimeHelper = mimeHelper;
+            _xUserFileHelper = new XUserFileHelper();
         }
         #endregion
 
@@ -186,6 +189,7 @@ namespace POYA.Areas.EduHub.Controllers
             if (ModelState.IsValid)
             {
                 var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+                var _EArticleFiles = new List<EArticleFile>();
                 eArticle.Id = Guid.NewGuid();
                 eArticle.UserId = UserId_;
                 eArticle.Content = _htmlSanitizer.Sanitize(eArticle.Content);
@@ -194,6 +198,7 @@ namespace POYA.Areas.EduHub.Controllers
                 if (eArticle.LAttachments.Count()>0|| eArticle.LVideos.Count()>0) {
                     foreach(var i in eArticle.LAttachments){
 
+                        _EArticleFiles.Add(new EArticleFile {  EArticleId =eArticle.Id});
                     }
                     foreach(var i in eArticle.LVideos){
                         
@@ -317,14 +322,14 @@ namespace POYA.Areas.EduHub.Controllers
             {
                 var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                 var _data = new List<string>();
-                var _MD5s =await  System.IO.Directory.GetFiles(_x_DOVEHelper.FileStoragePath(_hostingEnv)).Select(p => p.Split(new char[]{ '\\', '/' }).LastOrDefault()).ToListAsync();
+                var _MD5s =await  System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(_hostingEnv)).Select(p => p.Split(new char[]{ '\\', '/' }).LastOrDefault()).ToListAsync();
                 foreach (var img in EArticleImages)
                 {
                     var MemoryStream_ = new MemoryStream();
                     await img.CopyToAsync(MemoryStream_);
                     var FileBytes = MemoryStream_.ToArray();
-                    var MD5_ = _x_DOVEHelper.GetFileMD5(FileBytes);
-                    var FilePath = _x_DOVEHelper.FileStoragePath(_hostingEnv) + MD5_;
+                    var MD5_ = _xUserFileHelper.GetFileMD5(FileBytes);
+                    var FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + MD5_;
                     //  System.IO.File.Create(FilePath);
                     if (!_MD5s.Contains(MD5_))
                     {
@@ -373,7 +378,7 @@ namespace POYA.Areas.EduHub.Controllers
             {
                 return NoContent();
             }
-            var _FilePath = _x_DOVEHelper.FileStoragePath(_hostingEnv) + _LUserFile.MD5;
+            var _FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + _LUserFile.MD5;
             if (!System.IO.File.Exists(_FilePath))
             {
                 return NoContent();
