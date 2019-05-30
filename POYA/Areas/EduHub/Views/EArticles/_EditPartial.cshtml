@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col">
-        <form asp-action='@(IsEdit?"Edit":"Create")' id="EArticles_Form" name="EArticles_Form" enctype="multipart/form-data">
+        <form asp-action='@(IsEdit ? "Edit" : "Create")' id="EArticles_Form" name="EArticles_Form" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group ">
@@ -77,8 +77,9 @@
          * Get MD5 of file input and execute a function
          * @@param {string} Id -The id of file input
          * @@param {Function} ToDo - Execute a function(pass Id and md5) after finishing computing md5
+         * @@param {boolean} IsEArticleVideo - Flag a file is video of article or not, the default is false
          */
-        GetMD5(Id, ToDo) {
+        GetMD5(Id, ToDo,IsEArticleVideo=false) {
             var File_ = document.getElementById(_Value.FileInput(Id)).files[0];
             
             var BlobSlice_ = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
@@ -94,7 +95,7 @@
                     loadNext();
                 } else {
                     let MD5 = String(Spark_.end());
-                    ToDo(Id,MD5);
+                    ToDo(Id,MD5,IsEArticleVideo);
                 }
             };
             FileReader_.onerror = function () {
@@ -239,34 +240,47 @@
     }
 
     class _EditPartial_Service {
+        /**
+         *  public Guid EArticleId { get; set; }
+         *  public string FileName { get; set;}
+         *  public string MD5 { get; set; }
+         *  public bool IsEArticleVideo { get; set; } = false;
+         * */
         async CheckMD5() {
             await $("input[name='LAttachments']").each(function (index, elem) {
                 let _id = this.id;
-                _EditPartial_Data_.GetMD5(_id, AddId8MD5);
+                _EditPartial_Data_.GetMD5(_id, AddId8MD5,false);
+            });
+            await $("input[name='LVideos']").each(function (index, elem) {
+                let _id = this.id;
+                _EditPartial_Data_.GetMD5(_id, AddId8MD5,true);
+            });
+            let eArticleFileMD5s = new Array();
+            ID8MD5Array.forEach((value, index, array) => {
+                eArticleFileMD5s.push({
+                    EArticleId: "@Model.Id",
+                    FileName: $("#" + value["ID"]).val(),
+                    MD5: value["MD5"],
+                    IsEArticleVideo: value["IsEArticleVideo"]
+                });
             });
             let ID8MD5Form = new FormData();
-            ID8MD5Form.append("");//////////////////////////////
+            ID8MD5Form.append("eArticleFileMD5s",JSON.stringify(eArticleFileMD5s));
             $.ajax({
-
+                url: "@Url.Action("LCheckMD5v1")",
+                type: "POST",
+                data: ID8MD5Form,
+                 headers: {
+                    "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
+                },
+                dataType:"json",
+                success: function (Response) {
+                    console.log(Response);
+                }
             });
         }
-        async SubmitForm() {
-
-        }
-
-        /**
-         * (Id ,MD5) ===> ID8MD5Array
-         * @@param {string}Id -The id of file input element
-         * @@param {string}MD5 -The MD5 string
-         */
-        AddId8MD5(Id, MD5) {
-            if (!ID8MD5Array.some((value, index, array) => { value["ID"] == Id && value["MD5"] == MD5 })) {
-                ID8MD5Array.push({ ID: Id, MD5:MD5 });
-            }
-        }
-
-        FormSubmitClick(Editor) {
-            $("#Content").val(Editor.txt.html());
+        async SubmitForm(Editor) {
+              $("#Content").val(Editor.txt.html());
             let _EArticles_Form_Data_=new FormData();
             _EArticles_Form_Data_.append("@(nameof(Model.Title))",$("#@nameof(Model.Title)").val());
             _EArticles_Form_Data_.append("@(nameof(Model.Content))",Editor.txt.html());
@@ -321,6 +335,23 @@
                 }
                 //  #endregion
             });
+        }
+
+        /**
+         * (Id ,MD5) ===> ID8MD5Array
+         * @@param {string}Id -The id of file input element
+         * @@param {string}MD5 -The MD5 string
+         * @@param {boolean} IsEArticleVideo - Flag a file is video of article or not, the default is false
+         */
+        AddId8MD5(Id, MD5,IsEArticleVideo=false) {
+            if (!ID8MD5Array.some((value, index, array) => { value["ID"] == Id && value["MD5"] == MD5 })) {
+                ID8MD5Array.push({ ID: Id, MD5:MD5,IsEArticleVideo:IsEArticleVideo });
+            }
+        }
+
+        FormSubmitClick(Editor) {
+            await this.CheckMD5();
+
         }
     }
 

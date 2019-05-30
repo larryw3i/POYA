@@ -200,7 +200,7 @@ namespace POYA.Unities.Helpers
         public static string EduHubFileStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/EduHub/";
 
         /// <summary>
-        /// env.ContentRootPath + $"/Data/LFiles/"
+        /// env.ContentRootPath + $"/Data/LFiles/XUserFile/"
         /// </summary>
         /// <param name="env">The HostingEnvironment</param>
         /// <returns></returns>
