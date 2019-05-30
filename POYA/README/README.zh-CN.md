@@ -17,7 +17,7 @@
 这是它的内容:  
 ```json
 {
-  "ConnectionStrings": { 
+  "ConnectionStrings": {
     "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=aspnet-POYA-0E28E843-176D-49F3-9739-6D5E6F1BC3F5;Trusted_Connection=True;MultipleActiveResultSets=true"
   },
   "Logging": {
@@ -27,19 +27,21 @@
   },
   "AllowedHosts": "*",
   "EmailSender": {
-    "userName": "xxxxxx@xxxxxx.xxx",
-    "host": "xxxxxx.xxxxxx.xxx",
-    "password": "xxxxxx",
-    "port": "xx"
-  }, 
+    "userName": "xxxxxx@xxxxxxxx.xxxx",
+    "host": "xxxxxx.xxxxx.xxxx",
+    "password": "xxxxx",
+    "port": xx,
+    "enableSsl": xxx
+  },
   "ErrorLogHandle": {
-    "ReceiveLogEmailAddress": "xxxxxxx@xxx.xxx"
+    "ReceiveLogEmailAddress": "xxxxxxxx@xxx.xxx"
   }
 } 
 ```     
 >✔ **DefaultConnection** 是数据库的连接字符串, 上面的值是MSSQL的连接字符串, 如果你使用SQLite, 那么它的DefaultConnection是  **"Data Source=app.db**   , 当然了, 你可以更改成你喜欢的数据库和相应的连接字符串, 然后在  **Startup.cs** 中修改  **services.AddDbContext**  里面的相应内容   
 ✔**EmailSender** 是你的邮件服务相关配置(为了能正常使用, 你可能要更改它的值), 它在用户注册和用户接受通知中起关键作用,  **userName** 是你的  **smtp** 用户名, 其它的三个你熟悉 **smtp** 的话你应该很容易明白它   
-✔**ReceiveLogEmailAddress** 邮箱地址是用来接收错误信息的(未医先治)    
+✔**ReceiveLogEmailAddress** 邮箱地址是用来接收错误信息的(未医先治)     
+
 #### 1(多余的)    
 ***   
 >完成 **appsettings.json** 后你可以试试项目能否 **RUN**  
