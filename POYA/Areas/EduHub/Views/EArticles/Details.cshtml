@@ -1,8 +1,10 @@
 ﻿@model POYA.Areas.EduHub.Models.EArticle
+@using POYA.Areas.EduHub.Models;
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var _EArticleFiles_ = ViewData["EArticleFile"] as List<EArticleFile>;
 }
 
 <h4 class="col offset-1">
@@ -15,6 +17,14 @@
 
 <div>
     <hr />
+    <dl class="row">
+        @foreach (var i in _EArticleFiles_.Where(p=>p.IsEArticleVideo))
+        {
+        <dd class="col col-6">
+            <video src="@Url.Action("GetFile", "LUserFiles", new { id = i.Id })"></video>
+        </dd>
+        }
+    </dl>
     <dl class="row">
         <dd class="col">
             @Html.Raw(Model.Content)

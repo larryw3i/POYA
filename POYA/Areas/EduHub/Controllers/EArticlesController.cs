@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using POYA.Areas.EduHub.Models;
 using POYA.Areas.XUserFile.Controllers;
 using POYA.Areas.XUserFile.Models;
@@ -166,6 +167,7 @@ namespace POYA.Areas.EduHub.Controllers
                 await _context.EArticleUserReadRecords.AddAsync(new EArticleUserReadRecord { EArticleId = eArticle.Id, UserId = UserId_ });
             }
             await _context.SaveChangesAsync();
+            ViewData[nameof(EArticleFile)] = await _context.EArticleFiles.Where(p => p.EArticleId == id).ToListAsync();
             return View(eArticle);
         }
 
@@ -193,17 +195,25 @@ namespace POYA.Areas.EduHub.Controllers
                 eArticle.Id = Guid.NewGuid();
                 eArticle.UserId = UserId_;
                 eArticle.Content = _htmlSanitizer.Sanitize(eArticle.Content);
-                _context.Add(eArticle);
-                #region     SAVE_FILES
-                if (eArticle.LAttachments.Count()>0|| eArticle.LVideos.Count()>0) {
-                    foreach(var i in eArticle.LAttachments){
+                await _context.AddAsync(eArticle);
 
-                        _EArticleFiles.Add(new EArticleFile {  EArticleId =eArticle.Id});
+               
+                //  _context.Add(eArticle);
+                #region     SAVE_FILES
+                if (eArticle.LAttachments.Count() > 0 || eArticle.LVideos.Count() > 0)
+                {
+                    foreach (var i in eArticle.LAttachments)
+                    { 
+                        var MD5_ =await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv,i); 
+                        _EArticleFiles.Add(new EArticleFile { EArticleId = eArticle.Id, FileName =System.IO.Path.GetFileNameWithoutExtension( i.FileName), FileMD5 =MD5_, IsEArticleVideo = false });
                     }
-                    foreach(var i in eArticle.LVideos){
-                        
+                    foreach (var i in eArticle.LVideos)
+                    { 
+                        var MD5_ = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, i); 
+                        _EArticleFiles.Add(new EArticleFile { EArticleId = eArticle.Id, FileName = System.IO.Path.GetFileNameWithoutExtension(i.FileName), FileMD5 = MD5_, IsEArticleVideo = true });
                     }
                 }
+                await _context.EArticleFiles.AddRangeAsync(_EArticleFiles);
                 #endregion
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -315,10 +325,20 @@ namespace POYA.Areas.EduHub.Controllers
         #region DEPOLLUTION
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> LCheckMD5v1([FromForm]IEnumerable<EArticleFileMD5>  eArticleFileMD5s)
+        public async Task<IActionResult> LCheckMD5v1(IEnumerable<EArticleFileMD5> eArticleFileMD5s)
         {
-
-            return NoContent();
+            var _lMD5s = eArticleFileMD5s.ToList().Select(p => new LMD5 { FileMD5 = p.MD5, IsUploaded = false });
+            _lMD5s = _xUserFileHelper.LCheckMD5(_hostingEnv, _lMD5s);
+            var _EArticleFiles_ = new List<EArticleFile>();
+            eArticleFileMD5s.ToList().ForEach(p =>
+            {
+                if (_lMD5s.Any(q => q.FileMD5 == p.MD5 && q.IsUploaded))
+                {
+                    _EArticleFiles_.Add(new EArticleFile { EArticleId = p.EArticleId, FileMD5 = p.MD5, FileName = p.FileName, IsEArticleVideo = p.IsEArticleVideo });
+                }
+            });
+            await _context.EArticleFiles.AddRangeAsync(_EArticleFiles_);
+            return Ok(_lMD5s );
         }
         [HttpPost]
         [AutoValidateAntiforgeryToken]

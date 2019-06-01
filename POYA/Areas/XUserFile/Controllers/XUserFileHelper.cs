@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using POYA.Areas.XUserFile.Models;
@@ -6,6 +7,7 @@ using POYA.Data;
 using POYA.Unities.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,6 +17,26 @@ namespace POYA.Areas.XUserFile.Controllers
 {
     public class XUserFileHelper
     {
+        public async Task<string> LWriteBufferToFileAsync( IHostingEnvironment _hostingEnv , IFormFile formFile)
+        {
+            var MemoryStream_ = new MemoryStream();
+            await formFile.CopyToAsync(MemoryStream_);
+            var FileBytes = MemoryStream_.ToArray();
+            var MD5_ = GetFileMD5(FileBytes);
+            var UploadFileMD5s = System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(_hostingEnv))
+             .Select(p => System.IO.Path.GetFileNameWithoutExtension(p)).ToList();
+
+            if (UploadFileMD5s.Contains(MD5_))
+            {
+                return MD5_;
+            }
+
+            var FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + MD5_;
+            //  System.IO.File.Create(FilePath);
+            await System.IO.File.WriteAllBytesAsync(FilePath, FileBytes);
+            return MD5_;
+
+        }
         /// <summary>
         /// determine the MD5 in IEnumerableLMD5 is match the MD5 of uploaded files or not
         /// </summary>

@@ -378,6 +378,17 @@ namespace POYA.Areas.XUserFile.Controllers {
             if (id == null) {
                 return NoContent ();
             }
+            var _EArticleFile = await _context.EArticleFiles.FirstOrDefaultAsync(p => p.Id == id);
+            if (_EArticleFile != null)
+            {
+                var _FilePath_ = X_DOVEValues.FileStoragePath(_hostingEnv) + _EArticleFile.FileMD5;
+                if (!System.IO.File.Exists(_FilePath_))
+                {
+                    return NoContent();
+                }
+                var _FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath_);
+                return File(_FileBytes, _mimeHelper.GetMimes(_EArticleFile.FileName, _hostingEnv).Last(), _EArticleFile.FileName, true);
+            }
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             var _UserId = _userManager.GetUserAsync (User).GetAwaiter ().GetResult ().Id;
             var _LUserFile = await _context.LUserFile.Select (p => new { p.MD5, p.Id, p.Name, p.UserId })
