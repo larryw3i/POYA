@@ -11,10 +11,12 @@
 
 *@
 
+@using POYA.Areas.EduHub.Models;
 @model POYA.Areas.EduHub.Models.EArticle
 
 @{
     var IsEdit = (bool)ViewData["IsEdit"];
+    var EArticleFiles = IsEdit ? ViewData["EArticleFiles"] as List<EArticleFile> : null ;
 }
 
 <hr />
@@ -48,14 +50,34 @@
             <div class="form-group row">
                 <div class="col col-4" id="video_div">
                     <span class="row">@Localizer["Upload videos for your article"]</span>
-                    <div class="row" id="video_list_div"></div>
+                    <div class="row" id="video_list_div">
+                        @if (IsEdit)
+                        {
+                            foreach (var v in EArticleFiles.Where(p => p.IsEArticleVideo))
+                            {
+                                var _id = v.Id;
+                                <div class="SelectFileShowDiv" id="LVideos_@_id"><span>@(v.FileName)</span><span class='FileInputRemoveSpan' id="LVideos_@_id" onclick="RemoveFile('@_id',true,true)"> x</span></div>
+                            }
+                        }
+                    </div>
                     <div class="row" id="video_row_div">
                         <a class="btn btn-outline-info" id="VideoSelectBtn">@Localizer["Select video"]</a>
                     </div>
                 </div>
                 <div class="col col-4" id="attachment_div">
                     <span class="row">@Localizer["Upload attachments for your article"]</span>
-                    <div class="row" id="attachment_list_div"></div>
+                    <div class="row" id="attachment_list_div">
+                        @if (IsEdit)
+                        {
+                            foreach (var a in EArticleFiles.Where(p => !p.IsEArticleVideo))
+                            {
+                                var _id = a.Id;
+                                <div class="SelectFileShowDiv" id="LAttachments_@_id)"><span>@(a.FileName)</span><span class='FileInputRemoveSpan' id="LAttachments_@_id" onclick="RemoveFile('@_id',false,true)"> x</span></div>
+                              
+                            }
+
+                        }
+                    </div>
                     <div class="row" id="attachment_row_div">
                         <a class="btn btn-outline-info" id="AttachmentSelectBtn">@Localizer["Select attachment"]</a>
                     </div>
@@ -80,8 +102,6 @@
 <script src="~/lib/js-spark-md5/spark-md5.min.js"></script>
 <script>
 
-
-
     var _Editor = window.wangEditor;
     var Editor = new _Editor("#MenuToolbar","#_ContentEditor");
 
@@ -91,6 +111,9 @@
     $(document).ready(function () {
 
         ReadyEditor(Editor);
+
+        $("#video_list_div").hide();
+        $("#attachment_list_div").hide();
 
         $("#EArticles_Form_Submit_A").on("click", function () {
             FormSubmitClick(Editor);
@@ -156,7 +179,9 @@
     var LAttachmentFileInput = (id) => `<input type='file' hidden name='LAttachments' id='${this.LAttachmentFileInputId(id)}' onchange='LAttachmentsOnChange("${id}")'/>`;
 
     var LVideoFileInput = (id) => `<input type='file'  hidden name='LVideos' id='${this.LVideoFileInputId(id)}' accept='video/*'  onchange='LVideosOnChange("${id}")'/>`;
-    var FileRemoveBtnId = (id) => `FileRemove_${id}`;
+    var FileRemoveId = (id) => `FileRemove_${id}`;
+    var FileRemoveDIVId = (id) => `FileRemoveDIV_${id}`;
+    var FileRemoveSpanId = (id) => `FileRemoveSpan_${id}`;
     //  #endregion
 
     //  #region  SERVICES
@@ -232,28 +257,43 @@
     /**
     *
     * @@param {string} id -The id
-    * @@param IsVideoFileInput
+    * @@param {boolean} IsVideoFileInput -Flag a file input is video input for article
+    * @@param {boolean} IsUploadedFile -Flag a file input is uploaded(from Edit)
     */
-    function RemoveFile(id, IsVideoFileInput = false) {
-        $(`#${_EditPartial_Value_.FileRemoveBtnId(id)}`).remove();
+    function RemoveFile(id, IsVideoFileInput = false, IsUploadedFile = false) {
+        if (IsUploadedFile) {
+            $.ajax({
+                url: "@Url.Action("RemoveArticleFile")",
+                type: "POST",
+                data: { "id": id },
+                headers: {
+                    "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
+                },
+                success: function () {
+                    $(`#${FileRemoveDIVId(id)}`).remove();
+                }
+            });
+            return;
+        }
+        $(`#${FileRemoveDIVId(id)}`).remove();
         if (IsVideoFileInput) {
-            $(`#${_EditPartial_Value_.LVideoFileInputId(id)}`).remove();
+            $(`#${LVideoFileInputId(id)}`).remove();
         } else {
-            $(`#${_EditPartial_Value_.LAttachmentFileInputId(id)}`).remove();
+            $(`#${LAttachmentFileInputId(id)}`).remove();
         }
     }
 
     function LAttachmentsOnChange(id) {
         GetMD5(LAttachmentFileInputId(id), false);
         let _Value = $(`#LAttachments_${id}`).val();
-        let _Content = `<div class="btn btn-info" id="FileRemove_${id}" onclick="RemoveFile('${id}')">${_Value} x</div>`;
+        let _Content = `<div class="SelectFileShowDiv"   id="${FileRemoveDIVId(id)}" ><span>${_Value}</span><span class='FileInputRemoveSpan'  id="${FileRemoveSpanId(id)}" onclick="RemoveFile('${id}')"> x</span></div>`;
         $("#attachment_list_div").append(_Content);
     }
 
     function LVideosOnChange(id) {
         GetMD5(LVideoFileInputId(id),true);
         let _Value = $(`#LVideos_${id}`).val();
-        let _Content = `<div class="btn btn-info" id="FileRemove_${id}"  onclick="RemoveFile('${id}',true)">${_Value} x</div>`;
+        let _Content = `<div class="SelectFileShowDiv"   id="${FileRemoveDIVId(id)}" ><span>${_Value}</span><span class='FileInputRemoveSpan'   id="${FileRemoveSpanId(id)}" onclick="RemoveFile('${id}',true)"> x</span></div>`;
         $("#video_list_div").append(_Content);
     }
     /**
@@ -481,4 +521,17 @@
     .LookForImageIcon {
         zoom: 200%;
     }
+    .SelectFileShowDiv{
+        border:dotted;
+        border-radius:8px;
+        padding:2px;
+        max-width:90%;
+        
+    }
+    
+    .FileInputRemoveSpan:hover{
+        color:red;
+        zoom:150%;
+    }
+
 </style>

@@ -78,6 +78,13 @@ namespace POYA.Areas.EduHub.Models
         public string FileMD5 { get; set; }
         public string FileName { get; set; }
         public bool IsEArticleVideo { get; set; } = false;
+        #region DEPOLLUTION
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        [NotMapped]
+        public string ContentType { get; set; }
+        #endregion
     }
 
     public class EArticleFileMD5

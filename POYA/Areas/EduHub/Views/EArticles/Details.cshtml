@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var _EArticleFiles_ = ViewData["EArticleFile"] as List<EArticleFile>;
+    var _EArticleFiles_ = ViewData["EArticleFiles"] as List<EArticleFile>;
 }
 
 <h4 class="col offset-1">
@@ -20,8 +20,8 @@
     <dl class="row">
         @foreach (var i in _EArticleFiles_.Where(p=>p.IsEArticleVideo))
         {
-        <dd class="col col-6">
-            <video src="@Url.Action("GetFile", "LUserFiles", new { id = i.Id })"></video>
+        <dd class="col col-10">
+            <video src="@Url.Action("GetFile", "LUserFiles", new { id = i.Id,area="XUserFile" })" style="width:100%" type="@(Model.ContentType)" controls></video>
         </dd>
         }
     </dl>
