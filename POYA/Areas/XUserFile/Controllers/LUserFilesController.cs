@@ -374,6 +374,7 @@ namespace POYA.Areas.XUserFile.Controllers {
         /// <param name="id">The <see cref="LUserFile"/> id or the sharing id of <see cref="LSharing"/> </param>
         /// <param name="LSharingId">The <see cref="LSharing"/> id should be passed if you get a file in shared directory</param>
         /// <returns></returns>
+        [AllowAnonymous]
         public async Task<IActionResult> GetFile (Guid? id) {
             if (id == null) {
                 return NoContent ();

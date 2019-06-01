@@ -18,16 +18,35 @@
 <div>
     <hr />
     <dl class="row">
-        @foreach (var i in _EArticleFiles_.Where(p=>p.IsEArticleVideo))
+        @if (_EArticleFiles_?.Count() > 0)
         {
-        <dd class="col col-10">
-            <video src="@Url.Action("GetFile", "LUserFiles", new { id = i.Id,area="XUserFile" })" style="width:100%" type="@(Model.ContentType)" controls></video>
-        </dd>
+            @foreach (var i in _EArticleFiles_.Where(p => p.IsEArticleVideo))
+            {
+                <dd class="col col-10">
+                    <video style="width:100%" controls>
+                        <source src="@Url.Action("GetFile", "LUserFiles", new { id = i.Id, area = "XUserFile" })" type="@(i.ContentType)" />
+                    </video>
+                </dd>
+            }
         }
+
     </dl>
     <dl class="row">
         <dd class="col">
             @Html.Raw(Model.Content)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dd class="col">
+            @if (_EArticleFiles_.Where(p=>!p.IsEArticleVideo).Count() > 0)
+            {
+                <span>@string.Format( Localizer["The attachment{0} of this article"],_EArticleFiles_.Where(p=>!p.IsEArticleVideo).Count()>1?"s":"")</span>
+                @foreach (var i in _EArticleFiles_.Where(p => !p.IsEArticleVideo))
+                {
+                    <br />
+                    <a asp-action="GetFile" asp-route-id="@(i.Id)" asp-controller="LUserFiles" asp-area="XUserFile" title="@Localizer["Get it"]">@(i.FileName)</a>
+                }
+            }
         </dd>
     </dl>
 </div>
