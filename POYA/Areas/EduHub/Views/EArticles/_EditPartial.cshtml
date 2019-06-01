@@ -56,7 +56,7 @@
                             foreach (var v in EArticleFiles.Where(p => p.IsEArticleVideo))
                             {
                                 var _id = v.Id;
-                                <div class="SelectFileShowDiv" id="LVideos_@_id"><span>@(v.FileName)</span><span class='FileInputRemoveSpan' id="LVideos_@_id" onclick="RemoveFile('@_id',true,true)"> x</span></div>
+                                <div class="SelectFileShowDiv" id="FileRemoveDIV_@_id"><span>@(v.FileName)</span><span class='FileInputRemoveSpan' id="LVideos_@_id" onclick="RemoveFile('@_id',true,true)"> x</span></div>
                             }
                         }
                     </div>
@@ -72,7 +72,7 @@
                             foreach (var a in EArticleFiles.Where(p => !p.IsEArticleVideo))
                             {
                                 var _id = a.Id;
-                                <div class="SelectFileShowDiv" id="LAttachments_@_id)"><span>@(a.FileName)</span><span class='FileInputRemoveSpan' id="LAttachments_@_id" onclick="RemoveFile('@_id',false,true)"> x</span></div>
+                                <div class="SelectFileShowDiv" id="FileRemoveDIV_@_id)"><span>@(a.FileName)</span><span class='FileInputRemoveSpan' id="LAttachments_@_id" onclick="RemoveFile('@_id',false,true)"> x</span></div>
                               
                             }
 
@@ -273,14 +273,15 @@
                     $(`#${FileRemoveDIVId(id)}`).remove();
                 }
             });
-            return;
-        }
-        $(`#${FileRemoveDIVId(id)}`).remove();
-        if (IsVideoFileInput) {
-            $(`#${LVideoFileInputId(id)}`).remove();
         } else {
-            $(`#${LAttachmentFileInputId(id)}`).remove();
+            $(`#${FileRemoveDIVId(id)}`).remove();
+            if (IsVideoFileInput) {
+                $(`#${LVideoFileInputId(id)}`).remove();
+            } else {
+                $(`#${LAttachmentFileInputId(id)}`).remove();
+            }
         }
+
     }
 
     function LAttachmentsOnChange(id) {
