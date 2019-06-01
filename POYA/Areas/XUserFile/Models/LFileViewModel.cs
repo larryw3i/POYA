@@ -58,6 +58,9 @@ namespace POYA.Areas.XUserFile.Models
         /// </summary>
         public string UserId { get; set; }
 
+        /// <summary>
+        /// The default is DateTimeOffset.Now
+        /// </summary>
         public DateTimeOffset DOUpload { get; set; } = DateTimeOffset.Now;
 
         /// <summary>

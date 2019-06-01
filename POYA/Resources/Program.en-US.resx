@@ -809,4 +809,22 @@
   <data name="Another solution for rendering knowledge" xml:space="preserve">
     <value>Another solution for rendering knowledge</value>
   </data>
+  <data name="The attachments of this article" xml:space="preserve">
+    <value>The attachments of this article</value>
+  </data>
+  <data name="The attachment of this article" xml:space="preserve">
+    <value>The attachment of this article</value>
+  </data>
+  <data name="Upload videos for your article" xml:space="preserve">
+    <value>Upload videos for your article</value>
+  </data>
+  <data name="Upload attachments for your article" xml:space="preserve">
+    <value>Upload attachments for your article</value>
+  </data>
+  <data name="Select video" xml:space="preserve">
+    <value>Select video</value>
+  </data>
+  <data name="Select attachment" xml:space="preserve">
+    <value>Select attachment</value>
+  </data>
 </root>

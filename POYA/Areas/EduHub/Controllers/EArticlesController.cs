@@ -194,6 +194,14 @@ namespace POYA.Areas.EduHub.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(eArticle.Title.Length<2 || eArticle.Content.Length < 20)
+                {
+
+                    ViewData["EArticleFiles"] = await _context.EArticleFiles.Where(p => p.EArticleId == eArticle.Id).ToListAsync();
+                    eArticle.LAttachments = null;
+                    eArticle.LVideos = null;
+                    return View(eArticle);
+                }
                 var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                 var _EArticleFiles = new List<EArticleFile>();
                 eArticle.Id = Guid.NewGuid();
@@ -469,12 +477,15 @@ namespace POYA.Areas.EduHub.Controllers
         private async Task SaveArticleFilesAsync(EArticle eArticle)
         {
             var _EArticleFiles = new List<EArticleFile>();
+            var _LFiles_ = new List<LFile>();
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             if (eArticle.LAttachments?.Count() > 0)
             {
                 foreach (var i in eArticle.LAttachments)
                 {
                     var MD5_ = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, i);
                     _EArticleFiles.Add(new EArticleFile { EArticleId = eArticle.Id, FileName = System.IO.Path.GetFileName(i.FileName), FileMD5 = MD5_, IsEArticleVideo = false });
+                    _LFiles_.Add(new LFile {  UserId=UserId_, MD5=MD5_});
                 }
             }
             if (eArticle.LVideos?.Count() > 0)
@@ -483,9 +494,11 @@ namespace POYA.Areas.EduHub.Controllers
                 {
                     var MD5_ = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, i);
                     _EArticleFiles.Add(new EArticleFile { EArticleId = eArticle.Id, FileName = System.IO.Path.GetFileName(i.FileName), FileMD5 = MD5_, IsEArticleVideo = true });
+                    _LFiles_.Add(new LFile { UserId = UserId_, MD5 = MD5_ });
                 }
             }
             await _context.EArticleFiles.AddRangeAsync(_EArticleFiles);
+            await _context.LFile.AddRangeAsync(_LFiles_);
             return;
         }
         #endregion

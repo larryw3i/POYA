@@ -17,9 +17,9 @@
 @{
     var IsEdit = (bool)ViewData["IsEdit"];
     var EArticleFiles = IsEdit ? ViewData["EArticleFiles"] as List<EArticleFile> : null ;
+    var FileRemoveEleString = "FileRemoveEle_";
 }
 
-<hr />
 <div class="row">
     <div class="col">
         <form asp-action='@(IsEdit ? "Edit" : "Create")' id="EArticles_Form" name="EArticles_Form" enctype="multipart/form-data">
@@ -50,13 +50,13 @@
             <div class="form-group row">
                 <div class="col col-4" id="video_div">
                     <span class="row">@Localizer["Upload videos for your article"]</span>
-                    <div class="row" id="video_list_div">
+                    <div class="col" id="video_list_div">
                         @if (IsEdit)
                         {
                             foreach (var v in EArticleFiles.Where(p => p.IsEArticleVideo))
                             {
-                                var _id = v.Id;
-                                <div class="SelectFileShowDiv" id="FileRemoveDIV_@_id"><span>@(v.FileName)</span><span class='FileInputRemoveSpan' id="LVideos_@_id" onclick="RemoveFile('@_id',true,true)"> x</span></div>
+                                var _id = v.Id.ToString();
+                                <div class="SelectFileShowDiv row" id="@(FileRemoveEleString+_id)"><span>@(v.FileName)</span><span class='FileInputRemoveSpan' id="LVideos_@_id" onclick="RemoveFile('@_id',true,true)">  &#128500;</span></div>
                             }
                         }
                     </div>
@@ -66,13 +66,13 @@
                 </div>
                 <div class="col col-4" id="attachment_div">
                     <span class="row">@Localizer["Upload attachments for your article"]</span>
-                    <div class="row" id="attachment_list_div">
+                    <div class="col" id="attachment_list_div">
                         @if (IsEdit)
                         {
                             foreach (var a in EArticleFiles.Where(p => !p.IsEArticleVideo))
                             {
-                                var _id = a.Id;
-                                <div class="SelectFileShowDiv" id="FileRemoveDIV_@_id)"><span>@(a.FileName)</span><span class='FileInputRemoveSpan' id="LAttachments_@_id" onclick="RemoveFile('@_id',false,true)"> x</span></div>
+                                var _id = a.Id.ToString();
+                                <div class="SelectFileShowDiv row" id="@(FileRemoveEleString+_id)"><span>@(a.FileName)</span><span class='FileInputRemoveSpan' id="LAttachments_@_id" onclick="RemoveFile('@_id',false,true)"> &#128500;</span></div>
                               
                             }
 
@@ -85,13 +85,10 @@
                 </div>
             </div>
 
-
-            @*<partial name="_VideoSelectPartial" model="Model" />*@
-
             <div class="form-group">
                 <a asp-action="Index" class="btn btn-outline-primary">&laquo; @Localizer["Back"]</a>
                 <a class="btn btn-outline-info" id="EArticles_Form_Submit_A">@Localizer["Save"]</a>
-                <span id="SaveProgressSpan"></span>
+                <span id="SaveProgressEle"></span>
             </div>
         </form>
     </div>
@@ -116,7 +113,9 @@
         $("#attachment_list_div").hide();
 
         $("#EArticles_Form_Submit_A").on("click", function () {
-            FormSubmitClick(Editor);
+            if ($("#Title").val().length < 2) return;
+            if (Editor.txt.html().length < 10) return;
+            FormSubmitClick();
             event.preventDefault();
         });
 
@@ -126,10 +125,13 @@
 
         $("#VideoSelectBtn").on("click", function () {
             //  #region
+            // console.log(">>>>>>>>"+$("#video_row_div input:last").val());
             if ($("#video_row_div input:last").val() != "") {
+                
                 let _LVideoFileInput = LVideoFileInput(_Data_.NewGuid());
                 $(_LVideoFileInput).attr("form", "EArticles_Form");
                 $("#video_row_div").append(_LVideoFileInput);
+                
             }
             $("#video_row_div input:last").click();
             //  #endregion
@@ -179,8 +181,8 @@
     var LAttachmentFileInput = (id) => `<input type='file' hidden name='LAttachments' id='${this.LAttachmentFileInputId(id)}' onchange='LAttachmentsOnChange("${id}")'/>`;
 
     var LVideoFileInput = (id) => `<input type='file'  hidden name='LVideos' id='${this.LVideoFileInputId(id)}' accept='video/*'  onchange='LVideosOnChange("${id}")'/>`;
-    var FileRemoveId = (id) => `FileRemove_${id}`;
-    var FileRemoveDIVId = (id) => `FileRemoveDIV_${id}`;
+    //  var FileRemoveId = (id) => `FileRemove_${id}`;
+    var FileRemoveEleId = (id) => `@FileRemoveEleString${id}`;
     var FileRemoveSpanId = (id) => `FileRemoveSpan_${id}`;
     //  #endregion
 
@@ -192,20 +194,24 @@
     *  public bool IsEArticleVideo { get; set; } = false;
     * */
     function SubmitForm(Editor) {
-        $("#Content").val(Editor.txt.html());
+        // console.log(">>>>>>>><<<<<<<");
+        //  $("#Content").val(Editor.txt.html());
         let _EArticles_Form_Data_ = new FormData();
         _EArticles_Form_Data_.append("@(nameof(Model.Title))", $("#@nameof(Model.Title)").val());
         _EArticles_Form_Data_.append("@(nameof(Model.Content))", Editor.txt.html());
         $("input[name='LAttachments']").each(function (index, elem) {
+            // console.log($(elem).val());
+            if ($(elem).val() == "") return true;
             let _id = this.id;
-            console.log(_id);
+            // console.log(_id);
             let _File = document.getElementById(_id).files[0];
             _EArticles_Form_Data_.append("LAttachments", _File, _File.name);
         });
         $("input[name='LVideos']").each(function (index, elem) {
-
+            // console.log($(elem).val());
+            if ($(elem).val() == "") return true;
             let _id = this.id;
-            console.log(_id);
+            // console.log(_id);
             let _File = document.getElementById(_id).files[0];
             _EArticles_Form_Data_.append("LVideos", _File, _File.name);
         });
@@ -231,9 +237,9 @@
                     xhr.upload.addEventListener("progress", function (e) {
                         var loaded = e.loaded;
                         var tot = e.total;
-                        //  console.log(">>"+Id_);
+                        //  // console.log(">>"+Id_);
                         var per = Math.floor(100 * loaded / tot);
-                        $("#SaveProgressSpan").val(per + "%");
+                        $("#SaveProgressEle").html(per + "%");
                     }, false);
                     return xhr;
                 }
@@ -270,11 +276,11 @@
                     "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
                 },
                 success: function () {
-                    $(`#${FileRemoveDIVId(id)}`).remove();
+                    $(`#${FileRemoveEleId(id)}`).remove();
                 }
             });
         } else {
-            $(`#${FileRemoveDIVId(id)}`).remove();
+            $(`#${FileRemoveEleId(id)}`).remove();
             if (IsVideoFileInput) {
                 $(`#${LVideoFileInputId(id)}`).remove();
             } else {
@@ -287,14 +293,14 @@
     function LAttachmentsOnChange(id) {
         GetMD5(LAttachmentFileInputId(id), false);
         let _Value = $(`#LAttachments_${id}`).val();
-        let _Content = `<div class="SelectFileShowDiv"   id="${FileRemoveDIVId(id)}" ><span>${_Value}</span><span class='FileInputRemoveSpan'  id="${FileRemoveSpanId(id)}" onclick="RemoveFile('${id}')"> x</span></div>`;
+        let _Content = `<div class="SelectFileShowDiv" title='@Localizer["Delete"]'  id="${FileRemoveEleId(id)}" ><span>${_Value}</span><span class='FileInputRemoveSpan'  id="${FileRemoveSpanId(id)}" onclick="RemoveFile('${id}')"> x</span></div>`;
         $("#attachment_list_div").append(_Content);
     }
 
     function LVideosOnChange(id) {
         GetMD5(LVideoFileInputId(id),true);
         let _Value = $(`#LVideos_${id}`).val();
-        let _Content = `<div class="SelectFileShowDiv"   id="${FileRemoveDIVId(id)}" ><span>${_Value}</span><span class='FileInputRemoveSpan'   id="${FileRemoveSpanId(id)}" onclick="RemoveFile('${id}',true)"> x</span></div>`;
+        let _Content = `<div class="SelectFileShowDiv"   title='@Localizer["Delete"]'  id="${FileRemoveEleId(id)}" ><span>${_Value}</span><span class='FileInputRemoveSpan'   id="${FileRemoveSpanId(id)}" onclick="RemoveFile('${id}',true)"> x</span></div>`;
         $("#video_list_div").append(_Content);
     }
     /**
@@ -328,7 +334,7 @@
                 loadNext();
             } else {
                 let MD5 = String(Spark_.end());
-                console.log(MD5);
+                // console.log(MD5);
                 if (!ID8MD5Array.some((value, index, array) => { value["ID"] == Id && value["MD5"] == MD5 })) {
                     ID8MD5Array.push({ "ID": Id, "MD5": MD5, "IsEArticleVideo": IsEArticleVideo });
                 }
@@ -360,8 +366,9 @@
     //  #endregion
 
     function CheckMD5() {
-
-        console.log(">>>>>>>>>", JSON.stringify(ID8MD5Array));
+        // console.log("<<<<>>>");
+        if (ID8MD5Array.length < 1) SubmitForm(Editor);;
+        // console.log(">>>>>>>>>", JSON.stringify(ID8MD5Array));
         var eArticleFileMD5s = new Array();
 
         ID8MD5Array.forEach((value, index, array) => {
@@ -374,7 +381,7 @@
             });
         });
 
-        console.log(">>>>>", eArticleFileMD5s);
+        // console.log(">>>>>", eArticleFileMD5s);
 
         $.ajax({
             url: "@Url.Action("LCheckMD5v1")",
@@ -386,14 +393,18 @@
             },
             dataType: "json",
             success: function (Response) {
-                console.log(Response);
+                // console.log(Response);
                 Response.forEach((value, index, array) => {
                     
                     if (value["IsUploaded"] == true) {
                         ID8MD5Array.forEach((v, i, o) => {
                             if (v["MD5"] == value["FileMD5"]) {
-                                RemoveFile(v["ID"])
-                                
+                                //  RemoveFile(v["ID"])
+                                if ($(`#${LAttachmentFileInputId(v["ID"])}`).length > 0) {
+                                    $(`#${LAttachmentFileInputId(v["ID"])}`).remove();
+                                } else {
+                                    $(`#${LVideoFileInputId(v["ID"])}`).remove();
+                                }
                             }
                         });
                     }
@@ -408,9 +419,9 @@
      *
      * @@param Editor
      */
-    function FormSubmitClick(Editor) {
+    function FormSubmitClick() {
         CheckMD5();
-
+        // console.log(">>>")
     }
     function ReadyEditor(Editor) {
         //  #region CONTENT_EDITOR
