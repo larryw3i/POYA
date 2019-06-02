@@ -25,6 +25,15 @@ namespace POYA.Data
         public DbSet<POYA.Areas.XLaw.Models.Complaint> Complaint { get; set; }
         public DbSet<POYA.Areas.XLaw.Models.Arbitrament> Arbitrament { get; set; }
         public DbSet<EArticleFile> EArticleFiles { get; set; }
+
+        #region EARTICLE_CLASS
+        public DbSet<LField> LFields { get; set; }
+        public DbSet<LAdvancedClass> LAdvancedClasses { get; set; }
+        public DbSet<LSecondaryClass> LSecondaryClasses { get; set; }
+        public DbSet<LGrade> LGrades { get; set; }
+        public DbSet<LGradeComment> LGradeComments { get; set; }
+        #endregion
+
         /*
         public DbSet<POYA.Areas.EduHub.Models.EGrade> EGrade { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.ESubject> ESubject { get; set; }

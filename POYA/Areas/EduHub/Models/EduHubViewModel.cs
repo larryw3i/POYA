@@ -51,6 +51,8 @@ namespace POYA.Areas.EduHub.Models
 
         public DateTimeOffset? DOUpdating { get; set; }
         public long ClickCount { get; set; } = 0;
+        public Guid LGradeId { get; set; }
+
         #region DEPOLLUTION
         /// <summary>
         /// <see cref="NotMappedAttribute" />
@@ -97,6 +99,44 @@ namespace POYA.Areas.EduHub.Models
 
     #region DEPOLLUTION
 
+    #region ARTICLE_CLASS
+    public class LField
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();
+        [StringLength(maximumLength:20)]
+        public string Name { get; set; }
+    }
+    public class LAdvancedClass
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid LFieldId { get; set; }
+        [StringLength(maximumLength: 20)]
+        public string Name { get; set; }
+    }
+    public class LSecondaryClass
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid LAdvancedClassId { get; set; }
+        [StringLength(maximumLength: 20)]
+        public string Name { get; set; }
+    }
+    public class LGrade
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid LSecondaryClassId { get; set; }
+        [StringLength(maximumLength: 20)]
+        public string Name { get; set; }
+    }
+    public class LGradeComment
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid LGradeId { get; set; }
+        [StringLength(maximumLength: 50)]
+        public string Comment { get; set; }
+
+    }
+    #endregion
+    
 
     #endregion
 }

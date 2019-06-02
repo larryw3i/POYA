@@ -16,9 +16,9 @@
 
 @{
     var IsEdit = (bool)ViewData["IsEdit"];
-    var EArticleFiles = IsEdit ? ViewData["EArticleFiles"] as List<EArticleFile> : null ;
+    var EArticleFiles = IsEdit ? ViewData["EArticleFiles"] as List<EArticleFile> : null;
     var FileRemoveEleString = "FileRemoveEle_";
-    var IsVideoFileUploaded =IsEdit? EArticleFiles.Any(p=>p.IsEArticleVideo):false;
+    var IsVideoFileUploaded = IsEdit ? EArticleFiles.Any(p => p.IsEArticleVideo) : false;
 }
 
 <div class="row">
@@ -29,9 +29,7 @@
             <div class="form-group ">
                 <div class="row">
                     <input asp-for="Title" class="form-control col offset-3 col-6" placeholder="@(Localizer["Title"])" />
-                    @*
-                        <a asp-action="GetSharedImages" asp-controller="LUserFiles" asp-area="XUserFile" target="ImageSelectTab" class="col  col-1 col-sm-3 LookForImageIcon">&#128443;</a>
-                    *@
+
                 </div>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
@@ -43,8 +41,6 @@
                         @(Html.Raw(Model.Content))
                     </p>
                 </div>
-                @*<div id="_ContentEditor"></div>*@
-                @*<input asp-for="Content" hidden />*@
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
 
@@ -74,9 +70,7 @@
                             {
                                 var _id = a.Id.ToString();
                                 <div class="SelectFileShowEle row" id="@(FileRemoveEleString+_id)"><span>@(a.FileName)</span><span class='FileInputRemoveEle' id="LAttachments_@_id" onclick="RemoveFile('@_id',false,true)"> &#128500;</span></div>
-                              
                             }
-
                         }
                     </div>
                     <div class="row" id="attachment_row_div">
@@ -131,11 +125,11 @@
             var _LastVideoInputVal = $("#video_row_div input:last").val();
             //  console.log("Value of last video file input >_ " + _LastVideoInputVal + "\t" + _LastVideoInputVal.length);
             if (_LastVideoInputVal == undefined|| _LastVideoInputVal.length > 0) {
-                
+
                 let _LVideoFileInput = LVideoFileInput(_Data_.NewGuid());
                 $(_LVideoFileInput).attr("form", "EArticles_Form");
                 $("#video_row_div").append(_LVideoFileInput);
-                
+
             }
             $("#video_row_div input:last").click();
             //  #endregion
@@ -181,7 +175,7 @@
     //  #endregion
 
     //  #region  VALUES
-    
+
     var IsVideoFileSelected =@(IsVideoFileUploaded?"true":"false");
     var LAttachmentFileInputId = (id) => `LAttachments_${id}`;
     var LVideoFileInputId = (id) => `LVideos_${id}`;
@@ -406,7 +400,7 @@
             success: function (Response) {
                 // console.log(Response);
                 Response.forEach((value, index, array) => {
-                    
+
                     if (value["IsUploaded"] == true) {
                         ID8MD5Array.forEach((v, i, o) => {
                             if (v["MD5"] == value["FileMD5"]) {
@@ -508,14 +502,8 @@
         };
         Editor.customConfig.uploadFileName = 'EArticleImages';
         Editor.customConfig.zIndex = 1;
-        //  #endregion
-
-
+        
         Editor.create();
-            @*Editor.txt.html('@(Html.Raw(Model.Content))');*@
-        //  #endregion
-
-
     }
     //  #endregion
 </script>
@@ -544,18 +532,18 @@
     .LookForImageIcon {
         zoom: 200%;
     }
-    .SelectFileShowEle{
-        border:dotted;
-        border-radius:8px;
-        padding:2px;
-        max-width:90%;
-        word-break:break-all;
-        word-wrap:break-word;
-    }
-    
-    .FileInputRemoveEle:hover{
-        color:red;
-        zoom:150%;
+
+    .SelectFileShowEle {
+        border: dotted;
+        border-radius: 8px;
+        padding: 2px;
+        max-width: 90%;
+        word-break: break-all;
+        word-wrap: break-word;
     }
 
+    .FileInputRemoveEle:hover {
+        color: red;
+        zoom: 150%;
+    }
 </style>
