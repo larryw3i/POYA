@@ -372,6 +372,18 @@ namespace POYA.Areas.EduHub.Controllers
             var _lMD5s = eArticleFileMD5s.ToList().Select(p => new LMD5 { FileMD5 = p.MD5, IsUploaded = false });
             _lMD5s = _xUserFileHelper.LCheckMD5(_hostingEnv, _lMD5s);
             var _EArticleFiles_ = new List<EArticleFile>();
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            #region PERMISSION_CHECK
+            var UserEArticles = await _context.EArticle.Where(p => p.UserId == UserId_).Select(p => new { p.Id ,p.UserId}).ToListAsync();
+            foreach(var e in eArticleFileMD5s)
+            {
+                if (UserEArticles.Any(q => q.Id == e.EArticleId && (q.UserId != UserId_)))
+                {
+                    return NotFound();
+                }
+            }
+         
+            #endregion
             eArticleFileMD5s.ToList().ForEach(p =>
             {
                 if (_lMD5s.Any(q => q.FileMD5 == p.MD5 && q.IsUploaded))

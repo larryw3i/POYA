@@ -221,6 +221,7 @@ var _Service_ = new Service_();
 
 $(document).ready(function () {
     _UI_.Initial();
+    KeepLogin();
     $("#Language").on("change", function () {
         _Service_.ChangeLanguage();
     });
@@ -231,3 +232,13 @@ $(document).ready(function () {
         history.go(-1);
     });
 });
+
+function KeepLogin() {
+    setInterval(function () {
+        $.ajax({
+            url: "/Home/KeepLogin",
+            type: "GET"
+        });
+    }, 5 * 60000);
+
+}

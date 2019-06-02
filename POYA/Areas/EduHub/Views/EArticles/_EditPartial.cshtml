@@ -18,6 +18,7 @@
     var IsEdit = (bool)ViewData["IsEdit"];
     var EArticleFiles = IsEdit ? ViewData["EArticleFiles"] as List<EArticleFile> : null ;
     var FileRemoveEleString = "FileRemoveEle_";
+    var IsVideoFileUploaded =IsEdit? EArticleFiles.Any(p=>p.IsEArticleVideo):false;
 }
 
 <div class="row">
@@ -56,12 +57,12 @@
                             foreach (var v in EArticleFiles.Where(p => p.IsEArticleVideo))
                             {
                                 var _id = v.Id.ToString();
-                                <div class="SelectFileShowDiv row" id="@(FileRemoveEleString+_id)"><span>@(v.FileName)</span><span class='FileInputRemoveSpan' id="LVideos_@_id" onclick="RemoveFile('@_id',true,true)">  &#128500;</span></div>
+                                <div class="SelectFileShowEle row" id="@(FileRemoveEleString+_id)"><span>@(v.FileName)</span><span class='FileInputRemoveEle' id="LVideos_@_id" onclick="RemoveFile('@_id',true,true)">  &#128500;</span></div>
                             }
                         }
                     </div>
                     <div class="row" id="video_row_div">
-                        <a class="btn btn-outline-info" id="VideoSelectBtn">@Localizer["Select video"]</a>
+                        <a class="btn btn-outline-info" id="VideoSelectEle">@Localizer["Select video"]</a>
                     </div>
                 </div>
                 <div class="col col-4" id="attachment_div">
@@ -72,7 +73,7 @@
                             foreach (var a in EArticleFiles.Where(p => !p.IsEArticleVideo))
                             {
                                 var _id = a.Id.ToString();
-                                <div class="SelectFileShowDiv row" id="@(FileRemoveEleString+_id)"><span>@(a.FileName)</span><span class='FileInputRemoveSpan' id="LAttachments_@_id" onclick="RemoveFile('@_id',false,true)"> &#128500;</span></div>
+                                <div class="SelectFileShowEle row" id="@(FileRemoveEleString+_id)"><span>@(a.FileName)</span><span class='FileInputRemoveEle' id="LAttachments_@_id" onclick="RemoveFile('@_id',false,true)"> &#128500;</span></div>
                               
                             }
 
@@ -123,10 +124,13 @@
             $(".w-e-text").focus();
         });
 
-        $("#VideoSelectBtn").on("click", function () {
+        $("#VideoSelectEle").on("click", function () {
             //  #region
             // console.log(">>>>>>>>"+$("#video_row_div input:last").val());
-            if ($("#video_row_div input:last").val() != "") {
+            if (IsVideoFileSelected) return;
+            var _LastVideoInputVal = $("#video_row_div input:last").val();
+            //  console.log("Value of last video file input >_ " + _LastVideoInputVal + "\t" + _LastVideoInputVal.length);
+            if (_LastVideoInputVal == undefined|| _LastVideoInputVal.length > 0) {
                 
                 let _LVideoFileInput = LVideoFileInput(_Data_.NewGuid());
                 $(_LVideoFileInput).attr("form", "EArticles_Form");
@@ -139,7 +143,8 @@
         });
         $("#AttachmentSelectBtn").on("click", function () {
             //  #region
-            if ($("#attachment_row_div input:last").val() != "") {
+            var _LastAttachmentInputVal = $("#attachment_row_div input:last").val();
+            if (_LastAttachmentInputVal == undefined || _LastAttachmentInputVal.length > 0) {
                 let _LAttachmentFileInput = LAttachmentFileInput(_Data_.NewGuid());
                 $(_LAttachmentFileInput).attr("form", "EArticles_Form");
                 $("#attachment_row_div").append(_LAttachmentFileInput);
@@ -176,6 +181,8 @@
     //  #endregion
 
     //  #region  VALUES
+    
+    var IsVideoFileSelected =@(IsVideoFileUploaded?"true":"false");
     var LAttachmentFileInputId = (id) => `LAttachments_${id}`;
     var LVideoFileInputId = (id) => `LVideos_${id}`;
     var LAttachmentFileInput = (id) => `<input type='file' hidden name='LAttachments' id='${this.LAttachmentFileInputId(id)}' onchange='LAttachmentsOnChange("${id}")'/>`;
@@ -249,7 +256,8 @@
              * @@param {number} Id The id
              */
             success: function () {
-                history.go(-1);
+                //  history.go(-1);
+                window.location.href = "@Url.Action("Index")";
             }
             //  #endregion
         });
@@ -277,6 +285,7 @@
                 },
                 success: function () {
                     $(`#${FileRemoveEleId(id)}`).remove();
+                    IsVideoFileSelected = false;
                 }
             });
         } else {
@@ -286,6 +295,7 @@
             } else {
                 $(`#${LAttachmentFileInputId(id)}`).remove();
             }
+            IsVideoFileSelected = false;
         }
 
     }
@@ -293,15 +303,16 @@
     function LAttachmentsOnChange(id) {
         GetMD5(LAttachmentFileInputId(id), false);
         let _Value = $(`#LAttachments_${id}`).val();
-        let _Content = `<div class="SelectFileShowDiv" title='@Localizer["Delete"]'  id="${FileRemoveEleId(id)}" ><span>${_Value}</span><span class='FileInputRemoveSpan'  id="${FileRemoveSpanId(id)}" onclick="RemoveFile('${id}')"> x</span></div>`;
+        let _Content = `<div class="SelectFileShowEle" title='@Localizer["Delete"]'  id="${FileRemoveEleId(id)}" ><span>${_Value}</span><span class='FileInputRemoveEle'  id="${FileRemoveSpanId(id)}" onclick="RemoveFile('${id}')"> x</span></div>`;
         $("#attachment_list_div").append(_Content);
     }
 
     function LVideosOnChange(id) {
         GetMD5(LVideoFileInputId(id),true);
         let _Value = $(`#LVideos_${id}`).val();
-        let _Content = `<div class="SelectFileShowDiv"   title='@Localizer["Delete"]'  id="${FileRemoveEleId(id)}" ><span>${_Value}</span><span class='FileInputRemoveSpan'   id="${FileRemoveSpanId(id)}" onclick="RemoveFile('${id}',true)"> x</span></div>`;
+        let _Content = `<div class="SelectFileShowEle"   title='@Localizer["Delete"]'  id="${FileRemoveEleId(id)}" ><span>${_Value}</span><span class='FileInputRemoveEle'   id="${FileRemoveSpanId(id)}" onclick="RemoveFile('${id}',true)"> x</span></div>`;
         $("#video_list_div").append(_Content);
+        IsVideoFileSelected = true;
     }
     /**
     * Get MD5 of file input and execute a function
@@ -533,15 +544,16 @@
     .LookForImageIcon {
         zoom: 200%;
     }
-    .SelectFileShowDiv{
+    .SelectFileShowEle{
         border:dotted;
         border-radius:8px;
         padding:2px;
         max-width:90%;
-        
+        word-break:break-all;
+        word-wrap:break-word;
     }
     
-    .FileInputRemoveSpan:hover{
+    .FileInputRemoveEle:hover{
         color:red;
         zoom:150%;
     }

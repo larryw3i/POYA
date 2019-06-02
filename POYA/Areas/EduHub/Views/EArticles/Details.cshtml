@@ -18,16 +18,13 @@
 <div>
     <hr />
     <dl class="row">
-        @if (_EArticleFiles_?.Count() > 0)
+        @foreach (var i in _EArticleFiles_.Where(p => p.IsEArticleVideo))
         {
-            @foreach (var i in _EArticleFiles_.Where(p => p.IsEArticleVideo))
-            {
-                <dd class="col offset-1 col-10">
-                    <video style="width:100%" controls>
-                        <source src="@Url.Action("GetFile", "LUserFiles", new { id = i.Id, area = "XUserFile" })" type="@(i.ContentType)" />
-                    </video>
-                </dd>
-            }
+            <dd class="col offset-1 col-10">
+                <video style="width:100%" controls>
+                    <source src="@Url.Action("GetFile", "LUserFiles", new { id = i.Id, area = "XUserFile" })" type="@(i.ContentType)" />
+                </video>
+            </dd>
         }
 
     </dl>
@@ -38,9 +35,9 @@
     </dl>
     <dl class="row">
         <dd class="col">
-            @if (_EArticleFiles_.Where(p=>!p.IsEArticleVideo).Count() > 0)
+            @if (_EArticleFiles_.Where(p => !p.IsEArticleVideo).Count() > 0)
             {
-            <span>@(_EArticleFiles_.Where(p=>!p.IsEArticleVideo).Count()>1?Localizer["The attachments of this article"]:Localizer["The attachment of this article"]) </span>
+                <span>@(_EArticleFiles_.Where(p => !p.IsEArticleVideo).Count() > 1 ? Localizer["The attachments of this article"] : Localizer["The attachment of this article"]) </span>
                 @foreach (var i in _EArticleFiles_.Where(p => !p.IsEArticleVideo))
                 {
                     <br />
