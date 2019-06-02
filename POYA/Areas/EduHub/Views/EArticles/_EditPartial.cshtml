@@ -200,6 +200,7 @@
         let _EArticles_Form_Data_ = new FormData();
         _EArticles_Form_Data_.append("@(nameof(Model.Title))", $("#@nameof(Model.Title)").val());
         _EArticles_Form_Data_.append("@(nameof(Model.Content))", Editor.txt.html());
+        _EArticles_Form_Data_.append("@(nameof(Model.Id))", "@Model.Id");
         $("input[name='LAttachments']").each(function (index, elem) {
             // console.log($(elem).val());
             if ($(elem).val() == "") return true;
@@ -316,15 +317,9 @@
     */
     function GetMD5(Id,  IsEArticleVideo = false) {
 
-        var File_ = undefined;
-        //  #region     GET FILE_INPUT
-        try {
+        var File_ = File_ = document.getElementById(Id).files[0];
+        $("#SaveProgressEle").html("@Localizer["Read file . . ."]");
 
-            File_ = document.getElementById(Id).files[0];
-        } catch{
-            File_ = document.getElementById(Id).files[0];
-        }
-        //  #endregion
 
         var BlobSlice_ = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
             ChunkSize = 20 * 1024 * 1024,
@@ -339,10 +334,15 @@
                 loadNext();
             } else {
                 let MD5 = String(Spark_.end());
+                $("#SaveProgressEle").html("@Localizer["Read file finish"]");
+
                 // console.log(MD5);
                 if (!ID8MD5Array.some((value, index, array) => { value["ID"] == Id && value["MD5"] == MD5 })) {
                     ID8MD5Array.push({ "ID": Id, "MD5": MD5, "IsEArticleVideo": IsEArticleVideo });
                 }
+                setTimeout(function () {
+                    $("#SaveProgressEle").html("");
+                },2000);
             }
         };
         FileReader_.onerror = function () {
@@ -398,17 +398,20 @@
             },
             dataType: "json",
             success: function (Response) {
-                // console.log(Response);
+                console.log(Response);
+                console.log(ID8MD5Array);
                 Response.forEach((value, index, array) => {
 
                     if (value["IsUploaded"] == true) {
-                        ID8MD5Array.forEach((v, i, o) => {
+                        ID8MD5Array.forEach((v, i, a) => {
                             if (v["MD5"] == value["FileMD5"]) {
                                 //  RemoveFile(v["ID"])
-                                if ($(`#${LAttachmentFileInputId(v["ID"])}`).length > 0) {
-                                    $(`#${LAttachmentFileInputId(v["ID"])}`).remove();
+                                console.log($(`#${v["ID"]}`).length);
+                                console.log($(`#${v["ID"]}`).length);
+                                if ($(`#${v["ID"]}`).length > 0) {
+                                    $(`#${v["ID"]}`).remove();
                                 } else {
-                                    $(`#${LVideoFileInputId(v["ID"])}`).remove();
+                                    $(`#${v["ID"]}`).remove();
                                 }
                             }
                         });

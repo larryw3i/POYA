@@ -204,7 +204,7 @@ namespace POYA.Areas.EduHub.Controllers
                 }
                 var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                 var _EArticleFiles = new List<EArticleFile>();
-                eArticle.Id = Guid.NewGuid();
+                //  eArticle.Id = Guid.NewGuid();
                 eArticle.UserId = UserId_;
                 eArticle.Content = _htmlSanitizer.Sanitize(eArticle.Content);
                 await _context.AddAsync(eArticle);
@@ -369,7 +369,7 @@ namespace POYA.Areas.EduHub.Controllers
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> LCheckMD5v1(IEnumerable<EArticleFileMD5> eArticleFileMD5s)
         {
-            var _lMD5s = eArticleFileMD5s.ToList().Select(p => new LMD5 { FileMD5 = p.MD5, IsUploaded = false });
+            var _lMD5s = eArticleFileMD5s.ToList().Select(p => new LMD5 { FileMD5 = p.MD5, IsUploaded = false }).ToList();
             _lMD5s = _xUserFileHelper.LCheckMD5(_hostingEnv, _lMD5s);
             var _EArticleFiles_ = new List<EArticleFile>();
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
@@ -392,6 +392,7 @@ namespace POYA.Areas.EduHub.Controllers
                 }
             });
             await _context.EArticleFiles.AddRangeAsync(_EArticleFiles_);
+            await _context.SaveChangesAsync();
             return Ok(_lMD5s );
         }
         [HttpPost]

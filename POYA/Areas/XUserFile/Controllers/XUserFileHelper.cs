@@ -43,7 +43,7 @@ namespace POYA.Areas.XUserFile.Controllers
         /// <param name="env">The IHostingEnvironment for getting FileStoragePath</param>
         /// <param name="lMD5s">The IEnumerableLMD5</param>
         /// <returns></returns>
-        public IEnumerable<LMD5> LCheckMD5(IHostingEnvironment env,IEnumerable<LMD5> lMD5s)
+        public List<LMD5> LCheckMD5(IHostingEnvironment env,List<LMD5> lMD5s)
         { 
             
             var UploadFileMD5s =System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(env))
