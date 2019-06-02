@@ -26,11 +26,12 @@ The contents of **appsettings.json** are:
   },
   "AllowedHosts": "*",
   "EmailSender": {
-    "userName": "xxxxxx@xxxxxx.xxx",
-    "host": "xxxxxx.xxxxxx.xxx",
-    "password": "xxxxxx",
-    "port": "xx"
-  }, 
+    "userName": "xxxxxx@xxxxxxxx.xxxx",
+    "host": "xxxxxx.xxxxx.xxxx",
+    "password": "xxxxx",
+    "port": 00,
+    "enableSsl": false
+  },
   "ErrorLogHandle": {
     "ReceiveLogEmailAddress": "xxxxxxx@xxx.xxx"
   }
