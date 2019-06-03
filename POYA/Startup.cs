@@ -150,6 +150,8 @@ namespace POYA
             });
 
             services.AddAntiforgery(options => options.HeaderName = "L-XSRF-TOKEN");
+
+            
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)     //  , IServiceProvider serviceProvider

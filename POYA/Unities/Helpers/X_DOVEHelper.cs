@@ -160,13 +160,14 @@ namespace POYA.Unities.Helpers
         }
         public List<string> GetExtensions(string Mime, IHostingEnvironment env)
         {
-            var _CSV = File.ReadAllTextAsync(env.ContentRootPath + "/Data/MIME/all_mime.csv").GetAwaiter().GetResult();
+            var _CSV = File.ReadAllTextAsync(env.ContentRootPath + "/Data/LAppDoc/lmime.csv").GetAwaiter().GetResult();
             var MediaTypes = CsvConvert.DeserializeObject<MediaType>(_CSV);
-            var MediaTypeList = MediaTypes.ToList();
+            var MediaTypeList = MediaTypes.ToList();    //  .Select(p=>new MediaType {  Name=});
             var _Extensions = new List<string>();
+            Mime = Mime.Split(".").LastOrDefault().ToLower();
             foreach(var i in MediaTypeList)
             {
-                if (i.Template.StartsWith(Mime))
+                if (i.Template.ToLower()==Mime)
                 {
                     _Extensions.Add(i.Name);
                 }

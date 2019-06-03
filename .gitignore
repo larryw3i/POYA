@@ -1,4 +1,5 @@
 ﻿# Custom ignore rule of some files and directorie
 # Directories 
 /.vs/
+/POYATEST/
 # Files

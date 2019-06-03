@@ -185,7 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.3.1" />
-    <PackageReference Include="HtmlSanitizer" Version="4.0.210" />
+    <PackageReference Include="HtmlSanitizer" Version="4.0.217" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNet.SignalR" Version="2.4.1" />
     <PackageReference Include="Microsoft.AspNet.SignalR.Client" Version="2.4.1" />
@@ -218,7 +218,7 @@
     <PackageReference Include="MySql.Data.EntityFrameworkCore.Design" Version="8.0.16" />
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-    <PackageReference Include="NLog" Version="4.6.3" />
+    <PackageReference Include="NLog" Version="4.6.4" />
     <PackageReference Include="Nukepayload2.Csv" Version="1.3.3" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="QRCoder" Version="1.3.5" />
@@ -263,6 +263,19 @@
     <None Include="wwwroot\lib\vue-dev\dist\vue.runtime.min.js" />
     <None Include="wwwroot\lib\vue-dev\LICENSE" />
     <None Include="wwwroot\lib\wangEditor-3.1.1\LICENSE" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Data\LAppDoc\lmime.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Data\LAppDoc\lmime.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="UpdateEFDatabase.ps1">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES2018</TypeScriptTarget>
