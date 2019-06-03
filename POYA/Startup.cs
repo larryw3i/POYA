@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Ganss.XSS;
 using Microsoft.AspNetCore.Identity.UI;
 using Newtonsoft.Json.Serialization;
+using System.IO;
 
 namespace POYA
 {
@@ -47,7 +48,7 @@ namespace POYA
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
+                options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
             #region
@@ -104,20 +105,20 @@ namespace POYA
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.Configure<RequestLocalizationOptions>( opts =>
-            {
-                var supportedCultures = new List<CultureInfo>
-                {
+            services.Configure<RequestLocalizationOptions>(opts =>
+           {
+               var supportedCultures = new List<CultureInfo>
+               {
                         new CultureInfo("en-US"),
                         new CultureInfo("zh-CN")
-                };
-                opts.SupportedCultures = supportedCultures;
-                opts.SupportedUICultures = supportedCultures;
-                opts.RequestCultureProviders = new List<IRequestCultureProvider>
-                  {
+               };
+               opts.SupportedCultures = supportedCultures;
+               opts.SupportedUICultures = supportedCultures;
+               opts.RequestCultureProviders = new List<IRequestCultureProvider>
+                 {
                       new   X_DOVERequestCultureProvider()
-                  };
-            });
+                 };
+           });
 
             #region
             /*
@@ -151,7 +152,7 @@ namespace POYA
 
             services.AddAntiforgery(options => options.HeaderName = "L-XSRF-TOKEN");
 
-            
+
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)     //  , IServiceProvider serviceProvider
@@ -165,7 +166,7 @@ namespace POYA
             else
             {
                 //  app.UseDeveloperExceptionPage();
-                app.UseExceptionHandler(builder => builder.Run(async context => await x_DOVEHelper.ErrorEventAsync(Configuration,context)));
+                app.UseExceptionHandler(builder => builder.Run(async context => await x_DOVEHelper.ErrorEventAsync(Configuration, context)));
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
@@ -194,6 +195,19 @@ namespace POYA
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            #region CUSTOM_APP_INITIALIZATION
+            var LFilesPath = env.ContentRootPath + "/Data/LFiles";
+            var AvatarPath = $"{LFilesPath}/Avatars";
+            var XUserFilePath = $"{LFilesPath}/XUserFile";
+            foreach(var p in new string[] { AvatarPath, XUserFilePath })
+            {
+                if (!Directory.Exists(p))
+                {
+                    Directory.CreateDirectory(p);
+                }
+            }
+            #endregion
         }
     }
 }

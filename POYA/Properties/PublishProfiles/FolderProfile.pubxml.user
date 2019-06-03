@@ -10,7 +10,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <DestinationConnectionStrings Include="DefaultConnection">
-      <Value>Data Source=app.db</Value>
+      <Value>Server=%28localdb%29\mssqllocaldb%3bDatabase=aspnet-POYA-0E28E843-176D-49F3-9739-6D5E6F1BC3F5%3bTrusted_Connection=True%3bMultipleActiveResultSets=true</Value>
     </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="POYA.Data.ApplicationDbContext">
+      <Value>Server=%28localdb%29\mssqllocaldb%3bDatabase=aspnet-POYA-0E28E843-176D-49F3-9739-6D5E6F1BC3F5%3bTrusted_Connection=True%3bMultipleActiveResultSets=true</Value>
+    </EFMigrations>
   </ItemGroup>
 </Project>

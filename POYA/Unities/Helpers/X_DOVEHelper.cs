@@ -145,7 +145,7 @@ namespace POYA.Unities.Helpers
     {
         public List<string> GetMimes(string FileExtension, IHostingEnvironment env)
         {
-            var _CSV = File.ReadAllTextAsync(env.ContentRootPath + "/Data/MIME/all_mime.csv").GetAwaiter().GetResult();
+            var _CSV = File.ReadAllTextAsync(env.ContentRootPath + "/Data/LAppDoc/lmime.csv").GetAwaiter().GetResult();
             var MediaTypes = CsvConvert.DeserializeObject<MediaType>(_CSV);
             FileExtension = FileExtension.Contains(".") ? FileExtension.Split(".").LastOrDefault() : FileExtension;
             //  Console.WriteLine(JsonConvert.SerializeObject(MediaTypes));
