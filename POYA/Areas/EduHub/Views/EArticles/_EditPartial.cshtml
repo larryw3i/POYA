@@ -406,13 +406,13 @@
                         ID8MD5Array.forEach((v, i, a) => {
                             if (v["MD5"] == value["FileMD5"]) {
                                 //  RemoveFile(v["ID"])
-                                console.log($(`#${v["ID"]}`).length);
-                                console.log($(`#${v["ID"]}`).length);
-                                if ($(`#${v["ID"]}`).length > 0) {
+                                //  console.log($(`#${v["ID"]}`).length);
+                                //  console.log($(`#${v["ID"]}`).length);
+                                /// if ($(`#${v["ID"]}`).length > 0) {
                                     $(`#${v["ID"]}`).remove();
-                                } else {
-                                    $(`#${v["ID"]}`).remove();
-                                }
+                                //  } else {
+                                //  $(`#${v["ID"]}`).remove();
+                                //  }
                             }
                         });
                     }
@@ -505,7 +505,7 @@
         };
         Editor.customConfig.uploadFileName = 'EArticleImages';
         Editor.customConfig.zIndex = 1;
-        
+
         Editor.create();
     }
     //  #endregion
