@@ -16,6 +16,7 @@ using POYA.Data;
 using POYA.Models;
 using POYA.Unities.Services;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -143,21 +144,7 @@ namespace POYA.Unities.Helpers
 
     public class MimeHelper
     {
-        public List<string> GetMimes(string FileExtension, IHostingEnvironment env)
-        {
-            var _CSV = File.ReadAllTextAsync(env.ContentRootPath + "/Data/LAppDoc/lmime.csv").GetAwaiter().GetResult();
-            var MediaTypes = CsvConvert.DeserializeObject<MediaType>(_CSV);
-            FileExtension = FileExtension.Contains(".") ? FileExtension.Split(".").LastOrDefault() : FileExtension;
-            //  Console.WriteLine(JsonConvert.SerializeObject(MediaTypes));
-            var MediaTypeList = MediaTypes.ToList();
-            var _MediaTypes = MediaTypeList.Where(p => p.Name == FileExtension).Select(p => p.Template).ToList(); // "text/plain";
-            //  _MediaTypes = _MediaTypes.Count() < 1 ? "text/plain" : _MediaTypes;
-            if (_MediaTypes.Count() < 1)
-            {
-                _MediaTypes.Add("text/plain");
-            }
-            return _MediaTypes;
-        }
+        
         public List<string> GetExtensions(string Mime, IHostingEnvironment env)
         {
             var _CSV = File.ReadAllTextAsync(env.ContentRootPath + "/Data/LAppDoc/lmime.csv").GetAwaiter().GetResult();
@@ -223,4 +210,43 @@ namespace POYA.Unities.Helpers
     {
         public static Guid PublicDirId { get; } = Guid.Parse("75EAD9A8-31C0-4491-8D8B-431A506C6567");
     }
+
+    #region DISCARD
+    /*
+    public List<string> GetMimes(string FileExtension, IHostingEnvironment env)
+    {
+        var _SlnPath = $"/Users/larry/source/repos/POYA";
+        var _MimeDirPath = $"{_SlnPath}/POYA/Data/LAppDoc";
+        var _mimeJson = File.ReadAllTextAsync(_MimeDirPath + "/lmime.json").GetAwaiter().GetResult();
+        var _mimes = (JArray)JsonConvert.DeserializeObject(_mimeJson);
+        var _mimes_ = new List<string>();
+        FileExtension = FileExtension.Contains(".") ? FileExtension.Split(".").LastOrDefault() : FileExtension;
+        foreach (var i in _mimes)
+        {
+            var _milk = i.ToString().Split('\n')[1];
+            var _extension = _milk.Split('\"')[1];
+            var _mime = _milk.Split("\"")[3];
+            if (FileExtension == _extension.ToLower()) _mimes_.Add(_mime);
+        }
+        if (_mimes_.Count() < 1) _mimes_.Add("text/plain");
+        return _mimes_;
+        #region OLD_VERSION
+        *
+        var _CSV = File.ReadAllTextAsync(env.ContentRootPath + "/Data/LAppDoc/lmime.csv").GetAwaiter().GetResult();
+        var MediaTypes = CsvConvert.DeserializeObject<MediaType>(_CSV);
+        FileExtension = FileExtension.Contains(".") ? FileExtension.Split(".").LastOrDefault() : FileExtension;
+        //  Console.WriteLine(JsonConvert.SerializeObject(MediaTypes));
+        var MediaTypeList = MediaTypes.ToList();
+        var _MediaTypes = MediaTypeList.Where(p => p.Name == FileExtension).Select(p => p.Template).ToList(); // "text/plain";
+        //  _MediaTypes = _MediaTypes.Count() < 1 ? "text/plain" : _MediaTypes;
+        if (_MediaTypes.Count() < 1)
+        {
+            _MediaTypes.Add("text/plain");
+        }
+        return _MediaTypes;
+        *
+        #endregion
+
+    }*/
+    #endregion
 }

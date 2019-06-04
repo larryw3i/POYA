@@ -169,7 +169,7 @@ namespace POYA.Areas.EduHub.Controllers
             await _context.SaveChangesAsync();
             var _EArticleFiles = await _context.EArticleFiles.Where(p => p.EArticleId == id).ToListAsync();
             _EArticleFiles.ForEach(p=> {
-                p.ContentType = _mimeHelper.GetMimes(p.FileName,_hostingEnv).LastOrDefault();
+                p.ContentType = _xUserFileHelper.GetMimes(p.FileName,_hostingEnv).LastOrDefault();
             });
             ViewData["EArticleFiles"] = _EArticleFiles;
             return View(eArticle);
@@ -466,7 +466,7 @@ namespace POYA.Areas.EduHub.Controllers
                 return NoContent();
             }
             var FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath);
-            return File(FileBytes, _mimeHelper.GetMimes(_LUserFile.Name, _hostingEnv).Last(), _LUserFile.Name, true);
+            return File(FileBytes, _xUserFileHelper.GetMimes(_LUserFile.Name, _hostingEnv).Last(), _LUserFile.Name, true);
         }
 
         private async Task<List<SelectListItem>> GetVideoSharedCodeSelectListItemsForUser()
@@ -478,7 +478,7 @@ namespace POYA.Areas.EduHub.Controllers
                 new SelectListItem{  Value=Guid.Empty.ToString(), Text="Select your video file",Selected=true}
             };
             _LUserFile.ForEach(p => {
-                if (_mimeHelper.GetMimes(p.Name.Split(".").LastOrDefault(), _hostingEnv).LastOrDefault().StartsWith("video")) {
+                if (_xUserFileHelper.GetMimes(p.Name.Split(".").LastOrDefault(), _hostingEnv).LastOrDefault().StartsWith("video")) {
                 _VideoSharedCodeSelectListItems.Add(
                     new SelectListItem { Text = _x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId) + p.Name, Value = p.Id.ToString() }   //<<<<<<<<
                     );

@@ -151,7 +151,7 @@ namespace POYA.Areas.XUserFile.Models
         //  Name,Template,Reference
         public string Name { get; set; }
         public string Template { get; set; }
-        public string Reference { get; set; }
+        //public string Reference { get; set; }
     }
 
     public class ContrastMD5

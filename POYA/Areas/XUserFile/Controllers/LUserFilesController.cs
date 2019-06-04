@@ -151,7 +151,7 @@ namespace POYA.Areas.XUserFile.Controllers {
 
             var lUserFile = await _context.LUserFile.FirstOrDefaultAsync (m => m.Id == id);
 
-            lUserFile.ContentType = _mimeHelper.GetMimes (lUserFile.Name, _hostingEnv).Last ();
+            lUserFile.ContentType = _xUserFileHelper.GetMimes (lUserFile.Name, _hostingEnv).Last ();
             return View (lUserFile);
         }
 
@@ -316,7 +316,7 @@ namespace POYA.Areas.XUserFile.Controllers {
             if (lUserFile == null) {
                 return NotFound ();
             }
-            lUserFile.ContentType = _mimeHelper.GetMimes (lUserFile.Name, _hostingEnv).Last ();
+            lUserFile.ContentType = _xUserFileHelper.GetMimes (lUserFile.Name, _hostingEnv).Last ();
             return View (lUserFile);
         }
 
@@ -388,7 +388,7 @@ namespace POYA.Areas.XUserFile.Controllers {
                     return NoContent();
                 }
                 var _FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath_);
-                return File(_FileBytes, _mimeHelper.GetMimes(_EArticleFile.FileName, _hostingEnv).Last(), _EArticleFile.FileName, true);
+                return File(_FileBytes, _xUserFileHelper.GetMimes(_EArticleFile.FileName, _hostingEnv).Last(), _EArticleFile.FileName, true);
             }
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             var _UserId = _userManager.GetUserAsync (User).GetAwaiter ().GetResult ().Id;
@@ -402,7 +402,7 @@ namespace POYA.Areas.XUserFile.Controllers {
                 return NoContent ();
             }
             var FileBytes = await System.IO.File.ReadAllBytesAsync (_FilePath);
-            return File (FileBytes, _mimeHelper.GetMimes (_LUserFile.Name, _hostingEnv).Last (), _LUserFile.Name, true);
+            return File (FileBytes, _xUserFileHelper.GetMimes (_LUserFile.Name, _hostingEnv).Last (), _LUserFile.Name, true);
         }
 
         /*

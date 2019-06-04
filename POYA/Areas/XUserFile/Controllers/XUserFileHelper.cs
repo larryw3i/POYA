@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using POYA.Areas.XUserFile.Models;
 using POYA.Data;
 using POYA.Unities.Helpers;
@@ -17,6 +19,41 @@ namespace POYA.Areas.XUserFile.Controllers
 {
     public class XUserFileHelper
     {
+        public List<string> GetMimes(string FileExtension, IHostingEnvironment env)
+        {
+            var _SlnPath = $"/Users/larry/source/repos/POYA";
+            var _MimeDirPath = $"{_SlnPath}/POYA/Data/LAppDoc";
+            var _mimeJson = File.ReadAllTextAsync(_MimeDirPath + "/lmime.json").GetAwaiter().GetResult();
+            var _mimes = (JArray)JsonConvert.DeserializeObject(_mimeJson);
+            var _mimes_ = new List<string>();
+            FileExtension = FileExtension.Contains(".") ? FileExtension.Split(".").LastOrDefault() : FileExtension;
+            foreach (var i in _mimes)
+            {
+                var _milk = i.ToString().Split('\n')[1];
+                var _extension = _milk.Split('\"')[1];
+                var _mime = _milk.Split("\"")[3];
+                if (FileExtension == _extension.ToLower()) _mimes_.Add(_mime);
+            }
+            if (_mimes_.Count() < 1) _mimes_.Add("text/plain");
+            return _mimes_;
+            #region OLD_VERSION
+            /*
+            var _CSV = File.ReadAllTextAsync(env.ContentRootPath + "/Data/LAppDoc/lmime.csv").GetAwaiter().GetResult();
+            var MediaTypes = CsvConvert.DeserializeObject<MediaType>(_CSV);
+            FileExtension = FileExtension.Contains(".") ? FileExtension.Split(".").LastOrDefault() : FileExtension;
+            //  Console.WriteLine(JsonConvert.SerializeObject(MediaTypes));
+            var MediaTypeList = MediaTypes.ToList();
+            var _MediaTypes = MediaTypeList.Where(p => p.Name == FileExtension).Select(p => p.Template).ToList(); // "text/plain";
+            //  _MediaTypes = _MediaTypes.Count() < 1 ? "text/plain" : _MediaTypes;
+            if (_MediaTypes.Count() < 1)
+            {
+                _MediaTypes.Add("text/plain");
+            }
+            return _MediaTypes;
+            */
+            #endregion
+
+        }
         public async Task<string> LWriteBufferToFileAsync( IHostingEnvironment _hostingEnv , IFormFile formFile)
         {
             var MemoryStream_ = new MemoryStream();
