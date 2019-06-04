@@ -270,6 +270,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Update="Data\LAppDoc\earticle_category.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Data\LAppDoc\lmime.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
