@@ -20,12 +20,14 @@ namespace POYA.Data
         public DbSet<POYA.Areas.XUserFile.Models.LFile> LFile { get; set; }
         public DbSet<POYA.Areas.XUserFile.Models.LDir> LDir { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.EArticle> EArticle { get; set; }
-        public DbSet<POYA.Areas.EduHub.Models.EArticleComment> EArticleComment { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.EArticleUserReadRecord>   EArticleUserReadRecords { get; set; }
         public DbSet<POYA.Areas.XLaw.Models.Complaint> Complaint { get; set; }
         public DbSet<POYA.Areas.XLaw.Models.Arbitrament> Arbitrament { get; set; }
         public DbSet<EArticleFile> EArticleFiles { get; set; }
 
+
+        /*
+        public DbSet<POYA.Areas.EduHub.Models.EArticleComment> EArticleComment { get; set; }
         #region EARTICLE_CLASS
         public DbSet<LField> LFields { get; set; }
         public DbSet<LAdvancedClass> LAdvancedClasses { get; set; }
@@ -34,7 +36,6 @@ namespace POYA.Data
         public DbSet<LGradeComment> LGradeComments { get; set; }
         #endregion
 
-        /*
         public DbSet<POYA.Areas.EduHub.Models.EGrade> EGrade { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.ESubject> ESubject { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.EType> EType { get; set; }

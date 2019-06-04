@@ -44,6 +44,25 @@
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
 
+            <div class="form-group ">
+                <div class="row">
+                    <div class="col col-3">
+                        <select id="FirstCategorySelect" asp-items="Model.FirstCategorySelectListItems"></select>
+                    </div>  
+                    <div class="col col-3">
+                        <select asp-for="CategoryId" asp-items="Model.SecondCategorySelectListItems"></select>
+                    </div>    
+                    <div class="col col-3">
+                        <input asp-for="AdditionalCategory" />
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col col-3">
+                        <select asp-for="ComplexityRank" asp-items="Model.ComplexityRankSelectListItems"></select>
+                    </div>
+                </div>
+            </div>
             <div class="form-group row">
                 <div class="col col-4" id="video_div">
                     <span class="row">@Localizer["Upload videos for your article"]</span>
@@ -106,6 +125,12 @@
 
         $("#video_list_div").hide();
         $("#attachment_list_div").hide();
+        HandleCategorySelect();
+
+        $("#FirstCategorySelect").on("change", function () {
+            HandleCategorySelect();
+
+        });
 
         $("#EArticles_Form_Submit_A").on("click", function () {
             if ($("#Title").val().length < 2) return;
@@ -201,6 +226,9 @@
         _EArticles_Form_Data_.append("@(nameof(Model.Title))", $("#@nameof(Model.Title)").val());
         _EArticles_Form_Data_.append("@(nameof(Model.Content))", Editor.txt.html());
         _EArticles_Form_Data_.append("@(nameof(Model.Id))", "@Model.Id");
+        _EArticles_Form_Data_.append("@(nameof(Model.CategoryId))", $("#CategoryId option:selected").val().toString().split('_')[0]);
+        _EArticles_Form_Data_.append("@(nameof(Model.ComplexityRank))", $("#ComplexityRank option:selected").val());
+        _EArticles_Form_Data_.append("@(nameof(Model.AdditionalCategory))", $("#ComplexityRank").val());
         $("input[name='LAttachments']").each(function (index, elem) {
             // console.log($(elem).val());
             if ($(elem).val() == "") return true;
@@ -263,6 +291,40 @@
     //  #endregion
 
     //  #region  DATA
+      var _CategoryId = "@Model.CategoryId";
+        var _GuidEmpty = "@(Guid.Empty)";
+        var _IsEdit =@(IsEdit?"true":"false");
+    function HandleCategorySelect() {
+
+        if (_CategoryId != _GuidEmpty) {
+            var _SecondCategoryCode = $("#CategoryId option:selected").val().toString().split('_')[1];
+            $("#FirstCategorySelect option").each((index, element) => {
+                var _FirstCategoryCode = $(element).val().toString().split('_')[1];
+                if (_SecondCategoryCode.startsWith(_FirstCategoryCode)) {
+                    
+                    $(element).attr("selected", true);
+                    return false;
+                }
+            });
+        } else {
+            var _FirstCategoryCode = $("#FirstCategorySelect option:selected").val().toString().split('_')[1];
+            var IsSetSelected = false;
+            $("#CategoryId option").each((index, element) => {
+                var _SecondCategoryCode = $(element).val().toString().split('_')[1];
+                if (_SecondCategoryCode.startsWith(_FirstCategoryCode)) {
+                    $(element).show();
+                    if (!IsSetSelected) {
+                        $(element).attr("selected", true);
+                        IsSetSelected = true;
+                    }
+                } else {
+                    $(element).hide();
+                }
+            });
+        }
+
+    }
+
     /**
     *
     * @@param {string} id -The id

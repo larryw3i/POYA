@@ -29,7 +29,30 @@ namespace POYA.Areas.EduHub.Models
 
         public string UserId { get; set; }
 
-        public Guid ClassId { get; set; }
+        #region CATEGORY
+
+        /// <summary>
+        /// CategoryId include the first and second category, it is  reference from GB/T 13745-2009,
+        /// <br/> and there's no guarantee that they're fully compatible,
+        /// category of earticle is just a label which author want to set, 
+        /// <br/>please let us know if you have a better category 
+        /// </summary>
+        public Guid CategoryId { get; set; }
+
+        [NotMapped]
+        public List<SelectListItem> FirstCategorySelectListItems { get; set; }
+
+        [NotMapped]
+        public List<SelectListItem> SecondCategorySelectListItems { get; set; }
+
+        public string AdditionalCategory { get; set; }
+
+        public int ComplexityRank { get; set; } = 0;
+
+        [NotMapped]
+        public List<SelectListItem> ComplexityRankSelectListItems { get; set; }
+
+        #endregion
 
         [StringLength(maximumLength: 50, MinimumLength = 2)]
         public string Title { get; set; }
@@ -37,10 +60,6 @@ namespace POYA.Areas.EduHub.Models
         [StringLength(maximumLength: 16384)]
         public string Content { get; set; }
 
-        /// <summary>
-        /// "text/html" or "text/markdown", the default is "text/html"
-        /// </summary>
-        public string ContentType { get; set; } = "text/html";
 
         /// <summary>
         /// Determine the article is legal or not by Content appraiser, the default value is <see langword="true"/>
@@ -50,8 +69,8 @@ namespace POYA.Areas.EduHub.Models
         public DateTimeOffset DOPublishing { get; set; } = DateTimeOffset.Now;
 
         public DateTimeOffset? DOUpdating { get; set; }
+
         public long ClickCount { get; set; } = 0;
-        public Guid LGradeId { get; set; }
 
         #region DEPOLLUTION
         /// <summary>
@@ -68,6 +87,25 @@ namespace POYA.Areas.EduHub.Models
         [NotMapped]
         public IEnumerable<IFormFile> LAttachments { get; set; }
         #endregion
+
+        #region DISCARD
+
+        /// <summary>
+        /// || DISCARD ||
+        /// </summary>
+        public Guid ClassId { get; set; }
+
+        /// <summary>
+        /// || DISCARD ||
+        /// </summary>
+        public Guid LGradeId { get; set; }
+
+        /// <summary>
+        /// || DISCARD ||
+        /// "text/html" or "text/markdown", the default is "text/html"
+        /// </summary>
+        public string ContentType { get; set; } //    = "text/html";
+        #endregion
     }
 
     public class EArticleFile
@@ -75,6 +113,7 @@ namespace POYA.Areas.EduHub.Models
         /// <summary>
         /// The default is  Guid.NewGuid()
         /// </summary>
+        [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
         public Guid EArticleId { get; set; }
         public string FileMD5 { get; set; }
@@ -99,7 +138,18 @@ namespace POYA.Areas.EduHub.Models
 
     #region DEPOLLUTION
 
+    public class LEArticleCategory
+    {
+        public Guid Id { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
+    }
+
     #region ARTICLE_CLASS
+    /*
+     * Id,Code,Name
+
+     * 
     public class LField
     {
         public Guid Id { get; set; } = Guid.NewGuid();
@@ -135,8 +185,9 @@ namespace POYA.Areas.EduHub.Models
         public string Comment { get; set; }
 
     }
+    */
     #endregion
-    
+
 
     #endregion
 }

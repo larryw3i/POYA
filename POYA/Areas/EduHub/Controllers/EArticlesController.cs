@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using CsvHelper;
 using Ganss.XSS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -41,6 +43,8 @@ namespace POYA.Areas.EduHub.Controllers
         private readonly HtmlSanitizer _htmlSanitizer;
         private readonly MimeHelper _mimeHelper;
         private readonly XUserFileHelper _xUserFileHelper;
+        private readonly string _eArticleCategoryFilePath;
+        private readonly Regex _unicode2StringRegex;
         public EArticlesController(
             MimeHelper mimeHelper,
             HtmlSanitizer htmlSanitizer,
@@ -65,6 +69,8 @@ namespace POYA.Areas.EduHub.Controllers
             _signInManager = signInManager;
             _mimeHelper = mimeHelper;
             _xUserFileHelper = new XUserFileHelper();
+            _eArticleCategoryFilePath = _hostingEnv.ContentRootPath + $"/Data/LAppDoc/earticle_category.csv";
+            _unicode2StringRegex = new Regex(@"\\u([0-9A-F]{4})", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         }
         #endregion
 
@@ -182,6 +188,7 @@ namespace POYA.Areas.EduHub.Controllers
             var _LUserFile = await _context.LUserFile.Where(p => p.UserId == UserId_  ).ToListAsync();  //<<<<<<<<
 
             var _EArticle = new EArticle ();
+            InitSelectListItem(_EArticle);
             return View(_EArticle);
         }
 
@@ -190,7 +197,7 @@ namespace POYA.Areas.EduHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Content,LVideos,LAttachments")][FromForm]EArticle eArticle)
+        public async Task<IActionResult> Create([Bind("Id,Title,Content,LVideos,LAttachments,CategoryId,AdditionalCategory,ComplexityRank")][FromForm]EArticle eArticle)
         {
             if (ModelState.IsValid)
             {
@@ -207,6 +214,7 @@ namespace POYA.Areas.EduHub.Controllers
                 //  eArticle.Id = Guid.NewGuid();
                 eArticle.UserId = UserId_;
                 eArticle.Content = _htmlSanitizer.Sanitize(eArticle.Content);
+                
                 await _context.AddAsync(eArticle);
 
 
@@ -250,13 +258,15 @@ namespace POYA.Areas.EduHub.Controllers
 
             TempData.Keep();
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var eArticle = await _context.EArticle.FirstOrDefaultAsync(p=>p.Id==id && p.UserId==UserId_);
+            var eArticle = await _context.EArticle.FirstOrDefaultAsync(p => p.Id == id && p.UserId == UserId_);
             if (eArticle == null)
             {
                 return NotFound();
             }
             ViewData["EArticleFiles"] = await _context.EArticleFiles.Where(p => p.EArticleId == id).ToListAsync();
             //  eArticle.VideoSharedCodeSelectListItems = await GetVideoSharedCodeSelectListItemsForUser();
+
+            InitSelectListItem(eArticle);
             return View(eArticle);
         }
 
@@ -265,7 +275,8 @@ namespace POYA.Areas.EduHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,VideoSharedCode,Title,Content,LVideos,LAttachments")] EArticle eArticle)
+        public async Task<IActionResult> Edit(Guid id,
+            [Bind("Id,VideoSharedCode,Title,Content,LVideos,LAttachments,CategoryId,AdditionalCategory,ComplexityRank")] EArticle eArticle)
         {
             if (id != eArticle.Id)
             {
@@ -343,6 +354,43 @@ namespace POYA.Areas.EduHub.Controllers
 
 
         #region DEPOLLUTION
+
+        /// <summary>
+        /// FROM        https://blog.csdn.net/qq_26422355/article/details/82716824
+        /// THANK       https://blog.csdn.net/qq_26422355
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        private string Unicode2String(string source)
+        {
+            return _unicode2StringRegex.Replace(source, x => string.Empty + Convert.ToChar(Convert.ToUInt16(x.Result("$1"), 16)));
+        }
+        private void InitSelectListItem(EArticle eArticle)
+        {
+            var reader = new StreamReader(_eArticleCategoryFilePath);
+            var csv = new CsvReader(reader);
+            var Categories = csv.GetRecords<LEArticleCategory>().ToList();
+            Categories.ForEach(p=> {
+                p.Name =_localizer[ Unicode2String(p.Name)];
+            });
+            eArticle.ComplexityRankSelectListItems = new List<SelectListItem>{
+                new SelectListItem { Value = "0", Text = "\u269D",Selected=true },
+                new SelectListItem { Value = "1", Text = "\u269D\u269D" },
+                new SelectListItem { Value = "2", Text = "\u269D\u269D\u269D"  },
+                new SelectListItem { Value = "3", Text = "\u269D\u269D\u269D\u269D"  }
+            };
+            
+            eArticle.FirstCategorySelectListItems =Categories.Where(p=>p.Code.Length==3).Select(p=>new SelectListItem {
+                Value = p.Id.ToString() + "_" + p.Code,
+                Text =p.Name
+            }).ToList();
+            eArticle.SecondCategorySelectListItems = Categories.Where(p => p.Code.Length ==5).Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString()+"_"+p.Code,
+                Text = p.Name
+            }).ToList();
+        }
+
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> RemoveArticleFile(Guid? id)
