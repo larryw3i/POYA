@@ -16,6 +16,11 @@
     <Compile Remove="Areas\EduHub\Views\ESubjects\**" />
     <Compile Remove="Areas\EduHub\Views\ETypes\**" />
     <Compile Remove="Areas\EduHub\Views\EVideos\**" />
+    <Compile Remove="Areas\EduHub\Views\LAdvancedClasses\**" />
+    <Compile Remove="Areas\EduHub\Views\LFields\**" />
+    <Compile Remove="Areas\EduHub\Views\LGradeComments\**" />
+    <Compile Remove="Areas\EduHub\Views\LGrades\**" />
+    <Compile Remove="Areas\EduHub\Views\LSecondaryClasses\**" />
     <Compile Remove="Views\EduHubArticles\**" />
     <Compile Remove="Views\EduHubGrades\**" />
     <Compile Remove="Views\EduHubSubjects\**" />
@@ -31,6 +36,11 @@
     <Content Remove="Areas\EduHub\Views\ESubjects\**" />
     <Content Remove="Areas\EduHub\Views\ETypes\**" />
     <Content Remove="Areas\EduHub\Views\EVideos\**" />
+    <Content Remove="Areas\EduHub\Views\LAdvancedClasses\**" />
+    <Content Remove="Areas\EduHub\Views\LFields\**" />
+    <Content Remove="Areas\EduHub\Views\LGradeComments\**" />
+    <Content Remove="Areas\EduHub\Views\LGrades\**" />
+    <Content Remove="Areas\EduHub\Views\LSecondaryClasses\**" />
     <Content Remove="Views\EduHubArticles\**" />
     <Content Remove="Views\EduHubGrades\**" />
     <Content Remove="Views\EduHubSubjects\**" />
@@ -46,6 +56,11 @@
     <EmbeddedResource Remove="Areas\EduHub\Views\ESubjects\**" />
     <EmbeddedResource Remove="Areas\EduHub\Views\ETypes\**" />
     <EmbeddedResource Remove="Areas\EduHub\Views\EVideos\**" />
+    <EmbeddedResource Remove="Areas\EduHub\Views\LAdvancedClasses\**" />
+    <EmbeddedResource Remove="Areas\EduHub\Views\LFields\**" />
+    <EmbeddedResource Remove="Areas\EduHub\Views\LGradeComments\**" />
+    <EmbeddedResource Remove="Areas\EduHub\Views\LGrades\**" />
+    <EmbeddedResource Remove="Areas\EduHub\Views\LSecondaryClasses\**" />
     <EmbeddedResource Remove="Views\EduHubArticles\**" />
     <EmbeddedResource Remove="Views\EduHubGrades\**" />
     <EmbeddedResource Remove="Views\EduHubSubjects\**" />
@@ -61,6 +76,11 @@
     <None Remove="Areas\EduHub\Views\ESubjects\**" />
     <None Remove="Areas\EduHub\Views\ETypes\**" />
     <None Remove="Areas\EduHub\Views\EVideos\**" />
+    <None Remove="Areas\EduHub\Views\LAdvancedClasses\**" />
+    <None Remove="Areas\EduHub\Views\LFields\**" />
+    <None Remove="Areas\EduHub\Views\LGradeComments\**" />
+    <None Remove="Areas\EduHub\Views\LGrades\**" />
+    <None Remove="Areas\EduHub\Views\LSecondaryClasses\**" />
     <None Remove="Views\EduHubArticles\**" />
     <None Remove="Views\EduHubGrades\**" />
     <None Remove="Views\EduHubSubjects\**" />
@@ -74,10 +94,16 @@
     <None Remove="Views\__LUserFiles\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Areas\EduHub\Controllers\EArticleCommentsController.cs" />
     <Compile Remove="Areas\EduHub\Controllers\EGradesController.cs" />
     <Compile Remove="Areas\EduHub\Controllers\ESubjectsController.cs" />
     <Compile Remove="Areas\EduHub\Controllers\ETypesController.cs" />
     <Compile Remove="Areas\EduHub\Controllers\EVideosController.cs" />
+    <Compile Remove="Areas\EduHub\Controllers\LAdvancedClassesController.cs" />
+    <Compile Remove="Areas\EduHub\Controllers\LFieldsController.cs" />
+    <Compile Remove="Areas\EduHub\Controllers\LGradeCommentsController.cs" />
+    <Compile Remove="Areas\EduHub\Controllers\LGradesController.cs" />
+    <Compile Remove="Areas\EduHub\Controllers\LSecondaryClassesController.cs" />
     <Compile Remove="Controllers\EduHubArticlesController.cs" />
     <Compile Remove="Controllers\EduHubGradesController.cs" />
     <Compile Remove="Controllers\EduHubSubjectsController.cs" />
@@ -272,6 +298,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="Data\LAppDoc\earticle_category.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\LAppDoc\_earticle_category.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Data\LAppDoc\lmime.csv">
