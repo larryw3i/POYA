@@ -5,12 +5,17 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _EArticleFiles_ = ViewData["EArticleFiles"] as List<EArticleFile>;
+    var Categories= ViewData["Categories"] as List<LEArticleCategory>;
 }
 
 <h4 class="col offset-1">
     @(Html.DisplayFor(model => model.Title))
-    <span style="font-size:60%">
-        @(Model.ClickCount) <span title="@Localizer["click"]">&#128064;</span>
+    <span style="font-size:50%">
+        <br />
+        @(ViewData["Category"])
+        @(new string('\u269D',Model.ComplexityRank+1))
+        
+        <span title="@Localizer["click"]">&#128064;</span>
         @(ViewData["UserRead"])  <span title="@($"{ViewData["UserRead"]} {Localizer["people viewed"]}")">&#128521;</span>
     </span>
 </h4>
@@ -28,7 +33,7 @@
         }
 
     </dl>
-    <dl class="row">
+    <dl class="row" style="word-break:break-all;word-wrap:break-word">
         <dd class="col">
             @Html.Raw(Model.Content)
         </dd>

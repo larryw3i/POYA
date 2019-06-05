@@ -47,55 +47,60 @@
             <div class="form-group ">
                 <div class="row">
                     <div class="col col-3">
-                        <select id="FirstCategorySelect" asp-items="Model.FirstCategorySelectListItems"></select>
-                    </div>  
-                    <div class="col col-3">
-                        <select asp-for="CategoryId" asp-items="Model.SecondCategorySelectListItems"></select>
-                    </div>    
-                    <div class="col col-3">
-                        <input asp-for="AdditionalCategory" />
+                        <select id="FirstCategorySelect" asp-items="Model.FirstCategorySelectListItems" class="form-control"></select>
                     </div>
-                    
+                    <div class="col col-3">
+                        <select asp-for="CategoryId" asp-items="Model.SecondCategorySelectListItems" class="form-control"></select>
+                    </div>
+                    <div class="col col-3">
+                        <input asp-for="AdditionalCategory" class="form-control" />
+                    </div>
+
                 </div>
                 <div class="row">
                     <div class="col col-3">
-                        <select asp-for="ComplexityRank" asp-items="Model.ComplexityRankSelectListItems"></select>
+                        <span>@Localizer["Complexity"]</span>? 
+                        <span>
+                            <select asp-for="ComplexityRank" asp-items="Model.ComplexityRankSelectListItems" class="form-control"></select>
+                        </span>
                     </div>
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col col-4" id="video_div">
-                    <span class="row">@Localizer["Upload videos for your article"]</span>
-                    <div class="col" id="video_list_div">
-                        @if (IsEdit)
-                        {
-                            foreach (var v in EArticleFiles.Where(p => p.IsEArticleVideo))
+            <div class="form-group offset-1">
+                <div class="row">
+                    <div class="col col-5" id="video_div">
+                        <span class="row">@Localizer["Upload videos for your article"]</span>
+                        <div class="col" id="video_list_div">
+                            @if (IsEdit)
                             {
-                                var _id = v.Id.ToString();
-                                <div class="SelectFileShowEle row" id="@(FileRemoveEleString+_id)"><span>@(v.FileName)</span><span class='FileInputRemoveEle' id="LVideos_@_id" onclick="RemoveFile('@_id',true,true)">  &#128500;</span></div>
+                                foreach (var v in EArticleFiles.Where(p => p.IsEArticleVideo))
+                                {
+                                    var _id = v.Id.ToString();
+                                    <div class="SelectFileShowEle row" id="@(FileRemoveEleString+_id)"><span>@(v.FileName)</span><span class='FileInputRemoveEle' id="LVideos_@_id" onclick="RemoveFile('@_id',true,true)">  &#128500;</span></div>
+                                }
                             }
-                        }
+                        </div>
+                        <div class="row" id="video_row_div">
+                            <a class="btn btn-outline-info" id="VideoSelectEle">@Localizer["Select video"]</a>
+                        </div>
                     </div>
-                    <div class="row" id="video_row_div">
-                        <a class="btn btn-outline-info" id="VideoSelectEle">@Localizer["Select video"]</a>
-                    </div>
-                </div>
-                <div class="col col-4" id="attachment_div">
-                    <span class="row">@Localizer["Upload attachments for your article"]</span>
-                    <div class="col" id="attachment_list_div">
-                        @if (IsEdit)
-                        {
-                            foreach (var a in EArticleFiles.Where(p => !p.IsEArticleVideo))
+                    <div class="col offset-1 col-5" id="attachment_div">
+                        <span class="row">@Localizer["Upload attachments for your article"]</span>
+                        <div class="col" id="attachment_list_div">
+                            @if (IsEdit)
                             {
-                                var _id = a.Id.ToString();
-                                <div class="SelectFileShowEle row" id="@(FileRemoveEleString+_id)"><span>@(a.FileName)</span><span class='FileInputRemoveEle' id="LAttachments_@_id" onclick="RemoveFile('@_id',false,true)"> &#128500;</span></div>
+                                foreach (var a in EArticleFiles.Where(p => !p.IsEArticleVideo))
+                                {
+                                    var _id = a.Id.ToString();
+                                    <div class="SelectFileShowEle row" id="@(FileRemoveEleString+_id)"><span>@(a.FileName)</span><span class='FileInputRemoveEle' id="LAttachments_@_id" onclick="RemoveFile('@_id',false,true)"> &#128500;</span></div>
+                                }
                             }
-                        }
-                    </div>
-                    <div class="row" id="attachment_row_div">
-                        <a class="btn btn-outline-info" id="AttachmentSelectBtn">@Localizer["Select attachment"]</a>
-                    </div>
+                        </div>
+                        <div class="row" id="attachment_row_div">
+                            <a class="btn btn-outline-info" id="AttachmentSelectBtn">@Localizer["Select attachment"]</a>
+                        </div>
 
+                    </div>
                 </div>
             </div>
 
@@ -228,7 +233,7 @@
         _EArticles_Form_Data_.append("@(nameof(Model.Id))", "@Model.Id");
         _EArticles_Form_Data_.append("@(nameof(Model.CategoryId))", $("#CategoryId option:selected").val().toString().split('_')[0]);
         _EArticles_Form_Data_.append("@(nameof(Model.ComplexityRank))", $("#ComplexityRank option:selected").val());
-        _EArticles_Form_Data_.append("@(nameof(Model.AdditionalCategory))", $("#ComplexityRank").val());
+        _EArticles_Form_Data_.append("@(nameof(Model.AdditionalCategory))", $("#AdditionalCategory").val());
         $("input[name='LAttachments']").each(function (index, elem) {
             // console.log($(elem).val());
             if ($(elem).val() == "") return true;
@@ -301,7 +306,7 @@
             $("#FirstCategorySelect option").each((index, element) => {
                 var _FirstCategoryCode = $(element).val().toString().split('_')[1];
                 if (_SecondCategoryCode.startsWith(_FirstCategoryCode)) {
-                    
+
                     $(element).attr("selected", true);
                     return false;
                 }

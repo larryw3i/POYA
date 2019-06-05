@@ -178,6 +178,10 @@ namespace POYA.Areas.EduHub.Controllers
                 p.ContentType = _xUserFileHelper.GetMimes(p.FileName,_hostingEnv).LastOrDefault();
             });
             ViewData["EArticleFiles"] = _EArticleFiles;
+            var Categories = GetCategories();   //  .FirstOrDefault(p => p.Id == eArticle.CategoryId);
+            var Category=Categories.FirstOrDefault(p => p.Id == eArticle.CategoryId);
+            var CategoryCode = Category.Code.Substring(0, 3);
+            ViewData["Category"] = $" {Unicode2String( Categories.FirstOrDefault(p=>p.Code==CategoryCode).Name)}  {Unicode2String( Category.Name)} {eArticle.AdditionalCategory}";   //  csv.GetRecords<LEArticleCategory>().ToList();
             return View(eArticle);
         }
 
@@ -197,7 +201,8 @@ namespace POYA.Areas.EduHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Content,LVideos,LAttachments,CategoryId,AdditionalCategory,ComplexityRank")][FromForm]EArticle eArticle)
+        public async Task<IActionResult> Create(
+            [Bind("Id,Title,Content,LVideos,LAttachments,CategoryId,AdditionalCategory,ComplexityRank")][FromForm]EArticle eArticle)
         {
             if (ModelState.IsValid)
             {
@@ -276,7 +281,7 @@ namespace POYA.Areas.EduHub.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            [Bind("Id,VideoSharedCode,Title,Content,LVideos,LAttachments,CategoryId,AdditionalCategory,ComplexityRank")] EArticle eArticle)
+            [Bind("Id,Title,Content,LVideos,LAttachments,CategoryId,AdditionalCategory,ComplexityRank")] EArticle eArticle)
         {
             if (id != eArticle.Id)
             {
@@ -295,6 +300,9 @@ namespace POYA.Areas.EduHub.Controllers
                     _EArticle.DOUpdating = DateTimeOffset.Now;
                     //  _EArticle.VideoSharedCode = eArticle.VideoSharedCode;
                     _EArticle.Title = eArticle.Title;
+                    _EArticle.ComplexityRank = eArticle.ComplexityRank;
+                    _EArticle.CategoryId = eArticle.CategoryId;
+                    _EArticle.AdditionalCategory = eArticle.AdditionalCategory;
                     #endregion
                     await SaveArticleFilesAsync(eArticle);
 
@@ -365,16 +373,15 @@ namespace POYA.Areas.EduHub.Controllers
         {
             return _unicode2StringRegex.Replace(source, x => string.Empty + Convert.ToChar(Convert.ToUInt16(x.Result("$1"), 16)));
         }
+
         private void InitSelectListItem(EArticle eArticle)
         {
-            var reader = new StreamReader(_eArticleCategoryFilePath);
-            var csv = new CsvReader(reader);
-            var Categories = csv.GetRecords<LEArticleCategory>().ToList();
+            var Categories = GetCategories();   // csv.GetRecords<LEArticleCategory>().ToList();
             Categories.ForEach(p=> {
                 p.Name =_localizer[ Unicode2String(p.Name)];
             });
             eArticle.ComplexityRankSelectListItems = new List<SelectListItem>{
-                new SelectListItem { Value = "0", Text = "\u269D",Selected=true },
+                new SelectListItem { Value = "0", Text = "\u269D" },
                 new SelectListItem { Value = "1", Text = "\u269D\u269D" },
                 new SelectListItem { Value = "2", Text = "\u269D\u269D\u269D"  },
                 new SelectListItem { Value = "3", Text = "\u269D\u269D\u269D\u269D"  }
@@ -561,6 +568,13 @@ namespace POYA.Areas.EduHub.Controllers
             await _context.EArticleFiles.AddRangeAsync(_EArticleFiles);
             await _context.LFile.AddRangeAsync(_LFiles_);
             return;
+        }
+
+        private List<LEArticleCategory> GetCategories()
+        {
+            var reader = new StreamReader(_eArticleCategoryFilePath);
+            var csv = new CsvReader(reader);
+            return csv.GetRecords<LEArticleCategory>().ToList();
         }
         #endregion
     }
