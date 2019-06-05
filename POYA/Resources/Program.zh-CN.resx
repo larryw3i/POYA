@@ -839,4 +839,10 @@
   <data name="\u6c34\u6587\u5b66" xml:space="preserve">
     <value>水文学</value>
   </data>
+  <data name="\u7ec4\u5408\u6570\u5b66" xml:space="preserve">
+    <value>组合数学</value>
+  </data>
+  <data name="\u79bb\u6563\u6570\u5b66" xml:space="preserve">
+    <value>离散数学</value>
+  </data>
 </root>

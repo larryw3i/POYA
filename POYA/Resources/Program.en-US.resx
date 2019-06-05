@@ -831,12 +831,18 @@
     <value>Mathematics</value>
   </data>
   <data name="\u6570\u5b66\u53f2" xml:space="preserve">
-    <value>history of mathematics</value>
+    <value>History of mathematics</value>
   </data>
   <data name="\u5730\u7403\u79d1\u5b66" xml:space="preserve">
-    <value>geoscience</value>
+    <value>Geoscience</value>
   </data>
   <data name="\u6c34\u6587\u5b66" xml:space="preserve">
-    <value>hydrology</value>
+    <value>Hydrology</value>
+  </data>
+  <data name="\u7ec4\u5408\u6570\u5b66" xml:space="preserve">
+    <value>Combinatorics</value>
+  </data>
+  <data name="\u79bb\u6563\u6570\u5b66" xml:space="preserve">
+    <value>Discrete mathematics</value>
   </data>
 </root>

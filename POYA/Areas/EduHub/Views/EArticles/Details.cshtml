@@ -8,14 +8,16 @@
     var Categories = ViewData["Categories"] as List<LEArticleCategory>;
 }
 
-<h4 class="col offset-1">
-    @(Html.DisplayFor(model => model.Title))
+<h4 class="col offset-1 col-8">
+    <span style="max-width:60%;word-wrap:break-word;word-break:break-all">
+        @(Html.DisplayFor(model => model.Title))
+    </span>
     <span style="font-size:50%">
         <br />
         @(ViewData["Category"])
         @(new string('\u269D', Model.ComplexityRank + 1))
 
-        <span title="@Localizer["click"]">&#128064;</span>
+        @(Model.ClickCount)<span title="@Localizer["click"]">&#128064;</span>
         @(ViewData["UserRead"])  <span title="@($"{ViewData["UserRead"]} {Localizer["people viewed"]}")">&#128521;</span>
     </span>
 </h4>

@@ -16,7 +16,7 @@
 <div class="row">
     <div class="col col-4">
         <img src="~/img/article.bmp" class=" main-icon" title="@Localizer["Article"]" />
-        <span style="font-size:200%">@Localizer["Article"]</span>
+        <span style="font-size:200%">@Localizer["EduHub"]</span>
     </div>
     <a class="col offset-2 offset-md-2 offset-sm-2 offset-lg-4 col-2 col-lg-1" asp-action="Create" title="@Localizer["Add"]">
         <img src="~/img/add.bmp" style="max-height:50px;" />
@@ -35,15 +35,24 @@
 </div>
 
 <div class="row">
-    @foreach(var a in (ViewData["EArticles"] as IPagedList<EArticle>))
+    @foreach (var a in (ViewData["EArticles"] as IPagedList<EArticle>))
     {
-        <div class="col col-3">
-            <div class="card" style="margin-top:6px;"  onclick="GoToDetails('@a.Id')">
-                <video src="@Url.Action("GetFile", "LUserFiles", new { id = EArticleFiles.FirstOrDefault(p=>p.EArticleId==a.Id).Id, area = "XUserFile" })" 
-                       class="card-img-top" alt="@(a.Title)"></video>
+        var _EArticleFiles = EArticleFiles.FirstOrDefault(p => p.EArticleId == a.Id);
+        <div class="col col-4 col-lg-2 col-md-3 ">
+            <div class="card" name="EArticleHomeCard" style="margin-top:6px;" onclick="GoToDetails('@a.Id')">
+                @if (_EArticleFiles == null)
+                {
+                    <div class="card-img-top card-img-top-text" alt="@(a.Title)">
+                        <span>@(Html.Raw(a.Content))</span>
+                    </div>
+                }
+                else
+                {
+                    <video src="@Url.Action("GetFile", "LUserFiles", new { id = EArticleFiles.FirstOrDefault(p=>p.EArticleId==a.Id).Id, area = "XUserFile" })"
+                           class="card-img-top" alt="@(a.Title)"></video>
+                }
                 <div class="card-body">
-                    <p class="card-text" style="word-wrap:break-word;word-break:break-all">
-
+                    <p class="card-text">
                         <a asp-action="Details" asp-route-id="@a.Id" title="@(a.Title)" class="title">@Html.DisplayFor(modelItem => a.Title)</a>
                     </p>
                 </div>
@@ -58,7 +67,7 @@
 @section Scripts{
     <script>
         /**
-         * 
+         *
          * @@param { string} Id
          */
         function GoToDetails(Id) {
@@ -118,9 +127,10 @@
         }
 
         .title {
-            font-size: 120%;
-            font-weight: bold;
-            color: coral;
+            font-size: 80%;
+            word-wrap: break-word;
+            word-break: break-all;
+            color: darkorchid;
         }
 
         .main-icon {
@@ -132,68 +142,84 @@
             zoom: 120%;
             margin-top: 10px;
         }
+
+        [name='EArticleHomeCard'] {
+            max-height: 120px;
+            overflow: hidden
+        }
+
+        .card-body {
+            margin-top: -20px;
+        }
+
+        .card-img-top-text {
+            overflow: hidden;
+        }
+        .card:hover{
+            box-shadow: 5px 5px 5px #888888;
+        }
     </style>
 }
 
 @*
 
-    
 
-<table class="table">
 
-    <tbody>
-        @foreach (var item in ViewData["EArticles"] as IPagedList<EArticle>)
-        {
-            <tr>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" title="@(item.Title)" class="title">@Html.DisplayFor(modelItem => item.Title)</a>
-                    <span class="author">
-                        @($"{item.UserName}") &#9998; @($"{item.DOPublishing.LocalDateTime.ToShortDateString()}")
-                        @if (item.DOUpdating != null)
+    <table class="table">
+
+        <tbody>
+            @foreach (var item in ViewData["EArticles"] as IPagedList<EArticle>)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" title="@(item.Title)" class="title">@Html.DisplayFor(modelItem => item.Title)</a>
+                        <span class="author">
+                            @($"{item.UserName}") &#9998; @($"{item.DOPublishing.LocalDateTime.ToShortDateString()}")
+                            @if (item.DOUpdating != null)
+                            {
+                                <span style="font-size:150%">&#10226;</span>
+                                <span>@(item.DOUpdating?.LocalDateTime.ToShortDateString())</span>
+                            }
+
+
+                        </span>
+                        @if (UserId == item.UserId)
                         {
-                            <span style="font-size:150%">&#10226;</span>
-                            <span>@(item.DOUpdating?.LocalDateTime.ToShortDateString())</span>
+                            <a asp-action="Edit" asp-route-id="@item.Id" title="@Localizer["Edit"]">&#9997;</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" title="@Localizer["Delete"]">&#10008;</a>
                         }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
 
 
-                    </span>
-                    @if (UserId == item.UserId)
-                    {
-                        <a asp-action="Edit" asp-route-id="@item.Id" title="@Localizer["Edit"]">&#9997;</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" title="@Localizer["Delete"]">&#10008;</a>
-                    }
-                </td>
-
+         <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SubjectId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GradeId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TypeId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Content)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsLegal)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
-
-
-     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SubjectId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GradeId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TypeId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Content)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsLegal)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+        </thead>
 *@
