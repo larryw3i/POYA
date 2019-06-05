@@ -827,4 +827,16 @@
   <data name="Select attachment" xml:space="preserve">
     <value>Select attachment</value>
   </data>
+  <data name="\u6570\u5b66" xml:space="preserve">
+    <value>Mathematics</value>
+  </data>
+  <data name="\u6570\u5b66\u53f2" xml:space="preserve">
+    <value>history of mathematics</value>
+  </data>
+  <data name="\u5730\u7403\u79d1\u5b66" xml:space="preserve">
+    <value>geoscience</value>
+  </data>
+  <data name="\u6c34\u6587\u5b66" xml:space="preserve">
+    <value>hydrology</value>
+  </data>
 </root>

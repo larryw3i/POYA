@@ -5,7 +5,7 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _EArticleFiles_ = ViewData["EArticleFiles"] as List<EArticleFile>;
-    var Categories= ViewData["Categories"] as List<LEArticleCategory>;
+    var Categories = ViewData["Categories"] as List<LEArticleCategory>;
 }
 
 <h4 class="col offset-1">
@@ -13,8 +13,8 @@
     <span style="font-size:50%">
         <br />
         @(ViewData["Category"])
-        @(new string('\u269D',Model.ComplexityRank+1))
-        
+        @(new string('\u269D', Model.ComplexityRank + 1))
+
         <span title="@Localizer["click"]">&#128064;</span>
         @(ViewData["UserRead"])  <span title="@($"{ViewData["UserRead"]} {Localizer["people viewed"]}")">&#128521;</span>
     </span>

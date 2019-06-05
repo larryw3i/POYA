@@ -10,6 +10,7 @@
     var UserId = ViewData["UserId"].ToString();
     var IsIndividual = (bool)ViewData["IsIndividual"];
     var SortBy = (int)ViewData["SortBy"];
+    var EArticleFiles = ViewData["EArticleFile"] as List<EArticleFile>;
 }
 
 <div class="row">
@@ -33,41 +34,36 @@
 
 </div>
 
+<div class="row">
+    @foreach(var a in (ViewData["EArticles"] as IPagedList<EArticle>))
+    {
+        <div class="col col-3">
+            <div class="card" style="margin-top:6px;"  onclick="GoToDetails('@a.Id')">
+                <video src="@Url.Action("GetFile", "LUserFiles", new { id = EArticleFiles.FirstOrDefault(p=>p.EArticleId==a.Id).Id, area = "XUserFile" })" 
+                       class="card-img-top" alt="@(a.Title)"></video>
+                <div class="card-body">
+                    <p class="card-text" style="word-wrap:break-word;word-break:break-all">
 
-<table class="table">
+                        <a asp-action="Details" asp-route-id="@a.Id" title="@(a.Title)" class="title">@Html.DisplayFor(modelItem => a.Title)</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
-    <tbody>
-        @foreach (var item in ViewData["EArticles"] as IPagedList<EArticle>)
-        {
-            <tr>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" title="@(item.Title)" class="title">@Html.DisplayFor(modelItem => item.Title)</a>
-                    <span class="author">
-                        @($"{item.UserName}") &#9998; @($"{item.DOPublishing.LocalDateTime.ToShortDateString()}")
-                        @if (item.DOUpdating != null)
-                        {
-                            <span style="font-size:150%">&#10226;</span>
-                            <span>@(item.DOUpdating?.LocalDateTime.ToShortDateString())</span>
-                        }
-
-
-                    </span>
-                    @if (UserId == item.UserId)
-                    {
-                        <a asp-action="Edit" asp-route-id="@item.Id" title="@Localizer["Edit"]">&#9997;</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" title="@Localizer["Delete"]">&#10008;</a>
-                    }
-                </td>
-
-            </tr>
-        }
-    </tbody>
-</table>
 @(Html.PagedListPager((IPagedList<EArticle>)ViewData["EArticles"], _page => Url.Action("Index", new { _page = _page }),
     PagedListRenderOptions.OnlyShowFivePagesAtATime))
 
 @section Scripts{
     <script>
+        /**
+         * 
+         * @@param { string} Id
+         */
+        function GoToDetails(Id) {
+            window.location.href = `/EduHub/EArticles/Details/${Id}`;
+        }
         class Service {
             ChangeSort() {
                 $("#SortBySelect").on("change", function () {
@@ -100,6 +96,7 @@
         $(document).ready(function () {
             _Service.ChangeSort();
             _Data.Initial();
+
             //  #region
             /*
             $("#AuthorTypeSelect option[value='@@(ViewData["IsIndividual"].ToString().ToLower())']").attr( "selected", true );
@@ -139,6 +136,40 @@
 }
 
 @*
+
+    
+
+<table class="table">
+
+    <tbody>
+        @foreach (var item in ViewData["EArticles"] as IPagedList<EArticle>)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" title="@(item.Title)" class="title">@Html.DisplayFor(modelItem => item.Title)</a>
+                    <span class="author">
+                        @($"{item.UserName}") &#9998; @($"{item.DOPublishing.LocalDateTime.ToShortDateString()}")
+                        @if (item.DOUpdating != null)
+                        {
+                            <span style="font-size:150%">&#10226;</span>
+                            <span>@(item.DOUpdating?.LocalDateTime.ToShortDateString())</span>
+                        }
+
+
+                    </span>
+                    @if (UserId == item.UserId)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" title="@Localizer["Edit"]">&#9997;</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" title="@Localizer["Delete"]">&#10008;</a>
+                    }
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
      <thead>
         <tr>
             <th>

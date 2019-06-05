@@ -133,7 +133,11 @@ namespace POYA.Areas.EduHub.Controllers
             {
                 _EArticle =_EArticle.OrderByDescending(p => p.DOPublishing);
             }
-            ViewData["EArticles"] =_EArticle.ToPagedList(_page, 8);
+            var _EArticlePagedList= _EArticle.ToPagedList(_page, 8);
+            var _EArticlePagedListIDs = _EArticlePagedList.Select(p=>p.Id);
+            var _EArticleFiles = await _context.EArticleFiles
+                .Where(p => p.IsEArticleVideo && _EArticlePagedListIDs.Contains(p.EArticleId)).ToListAsync();
+            ViewData["EArticles"] = _EArticlePagedList;
             //  ViewData[nameof(IsIndividual)] = IsIndividual;
             ViewData["UserId"] = UserId_;
             TempData[nameof(_page)] = _page;
@@ -141,6 +145,9 @@ namespace POYA.Areas.EduHub.Controllers
             ViewData[nameof(IsIndividual)] = IsIndividual;
             TempData[nameof(SortBy)] = SortBy;
             ViewData[nameof(SortBy)] = SortBy;
+            InitFileExtension(_EArticleFiles);
+
+            ViewData[nameof(EArticleFile)] = _EArticleFiles;
             //  ViewData[nameof(IsIndividual)] = IsIndividual;
             return View();
         }
@@ -154,7 +161,7 @@ namespace POYA.Areas.EduHub.Controllers
                 return NotFound();
             }
 
-            var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id??string.Empty;
+            var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id ?? string.Empty;
             var eArticle = await _context.EArticle
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (eArticle == null)
@@ -164,24 +171,22 @@ namespace POYA.Areas.EduHub.Controllers
 
             //  ViewData["Click"] = await _context.EArticleClicks.Where(p => p.EArticleId == eArticle.Id).CountAsync();
             eArticle.ClickCount += 1;
-            ViewData["UserRead"] = await _context.EArticleUserReadRecords.Where(p=>p.EArticleId==eArticle.Id).Select(p=>p.UserId)
+            ViewData["UserRead"] = await _context.EArticleUserReadRecords.Where(p => p.EArticleId == eArticle.Id).Select(p => p.UserId)
                 .Distinct()
                 .CountAsync();
             ViewData[nameof(UserId_)] = UserId_;
-            if (!string.IsNullOrWhiteSpace(UserId_)&& !await _context.EArticleUserReadRecords.AnyAsync(p => p.UserId == UserId_ && p.EArticleId == eArticle.Id))
+            if (!string.IsNullOrWhiteSpace(UserId_) && !await _context.EArticleUserReadRecords.AnyAsync(p => p.UserId == UserId_ && p.EArticleId == eArticle.Id))
             {
                 await _context.EArticleUserReadRecords.AddAsync(new EArticleUserReadRecord { EArticleId = eArticle.Id, UserId = UserId_ });
             }
             await _context.SaveChangesAsync();
             var _EArticleFiles = await _context.EArticleFiles.Where(p => p.EArticleId == id).ToListAsync();
-            _EArticleFiles.ForEach(p=> {
-                p.ContentType = _xUserFileHelper.GetMimes(p.FileName,_hostingEnv).LastOrDefault();
-            });
+            InitFileExtension(_EArticleFiles);
             ViewData["EArticleFiles"] = _EArticleFiles;
             var Categories = GetCategories();   //  .FirstOrDefault(p => p.Id == eArticle.CategoryId);
-            var Category=Categories.FirstOrDefault(p => p.Id == eArticle.CategoryId);
+            var Category = Categories.FirstOrDefault(p => p.Id == eArticle.CategoryId);
             var CategoryCode = Category.Code.Substring(0, 3);
-            ViewData["Category"] = $" {Unicode2String( Categories.FirstOrDefault(p=>p.Code==CategoryCode).Name)}  {Unicode2String( Category.Name)} {eArticle.AdditionalCategory}";   //  csv.GetRecords<LEArticleCategory>().ToList();
+            ViewData["Category"] = $" {_localizer[Categories.FirstOrDefault(p => p.Code == CategoryCode).Name]} > {_localizer[Category.Name]} >  {eArticle.AdditionalCategory}";   //  csv.GetRecords<LEArticleCategory>().ToList();
             return View(eArticle);
         }
 
@@ -225,8 +230,10 @@ namespace POYA.Areas.EduHub.Controllers
 
                 //  _context.Add(eArticle);
                 #region     SAVE_FILES
-
-                await SaveArticleFilesAsync(eArticle);
+                if (eArticle.LAttachments.Count() > 0 || eArticle.LVideos.Count() > 0)
+                {
+                    await SaveArticleFilesAsync(eArticle);
+                }
                 /*
                 if (eArticle.LAttachments?.Count() > 0)
                 {
@@ -304,8 +311,10 @@ namespace POYA.Areas.EduHub.Controllers
                     _EArticle.CategoryId = eArticle.CategoryId;
                     _EArticle.AdditionalCategory = eArticle.AdditionalCategory;
                     #endregion
-                    await SaveArticleFilesAsync(eArticle);
-
+                    if(eArticle.LAttachments?.Count()>0 || eArticle.LVideos?.Count() > 0)
+                    {
+                        await SaveArticleFilesAsync(eArticle);
+                    }
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -551,6 +560,7 @@ namespace POYA.Areas.EduHub.Controllers
             {
                 foreach (var i in eArticle.LAttachments)
                 {
+                    if (i.Length < 1) continue;
                     var MD5_ = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, i);
                     _EArticleFiles.Add(new EArticleFile { EArticleId = eArticle.Id, FileName = System.IO.Path.GetFileName(i.FileName), FileMD5 = MD5_, IsEArticleVideo = false });
                     _LFiles_.Add(new LFile {  UserId=UserId_, MD5=MD5_});
@@ -560,6 +570,7 @@ namespace POYA.Areas.EduHub.Controllers
             {
                 foreach (var i in eArticle.LVideos)
                 {
+                    if (i.Length < 1) continue;
                     var MD5_ = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, i);
                     _EArticleFiles.Add(new EArticleFile { EArticleId = eArticle.Id, FileName = System.IO.Path.GetFileName(i.FileName), FileMD5 = MD5_, IsEArticleVideo = true });
                     _LFiles_.Add(new LFile { UserId = UserId_, MD5 = MD5_ });
@@ -575,6 +586,18 @@ namespace POYA.Areas.EduHub.Controllers
             var reader = new StreamReader(_eArticleCategoryFilePath);
             var csv = new CsvReader(reader);
             return csv.GetRecords<LEArticleCategory>().ToList();
+        }
+
+        private void InitFileExtension(List<EArticleFile> _EArticleFiles)
+        {
+            if (_EArticleFiles.Count > 0)
+            {
+                _EArticleFiles.ForEach(p =>
+                {
+                    if(!String.IsNullOrWhiteSpace(p.FileName))
+                        p.ContentType = _xUserFileHelper.GetMimes(p.FileName, _hostingEnv).LastOrDefault();
+                });
+            }
         }
         #endregion
     }

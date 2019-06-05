@@ -26,7 +26,7 @@ namespace POYA.Areas.XUserFile.Controllers
             var _mimeJson = File.ReadAllTextAsync(_MimeDirPath + "/lmime.json").GetAwaiter().GetResult();
             var _mimes = (JArray)JsonConvert.DeserializeObject(_mimeJson);
             var _mimes_ = new List<string>();
-            FileExtension = FileExtension.Contains(".") ? FileExtension.Split(".").LastOrDefault() : FileExtension;
+            FileExtension = (FileExtension.Contains(".") ? FileExtension.Split(".").LastOrDefault() : FileExtension).ToLower();
             foreach (var i in _mimes)
             {
                 var _milk = i.ToString().Split('\n')[1];
