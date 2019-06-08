@@ -845,4 +845,13 @@
   <data name="\u79bb\u6563\u6570\u5b66" xml:space="preserve">
     <value>Discrete mathematics</value>
   </data>
+  <data name="\u81ea\u7136\u79d1\u5b66\u76f8\u5173\u5de5\u7a0b\u4e0e\u6280\u672f" xml:space="preserve">
+    <value>Natural science-related engineering and technology</value>
+  </data>
+  <data name="\u751f\u7269\u5de5\u7a0b" xml:space="preserve">
+    <value>Bioengineering</value>
+  </data>
+  <data name="\u8fd0\u7b79\u5b66" xml:space="preserve">
+    <value>Opsearch</value>
+  </data>
 </root>

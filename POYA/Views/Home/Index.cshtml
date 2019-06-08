@@ -17,7 +17,7 @@
                         <h5>@Localizer["Access to knowledge in an infinite number of ways"]</h5>
                         <p>@*Nulla vitae elit libero, a pharetra augue mollis interdum.*@</p>
                     </div>
-                </div>  
+                </div>
                 <div class="carousel-item">
                     <img src="~/img/correlation.webp" class="d-block zoom-in-img" alt="...">
                     <div class="carousel-caption d-block">
@@ -68,10 +68,11 @@
             zoom: 150%;
             font-weight: bold;
         }
-         .carousel-item{
+
+        .carousel-item {
             height: 500px;
-            overflow:hidden;
-         }
+            overflow: hidden;
+        }
 
             .carousel-item img {
                 margin: auto;
@@ -86,33 +87,35 @@
             animation: rotateImg 50s linear infinite;
             vertical-align: middle;
         }
-        .zoom-out-img{
-                width:100%;
-             animation: zoomOutImg 20s linear infinite;
+
+        .zoom-out-img {
+            width: 100%;
+            animation: zoomOutImg 20s linear infinite;
             vertical-align: middle;
         }
+
         .zoom-in-img {
             animation: zoomInImg 20s linear infinite;
             vertical-align: middle;
         }
 
-        @@keyframes zoomOutImg{
+        @@keyframes zoomOutImg {
             0% {
-                height:150%;
+                height: 150%;
             }
 
             100% {
-                height:100%;
+                height: 100%;
             }
         }
 
         @@keyframes zoomInImg {
             0% {
-                width:50%;
+                width: 50%;
             }
 
             100% {
-                width:150%;
+                width: 150%;
             }
         }
 

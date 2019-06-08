@@ -7,7 +7,7 @@
     {
         <li class="nav-item">
             <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title='@(User.Identity.Name)(@Localizer[$"Manage"])'>
-                <img name="UserAvatarImg"  class="rounded-circle" style="height:50px;width:50px;position:absolute;"/>
+                <img name="UserAvatarImg"  class="rounded-circle NavAvatar" style="height:50px;width:50px;position:absolute;"/>
             </a>
         </li>
         <li class="nav-item" style="margin-left:55px">
@@ -28,3 +28,20 @@
         </li>
     }
 </ul>
+
+<style>
+    .NavAvatar:hover{
+        animation:NavAvatarZoomIn  0.2s linear 1 forwards;
+    }
+  
+    @@keyframes NavAvatarZoomIn {
+        0% {
+            box-shadow: 0px 0px 0px 0px #ff6a00;
+        }
+        
+        100% {
+            box-shadow: 0px 0px 0px 2px  #ff00dc;
+        }
+    }
+  
+</style>

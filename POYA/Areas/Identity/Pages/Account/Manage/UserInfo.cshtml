@@ -12,10 +12,10 @@
 <div class="row">
     <div class="col col-4 col-sm-4 col-md-3">
         <form id="_UserAvatarForm">
-            <img name="UserAvatarImg"  class="rounded-circle" style="height:100px;width:100px;border:solid;border-color:#EE7AE9;box-shadow: 2px 2px 8px #EE7AE9;" />
+            <img name="UserAvatarImg"  class="rounded-circle ZoomAvatar"  />
             <input id="_UserAvatarInput" type="file" accept="image/*" hidden />
         </form>
-        <h6 style="font-size:90%" id="_UploadAvatarMsgH"></h6>
+        <h6 style="font-size:90%" id="_UploadAvatarMsgEle"></h6>
     </div>
     <div class=" col col-10 col-sm-8 col-md-9">
         <form id="profile-form" method="post">
@@ -120,10 +120,10 @@
         });
         $("#_UserAvatarInput").on("change", function () {
             var _file_ = document.getElementById("_UserAvatarInput").files[0];
-            var _UploadAvatarMsgH_ = $("#_UploadAvatarMsgH");
+            var _UploadAvatarMsgEle_ = $("#_UploadAvatarMsgEle");
             //  console.log(_file_.size);
             if (_file_.size > 1024 * 1024) {
-                _UploadAvatarMsgH_.text("@Localizer["Oops...., the size of avatar should be less than 1M"]");
+                _UploadAvatarMsgEle_.text("@Localizer["Oops...., the size of avatar should be less than 1M"]");
                 return;
             }
             if ($("#_UserAvatarInput").val() == "") return;
@@ -140,16 +140,16 @@
                 success: function (data) {
                     if (data["status"] == true) {
                         //  window.cacheRefreshCode = Math.floor(Math.random() * 100 + 1);
-                        _UploadAvatarMsgH_.text("@Localizer["Uploaded successfully"]!");
+                        _UploadAvatarMsgEle_.text("@Localizer["Uploaded successfully"]!");
                         //  UpdateCacheData();
                         _UI_.SetUserAvatar();
                         _X_DOVE_XSRF_TOKEN_ = data["x_DOVE_XSRF_TOKEN"];
                     } else {
-                        _UploadAvatarMsgH_.text(data["msg"]);
+                        _UploadAvatarMsgEle_.text(data["msg"]);
                     }
                 },
                 error: function (msg) {
-                    _UploadAvatarMsgH_.text("ERROR");
+                    _UploadAvatarMsgEle_.text("ERROR");
                     //  console.log(msg);
                 }
             });
@@ -166,6 +166,27 @@
             -webkit-user-select: none;
             -ms-user-select: none;
             user-select: none;
+        }
+        .ZoomAvatar {
+            height: 100px;
+            width: 100px;
+            border: solid;
+            border-color: #EE7AE9;
+            box-shadow: 2px 2px 8px #EE7AE9;
+        }
+        .ZoomAvatar:hover {
+            animation: AvatarAnimation 0.2s linear 1 forwards;
+        }
+
+        @@keyframes AvatarAnimation{
+            0% {
+                height: 100px;
+                width: 100px;
+            }
+            100%{
+                height: 120px;
+                width: 120px;
+            }
         }
     </style>
 }

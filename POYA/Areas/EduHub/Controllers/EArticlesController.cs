@@ -43,7 +43,7 @@ namespace POYA.Areas.EduHub.Controllers
         private readonly HtmlSanitizer _htmlSanitizer;
         private readonly MimeHelper _mimeHelper;
         private readonly XUserFileHelper _xUserFileHelper;
-        private readonly string _eArticleCategoryFilePath;
+        //  private readonly string _eArticleCategoryFilePath;
         private readonly Regex _unicode2StringRegex;
         public EArticlesController(
             MimeHelper mimeHelper,
@@ -69,7 +69,7 @@ namespace POYA.Areas.EduHub.Controllers
             _signInManager = signInManager;
             _mimeHelper = mimeHelper;
             _xUserFileHelper = new XUserFileHelper();
-            _eArticleCategoryFilePath = _hostingEnv.ContentRootPath + $"/Data/LAppDoc/earticle_category.csv";
+            //  _eArticleCategoryFilePath = _hostingEnv.ContentRootPath + $"/Data/LAppDoc/earticle_category.csv";
             _unicode2StringRegex = new Regex(@"\\u([0-9A-F]{4})", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         }
         #endregion
@@ -134,7 +134,7 @@ namespace POYA.Areas.EduHub.Controllers
             {
                 _EArticle = _EArticle.OrderByDescending(p => p.DOPublishing);
             }
-            var _EArticlePagedList = _EArticle.ToPagedList(_page, 8);
+            var _EArticlePagedList = _EArticle.ToPagedList(_page, 10);
             var _EArticlePagedListIDs = _EArticlePagedList.Select(p => p.Id);
             var _EArticleFiles = await _context.EArticleFiles
                 .Where(p => p.IsEArticleVideo && _EArticlePagedListIDs.Contains(p.EArticleId)).ToListAsync();
@@ -181,13 +181,21 @@ namespace POYA.Areas.EduHub.Controllers
                 await _context.EArticleUserReadRecords.AddAsync(new EArticleUserReadRecord { EArticleId = eArticle.Id, UserId = UserId_ });
             }
             await _context.SaveChangesAsync();
+
+            #region EARTICLE_FILES
             var _EArticleFiles = await _context.EArticleFiles.Where(p => p.EArticleId == id).ToListAsync();
             InitFileExtension(_EArticleFiles);
             ViewData["EArticleFiles"] = _EArticleFiles;
+            #endregion
+
+
+            #region CATEGORY
             var Categories = GetCategories();   //  .FirstOrDefault(p => p.Id == eArticle.CategoryId);
-            var Category = Categories.FirstOrDefault(p => p.Id == eArticle.CategoryId);
+            var Category = Categories.FirstOrDefault(p => p.Id == eArticle.CategoryId) ?? Categories.Where(p=>p.Code.Length==5).FirstOrDefault();
             var CategoryCode = Category.Code.Substring(0, 3);
-            ViewData["Category"] = $" {_localizer[Categories.FirstOrDefault(p => p.Code == CategoryCode).Name]} > {_localizer[Category.Name]} >  {eArticle.AdditionalCategory}";   //  csv.GetRecords<LEArticleCategory>().ToList();
+            ViewData["Category"] = $" {_localizer[Categories.FirstOrDefault(p => p.Code == CategoryCode).Name]} > {_localizer[Category.Name]} {(string.IsNullOrWhiteSpace(eArticle.AdditionalCategory)?string.Empty:" > "+eArticle.AdditionalCategory)}"; //  csv.GetRecords<LEArticleCategory>().ToList();
+            #endregion
+
             return View(eArticle);
         }
 
@@ -387,13 +395,13 @@ namespace POYA.Areas.EduHub.Controllers
             var Categories = GetCategories();   // csv.GetRecords<LEArticleCategory>().ToList();
             Categories.ForEach(p =>
             {
-                p.Name = _localizer[Unicode2String(p.Name)];
+                p.Name = _localizer[p.Name];
             });
             eArticle.ComplexityRankSelectListItems = new List<SelectListItem>{
-                new SelectListItem { Value = "0", Text = "\u269D" },
-                new SelectListItem { Value = "1", Text = "\u269D\u269D" },
-                new SelectListItem { Value = "2", Text = "\u269D\u269D\u269D"  },
-                new SelectListItem { Value = "3", Text = "\u269D\u269D\u269D\u269D"  }
+                new SelectListItem { Value = "0", Text = new string("\u269D") },
+                new SelectListItem { Value = "1", Text = new string('\u269D',2) },
+                new SelectListItem { Value = "2", Text = new string('\u269D',3)  },
+                new SelectListItem { Value = "3", Text = new string('\u269D',4) }
             };
 
             eArticle.FirstCategorySelectListItems = Categories.Where(p => p.Code.Length == 3).Select(p => new SelectListItem
@@ -453,7 +461,7 @@ namespace POYA.Areas.EduHub.Controllers
             {
                 if (_lMD5s.Any(q => q.FileMD5 == p.MD5 && q.IsUploaded))
                 {
-                    _EArticleFiles_.Add(new EArticleFile { EArticleId = p.EArticleId, FileMD5 = p.MD5, FileName = p.FileName, IsEArticleVideo = p.IsEArticleVideo });
+                    _EArticleFiles_.Add(new EArticleFile { EArticleId = p.EArticleId, FileMD5 = p.MD5, FileName =Path.GetFileName( p.FileName), IsEArticleVideo = p.IsEArticleVideo });
                 }
             });
             await _context.EArticleFiles.AddRangeAsync(_EArticleFiles_);
@@ -588,6 +596,7 @@ namespace POYA.Areas.EduHub.Controllers
 
         private List<LEArticleCategory> GetCategories()
         {
+            var _eArticleCategoryFilePath = _hostingEnv.ContentRootPath + $"/Data/LAppDoc/earticle_category.csv";
             var reader = new StreamReader(_eArticleCategoryFilePath);
             var csv = new CsvReader(reader);
             return csv.GetRecords<LEArticleCategory>().ToList();
@@ -600,7 +609,11 @@ namespace POYA.Areas.EduHub.Controllers
                 _EArticleFiles.ForEach(p =>
                 {
                     if (!String.IsNullOrWhiteSpace(p.FileName))
+                    {
                         p.ContentType = _xUserFileHelper.GetMimes(p.FileName, _hostingEnv).LastOrDefault();
+                        p.FileName = Path.GetFileName(p.FileName);
+                    }
+                 
                 });
             }
         }

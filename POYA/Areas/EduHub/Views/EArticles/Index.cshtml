@@ -16,7 +16,7 @@
 <div class="row">
     <div class="col col-4">
         <img src="~/img/article.bmp" class=" main-icon" title="@Localizer["Article"]" />
-        <span style="font-size:200%">@Localizer["EduHub"]</span>
+        @*<span style="font-size:200%">@Localizer["EduHub"]</span>*@
     </div>
     <a class="col offset-2 offset-md-2 offset-sm-2 offset-lg-4 col-2 col-lg-1" asp-action="Create" title="@Localizer["Add"]">
         <img src="~/img/add.bmp" style="max-height:50px;" />
@@ -43,7 +43,7 @@
                 @if (_EArticleFiles == null)
                 {
                     <div class="card-img-top card-img-top-text" alt="@(a.Title)">
-                        <span>@(Html.Raw(a.Content))</span>
+                        <span style="font-size:80%;zoom:80%;">@(Html.Raw(a.Content))</span>
                     </div>
                 }
                 else
@@ -155,8 +155,19 @@
         .card-img-top-text {
             overflow: hidden;
         }
-        .card:hover{
-            box-shadow: 5px 5px 5px #888888;
+
+        .card:hover {
+            animation: AnimationBoxShadow 0.2s linear 1 forwards;
+        }
+
+        @@keyframes AnimationBoxShadow {
+            0% {
+                box-shadow: 1px 1px 1px #888888;
+            }
+
+            100% {
+                box-shadow: 5px 5px 8px #888888;
+            }
         }
     </style>
 }

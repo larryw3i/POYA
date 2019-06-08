@@ -59,7 +59,7 @@
                 </div>
                 <div class="row">
                     <div class="col col-3">
-                        <span>@Localizer["Complexity"]</span>? 
+                        <span>@Localizer["Complexity"]</span>?
                         <span>
                             <select asp-for="ComplexityRank" asp-items="Model.ComplexityRankSelectListItems" class="form-control"></select>
                         </span>
@@ -465,8 +465,8 @@
             },
             dataType: "json",
             success: function (Response) {
-                console.log(Response);
-                console.log(ID8MD5Array);
+                //  console.log(Response);
+                //  console.log(ID8MD5Array);
                 Response.forEach((value, index, array) => {
 
                     if (value["IsUploaded"] == true) {
