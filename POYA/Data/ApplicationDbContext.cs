@@ -25,6 +25,7 @@ namespace POYA.Data
         public DbSet<POYA.Areas.XLaw.Models.Arbitrament> Arbitrament { get; set; }
         public DbSet<EArticleFile> EArticleFiles { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.UserEArticleSet> UserEArticleSet { get; set; }
+        public DbSet<POYA.Areas.EduHub.Models.UserEArticleHomeInfo> userEArticleHomeInfos { get; set; }
 
 
         /*

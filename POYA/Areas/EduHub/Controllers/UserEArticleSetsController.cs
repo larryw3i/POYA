@@ -73,7 +73,10 @@ namespace POYA.Areas.EduHub.Controllers
         #endregion
         public async Task<IActionResult> Index()
         {
-            return View(await _context.UserEArticleSet.ToListAsync());
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var _UserEArticleSet = await _context.UserEArticleSet.Where(p => p.UserId == _UserId).ToListAsync();
+            ViewData[nameof(UserEArticleHomeInfo)] = (await _context.userEArticleHomeInfos.Where(p => p.UserId == _UserId).FirstOrDefaultAsync()) ?? new UserEArticleHomeInfo { UserId = _UserId, Comment = _localizer["No set yet"] +"!" };
+            return View(_UserEArticleSet);
         }
 
         #region 
@@ -86,6 +89,7 @@ namespace POYA.Areas.EduHub.Controllers
                 return NotFound();
             }
 
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var userEArticleSet = await _context.UserEArticleSet
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (userEArticleSet == null)
@@ -101,6 +105,7 @@ namespace POYA.Areas.EduHub.Controllers
         #endregion
         public IActionResult Create()
         {
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             return View();
         }
 
@@ -115,6 +120,7 @@ namespace POYA.Areas.EduHub.Controllers
         {
             if (ModelState.IsValid)
             {
+                var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                 userEArticleSet.Id = Guid.NewGuid();
                 _context.Add(userEArticleSet);
                 await _context.SaveChangesAsync();
@@ -133,6 +139,7 @@ namespace POYA.Areas.EduHub.Controllers
                 return NotFound();
             }
 
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var userEArticleSet = await _context.UserEArticleSet.FindAsync(id);
             if (userEArticleSet == null)
             {
@@ -159,6 +166,7 @@ namespace POYA.Areas.EduHub.Controllers
             {
                 try
                 {
+                    var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                     _context.Update(userEArticleSet);
                     await _context.SaveChangesAsync();
                 }
@@ -188,6 +196,7 @@ namespace POYA.Areas.EduHub.Controllers
                 return NotFound();
             }
 
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var userEArticleSet = await _context.UserEArticleSet
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (userEArticleSet == null)
@@ -205,6 +214,7 @@ namespace POYA.Areas.EduHub.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var userEArticleSet = await _context.UserEArticleSet.FindAsync(id);
             _context.UserEArticleSet.Remove(userEArticleSet);
             await _context.SaveChangesAsync();

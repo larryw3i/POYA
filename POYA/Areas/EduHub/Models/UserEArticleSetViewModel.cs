@@ -11,6 +11,11 @@ namespace POYA.Areas.EduHub.Models
         public string UserId { get; set; }
         public string Name { get; set; }
         public string Label { get; set; }
+        #region
+        /// <summary>
+        /// The default is DateTimeOffset.Now
+        /// </summary>
+        #endregion
         public DateTimeOffset DOCreating { get; set; } = DateTimeOffset.Now;
         public string Comment{ get; set; }
     }
@@ -20,6 +25,6 @@ namespace POYA.Areas.EduHub.Models
         public Guid Id { get; set; } = Guid.NewGuid();
         public string UserId { get; set; }
         public string CoverFileMD5 { get; set; }
-        public string Label { get; set; }
+        public string Comment { get; set; }
     }
 }

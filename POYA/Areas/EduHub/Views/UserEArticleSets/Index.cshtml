@@ -1,8 +1,13 @@
 ﻿@model IEnumerable<POYA.Areas.EduHub.Models.UserEArticleSet>
+@using Microsoft.AspNetCore.Identity
+@using POYA.Areas.EduHub.Models
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var _UserEArticleHomeInfo = ViewData["UserEArticleHomeInfo"] as UserEArticleHomeInfo;
 }
 
 @*
@@ -14,7 +19,17 @@
 
 <div class="row">
     <div class="col  col-12  EArticle-Home-Img-Ele">
-        <img src="~/img/earticle_home_default_img.webp" class="img-fluid EArticle-Home-Img" />
+        <img class="rounded-circle mx-auto d-block EArticle-Home-Avatar" />
+        <div class="text-center">@(User.Identity.Name)</div>
+
+        <div class="col text-center">
+            <input type="text"
+                   id="UserEArticleHomeInfo_Comment"
+                   onkeypress="CheckConfirmation()"
+                   value="@(_UserEArticleHomeInfo.Comment)" />
+        </div>
+        <input type="file" id="UserEArticleHomeInfo_Conver_Input" hidden />
+        <img class="EArticle-Home-BgImg-Edit" id="UserEArticleHomeInfo_Conver" />
     </div>
 </div>
 
@@ -49,20 +64,91 @@
     </tbody>
 </table>
 
+@section Scripts{
+    <script>
+
+        //  #region DATA
+        function CheckConfirmation() {
+            var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
+            if (keyCode == 13) {
+                alert($("#UserEArticleHomeInfo_Comment").val());
+            }
+        }
+        //  #endregion
+        $(document).ready(function () {
+            $(".EArticle-Home-Avatar").attr("src", "/Home/GetAvatar?random=" + Math.floor(Math.random() * 100 + 1));
+            $(".EArticle-Home-BgImg-Edit").attr("src", "/img/edit.webp");
+            $("#UserEArticleHomeInfo_Conver").on("click", function () {
+
+            });
+
+        });
+
+    </script>
+}
+
 @section Styles{
     <style>
-        .EArticle-Home-Img-Ele{
-            height: 200px;
+        #UserEArticleHomeInfo_Comment {
+            background-color: transparent;
+            border: none;
+            text-align: center;
         }
-        .EArticle-Home-Img {
-            width: 100%;
-            height: 200px;
+
+        .EArticle-Home-BgImg-Edit {
+            position: absolute;
+            right: 0px;
+            bottom: 0px;
+            width: 30px;
+        }
+
+        .EArticle-Home-Img-Ele {
+            height: 150px;
+            background-image: url("/img/earticle_home_default_img.webp");
+            background-position: center;
             border-radius: 10px;
+        }
+
+        .EArticle-Home-Avatar {
+            height: 55px;
+            width: 55px;
+            margin-top: 20px;
+            border: 1px solid #ff00dc;
+        }
+
+
+            .EArticle-Home-Avatar:hover {
+                animation: AvatarScale 0.2s linear 1 forwards;
+            }
+
+        @@keyframes AvatarScale {
+            0% {
+                height: 55px;
+                width: 55px;
+                margin-top: 20px;
+                border: 1px solid #ff00dc;
+                box-shadow: 0px 0px 0px #ff00dc;
+            }
+
+            100% {
+                height: 75px;
+                width: 75px;
+                margin-top: 5px;
+                border: 4px solid #ff00dc;
+                box-shadow: 0px 0px 9px #ff00dc;
+            }
         }
     </style>
 }
 
 @*
+
+        <img src="~/img/earticle_home_default_img.webp" class="img-fluid EArticle-Home-Img" />
+    .EArticle-Home-Img {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+        }
     <thead>
         <tr>
             <th>
