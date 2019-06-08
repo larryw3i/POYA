@@ -854,4 +854,7 @@
   <data name="\u8fd0\u7b79\u5b66" xml:space="preserve">
     <value>Opsearch</value>
   </data>
+  <data name="X-DOVE" xml:space="preserve">
+    <value>X-DOVE</value>
+  </data>
 </root>

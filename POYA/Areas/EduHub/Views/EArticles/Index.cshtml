@@ -13,26 +13,42 @@
     var EArticleFiles = ViewData["EArticleFile"] as List<EArticleFile>;
 }
 
-<div class="row">
-    <div class="col col-4">
-        <img src="~/img/article.bmp" class=" main-icon" title="@Localizer["Article"]" />
-        @*<span style="font-size:200%">@Localizer["EduHub"]</span>*@
-    </div>
-    <a class="col offset-2 offset-md-2 offset-sm-2 offset-lg-4 col-2 col-lg-1" asp-action="Create" title="@Localizer["Add"]">
-        <img src="~/img/add.bmp" style="max-height:50px;" />
-    </a>
-    <a class="col col-2 col-lg-1" asp-action="Index" asp-route-IsIndividual="@(IsIndividual?"false":"true")"
-       title="@(IsIndividual?Localizer["View all"]:Localizer["Just me"])">
-        <img src="~/img/@(IsIndividual?"total.bmp":"individual.bmp")" style="max-height:50px;" />
-    </a>
-    <div class="col>">
-        <select id="SortBySelect" name="SortBySelect">
-            <option value="0">@Localizer["buzz"]</option>
-            <option value="1" selected>@Localizer["time"]</option>
-        </select>
+    <div class="row">
+        <div class="col col-4">
+            <img src="~/img/article.bmp" class=" main-icon" title="@Localizer["Article"]" />
+            @*<span style="font-size:200%">@Localizer["EduHub"]</span>*@
+        </div>
+        <a class="col  offset-md-2 offset-sm-2 offset-lg-4 col-2 col-lg-1" asp-action="Create" title="@Localizer["My EArticle"]">
+            <img src="~/img/user_earticle.webp" style="max-height:50px;" />
+        </a>
+        <a class="col  col-2 col-lg-1" asp-action="Create" title="@Localizer["Add"]">
+            <img src="~/img/add.webp" style="max-height:50px;" />
+        </a>
+        <a class="col col-2 col-lg-1" asp-action="Index" asp-route-IsIndividual="@(IsIndividual?"false":"true")"
+           title="@(IsIndividual?Localizer["View all"]:Localizer["Just me"])">
+            <img src="~/img/@(IsIndividual?"total.bmp":"individual.bmp")" style="max-height:50px;" />
+        </a>
+        <div class="col>">
+            <select id="SortBySelect" name="SortBySelect">
+                <option value="0">@Localizer["buzz"]</option>
+                <option value="1" selected>@Localizer["time"]</option>
+            </select>
+        </div>
+
     </div>
 
-</div>
+    <div class="row">
+        <div class="col offset-4 offset-sm-4 offset-md-6 offset-lg-8 EArticleSearchCol">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="@(Localizer["Search"]+" . . .")" aria-label="@(Localizer["Search"]+". . .")" aria-describedby="EArticleSearchBtn" id="EArticleSearchInput">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-info" type="button" id="EArticleSearchBtn">@Localizer["Search"]</button>
+                </div>
+            </div>
+        </div>
+ 
+
+    </div>
 
 <div class="row">
     @foreach (var a in (ViewData["EArticles"] as IPagedList<EArticle>))
@@ -48,8 +64,7 @@
                 }
                 else
                 {
-                    <video src="@Url.Action("GetFile", "LUserFiles", new { id = EArticleFiles.FirstOrDefault(p=>p.EArticleId==a.Id).Id, area = "XUserFile" })"
-                           class="card-img-top" alt="@(a.Title)"></video>
+                    <video src="@Url.Action("GetFile", "LUserFiles", new { id = EArticleFiles.FirstOrDefault(p=>p.EArticleId==a.Id).Id, area = "XUserFile" })" class="card-img-top" alt="@(a.Title)" preload="metadata"></video>
                 }
                 <div class="card-body">
                     <p class="card-text">
@@ -168,6 +183,10 @@
             100% {
                 box-shadow: 5px 5px 8px #888888;
             }
+        }
+
+        .EArticleSearchCol{
+            zoom:80%;
         }
     </style>
 }
