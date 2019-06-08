@@ -1,0 +1,86 @@
+﻿@model IEnumerable<POYA.Areas.EduHub.Models.UserEArticleSet>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*
+    <h1>Index</h1>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+*@
+
+<div class="row">
+    <div class="col  col-12  EArticle-Home-Img-Ele">
+        <img src="~/img/earticle_home_default_img.webp" class="img-fluid EArticle-Home-Img" />
+    </div>
+</div>
+
+<table class="table">
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Label)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DOCreating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Styles{
+    <style>
+        .EArticle-Home-Img-Ele{
+            height: 200px;
+        }
+        .EArticle-Home-Img {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+        }
+    </style>
+}
+
+@*
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Label)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DOCreating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+*@

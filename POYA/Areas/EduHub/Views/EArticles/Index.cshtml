@@ -18,11 +18,11 @@
         <img src="~/img/article.webp" class=" main-icon" title="@Localizer["Article"]" />
         @*<span style="font-size:200%">@Localizer["EduHub"]</span>*@
     </div>
-    <a class="col offset-md-4 offset-sm-1 offset-md-4 offset-lg-5 col-2 col-md-1" asp-action="Create" title="@Localizer["My EArticle"]">
-        <img src="~/img/user_earticle.webp" style="max-height:50px;" />
+    <a class="col offset-md-4 offset-sm-1 offset-md-4 offset-lg-5 col-2 col-md-1">
+        @*<img src="~/img/user_earticle.webp" style="max-height:50px;" />*@
     </a>
-    <a class="col  col-2 col-md-1" asp-action="Create" title="@Localizer["Add"]">
-        <img src="~/img/add.webp" style="max-height:50px;" />
+    <a class="col col-2 col-md-1" asp-action="Index" asp-controller="UserEArticleSets" title="@Localizer["My EArticle"]">
+        <img src="~/img/user_earticle.webp" style="max-height:50px;" />
     </a>
     <a class="col col-2 col-md-1" asp-action="Index" asp-route-IsIndividual="@(IsIndividual?"false":"true")"
        title="@(IsIndividual?Localizer["View all"]:Localizer["Just me"])">
@@ -38,7 +38,7 @@
 </div>
 
 <div class="row">
-    <div class="col offset-4 offset-sm-4 offset-md-7 offset-lg-8 EArticleSearchCol">
+    <div class="col offset-5 offset-sm-5 offset-md-7 offset-lg-8 offset-xl-8 EArticleSearchCol">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="@(Localizer["Search"]+" . . .")" aria-label="@(Localizer["Search"]+". . .")" aria-describedby="EArticleSearchBtn" id="EArticleSearchInput">
             <div class="input-group-append">

@@ -266,6 +266,7 @@
     <Folder Include="Areas\EduHub\Data\EArticleFiles\" />
     <Folder Include="Areas\EduHub\Data\EArticleFiles\" />
     <Folder Include="Areas\XLaw\Data\" />
+    <Folder Include="Areas\XLaw\Data\" />
     <Folder Include="Areas\XUserFile\Data\" />
     <Folder Include="Areas\XUserFile\Data\" />
     <Folder Include="Data\LFiles\Avatars\" />

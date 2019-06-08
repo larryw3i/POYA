@@ -239,6 +239,7 @@ function KeepLogin() {
             url: "/Home/KeepLogin",
             type: "GET"
         });
+        console.log("\u1F498");
     }, 5 * 60000);
 
 }
