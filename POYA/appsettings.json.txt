@@ -12,8 +12,8 @@
     "userName": "xxxxxx@xxxxxxxx.xxxx",
     "host": "xxxxxx.xxxxx.xxxx",
     "password": "xxxxx",
-    "port": xx,
-    "enableSsl": xxx
+    "port": 00,
+    "enableSsl": false
   },
   "ErrorLogHandle": {
     "ReceiveLogEmailAddress": "xxxxxxxx@xxx.xxx"

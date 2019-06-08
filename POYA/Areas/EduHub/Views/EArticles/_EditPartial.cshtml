@@ -37,9 +37,7 @@
                 <div id="MenuToolbar" class="toolbar">
                 </div>
                 <div id="_ContentEditor" class="text">
-                    <p>
                         @(Html.Raw(Model.Content))
-                    </p>
                 </div>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
@@ -588,6 +586,8 @@
         border: dotted;
         border-radius: 10px;
         overflow: hidden;
+        word-wrap:break-word;
+        word-break:break-all;
     }
 
     .w-e-text {
