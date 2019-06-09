@@ -54,6 +54,7 @@ namespace POYA.Areas.XUserFile.Controllers
             #endregion
 
         }
+
         public async Task<string> LWriteBufferToFileAsync( IHostingEnvironment _hostingEnv , IFormFile formFile)
         {
             var MemoryStream_ = new MemoryStream();
@@ -74,12 +75,15 @@ namespace POYA.Areas.XUserFile.Controllers
             return MD5_;
 
         }
+
+        #region 
         /// <summary>
         /// determine the MD5 in IEnumerableLMD5 is match the MD5 of uploaded files or not
         /// </summary>
         /// <param name="env">The IHostingEnvironment for getting FileStoragePath</param>
         /// <param name="lMD5s">The IEnumerableLMD5</param>
         /// <returns></returns>
+        #endregion
         public List<LMD5> LCheckMD5(IHostingEnvironment env,List<LMD5> lMD5s)
         { 
             
@@ -93,6 +97,7 @@ namespace POYA.Areas.XUserFile.Controllers
             return lMD5s;
         }
 
+        #region
         /// <summary>
         /// Get the md5 of file byte array
         /// </summary>
@@ -100,6 +105,7 @@ namespace POYA.Areas.XUserFile.Controllers
         /// File byte array
         /// </param>
         /// <returns></returns>
+        #endregion
         public string GetFileMD5(byte[] FileBytes)
         {
             var Md5_ = MD5.Create();
@@ -112,12 +118,14 @@ namespace POYA.Areas.XUserFile.Controllers
             return sb.ToString();
         }
 
+        #region
         /// <summary>
         /// Determine a id of <see cref="LUserFile"/> or <see cref="LDir"/> is included in a directory
         /// </summary>
         /// <returns>
         /// Return <see cref="true"/> if the id is included in DirId, or <see cref="false"/>
         /// </returns>
+        #endregion
         public bool IsFileOrDirInDir(IEnumerable<ID8InDirId> iD8InDirIds, Guid id, Guid DirId)
         {
             var _InDirId = iD8InDirIds.Where(p => p.Id == id).Select(p => p.InDirId).FirstOrDefault();
@@ -134,10 +142,12 @@ namespace POYA.Areas.XUserFile.Controllers
             return false;
         }
 
+        #region 
         /// <summary>
         /// Get all subdirectories in a directory
         /// </summary>
         /// <returns>List<LDir></returns>
+        #endregion
         public List<LDir> GetAllSubDirs(List<LDir> lDirs, Guid DirId)
         {
             var SubDirs = new List<LDir>();
@@ -158,7 +168,9 @@ namespace POYA.Areas.XUserFile.Controllers
             _DirIDs.Add(DirId);
             return lUserFiles.Where(o => _DirIDs.Contains(o.InDirId)).ToList();
         }
+
         #region
+
         /*
         public List<LSharingDirMap> MakeSubFDCopy(List<LDir> lDirs, List<LUserFile> lUserFiles, Guid InDirId)
         {
@@ -181,6 +193,7 @@ namespace POYA.Areas.XUserFile.Controllers
             return _LSharingDirMap;
         }
         */
+
         #endregion
     }
 }

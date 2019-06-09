@@ -76,7 +76,9 @@ namespace POYA.Areas.XUserFile.Controllers {
         }
         */
 
+        #region
         // GET: LUserFiles
+        #endregion
         public async Task<IActionResult> Index (Guid? InDirId) {
 
             #region REBARBATIVE INITIALIZATION
@@ -143,7 +145,9 @@ namespace POYA.Areas.XUserFile.Controllers {
 
         }
 
+        #region 
         // GET: LUserFiles/Details/5
+        #endregion
         public async Task<IActionResult> Details (Guid? id) {
             if (id == null) {
                 return NotFound ();
@@ -155,15 +159,19 @@ namespace POYA.Areas.XUserFile.Controllers {
             return View (lUserFile);
         }
 
+        #region 
         // GET: LUserFiles/Create
+        #endregion
         public IActionResult Create (Guid? InDirId) {
             ViewData[nameof (InDirId)] = InDirId ?? Guid.Empty;
             return View ();
         }
 
+        #region 
         // POST: LUserFiles/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create ([FromForm] LFilePost _LFilePost) {
@@ -209,7 +217,9 @@ namespace POYA.Areas.XUserFile.Controllers {
             #endregion
         }
 
+        #region 
         // GET: LUserFiles/Edit/5
+        #endregion
         public async Task<IActionResult> Edit (Guid? id) {
             if (id == null) {
                 return NotFound ();
@@ -237,12 +247,15 @@ namespace POYA.Areas.XUserFile.Controllers {
             return View (lUserFile);
         }
 
+        #region 
         // POST: LUserFiles/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit (Guid id, [Bind ("Id,Name,CopyMove,InDirId,IsShared,SharingCode")] LUserFile lUserFile) {
+        public async Task<IActionResult> Edit (Guid id, 
+            [Bind ("Id,Name,CopyMove,InDirId,IsShared,SharingCode")] LUserFile lUserFile) {
             if (id != lUserFile.Id) {
                 return NotFound ();
             }
@@ -303,9 +316,11 @@ namespace POYA.Areas.XUserFile.Controllers {
             return View (lUserFile);
         }
 
+        #region 
         // GET: LUserFiles/Delete/5 //
         //  [HttpPost]
         //  [ValidateAntiForgeryToken]
+        #endregion
         public async Task<IActionResult> Delete (Guid? id) {
             if (id == null) {
                 return NotFound ();
@@ -320,7 +335,9 @@ namespace POYA.Areas.XUserFile.Controllers {
             return View (lUserFile);
         }
 
+        #region 
         // POST: LUserFiles/Delete/5
+        #endregion
         [HttpPost, ActionName ("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed (Guid id) {
@@ -342,7 +359,7 @@ namespace POYA.Areas.XUserFile.Controllers {
 
         #region DEPOLLUTION
 
-        #region INDEX
+   
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -368,12 +385,14 @@ namespace POYA.Areas.XUserFile.Controllers {
             return Json (ContrastResult);
         }
 
+        #region 
         /// <summary>
         /// Get a file, it is a user's file or a file is shared
         /// </summary>
         /// <param name="id">The <see cref="LUserFile"/> id or the sharing id of <see cref="LSharing"/> </param>
         /// <param name="LSharingId">The <see cref="LSharing"/> id should be passed if you get a file in shared directory</param>
         /// <returns></returns>
+        #endregion
         [AllowAnonymous]
         public async Task<IActionResult> GetFile (Guid? id) {
             if (id == null) {
@@ -417,8 +436,7 @@ namespace POYA.Areas.XUserFile.Controllers {
             return NoContent();
         }
         */
-        #endregion
-        #region CREATE
+
 
         /*
         public async Task<IActionResult> UploadFile(Guid? InDirId)
@@ -439,11 +457,6 @@ namespace POYA.Areas.XUserFile.Controllers {
         }
         */
 
-        #endregion
-        #region EDIT
-        #endregion
-        #region DELETE
-        #endregion
 
         #endregion
     }
