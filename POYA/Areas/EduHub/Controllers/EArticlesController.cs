@@ -80,9 +80,9 @@ namespace POYA.Areas.EduHub.Controllers
         /// </summary>
         /// <returns></returns>
         #endregion
-        public async Task<IActionResult> XIndex()
+        public async Task<IActionResult> XIndex(Guid? SetId, int _page=1)
         {
-            return NoContent();
+            return View();
         }
 
         // GET: EduHub/EArticles
