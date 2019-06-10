@@ -79,9 +79,33 @@ namespace POYA.Areas.EduHub.Controllers
         /// Index for UserEArticleSets
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         #endregion
-        public async Task<IActionResult> XIndex(Guid? SetId, int _page=1)
+        public async Task<IActionResult> XIndex(Guid? SetId, int? _page )
         {
+            var TempSetId=Guid.Parse (TempData[nameof(SetId)]?.ToString()??Guid.Empty.ToString());
+            SetId = SetId ==null ||SetId==Guid.Empty? 
+                (TempSetId==null? LValue.DefaultEArticleSetId:TempSetId)
+                :SetId;
+            var _EArticles = await _context.EArticle.Where(p =>
+                     SetId == LValue.DefaultEArticleSetId ?
+                     (p.SetId == Guid.Empty || p.SetId == null || p.SetId == LValue.DefaultEArticleSetId) :
+                     p.SetId == SetId)
+                .ToListAsync();
+            _EArticles.ForEach(p =>
+            {
+                if (p.SetId == Guid.Empty || p.SetId == null)
+                {
+                    p.SetId = LValue.DefaultEArticleSetId;
+                }
+            });
+            ViewData[nameof(_EArticles)] = _EArticles.ToPagedList(_page??1, 10);
+            var _EArticleFiles = await _context.EArticleFiles
+                .Where(p => p.IsEArticleVideo && _EArticles.Select(s => s.Id)
+                .Contains(p.EArticleId)).ToListAsync();
+            InitFileExtension(_EArticleFiles);
+            ViewData["EArticleFile"] = _EArticleFiles;
+            TempData[nameof(SetId)] = SetId;
             return View();
         }
 
@@ -211,13 +235,19 @@ namespace POYA.Areas.EduHub.Controllers
         }
 
         // GET: EduHub/EArticles/Create
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(Guid? SetId)
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            if (SetId == null ||
+                ! await _context.UserEArticleSet.AnyAsync(p=>p.Id==SetId && p.UserId==UserId_))
+            {
+                SetId = LValue.DefaultEArticleSetId;
+            }
             var _LUserFile = await _context.LUserFile.Where(p => p.UserId == UserId_).ToListAsync();  //<<<<<<<<
 
             var _EArticle = new EArticle();
             InitSelectListItem(_EArticle);
+            TempData["Create_SetId"] = SetId;
             return View(_EArticle);
         }
 
@@ -239,11 +269,13 @@ namespace POYA.Areas.EduHub.Controllers
                     eArticle.LVideos = null;
                     return View(eArticle);
                 }
+                var Create_SetId= Guid.Parse(TempData["Create_SetId"]?.ToString() ?? Guid.Empty.ToString());
                 var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                 var _EArticleFiles = new List<EArticleFile>();
                 //  eArticle.Id = Guid.NewGuid();
                 eArticle.UserId = UserId_;
                 eArticle.Content = _htmlSanitizer.Sanitize(eArticle.Content);
+                eArticle.SetId = Create_SetId;
 
                 await _context.AddAsync(eArticle);
 
@@ -274,7 +306,7 @@ namespace POYA.Areas.EduHub.Controllers
                 */
                 #endregion
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Ok();    //  RedirectToAction(nameof(XIndex),new { SetId =Create_SetId});
             }
             return View(eArticle);
         }
@@ -334,6 +366,7 @@ namespace POYA.Areas.EduHub.Controllers
                     await SaveArticleFilesAsync(eArticle);
 
                     await _context.SaveChangesAsync();
+                    return Ok();    //   RedirectToAction(nameof(XIndex), new { _EArticle.SetId });   //  _page = TempData["_page"], IsIndividual = TempData["IsIndividual"] });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -346,7 +379,6 @@ namespace POYA.Areas.EduHub.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index), new { _page = TempData["_page"], IsIndividual = TempData["IsIndividual"] });
             }
             return View(eArticle);
         }

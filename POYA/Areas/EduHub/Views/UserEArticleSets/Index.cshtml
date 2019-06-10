@@ -206,7 +206,7 @@
                 var _cardid = $(this).attr("cardid");
                 window.location.href = _cardid == "@(LValue.AddEArticleSetId)" ?
                     "@(Url.Action("Create","UserEArticleSets",new { area="EduHub"}))" :
-                    "@(Url.Action("Details","EArticles",new { area="EduHub",id=LValue.DefaultEArticleSetId}))";
+                    `@(Url.Action("XIndex","EArticles",new { area = "EduHub" }))?SetId=${_cardid}`;
             });
 
         });

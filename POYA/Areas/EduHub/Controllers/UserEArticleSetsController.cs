@@ -78,21 +78,21 @@ namespace POYA.Areas.EduHub.Controllers
             #region INITIALIZE_THE_DEFAULT
             _UserEArticleSet.Add(new UserEArticleSet
             {
-                Id = LValue.AddEArticleSetId,
-                Label = _localizer["Click to add"],
-                Name = _localizer["ADD"],
-                Comment = _localizer["Click to add"]
-            });
-            _UserEArticleSet.Add(new UserEArticleSet
-            {
                 Id = LValue.DefaultEArticleSetId,
                 Comment = _localizer["The default"],
                 Name = _localizer["default"],
                 Label = _localizer["default"]
             });
+            _UserEArticleSet.Add(new UserEArticleSet
+            {
+                Id = LValue.AddEArticleSetId,
+                Label = _localizer["Click to add"],
+                Name = _localizer["ADD"],
+                Comment = _localizer["Click to add"]
+            });
             #endregion
             ViewData[nameof(UserEArticleHomeInfo)] = (await _context.userEArticleHomeInfos.Where(p => p.UserId == _UserId).FirstOrDefaultAsync()) ?? new UserEArticleHomeInfo { UserId = _UserId, Comment = _localizer["No set yet"] + "!" };
-            return View(_UserEArticleSet);
+            return View(_UserEArticleSet.OrderByDescending(p=>p.DOCreating));
         }
 
         #region 
