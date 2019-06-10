@@ -1,6 +1,6 @@
 ﻿
 ﻿English      <a href="./POYA/README/README.zh-CN.md">中文</a>   
-**Hello, here is POYA project, I'm Larry Wei**  
+**Hello, here is POYA project, I'm Larry**  
 **❤ Welcome!! ❤**  
 >In fact, my definition of this project is vague, but I have implemented the function of file storage and article publishing in the project, and I would like to add many functions in the future. If you like my project and want to contribute your code (<a href="#2">succinctly</a>) **>_**   
 ####  null  

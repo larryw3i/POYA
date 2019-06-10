@@ -75,6 +75,10 @@ namespace POYA.Areas.EduHub.Controllers
         {
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var _UserEArticleSet = await _context.UserEArticleSet.Where(p => p.UserId == _UserId).ToListAsync();
+            #region INITIALIZE_THE_DEFAULT
+            _UserEArticleSet.Add(new UserEArticleSet { Label = _localizer["Click to add"], Name = _localizer["ADD"], Comment = _localizer["Click to add"] });
+            _UserEArticleSet.Add(new UserEArticleSet {  Comment=_localizer["The default"], Name=_localizer["default"], Label=_localizer["default"]});
+            #endregion
             ViewData[nameof(UserEArticleHomeInfo)] = (await _context.userEArticleHomeInfos.Where(p => p.UserId == _UserId).FirstOrDefaultAsync()) ?? new UserEArticleHomeInfo { UserId = _UserId, Comment = _localizer["No set yet"] +"!" };
             return View(_UserEArticleSet);
         }

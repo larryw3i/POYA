@@ -25,7 +25,7 @@
         <div class="col text-center">
             <input type="text"
                    id="UserEArticleHomeInfo_Comment"
-                   value="@(_UserEArticleHomeInfo.Comment)" title="@Localizer["Press ENTER to save"]"/>
+                   value="@(_UserEArticleHomeInfo.Comment)" title="@Localizer["Press ENTER to save"]" />
         </div>
         <input type="file" id="UserEArticleHomeInfo_Conver_Input" hidden accept="image/*" />
         <img class="EArticle-Home-BgImg-Edit" id="UserEArticleHomeInfo_Conver" />
@@ -33,24 +33,19 @@
 </div>
 
 <div class="row" style="margin-top:10px">
-    <div class="col col-3">
-        <div class="card" style="width: 90%;">
-            <div class="card-body text-center">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+    @foreach (var i in Model)
+    {
+        <div class="col col-4 col-md-3 col-lg-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">@(i.Name)</h5>
+                    <p class="card-text">@(i.Label)</p>
+                    @*<a href="#" class="btn btn-primary">@Localizer["ADD"]</a>*@
+                </div>
             </div>
         </div>
-    </div> 
-    <div class="col col-3">
-        <div class="card" style="width: 90%;">
-            <div class="card-body text-center">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-    </div>
+    }
+
 </div>
 
 
@@ -65,6 +60,7 @@
 
     <script>
         /*====  UI          ====*/
+        //  ONCLICK <<<<<<
         function InitHomeCover() {
             var EArticle_Home_Avatar = $(".EArticle-Home-Avatar");
             EArticle_Home_Avatar.attr("src", "@(Url.Action("GetFile","LUserFiles",new { area="XUserFile",id=_UserEArticleHomeInfo.Id}))");
@@ -134,7 +130,7 @@
                     MakeAlert("danger", "@Localizer["Some errors has occurred"]" + "!");
                 }
             });
-   
+
     }
     </script>
 
@@ -212,6 +208,16 @@
 
 @section Styles{
     <style>
+        .card {
+            font-size: 80%;
+            width: 90%;
+        }
+
+            .card:hover {
+                animation: AnimationBoxShadow 3.2s linear  infinite;
+            }
+
+
         #UserEArticleHomeInfo_Comment {
             background-color: rgba(255,0,220,0.2);
             border: none;
@@ -245,6 +251,20 @@
                 animation: AvatarScale 0.2s linear 1 forwards;
             }
 
+        @@keyframes AnimationBoxShadow {
+            0% {
+                box-shadow: 1px 1px 1px #888888;
+            }
+
+            50% {
+                box-shadow: 5px 5px 8px #888888;
+            }
+
+            100% {
+                box-shadow: 1px 1px 1px #888888;
+            }
+        }
+
         @@keyframes AvatarScale {
             0% {
                 height: 55px;
@@ -266,61 +286,61 @@
 }
 
 @*
-    
-<table class="table">
 
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <table class="table">
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Label)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DOCreating)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comment)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+            <img src="~/img/earticle_home_default_img.webp" class="img-fluid EArticle-Home-Img" />
+        .EArticle-Home-Img {
+                width: 100%;
+                height: 200px;
+                border-radius: 10px;
+            }
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Label)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DOCreating)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Comment)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Label)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DOCreating)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Comment)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
-        <img src="~/img/earticle_home_default_img.webp" class="img-fluid EArticle-Home-Img" />
-    .EArticle-Home-Img {
-            width: 100%;
-            height: 200px;
-            border-radius: 10px;
-        }
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Label)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DOCreating)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comment)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+        </thead>
 *@
