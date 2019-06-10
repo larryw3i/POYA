@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace POYA.Areas.EduHub.Models
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string UserId { get; set; }
+        [StringLength(maximumLength:50,MinimumLength =2)]
         public string Name { get; set; }
         public string Label { get; set; }
         #region

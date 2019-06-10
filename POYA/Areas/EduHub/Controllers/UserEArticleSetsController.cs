@@ -76,10 +76,22 @@ namespace POYA.Areas.EduHub.Controllers
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var _UserEArticleSet = await _context.UserEArticleSet.Where(p => p.UserId == _UserId).ToListAsync();
             #region INITIALIZE_THE_DEFAULT
-            _UserEArticleSet.Add(new UserEArticleSet { Label = _localizer["Click to add"], Name = _localizer["ADD"], Comment = _localizer["Click to add"] });
-            _UserEArticleSet.Add(new UserEArticleSet {  Comment=_localizer["The default"], Name=_localizer["default"], Label=_localizer["default"]});
+            _UserEArticleSet.Add(new UserEArticleSet
+            {
+                Id = LValue.AddEArticleSetId,
+                Label = _localizer["Click to add"],
+                Name = _localizer["ADD"],
+                Comment = _localizer["Click to add"]
+            });
+            _UserEArticleSet.Add(new UserEArticleSet
+            {
+                Id = LValue.DefaultEArticleSetId,
+                Comment = _localizer["The default"],
+                Name = _localizer["default"],
+                Label = _localizer["default"]
+            });
             #endregion
-            ViewData[nameof(UserEArticleHomeInfo)] = (await _context.userEArticleHomeInfos.Where(p => p.UserId == _UserId).FirstOrDefaultAsync()) ?? new UserEArticleHomeInfo { UserId = _UserId, Comment = _localizer["No set yet"] +"!" };
+            ViewData[nameof(UserEArticleHomeInfo)] = (await _context.userEArticleHomeInfos.Where(p => p.UserId == _UserId).FirstOrDefaultAsync()) ?? new UserEArticleHomeInfo { UserId = _UserId, Comment = _localizer["No set yet"] + "!" };
             return View(_UserEArticleSet);
         }
 
@@ -120,12 +132,13 @@ namespace POYA.Areas.EduHub.Controllers
         #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,Name,Label,DOCreating,Comment")] UserEArticleSet userEArticleSet)
+        public async Task<IActionResult> Create([Bind("Id,Name,Label,Comment")] UserEArticleSet userEArticleSet)
         {
             if (ModelState.IsValid)
             {
                 var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                 userEArticleSet.Id = Guid.NewGuid();
+                userEArticleSet.UserId = _UserId;
                 _context.Add(userEArticleSet);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

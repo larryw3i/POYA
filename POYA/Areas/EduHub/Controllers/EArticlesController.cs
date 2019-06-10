@@ -74,9 +74,20 @@ namespace POYA.Areas.EduHub.Controllers
         }
         #endregion
 
+        #region 
+        /// <summary>
+        /// Index for UserEArticleSets
+        /// </summary>
+        /// <returns></returns>
+        #endregion
+        public async Task<IActionResult> XIndex()
+        {
+            return NoContent();
+        }
+
         // GET: EduHub/EArticles
         [AllowAnonymous]
-        public async Task<IActionResult> Index(bool? IsIndividual, int? SortBy, int _page = 1)
+        public async Task<IActionResult> Index( bool ? IsIndividual, int? SortBy, int _page = 1 )
         {
             if (IsIndividual == true && !_signInManager.IsSignedIn(User))
             {
