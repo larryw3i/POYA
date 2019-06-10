@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,5 +28,18 @@ namespace POYA.Areas.EduHub.Models
         public string UserId { get; set; }
         public string CoverFileMD5 { get; set; }
         public string Comment { get; set; }
+
+        public string CoverFileContentType { get; set; } = "image/png";
+
+        #region DEPOLLUTION
+
+        #region 
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        #endregion
+        [NotMapped]
+        public IFormFile CoverFile { get; set; }
+        #endregion
     }
 }

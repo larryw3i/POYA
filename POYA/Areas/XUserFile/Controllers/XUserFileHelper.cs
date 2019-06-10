@@ -55,6 +55,12 @@ namespace POYA.Areas.XUserFile.Controllers
 
         }
 
+        /// <summary>
+        /// Write the IFormFile bytes to "X_DOVEValues.FileStoragePath(_hostingEnv) + MD5_" and return the MD5 string
+        /// </summary>
+        /// <param name="_hostingEnv"></param>
+        /// <param name="formFile"></param>
+        /// <returns></returns>
         public async Task<string> LWriteBufferToFileAsync( IHostingEnvironment _hostingEnv , IFormFile formFile)
         {
             var MemoryStream_ = new MemoryStream();

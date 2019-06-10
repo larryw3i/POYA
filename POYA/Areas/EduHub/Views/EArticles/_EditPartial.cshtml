@@ -37,7 +37,7 @@
                 <div id="MenuToolbar" class="toolbar">
                 </div>
                 <div id="_ContentEditor" class="text">
-                        @(Html.Raw(Model.Content))
+                    @(Html.Raw(Model.Content))
                 </div>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
@@ -147,7 +147,7 @@
         });
 
         $("#VideoSelectEle").on("click", function () {
-            //  #region
+
             // console.log(">>>>>>>>"+$("#video_row_div input:last").val());
             if (IsVideoFileSelected) return;
             var _LastVideoInputVal = $("#video_row_div input:last").val();
@@ -160,11 +160,11 @@
 
             }
             $("#video_row_div input:last").click();
-            //  #endregion
+
             event.preventDefault();
         });
         $("#AttachmentSelectBtn").on("click", function () {
-            //  #region
+
             var _LastAttachmentInputVal = $("#attachment_row_div input:last").val();
             if (_LastAttachmentInputVal == undefined || _LastAttachmentInputVal.length > 0) {
                 let _LAttachmentFileInput = LAttachmentFileInput(_Data_.NewGuid());
@@ -172,7 +172,7 @@
                 $("#attachment_row_div").append(_LAttachmentFileInput);
             }
             $("#attachment_row_div input:last").click();
-            //  #endregion
+
             event.preventDefault();
         });
 
@@ -198,11 +198,7 @@
 
     });
 
-    //  #region UI
 
-    //  #endregion
-
-    //  #region  VALUES
 
     var IsVideoFileSelected =@(IsVideoFileUploaded?"true":"false");
     var LAttachmentFileInputId = (id) => `LAttachments_${id}`;
@@ -213,9 +209,7 @@
     //  var FileRemoveId = (id) => `FileRemove_${id}`;
     var FileRemoveEleId = (id) => `@FileRemoveEleString${id}`;
     var FileRemoveSpanId = (id) => `FileRemoveSpan_${id}`;
-    //  #endregion
 
-    //  #region  SERVICES
     /**
     *  public Guid EArticleId { get; set; }
     *  public string FileName { get; set;}
@@ -249,7 +243,7 @@
             _EArticles_Form_Data_.append("LVideos", _File, _File.name);
         });
         $.ajax({
-            //  #region
+            //
             url: "@(Url.Action(IsEdit?"Edit":"Create"))",
             type: "POST",
             data: _EArticles_Form_Data_,
@@ -285,15 +279,15 @@
                 //  history.go(-1);
                 window.location.href = "@Url.Action("Index")";
             }
-            //  #endregion
+            //  
         });
 
 
     }
 
-    //  #endregion
+    //  
 
-    //  #region  DATA
+    //    DATA
       var _CategoryId = "@Model.CategoryId";
         var _GuidEmpty = "@(Guid.Empty)";
         var _IsEdit =@(IsEdit?"true":"false");
@@ -421,7 +415,7 @@
         loadNext();
     }
 
-    //  #region
+    //
     /**
     * (Id ,MD5) ===> ID8MD5Array
     * @@param {string}Id -The id of file input element
@@ -433,7 +427,7 @@
             ID8MD5Array.push({ ID: Id, MD5: MD5, IsEArticleVideo: IsEArticleVideo });
         }
     }
-    //  #endregion
+    //  
 
     function CheckMD5() {
         // console.log("<<<<>>>");
@@ -497,9 +491,9 @@
         // console.log(">>>")
     }
     function ReadyEditor(Editor) {
-        //  #region CONTENT_EDITOR
+        //   CONTENT_EDITOR
 
-        //  #region MENU CONFIGURE
+        //   MENU CONFIGURE
         Editor.customConfig.menus = [
             'head',
             'bold',
@@ -520,10 +514,11 @@
             'undo',
             'redo',
         ];
-        //  #endregion
+
+        //  
 
 
-        // #region  LANGUAGE CONFIGURE
+        //   LANGUAGE CONFIGURE
 
         Editor.customConfig.lang = {
 
@@ -559,9 +554,10 @@
 
         };
 
-        // #endregion
 
-        //  #region UPLOAD IMAGE CONFIGURE
+        // 
+
+        //   UPLOAD IMAGE CONFIGURE
         Editor.customConfig.uploadImgServer = '@(Url.Action("UploadEArticleImage"))';
         Editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024;
         Editor.customConfig.uploadImgMaxLength = 8;
@@ -573,7 +569,7 @@
 
         Editor.create();
     }
-    //  #endregion
+    //  
 </script>
 <style>
 
@@ -586,8 +582,8 @@
         border: dotted;
         border-radius: 10px;
         overflow: hidden;
-        word-wrap:break-word;
-        word-break:break-all;
+        word-wrap: break-word;
+        word-break: break-all;
     }
 
     .w-e-text {

@@ -25,10 +25,9 @@
         <div class="col text-center">
             <input type="text"
                    id="UserEArticleHomeInfo_Comment"
-                   onkeypress="CheckConfirmation()"
                    value="@(_UserEArticleHomeInfo.Comment)" />
         </div>
-        <input type="file" id="UserEArticleHomeInfo_Conver_Input" hidden />
+        <input type="file" id="UserEArticleHomeInfo_Conver_Input" hidden accept="image/*" />
         <img class="EArticle-Home-BgImg-Edit" id="UserEArticleHomeInfo_Conver" />
     </div>
 </div>
@@ -55,8 +54,8 @@
                     @Html.DisplayFor(modelItem => item.Comment)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
@@ -65,34 +64,134 @@
 </table>
 
 @section Scripts{
+    <script>
+        /*====  VALUE       ====*/
+        var InitHomeComment = "@(_UserEArticleHomeInfo.Comment)";
+        var ConverImgMD5 = "";
+
+    </script>
 
 
     <script>
         /*====  UI          ====*/
+        function InitHomeCover() {
+            var EArticle_Home_Avatar = $(".EArticle-Home-Avatar");
+            EArticle_Home_Avatar.attr("src", "@(Url.Action("GetFile","LUserFiles",new { area="XUserFile",id=_UserEArticleHomeInfo.Id}))");
+            EArticle_Home_Avatar.onerror = function () {
+
+                EArticle_Home_Avatar.attr("src", "/img/earticle_home_default_img.webp");
+            }
+        }
+
+        /**
+        * Return the alert html string
+        * @@param {string} ClassType The class type >_
+        *      primary/secondary/success/info/danger/warning/dark/light
+        * @@param  {string} Message The message
+        */
+        function MakeAlert(ClassType, Message) {
+            var _Ele =
+                '\
+                <div class="alert alert-'+ (ClassType) + ' alert-dismissible fade show" role="alert">' + Message + '\
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
+                    <span aria-hidden="true">&times;</span>\
+                    </button>\
+                </div>\
+                ';
+            $(".xbody").prepend(_Ele);
+            setTimeout(function () {
+                $('.alert').alert('close');
+            }, 2500);
+        }
     </script>
 
     <script>
         /*====  SERVICE     ====*/
-        function UplaodEArticleHomeInfo() {
-            var _FormData = new FormData();
-            _FormData.append("@nameof(_UserEArticleHomeInfo.Comment))", $("#UserEArticleHomeInfo_Comment").val());
-            //  _FormData.append("@nameof(_UserEArticleHomeInfo)");
+        function UploadEArticleHomeInfo() {
+            /*
+            if ($("#UserEArticleHomeInfo_Conver_Input").val().length > 0) {
+                var _File = document.getElementById("UserEArticleHomeInfo_Conver_Input").files[0];
+                if (_File.size > 1024) {
+                    MakeAlert("danger", "@@Localizer["The size of cover image should be less than 1 M"]");
+                    return;
+                }
+            }
+            */
+            //  else {
+            if ($("#UserEArticleHomeInfo_Comment").val() == InitHomeComment && $("#UserEArticleHomeInfo_Conver_Input").length <1) return;
+            var _userEArticleHomeInfo = new FormData();
+            _userEArticleHomeInfo.append("Comment", $("#UserEArticleHomeInfo_Comment").val());
+            if ($("#UserEArticleHomeInfo_Conver_Input").length > 0) {
+                var _File = document.getElementById("UserEArticleHomeInfo_Conver_Input").files[0];
+                _userEArticleHomeInfo.append("CoverFile", _File, _File.name);
+            }
+            $.ajax({
+                url: "@(Url.Action("UploadEArticleHomeInfo","LUserFiles",new { area="XUserFile"}))",
+                type: "POST",
+                data: _userEArticleHomeInfo,
+                dataType: "json", processData: false,
+                contentType: false,
+                headers: {
+                    "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
+                },
+                success: function () {
+                    //  $("#UserEArticleHomeInfo_Comment").val();
+                    InitHomeComment = $("#UserEArticleHomeInfo_Comment").val();
+                    MakeAlert("info", "@Localizer[ "Update successfully"]"+"!")
+                },
+                error: function () {
+                }
+            });
+        //  }
+        /*
+         var _FormData = new FormData();
+        _FormData.append("@@nameof(_UserEArticleHomeInfo.Comment))", $("#UserEArticleHomeInfo_Comment").val());
+        */
+        //  _FormData.append("@@nameof(_UserEArticleHomeInfo)");
     }
     </script>
 
-    <script>
-        /*====  VALUE       ====*/
-        var InitHomeComment = "@(_UserEArticleHomeInfo.Comment)";
-    </script>
 
     <script>
         /*====  DATA        ====*/
-        function CheckConfirmation() {
+
+        function ReadMD5() {
+            {
+                var BlobSlice_ = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
+                    ChunkSize = 20 * 1024 * 1024,
+                    Chunks = Math.ceil(_File.size / ChunkSize),
+                    CurrentChunk = 0,
+                    Spark_ = new SparkMD5.ArrayBuffer(),
+                    FileReader_ = new FileReader();
+            }
+
+            FileReader_.onload = function (e) {
+                Spark_.append(e.target.result);
+                CurrentChunk++;
+                if (CurrentChunk < Chunks) {
+                    loadNext();
+                } else {
+                    ConverImgMD5 = String(Spark_.end());
+                    UploadEArticleHomeInfo();
+                }
+            };
+            FileReader_.onerror = function () {
+                MakeAlert("danger","@Localizer["Some errors has occurred"]");
+            };
+            function loadNext() {
+                var Start = CurrentChunk * ChunkSize,
+                    End = ((Start + ChunkSize) >= _File.size) ? _File.size : Start + ChunkSize;
+                FileReader_.readAsArrayBuffer(BlobSlice_.call(File_, Start, End));
+            }
+            loadNext();
+        }
+
+        function CheckKeyCodeConfirmation() {
             var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
             if (keyCode == 13) {
                 var _Comment = $("#UserEArticleHomeInfo_Comment").val();
                 if (InitHomeComment != _Comment) {
-                    UplaodEArticleHomeInfo();
+                    UploadEArticleHomeInfo();
                 }
             }
         }
@@ -101,13 +200,20 @@
 
     <script>
 
-
-
         $(document).ready(function () {
+            InitHomeCover();
             $(".EArticle-Home-Avatar").attr("src", "/Home/GetAvatar?random=" + Math.floor(Math.random() * 100 + 1));
             $(".EArticle-Home-BgImg-Edit").attr("src", "/img/edit.webp");
             $("#UserEArticleHomeInfo_Conver").on("click", function () {
+                $("#UserEArticleHomeInfo_Conver_Input").click();
+            });
+            $("#UserEArticleHomeInfo_Comment").keypress(function () {
+                CheckKeyCodeConfirmation();
+            });
 
+            $("#UserEArticleHomeInfo_Conver_Input").on("change", function () {
+                //  ReadMD5();
+                UploadEArticleHomeInfo();
             });
 
         });

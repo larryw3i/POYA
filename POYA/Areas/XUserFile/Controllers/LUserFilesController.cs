@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using POYA.Areas.EduHub.Models;
 using POYA.Areas.XUserFile.Models;
 using POYA.Data;
 using POYA.Models;
@@ -359,7 +360,55 @@ namespace POYA.Areas.XUserFile.Controllers {
 
         #region DEPOLLUTION
 
-   
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UploadEArticleHomeInfo([FromForm]UserEArticleHomeInfo userEArticleHomeInfo)
+        {
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var _userEArticleHomeInfo = await _context.userEArticleHomeInfos.FirstOrDefaultAsync(p=>p.UserId==UserId_);
+            var _MD5 = string.Empty;
+            if (userEArticleHomeInfo?.CoverFile != null)
+            {
+                _MD5 = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, userEArticleHomeInfo.CoverFile);
+            }
+            if (_userEArticleHomeInfo == null)
+            {
+                await _context.userEArticleHomeInfos.AddAsync(new UserEArticleHomeInfo { UserId = UserId_, Comment = userEArticleHomeInfo.Comment, CoverFileMD5 = _MD5, Id = Guid.NewGuid() }) ;
+            }
+            else
+            {
+                _userEArticleHomeInfo.Comment = userEArticleHomeInfo.Comment;
+                _userEArticleHomeInfo.CoverFileMD5 = _MD5;
+            }
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        #region 
+        /// <summary>
+        /// The basic method for checking md5
+        /// </summary>
+        /// <returns></returns>
+        #endregion
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult XCheckMd5([FromForm]List<string> MD5s)
+        {
+            var CheckResult = new Dictionary<string, bool>();
+            var UploadFileMD5s = System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(_hostingEnv))
+             .Select(p => System.IO.Path.GetFileNameWithoutExtension(p)).ToList();
+
+            foreach (var m in MD5s)
+            {
+                if (UploadFileMD5s.Contains(m))
+                {
+                    CheckResult.Add(m,true);
+                }
+                CheckResult.Add(m, false);
+            }
+
+            return Json( CheckResult.Select(p=>new { MD5=p.Key,IsUploaded=p.Value}).ToList());
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -394,10 +443,29 @@ namespace POYA.Areas.XUserFile.Controllers {
         /// <returns></returns>
         #endregion
         [AllowAnonymous]
-        public async Task<IActionResult> GetFile (Guid? id) {
-            if (id == null) {
-                return NoContent ();
+        public async Task<IActionResult> GetFile(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
             }
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
+            #region EARTICLE_HOME_COVER
+            var _userEArticleHomeInfo = await _context.userEArticleHomeInfos.FirstOrDefaultAsync(p=>p.UserId==_UserId && p.Id==id);
+            if (_userEArticleHomeInfo != null)
+            {
+                var _FilePath_ = X_DOVEValues.FileStoragePath(_hostingEnv) + _userEArticleHomeInfo.CoverFileMD5;
+                if (!System.IO.File.Exists(_FilePath_))
+                {
+                    return NoContent();
+                }
+                var _FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath_);
+                return File(_FileBytes, _userEArticleHomeInfo.CoverFileContentType, $"EARTICLE_HOME_COVER_{_UserId}", true);
+            }
+            #endregion
+
+            #region EARTICLE_FILE
             var _EArticleFile = await _context.EArticleFiles.FirstOrDefaultAsync(p => p.Id == id);
             if (_EArticleFile != null)
             {
@@ -409,19 +477,21 @@ namespace POYA.Areas.XUserFile.Controllers {
                 var _FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath_);
                 return File(_FileBytes, _xUserFileHelper.GetMimes(_EArticleFile.FileName, _hostingEnv).Last(), _EArticleFile.FileName, true);
             }
-            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            var _UserId = _userManager.GetUserAsync (User).GetAwaiter ().GetResult ().Id;
-            var _LUserFile = await _context.LUserFile.Select (p => new { p.MD5, p.Id, p.Name, p.UserId })
-                .FirstOrDefaultAsync (p => (p.Id == id && p.UserId == _UserId));
-            if (_LUserFile == null) {
-                return NoContent ();
+            #endregion
+
+            var _LUserFile = await _context.LUserFile.Select(p => new { p.MD5, p.Id, p.Name, p.UserId })
+                .FirstOrDefaultAsync(p => (p.Id == id && p.UserId == _UserId));
+            if (_LUserFile == null)
+            {
+                return NotFound();
             }
-            var _FilePath = X_DOVEValues.FileStoragePath (_hostingEnv) + _LUserFile.MD5;
-            if (!System.IO.File.Exists (_FilePath)) {
-                return NoContent ();
+            var _FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + _LUserFile.MD5;
+            if (!System.IO.File.Exists(_FilePath))
+            {
+                return NotFound();
             }
-            var FileBytes = await System.IO.File.ReadAllBytesAsync (_FilePath);
-            return File (FileBytes, _xUserFileHelper.GetMimes (_LUserFile.Name, _hostingEnv).Last (), _LUserFile.Name, true);
+            var FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath);
+            return File(FileBytes, _xUserFileHelper.GetMimes(_LUserFile.Name, _hostingEnv).Last(), _LUserFile.Name, true);
         }
 
         /*
@@ -435,10 +505,7 @@ namespace POYA.Areas.XUserFile.Controllers {
         {
             return NoContent();
         }
-        */
-
-
-        /*
+       
         public async Task<IActionResult> UploadFile(Guid? InDirId)
         {
             InDirId = InDirId ?? Guid.Empty;
