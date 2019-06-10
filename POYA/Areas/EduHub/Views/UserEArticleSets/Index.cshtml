@@ -25,43 +25,34 @@
         <div class="col text-center">
             <input type="text"
                    id="UserEArticleHomeInfo_Comment"
-                   value="@(_UserEArticleHomeInfo.Comment)" />
+                   value="@(_UserEArticleHomeInfo.Comment)" title="@Localizer["Press ENTER to save"]"/>
         </div>
         <input type="file" id="UserEArticleHomeInfo_Conver_Input" hidden accept="image/*" />
         <img class="EArticle-Home-BgImg-Edit" id="UserEArticleHomeInfo_Conver" />
     </div>
 </div>
 
-<table class="table">
+<div class="row" style="margin-top:10px">
+    <div class="col col-3">
+        <div class="card" style="width: 90%;">
+            <div class="card-body text-center">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div> 
+    <div class="col col-3">
+        <div class="card" style="width: 90%;">
+            <div class="card-body text-center">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Label)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DOCreating)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Comment)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
 
 @section Scripts{
     <script>
@@ -275,7 +266,37 @@
 }
 
 @*
+    
+<table class="table">
 
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Label)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DOCreating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
         <img src="~/img/earticle_home_default_img.webp" class="img-fluid EArticle-Home-Img" />
     .EArticle-Home-Img {
             width: 100%;

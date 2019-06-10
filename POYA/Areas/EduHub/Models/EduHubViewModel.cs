@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using POYA.Unities.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -29,7 +30,16 @@ namespace POYA.Areas.EduHub.Models
 
         public string UserId { get; set; }
 
+        #region 
+        /// <summary>
+        /// The EArticle set id
+        /// </summary>
+        #endregion
+        public Guid SetId { get; set; }     //  = LValue.DefaultEArticleSetId;
+
         #region CATEGORY
+
+        #region 
 
         /// <summary>
         /// CategoryId include the first and second category, it is  reference from GB/T 13745-2009,
@@ -37,6 +47,7 @@ namespace POYA.Areas.EduHub.Models
         /// category of earticle is just a label which author want to set, 
         /// <br/>please let us know if you have a better category 
         /// </summary>
+        #endregion
         public Guid CategoryId { get; set; }
 
         [NotMapped]
@@ -60,10 +71,12 @@ namespace POYA.Areas.EduHub.Models
         [StringLength(maximumLength: 16384)]
         public string Content { get; set; }
 
+        #region 
 
         /// <summary>
         /// Determine the article is legal or not by Content appraiser, the default value is <see langword="true"/>
         /// </summary>
+        #endregion
         public bool IsLegal { get; set; } = true;
 
         public DateTimeOffset DOPublishing { get; set; } = DateTimeOffset.Now;
@@ -90,29 +103,41 @@ namespace POYA.Areas.EduHub.Models
 
         #region DISCARD
 
-        /// <summary>
-        /// || DISCARD ||
-        /// </summary>
-        public Guid ClassId { get; set; }
+        #region 
 
         /// <summary>
         /// || DISCARD ||
         /// </summary>
+        #endregion
+        public Guid ClassId { get; set; }
+
+        #region 
+
+        /// <summary>
+        /// || DISCARD ||
+        /// </summary>
+        #endregion
         public Guid LGradeId { get; set; }
+
+        #region 
 
         /// <summary>
         /// || DISCARD ||
         /// "text/html" or "text/markdown", the default is "text/html"
         /// </summary>
+        #endregion
         public string ContentType { get; set; } //    = "text/html";
         #endregion
     }
 
     public class EArticleFile
     {
+        #region 
+
         /// <summary>
         /// The default is  Guid.NewGuid()
         /// </summary>
+        #endregion
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
         public Guid EArticleId { get; set; }
@@ -120,9 +145,13 @@ namespace POYA.Areas.EduHub.Models
         public string FileName { get; set; }
         public bool IsEArticleVideo { get; set; } = false;
         #region DEPOLLUTION
+
+        #region 
+
         /// <summary>
         /// [NotMapped]
         /// </summary>
+        #endregion
         [NotMapped]
         public string ContentType { get; set; }
         #endregion

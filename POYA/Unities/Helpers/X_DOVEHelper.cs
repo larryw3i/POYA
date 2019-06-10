@@ -209,6 +209,7 @@ namespace POYA.Unities.Helpers
     public static class LValue
     {
         public static Guid PublicDirId { get; } = Guid.Parse("75EAD9A8-31C0-4491-8D8B-431A506C6567");
+        public static Guid DefaultEArticleSetId { get; } = Guid.Parse("5F8EBDF5-1ADC-4891-85F6-FD0755223A06");
     }
 
     #region DISCARD
