@@ -373,12 +373,18 @@ namespace POYA.Areas.XUserFile.Controllers {
             }
             if (_userEArticleHomeInfo == null)
             {
-                await _context.userEArticleHomeInfos.AddAsync(new UserEArticleHomeInfo { UserId = UserId_, Comment = userEArticleHomeInfo.Comment, CoverFileMD5 = _MD5, Id = Guid.NewGuid() }) ;
+                await _context.userEArticleHomeInfos.AddAsync(new UserEArticleHomeInfo { UserId = UserId_, Comment = userEArticleHomeInfo.Comment, CoverFileMD5 = _MD5, Id = Guid.NewGuid(),
+                    CoverFileContentType =string.IsNullOrWhiteSpace(_MD5)?
+                    "":userEArticleHomeInfo.CoverFile.ContentType }) ;
             }
             else
             {
-                _userEArticleHomeInfo.Comment = userEArticleHomeInfo.Comment;
-                _userEArticleHomeInfo.CoverFileMD5 = _MD5;
+                _userEArticleHomeInfo.Comment =string.IsNullOrWhiteSpace( userEArticleHomeInfo.Comment)?
+                    _userEArticleHomeInfo.Comment:userEArticleHomeInfo.Comment;
+                _userEArticleHomeInfo.CoverFileMD5 = string.IsNullOrWhiteSpace(_MD5)?
+                    _userEArticleHomeInfo.CoverFileMD5:_MD5;
+                _userEArticleHomeInfo.CoverFileContentType = string.IsNullOrWhiteSpace(_MD5) ?
+                    _userEArticleHomeInfo.CoverFileContentType : userEArticleHomeInfo.CoverFile.ContentType;
             }
             await _context.SaveChangesAsync();
             return Ok();
@@ -449,7 +455,7 @@ namespace POYA.Areas.XUserFile.Controllers {
             {
                 return NotFound();
             }
-            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var _UserId = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id;
 
             #region EARTICLE_HOME_COVER
             var _userEArticleHomeInfo = await _context.userEArticleHomeInfos.FirstOrDefaultAsync(p=>p.UserId==_UserId && p.Id==id);
