@@ -6,20 +6,36 @@
     ViewData["Title"] = "XIndex";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var EArticleFiles = ViewData["EArticleFile"] as List<EArticleFile>;
-    var _SetId=TempData["SetId"];
+    var _SetId = TempData["SetId"];
     TempData.Keep();
+    var _UserEArticleSet = ViewData[nameof(UserEArticleSet)] as UserEArticleSet;
 }
 
+@*
+    <hr />
+    <div class="row">
+        <div class="col offset-10">
+            <a asp-action="Create" asp-route-SetId="@(_SetId)" class="btn btn-outline-info">@Localizer["Write"] &raquo;</a>
+        </div>
+    </div>
+*@
 <hr />
-<div class="col offset-10">
-    <a asp-action="Create" asp-route-SetId="@(_SetId)" class="btn btn-outline-info">@Localizer["Write"] &raquo;</a>
-</div>
+<div class="row">
+    <div class="col col-12 User-EArticle-Set">
+        <span style="font-size:250%;font-weight:bolder">@(_UserEArticleSet.Name)</span><br />
+        <span class="float-right">
 
+            <span style="font-size:80%">@(_UserEArticleSet.Label)</span><br />
+            <span style="font-size:80%">@(_UserEArticleSet.Comment)</span><br />
+            <a asp-action="Create" asp-route-SetId="@(_SetId)">@Localizer["Write"] &raquo;</a>
+        </span>
+    </div>
+</div>
 <div class="row">
     @foreach (var a in (ViewData["_EArticles"] as IPagedList<EArticle>))
     {
         var _EArticleFiles = EArticleFiles.FirstOrDefault(p => p.EArticleId == a.Id);
-        <div class="col col-4 col-lg-2 col-md-3 ">
+        <div class="col col-4 col-lg-2 col-md-3">
             <div class="card" name="EArticleHomeCard" style="margin-top:6px;" onclick="GoToDetails('@a.Id')">
                 @if (_EArticleFiles == null)
                 {
@@ -41,10 +57,15 @@
     }
 </div>
 
-
-@(Html.PagedListPager((IPagedList<EArticle>)ViewData["_EArticles"], _page => Url.Action("XIndex", new { _page = _page }),
-    PagedListRenderOptions.OnlyShowFivePagesAtATime))
-
+<div class="row" style="margin-top:10px;">
+    <div class="col col-4 col-sm-3 col-md-2 col-lg-2">
+        <a asp-action="Index" asp-controller="UserEArticleSets" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
+    </div>
+    <div class="col offset-sm-1 offset-md-2 offset-lg-2">
+        @(Html.PagedListPager((IPagedList<EArticle>)ViewData["_EArticles"], _page => Url.Action("XIndex", new { SetId = _SetId, _page = _page }),
+            PagedListRenderOptions.OnlyShowFivePagesAtATime))
+    </div>
+</div>
 @section Scripts{
     <script>
         /**
@@ -54,7 +75,7 @@
         function GoToDetails(Id) {
             window.location.href = `/EduHub/EArticles/Details/${Id}`;
         }
-       
+
         $(document).ready(function () {
 
             //  #region
@@ -72,6 +93,24 @@
 @section Styles{
     <link href="~/css/PagedList.css" rel="stylesheet" type="text/css" />
     <style>
+        .User-EArticle-Set {
+            text-align: center;
+            border-radius: 20px;
+            background: rgba(255,182,193,0.5);
+            animation: BgAnimation 15s linear infinite alternate;
+            cursor: default;
+        }
+
+        @@keyframes BgAnimation {
+            25% {
+                background: rgba(255,20,147,0.4);
+            }
+
+            50% {
+                background: rgba(255,0,255,0.6);
+            }
+        }
+
         .author {
             font-size: 60%;
             color: blue;

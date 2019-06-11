@@ -26,17 +26,18 @@
         <div class="col text-center">
             <input type="text"
                    id="UserEArticleHomeInfo_Comment"
-                   value="@(_UserEArticleHomeInfo.Comment)" title="@Localizer["Press ENTER to save"]" />
+                   value="@(_UserEArticleHomeInfo.Comment)"
+                   title="@Localizer["Press ENTER to save"]" />
         </div>
         <input type="file" id="UserEArticleHomeInfo_Conver_Input" hidden accept="image/*" />
         <img class="EArticle-Home-BgImg-Edit" id="UserEArticleHomeInfo_Conver" />
     </div>
 </div>
 
-<div class="row" style="margin-top:10px">
+<div class="row">
     @foreach (var i in Model)
     {
-        <div class="col col-4 col-md-3 col-lg-2">
+        <div class="col col-4 col-md-3 col-lg-2"  style="margin-top:10px">
             <div class="card" cardid="@(i.Id)">
                 <div class="card-body text-center">
                     <h5 class="card-title">@(i.Name)</h5>
@@ -66,7 +67,6 @@
             var EArticle_Home_Avatar = $(".EArticle-Home-Avatar");
             EArticle_Home_Avatar.attr("src", "@(Url.Action("GetFile","LUserFiles",new { area="XUserFile",id=_UserEArticleHomeInfo.Id}))");
             EArticle_Home_Avatar.onerror = function () {
-
                 EArticle_Home_Avatar.attr("src", "/img/earticle_home_default_img.webp");
             }
         }
@@ -223,8 +223,8 @@
         }
 
             .card:hover {
-                animation: AnimationBoxShadow 3.2s linear  infinite;                
-                cursor:pointer;
+                animation: AnimationBoxShadow 3.2s linear infinite;
+                cursor: pointer;
             }
 
 
@@ -266,7 +266,7 @@
                 box-shadow: 1px 1px 1px #888888;
             }
 
-            25%{
+            25% {
                 box-shadow: 3px 3px 5px #888888;
             }
 
@@ -274,7 +274,7 @@
                 box-shadow: 5px 5px 8px #888888;
             }
 
-            75%{
+            75% {
                 box-shadow: 3px 3px 5px #888888;
             }
 
