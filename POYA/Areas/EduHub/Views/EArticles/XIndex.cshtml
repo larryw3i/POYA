@@ -9,9 +9,11 @@
     var _SetId=TempData["SetId"];
     TempData.Keep();
 }
-<p>
+
+<hr />
+<div class="col offset-10">
     <a asp-action="Create" asp-route-SetId="@(_SetId)" class="btn btn-outline-info">@Localizer["Write"] &raquo;</a>
-</p>
+</div>
 
 <div class="row">
     @foreach (var a in (ViewData["_EArticles"] as IPagedList<EArticle>))

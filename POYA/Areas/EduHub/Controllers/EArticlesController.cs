@@ -79,19 +79,23 @@ namespace POYA.Areas.EduHub.Controllers
         /// Index for UserEArticleSets
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
+        
         #endregion
         public async Task<IActionResult> XIndex(Guid? SetId, int? _page )
         {
             var TempSetId=Guid.Parse (TempData[nameof(SetId)]?.ToString()??Guid.Empty.ToString());
+            var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult().Id; //   ?? string.Empty;
+            if(!await _context.UserEArticleSet.AnyAsync(p=>p.UserId==UserId_ && p.Id == SetId))
+            {
+                return NotFound();
+            }
             SetId = SetId ==null ||SetId==Guid.Empty? 
                 (TempSetId==null? LValue.DefaultEArticleSetId:TempSetId)
                 :SetId;
             var _EArticles = await _context.EArticle.Where(p =>
                      SetId == LValue.DefaultEArticleSetId ?
                      (p.SetId == Guid.Empty || p.SetId == null || p.SetId == LValue.DefaultEArticleSetId) :
-                     p.SetId == SetId)
-                .ToListAsync();
+                     p.SetId == SetId&& p.UserId==UserId_).ToListAsync();
             _EArticles.ForEach(p =>
             {
                 if (p.SetId == Guid.Empty || p.SetId == null)
@@ -106,6 +110,7 @@ namespace POYA.Areas.EduHub.Controllers
             InitFileExtension(_EArticleFiles);
             ViewData["EArticleFile"] = _EArticleFiles;
             TempData[nameof(SetId)] = SetId;
+            ViewData[""] = await _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == SetId);
             return View();
         }
 
