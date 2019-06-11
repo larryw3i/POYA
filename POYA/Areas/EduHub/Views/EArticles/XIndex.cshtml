@@ -96,18 +96,18 @@
         .User-EArticle-Set {
             text-align: center;
             border-radius: 20px;
-            background: rgba(255,182,193,0.5);
+            background: rgba(@(new Random().Next(255)),@(new Random().Next(255)),@(new Random().Next(255)),0.4);
             animation: BgAnimation 15s linear infinite alternate;
             cursor: default;
         }
 
         @@keyframes BgAnimation {
             25% {
-                background: rgba(255,20,147,0.4);
+                background: rgba(@(new Random().Next(255)),@(new Random().Next(255)),@(new Random().Next(255)),0.2);
             }
 
             50% {
-                background: rgba(255,0,255,0.6);
+                background: rgba(@(new Random().Next(255)),@(new Random().Next(255)),@(new Random().Next(255)),0.3);
             }
         }
 

@@ -857,4 +857,7 @@
   <data name="X-DOVE" xml:space="preserve">
     <value>X-DOVE</value>
   </data>
+  <data name="Write" xml:space="preserve">
+    <value>发布</value>
+  </data>
 </root>
