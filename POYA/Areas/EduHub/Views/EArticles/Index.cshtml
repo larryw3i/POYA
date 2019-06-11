@@ -8,9 +8,14 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var UserId = ViewData["UserId"].ToString();
-    var IsIndividual = (bool)ViewData["IsIndividual"];
+    //  var IsIndividual = (bool)ViewData["IsIndividual"];
     var SortBy = (int)ViewData["SortBy"];
     var EArticleFiles = ViewData["EArticleFile"] as List<EArticleFile>;
+    var SortBySelect = new List<SelectListItem> {
+        new SelectListItem{  Value="0",Text=Localizer["buzz"]},
+        new SelectListItem{  Value="1",Text=Localizer["time"]},
+    };
+    SortBySelect.ForEach(p => { if (p.Value == SortBy.ToString()) p.Selected = true; });
 }
 
 <div class="row">
@@ -24,15 +29,14 @@
     <a class="col col-2 col-md-1" asp-action="Index" asp-controller="UserEArticleSets" title="@Localizer["My EArticle"]">
         <img src="~/img/user_earticle.webp" style="max-height:50px;" />
     </a>
-    <a class="col col-2 col-md-1" asp-action="Index" asp-route-IsIndividual="@(IsIndividual?"false":"true")"
-       title="@(IsIndividual?Localizer["View all"]:Localizer["Just me"])">
-        <img src="~/img/@(IsIndividual?"total.webp":"individual.webp")" style="max-height:50px;" />
-    </a>
+    @*
+        <a class="col col-2 col-md-1" asp-action="Index" asp-route-IsIndividual="@(IsIndividual?"false":"true")"
+           title="@@(IsIndividual?Localizer["View all"]:Localizer["Just me"])">
+            <img src="~/img/@@(IsIndividual?"total.webp":"individual.webp")" style="max-height:50px;" />
+        </a>
+    *@
     <div class="col col-2 col-md-1 col-lg-1">
-        <select id="SortBySelect" name="SortBySelect">
-            <option value="0">@Localizer["buzz"]</option>
-            <option value="1" selected>@Localizer["time"]</option>
-        </select>
+        <select id="SortBySelect" name="SortBySelect" asp-items="SortBySelect"></select>
     </div>
 
 </div>
@@ -111,7 +115,7 @@
 
         class Data {
             Initial() {
-                $("#SortBySelect option[value='@(SortBy)']").attr("selected", true);
+                //  $("#SortBySelect option[value='@(SortBy)']").attr("selected", true);
             }
         }
         var _Service = new Service();
@@ -171,14 +175,16 @@
             overflow: hidden;
         }
 
-        .card:hover {
-            animation: AnimationBoxShadow 0.2s linear 1 forwards;
+        .card {
+            box-shadow: 1px 1px 1px #888888;
         }
 
-        @@keyframes AnimationBoxShadow {
-            0% {
-                box-shadow: 1px 1px 1px #888888;
+            .card:hover {
+                animation: AnimationBoxShadow 0.2s linear 1 forwards;
             }
+
+        @@keyframes AnimationBoxShadow {
+
 
             100% {
                 box-shadow: 5px 5px 8px #888888;

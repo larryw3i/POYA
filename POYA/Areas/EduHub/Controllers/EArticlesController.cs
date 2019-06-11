@@ -118,16 +118,22 @@ namespace POYA.Areas.EduHub.Controllers
 
         // GET: EduHub/EArticles
         [AllowAnonymous]
-        public async Task<IActionResult> Index( bool ? IsIndividual, int? SortBy, int _page = 1 )
+        public async Task<IActionResult> Index( int? SortBy, int _page = 1 )
         {
+            #region 
+   /*
             if (IsIndividual == true && !_signInManager.IsSignedIn(User))
             {
                 return RedirectToPage(pageName: "/Account/Login", routeValues: new { area = "Identity", ReturnUrl = Request.Path });
             }
 
+            */
+            #endregion
+         
             var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id ?? string.Empty;
 
-            #region CONTRAST IsIndividual
+            #region 
+            /*
             var _IsIndividual = TempData[nameof(IsIndividual)];
             TempData.Keep();
             if (IsIndividual == null)
@@ -141,6 +147,7 @@ namespace POYA.Areas.EduHub.Controllers
                     IsIndividual = false;
                 }
             }
+            */
             #endregion
 
 
@@ -153,8 +160,9 @@ namespace POYA.Areas.EduHub.Controllers
             }
             #endregion
 
-            var _EArticle = _context.EArticle.Where(p => IsIndividual == true ? (p.UserId == UserId_) : true)
-               .OrderBy(p => p.DOPublishing);
+            var _EArticle = _context.EArticle.OrderBy(p => p.DOPublishing);
+            #region 
+  /*
             if (IsIndividual == false)
             {
                 var _User = await _context.Users.Where(p => p.EmailConfirmed).Select(p => new { p.UserName, p.Id }).ToListAsync();
@@ -163,6 +171,9 @@ namespace POYA.Areas.EduHub.Controllers
                     p.UserName = _User.FirstOrDefault(o => o.Id == p.UserId)?.UserName;
                 });
             }
+            */
+            #endregion
+          
             var _EArticleUserReadRecords = await _context.EArticleUserReadRecords.ToListAsync();
             await _EArticle.ForEachAsync(p =>
             {
@@ -184,8 +195,13 @@ namespace POYA.Areas.EduHub.Controllers
             //  ViewData[nameof(IsIndividual)] = IsIndividual;
             ViewData["UserId"] = UserId_;
             TempData[nameof(_page)] = _page;
+            #region 
+  /*
             TempData[nameof(IsIndividual)] = IsIndividual;
             ViewData[nameof(IsIndividual)] = IsIndividual;
+            */
+            #endregion
+          
             TempData[nameof(SortBy)] = SortBy;
             ViewData[nameof(SortBy)] = SortBy;
             InitFileExtension(_EArticleFiles);

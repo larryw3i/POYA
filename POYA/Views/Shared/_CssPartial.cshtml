@@ -1,0 +1,63 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var Light = "Light";
+    var Dark = "Dark";
+    //  var Care = "Care";
+    var _black = "black";
+    var _white = "white";
+    var _C7EDCC = "#C7EDCC";
+    var _THEME = Context.Request.Cookies["THEME"]??Light;
+
+    //  var _Language = Context.Request.Cookies["CULTURE"] ?? "zh-CN";
+}
+<style>
+    #_body,footer,.dropdown *,select{
+        background-color:@(_THEME==Dark?_black:_THEME==Light?_white:_C7EDCC);
+        color:@(_THEME==Dark?_C7EDCC:_black)
+    }
+    .table{
+        color:@(_THEME==Dark?_white:_black);
+    }
+    input[class=form-control],textarea[class=form-control]{
+        background-color:@(_THEME==Light?_white:_C7EDCC);
+    }
+    .button{
+        color:@(_THEME==Dark?_C7EDCC:_black);
+    }
+    select,.card{
+        background-color:@(_THEME==Dark?_black:_THEME==Light?_white:_C7EDCC);
+        color:@(_THEME==Dark?_C7EDCC:_black)
+    }
+    
+    [name='UserAvatarImg']{
+        background-color:@(_THEME==Dark?_black:_THEME==Light?_white:_C7EDCC);
+    }
+    #_ContentEditor{
+        color:@(_THEME==Dark?_C7EDCC:_black);
+    }
+</style>
+
+@*
+case "Dark":
+    $("#_body,footer,.dropdown *,select").css({ "background-color": "black", "color": "#C7EDCC" });
+    $(".table").css("color", "#C7EDCC");
+    $("input[class=form-control]").css({ "background-color": "#C7EDCC" });
+    $("button").css({ "color": "#C7EDCC" });
+    $("select,.card").css({ "background-color": "black", "color": "#C7EDCC" });
+    break;
+case "Light":
+    $("#_body,footer,.dropdown *,select,.card").css({ "background-color": "white", "color": "blue" });
+    $(".table").css("color", "black");
+    $("input[class=form-control]").css({ "background-color": "white" });
+    $("button").css({ "color": "black" });
+    $("select").css({ "background-color": "white" });
+    break;
+default:
+    $("#_body,footer,.dropdown *,select").css({ "background-color": "#C7EDCC", "color": "blue" });
+    $(".table").css("color", "black");
+    $("button").css({ "color": "black" });
+    $("input[type!='submit'],.card").css({ "background-color": "#C7EDCC", "color": "black" });
+    break;    
+*@

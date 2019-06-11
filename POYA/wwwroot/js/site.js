@@ -58,9 +58,9 @@ class UI_ {
      * - Initialize some UI
      * */
     Initial() {
-        this.ChangeTheme(false); 
+        //  this.ChangeTheme(false); 
         this.ChangeLanguageTagShow();
-        this.ChangeThemeTagShow();
+        //  this.ChangeThemeTagShow();
         this.SetUserAvatar();
         this.SetTableContentWrapBreak();
     }
@@ -84,7 +84,7 @@ class UI_ {
      * - Set the value of languge select tag
      * */
     ChangeLanguageTagShow() {
-        $('#Language  option[value=' + _Value_.GetCulture() + ']').attr("selected", true);
+        $('#_Language  option[value=' + _Value_.GetCulture() + ']').attr("selected", true);
     }
 
     /**
@@ -96,16 +96,18 @@ class UI_ {
         if (IsGetValueFromSelectTag) {
             Cookies.set(_Value_.THEME, _theme_, { expires: 365 });
         }
+        location.reload();
+        /*
         switch (_theme_) {
             case "Dark":
                 $("#_body,footer,.dropdown *,select").css({ "background-color": "black", "color": "#C7EDCC" });
                 $(".table").css("color", "#C7EDCC");
                 $("input[class=form-control]").css({ "background-color": "#C7EDCC" });
                 $("button").css({ "color": "#C7EDCC" });
-                $("select").css({ "background-color": "black", "color": "#C7EDCC" });
+                $("select,.card").css({ "background-color": "black", "color": "#C7EDCC" });
                 break;
             case "Light":
-                $("#_body,footer,.dropdown *,select").css({ "background-color": "white", "color": "blue" });
+                $("#_body,footer,.dropdown *,select,.card").css({ "background-color": "white", "color": "blue" });
                 $(".table").css("color", "black");
                 $("input[class=form-control]").css({ "background-color": "white" });
                 $("button").css({ "color": "black" });
@@ -115,9 +117,10 @@ class UI_ {
                 $("#_body,footer,.dropdown *,select").css({ "background-color": "#C7EDCC", "color": "blue" });
                 $(".table").css("color", "black");
                 $("button").css({ "color": "black" });
-                $("input[type!='submit']").css({ "background-color": "white", "color": "black" });
+                $("input[type!='submit'],.card").css({ "background-color": "#C7EDCC", "color": "black" });
                 break;
         }
+        */
     }
 
     /**
@@ -136,9 +139,13 @@ class Service_ {
      * - Change the language by cluture
      * */
     ChangeLanguage() {
+        Cookies.set(_Value_.CULTURE, $(_Value_.Language + " option:selected").val());
+        location.reload();
+        /*
         var _language = $(_Value_.Language + " option:selected").val();
         window.CULTURE = _language;
         window.location.href = _Data_.SetQueryString(window.location.href, "culture", _language);
+        */
         return;
     }
 }
@@ -154,7 +161,7 @@ class Value_ {
         /**
          *  "#Language" 
          */
-        this.Language = "#Language";
+        this.Language = "#_Language";
         /**
          * "THEME"
          */
@@ -222,7 +229,7 @@ var _Service_ = new Service_();
 $(document).ready(function () {
     _UI_.Initial();
     KeepLogin();
-    $("#Language").on("change", function () {
+    $("#_Language").on("change", function () {
         _Service_.ChangeLanguage();
     });
     $("#Theme").on("change", function () {
@@ -240,6 +247,6 @@ function KeepLogin() {
             type: "GET"
         });
         console.log("\u1F498");
-    }, 5 * 60000);
+    }, 1 * 60*1000);
 
 }

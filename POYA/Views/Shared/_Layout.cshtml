@@ -2,9 +2,25 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @{
-    var _THEME = Context.Request.Cookies["THEME"];
-    _THEME = _THEME == "Light" ? "white" :
-        _THEME == "Dark" ? "black" : "#C7EDCC";
+    #region
+    var _THEME = Context.Request.Cookies["THEME"] ?? "Light";
+    //  _THEME = _THEME == "Light" ? "white" :
+    //    _THEME == "Dark" ? "black" : "#C7EDCC";
+    var _Language_ = Context.Request.Cookies["CULTURE"] ?? "zh-CN";
+    var _Language = new List<SelectListItem>
+{
+            new SelectListItem { Value = "zh-CN", Text = "\u7b80\u4f53\u4e2d\u6587" },
+            new SelectListItem { Value = "en-US", Text = "English" },
+        };
+    _Language.ForEach(p => { if (p.Value == _Language_) p.Selected = true; });
+    var Theme = new List<SelectListItem>
+{
+            new SelectListItem { Value = "Light", Text = "Light" },
+            new SelectListItem { Value = "Dark", Text = "Dark" },
+            new SelectListItem{ Value="Care",Text="Care"}
+        };
+    Theme.ForEach(p => { if (p.Value == _THEME) p.Selected = true; });
+    #endregion
 }
 <!DOCTYPE html>
 <html>
@@ -24,9 +40,10 @@
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/img/chat_with_friends_ico.webp" rel="icon" type="image/webp">
-    @RenderSection("Styles", required: false)
+    @(RenderSection("Styles", required: false))
+    <partial name="_CssPartial" />
 </head>
-<body id="_body" style="background-color:@_THEME">
+<body id="_body">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container">
@@ -62,10 +79,12 @@
                         </li>
                         <li class="nav-item">
                             <div class="nav-link ">
-                                <select id="Theme" name="Theme">
-                                    <option value="Light">@(Localizer["Light"]) </option>
-                                    <option value="Dark" selected>@(Localizer["Dark"])</option>
-                                    <option value="Care">@(Localizer["Care"])</option>
+                                <select id="Theme" name="Theme" asp-items="Theme">
+                                    @*
+                                        <option value="Light">@(Localizer["Light"]) </option>
+                                        <option value="Dark" selected>@(Localizer["Dark"])</option>
+                                        <option value="Care">@(Localizer["Care"])</option>
+                                    *@
                                 </select>
                             </div>
                         </li>
@@ -83,9 +102,11 @@
     <footer class="border-top footer text-muted" style="position:fixed;z-index:999;height:40px">
         <div class="container" style="margin-top:-12px">
             &copy; 2019 - @Localizer["WSUDisk"] -
-            <select id="Language" name="Language">
-                <option value="zh-CN">@Localizer["zh-CN"]</option>
-                <option value="en-US" selected>@Localizer["en-US"]</option>
+            <select id="_Language" name="_Language" asp-items="_Language">
+                @*
+                    <option value="zh-CN" >@Localizer["zh-CN"]</option>
+                    <option value="en-US" selected>@Localizer["en-US"]</option>
+                *@
             </select> -
             <a asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Privacy"]</a> - @Localizer["More"]
         </div>
@@ -117,5 +138,5 @@
 
 
 @*
-https://blog.csdn.net/LingHuChong20
+    https://blog.csdn.net/LingHuChong20
 *@
