@@ -860,4 +860,34 @@
   <data name="Write" xml:space="preserve">
     <value>发布</value>
   </data>
+  <data name="Click to your sharing" xml:space="preserve">
+    <value>点击跳转分享</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>总共</value>
+  </data>
+  <data name="Used" xml:space="preserve">
+    <value>使用</value>
+  </data>
+  <data name="Press ENTER to save" xml:space="preserve">
+    <value>按ENTER就保存了</value>
+  </data>
+  <data name="My EArticle" xml:space="preserve">
+    <value>我的文章</value>
+  </data>
+  <data name="Change cover" xml:space="preserve">
+    <value>更改封面</value>
+  </data>
+  <data name="Add your earticle set" xml:space="preserve">
+    <value>添加一个分组</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="Label" xml:space="preserve">
+    <value>标签</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>标题</value>
+  </data>
 </root>

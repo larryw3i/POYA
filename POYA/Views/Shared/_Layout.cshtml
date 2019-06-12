@@ -15,9 +15,9 @@
     _Language.ForEach(p => { if (p.Value == _Language_) p.Selected = true; });
     var Theme = new List<SelectListItem>
 {
-            new SelectListItem { Value = "Light", Text = "Light" },
-            new SelectListItem { Value = "Dark", Text = "Dark" },
-            new SelectListItem{ Value="Care",Text="Care"}
+            new SelectListItem { Value = "Light", Text =Localizer[ "Light" ]},
+            new SelectListItem { Value = "Dark", Text =Localizer[ "Dark" ]},
+            new SelectListItem{ Value="Care",Text=Localizer[ "Care"]}
         };
     Theme.ForEach(p => { if (p.Value == _THEME) p.Selected = true; });
     #endregion

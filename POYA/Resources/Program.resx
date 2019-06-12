@@ -860,4 +860,34 @@
   <data name="Write" xml:space="preserve">
     <value>Write</value>
   </data>
+  <data name="Click to your sharing" xml:space="preserve">
+    <value>Click to your sharing</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Used" xml:space="preserve">
+    <value>Used</value>
+  </data>
+  <data name="Press ENTER to save" xml:space="preserve">
+    <value>Press ENTER to save</value>
+  </data>
+  <data name="My EArticle" xml:space="preserve">
+    <value>My EArticle</value>
+  </data>
+  <data name="Change cover" xml:space="preserve">
+    <value>Change cover</value>
+  </data>
+  <data name="Add your earticle set" xml:space="preserve">
+    <value>Add your earticle set</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="Label" xml:space="preserve">
+    <value>Label</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
 </root>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CsvHelper.Configuration.Attributes;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,15 +13,32 @@ namespace POYA.Areas.EduHub.Models
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string UserId { get; set; }
-        [StringLength(maximumLength:50,MinimumLength =2)]
+
+        #region 
+        [Display(Name="Title")]
+        [StringLength(maximumLength: 50, MinimumLength = 2)]
+        #endregion
         public string Name { get; set; }
+
+        #region 
+
+        [Display(Name = "Label")]
+        [StringLength(maximumLength: 20, MinimumLength = 2)]
+        #endregion
         public string Label { get; set; }
+
         #region
         /// <summary>
         /// The default is DateTimeOffset.Now
         /// </summary>
         #endregion
         public DateTimeOffset DOCreating { get; set; } = DateTimeOffset.Now;
+
+        #region 
+
+        [Display(Name = "Comment")]
+        [StringLength(maximumLength: 20, MinimumLength = 2)]
+        #endregion
         public string Comment{ get; set; }
     }
 
