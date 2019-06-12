@@ -117,16 +117,22 @@ namespace POYA.Areas.XUserFile.Controllers {
             InDirId = InDirId ?? Guid.Empty;
             var UserId_ = _userManager.GetUserAsync (User).GetAwaiter ().GetResult ().Id;
 
-            var LUserFile_ = await _context.LUserFile
-                .Where (p => p.UserId == UserId_ && p.InDirId == InDirId && !string.IsNullOrWhiteSpace (p.MD5))
-                .OrderBy (p => p.DOCreate).ToListAsync ();
-            var LUserFileIds = LUserFile_.Select (p => p.Id);
-
-            var _UserFileMD5s_ = await _context.LUserFile.Where(p => p.UserId == UserId_).Select(p => p.MD5).ToListAsync();
-            var TotalSize = 0.0;
-            _UserFileMD5s_.ForEach(p=> {
-                TotalSize += new FileInfo(_xUserFileHelper.FileStoragePath(_hostingEnv) + p).Length/(1024*1024);    //  MByte
+            #region INITIAL_SIZE
+            var _UserFiles_ = await _context.LUserFile.Where(p => p.UserId == UserId_).ToListAsync();
+            var UsedSpace = await GetUsedSpaceAsync(_UserFiles_);   //  0.0;
+                /*
+            _UserFiles_.ForEach(p=> {
+                var _FileLength = new FileInfo(_xUserFileHelper.FileStoragePath(_hostingEnv) + p.MD5).Length;
+                UsedSpace += _FileLength/(1024*1024);    //  MByte
+                p.Size = _FileLength;
             });
+            */
+            #endregion
+
+
+            _UserFiles_ = _UserFiles_.Where (p => p.UserId == UserId_ && p.InDirId == InDirId && !string.IsNullOrWhiteSpace (p.MD5))
+                .OrderBy (p => p.DOCreate).ToList();
+            var LUserFileIds = _UserFiles_.Select (p => p.Id);
 
             #region VIEWDATA
             #region
@@ -146,10 +152,10 @@ namespace POYA.Areas.XUserFile.Controllers {
             ViewData[nameof (_LastDirId)] = _LastDirId;
             ViewData[nameof (_InDirName)] = _InDirName;
             ViewData[nameof (InDirId)] = InDirId;
-            ViewData["SpaceRemainder"] = (int)(TotalSize*100/(50));
+            ViewData["UsedSpace"] = (int)UsedSpace;
             #endregion
 
-            return View (LUserFile_);
+            return View (_UserFiles_);
 
         }
 
@@ -184,8 +190,14 @@ namespace POYA.Areas.XUserFile.Controllers {
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create ([FromForm] LFilePost _LFilePost) {
             //  [Bind("Id,MD5,UserId,SharedCode,DOGenerating,Name,InDirId")] LUserFile lUserFile)
+
             if (_LFilePost._LFile.Length > 0) {
                 var UserId_ = _userManager.GetUserAsync (User).GetAwaiter ().GetResult ().Id;
+                var _LUserFiles = await _context.LUserFile.Where(p => p.UserId == UserId_).ToListAsync();
+                if (await GetUsedSpaceAsync(_LUserFiles) >= (5 * 1024))
+                {
+                    return Ok(new { Msg = "The storage space is used up" });
+                }
                 var MemoryStream_ = new MemoryStream ();
                 await _LFilePost._LFile.CopyToAsync (MemoryStream_);
                 var FileBytes = MemoryStream_.ToArray ();
@@ -366,6 +378,26 @@ namespace POYA.Areas.XUserFile.Controllers {
         }
 
         #region DEPOLLUTION
+
+        #region 
+        /// <summary>
+        /// Get the used storge space of user, and the Size of _UserFiles_ is assigned
+        /// </summary>
+        /// <param name="_UserFiles_"></param>
+        /// <returns></returns>
+        #endregion
+        private async Task<int> GetUsedSpaceAsync(List<LUserFile> _UserFiles_)
+        {
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            _UserFiles_ = await _context.LUserFile.Where(p => p.UserId == UserId_).ToListAsync();
+            var UsedSpace = 0.0;
+            _UserFiles_.ForEach(p => {
+                var _FileLength = new FileInfo(_xUserFileHelper.FileStoragePath(_hostingEnv) + p.MD5).Length;
+                UsedSpace += _FileLength / (1024 * 1024);    //  MByte
+                p.Size = _FileLength;
+            });
+            return (int)UsedSpace;
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

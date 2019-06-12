@@ -8,8 +8,11 @@
     var InDirId = ViewData["InDirId"];
     var InDirName = ViewData["_InDirName"];
     var LastDirId = ViewData["_LastDirId"];  //  BUG >_  DELETE DIR
+    var UsedSpace = (int)ViewData["UsedSpace"];
+    var SpaceRemainder =100- (int)(UsedSpace / (5 * 1024));
 
 }
+
 <div class="row">
     <div class="col col-auto">
         <img src="~/img/storage.webp" class="ss-icon" title="@Localizer["Click to your sharing"]" />
@@ -20,9 +23,9 @@
 </div> 
 <div class="row">
     <div class="col offset-6">
-        <div class="progress space-use-progress">
-            <div class="progress-bar" role="progressbar" style="width:@ViewData["SpaceRemainder"]%;" aria-valuemin="0" 
-                 aria-valuemax="100">@ViewData["SpaceRemainder"]%</div>
+        <div class="progress space-use-progress" title="@Localizer["Total"]: 5G @Localizer["Used"]: @UsedSpace M">
+            <div class="progress-bar" role="progressbar" style="width:@SpaceRemainder%;" aria-valuemin="0" 
+                 aria-valuemax="100">@SpaceRemainder%</div>
         </div>
     </div>
 </div>
