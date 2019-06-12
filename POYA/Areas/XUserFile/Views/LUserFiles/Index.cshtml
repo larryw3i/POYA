@@ -23,9 +23,9 @@
 </div> 
 <div class="row">
     <div class="col offset-6">
-        <div class="progress space-use-progress" title="@Localizer["Total"]: 5G @Localizer["Used"]: @UsedSpace M">
+        <div class="progress space-use-progress" title="@Localizer["Total"]: 5G @Localizer["Used"]: ~@UsedSpace M">
             <div class="progress-bar" role="progressbar" style="width:@SpaceRemainder%;" aria-valuemin="0" 
-                 aria-valuemax="100">@SpaceRemainder%</div>
+                 aria-valuemax="100">@Localizer["surplus"]: @SpaceRemainder%</div>
         </div>
     </div>
 </div>
@@ -79,12 +79,14 @@
                 </td>
             </tr>
         }
+
         @foreach (var item in Model)
         {
             <tr>
                 <td>
                     <a asp-action="Details" asp-route-id="@(item.Id)" title="@Localizer["Details"]">@(Html.DisplayFor(modelItem => item.Name))</a>
                     <span style="font-size:60%;color:red">f</span>
+                    <span style="font-size:60%;">(<span style="color:red">@(item.OptimizedSize) </span>)</span>
                 </td>
                 <td>
                     @(item.DOCreate.LocalDateTime.ToShortDateString())

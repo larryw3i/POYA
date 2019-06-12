@@ -20,9 +20,10 @@
 
 <div class="row">
     <div class="col  col-12  EArticle-Home-Img-Ele">
-        <div class="float-left" onclick="location.href='@(Url.Action("Index","EArticles"))'"
+        <div class="float-left" onclick="location.href = '@(Url.Action("Index","EArticles"))'"
              style="zoom:200%;position:fixed;cursor:pointer;color:brown">&laquo;</div>
-        <img class="rounded-circle mx-auto d-block EArticle-Home-Avatar" />
+        <img class="rounded-circle mx-auto d-block EArticle-Home-Avatar" 
+             src="/Home/GetAvatar?random=@(new Random().Next())"/>
         <div class="text-center">@(User.Identity.Name)</div>
 
         <div class="col text-center">
@@ -55,23 +56,17 @@
 
 @section Scripts{
     <script>
-        /*====  VALUE       ====*/
-        var InitHomeComment = "@(_UserEArticleHomeInfo.Comment)";
-        var ConverImgMD5 = "";
+            /*====  VALUE       ====*/
+            var InitHomeComment = "@(_UserEArticleHomeInfo.Comment)";
+            var ConverImgMD5 = "";
 
     </script>
 
 
     <script>
-        /*====  UI          ====*/
-        //  ONCLICK <<<<<<
-        function InitHomeCover() {
-            var EArticle_Home_Avatar = $(".EArticle-Home-Avatar");
-            EArticle_Home_Avatar.attr("src", "@(Url.Action("GetFile","LUserFiles",new { area="XUserFile",id=_UserEArticleHomeInfo.Id}))");
-            EArticle_Home_Avatar.onerror = function () {
-                EArticle_Home_Avatar.attr("src", "/img/earticle_home_default_img.webp");
-            }
-        }
+            /*====  UI          ====*/
+            //  ONCLICK <<<<<<
+   
 
         /**
         * Return the alert html string
@@ -187,11 +182,13 @@
     <script>
 
         $(document).ready(function () {
-            InitHomeCover();
-            $(".EArticle-Home-Avatar").attr("src", "/Home/GetAvatar?random=" + Math.floor(Math.random() * 100 + 1));
+            //  InitHomeCover();
+            //  $(".EArticle-Home-Avatar").attr("src",  + Math.floor(Math.random() * 100 + 1));
             //  $(".EArticle-Home-BgImg-Edit").attr("src", "/img/edit.webp");
+
             $(".EArticle-Home-Img-Ele").css("background-image",
-                'url("@(Url.Action("GetFile","LUserFiles", new { area="XUserFile",id=_UserEArticleHomeInfo.Id}))")');
+            'url("@(Url.Action("GetEArticleHomeCover", new { area="EduHub",id=_UserEArticleHomeInfo.Id}))")');
+   
             $("#UserEArticleHomeInfo_Conver").on("click", function () {
                 $("#UserEArticleHomeInfo_Conver_Input").click();
             });

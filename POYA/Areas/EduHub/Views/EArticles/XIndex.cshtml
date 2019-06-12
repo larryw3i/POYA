@@ -95,14 +95,18 @@
         .User-EArticle-Set {
             text-align: center;
             border-radius: 20px;
-            background: rgba(@(new Random().Next(255)),@(new Random().Next(255)),@(new Random().Next(255)),0.4);
+            background: rgba(@(new Random().Next(255)),@(new Random().Next(255)),@(new Random().Next(255)),0.0);
             animation: BgAnimation 15s linear infinite alternate;
             cursor: default;
         }
 
-        @@keyframes BgAnimation {
-            25% {
+        @@keyframes BgAnimation { 
+            10% {
                 background: rgba(@(new Random().Next(255)),@(new Random().Next(255)),@(new Random().Next(255)),0.2);
+            }
+
+            25% {
+                background: rgba(@(new Random().Next(255)),@(new Random().Next(255)),@(new Random().Next(255)),0.4);
             }
 
             50% {

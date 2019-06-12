@@ -24,10 +24,12 @@
 }
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - @Localizer["X-DOVE"]</title>
+    <!--      CSS       -->
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     </environment>
@@ -42,7 +44,10 @@
     <link href="~/img/chat_with_friends_ico.webp" rel="icon" type="image/webp">
     @(RenderSection("Styles", required: false))
     <partial name="_CssPartial" />
+    <!--    CSS_END     -->
+ 
 </head>
+
 <body id="_body">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
@@ -79,7 +84,7 @@
                         </li>
                         <li class="nav-item">
                             <div class="nav-link ">
-                                <select id="Theme" name="Theme" asp-items="Theme"  style="border:none">
+                                <select id="Theme" name="Theme" asp-items="Theme" style="border:none">
                                     @*
                                         <option value="Light">@(Localizer["Light"]) </option>
                                         <option value="Dark" selected>@(Localizer["Dark"])</option>
@@ -111,6 +116,7 @@
             <a asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Privacy"]</a> - @Localizer["More"]
         </div>
     </footer>
+    <!--       JS       -->
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
@@ -133,6 +139,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/vue-dev/dist/vue.min.js"></script>
     @RenderSection("Scripts", required: false)
+    <!--    JS_END      -->
 </body>
 </html>
 

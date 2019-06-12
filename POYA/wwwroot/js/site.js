@@ -240,6 +240,7 @@ $(document).ready(function () {
     });
 });
 
+//========      SERVICE     ========//
 function KeepLogin() {
     setInterval(function () {
         $.ajax({
@@ -250,3 +251,18 @@ function KeepLogin() {
     }, 1 * 60*1000);
 
 }
+//========   SERVICE_END    ========//
+
+//========      DATA        ========//
+/**
+ * Optime the storage size for showing
+ * @param {number} byte -The byte
+ * @returns {string} -Return the optimized string
+ */
+var OptimizeSizeShow = (byte) => {
+    return byte < 1024 ? `${byte}b`
+        : byte < Math.pow(1024, 2) ? `${(byte / 1024).toFixed(1)}k`
+            : byte < Math.pow(1024, 3) ? `${(byte / Math.pow(1024, 2)).toFixed(1)}M`
+                : `${(byte / Math.pow(1024, 3)).toFixed(1)}G`;
+};
+//========   DATA_END       ========//

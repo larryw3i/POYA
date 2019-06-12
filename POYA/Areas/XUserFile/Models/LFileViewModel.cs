@@ -13,9 +13,12 @@ namespace POYA.Areas.XUserFile.Models
     {
         public string MD5 { get; set; } = string.Empty;
 
+        #region 
+
         /// <summary>
         /// The default value is DateTimeOffset.Now
         /// </summary>
+        #endregion
         [Display(Name = "Date")]
         public DateTimeOffset DOCreate { get; set; } = DateTimeOffset.Now;
 
@@ -25,6 +28,8 @@ namespace POYA.Areas.XUserFile.Models
 
         #region DEPOLLUTION
 
+        #region SIZE
+
         #region 
         /// <summary>
         /// [NotMapped]
@@ -33,15 +38,30 @@ namespace POYA.Areas.XUserFile.Models
         #endregion
         public long Size { get; set; }
 
+        #region 
         /// <summary>
         /// [NotMapped]
         /// </summary>
         [NotMapped]
-        public string ContentType { get; set; }
+        #endregion
+        public string OptimizedSize { get; set; }
+        #endregion
+
+        #region 
 
         /// <summary>
         /// [NotMapped]
         /// </summary>
+        #endregion
+        [NotMapped]
+        public string ContentType { get; set; }
+
+        #region
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+
+        #endregion
         [NotMapped]
         public IFormFile LFormFile { get; set; }
         #endregion

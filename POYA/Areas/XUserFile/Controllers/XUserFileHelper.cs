@@ -19,6 +19,20 @@ namespace POYA.Areas.XUserFile.Controllers
 {
     public class XUserFileHelper
     {
+        #region 
+        /// <summary>
+        /// Optime the storage size for showing
+        /// </summary>
+        /// <param name="_byte">The byte</param>
+        /// <returns>Return the optimed string</returns>
+        #endregion
+        public string OptimizeSizeShow(long _byte) =>
+            _byte < 1024 ? $"{_byte}b" :
+            _byte < Math.Pow(1024, 2) ? $"{(_byte / 1024).ToString("0.0")}K" :
+            _byte < Math.Pow(1024, 3) ? $"{(_byte / Math.Pow(1024, 2)).ToString("0.0")}M" :
+            $"{(_byte / Math.Pow(1024, 3)).ToString("0.0")}G";
+
+
         public List<string> GetMimes(string FileExtension, IHostingEnvironment env)
         {
             var _SlnPath = $"/Users/larry/source/repos/POYA";
@@ -55,12 +69,15 @@ namespace POYA.Areas.XUserFile.Controllers
 
         }
 
+        #region 
+
         /// <summary>
         /// Write the IFormFile bytes to "X_DOVEValues.FileStoragePath(_hostingEnv) + MD5_" and return the MD5 string
         /// </summary>
         /// <param name="_hostingEnv"></param>
         /// <param name="formFile"></param>
         /// <returns></returns>
+        #endregion
         public async Task<string> LWriteBufferToFileAsync( IHostingEnvironment _hostingEnv , IFormFile formFile)
         {
             var MemoryStream_ = new MemoryStream();
