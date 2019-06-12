@@ -20,7 +20,7 @@
 
 <div class="row">
     <div class="col  col-12  EArticle-Home-Img-Ele">
-        <div class="float-left" onclick="location.href='@(Url.Action("Index","EArticles"))'"  
+        <div class="float-left" onclick="location.href='@(Url.Action("Index","EArticles"))'"
              style="zoom:200%;position:fixed;cursor:pointer;color:brown">&laquo;</div>
         <img class="rounded-circle mx-auto d-block EArticle-Home-Avatar" />
         <div class="text-center">@(User.Identity.Name)</div>
@@ -31,15 +31,15 @@
                    value="@(_UserEArticleHomeInfo.Comment)"
                    title="@Localizer["Press ENTER to save"]" />
         </div>
-        <input type="file" id="UserEArticleHomeInfo_Conver_Input" hidden accept="image/*"/>
-        <img class="EArticle-Home-BgImg-Edit" id="UserEArticleHomeInfo_Conver"  title="@Localizer["Change cover"]"/>
+        <input type="file" id="UserEArticleHomeInfo_Conver_Input" hidden accept="image/*" />
+        <img class="EArticle-Home-BgImg-Edit" id="UserEArticleHomeInfo_Conver" src="~/img/edit.webp" title="@Localizer["Change cover"]" />
     </div>
 </div>
 
 <div class="row">
     @foreach (var i in Model)
     {
-        <div class="col col-4 col-md-3 col-lg-2"  style="margin-top:10px">
+        <div class="col col-4 col-md-3 col-lg-2" style="margin-top:10px">
             <div class="card" cardid="@(i.Id)">
                 <div class="card-body text-center">
                     <h5 class="card-title">@(i.Name)</h5>
@@ -189,7 +189,7 @@
         $(document).ready(function () {
             InitHomeCover();
             $(".EArticle-Home-Avatar").attr("src", "/Home/GetAvatar?random=" + Math.floor(Math.random() * 100 + 1));
-            $(".EArticle-Home-BgImg-Edit").attr("src", "/img/edit.webp");
+            //  $(".EArticle-Home-BgImg-Edit").attr("src", "/img/edit.webp");
             $(".EArticle-Home-Img-Ele").css("background-image",
                 'url("@(Url.Action("GetFile","LUserFiles", new { area="XUserFile",id=_UserEArticleHomeInfo.Id}))")');
             $("#UserEArticleHomeInfo_Conver").on("click", function () {
