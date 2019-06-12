@@ -116,20 +116,23 @@ namespace POYA.Areas.EduHub.Controllers
             return View();
         }
 
+        #region 
+
         // GET: EduHub/EArticles
+        #endregion
         [AllowAnonymous]
-        public async Task<IActionResult> Index( int? SortBy, int _page = 1 )
+        public async Task<IActionResult> Index(int? SortBy, int _page = 1)
         {
             #region 
-   /*
-            if (IsIndividual == true && !_signInManager.IsSignedIn(User))
-            {
-                return RedirectToPage(pageName: "/Account/Login", routeValues: new { area = "Identity", ReturnUrl = Request.Path });
-            }
+            /*
+                     if (IsIndividual == true && !_signInManager.IsSignedIn(User))
+                     {
+                         return RedirectToPage(pageName: "/Account/Login", routeValues: new { area = "Identity", ReturnUrl = Request.Path });
+                     }
 
-            */
+                     */
             #endregion
-         
+
             var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id ?? string.Empty;
 
             #region 
@@ -162,18 +165,18 @@ namespace POYA.Areas.EduHub.Controllers
 
             var _EArticle = _context.EArticle.OrderBy(p => p.DOPublishing);
             #region 
-  /*
-            if (IsIndividual == false)
-            {
-                var _User = await _context.Users.Where(p => p.EmailConfirmed).Select(p => new { p.UserName, p.Id }).ToListAsync();
-                await _EArticle.ForEachAsync(p =>
-                {
-                    p.UserName = _User.FirstOrDefault(o => o.Id == p.UserId)?.UserName;
-                });
-            }
-            */
+            /*
+                      if (IsIndividual == false)
+                      {
+                          var _User = await _context.Users.Where(p => p.EmailConfirmed).Select(p => new { p.UserName, p.Id }).ToListAsync();
+                          await _EArticle.ForEachAsync(p =>
+                          {
+                              p.UserName = _User.FirstOrDefault(o => o.Id == p.UserId)?.UserName;
+                          });
+                      }
+                      */
             #endregion
-          
+
             var _EArticleUserReadRecords = await _context.EArticleUserReadRecords.ToListAsync();
             await _EArticle.ForEachAsync(p =>
             {
@@ -196,14 +199,15 @@ namespace POYA.Areas.EduHub.Controllers
             ViewData["UserId"] = UserId_;
             TempData[nameof(_page)] = _page;
             #region 
-  /*
-            TempData[nameof(IsIndividual)] = IsIndividual;
-            ViewData[nameof(IsIndividual)] = IsIndividual;
-            */
+            /*
+                      TempData[nameof(IsIndividual)] = IsIndividual;
+                      ViewData[nameof(IsIndividual)] = IsIndividual;
+                      */
             #endregion
-          
+
             TempData[nameof(SortBy)] = SortBy;
             ViewData[nameof(SortBy)] = SortBy;
+
             InitFileExtension(_EArticleFiles);
 
             ViewData[nameof(EArticleFile)] = _EArticleFiles;
@@ -211,7 +215,18 @@ namespace POYA.Areas.EduHub.Controllers
             return View();
         }
 
+        #region 
+
+        #endregion
+        public async Task<IActionResult> Search()
+        {
+            return NoContent();
+        }
+
+        #region 
+
         // GET: EduHub/EArticles/Details/5
+        #endregion
         [AllowAnonymous]
         public async Task<IActionResult> Details(Guid? id)
         {
@@ -257,7 +272,10 @@ namespace POYA.Areas.EduHub.Controllers
             return View(eArticle);
         }
 
+        #region 
+
         // GET: EduHub/EArticles/Create
+        #endregion
         public async Task<IActionResult> Create(Guid? SetId)
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
@@ -274,9 +292,12 @@ namespace POYA.Areas.EduHub.Controllers
             return View(_EArticle);
         }
 
+        #region 
+
         // POST: EduHub/EArticles/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -334,7 +355,9 @@ namespace POYA.Areas.EduHub.Controllers
             return View(eArticle);
         }
 
+        #region
         // GET: EduHub/EArticles/Edit/5
+        #endregion
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -356,9 +379,12 @@ namespace POYA.Areas.EduHub.Controllers
             return View(eArticle);
         }
 
+        #region 
         // POST: EduHub/EArticles/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
@@ -406,7 +432,10 @@ namespace POYA.Areas.EduHub.Controllers
             return View(eArticle);
         }
 
+        #region 
+
         // GET: EduHub/EArticles/Delete/5
+        #endregion
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -425,7 +454,10 @@ namespace POYA.Areas.EduHub.Controllers
             return View(eArticle);
         }
 
+        #region 
+
         // POST: EduHub/EArticles/Delete/5
+        #endregion
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

@@ -122,6 +122,12 @@ namespace POYA.Areas.XUserFile.Controllers {
                 .OrderBy (p => p.DOCreate).ToListAsync ();
             var LUserFileIds = LUserFile_.Select (p => p.Id);
 
+            var _UserFileMD5s_ = await _context.LUserFile.Where(p => p.UserId == UserId_).Select(p => p.MD5).ToListAsync();
+            var TotalSize = 0.0;
+            _UserFileMD5s_.ForEach(p=> {
+                TotalSize += new FileInfo(_xUserFileHelper.FileStoragePath(_hostingEnv) + p).Length/(1024*1024);    //  MByte
+            });
+
             #region VIEWDATA
             #region
             //  (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? "root";
@@ -140,6 +146,7 @@ namespace POYA.Areas.XUserFile.Controllers {
             ViewData[nameof (_LastDirId)] = _LastDirId;
             ViewData[nameof (_InDirName)] = _InDirName;
             ViewData[nameof (InDirId)] = InDirId;
+            ViewData["SpaceRemainder"] = (int)(TotalSize*100/(50));
             #endregion
 
             return View (LUserFile_);

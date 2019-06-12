@@ -24,6 +24,15 @@ namespace POYA.Areas.XUserFile.Models
         public bool IsLegal { get; set; } = true;
 
         #region DEPOLLUTION
+
+        #region 
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        [NotMapped]
+        #endregion
+        public long Size { get; set; }
+
         /// <summary>
         /// [NotMapped]
         /// </summary>

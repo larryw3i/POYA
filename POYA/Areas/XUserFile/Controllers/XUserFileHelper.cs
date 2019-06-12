@@ -175,6 +175,16 @@ namespace POYA.Areas.XUserFile.Controllers
             return lUserFiles.Where(o => _DirIDs.Contains(o.InDirId)).ToList();
         }
 
+        #region 
+
+        /// <summary>
+        /// env.ContentRootPath + $"/Data/LFiles/XUserFile/"
+        /// </summary>
+        /// <param name="env">The HostingEnvironment</param>
+        /// <returns></returns>
+        #endregion
+        public string FileStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/XUserFile/";
+
         #region
 
         /*

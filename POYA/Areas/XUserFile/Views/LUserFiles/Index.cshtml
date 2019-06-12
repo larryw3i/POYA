@@ -10,9 +10,22 @@
     var LastDirId = ViewData["_LastDirId"];  //  BUG >_  DELETE DIR
 
 }
+<div class="row">
+    <div class="col col-auto">
+        <img src="~/img/storage.webp" class="ss-icon" title="@Localizer["Click to your sharing"]" />
 
-<img src="~/img/storage.webp" class="ss-icon" title="@Localizer["Click to your sharing"]" />
+    </div>
 
+
+</div> 
+<div class="row">
+    <div class="col offset-6">
+        <div class="progress space-use-progress">
+            <div class="progress-bar" role="progressbar" style="width:@ViewData["SpaceRemainder"]%;" aria-valuemin="0" 
+                 aria-valuemax="100">@ViewData["SpaceRemainder"]%</div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col col-8">
         <span class="InDirNameSpan">@(InDirName)</span>(
@@ -55,7 +68,7 @@
                 </td>
                 <td>
                     @*
-                    <a asp-action="Create" asp-route-_id="@d.Id" asp-controller="LSharings" title="@Localizer["Share"]">&#128226;</a>
+                        <a asp-action="Create" asp-route-_id="@d.Id" asp-controller="LSharings" title="@Localizer["Share"]">&#128226;</a>
                     *@
                     <a asp-action="Edit" asp-controller="LDirs" asp-route-id="@d.Id" title="@Localizer["Rename"]">&#9997;</a>
                     <a asp-action="Details" asp-controller="LDirs" asp-route-id="@d.Id" title="@Localizer["Details"]">&#9749;</a>
@@ -75,7 +88,7 @@
                 </td>
                 <td>
                     @*
-                    <a asp-action="Create" asp-route-_id="@item.Id" asp-controller="LSharings" title="@Localizer["Share"]">&#128226;</a>
+                        <a asp-action="Create" asp-route-_id="@item.Id" asp-controller="LSharings" title="@Localizer["Share"]">&#128226;</a>
                     *@
                     <a asp-action="Edit" asp-route-id="@item.Id" title="@Localizer["Rename"]">&#9997;</a>
                     <a asp-action="Details" asp-route-id="@item.Id" title="@Localizer["Details"]">&#9749;</a>
@@ -129,17 +142,18 @@
 
 @section Styles{
     <style>
+        .ss-icon {
+            max-height: 80px;
+            max-width: 80px;
+            position: sticky;
+        }
+
         .InDirNameSpan {
             font-size: 200%;
         }
 
         ._PathSpan {
             font-size: 90%;
-        }
-
-        .ss-icon {
-            max-height: 80px;
-            max-width: 80px;
         }
     </style>
 }
