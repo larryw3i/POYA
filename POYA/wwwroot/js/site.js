@@ -240,6 +240,10 @@ $(document).ready(function () {
     });
 });
 
+//========          UI      ========//
+
+//========        UI_END    ========//
+
 //========      SERVICE     ========//
 function KeepLogin() {
     setInterval(function () {
@@ -247,13 +251,33 @@ function KeepLogin() {
             url: "/Home/KeepLogin",
             type: "GET"
         });
-        console.log("💋");
-    }, 1 * 60 * 1000);
+        console.log("&#128139;");
+    }, 5 * 60 * 1000);
 
 }
 //========   SERVICE_END    ========//
 
 //========      DATA        ========//
+
+/**
+ * Set key and value in querystring
+ * REFERENCE    https://stackoverflow.com/questions/5999118/how-can-i-add-or-update-a-query-string-parameter
+ * THANK        https://stackoverflow.com/users/184/niyaz
+ * @param {string} uri - The url, default value is window.location.href
+ * @param {string} key - The querystring key
+ * @param {string} value - The querystring value of value
+ * @returns {string} Return the new url
+ * */
+function SetQueryString(uri = window.location.href, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+        return uri.replace(re, '$1' + key + "=" + value + '$2');
+    }
+    return uri + separator + key + "=" + value;
+}
+
+
 /**
  * Optime the storage size for showing
  * @param {number} byte -The byte

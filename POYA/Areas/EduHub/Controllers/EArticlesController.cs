@@ -121,40 +121,13 @@ namespace POYA.Areas.EduHub.Controllers
         // GET: EduHub/EArticles
         #endregion
         [AllowAnonymous]
-        public async Task<IActionResult> Index(int? SortBy, int _page = 1)
+        public async Task<IActionResult> Index(int? SortBy, int _page = 1, string _search = "")
         {
-            #region 
-            /*
-                     if (IsIndividual == true && !_signInManager.IsSignedIn(User))
-                     {
-                         return RedirectToPage(pageName: "/Account/Login", routeValues: new { area = "Identity", ReturnUrl = Request.Path });
-                     }
-
-                     */
-            #endregion
 
             var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id ?? string.Empty;
+            var CancelSearchKeyCmd = "E58AE815-0CE2-469A-BD46-3C68B99547D9";
 
-            #region 
-            /*
-            var _IsIndividual = TempData[nameof(IsIndividual)];
-            TempData.Keep();
-            if (IsIndividual == null)
-            {
-                if (!string.IsNullOrWhiteSpace(_IsIndividual?.ToString()))
-                {
-                    IsIndividual = (bool)_IsIndividual;
-                }
-                else
-                {
-                    IsIndividual = false;
-                }
-            }
-            */
-            #endregion
-
-
-            #region CONTRAST SORTBY
+            #region CONTRAST_SORTBY
             if (SortBy == null)
             {
                 var _SortBy = (int)(TempData[nameof(SortBy)] ?? 1);
@@ -165,24 +138,34 @@ namespace POYA.Areas.EduHub.Controllers
 
             var _EArticle = _context.EArticle.OrderBy(p => p.DOPublishing);
 
-            #region 
-            /*
-                      if (IsIndividual == false)
-                      {
-                          var _User = await _context.Users.Where(p => p.EmailConfirmed).Select(p => new { p.UserName, p.Id }).ToListAsync();
-                          await _EArticle.ForEachAsync(p =>
-                          {
-                              p.UserName = _User.FirstOrDefault(o => o.Id == p.UserId)?.UserName;
-                          });
-                      }
-                      */
+            #region SEARCH_KEYWORD
+            if (!string.IsNullOrWhiteSpace(_search) || _search == CancelSearchKeyCmd) _page = 1;
+            if (_search==CancelSearchKeyCmd)
+            {
+                TempData[nameof(_search)] = null;
+            }
+            else// if(_search!=CancelSearchKeyCmd)
+            {
+                var _TempDataSearch = TempData[nameof(_search)]?.ToString();
+                TempData.Keep();
+                _search = !string.IsNullOrWhiteSpace(_search) ? _search :
+                    !string.IsNullOrWhiteSpace(_TempDataSearch) ? _TempDataSearch : string.Empty;
+
+                if (!string.IsNullOrWhiteSpace(_search))
+                {
+                    _EArticle = _EArticle.Where(p => p.Title.Contains(_search) || p.Content.Contains(_search)).OrderBy(p => p.DOPublishing);
+                }
+            }
             #endregion
 
             var _EArticleUserReadRecords = await _context.EArticleUserReadRecords.ToListAsync();
+
             await _EArticle.ForEachAsync(p =>
             {
                 p.ReaderCount = _EArticleUserReadRecords.Where(o => o.EArticleId == p.Id).Count();
             });
+
+            #region SORT
             if (SortBy == (int)EArticleSortBy.Buzz)
             {
                 _EArticle = _EArticle.OrderByDescending(p => p.ReaderCount);
@@ -191,39 +174,35 @@ namespace POYA.Areas.EduHub.Controllers
             {
                 _EArticle = _EArticle.OrderByDescending(p => p.DOPublishing);
             }
+            #endregion
+
             var _EArticlePagedList = _EArticle.ToPagedList(_page, 10);
             var _EArticlePagedListIDs = _EArticlePagedList.Select(p => p.Id);
             var _EArticleFiles = await _context.EArticleFiles
                 .Where(p => p.IsEArticleVideo && _EArticlePagedListIDs.Contains(p.EArticleId)).ToListAsync();
+
+            InitFileExtension(_EArticleFiles);
+
+            #region VIEWDATA_AND_TEMPDATA
+            if (_search!=CancelSearchKeyCmd && !string.IsNullOrWhiteSpace(_search)) {
+                TempData[nameof(_search)] = _search;
+                ViewData[nameof(_search)] = _search;
+            }
             ViewData["EArticles"] = _EArticlePagedList;
             //  ViewData[nameof(IsIndividual)] = IsIndividual;
             ViewData["UserId"] = UserId_;
             TempData[nameof(_page)] = _page;
 
-            #region 
-            /*
-                      TempData[nameof(IsIndividual)] = IsIndividual;
-                      ViewData[nameof(IsIndividual)] = IsIndividual;
-                      */
-            #endregion
-
             TempData[nameof(SortBy)] = SortBy;
             ViewData[nameof(SortBy)] = SortBy;
 
-            InitFileExtension(_EArticleFiles);
 
             ViewData[nameof(EArticleFile)] = _EArticleFiles;
-            //  ViewData[nameof(IsIndividual)] = IsIndividual;
+            #endregion
+         
             return View();
         }
 
-        #region 
-
-        #endregion
-        public async Task<IActionResult> Search()
-        {
-            return NoContent();
-        }
 
         #region 
 

@@ -7,15 +7,21 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
     var UserId = ViewData["UserId"].ToString();
-    //  var IsIndividual = (bool)ViewData["IsIndividual"];
+
     var SortBy = (int)ViewData["SortBy"];
+
     var EArticleFiles = ViewData["EArticleFile"] as List<EArticleFile>;
+
     var SortBySelect = new List<SelectListItem> {
         new SelectListItem{  Value="0",Text=Localizer["Buzz"]},
         new SelectListItem{  Value="1",Text=Localizer["Time"]},
     };
+
     SortBySelect.ForEach(p => { if (p.Value == SortBy.ToString()) p.Selected = true; });
+
+    var _search = ViewData["_search"]?.ToString();
 }
 
 <div class="row">
@@ -30,6 +36,7 @@
         <img src="~/img/user_earticle.webp" style="max-height:50px;" />
     </a>
     @*
+
         <a class="col col-2 col-md-1" asp-action="Index" asp-route-IsIndividual="@(IsIndividual?"false":"true")"
            title="@@(IsIndividual?Localizer["View all"]:Localizer["Just me"])">
             <img src="~/img/@@(IsIndividual?"total.webp":"individual.webp")" style="max-height:50px;" />
@@ -44,7 +51,7 @@
 <div class="row">
     <div class="col offset-5 offset-sm-5 offset-md-7 offset-lg-8 offset-xl-8 EArticleSearchCol">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="@(Localizer["Search"]+" . . .")" aria-label="@(Localizer["Search"]+". . .")" aria-describedby="EArticleSearchBtn" id="EArticleSearchInput">
+            <input type="text" class="form-control" placeholder="@(Localizer["Search"]+" . . .")" aria-label="@(Localizer["Search"]+". . .")" aria-describedby="EArticleSearchBtn" id="EArticleSearchInput" value="@_search">
             <div class="input-group-append">
                 <button class="btn btn-outline-info" type="button" id="EArticleSearchBtn">@Localizer["Search"]</button>
             </div>
@@ -84,55 +91,58 @@
     PagedListRenderOptions.OnlyShowFivePagesAtATime))
 
 @section Scripts{
+
+    <script>
+        //========      DATA    ========//
+        function CheckKeyCode() {
+            var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
+            if (keyCode == 13) {
+                _Search();
+            }
+        }
+        //========    DATA_END  ========//
+    </script>
+    <script>
+        //========  SERVICE     ========//
+
+
+        /**
+         * url.SetQueryString(url, "_search", $("#EArticleSearchInput").val());
+         * */
+        function _Search() {
+            let _SearchValue = $("#EArticleSearchInput").val();
+            _SearchValue = _SearchValue.length > 0 ? _SearchValue : "E58AE815-0CE2-469A-BD46-3C68B99547D9";
+            let url = SetQueryString(window.location.href, "SortBy", $("#SortBySelect option:selected").val().toString());
+            url = SetQueryString(url, "_search", _SearchValue);
+            window.location.href = url;
+        }
+
+        function ChangeSort() {
+            $("#SortBySelect").on("change", function () {
+                let url = SetQueryString(window.location.href, "SortBy", $("#SortBySelect option:selected").val().toString());
+                window.location.href = url;
+            });
+        }
+    </script>
     <script>
         /**
-         *
+         * window.location.href = `/EduHub/EArticles/Details/${Id}`;
          * @@param { string} Id
          */
         function GoToDetails(Id) {
             window.location.href = `/EduHub/EArticles/Details/${Id}`;
         }
-        class Service {
-            ChangeSort() {
-                $("#SortBySelect").on("change", function () {
-                    let url = _Data_.SetQueryString(window.location.href, "SortBy", $("#SortBySelect option:selected").val().toString());
-                    window.location.href = url;
-                });
-            }
 
-            //  #region
-            /**
-             * View all or just me
-             * param {boolean} IsIndividual - view user's article only or view all
-             */
-            /*
-            ChangeAuthorType(IsIndividual) {
-                window.location.href = "@@(Url.Action("Index"))"+"?IsIndividual="+IsIndividual;
-            }
-            */
-            //  #endregion
-        }
-
-        class Data {
-            Initial() {
-                //  $("#SortBySelect option[value='@(SortBy)']").attr("selected", true);
-            }
-        }
-        var _Service = new Service();
-        var _Data = new Data();
 
         $(document).ready(function () {
-            _Service.ChangeSort();
-            _Data.Initial();
-
-            //  #region
-            /*
-            $("#AuthorTypeSelect option[value='@@(ViewData["IsIndividual"].ToString().ToLower())']").attr( "selected", true );
-            $("#AuthorTypeSelect").on("change", function () {
-                _Service.ChangeAuthorType($("#AuthorTypeSelect option:selected").val())
+            ChangeSort();
+            $("#EArticleSearchInput").focus();
+            $("#EArticleSearchBtn").on("click", function () {
+                _Search();
             });
-                */
-            //  #endregion
+            $("#EArticleSearchInput").keypress(function () {
+                CheckKeyCode();
+            });
         });
     </script>
 }
