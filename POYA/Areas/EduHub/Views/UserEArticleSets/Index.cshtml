@@ -122,7 +122,7 @@
                     }
                     //  console.log(">>>>>>"+InitHomeComment);
                     $(".EArticle-Home-Img-Ele").css("background-image",
-                        'url("@(Url.Action("GetFile","LUserFiles", new { area="XUserFile",id=_UserEArticleHomeInfo.Id}))?random='+Math.floor(Math.random() * 100 + 1)+'")');
+                        'url("@(Url.Action("GetEArticleHomeCover", new { area="EduHub",id=_UserEArticleHomeInfo.Id}))?random='+Math.floor(Math.random() * 100 + 1)+'")');
                 },
                 error: function () {
                     MakeAlert("danger", "@Localizer["Some errors has occurred"]" + "!");

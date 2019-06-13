@@ -911,4 +911,10 @@
   <data name="Select a directory" xml:space="preserve">
     <value>选择文件夹</value>
   </data>
+  <data name="Buzz" xml:space="preserve">
+    <value>热度</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>时间</value>
+  </data>
 </root>

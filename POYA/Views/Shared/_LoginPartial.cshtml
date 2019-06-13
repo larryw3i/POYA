@@ -2,12 +2,42 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
+
+<style>
+    .NavAvatar {
+        height: 50px;
+        width: 50px;
+        position: absolute;
+        box-shadow: 0px 0px 0px 2px #ff6a00 inset;
+        opacity:0.0;
+        animation: InitialAvatar 0.4s linear 1 forwards;
+    }
+
+        .NavAvatar:hover {
+            animation: NavAvatarZoomIn 0.2s linear 1 forwards;
+            opacity:1.0;
+        }
+
+    @@keyframes InitialAvatar{
+        100%{
+            opacity:1.0;
+        }
+    }
+
+    @@keyframes NavAvatarZoomIn {
+        
+        100% {
+            box-shadow: 0px 0px 0px 2px #ff00dc;
+        }
+    }
+</style>
+
 <ul class="navbar-nav float-right" style="margin-right:20px">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title='@(User.Identity.Name)(@Localizer[$"Manage"])'>
-                <img name="UserAvatarImg" class="rounded-circle NavAvatar" style="height:50px;width:50px;position:absolute;" />
+        <li class="nav-item NavAvatarEle">
+            <a class="nav-link " asp-area="Identity" asp-page="/Account/Manage/Index" title='@(User.Identity.Name)(@Localizer[$"Manage"])'>
+                <img name="UserAvatarImg" class="rounded-circle NavAvatar" />
             </a>
         </li>
         <li class="nav-item" style="margin-left:55px">
@@ -28,19 +58,3 @@
         </li>
     }
 </ul>
-
-<style>
-    .NavAvatar:hover {
-        animation: NavAvatarZoomIn 0.2s linear 1 forwards;
-    }
-
-    @@keyframes NavAvatarZoomIn {
-        0% {
-            box-shadow: 0px 0px 0px 0px #ff6a00;
-        }
-
-        100% {
-            box-shadow: 0px 0px 0px 2px #ff00dc;
-        }
-    }
-</style>

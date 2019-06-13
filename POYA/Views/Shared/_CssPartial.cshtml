@@ -13,6 +13,7 @@
     //  var _Language = Context.Request.Cookies["CULTURE"] ?? "zh-CN";
 }
 <style>
+   
     .pagination>li>a{
         background-color:@(_THEME==Dark?_black:_THEME==Light?_white:_C7EDCC);
     }
@@ -47,6 +48,10 @@
 </style>
 
 @*
+     .NavAvatarEle{
+        background-color:@(_THEME==Dark?_black:_THEME==Light?_white:_C7EDCC);
+    }
+
     case "Dark":
         $("#_body,footer,.dropdown *,select").css({ "background-color": "black", "color": "#C7EDCC" });
         $(".table").css("color", "#C7EDCC");

@@ -911,4 +911,10 @@
   <data name="Select a directory" xml:space="preserve">
     <value>Select a directory</value>
   </data>
+  <data name="Buzz" xml:space="preserve">
+    <value>Buzz</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
 </root>

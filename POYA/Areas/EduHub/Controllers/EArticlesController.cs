@@ -164,6 +164,7 @@ namespace POYA.Areas.EduHub.Controllers
             #endregion
 
             var _EArticle = _context.EArticle.OrderBy(p => p.DOPublishing);
+
             #region 
             /*
                       if (IsIndividual == false)
@@ -198,6 +199,7 @@ namespace POYA.Areas.EduHub.Controllers
             //  ViewData[nameof(IsIndividual)] = IsIndividual;
             ViewData["UserId"] = UserId_;
             TempData[nameof(_page)] = _page;
+
             #region 
             /*
                       TempData[nameof(IsIndividual)] = IsIndividual;
@@ -477,12 +479,14 @@ namespace POYA.Areas.EduHub.Controllers
 
         #region DEPOLLUTION
 
+        #region 
         /// <summary>
         /// FROM        https://blog.csdn.net/qq_26422355/article/details/82716824
         /// THANK       https://blog.csdn.net/qq_26422355
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
+        #endregion
         private string Unicode2String(string source)
         {
             return _unicode2StringRegex.Replace(source, x => string.Empty + Convert.ToChar(Convert.ToUInt16(x.Result("$1"), 16)));
@@ -653,7 +657,9 @@ namespace POYA.Areas.EduHub.Controllers
                 if (_xUserFileHelper.GetMimes(p.Name.Split(".").LastOrDefault(), _hostingEnv).LastOrDefault().StartsWith("video"))
                 {
                     _VideoSharedCodeSelectListItems.Add(
-                        new SelectListItem { Text = _x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId) + p.Name, Value = p.Id.ToString() }   //<<<<<<<<
+                        new SelectListItem {
+                            Text = _x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId) + p.Name,
+                            Value = p.Id.ToString() }   //<<<<<<<<
                         );
                 }
             });

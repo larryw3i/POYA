@@ -12,8 +12,8 @@
     var SortBy = (int)ViewData["SortBy"];
     var EArticleFiles = ViewData["EArticleFile"] as List<EArticleFile>;
     var SortBySelect = new List<SelectListItem> {
-        new SelectListItem{  Value="0",Text=Localizer["buzz"]},
-        new SelectListItem{  Value="1",Text=Localizer["time"]},
+        new SelectListItem{  Value="0",Text=Localizer["Buzz"]},
+        new SelectListItem{  Value="1",Text=Localizer["Time"]},
     };
     SortBySelect.ForEach(p => { if (p.Value == SortBy.ToString()) p.Selected = true; });
 }
