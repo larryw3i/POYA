@@ -264,18 +264,23 @@ namespace POYA.Areas.EduHub.Controllers
             var _userEArticleHomeInfo = await _context.userEArticleHomeInfos.FirstOrDefaultAsync(p => p.UserId == _UserId && p.Id == id);
 
             var _FileBytes = new byte[0];
-            if (_userEArticleHomeInfo == null)
+            var _ContentType = "image/webp";    //  string.Empty;
+            if (_userEArticleHomeInfo == null || 
+                !System.IO.File.Exists(X_DOVEValues.FileStoragePath(_hostingEnv) 
+                + _userEArticleHomeInfo.CoverFileMD5))
             {
                 //  return File(_FileBytes, _userEArticleHomeInfo.CoverFileContentType, $"EARTICLE_HOME_COVER_{_UserId}", true);
                 _FileBytes = await System.IO.File.ReadAllBytesAsync(_hostingEnv.WebRootPath + "/img/earticle_home_default_img.webp");
+                //  _ContentType = ;
             }
             else
             {
                 var _FilePath_ = X_DOVEValues.FileStoragePath(_hostingEnv) + _userEArticleHomeInfo.CoverFileMD5;
                 _FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath_);
+                _ContentType = _userEArticleHomeInfo.CoverFileContentType;
             }
 
-            return File(_FileBytes, _userEArticleHomeInfo?.CoverFileContentType??"image/webp", $"EARTICLE_HOME_COVER_{_UserId}", true);
+            return File(_FileBytes, _ContentType, $"EARTICLE_HOME_COVER_{_UserId}", true);
 
         }
 

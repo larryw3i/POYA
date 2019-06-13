@@ -896,4 +896,19 @@
   <data name="Select files you want to upload" xml:space="preserve">
     <value>Select files you want to upload</value>
   </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="Also copy" xml:space="preserve">
+    <value>Also copy</value>
+  </data>
+  <data name="Also move" xml:space="preserve">
+    <value>Also move</value>
+  </data>
+  <data name="Edit for" xml:space="preserve">
+    <value>Edit for</value>
+  </data>
+  <data name="Select a directory" xml:space="preserve">
+    <value>Select a directory</value>
+  </data>
 </root>

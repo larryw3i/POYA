@@ -6,7 +6,7 @@
     var UserAllSubDirs = ViewData["UserAllSubDirs"] as List<SelectListItem>;
 }
 
-<h1>@(string.Format(Localizer["Edit for {0}"], Model.Name)) </h1>
+<h1>@(Localizer["Edit for"]) @(Model.Name)</h1>
 
 <hr />
 <div class="row">
@@ -23,9 +23,12 @@
                 <span asp-validation-for="Name" data-interval="5000" class="text-danger"></span>
                 <span asp-validation-for="CopyMove" data-interval="5000" class="text-danger"></span>
                 <div class="row">
-                    <select asp-for="InDirId" asp-items="Model.UserAllSubDirSelectListItems" class="form-control col-11" ></select>
+                    <div class="col-11" id="InDirIdEle" style="display:none">
+                        <span>@Localizer["Select a directory"]</span>
+                        <select asp-for="InDirId" asp-items="Model.UserAllSubDirSelectListItems" class="form-control"></select>
+                        <span asp-validation-for="InDirId" data-interval="5000" class="text-danger"></span>
+                    </div>
                 </div>
-                <span asp-validation-for="InDirId" data-interval="5000" class="text-danger"></span>
              
             </div>
             <div class="form-group" style="margin-top:20px">
@@ -44,15 +47,14 @@
     <script>
         $(document).ready(function () {
             /*
-            $("#InDirId").hide();
             $("#SharingCode").hide();
             */
 
             $("#CopyMove").on("change", function () {
                 if ($("#CopyMove option:selected").val() != 0) {
-                    $("#InDirId").show();
+                    $("#InDirIdEle").show();
                 } else {
-                    $("#InDirId").hide();
+                    $("#InDirIdEle").hide();
                 }
             });
         });
@@ -65,14 +67,15 @@
         margin-top:5px;
     }
 
-    #InDirId{
-        display:none;
-    }
+   
 </style>
 }
 
 @*
-    @*
+     #InDirId{
+        display:none;
+    }
+
         <div class="form-group">
             <label asp-for="MD5" class="control-label"></label>
             <input asp-for="MD5" class="form-control" />

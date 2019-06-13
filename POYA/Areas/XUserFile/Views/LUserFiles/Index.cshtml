@@ -8,8 +8,9 @@
     var InDirId = ViewData["InDirId"];
     var InDirName = ViewData["_InDirName"];
     var LastDirId = ViewData["_LastDirId"];  //  BUG >_  DELETE DIR
-    var UsedSpace = (int)ViewData["UsedSpace"];
-    var SpaceRemainder =100- (int)(UsedSpace / (5 * 1024));
+    var UsedSpace = (long)ViewData["UsedSpace"];    //  in byte
+    var SpaceRemainder =100- (long)(UsedSpace /(50*Math.Pow(1024,3)));
+    var _OptimizedUsedSpace = ViewData["OptimizedUsedSpace"];
 
 }
 
@@ -19,11 +20,10 @@
 
     </div>
 
-
 </div> 
 <div class="row">
     <div class="col offset-6">
-        <div class="progress space-use-progress" title="@Localizer["Total"]: 5G @Localizer["Used"]: ~@UsedSpace M">
+        <div class="progress space-use-progress" title="@Localizer["Total"]: 5G @Localizer["Used"]: ~@_OptimizedUsedSpace">
             <div class="progress-bar" role="progressbar" style="width:@SpaceRemainder%;" aria-valuemin="0" 
                  aria-valuemax="100">@Localizer["surplus"]: @SpaceRemainder%</div>
         </div>

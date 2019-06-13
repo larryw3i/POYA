@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@(string.Format(Localizer["Edit for {0}"], Model.Name))<span class="directorySpan">&#128448;(@Model.InFullPath)</span></h1>
+<h1>@Localizer["Edit for"]<span class="directorySpan">&#128448;(@Model.InFullPath)</span></h1>
 
 <hr />
 <div class="row">
@@ -23,7 +23,10 @@
                 <span asp-validation-for="Name" data-interval="5000" class="text-danger"></span>
                 <span asp-validation-for="CopyMove" data-interval="5000" class="text-danger"></span> @*   Should be enum  *@
                 <div class="row" style="margin-top:20px">
-                    <select asp-for="InDirId" asp-items="Model.UserAllSubDirSelectListItems" class="form-control col-11"></select>
+                    <div class="col col-11" id="InDirIdEle" style="display:none">
+                        <span>@Localizer["Select a directory"]</span>
+                        <select asp-for="InDirId" asp-items="Model.UserAllSubDirSelectListItems" class="form-control"></select>
+                    </div>
                 </div>
               
                 <span asp-validation-for="InDirId" data-interval="5000" class="text-danger"></span>
@@ -40,7 +43,7 @@
 
     <script>
         $(document).ready(function () {
-            $("#InDirId").hide();
+            //  $("#InDirIdEle").hide();
             
             //#region
             /*
@@ -67,9 +70,9 @@
 
             $("#CopyMove").on("change", function () {
                 if ($("#CopyMove option:selected").val() != 0) {
-                    $("#InDirId").show();
+                    $("#InDirIdEle").show();
                 } else {
-                    $("#InDirId").hide();
+                    $("#InDirIdEle").hide();
                 }
             });
         });

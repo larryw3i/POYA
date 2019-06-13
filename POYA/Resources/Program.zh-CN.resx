@@ -896,4 +896,19 @@
   <data name="Select files you want to upload" xml:space="preserve">
     <value>选择你要上传的文件</value>
   </data>
+  <data name="Rename" xml:space="preserve">
+    <value>重命名</value>
+  </data>
+  <data name="Also copy" xml:space="preserve">
+    <value>+复制</value>
+  </data>
+  <data name="Also move" xml:space="preserve">
+    <value>+移动</value>
+  </data>
+  <data name="Edit for" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="Select a directory" xml:space="preserve">
+    <value>选择文件夹</value>
+  </data>
 </root>

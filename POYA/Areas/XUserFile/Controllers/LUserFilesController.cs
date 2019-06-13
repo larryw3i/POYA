@@ -140,36 +140,37 @@ namespace POYA.Areas.XUserFile.Controllers
                 p.OptimizedSize = _xUserFileHelper.OptimizeSizeShow(_FileLength);
             });
             /*
-        _UserFiles_.ForEach(p=> {
-            var _FileLength = new FileInfo(_xUserFileHelper.FileStoragePath(_hostingEnv) + p.MD5).Length;
-            UsedSpace += _FileLength/(1024*1024);    //  MByte
-            p.Size = _FileLength;
-        });
-        */
+            _UserFiles_.ForEach(p=> {
+                var _FileLength = new FileInfo(_xUserFileHelper.FileStoragePath(_hostingEnv) + p.MD5).Length;
+                UsedSpace += _FileLength/(1024*1024);    //  MByte
+                p.Size = _FileLength;
+            });
+            */
             #endregion
-
 
             var LUserFileIds = _UserFiles_.Select(p => p.Id);
-
-            #region VIEWDATA
-            #region
-            //  (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? "root";
-            // InDirId == Guid.Empty ? InDirId
-            //    : await _context.LDir.Where(p => p.Id == InDirId && p.UserId == UserId_).Select(p => p.InDirId).FirstOrDefaultAsync();
-            #endregion
-
+            
+            #region PATH
             _InDirName = (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? _InDirName;
             _LastDirId = await _context.LDir.Where(p => p.Id == InDirId && p.UserId == UserId_).Select(p => p.InDirId).FirstOrDefaultAsync();
             _LDirs = await _context.LDir.Where(p => p.UserId == UserId_ && p.InDirId == InDirId && !LUserFileIds.Contains(p.Id))
                 .ToListAsync();
             _Path = _x_DOVEHelper.GetInPathOfFileOrDir(context: _context, InDirId: InDirId ?? Guid.Empty);
 
+            //  (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? "root";
+            // InDirId == Guid.Empty ? InDirId
+            //    : await _context.LDir.Where(p => p.Id == InDirId && p.UserId == UserId_).Select(p => p.InDirId).FirstOrDefaultAsync();
+            #endregion
+
+            #region VIEWDATA
+            
             ViewData[nameof(_Path)] = _Path;
             ViewData[nameof(_LDirs)] = _LDirs;
             ViewData[nameof(_LastDirId)] = _LastDirId;
             ViewData[nameof(_InDirName)] = _InDirName;
             ViewData[nameof(InDirId)] = InDirId;
             ViewData["UsedSpace"] = UsedSpace;
+            ViewData["OptimizedUsedSpace"] = _xUserFileHelper.OptimizeSizeShow(UsedSpace);
             #endregion
 
             return View(_UserFiles_);
@@ -285,9 +286,9 @@ namespace POYA.Areas.XUserFile.Controllers
             //  lUserFile.UserAllSubDirSelectListItems.Add(new SelectListItem {  Text="root/",Value=Guid.Empty.ToString()});
             lUserFile.UserAllSubDirSelectListItems.AddRange(AllUserSubDirs.Select(p => new SelectListItem { Text = $"{_x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId)}{p.Name}", Value = p.Id.ToString() }).OrderBy(p => p.Text).ToList());
             lUserFile.CopyMoveSelectListItems = new List<SelectListItem>() {
-                new SelectListItem { Text = "Rename", Value = "0", Selected = true },
-                new SelectListItem { Text = "Also copy", Value = "1" },
-                new SelectListItem { Text = "Also move", Value = "2" }
+                new SelectListItem { Text =_localizer[ "Rename"], Value = "0", Selected = true },
+                new SelectListItem { Text =_localizer[ "Also copy"], Value = "1" },
+                new SelectListItem { Text =_localizer[ "Also move"], Value = "2" }
             };
             #endregion
 
@@ -438,18 +439,18 @@ namespace POYA.Areas.XUserFile.Controllers
         /// <param name="_UserFiles_"></param>
         /// <returns></returns>
         #endregion
-        private async Task<int> GetUsedSpaceAsync(List<LUserFile> _UserFiles_)
+        private async Task<long> GetUsedSpaceAsync(List<LUserFile> _UserFiles_)
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             _UserFiles_ = await _context.LUserFile.Where(p => p.UserId == UserId_).ToListAsync();
-            var UsedSpace = 0.0;
+            var UsedSpace = (long)0;
             _UserFiles_.ForEach(p =>
             {
                 var _FileLength = new FileInfo(_xUserFileHelper.FileStoragePath(_hostingEnv) + p.MD5).Length;
-                UsedSpace += _FileLength / (1024 * 1024);    //  MByte
+                UsedSpace += _FileLength;   //  / (1024 * 1024);    //  MByte
 
             });
-            return (int)UsedSpace;
+            return UsedSpace;
         }
 
         [HttpPost]
