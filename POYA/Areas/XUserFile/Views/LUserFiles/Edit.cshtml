@@ -29,7 +29,7 @@
                         <span asp-validation-for="InDirId" data-interval="5000" class="text-danger"></span>
                     </div>
                 </div>
-             
+
             </div>
             <div class="form-group" style="margin-top:20px">
                 <a class="btn btn-outline-info" asp-action="Index" asp-route-InDirId="@(Model.InDirId)">&laquo; @Localizer["Back"]</a>
@@ -61,14 +61,12 @@
     </script>
 }
 
-@section Styles{ 
-<style>
-    .row{
-        margin-top:5px;
-    }
-
-   
-</style>
+@section Styles{
+    <style>
+        .row {
+            margin-top: 5px;
+        }
+    </style>
 }
 
 @*

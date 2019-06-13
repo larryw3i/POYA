@@ -20,7 +20,7 @@ namespace POYA.Data
         public DbSet<POYA.Areas.XUserFile.Models.LFile> LFile { get; set; }
         public DbSet<POYA.Areas.XUserFile.Models.LDir> LDir { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.EArticle> EArticle { get; set; }
-        public DbSet<POYA.Areas.EduHub.Models.EArticleUserReadRecord>   EArticleUserReadRecords { get; set; }
+        public DbSet<POYA.Areas.EduHub.Models.EArticleUserReadRecord> EArticleUserReadRecords { get; set; }
         public DbSet<POYA.Areas.XLaw.Models.Complaint> Complaint { get; set; }
         public DbSet<POYA.Areas.XLaw.Models.Arbitrament> Arbitrament { get; set; }
         public DbSet<EArticleFile> EArticleFiles { get; set; }

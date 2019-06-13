@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     //  ViewData["IsEdit"] = true;
     var _ViewDatas = new ViewDataDictionary(ViewData)
-    {
+{
         { "IsEdit",true}
     };
 }
@@ -14,36 +14,36 @@
 <partial name="_EditPartial" model="Model" view-data="_ViewDatas" />
 
 @*
-    
-<hr />
 
-<div class="row">
-    <div class="col">
-        <form asp-action="Edit" id="EArticles_Edit_Form">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group ">
-                <div class="row">
-                    <input asp-for="Title" class="form-control col offset-3 col-6" placeholder="@Localizer["Title"]" />
-                    <a class="col offset-2 col-1 LookForImageIcon">&#128443;</a>
+    <hr />
+
+    <div class="row">
+        <div class="col">
+            <form asp-action="Edit" id="EArticles_Edit_Form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group ">
+                    <div class="row">
+                        <input asp-for="Title" class="form-control col offset-3 col-6" placeholder="@Localizer["Title"]" />
+                        <a class="col offset-2 col-1 LookForImageIcon">&#128443;</a>
+                    </div>
+                    <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div id="Edit_ContentEditor"></div>
-                <input asp-for="Content" hidden />
-                <span asp-validation-for="Content" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <div id="Edit_ContentEditor"></div>
+                    <input asp-for="Content" hidden />
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
 
-            <partial name="_VideoSelectPartial" model="Model" />
+                <partial name="_VideoSelectPartial" model="Model" />
 
-            <div class="form-group">
-                <a asp-action="Index" class="btn btn-outline-primary">&laquo; @Localizer["Back"]</a>
-                <a class="btn btn-primary" id="EArticles_Edit_Form_Submit_A">@Localizer["Save"]</a>
-            </div>
-        </form>
+                <div class="form-group">
+                    <a asp-action="Index" class="btn btn-outline-primary">&laquo; @Localizer["Back"]</a>
+                    <a class="btn btn-primary" id="EArticles_Edit_Form_Submit_A">@Localizer["Save"]</a>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 *@
 
 
@@ -51,82 +51,82 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-@*
-    <script src="~/lib/wangEditor-3.1.1/release/wangEditor.min.js"></script>
-    <script>
+    @*
+        <script src="~/lib/wangEditor-3.1.1/release/wangEditor.min.js"></script>
+        <script>
 
-        $(document).ready(function () {
+            $(document).ready(function () {
 
-            //  #region CONTENT_EDITOR
-            var _Editor = window.wangEditor;
-            var Editor = new _Editor("#Edit_ContentEditor");
+                //  #region CONTENT_EDITOR
+                var _Editor = window.wangEditor;
+                var Editor = new _Editor("#Edit_ContentEditor");
 
-            Editor.customConfig.menus = [
-                'head',
-                'bold',
-                'fontSize',
-                'italic',
-                'underline',
-                'strikeThrough',
-                'foreColor',
-                'backColor',
-                'link',
-                'list',
-                'justify',
-                'quote',
-                'emoticon',
-                'image',
-                'table',
-                'code',
-                'undo',
-                'redo'
-            ];
-            Editor.customConfig.lang = {
-                '\u8bbe\u7f6e\u6807\u9898': '@Localizer["Title"]',
-                '\u6b63\u6587': '@Localizer["Paragraph"]',
-                '\u94fe\u63a5\u6587\u5b57': '@Localizer["Link text"]',
-                "\u56fe\u7247\u94fe\u63a5": "@Localizer["Image link"]",
-                '\u94fe\u63a5': '@Localizer["Link"]',
-                '\u4e0a\u4f20\u56fe\u7247': '@Localizer["Upload image"]',
-                '\u4e0a\u4f20': '@Localizer["Upload"]',
-                '\u521b\u5efa': '@Localizer["Initial"]',
-                "\u63d2\u5165\u4ee3\u7801": "@Localizer["Insert code"]",
-                "\u7f51\u7edc\u56fe\u7247": "@Localizer["Image url"]",
-                "\u63d2\u5165\u8868\u683c": "@Localizer["Table"]",
-                "\u884c": "@Localizer["line"]",
-                "\u5217\u7684\u8868\u683c": "@Localizer["col"]",
-                "\u63d2\u5165": "@Localizer["Insert"]",
-                "\u5bf9\u9f50\u65b9\u5f0f": "@Localizer["Align"]",
-                "\u5b57\u53f7": "@Localizer["Font size"]",
-                "\u5b57\u4f53": "@Localizer["Font"]",
-                "\u5b8b\u4f53": "@Localizer["Simsun"]",
-                "\u5fae\u8f6f\u96c5\u9ed1": "@Localizer["Microsoft YaHei"]",
-                "\u6587\u5b57\u989c\u8272": "@Localizer["Font color"]",
-                "\u80cc\u666f\u8272": "@Localizer["background color"]",
-                "\u8bbe\u7f6e\u5217\u8868": "@Localizer["List"]",
-                "\u6709\u5e8f\u5217\u8868": "@Localizer["ordered list"]",
-                "\u65e0\u5e8f\u5217\u8868": "@Localizer["unordered list"]",
-                "\u9760\u5de6": "@Localizer["Left"]",
-                "\u5c45\u4e2d": "@Localizer["Center"]",
-                "\u9760\u53f3": "@Localizer["Right"]",
-                "\u9ed8\u8ba4": "@Localizer["Default"]",
-                "\u65b0\u6d6a": "@Localizer["Sina"]"
-            };
+                Editor.customConfig.menus = [
+                    'head',
+                    'bold',
+                    'fontSize',
+                    'italic',
+                    'underline',
+                    'strikeThrough',
+                    'foreColor',
+                    'backColor',
+                    'link',
+                    'list',
+                    'justify',
+                    'quote',
+                    'emoticon',
+                    'image',
+                    'table',
+                    'code',
+                    'undo',
+                    'redo'
+                ];
+                Editor.customConfig.lang = {
+                    '\u8bbe\u7f6e\u6807\u9898': '@Localizer["Title"]',
+                    '\u6b63\u6587': '@Localizer["Paragraph"]',
+                    '\u94fe\u63a5\u6587\u5b57': '@Localizer["Link text"]',
+                    "\u56fe\u7247\u94fe\u63a5": "@Localizer["Image link"]",
+                    '\u94fe\u63a5': '@Localizer["Link"]',
+                    '\u4e0a\u4f20\u56fe\u7247': '@Localizer["Upload image"]',
+                    '\u4e0a\u4f20': '@Localizer["Upload"]',
+                    '\u521b\u5efa': '@Localizer["Initial"]',
+                    "\u63d2\u5165\u4ee3\u7801": "@Localizer["Insert code"]",
+                    "\u7f51\u7edc\u56fe\u7247": "@Localizer["Image url"]",
+                    "\u63d2\u5165\u8868\u683c": "@Localizer["Table"]",
+                    "\u884c": "@Localizer["line"]",
+                    "\u5217\u7684\u8868\u683c": "@Localizer["col"]",
+                    "\u63d2\u5165": "@Localizer["Insert"]",
+                    "\u5bf9\u9f50\u65b9\u5f0f": "@Localizer["Align"]",
+                    "\u5b57\u53f7": "@Localizer["Font size"]",
+                    "\u5b57\u4f53": "@Localizer["Font"]",
+                    "\u5b8b\u4f53": "@Localizer["Simsun"]",
+                    "\u5fae\u8f6f\u96c5\u9ed1": "@Localizer["Microsoft YaHei"]",
+                    "\u6587\u5b57\u989c\u8272": "@Localizer["Font color"]",
+                    "\u80cc\u666f\u8272": "@Localizer["background color"]",
+                    "\u8bbe\u7f6e\u5217\u8868": "@Localizer["List"]",
+                    "\u6709\u5e8f\u5217\u8868": "@Localizer["ordered list"]",
+                    "\u65e0\u5e8f\u5217\u8868": "@Localizer["unordered list"]",
+                    "\u9760\u5de6": "@Localizer["Left"]",
+                    "\u5c45\u4e2d": "@Localizer["Center"]",
+                    "\u9760\u53f3": "@Localizer["Right"]",
+                    "\u9ed8\u8ba4": "@Localizer["Default"]",
+                    "\u65b0\u6d6a": "@Localizer["Sina"]"
+                };
 
-            Editor.create();
-            Editor.txt.html('@(Html.Raw( Model.Content))');
-            //  #endregion
+                Editor.create();
+                Editor.txt.html('@(Html.Raw( Model.Content))');
+                //  #endregion
 
-            $("#EArticles_Edit_Form_Submit_A").on("click", function () {
-                $("#Content").val(Editor.txt.html());
-                $("#EArticles_Edit_Form").submit();
-                event.preventDefault();
+                $("#EArticles_Edit_Form_Submit_A").on("click", function () {
+                    $("#Content").val(Editor.txt.html());
+                    $("#EArticles_Edit_Form").submit();
+                    event.preventDefault();
+                });
             });
-        });
-    </script>
+        </script>
     *@
 }
 
 @section Styles {
-  
+
 }

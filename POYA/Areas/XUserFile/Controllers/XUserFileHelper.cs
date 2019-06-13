@@ -78,7 +78,7 @@ namespace POYA.Areas.XUserFile.Controllers
         /// <param name="formFile"></param>
         /// <returns></returns>
         #endregion
-        public async Task<string> LWriteBufferToFileAsync( IHostingEnvironment _hostingEnv , IFormFile formFile)
+        public async Task<string> LWriteBufferToFileAsync(IHostingEnvironment _hostingEnv, IFormFile formFile)
         {
             var MemoryStream_ = new MemoryStream();
             await formFile.CopyToAsync(MemoryStream_);
@@ -107,10 +107,10 @@ namespace POYA.Areas.XUserFile.Controllers
         /// <param name="lMD5s">The IEnumerableLMD5</param>
         /// <returns></returns>
         #endregion
-        public List<LMD5> LCheckMD5(IHostingEnvironment env,List<LMD5> lMD5s)
-        { 
-            
-            var UploadFileMD5s =System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(env))
+        public List<LMD5> LCheckMD5(IHostingEnvironment env, List<LMD5> lMD5s)
+        {
+
+            var UploadFileMD5s = System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(env))
                 .Select(p => System.IO.Path.GetFileNameWithoutExtension(p)).ToList();
 
             foreach (var m in lMD5s)

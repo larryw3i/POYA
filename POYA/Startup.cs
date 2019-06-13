@@ -200,7 +200,7 @@ namespace POYA
             var LFilesPath = env.ContentRootPath + "/Data/LFiles";
             var AvatarPath = $"{LFilesPath}/Avatars";
             var XUserFilePath = $"{LFilesPath}/XUserFile";
-            foreach(var p in new string[] { AvatarPath, XUserFilePath })
+            foreach (var p in new string[] { AvatarPath, XUserFilePath })
             {
                 if (!Directory.Exists(p))
                 {

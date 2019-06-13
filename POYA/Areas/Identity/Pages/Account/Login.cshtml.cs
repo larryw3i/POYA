@@ -67,7 +67,7 @@ namespace POYA.Areas.Identity.Pages.Account
             public string Email { get; set; }
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name ="Password")]
+            [Display(Name = "Password")]
             public string Password { get; set; }
             [Display(Name = "Remember me")]
             public bool RememberMe { get; set; }
@@ -80,9 +80,9 @@ namespace POYA.Areas.Identity.Pages.Account
             }
             if (IsFromRegister && !IsEmailConfirmed)
             {
-                ModelState.AddModelError(nameof(Input.Email),_localizer["We have sent a confirmation email to you, you can login after confirming it (Didn't you get the email? check it in spam)"]);
+                ModelState.AddModelError(nameof(Input.Email), _localizer["We have sent a confirmation email to you, you can login after confirming it (Didn't you get the email? check it in spam)"]);
             }
-            else if (IsFromRegister) ModelState.AddModelError(nameof(Input.Email),_localizer[ "Your email is already registered in POYA, log in Now"]+" (^_^)");
+            else if (IsFromRegister) ModelState.AddModelError(nameof(Input.Email), _localizer["Your email is already registered in POYA, log in Now"] + " (^_^)");
             returnUrl = returnUrl ?? Url.Content("~/");
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
@@ -95,11 +95,11 @@ namespace POYA.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var _user = await _userManager.FindByEmailAsync(Input.Email);
-                if (_user==null)
+                if (_user == null)
                 {
-                    return RedirectToPage("Register",new { IsFromLogin = true, returnUrl });
+                    return RedirectToPage("Register", new { IsFromLogin = true, returnUrl });
                 }
-                if(! await _userManager.IsEmailConfirmedAsync(_user))
+                if (!await _userManager.IsEmailConfirmedAsync(_user))
                 {
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(_user);
                     var callbackUrl = Url.Page(
@@ -115,7 +115,7 @@ namespace POYA.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(
-                    _userManager.FindByEmailAsync(Input.Email).GetAwaiter().GetResult().UserName, 
+                    _userManager.FindByEmailAsync(Input.Email).GetAwaiter().GetResult().UserName,
                     Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
@@ -133,7 +133,7 @@ namespace POYA.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, _localizer[ "Invalid login attempt"]);
+                    ModelState.AddModelError(string.Empty, _localizer["Invalid login attempt"]);
                     return Page();
                 }
             }

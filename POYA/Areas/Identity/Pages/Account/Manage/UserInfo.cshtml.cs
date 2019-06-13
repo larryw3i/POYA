@@ -112,7 +112,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
                     Address = p.Address,
                     //  AvatarBuffer = null,
                     DOBirth = p.DOBirth,
-                    Hobby = p.Hobby, 
+                    Hobby = p.Hobby,
                     IsAddressOvert = p.IsAddressOvert,
                     IsDOBirthOvert = p.IsDOBirthOvert,
                     IsHobbyOvert = p.IsHobbyOvert,
@@ -194,7 +194,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
                     MaritalStatus = Input.MaritalStatus,
                     Occupation = Input.Occupation,
                     OriginalAddress = Input.OriginalAddress,
-                    UserId = user.Id, 
+                    UserId = user.Id,
                     #endregion
                 };
                 await _context.X_DoveUserInfos.AddAsync(_X_doveUserInfo_);

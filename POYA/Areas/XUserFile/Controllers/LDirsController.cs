@@ -60,7 +60,7 @@ namespace POYA.Areas.XUserFile.Controllers
         public async Task<IActionResult> Index()
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            return View(await _context.LDir.Where(p=>p.UserId==UserId_).ToListAsync());
+            return View(await _context.LDir.Where(p => p.UserId == UserId_).ToListAsync());
         }
 
         // GET: LDirs/Details/5
@@ -73,12 +73,12 @@ namespace POYA.Areas.XUserFile.Controllers
 
             //  ReturnUrl = ReturnUrl ?? Url.Content("~/");
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var lDir = await _context.LDir.FirstOrDefaultAsync(m => m.Id == id &&m.UserId==UserId_);
+            var lDir = await _context.LDir.FirstOrDefaultAsync(m => m.Id == id && m.UserId == UserId_);
             if (lDir == null)
             {
                 return NotFound();
             }   //  lDir.ReturnUrl = ReturnUrl ?? Url.Content("~/");
-            lDir.InDirName= (await _context.LDir.Select(p => new { p.Id, p.Name }).FirstOrDefaultAsync(p => p.Id == lDir.InDirId))?.Name ?? "root";
+            lDir.InDirName = (await _context.LDir.Select(p => new { p.Id, p.Name }).FirstOrDefaultAsync(p => p.Id == lDir.InDirId))?.Name ?? "root";
             lDir.InFullPath = _x_DOVEHelper.GetInPathOfFileOrDir(_context, lDir.InDirId);
             return View(lDir);  //   LocalRedirect(ReturnUrl); //  View(lDir);
         }
@@ -129,14 +129,14 @@ namespace POYA.Areas.XUserFile.Controllers
             {
                 return NotFound();
             }
-            
+
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var lDir = await _context.LDir.FirstOrDefaultAsync(p=>p.UserId==UserId_ && p.Id==id);
+            var lDir = await _context.LDir.FirstOrDefaultAsync(p => p.UserId == UserId_ && p.Id == id);
             if (lDir == null)
             {
                 return NotFound();
             }
-            
+
             #region MOVE AND COPY
 
             //  var UserSubDirs = await _context.LDir.Where(p => p.Id != Guid.Empty && p.UserId == UserId_).ToListAsync();
@@ -151,7 +151,7 @@ namespace POYA.Areas.XUserFile.Controllers
             #endregion
             UserDirs.Remove(lDir);
 
-            lDir.UserAllSubDirSelectListItems = new List<SelectListItem>() { new SelectListItem {  Value=Guid.Empty.ToString(),Text="root/"} };
+            lDir.UserAllSubDirSelectListItems = new List<SelectListItem>() { new SelectListItem { Value = Guid.Empty.ToString(), Text = "root/" } };
 
             lDir.UserAllSubDirSelectListItems.AddRange(UserDirs.Select(p => new SelectListItem { Text = $"{_x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId)}{p.Name}/", Value = p.Id.ToString() }).OrderBy(p => p.Text).ToList());
 
@@ -163,9 +163,9 @@ namespace POYA.Areas.XUserFile.Controllers
 
             #endregion
 
-           
 
-            lDir.InFullPath = _x_DOVEHelper.GetInPathOfFileOrDir(_context,lDir.InDirId);
+
+            lDir.InFullPath = _x_DOVEHelper.GetInPathOfFileOrDir(_context, lDir.InDirId);
 
             return View(lDir);
         }
@@ -190,12 +190,12 @@ namespace POYA.Areas.XUserFile.Controllers
                     var _LDir = await _context.LDir.FirstOrDefaultAsync(p => p.Id == lDir.Id && p.UserId == UserId_);
 
 
-                    if (_LDir==null)
+                    if (_LDir == null)
                     {
                         return NotFound();
                     }
 
-                    if (lDir.InDirId!=Guid.Empty &&!await _context.LDir.AnyAsync(p => p.Id == lDir.InDirId && p.UserId == UserId_))
+                    if (lDir.InDirId != Guid.Empty && !await _context.LDir.AnyAsync(p => p.Id == lDir.InDirId && p.UserId == UserId_))
                     {
                         ModelState.AddModelError(nameof(lDir.InDirId), _localizer["Sorry! the directory can't be found"]);
                         return View(lDir);
@@ -218,19 +218,20 @@ namespace POYA.Areas.XUserFile.Controllers
                         var _AllUserDirs = await _context.LDir.Where(p => p.UserId == UserId_).ToListAsync();
                         var _AllUserFiles = await _context.LUserFile.Where(p => p.UserId == UserId_).ToListAsync();
                         var _ID8InDirIds = _AllUserDirs.Select(p => new ID8InDirId { InDirId = p.InDirId, Id = p.Id })
-                            .Union(_AllUserFiles.Select(p=>new ID8InDirId {  Id=p.Id, InDirId=p.InDirId  }).ToList());
+                            .Union(_AllUserFiles.Select(p => new ID8InDirId { Id = p.Id, InDirId = p.InDirId }).ToList());
 
-                        var IncludedDirs = _AllUserDirs.Where(p =>_xUserFileHelper.IsFileOrDirInDir(_ID8InDirIds, p.Id, lDir.Id)).ToList();
-                        var IncludedFiles = _AllUserFiles.Where(p =>_xUserFileHelper.IsFileOrDirInDir(_ID8InDirIds, p.Id, lDir.Id)).ToList();
+                        var IncludedDirs = _AllUserDirs.Where(p => _xUserFileHelper.IsFileOrDirInDir(_ID8InDirIds, p.Id, lDir.Id)).ToList();
+                        var IncludedFiles = _AllUserFiles.Where(p => _xUserFileHelper.IsFileOrDirInDir(_ID8InDirIds, p.Id, lDir.Id)).ToList();
 
-                        var IDMap = new List<ID8NewID> ();
+                        var IDMap = new List<ID8NewID>();
                         var NewDirs = new List<LDir>();
-                        var NewUserFiles= new List<LUserFile>();
+                        var NewUserFiles = new List<LUserFile>();
 
-                        IncludedDirs.ForEach(d => {
-                            var _d = new LDir {  Id=Guid.NewGuid(), Name=d.Name, UserId=UserId_ };
+                        IncludedDirs.ForEach(d =>
+                        {
+                            var _d = new LDir { Id = Guid.NewGuid(), Name = d.Name, UserId = UserId_ };
                             NewDirs.Add(_d);
-                            IDMap.Add(new ID8NewID {  OriginalId=d.Id, NewId=_d.Id, OriginalInDirId=d.InDirId});
+                            IDMap.Add(new ID8NewID { OriginalId = d.Id, NewId = _d.Id, OriginalInDirId = d.InDirId });
                         });
 
                         //  Add the main directory (Copy of lDir)
@@ -238,9 +239,10 @@ namespace POYA.Areas.XUserFile.Controllers
                         NewDirs.Add(MainDir);
                         //  Add it here or UserFile copy in the root of main directory(lDir) can't find it's InDirId
 
-                        IDMap.Add(new ID8NewID { OriginalId = lDir.Id, NewId = MainDir.Id , OriginalInDirId=lDir.InDirId});
+                        IDMap.Add(new ID8NewID { OriginalId = lDir.Id, NewId = MainDir.Id, OriginalInDirId = lDir.InDirId });
 
-                        NewDirs.ForEach(_d => {
+                        NewDirs.ForEach(_d =>
+                        {
                             #region
                             //  You don't need to know here maybe, because I don't know what I'm writing too
                             //  var OrginalId = IDMap.FirstOrDefault(p => p.NewId == _d.Id).Id;
@@ -250,13 +252,15 @@ namespace POYA.Areas.XUserFile.Controllers
                             _d.InDirId = IDMap.FirstOrDefault(p => p.OriginalId == _OriginalInDirId)?.NewId ?? lDir.InDirId; // IDMap.FirstOrDefault(p => p.Id == CopiedDirInDirId_)?.NewId??lDir.InDirId;
                         });
 
-                        IncludedFiles.ForEach(f => {
-                            var _f = new LUserFile { Id=Guid.NewGuid(), MD5=f.MD5, Name=f.Name, UserId=UserId_ };
+                        IncludedFiles.ForEach(f =>
+                        {
+                            var _f = new LUserFile { Id = Guid.NewGuid(), MD5 = f.MD5, Name = f.Name, UserId = UserId_ };
                             NewUserFiles.Add(_f);
-                            IDMap.Add(new ID8NewID { OriginalId = f.Id, NewId = _f.Id, OriginalInDirId=f.InDirId });
+                            IDMap.Add(new ID8NewID { OriginalId = f.Id, NewId = _f.Id, OriginalInDirId = f.InDirId });
                         });
 
-                        NewUserFiles.ForEach(_f => {
+                        NewUserFiles.ForEach(_f =>
+                        {
 
                             var _OriginalInDirId = IDMap.FirstOrDefault(p => p.NewId == _f.Id).OriginalInDirId;
                             _f.InDirId = IDMap.FirstOrDefault(p => p.OriginalId == _OriginalInDirId).NewId;
@@ -310,7 +314,7 @@ namespace POYA.Areas.XUserFile.Controllers
             }
 
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var lDir = await _context.LDir.FirstOrDefaultAsync(m => m.Id == id && m.UserId==UserId_);
+            var lDir = await _context.LDir.FirstOrDefaultAsync(m => m.Id == id && m.UserId == UserId_);
             //  lDir.ReturnUrl = ReturnUrl ?? Url.Content("~/");
             if (lDir == null)
             {
@@ -328,20 +332,20 @@ namespace POYA.Areas.XUserFile.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var lDir = await _context.LDir.FirstOrDefaultAsync(p=>p.Id==id && p.UserId==UserId_);
+            var lDir = await _context.LDir.FirstOrDefaultAsync(p => p.Id == id && p.UserId == UserId_);
             if (lDir == null)
             {
                 return NotFound();
             }
             var InDirId = lDir.InDirId;
             var UserDirs = await _context.LDir.Where(p => p.UserId == UserId_).ToListAsync();
-            var _RemoveDirs = new List<LDir>() { lDir};
+            var _RemoveDirs = new List<LDir>() { lDir };
 
             _RemoveDirs.AddRange(_xUserFileHelper.GetAllSubDirs(UserDirs, id));
 
             _context.LDir.RemoveRange(_RemoveDirs);
             await _context.SaveChangesAsync();
-            return RedirectToAction(actionName:"Index",controllerName:"LUserFiles",routeValues:new { InDirId});  //   LocalRedirect(ReturnUrl??Url.Content("~/"));
+            return RedirectToAction(actionName: "Index", controllerName: "LUserFiles", routeValues: new { InDirId });  //   LocalRedirect(ReturnUrl??Url.Content("~/"));
         }
 
         private bool LDirExists(Guid id)
@@ -392,7 +396,7 @@ namespace POYA.Areas.XUserFile.Controllers
             return SubDirs;
         }
         */
-        
+
         #endregion
     }
 }

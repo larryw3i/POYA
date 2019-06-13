@@ -79,25 +79,25 @@ namespace POYA.Areas.EduHub.Controllers
         /// Index for UserEArticleSets
         /// </summary>
         /// <returns></returns>
-        
+
         #endregion
-        public async Task<IActionResult> XIndex(Guid? SetId, int? _page )
+        public async Task<IActionResult> XIndex(Guid? SetId, int? _page)
         {
-            var TempSetId=Guid.Parse (TempData[nameof(SetId)]?.ToString()??Guid.Empty.ToString());
+            var TempSetId = Guid.Parse(TempData[nameof(SetId)]?.ToString() ?? Guid.Empty.ToString());
             var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult().Id; //   ?? string.Empty;
 
-            if(SetId!=LValue.DefaultEArticleSetId &&!await _context.UserEArticleSet.AnyAsync(p=>p.UserId==UserId_ && p.Id == SetId))
+            if (SetId != LValue.DefaultEArticleSetId && !await _context.UserEArticleSet.AnyAsync(p => p.UserId == UserId_ && p.Id == SetId))
             {
                 return NotFound();
             }
 
-            SetId = SetId ==null ||SetId==Guid.Empty? 
-                (TempSetId==null? LValue.DefaultEArticleSetId:TempSetId)
-                :SetId;
+            SetId = SetId == null || SetId == Guid.Empty ?
+                (TempSetId == null ? LValue.DefaultEArticleSetId : TempSetId)
+                : SetId;
             var _EArticles = await _context.EArticle.Where(p =>
                      SetId == LValue.DefaultEArticleSetId ?
                      (p.SetId == Guid.Empty || p.SetId == null || p.SetId == LValue.DefaultEArticleSetId) :
-                     p.SetId == SetId&& p.UserId==UserId_).ToListAsync();
+                     p.SetId == SetId && p.UserId == UserId_).ToListAsync();
             _EArticles.ForEach(p =>
             {
                 if (p.SetId == Guid.Empty || p.SetId == null)
@@ -105,14 +105,14 @@ namespace POYA.Areas.EduHub.Controllers
                     p.SetId = LValue.DefaultEArticleSetId;
                 }
             });
-            ViewData[nameof(_EArticles)] = _EArticles.OrderByDescending(p=>p.DOPublishing).ToPagedList(_page??1, 10);
+            ViewData[nameof(_EArticles)] = _EArticles.OrderByDescending(p => p.DOPublishing).ToPagedList(_page ?? 1, 10);
             var _EArticleFiles = await _context.EArticleFiles
                 .Where(p => p.IsEArticleVideo && _EArticles.Select(s => s.Id)
                 .Contains(p.EArticleId)).ToListAsync();
             InitFileExtension(_EArticleFiles);
             ViewData["EArticleFile"] = _EArticleFiles;
             TempData[nameof(SetId)] = SetId;
-            ViewData[nameof(UserEArticleSet)] =SetId==LValue.DefaultEArticleSetId?new UserEArticleSet {  Name="Default", Label=string.Empty, Comment=string.Empty} : await _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == SetId);
+            ViewData[nameof(UserEArticleSet)] = SetId == LValue.DefaultEArticleSetId ? new UserEArticleSet { Name = "Default", Label = string.Empty, Comment = string.Empty } : await _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == SetId);
             return View();
         }
 
@@ -264,9 +264,9 @@ namespace POYA.Areas.EduHub.Controllers
 
             #region CATEGORY
             var Categories = GetCategories();   //  .FirstOrDefault(p => p.Id == eArticle.CategoryId);
-            var Category = Categories.FirstOrDefault(p => p.Id == eArticle.CategoryId) ?? Categories.Where(p=>p.Code.Length==5).FirstOrDefault();
+            var Category = Categories.FirstOrDefault(p => p.Id == eArticle.CategoryId) ?? Categories.Where(p => p.Code.Length == 5).FirstOrDefault();
             var CategoryCode = Category.Code.Substring(0, 3);
-            ViewData["Category"] = $" {_localizer[Categories.FirstOrDefault(p => p.Code == CategoryCode).Name]} > {_localizer[Category.Name]} {(string.IsNullOrWhiteSpace(eArticle.AdditionalCategory)?string.Empty:" > "+eArticle.AdditionalCategory)}"; //  csv.GetRecords<LEArticleCategory>().ToList();
+            ViewData["Category"] = $" {_localizer[Categories.FirstOrDefault(p => p.Code == CategoryCode).Name]} > {_localizer[Category.Name]} {(string.IsNullOrWhiteSpace(eArticle.AdditionalCategory) ? string.Empty : " > " + eArticle.AdditionalCategory)}"; //  csv.GetRecords<LEArticleCategory>().ToList();
             #endregion
 
             return View(eArticle);
@@ -280,7 +280,7 @@ namespace POYA.Areas.EduHub.Controllers
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             if (SetId == null ||
-                ! await _context.UserEArticleSet.AnyAsync(p=>p.Id==SetId && p.UserId==UserId_))
+                !await _context.UserEArticleSet.AnyAsync(p => p.Id == SetId && p.UserId == UserId_))
             {
                 SetId = LValue.DefaultEArticleSetId;
             }
@@ -313,7 +313,7 @@ namespace POYA.Areas.EduHub.Controllers
                     eArticle.LVideos = null;
                     return View(eArticle);
                 }
-                var Create_SetId= Guid.Parse(TempData["Create_SetId"]?.ToString() ?? Guid.Empty.ToString());
+                var Create_SetId = Guid.Parse(TempData["Create_SetId"]?.ToString() ?? Guid.Empty.ToString());
                 var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                 var _EArticleFiles = new List<EArticleFile>();
                 //  eArticle.Id = Guid.NewGuid();
@@ -559,7 +559,7 @@ namespace POYA.Areas.EduHub.Controllers
             {
                 if (_lMD5s.Any(q => q.FileMD5 == p.MD5 && q.IsUploaded))
                 {
-                    _EArticleFiles_.Add(new EArticleFile { EArticleId = p.EArticleId, FileMD5 = p.MD5, FileName =Path.GetFileName( p.FileName), IsEArticleVideo = p.IsEArticleVideo });
+                    _EArticleFiles_.Add(new EArticleFile { EArticleId = p.EArticleId, FileMD5 = p.MD5, FileName = Path.GetFileName(p.FileName), IsEArticleVideo = p.IsEArticleVideo });
                 }
             });
             await _context.EArticleFiles.AddRangeAsync(_EArticleFiles_);
@@ -711,7 +711,7 @@ namespace POYA.Areas.EduHub.Controllers
                         p.ContentType = _xUserFileHelper.GetMimes(p.FileName, _hostingEnv).LastOrDefault();
                         p.FileName = Path.GetFileName(p.FileName);
                     }
-                 
+
                 });
             }
         }

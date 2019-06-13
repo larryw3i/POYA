@@ -92,7 +92,7 @@ namespace POYA.Areas.EduHub.Controllers
             });
             #endregion
             ViewData[nameof(UserEArticleHomeInfo)] = (await _context.userEArticleHomeInfos.Where(p => p.UserId == _UserId).FirstOrDefaultAsync()) ?? new UserEArticleHomeInfo { UserId = _UserId, Comment = _localizer["No set yet"] + "!" };
-            return View(_UserEArticleSet.OrderByDescending(p=>p.DOCreating));
+            return View(_UserEArticleSet.OrderByDescending(p => p.DOCreating));
         }
 
         #region 
@@ -265,8 +265,8 @@ namespace POYA.Areas.EduHub.Controllers
 
             var _FileBytes = new byte[0];
             var _ContentType = "image/webp";    //  string.Empty;
-            if (_userEArticleHomeInfo == null || 
-                !System.IO.File.Exists(X_DOVEValues.FileStoragePath(_hostingEnv) 
+            if (_userEArticleHomeInfo == null ||
+                !System.IO.File.Exists(X_DOVEValues.FileStoragePath(_hostingEnv)
                 + _userEArticleHomeInfo.CoverFileMD5))
             {
                 //  return File(_FileBytes, _userEArticleHomeInfo.CoverFileContentType, $"EARTICLE_HOME_COVER_{_UserId}", true);

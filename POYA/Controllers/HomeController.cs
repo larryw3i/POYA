@@ -38,7 +38,7 @@ namespace POYA.Controllers
             ILogger<HomeController> logger,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
-            RoleManager<IdentityRole> roleManager, 
+            RoleManager<IdentityRole> roleManager,
            IEmailSender emailSender,
            UserManager<IdentityUser> userManager,
            ApplicationDbContext context,
@@ -49,7 +49,7 @@ namespace POYA.Controllers
             _localizer = localizer;
             _context = context;
             _userManager = userManager;
-            _emailSender = emailSender; 
+            _emailSender = emailSender;
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
@@ -76,10 +76,10 @@ namespace POYA.Controllers
         #region DEPOLLUTION
 
 
-        public async Task<IActionResult> GetAvatar(string UserId="")
+        public async Task<IActionResult> GetAvatar(string UserId = "")
         {
             var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            UserId =  string.IsNullOrWhiteSpace(UserId) ? CurrentUserId : UserId;
+            UserId = string.IsNullOrWhiteSpace(UserId) ? CurrentUserId : UserId;
             var AvatarFilePath = X_DOVEValues.AvatarStoragePath(_hostingEnv) + UserId;
             //  var _X_doveUserInfo=await _context.X_DoveUserInfos.Where(p => p.UserId == UserId).FirstOrDefaultAsync();
             if (System.IO.File.Exists(AvatarFilePath))
@@ -109,7 +109,7 @@ namespace POYA.Controllers
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var memoryStream = new MemoryStream();
             await avatarForm.AvatarImgFile.CopyToAsync(memoryStream);
-            var AvatarBuffer =memoryStream.ToArray();   //   MakeCircleImage(memoryStream);//  
+            var AvatarBuffer = memoryStream.ToArray();   //   MakeCircleImage(memoryStream);//  
             var AvatarFilePath = X_DOVEValues.AvatarStoragePath(_hostingEnv) + _UserId;
             if (System.IO.File.Exists(AvatarFilePath))
             {
@@ -119,8 +119,8 @@ namespace POYA.Controllers
                 {//  _X_doveUserInfo.AvatarBuffer
                     return Json(new { status = true, X_DOVE_XSRF_TOKEN });
                 }
-            } 
-            await System.IO.File.WriteAllBytesAsync(X_DOVEValues.AvatarStoragePath(_hostingEnv)+_UserId, AvatarBuffer);
+            }
+            await System.IO.File.WriteAllBytesAsync(X_DOVEValues.AvatarStoragePath(_hostingEnv) + _UserId, AvatarBuffer);
             X_DOVE_XSRF_TOKEN = Guid.NewGuid().ToString();
             TempData["X_DOVE_XSRF_TOKEN"] = X_DOVE_XSRF_TOKEN;
             return Json(new { status = true, X_DOVE_XSRF_TOKEN });
@@ -171,7 +171,7 @@ namespace POYA.Controllers
             AvatarEncoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, 8L);
             #endregion
 
-            b.Save( ms, ImageCodecInfo.GetImageDecoders().FirstOrDefault(p=>p.FormatID==ImageFormat.Jpeg.Guid), AvatarEncoderParameters);
+            b.Save(ms, ImageCodecInfo.GetImageDecoders().FirstOrDefault(p => p.FormatID == ImageFormat.Jpeg.Guid), AvatarEncoderParameters);
             return ms.ToArray();
         }
 
@@ -180,7 +180,7 @@ namespace POYA.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        
+
         public IActionResult KeepLogin()
         {
             return Ok();

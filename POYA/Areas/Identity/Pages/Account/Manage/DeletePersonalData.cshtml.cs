@@ -52,7 +52,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name ="Password")]
+            [Display(Name = "Password")]
             public string Password { get; set; }
         }
         public bool RequirePassword { get; set; }
@@ -61,7 +61,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"{_localizer[ "Unable to load user with ID"]} '{_userManager.GetUserId(User)}'");
+                return NotFound($"{_localizer["Unable to load user with ID"]} '{_userManager.GetUserId(User)}'");
             }
             RequirePassword = await _userManager.HasPasswordAsync(user);
             return Page();
@@ -71,14 +71,14 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"{_localizer[ "Unable to load user with ID "]}'{_userManager.GetUserId(User)}'");
+                return NotFound($"{_localizer["Unable to load user with ID "]}'{_userManager.GetUserId(User)}'");
             }
             RequirePassword = await _userManager.HasPasswordAsync(user);
             if (RequirePassword)
             {
                 if (!await _userManager.CheckPasswordAsync(user, Input.Password))
                 {
-                    ModelState.AddModelError(string.Empty,_localizer[ "Password not correct"]);
+                    ModelState.AddModelError(string.Empty, _localizer["Password not correct"]);
                     return Page();
                 }
             }
@@ -86,7 +86,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
             {
-                throw new InvalidOperationException($"{_localizer[ "Unexpected error occurred deleteing user with ID"]} '{userId}'");
+                throw new InvalidOperationException($"{_localizer["Unexpected error occurred deleteing user with ID"]} '{userId}'");
             }
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);

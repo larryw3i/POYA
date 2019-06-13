@@ -69,7 +69,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"{_localizer[ "Unable to load user with ID"]} '{_userManager.GetUserId(User)}'");
+                return NotFound($"{_localizer["Unable to load user with ID"]} '{_userManager.GetUserId(User)}'");
             }
             var hasPassword = await _userManager.HasPasswordAsync(user);
             if (hasPassword)
@@ -87,7 +87,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"{_localizer[ "Unable to load user with ID"]} '{_userManager.GetUserId(User)}'");
+                return NotFound($"{_localizer["Unable to load user with ID"]} '{_userManager.GetUserId(User)}'");
             }
             var addPasswordResult = await _userManager.AddPasswordAsync(user, Input.NewPassword);
             if (!addPasswordResult.Succeeded)
@@ -99,7 +99,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage =_localizer["Your password has been set"];
+            StatusMessage = _localizer["Your password has been set"];
             return RedirectToPage();
         }
     }

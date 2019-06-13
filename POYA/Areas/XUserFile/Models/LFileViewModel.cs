@@ -99,7 +99,7 @@ namespace POYA.Areas.XUserFile.Models
     }
 
     #region DEPOLLUTION
-    
+
 
     public class ID8InDirId
     {
@@ -130,7 +130,7 @@ namespace POYA.Areas.XUserFile.Models
         [Display(Name = "Name")]
         public string Name { get; set; }
 
-        
+
 
         #region DEPOLLUTION
 
@@ -169,7 +169,8 @@ namespace POYA.Areas.XUserFile.Models
 
     }
 
-    public enum CopyMove {
+    public enum CopyMove
+    {
         Copy = 1,
         Move = 2,
         DoNoThing = 0

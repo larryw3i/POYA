@@ -1,7 +1,7 @@
 ﻿@page
 @model LoginWith2faModel
 @{
-    ViewData["Title"] =Localizer[ "Two-factor authentication"];
+    ViewData["Title"] = Localizer["Two-factor authentication"];
 }
 <h1>@ViewData["Title"]</h1>
 <hr />
@@ -32,7 +32,7 @@
 </div>
 <p>
     @Localizer["Don't have access to your authenticator device? You can"]
-    <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">@Localizer[ "log in with a recovery code"]</a>
+    <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">@Localizer["log in with a recovery code"]</a>
 </p>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

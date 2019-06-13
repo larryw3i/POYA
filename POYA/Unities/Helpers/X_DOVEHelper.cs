@@ -29,10 +29,10 @@ namespace POYA.Unities.Helpers
 {
     public class X_DOVEHelper
     {
-        
+
         #region SOME VALUES
 
-      
+
 
         /// <summary>
         /// Get the full path of the dir file or directory is included
@@ -144,7 +144,7 @@ namespace POYA.Unities.Helpers
 
     public class MimeHelper
     {
-        
+
         public List<string> GetExtensions(string Mime, IHostingEnvironment env)
         {
             var _CSV = File.ReadAllTextAsync(env.ContentRootPath + "/Data/LAppDoc/lmime.csv").GetAwaiter().GetResult();
@@ -152,9 +152,9 @@ namespace POYA.Unities.Helpers
             var MediaTypeList = MediaTypes.ToList();    //  .Select(p=>new MediaType {  Name=});
             var _Extensions = new List<string>();
             Mime = Mime.Split(".").LastOrDefault().ToLower();
-            foreach(var i in MediaTypeList)
+            foreach (var i in MediaTypeList)
             {
-                if (i.Template.ToLower()==Mime)
+                if (i.Template.ToLower() == Mime)
                 {
                     _Extensions.Add(i.Name);
                 }

@@ -18,15 +18,15 @@ namespace POYA.Unities.Services
         public EmailSender(
             IConfiguration configuration)
         {
-            _configuration=configuration ;
+            _configuration = configuration;
         }
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
             var userName = _configuration["EmailSender:userName"]; //(string)jsonObject[nameof(EmailSender)]["userName"];
             var host = _configuration["EmailSender:host"];// (string)jsonObject[nameof(EmailSender)]["host"];
             var password = _configuration["EmailSender:password"];//     (string)jsonObject[nameof(EmailSender)]["password"];
-            var port = Convert.ToInt32( _configuration["EmailSender:port"]);//    (short)jsonObject[nameof(EmailSender)]["port"];
-            var enableSsl=Convert.ToBoolean( _configuration["EmailSender:enableSsl"]);
+            var port = Convert.ToInt32(_configuration["EmailSender:port"]);//    (short)jsonObject[nameof(EmailSender)]["port"];
+            var enableSsl = Convert.ToBoolean(_configuration["EmailSender:enableSsl"]);
             var smtpClient = new SmtpClient(host: host, port: port)
             {
                 EnableSsl = enableSsl,

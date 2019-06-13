@@ -160,7 +160,7 @@ namespace POYA.Areas.EduHub.Models
     public class EArticleFileMD5
     {
         public Guid EArticleId { get; set; }
-        public string FileName { get; set;}
+        public string FileName { get; set; }
         public string MD5 { get; set; }
         public bool IsEArticleVideo { get; set; } = false;
     }

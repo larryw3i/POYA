@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Localization;
-using POYA.Data; 
+using POYA.Data;
 using POYA.Unities.Helpers;
 using POYA.Models;
 namespace POYA.Areas.Identity.Pages.Account
@@ -70,9 +70,9 @@ namespace POYA.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match")]
             public string ConfirmPassword { get; set; }
         }
-        public void OnGet(string returnUrl = null, bool IsFromLogin=false)
+        public void OnGet(string returnUrl = null, bool IsFromLogin = false)
         {
-            if (IsFromLogin)  ModelState.AddModelError(nameof(Input.Email), _localizer[ "Your e-mail is not registered in POYA yet, register it Now"]+ " (^_^)");
+            if (IsFromLogin) ModelState.AddModelError(nameof(Input.Email), _localizer["Your e-mail is not registered in POYA yet, register it Now"] + " (^_^)");
             ReturnUrl = returnUrl;
         }
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -88,7 +88,7 @@ namespace POYA.Areas.Identity.Pages.Account
                 }
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
-               
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password");

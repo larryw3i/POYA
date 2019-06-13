@@ -4,7 +4,7 @@
 @{
     var _User = ViewData["_User"] as IdentityUser;    //   = _User.UserName;
     var X_doveUserInfo = ViewData["X_doveUserInfo"] as X_doveUserInfo;  //  = await _context.X_DoveUserInfos.Select(p => new X_doveUserInfo
-    ViewData["Title"] =_User.UserName+"'s "+Localizer[ "Information"];
+    ViewData["Title"] = _User.UserName + "'s " + Localizer["Information"];
 }
 <div class="row">
     <div class="col col-3 col-sm-4 col-md-3">
@@ -40,12 +40,12 @@
             }
         </ul>
         @*
-        <div class="card-body">
-            <a href="#" class="card-link">Like</a>
-            <a href="#" class="card-link">Chat</a>
-        </div>
+            <div class="card-body">
+                <a href="#" class="card-link">Like</a>
+                <a href="#" class="card-link">Chat</a>
+            </div>
         *@
     </div>
-    <div class="col col-10 col-sm-8 col-md-9"> 
+    <div class="col col-10 col-sm-8 col-md-9">
     </div>
 </div>

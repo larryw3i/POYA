@@ -1,7 +1,7 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] =Localizer[ "Register"];
+    ViewData["Title"] = Localizer["Register"];
 }
 <h1>@ViewData["Title"]</h1>
 <div class="row">
@@ -12,20 +12,20 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" placeholder="@Localizer["Type your email here"]"/>
+                <input asp-for="Input.Email" class="form-control" placeholder="@Localizer["Type your email here"]" />
                 <span asp-validation-for="Input.Email" data-interval="5000" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" placeholder="@Localizer["Type your password here"]"/>
-                <span asp-validation-for="Input.Password" data-interval="5000"  class="text-danger"></span>
+                <input asp-for="Input.Password" class="form-control" placeholder="@Localizer["Type your password here"]" />
+                <span asp-validation-for="Input.Password" data-interval="5000" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="@Localizer["Type your password again"]"/>
-                <span asp-validation-for="Input.ConfirmPassword" data-interval="5000"  class="text-danger"></span>
+                <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="@Localizer["Type your password again"]" />
+                <span asp-validation-for="Input.ConfirmPassword" data-interval="5000" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">@Localizer[ "Register"]</button>
+            <button type="submit" class="btn btn-primary">@Localizer["Register"]</button>
         </form>
     </div>
 </div>

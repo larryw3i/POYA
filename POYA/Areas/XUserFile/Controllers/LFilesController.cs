@@ -58,7 +58,7 @@ namespace POYA.Areas.XUserFile.Controllers
         public async Task<IActionResult> Index()
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            return View(await _context.LFile.Where(p=>p.UserId==UserId_).ToListAsync());
+            return View(await _context.LFile.Where(p => p.UserId == UserId_).ToListAsync());
         }
 
         // GET: LFiles/Details/5
@@ -71,7 +71,7 @@ namespace POYA.Areas.XUserFile.Controllers
 
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var lFile = await _context.LFile
-                .Where(p=>p.UserId==UserId_)
+                .Where(p => p.UserId == UserId_)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (lFile == null)
             {
@@ -178,7 +178,7 @@ namespace POYA.Areas.XUserFile.Controllers
 
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var lFile = await _context.LFile
-                .FirstOrDefaultAsync(m => m.Id == id && m.UserId==UserId_);
+                .FirstOrDefaultAsync(m => m.Id == id && m.UserId == UserId_);
             if (lFile == null)
             {
                 return NotFound();
@@ -193,7 +193,7 @@ namespace POYA.Areas.XUserFile.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var lFile = await _context.LFile.FirstOrDefaultAsync(p=>p.UserId==UserId_ &&p.Id==id);
+            var lFile = await _context.LFile.FirstOrDefaultAsync(p => p.UserId == UserId_ && p.Id == id);
             if (lFile == null)
             {
                 return NotFound();

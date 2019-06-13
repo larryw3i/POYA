@@ -27,12 +27,12 @@ namespace POYA.Areas.EduHub.Models
 
     public enum EArticleSortBy
     {
-        Buzz=0,
-        Time=1,
+        Buzz = 0,
+        Time = 1,
     }
 
     #region DUMPED
-   
+
     #endregion
     /*
        public class EArticleClick_    //  ViewModel

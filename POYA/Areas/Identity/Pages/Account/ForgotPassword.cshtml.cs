@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Hosting; 
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Localization;
 using POYA.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -56,7 +56,7 @@ namespace POYA.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
-            [Display(Name ="Email")]
+            [Display(Name = "Email")]
             public string Email { get; set; }
         }
         public async Task<IActionResult> OnPostAsync()
@@ -80,7 +80,7 @@ namespace POYA.Areas.Identity.Pages.Account
                 await _emailSender.SendEmailAsync(
                     Input.Email,
                    _localizer["Reset password"],
-                    $"{_localizer[ "Please reset your password by"]} <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> {_localizer[ "clicking here"]}</a>");
+                    $"{_localizer["Please reset your password by"]} <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> {_localizer["clicking here"]}</a>");
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
             return Page();

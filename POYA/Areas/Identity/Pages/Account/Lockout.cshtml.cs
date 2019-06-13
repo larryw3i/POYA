@@ -9,7 +9,7 @@ using Microsoft.Extensions.Localization;
 using POYA.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using POYA.Unities.Helpers;
-using Microsoft.Extensions.Logging; 
+using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 namespace POYA.Areas.Identity.Pages.Account
 {

@@ -8,22 +8,22 @@
 
     @foreach (var img in Model)
     {
-    <span>
-        <img class="shared-img" id="@img.Id" data-toggle="tooltip" data-placement="auto" title="@Localizer["Click to get url"]" src="@Url.Action("GetFile","LUserFiles", new {img.Id})" />
-    </span>
+        <span>
+            <img class="shared-img" id="@img.Id" data-toggle="tooltip" data-placement="auto" title="@Localizer["Click to get url"]" src="@Url.Action("GetFile","LUserFiles", new {img.Id})" />
+        </span>
     }
 </div>
 
-@section Scripts{ 
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script>
+@section Scripts{
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
         $(".shared-img").on("click", function () {
 
         });
     });
-</script>
+    </script>
 }
 
 @section Styles{
@@ -31,9 +31,10 @@
         .shared-img {
             max-height: 20%;
             max-width: 200px;
-            padding:20px;
+            padding: 20px;
         }
-        .img-div{
+
+        .img-div {
         }
     </style>
 }

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Localization;
 using POYA.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using POYA.Unities.Helpers; 
+using POYA.Unities.Helpers;
 namespace POYA.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]

@@ -15,7 +15,7 @@ namespace POYA.Areas.EduHub.Models
         public string UserId { get; set; }
 
         #region 
-        [Display(Name="Title")]
+        [Display(Name = "Title")]
         [StringLength(maximumLength: 50, MinimumLength = 2)]
         #endregion
         public string Name { get; set; }
@@ -39,7 +39,7 @@ namespace POYA.Areas.EduHub.Models
         [Display(Name = "Comment")]
         [StringLength(maximumLength: 20, MinimumLength = 2)]
         #endregion
-        public string Comment{ get; set; }
+        public string Comment { get; set; }
     }
 
     public class UserEArticleHomeInfo

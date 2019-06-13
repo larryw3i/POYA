@@ -127,7 +127,7 @@ class UI_ {
      * - Set the table content wrap break
      * */
     SetTableContentWrapBreak() {
-        $("td,td *,th,th *").css({ "word-wrap": "break-word", "break-word":"break-word"});
+        $("td,td *,th,th *").css({ "word-wrap": "break-word", "break-word": "break-word" });
     }
 }
 
@@ -174,7 +174,7 @@ class Value_ {
     //  #endregion
 
     //  #region METHOD
-     
+
     /**
      * - Get the theme string in select tag
      * @returns {string} - Return the theme string
@@ -233,7 +233,7 @@ $(document).ready(function () {
         _Service_.ChangeLanguage();
     });
     $("#Theme").on("change", function () {
-        _UI_.ChangeTheme(true); 
+        _UI_.ChangeTheme(true);
     });
     $("#BackA").on("click", function () {
         history.go(-1);
@@ -248,7 +248,7 @@ function KeepLogin() {
             type: "GET"
         });
         console.log("💋");
-    }, 1 * 60*1000);
+    }, 1 * 60 * 1000);
 
 }
 //========   SERVICE_END    ========//

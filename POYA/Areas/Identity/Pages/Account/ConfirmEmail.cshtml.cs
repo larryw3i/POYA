@@ -63,8 +63,8 @@ namespace POYA.Areas.Identity.Pages.Account
                 throw new InvalidOperationException($"Error confirming email for user with ID '{userId}':");
             }
 
-            await _x_DOVEHelper.InitialAccountData(_context,user);
-             
+            await _x_DOVEHelper.InitialAccountData(_context, user);
+
             return Page();
         }
     }

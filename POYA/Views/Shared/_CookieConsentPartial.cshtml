@@ -7,9 +7,9 @@
 @if (showBanner)
 {
     <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
-        @Localizer["If you use our services for the first time, you can view our Privacy Policy and service statement"]<a asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer[ "Learn More"]</a>
+        @Localizer["If you use our services for the first time, you can view our Privacy Policy and service statement"]<a asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Learn More"]</a>
         <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
-            <span aria-hidden="true">@Localizer[ "Accept"]</span>
+            <span aria-hidden="true">@Localizer["Accept"]</span>
         </button>
     </div>
     <script>

@@ -22,8 +22,8 @@
     <div class="col  col-12  EArticle-Home-Img-Ele">
         <div class="float-left" onclick="location.href = '@(Url.Action("Index","EArticles"))'"
              style="zoom:200%;position:fixed;cursor:pointer;color:brown">&laquo;</div>
-        <img class="rounded-circle mx-auto d-block EArticle-Home-Avatar" 
-             src="/Home/GetAvatar?random=@(new Random().Next())"/>
+        <img class="rounded-circle mx-auto d-block EArticle-Home-Avatar"
+             src="/Home/GetAvatar?random=@(new Random().Next())" />
         <div class="text-center">@(User.Identity.Name)</div>
 
         <div class="col text-center">
@@ -66,7 +66,7 @@
     <script>
             /*====  UI          ====*/
             //  ONCLICK <<<<<<
-   
+
 
         /**
         * Return the alert html string
@@ -188,7 +188,7 @@
 
             $(".EArticle-Home-Img-Ele").css("background-image",
             'url("@(Url.Action("GetEArticleHomeCover", new { area="EduHub",id=_UserEArticleHomeInfo.Id}))")');
-   
+
             $("#UserEArticleHomeInfo_Conver").on("click", function () {
                 $("#UserEArticleHomeInfo_Conver_Input").click();
             });
