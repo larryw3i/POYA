@@ -51,7 +51,7 @@
 <div class="row">
     <div class="col offset-5 offset-sm-5 offset-md-7 offset-lg-8 offset-xl-8 EArticleSearchCol">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="@(Localizer["Search"]+" . . .")" aria-label="@(Localizer["Search"]+". . .")" aria-describedby="EArticleSearchBtn" id="EArticleSearchInput" value="@_search">
+            <input type="text" class="form-control" placeholder="@(Localizer["Search"]+" . . .")" aria-label="@(Localizer["Search"]+". . .")" aria-describedby="EArticleSearchBtn" id="EArticleSearchInput" value="@_search" >
             <div class="input-group-append">
                 <button class="btn btn-outline-info" type="button" id="EArticleSearchBtn">@Localizer["Search"]</button>
             </div>
@@ -136,7 +136,7 @@
 
         $(document).ready(function () {
             ChangeSort();
-            $("#EArticleSearchInput").focus();
+            //  $("#EArticleSearchInput").focus();
             $("#EArticleSearchBtn").on("click", function () {
                 _Search();
             });

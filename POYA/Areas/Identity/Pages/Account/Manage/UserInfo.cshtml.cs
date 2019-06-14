@@ -158,7 +158,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             var _X_doveUserInfo = await _context.X_DoveUserInfos.FirstOrDefaultAsync(p => p.UserId == user.Id);
             if (_X_doveUserInfo != null)
             {
-                #region
+                #region UPDATE X_DOVEUSERINFO
                 _X_doveUserInfo.Address = Input.Address;
                 _X_doveUserInfo.DOBirth = Input.DOBirth;
                 _X_doveUserInfo.GraduatedFrom = Input.GraduatedFrom;
@@ -177,9 +177,9 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             }
             else
             {
+                #region     NEW_X_DOVEUSERINFO
                 var _X_doveUserInfo_ = new X_doveUserInfo
                 {
-                    #region
                     Address = Input.Address,
                     DOBirth = Input.DOBirth,
                     GraduatedFrom = Input.GraduatedFrom,
@@ -195,8 +195,8 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
                     Occupation = Input.Occupation,
                     OriginalAddress = Input.OriginalAddress,
                     UserId = user.Id,
-                    #endregion
                 };
+                #endregion
                 await _context.X_DoveUserInfos.AddAsync(_X_doveUserInfo_);
             }
             await _context.SaveChangesAsync();

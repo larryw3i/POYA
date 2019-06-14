@@ -4,8 +4,8 @@
 @{
     ViewData["Title"] = Localizer["Your information"];
     ViewData["ActivePage"] = ManageNavPages.UserInfo;
-    var X_DOVE_XSRF_TOKEN = Guid.NewGuid().ToString();
-    TempData[nameof(X_DOVE_XSRF_TOKEN)] = X_DOVE_XSRF_TOKEN;
+    //  var X_DOVE_XSRF_TOKEN = Guid.NewGuid().ToString();
+    //  TempData[nameof(X_DOVE_XSRF_TOKEN)] = X_DOVE_XSRF_TOKEN;
 }
 <h4>@ViewData["Title"]</h4>
 <partial name="_StatusMessage" for="StatusMessage" />
@@ -15,7 +15,7 @@
             <img name="UserAvatarImg" class="rounded-circle ZoomAvatar" />
             <input id="_UserAvatarInput" type="file" accept="image/*" hidden />
         </form>
-        <h6 style="font-size:90%" id="_UploadAvatarMsgEle"></h6>
+        <h6 id="_UploadAvatarMsgEle"></h6>
     </div>
     <div class=" col col-10 col-sm-8 col-md-9">
         <form id="profile-form" method="post">
@@ -105,9 +105,24 @@
 </div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        //========      DATA    ========//
+
+    </script>
+    <script>
+        //========    SERVICE   ========//
+        function UpdateUserAvatar() {
+            //  console.log(">_ "+window.CacheRefreshCode);
+            $("[name='UserAvatarImg']").attr("src", "/Home/GetAvatar?random=" + Math.floor(Math.random() * 100 + 1));//  ?random=" + window.CacheRefreshCode);
+        }
+    </script>
+    <script>
+        //========      UI      ========//
+
+    </script>
     <script type="text/javascript">
         var IsAvatarUploaded = false;
-        var _X_DOVE_XSRF_TOKEN_ = "@X_DOVE_XSRF_TOKEN";
+        //  var _X_DOVE_XSRF_TOKEN_ = "@@X_DOVE_XSRF_TOKEN";
         @*
         var _imgUrl_ = "/Home/GetAvatar?random=" + window.cacheRefreshCode;
         var _img_tag_ = $("#_UserAvatarForm img:first");
@@ -123,13 +138,13 @@
             var _UploadAvatarMsgEle_ = $("#_UploadAvatarMsgEle");
             //  console.log(_file_.size);
             if (_file_.size > 1024 * 1024) {
-                _UploadAvatarMsgEle_.text("@Localizer["Oops...., the size of avatar should be less than 1M"]");
+                _UploadAvatarMsgEle_.html("@Localizer["Oops...., the size of avatar should be less than 1M"]");
                 return;
             }
             if ($("#_UserAvatarInput").val() == "") return;
             var AvatarForm = new FormData();
             AvatarForm.append("AvatarImgFile", _file_);
-            AvatarForm.append("X_DOVE-XSRF-TOKEN", _X_DOVE_XSRF_TOKEN_);
+            //  AvatarForm.append("X_DOVE-XSRF-TOKEN", _X_DOVE_XSRF_TOKEN_);
             $.ajax({
                 url: "/Home/UploadAvatar",
                 type: "POST",
@@ -137,19 +152,25 @@
                 contentType: false,
                 processData: false,
                 dataType: "json",
+                headers: {
+                "L-XSRF-TOKEN": "@(CSRF.GetAndStoreTokens(HttpContext).RequestToken)"
+                },
                 success: function (data) {
                     if (data["status"] == true) {
                         //  window.cacheRefreshCode = Math.floor(Math.random() * 100 + 1);
                         _UploadAvatarMsgEle_.text("@Localizer["Uploaded successfully"]!");
                         //  UpdateCacheData();
-                        _UI_.SetUserAvatar();
-                        _X_DOVE_XSRF_TOKEN_ = data["x_DOVE_XSRF_TOKEN"];
+                        //  _UI_.SetUserAvatar();
+                        UpdateUserAvatar();
+                        //  _X_DOVE_XSRF_TOKEN_ = data["x_DOVE_XSRF_TOKEN"];
                     } else {
-                        _UploadAvatarMsgEle_.text(data["msg"]);
+                        if (data["msg"] == "ExceedSize") {
+                            _UploadAvatarMsgEle_.html("@Localizer["Oops...., the size of avatar should be less than 1M"]");
+                        }
                     }
                 },
                 error: function (msg) {
-                    _UploadAvatarMsgEle_.text("ERROR");
+                    _UploadAvatarMsgEle_.html("@Localizer["An error has occurred. . . , engineers are on their way"]");
                     //  console.log(msg);
                 }
             });
@@ -161,6 +182,12 @@
 }
 @section Styles {
     <style>
+        #_UploadAvatarMsgEle {
+            font-size: 90%;
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+
         .form-group .checkbox label {
             -moz-user-select: none;
             -webkit-user-select: none;

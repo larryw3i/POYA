@@ -54,6 +54,6 @@ namespace POYA.Models
     public class AvatarForm
     {
         public IFormFile AvatarImgFile { get; set; }
-        public string X_DOVE_XSRF_TOKEN { get; set; }
+        //  public string X_DOVE_XSRF_TOKEN { get; set; }
     }
 }

@@ -95,9 +95,9 @@ namespace POYA.Areas.EduHub.Controllers
                 (TempSetId == null ? LValue.DefaultEArticleSetId : TempSetId)
                 : SetId;
             var _EArticles = await _context.EArticle.Where(p =>
-                     SetId == LValue.DefaultEArticleSetId ?
+                     (SetId == LValue.DefaultEArticleSetId ?
                      (p.SetId == Guid.Empty || p.SetId == null || p.SetId == LValue.DefaultEArticleSetId) :
-                     p.SetId == SetId && p.UserId == UserId_).ToListAsync();
+                     p.SetId == SetId) && p.UserId == UserId_).ToListAsync();
             _EArticles.ForEach(p =>
             {
                 if (p.SetId == Guid.Empty || p.SetId == null)
@@ -105,10 +105,12 @@ namespace POYA.Areas.EduHub.Controllers
                     p.SetId = LValue.DefaultEArticleSetId;
                 }
             });
-            ViewData[nameof(_EArticles)] = _EArticles.OrderByDescending(p => p.DOPublishing).ToPagedList(_page ?? 1, 10);
+
             var _EArticleFiles = await _context.EArticleFiles
                 .Where(p => p.IsEArticleVideo && _EArticles.Select(s => s.Id)
                 .Contains(p.EArticleId)).ToListAsync();
+            ViewData[nameof(_EArticles)] = _EArticles.OrderByDescending(p => p.DOPublishing).ToPagedList(_page ?? 1, 10);
+        
             InitFileExtension(_EArticleFiles);
             ViewData["EArticleFile"] = _EArticleFiles;
             TempData[nameof(SetId)] = SetId;

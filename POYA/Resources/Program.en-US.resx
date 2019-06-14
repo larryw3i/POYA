@@ -917,4 +917,7 @@
   <data name="Time" xml:space="preserve">
     <value>Time</value>
   </data>
+  <data name="The content of the article should be more than 20 characters" xml:space="preserve">
+    <value>The content of the article should be more than 20 characters</value>
+  </data>
 </root>

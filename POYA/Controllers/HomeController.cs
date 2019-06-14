@@ -95,16 +95,19 @@ namespace POYA.Controllers
         }
 
         [HttpPost]
+        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> UploadAvatar([FromForm]AvatarForm avatarForm)
         {
-            var X_DOVE_XSRF_TOKEN = TempData["X_DOVE_XSRF_TOKEN"].ToString();
+            //  var X_DOVE_XSRF_TOKEN = TempData["X_DOVE_XSRF_TOKEN"].ToString();
+            /*
             if (!avatarForm.AvatarImgFile.ContentType.Contains("image") || X_DOVE_XSRF_TOKEN == avatarForm.X_DOVE_XSRF_TOKEN)
             {
                 return BadRequest();
             }
+            */
             if (avatarForm.AvatarImgFile.Length > 1024 * 1024)
             {
-                return Json(new { status = false, msg = _localizer["Oops...., the size of avatar should be less than 1M"] });
+                return Json(new { status = false, msg = "ExceedSize" });   //  _localizer["Oops...., the size of avatar should be less than 1M"] 
             }
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var memoryStream = new MemoryStream();
@@ -117,13 +120,13 @@ namespace POYA.Controllers
                 var _X_doveUserInfo = await _context.X_DoveUserInfos.FirstOrDefaultAsync(p => p.UserId == _UserId);
                 if (_X_doveUserInfo != null && AvatarBuffer == AvatarFileBytes)
                 {//  _X_doveUserInfo.AvatarBuffer
-                    return Json(new { status = true, X_DOVE_XSRF_TOKEN });
+                    return Json(new { status = true});  //  , X_DOVE_XSRF_TOKEN 
                 }
             }
             await System.IO.File.WriteAllBytesAsync(X_DOVEValues.AvatarStoragePath(_hostingEnv) + _UserId, AvatarBuffer);
-            X_DOVE_XSRF_TOKEN = Guid.NewGuid().ToString();
-            TempData["X_DOVE_XSRF_TOKEN"] = X_DOVE_XSRF_TOKEN;
-            return Json(new { status = true, X_DOVE_XSRF_TOKEN });
+            //  X_DOVE_XSRF_TOKEN = Guid.NewGuid().ToString();
+            //  TempData["X_DOVE_XSRF_TOKEN"] = X_DOVE_XSRF_TOKEN;
+            return Json(new { status = true }); //  , X_DOVE_XSRF_TOKEN
         }
 
         /// <summary>

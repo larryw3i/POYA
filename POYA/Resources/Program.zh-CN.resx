@@ -917,4 +917,7 @@
   <data name="Time" xml:space="preserve">
     <value>时间</value>
   </data>
+  <data name="The content of the article should be more than 20 characters" xml:space="preserve">
+    <value>文章的内容至少应该20个字哦</value>
+  </data>
 </root>
