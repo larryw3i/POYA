@@ -288,6 +288,17 @@ namespace POYA.Areas.EduHub.Controllers
         {
             if (ModelState.IsValid)
             {
+                #region 
+                /*
+                var _CurrentDOPublishing = await _context.EArticle.OrderByDescending(p => p.DOPublishing).Select(p => p.DOPublishing).FirstOrDefaultAsync();
+                if ((DateTimeOffset.Now - _CurrentDOPublishing).Minutes < 30)
+                {
+                    ModelState.AddModelError(string.Empty, _localizer["The system detects that you may be a robot"]);
+                    return View(eArticle);
+                }
+                */
+                #endregion
+
                 if (eArticle.Title.Length < 2 || eArticle.Content.Length < 20)
                 {
 

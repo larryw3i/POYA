@@ -926,4 +926,13 @@
   <data name="The story of the development" xml:space="preserve">
     <value>The story of the development</value>
   </data>
+  <data name="The story of the developers" xml:space="preserve">
+    <value>The story of the developers</value>
+  </data>
+  <data name="Uploaded successfully" xml:space="preserve">
+    <value>Uploaded successfully</value>
+  </data>
+  <data name="The system detects that you may be a robot" xml:space="preserve">
+    <value>The system detects that you may be a robot</value>
+  </data>
 </root>

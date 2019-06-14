@@ -95,7 +95,7 @@
                             @Html.DisplayNameFor(m => m.Input.IsMaritalStatusOvert)
                         </label>
                     </div>
-                    <input asp-for="Input.MaritalStatus" class="form-control" />
+                    <input asp-for="Input.MaritalStatus" class="form-control"/>
                     <span asp-validation-for="Input.MaritalStatus" class="text-danger"></span>
                 </div>
             </div>
@@ -148,7 +148,7 @@
                 },
                 success: function (data) {
                     if (data["status"] == true) {
-                        _UploadAvatarMsgEle_.text("@Localizer["Uploaded successfully"]!");
+                        _UploadAvatarMsgEle_.html("@Localizer["Uploaded successfully"]!");
                         UpdateUserAvatar();
                     } else {
                         if (data["msg"] == "ExceedSize") {
@@ -171,6 +171,7 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
+            $("input").attr("autocomplete","off");
             $("#_UserAvatarForm img:first").on("click", function () {
                 _UserAvatarFormClick();
                 event.preventDefault();
@@ -186,6 +187,7 @@
 }
 @section Styles {
     <style>
+        
         #_UploadAvatarMsgEle {
             font-size: 90%;
             word-break: break-all;
