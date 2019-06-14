@@ -87,6 +87,7 @@
     }
 </div>
 
+
 @(Html.PagedListPager((IPagedList<EArticle>)ViewData["EArticles"], _page => Url.Action("Index", new { _page = _page }),
     PagedListRenderOptions.OnlyShowFivePagesAtATime))
 

@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -96,7 +97,7 @@ namespace POYA.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> UploadAvatar([FromForm]AvatarForm avatarForm)
+        public async Task<IActionResult> UploadAvatar([FromForm]IFormFile avatarForm)
         {
             //  var X_DOVE_XSRF_TOKEN = TempData["X_DOVE_XSRF_TOKEN"].ToString();
             /*
@@ -105,13 +106,13 @@ namespace POYA.Controllers
                 return BadRequest();
             }
             */
-            if (avatarForm.AvatarImgFile.Length > 1024 * 1024)
+            if (avatarForm.Length > 1024 * 1024)
             {
                 return Json(new { status = false, msg = "ExceedSize" });   //  _localizer["Oops...., the size of avatar should be less than 1M"] 
             }
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var memoryStream = new MemoryStream();
-            await avatarForm.AvatarImgFile.CopyToAsync(memoryStream);
+            await avatarForm.CopyToAsync(memoryStream);
             var AvatarBuffer = memoryStream.ToArray();   //   MakeCircleImage(memoryStream);//  
             var AvatarFilePath = X_DOVEValues.AvatarStoragePath(_hostingEnv) + _UserId;
             if (System.IO.File.Exists(AvatarFilePath))

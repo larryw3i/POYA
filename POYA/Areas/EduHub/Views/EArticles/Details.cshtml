@@ -54,13 +54,29 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a id="BackA" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
+
+<div id="OperationEle" >
+    <a id="BackA" class="btn btn-info">&laquo; @Localizer["Back"]</a>
     @if (Model.UserId == ViewData["UserId_"].ToString())
     {
-        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">@Localizer["Edit"]</a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["Edit"]</a>
     }
 </div>
+
+@section Scripts{
+    <script>
+    </script>
+}
+
+@section Styles{
+    <style>
+        #OperationEle{
+            position:fixed;
+            bottom:50px;
+        }
+    </style>
+}
+
 @*
     <div class="bd-example">
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">

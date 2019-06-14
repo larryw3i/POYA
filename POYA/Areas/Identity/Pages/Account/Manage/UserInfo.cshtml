@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col col-4 col-sm-4 col-md-3">
         <form id="_UserAvatarForm">
-            <img name="UserAvatarImg" class="rounded-circle ZoomAvatar" />
+            <img name="UserAvatarImg" class="rounded-circle ZoomAvatar lazyload" />
             <input id="_UserAvatarInput" type="file" accept="image/*" hidden />
         </form>
         <h6 id="_UploadAvatarMsgEle"></h6>
@@ -105,35 +105,26 @@
 </div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        //========      VALUE   ========//
+        var IsAvatarUploaded = false;
+
+    </script>
     <script>
         //========      DATA    ========//
-
+        function _UserAvatarFormClick() {
+            if (IsAvatarUploaded) return;
+            $('#_UserAvatarInput').click();
+        }
     </script>
     <script>
         //========    SERVICE   ========//
         function UpdateUserAvatar() {
-            //  console.log(">_ "+window.CacheRefreshCode);
-            $("[name='UserAvatarImg']").attr("src", "/Home/GetAvatar?random=" + Math.floor(Math.random() * 100 + 1));//  ?random=" + window.CacheRefreshCode);
+            $("[name='UserAvatarImg']").attr("src", "/Home/GetAvatar?random=" + Math.floor(Math.random() * 100 + 1));
         }
-    </script>
-    <script>
-        //========      UI      ========//
 
-    </script>
-    <script type="text/javascript">
-        var IsAvatarUploaded = false;
-        //  var _X_DOVE_XSRF_TOKEN_ = "@@X_DOVE_XSRF_TOKEN";
-        @*
-        var _imgUrl_ = "/Home/GetAvatar?random=" + window.cacheRefreshCode;
-        var _img_tag_ = $("#_UserAvatarForm img:first");
-        _img_tag_.attr("src", _imgUrl_);
-            *@
-        $("#_UserAvatarForm img:first").on("click", function () {
-            if (IsAvatarUploaded) return;
-            $('#_UserAvatarInput').click();
-            event.preventDefault();
-        });
-        $("#_UserAvatarInput").on("change", function () {
+        function _UserAvatarInputOnChange() {
             var _file_ = document.getElementById("_UserAvatarInput").files[0];
             var _UploadAvatarMsgEle_ = $("#_UploadAvatarMsgEle");
             //  console.log(_file_.size);
@@ -143,7 +134,7 @@
             }
             if ($("#_UserAvatarInput").val() == "") return;
             var AvatarForm = new FormData();
-            AvatarForm.append("AvatarImgFile", _file_);
+            AvatarForm.append("avatarForm", _file_);
             //  AvatarForm.append("X_DOVE-XSRF-TOKEN", _X_DOVE_XSRF_TOKEN_);
             $.ajax({
                 url: "/Home/UploadAvatar",
@@ -157,12 +148,8 @@
                 },
                 success: function (data) {
                     if (data["status"] == true) {
-                        //  window.cacheRefreshCode = Math.floor(Math.random() * 100 + 1);
                         _UploadAvatarMsgEle_.text("@Localizer["Uploaded successfully"]!");
-                        //  UpdateCacheData();
-                        //  _UI_.SetUserAvatar();
                         UpdateUserAvatar();
-                        //  _X_DOVE_XSRF_TOKEN_ = data["x_DOVE_XSRF_TOKEN"];
                     } else {
                         if (data["msg"] == "ExceedSize") {
                             _UploadAvatarMsgEle_.html("@Localizer["Oops...., the size of avatar should be less than 1M"]");
@@ -175,9 +162,26 @@
                 }
             });
             $("#_UserAvatarInput").val(null);
-            event.preventDefault();
+            //  event.preventDefault();
         }
-        );
+    </script>
+    <script>
+        //========      UI      ========//
+
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#_UserAvatarForm img:first").on("click", function () {
+                _UserAvatarFormClick();
+                event.preventDefault();
+            });
+            $("#_UserAvatarInput").on("change", function () {
+                _UserAvatarInputOnChange();
+                event.preventDefault();
+            });
+        });
+
+
     </script>
 }
 @section Styles {
