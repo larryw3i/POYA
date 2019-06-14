@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<style>
+    #DonateEle {
+        position: fixed;
+        bottom: 42px;
+        right: 1px;
+        width: 45px;
+        height: 45px;
+    }
+
+        #DonateEle > img {
+            width: inherit;
+            height: inherit;
+        }
+
+            #DonateEle > img:hover {
+                animation: DonateImgHover 0.2s linear 1 forwards;
+            }
+
+    @@keyframes DonateImgRotation {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @@keyframes DonateImgHover {
+        0% {
+            box-shadow: 0px 0px 0px 0px #ff00dc;
+        }
+
+        100% {
+            box-shadow: 0px 0px 0px 5px #ff00dc;
+        }
+    }
+</style>
+
+<div id="DonateEle" title="@Localizer["Donate"]">
+    <img src="~/img/Donate.webp" class="rounded-circle" />
+</div>
+<script>
+    document.querySelector("#DonateEle").onclick = function () {
+        location.href = "@Url.Action("Donate","Home")";
+    }
+</script>

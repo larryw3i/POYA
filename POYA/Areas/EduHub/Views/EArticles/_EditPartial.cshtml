@@ -104,7 +104,8 @@
 
             <div class="form-group">
                 <a id="BackA" class="btn btn-outline-primary">&laquo; @Localizer["Back"]</a>
-                <a class="btn btn-outline-info" id="EArticles_Form_Submit_A">@Localizer["Save"]</a>
+                <a class="btn btn-outline-info col-4" id="EArticles_Form_Submit_A">@(IsEdit ? Localizer["Save"] : Localizer["Publish"])</a>
+                <a asp-action="Donate" asp-controller="Home">@Localizer["Donate"]</a>
                 <span id="SaveProgressEle"></span>
             </div>
         </form>
@@ -592,7 +593,7 @@
         word-wrap: break-word;
         word-break: break-all;
     }
-  
+
 
     .w-e-text {
         overflow-y: scroll;

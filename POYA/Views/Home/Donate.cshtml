@@ -4,17 +4,26 @@
 @{
     ViewData["Title"] = Localizer["Donate"];
 }
+
+<div class="row Donate8Story">
+    <div class="col col-auto"><a>@Localizer["Donate"]</a></div>|
+    <div class="col col-auto"><a href="#">@Localizer["The story of the development"]</a> </div>
+</div>
+<hr />
 <div class="row" style="margin-top:2%">
     <div class="col offset-1 col-2">
-        <img src="~/img/wechat_pay.webp" title="@Localizer["Thank you very much"] !" />
+        <img src="~/img/wechat_pay.webp" class="PayImg" title="@Localizer["Thank you very much"] !" />
     </div>
     <div class="col offset-3 col-3">
-        <img src="~/img/alipay_pay.webp" title="@Localizer["Thank you very much"] !" />
+        <img src="~/img/alipay_pay.webp" class="PayImg"  title="@Localizer["Thank you very much"] !" />
     </div>
 </div>
 @section Styles{
     <style type="text/css">
-        div > img {
+        .Donate8Story{
+            font-size:200%;
+        }
+        .PayImg {
             max-height: 250px;
             max-width: 250px;
             border: solid;
