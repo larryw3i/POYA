@@ -147,7 +147,7 @@ namespace POYA
             #endregion
             services.Configure<FormOptions>(options =>
             {
-                options.MultipartBodyLengthLimit = FormOptions.DefaultMultipartBodyLengthLimit;
+                options.MultipartBodyLengthLimit = (long)Math.Pow(1024, 2) * 200; //   FormOptions.DefaultMultipartBodyLengthLimit;
             });
 
             services.AddAntiforgery(options => options.HeaderName = "L-XSRF-TOKEN");

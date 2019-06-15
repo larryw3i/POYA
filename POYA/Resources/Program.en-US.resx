@@ -941,4 +941,7 @@
   <data name="Date of creating" xml:space="preserve">
     <value>Date of creating</value>
   </data>
+  <data name="Create directory in {0}" xml:space="preserve">
+    <value>Create directory in {0}</value>
+  </data>
 </root>

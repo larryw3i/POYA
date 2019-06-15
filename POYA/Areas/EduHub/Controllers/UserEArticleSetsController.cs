@@ -22,7 +22,7 @@ namespace POYA.Areas.EduHub.Controllers
     [Authorize]
     public class UserEArticleSetsController : Controller
     {
-        #region
+        #region     DI
         private readonly IHostingEnvironment _hostingEnv;
         private readonly IStringLocalizer<Program> _localizer;
         private readonly UserManager<IdentityUser> _userManager;
@@ -157,7 +157,7 @@ namespace POYA.Areas.EduHub.Controllers
             }
 
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var userEArticleSet = await _context.UserEArticleSet.FindAsync(id);
+            var userEArticleSet = await _context.UserEArticleSet.FirstOrDefaultAsync(p=>p.Id==id && p.UserId==_UserId);
             if (userEArticleSet == null)
             {
                 return NotFound();
@@ -225,7 +225,7 @@ namespace POYA.Areas.EduHub.Controllers
 
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var userEArticleSet = await _context.UserEArticleSet
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id && m.UserId==_UserId);
             if (userEArticleSet == null)
             {
                 return NotFound();
@@ -242,7 +242,8 @@ namespace POYA.Areas.EduHub.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var userEArticleSet = await _context.UserEArticleSet.FindAsync(id);
+            var userEArticleSet = await _context.UserEArticleSet.FirstOrDefaultAsync(p=>p.Id==id && p.UserId==_UserId);
+            if (userEArticleSet == null) return NotFound();
             _context.UserEArticleSet.Remove(userEArticleSet);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -253,6 +254,8 @@ namespace POYA.Areas.EduHub.Controllers
             return _context.UserEArticleSet.Any(e => e.Id == id);
         }
 
+
+        #region DEPOLLUTION
 
         #region 
         /// <summary>
@@ -293,6 +296,8 @@ namespace POYA.Areas.EduHub.Controllers
             return File(_FileBytes, _ContentType, $"EARTICLE_HOME_COVER_{_UserId}", true);
 
         }
+
+        #endregion
 
     }
 }

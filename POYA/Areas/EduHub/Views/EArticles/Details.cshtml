@@ -60,6 +60,7 @@
     @if (Model.UserId == ViewData["UserId_"].ToString())
     {
         <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["Edit"]</a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">@Localizer["Delete"]</a>
     }
 </div>
 

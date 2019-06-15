@@ -109,13 +109,17 @@ namespace POYA.Areas.EduHub.Controllers
             var _EArticleFiles = await _context.EArticleFiles
                 .Where(p => p.IsEArticleVideo && _EArticles.Select(s => s.Id)
                 .Contains(p.EArticleId)).ToListAsync();
-            ViewData[nameof(_EArticles)] = _EArticles.OrderByDescending(p => p.DOPublishing).ToPagedList(_page ?? 1, 10);
-        
             InitFileExtension(_EArticleFiles);
+
+            #region VIEWDATA
+            ViewData[nameof(_EArticles)] = _EArticles.OrderByDescending(p => p.DOPublishing).ToPagedList(_page ?? 1, 10);
+
             ViewData["EArticleFile"] = _EArticleFiles;
             TempData[nameof(SetId)] = SetId;
             ViewData[nameof(UserEArticleSet)] = SetId == LValue.DefaultEArticleSetId ? new UserEArticleSet { Name = "Default", Label = string.Empty, Comment = string.Empty } : await _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == SetId);
             ViewData["UserId_"] = UserId_;
+            #endregion
+
             return View();
         }
 
@@ -306,6 +310,7 @@ namespace POYA.Areas.EduHub.Controllers
                     eArticle.LVideos = null;
                     return View(eArticle);
                 }
+
                 var Create_SetId = Guid.Parse(TempData["Create_SetId"]?.ToString() ?? Guid.Empty.ToString());
                 var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                 var _EArticleFiles = new List<EArticleFile>();
@@ -316,13 +321,13 @@ namespace POYA.Areas.EduHub.Controllers
 
                 await _context.AddAsync(eArticle);
 
-
                 //  _context.Add(eArticle);
                 #region     SAVE_FILES
 
                 await SaveArticleFilesAsync(eArticle);
 
                 #endregion
+
                 await _context.SaveChangesAsync();
                 return Ok();    //  RedirectToAction(nameof(XIndex),new { SetId =Create_SetId});
             }
@@ -381,6 +386,7 @@ namespace POYA.Areas.EduHub.Controllers
                 {
                     var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                     var _EArticle = await _context.EArticle.Where(p => p.Id == eArticle.Id && p.UserId == UserId_).FirstOrDefaultAsync();
+                    if (_EArticle == null) return NotFound();
 
                     #region UPDATE
                     _EArticle.Content = _htmlSanitizer.Sanitize(eArticle.Content);
@@ -444,6 +450,7 @@ namespace POYA.Areas.EduHub.Controllers
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var eArticle = await _context.EArticle.FirstOrDefaultAsync(p => p.Id == id && p.UserId == UserId_);
+            if (eArticle == null) return NotFound();
             _context.EArticle.Remove(eArticle);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

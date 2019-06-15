@@ -119,12 +119,12 @@
                     var FileName_ = document.getElementById(_Value.FileInput(Id_)).files[0].name;
                     File8MD5s.push({ Id: Id_, FileName: FileName_, MD5: value["MD5"] });
                 });
-                console.log(File8MD5s);
+                //  console.log(File8MD5s);
                 $.ajax({
                     url: "@(Url.Action("CheckMD5"))",
                     type: "POST",
                     data: {
-                        _ContrastMD5: {
+                        LContrastMD5: {
                             InDirId: _Value.InDirId, File8MD5s: File8MD5s
                         }
                     },
@@ -138,7 +138,7 @@
                      * @@param {Array<number>} IdArray Uploaded id array
                      */
                     success: function (IdArray) {
-                        console.log("Contrast>>"+IdArray);
+                        //  console.log("Contrast>>"+IdArray);
                         IdArray.forEach(function (value) {
                             _Data.RemoveItemInMD5Array(value);
                             _UI.RemoveUploadedFileInput(value);
@@ -191,13 +191,16 @@
                         },
                         /**
                          * Retuen the id
-                         * @@param {number} Id The id
                          */
-                        success: function (Id) {
-                            console.log("Upload file>>"+Id);
-                            _UI.UpdateProgress(Id, "&radic;");
-                            _Data.RemoveItemInMD5Array(Id);
-                            _UI.RemoveUploadedFileInput(Id);
+                        success: function (Response) {
+                            //  console.log("Upload file>>"+Response["Id"]);
+                            if (Response["Status"] == true) {
+                                _UI.UpdateProgress(Response["Id"], "&radic;");
+                                _Data.RemoveItemInMD5Array(Response["Id"]);
+                                _UI.RemoveUploadedFileInput(Response["Id"]);
+                            } else {
+                                _UI.MakeAlert("warning", Response["Msg"]);
+                            }
                         }
                     });
                 });
@@ -260,7 +263,7 @@
                             _UI.ReadMD5FinishTip(Id);
                             _UI.ShowLastFilePath(Id);
                             _UI.ShowOrHideLastRemoveFileDIV(true);
-                            console.log(MD5);
+                            //  console.log(MD5);
                         }
                     }
                 };
@@ -289,7 +292,7 @@
                 this.FileIsTooLarge = "<strong>Oops. . .</strong> File is limit to less than " + this.MaxMultipartBodyLength / (1024 * 1024) + "M";
                 this.RemoveFileDIV = (Id = $.guid++) => "RemoveFileDIV" + Id;
                 this.FileName = (Id = $.guid++) => 'FileName_' + Id;
-                this.UploadProgress = (Id = $.guid++) => 'UploadProgress' + Id;
+                this.UploadProgress = (Id = $.guid++) => `UploadProgress${Id}`;
                 this.RemoveUploadedFileInput = (Id = $.guid++) => "RemoveUploadedFileInput" + Id;
                 this.FileInput = (Id = $.guid++) => "FileInput_" + Id;
                 /**

@@ -209,20 +209,20 @@ namespace POYA.Areas.XUserFile.Controllers
         #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([FromForm] LFilePost _LFilePost)
+        public async Task<IActionResult> Create([FromForm] LFilePost XFilePost)
         {
             //  [Bind("Id,MD5,UserId,SharedCode,DOGenerating,Name,InDirId")] LUserFile lUserFile)
 
-            if (_LFilePost._LFile.Length > 0)
+            if (XFilePost._LFile.Length > 0)
             {
                 var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                 var _LUserFiles = await _context.LUserFile.Where(p => p.UserId == UserId_).ToListAsync();
-                if (await GetUsedSpaceAsync(_LUserFiles) >= (5 * 1024))
+                if ((await GetUsedSpaceAsync(_LUserFiles))/(Math.Pow(1024,3)) >= (5 * 1024))
                 {
-                    return Ok(new { Msg = "The storage space is used up" });
+                    return Ok(new {Status=false, Msg =_localizer[ "The storage space is used up"] });
                 }
                 var MemoryStream_ = new MemoryStream();
-                await _LFilePost._LFile.CopyToAsync(MemoryStream_);
+                await XFilePost._LFile.CopyToAsync(MemoryStream_);
                 var FileBytes = MemoryStream_.ToArray();
                 var MD5_ = _xUserFileHelper.GetFileMD5(FileBytes);
                 var FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + MD5_;
@@ -238,18 +238,18 @@ namespace POYA.Areas.XUserFile.Controllers
                 {
                     UserId = UserId_,
                     MD5 = MD5_,
-                    InDirId = _LFilePost.InDirId,
-                    Name = _LFilePost._LFile.FileName,
+                    InDirId = XFilePost.InDirId,
+                    Name = XFilePost._LFile.FileName,
                     //  ContentType = _LFilePost._LFile.ContentType ?? "text/plain"
                 });
                 await _context.SaveChangesAsync();
-                return Ok(_LFilePost.Id);
+                return Ok(new { Status=true, XFilePost.Id });
             }
-            // process uploaded files
-            // Don't rely on or trust the FileName property without validation.
             return Ok();
             #region     //
             /*
+            // process uploaded files
+            // Don't rely on or trust the FileName property without validation
             if (ModelState.IsValid)
             {
                 lUserFile.Id = Guid.NewGuid();
@@ -434,7 +434,7 @@ namespace POYA.Areas.XUserFile.Controllers
 
         #region 
         /// <summary>
-        /// Get the used storge space of user
+        /// Get the used storge space of user(in byte)
         /// </summary>
         /// <param name="_UserFiles_"></param>
         /// <returns></returns>
@@ -517,20 +517,20 @@ namespace POYA.Areas.XUserFile.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CheckMD5(ContrastMD5 _ContrastMD5)
+        public async Task<IActionResult> CheckMD5(ContrastMD5 LContrastMD5)
         {
             //  Console.WriteLine(">>>>" + JsonConvert.SerializeObject(_ContrastMD5));
             //  System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(_ContrastMD5));
             var ContrastResult = new List<int>();
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            foreach (var i in _ContrastMD5.File8MD5s)
+            foreach (var i in LContrastMD5.File8MD5s)
             {
                 if (await _context.LFile.AnyAsync(p => p.MD5 == i.MD5))
                 {
                     await _context.LUserFile.AddAsync(
                         new LUserFile
                         {
-                            InDirId = _ContrastMD5.InDirId,
+                            InDirId = LContrastMD5.InDirId,
                             MD5 = i.MD5,
                             Name = i.FileName,
                             UserId = UserId_,

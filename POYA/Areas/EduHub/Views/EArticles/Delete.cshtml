@@ -5,14 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h3>@(string.Format(Localizer["Are you sure you want to delete {0}"], Model.Title)) ?</h3>
+<h3 style="color:orangered">@(string.Format(Localizer["Are you sure you want to delete {0}"], Model.Title)) ?</h3>
 
-<form asp-action="Delete">
-    <input type="hidden" asp-for="Id" />
-    <a asp-action="Index" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
-    <input type="submit" value="@Localizer["Delete"]" class="btn btn-danger" />
-</form>
-<hr />
 
 <h4 class="col offset-1">
     @Html.DisplayFor(model => model.Title)
@@ -26,3 +20,26 @@
         </dd>
     </dl>
 </div>
+
+<div id="OperationEle">
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <a id="BackA" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
+        <input type="submit" value="@Localizer["Delete"]" class="btn btn-danger" />
+    </form>
+</div>
+
+
+@section Scripts{
+    <script>
+    </script>
+}
+
+@section Styles{
+    <style>
+        #OperationEle {
+            position: fixed;
+            bottom: 50px;
+        }
+    </style>
+}
