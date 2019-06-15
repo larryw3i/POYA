@@ -97,45 +97,40 @@ namespace POYA.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> UploadAvatar([FromForm]IFormFile avatarForm)
+        public async Task<IActionResult> UploadAvatar([FromForm]IFormFile avatarFile)
         {
-            //  var X_DOVE_XSRF_TOKEN = TempData["X_DOVE_XSRF_TOKEN"].ToString();
-            /*
-            if (!avatarForm.AvatarImgFile.ContentType.Contains("image") || X_DOVE_XSRF_TOKEN == avatarForm.X_DOVE_XSRF_TOKEN)
-            {
-                return BadRequest();
-            }
-            */
-            if (avatarForm.Length > 1024 * 1024)
+            if (avatarFile.Length > 1024 * 1024)
             {
                 return Json(new { status = false, msg = "ExceedSize" });   //  _localizer["Oops...., the size of avatar should be less than 1M"] 
             }
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var memoryStream = new MemoryStream();
-            await avatarForm.CopyToAsync(memoryStream);
-            var AvatarBuffer = memoryStream.ToArray();   //   MakeCircleImage(memoryStream);//  
+            await avatarFile.CopyToAsync(memoryStream);
+            var AvatarBytes = MakeCircleImage(memoryStream);//   memoryStream.ToArray();   //  
             var AvatarFilePath = X_DOVEValues.AvatarStoragePath(_hostingEnv) + _UserId;
             if (System.IO.File.Exists(AvatarFilePath))
             {
                 var AvatarFileBytes = await System.IO.File.ReadAllBytesAsync(AvatarFilePath);
                 var _X_doveUserInfo = await _context.X_DoveUserInfos.FirstOrDefaultAsync(p => p.UserId == _UserId);
-                if (_X_doveUserInfo != null && AvatarBuffer == AvatarFileBytes)
+                if (_X_doveUserInfo != null && AvatarBytes == AvatarFileBytes)
                 {//  _X_doveUserInfo.AvatarBuffer
                     return Json(new { status = true});  //  , X_DOVE_XSRF_TOKEN 
                 }
             }
-            await System.IO.File.WriteAllBytesAsync(X_DOVEValues.AvatarStoragePath(_hostingEnv) + _UserId, AvatarBuffer);
+            await System.IO.File.WriteAllBytesAsync(X_DOVEValues.AvatarStoragePath(_hostingEnv) + _UserId, AvatarBytes);
             //  X_DOVE_XSRF_TOKEN = Guid.NewGuid().ToString();
             //  TempData["X_DOVE_XSRF_TOKEN"] = X_DOVE_XSRF_TOKEN;
             return Json(new { status = true }); //  , X_DOVE_XSRF_TOKEN
         }
 
+        #region 
         /// <summary>
         /// PART FROM   https://www.cnblogs.com/wjshan0808/p/5909174.html
         /// THANK       https://www.cnblogs.com/wjshan0808/
         /// </summary>
         /// <param name="ImageBytes">The MemoryStream of image</param> 
         /// <returns></returns>
+        #endregion
         private byte[] MakeCircleImage(MemoryStream ImageMemoryStream)
         {
             var img = Image.FromStream(ImageMemoryStream);

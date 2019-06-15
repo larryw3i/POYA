@@ -12,8 +12,8 @@
 <div class="row">
     <div class="col col-4 col-sm-4 col-md-3">
         <form id="_UserAvatarForm">
-            <img name="UserAvatarImg" class="rounded-circle ZoomAvatar lazyload" />
-            <input id="_UserAvatarInput" type="file" accept="image/*" hidden />
+            <img name="UserAvatarImg" class="rounded-circle ZoomAvatar" />
+            <input id="_UserAvatarInput" type="file" accept=".jpg,.png,.jpeg" hidden />
         </form>
         <h6 id="_UploadAvatarMsgEle"></h6>
     </div>
@@ -134,7 +134,7 @@
             }
             if ($("#_UserAvatarInput").val() == "") return;
             var AvatarForm = new FormData();
-            AvatarForm.append("avatarForm", _file_);
+            AvatarForm.append("avatarFile", _file_);
             //  AvatarForm.append("X_DOVE-XSRF-TOKEN", _X_DOVE_XSRF_TOKEN_);
             $.ajax({
                 url: "/Home/UploadAvatar",

@@ -288,15 +288,13 @@ namespace POYA.Areas.EduHub.Controllers
         {
             if (ModelState.IsValid)
             {
-                #region 
-                /*
+                #region INTERVAL_THRESHOLD
                 var _CurrentDOPublishing = await _context.EArticle.OrderByDescending(p => p.DOPublishing).Select(p => p.DOPublishing).FirstOrDefaultAsync();
-                if ((DateTimeOffset.Now - _CurrentDOPublishing).Minutes < 30)
+                if ((DateTimeOffset.Now - _CurrentDOPublishing).Minutes < 5)
                 {
                     ModelState.AddModelError(string.Empty, _localizer["The system detects that you may be a robot"]);
-                    return View(eArticle);
+                    return await EArticleEditViewAsync(eArticle);
                 }
-                */
                 #endregion
 
                 if (eArticle.Title.Length < 2 || eArticle.Content.Length < 20)
@@ -323,30 +321,11 @@ namespace POYA.Areas.EduHub.Controllers
 
                 await SaveArticleFilesAsync(eArticle);
 
-                /*
-                if (eArticle.LAttachments?.Count() > 0)
-                {
-                    foreach (var i in eArticle.LAttachments)
-                    {
-                        var MD5_ = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, i);
-                        _EArticleFiles.Add(new EArticleFile { EArticleId = eArticle.Id, FileName = System.IO.Path.GetFileName(i.FileName), FileMD5 = MD5_, IsEArticleVideo = false });
-                    }
-                }
-                if (eArticle.LVideos?.Count() > 0)
-                {
-                    foreach (var i in eArticle.LVideos)
-                    {
-                        var MD5_ = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, i);
-                        _EArticleFiles.Add(new EArticleFile { EArticleId = eArticle.Id, FileName = System.IO.Path.GetFileName(i.FileName), FileMD5 = MD5_, IsEArticleVideo = true });
-                    }
-                }
-                await _context.EArticleFiles.AddRangeAsync(_EArticleFiles);
-                */
                 #endregion
                 await _context.SaveChangesAsync();
                 return Ok();    //  RedirectToAction(nameof(XIndex),new { SetId =Create_SetId});
             }
-            return View(eArticle);
+            return await EArticleEditViewAsync(eArticle);
         }
 
         #region
@@ -359,18 +338,24 @@ namespace POYA.Areas.EduHub.Controllers
                 return NotFound();
             }
 
-            TempData.Keep();
+            //  TempData.Keep();
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var eArticle = await _context.EArticle.FirstOrDefaultAsync(p => p.Id == id && p.UserId == UserId_);
             if (eArticle == null)
             {
                 return NotFound();
             }
-            ViewData["EArticleFiles"] = await _context.EArticleFiles.Where(p => p.EArticleId == id).ToListAsync();
-            //  eArticle.VideoSharedCodeSelectListItems = await GetVideoSharedCodeSelectListItemsForUser();
 
-            InitSelectListItem(eArticle);
-            return View(eArticle);
+            #region //
+            /*
+           ViewData["EArticleFiles"] = await _context.EArticleFiles.Where(p => p.EArticleId == id).ToListAsync();
+           //  eArticle.VideoSharedCodeSelectListItems = await GetVideoSharedCodeSelectListItemsForUser();
+
+           InitSelectListItem(eArticle);
+           */
+            #endregion
+
+            return await EArticleEditViewAsync (eArticle);
         }
 
         #region 
@@ -423,7 +408,7 @@ namespace POYA.Areas.EduHub.Controllers
                     }
                 }
             }
-            return View(eArticle);
+            return await EArticleEditViewAsync (eArticle);
         }
 
         #region 
@@ -470,6 +455,22 @@ namespace POYA.Areas.EduHub.Controllers
 
 
         #region DEPOLLUTION
+
+        #region 
+        /// <summary>
+        /// Initialize EArticleFiles and SelectListItems
+        /// </summary>
+        /// <param name="eArticle">EArticle</param>
+        /// <returns></returns>
+        #endregion
+        private async Task<IActionResult> EArticleEditViewAsync(EArticle eArticle)
+        {
+            ViewData["EArticleFiles"] = await _context.EArticleFiles.Where(p => p.EArticleId == eArticle.Id).ToListAsync();
+            //  eArticle.VideoSharedCodeSelectListItems = await GetVideoSharedCodeSelectListItemsForUser();
+
+            InitSelectListItem(eArticle);
+            return View(eArticle);
+        }
 
         #region 
         /// <summary>
