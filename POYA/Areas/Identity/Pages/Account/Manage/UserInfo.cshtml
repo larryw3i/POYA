@@ -4,15 +4,14 @@
 @{
     ViewData["Title"] = Localizer["Your information"];
     ViewData["ActivePage"] = ManageNavPages.UserInfo;
-    //  var X_DOVE_XSRF_TOKEN = Guid.NewGuid().ToString();
-    //  TempData[nameof(X_DOVE_XSRF_TOKEN)] = X_DOVE_XSRF_TOKEN;
 }
 <h4>@ViewData["Title"]</h4>
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
-    <div class="col col-4 col-sm-4 col-md-3">
+    <div class="col col-4 col-sm-4 col-md-3 User-Avatar">
         <form id="_UserAvatarForm">
-            <img name="UserAvatarImg" class="rounded-circle ZoomAvatar" title="@Localizer["jpg|jpeg|png|gif"]"/>
+            <img name="User_Avatar_Img" class="rounded-circle ZoomAvatar" title="@Localizer["The extension of the file can only be jpg, jpeg or png"]" 
+                 src="/Home/GetAvatar?random=@(new Random().Next(20))"/>
             <input id="_UserAvatarInput" type="file" accept=".jpg,.png,.jpeg" hidden />
         </form>
         <h6 id="_UploadAvatarMsgEle"></h6>
@@ -109,7 +108,7 @@
     <script>
         //========      VALUE   ========//
         var IsAvatarUploaded = false;
-        var _allowedAvatarFileExtensions = ["jpg","jpeg","png"];
+        var _allowedAvatarFileExtensions = ["jpg", "jpeg", "png"];
 
     </script>
     <script>
@@ -122,6 +121,7 @@
     <script>
         //========    SERVICE   ========//
         function UpdateUserAvatar() {
+            $("[name='User_Avatar_Img']").attr("src", "/Home/GetAvatar?random=" + Math.floor(Math.random() * 100 + 1));
             $("[name='UserAvatarImg']").attr("src", "/Home/GetAvatar?random=" + Math.floor(Math.random() * 100 + 1));
         }
 
@@ -204,17 +204,18 @@
             });
         });
 
-
     </script>
 }
 @section Styles {
     <style>
+        .User-Avatar{
+            text-align: center;
+        }
 
         #_UploadAvatarMsgEle {
             font-size: 90%;
             word-break: break-all;
             word-wrap: break-word;
-            text-align:center;
         }
 
         .form-group .checkbox label {

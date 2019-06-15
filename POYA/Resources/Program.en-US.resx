@@ -938,4 +938,7 @@
   <data name="The extension of the file can only be jpg, jpeg or png" xml:space="preserve">
     <value>The extension of the file can only be jpg, jpeg or png</value>
   </data>
+  <data name="Date of creating" xml:space="preserve">
+    <value>Date of creating</value>
+  </data>
 </root>

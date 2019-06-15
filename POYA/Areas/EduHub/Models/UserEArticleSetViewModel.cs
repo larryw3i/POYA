@@ -31,6 +31,7 @@ namespace POYA.Areas.EduHub.Models
         /// <summary>
         /// The default is DateTimeOffset.Now
         /// </summary>
+        [Display(Name="Date of creating")]
         #endregion
         public DateTimeOffset DOCreating { get; set; } = DateTimeOffset.Now;
 

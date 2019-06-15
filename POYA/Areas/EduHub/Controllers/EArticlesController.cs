@@ -115,6 +115,7 @@ namespace POYA.Areas.EduHub.Controllers
             ViewData["EArticleFile"] = _EArticleFiles;
             TempData[nameof(SetId)] = SetId;
             ViewData[nameof(UserEArticleSet)] = SetId == LValue.DefaultEArticleSetId ? new UserEArticleSet { Name = "Default", Label = string.Empty, Comment = string.Empty } : await _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == SetId);
+            ViewData["UserId_"] = UserId_;
             return View();
         }
 

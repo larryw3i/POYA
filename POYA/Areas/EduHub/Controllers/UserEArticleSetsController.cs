@@ -172,7 +172,7 @@ namespace POYA.Areas.EduHub.Controllers
         #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,UserId,Name,Label,DOCreating,Comment")] UserEArticleSet userEArticleSet)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Label,Comment")] UserEArticleSet userEArticleSet)
         {
             if (id != userEArticleSet.Id)
             {
@@ -184,7 +184,17 @@ namespace POYA.Areas.EduHub.Controllers
                 try
                 {
                     var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-                    _context.Update(userEArticleSet);
+                    var _UserEArticleSet = await _context.UserEArticleSet.FirstOrDefaultAsync(p=>p.UserId==_UserId && p.Id==userEArticleSet.Id);
+                    if (_UserEArticleSet == null) return NotFound();
+
+                    #region UPDATE
+
+                    _UserEArticleSet.Name = userEArticleSet.Name;
+                    _UserEArticleSet.Label = userEArticleSet.Label;
+                    _UserEArticleSet.Comment = userEArticleSet.Comment;
+                    #endregion
+
+                    //  _context.Update(userEArticleSet);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

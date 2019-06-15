@@ -17,7 +17,7 @@
         <a asp-action="Create">Create New</a>
     </p>
 *@
-
+<div id="EArticleSetContextMenu_Ele"></div>
 <div class="row">
     <div class="col  col-12  EArticle-Home-Img-Ele">
         <div class="float-left" onclick="location.href = '@(Url.Action("Index","EArticles"))'"
@@ -41,11 +41,15 @@
     @foreach (var i in Model)
     {
         <div class="col col-4 col-md-3 col-lg-2" style="margin-top:10px">
-            <div class="card" cardid="@(i.Id)">
+            <div class="card EArticleSetCard" SetId="@(i.Id)">
                 <div class="card-body text-center">
                     <h5 class="card-title">@(i.Name)</h5>
-                    <p class="card-text">@(i.Label)</p>
-                    @*<a href="#" class="btn btn-primary">@Localizer["ADD"]</a>*@
+                    <span class="card-text">@(i.Label)</span> 
+                    <span>
+                        @*
+                        <img src="~/img/edit.webp" class="float-right EArticleSetOperationEle"  SetId="@@(i.Id)" style="width:20px;height:20px;position:absolute" />
+                        *@
+                    </span>
                 </div>
             </div>
         </div>
@@ -53,19 +57,48 @@
 
 </div>
 
-
 @section Scripts{
     <script>
-            /*====  VALUE       ====*/
-            var InitHomeComment = "@(_UserEArticleHomeInfo.Comment)";
-            var ConverImgMD5 = "";
+    /*====  VALUE       ====*/
+    var InitHomeComment = "@(_UserEArticleHomeInfo.Comment)";
+    var ConverImgMD5 = "";
+
+    var AddEArticleSetId = "@(LValue.AddEArticleSetId)";
+    var DefaultEArticleSetId = "@(LValue.DefaultEArticleSetId)";
+    /**
+     * EArticleSetContextMenu_${SetId}
+     * @@param {String}SetId -The EArticle set id
+     */
+    var _EArticleSetContextMenuId =(SetId)=> `EArticleSetContextMenu_${SetId}`;
+    /**
+     * The Context Menu of EArticle set
+     * @@param {String}SetId -The EArticle set id
+     */
+    function EArticleSetContextMenu(SetId) {
+        var CommonSetIsEle = (SetId == AddEArticleSetId ||SetId==DefaultEArticleSetId)?``: `
+        <div>
+            <button type="button" class="btn btn-success" onclick="GoToEArticleSetEdit('${SetId}')">@Localizer["Edit"]</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-success" onclick="GoToEArticleSetDelete('${SetId}')">@Localizer["Delete"]</button>
+        </div>
+        `;
+        return `
+        <div class="EArticle-Set-Context-Menu" id="${_EArticleSetContextMenuId(SetId)}" SetId="${SetId}">
+            <div>
+                <button type="button" class="btn btn-success" onclick="GoToEArticleSetDetails('${SetId}')">${SetId==AddEArticleSetId?"@Localizer["Add"]":"@Localizer["Details"]"} </button>
+            </div>
+            ${CommonSetIsEle}
+        </div>
+        `;
+    }
 
     </script>
 
 
     <script>
-            /*====  UI          ====*/
-            //  ONCLICK <<<<<<
+        /*====  UI          ====*/
+        //  ONCLICK <<<<<<
 
 
         /**
@@ -76,13 +109,13 @@
         */
         function MakeAlert(ClassType, Message) {
             var _Ele =
-                '\
-                <div class="alert alert-'+ (ClassType) + ' alert-dismissible fade show" role="alert">' + Message + '\
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
-                    <span aria-hidden="true">&times;</span>\
-                    </button>\
-                </div>\
-                ';
+                `
+                <div class="alert alert-${ClassType} alert-dismissible fade show" role="alert">${Message}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                `;
             $(".xbody").prepend(_Ele);
             setTimeout(function () {
                 $('.alert').alert('close');
@@ -129,92 +162,161 @@
                 }
             });
 
-    }
+        }
     </script>
 
 
     <script>
-        /*====  DATA        ====*/
+//====  DATA        ====//
 
-        function ReadMD5() {
-            {
-                var BlobSlice_ = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
-                    ChunkSize = 20 * 1024 * 1024,
-                    Chunks = Math.ceil(_File.size / ChunkSize),
-                    CurrentChunk = 0,
-                    Spark_ = new SparkMD5.ArrayBuffer(),
-                    FileReader_ = new FileReader();
-            }
-
-            FileReader_.onload = function (e) {
-                Spark_.append(e.target.result);
-                CurrentChunk++;
-                if (CurrentChunk < Chunks) {
-                    loadNext();
-                } else {
-                    ConverImgMD5 = String(Spark_.end());
-                    UploadEArticleHomeInfo();
-                }
-            };
-            FileReader_.onerror = function () {
-                MakeAlert("danger","@Localizer["Some errors has occurred"]");
-            };
-            function loadNext() {
-                var Start = CurrentChunk * ChunkSize,
-                    End = ((Start + ChunkSize) >= _File.size) ? _File.size : Start + ChunkSize;
-                FileReader_.readAsArrayBuffer(BlobSlice_.call(File_, Start, End));
-            }
-            loadNext();
-        }
-
-        function CheckKeyCodeConfirmation() {
-            var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
-            if (keyCode == 13) {
-                var _Comment = $("#UserEArticleHomeInfo_Comment").val();
-                if (InitHomeComment != _Comment) {
-                    UploadEArticleHomeInfo();
-                }
-            }
-        }
-
-    </script>
-
-    <script>
-
-        $(document).ready(function () {
-            //  InitHomeCover();
-            //  $(".EArticle-Home-Avatar").attr("src",  + Math.floor(Math.random() * 100 + 1));
-            //  $(".EArticle-Home-BgImg-Edit").attr("src", "/img/edit.webp");
-
-            $(".EArticle-Home-Img-Ele").css("background-image",
-            'url("@(Url.Action("GetEArticleHomeCover", new { area="EduHub",id=_UserEArticleHomeInfo.Id}))")');
-
-            $("#UserEArticleHomeInfo_Conver").on("click", function () {
-                $("#UserEArticleHomeInfo_Conver_Input").click();
-            });
-            $("#UserEArticleHomeInfo_Comment").keypress(function () {
-                CheckKeyCodeConfirmation();
-            });
-
-            $("#UserEArticleHomeInfo_Conver_Input").on("change", function () {
-                //  ReadMD5();
-                UploadEArticleHomeInfo();
-            });
-
-            $(".card").on("click", function () {
-                var _cardid = $(this).attr("cardid");
-                window.location.href = _cardid == "@(LValue.AddEArticleSetId)" ?
+    /**
+     * Go to the EArticle Set
+     * @@param {String}SetId -The Card id
+     */
+    function GoToEArticleSetDetails(SetId) {
+           window.location.href = SetId == "@(LValue.AddEArticleSetId)" ?
                     "@(Url.Action("Create","UserEArticleSets",new { area="EduHub"}))" :
-                    `@(Url.Action("XIndex","EArticles",new { area = "EduHub" }))?SetId=${_cardid}`;
-            });
+            `@(Url.Action("XIndex","EArticles",new { area = "EduHub" }))?SetId=${SetId}`;
+        event.preventDefault();
+    }
+    /**
+     * Go to the EArticle Set
+     * @@param {String}SetId -The Card id
+     */
+    function GoToEArticleSetEdit(SetId) {
+        window.location.href = `/EduHub/UserEArticleSets/Edit/${SetId}`;
+        event.preventDefault();
+    }
+    /**
+     * Go to the EArticle Set
+     * @@param {String}SetId -The Card id
+     */
+    function GoToEArticleSetDelete(SetId) {
+        window.location.href = `/EduHub/UserEArticleSets/Delete/${SetId}`;
+        event.preventDefault();
+    }
 
+        /**
+         * Show context menu
+         * @@param {String} SetId -The set id
+         */
+    function ShowEArticleSetContextMenu(SetId) {
+        //  if ($(`#` + _EArticleSetContextMenuId(SetId)).length > 0) return false;
+        $(".EArticle-Set-Context-Menu").remove();
+        var _EArticleSetContextMenu = $(EArticleSetContextMenu(SetId));
+        $("#EArticleSetContextMenu_Ele").append(_EArticleSetContextMenu);
+        _EArticleSetContextMenu.offset({ top: window.event.pageY, left:  window.event.pageX });
+
+        return false;
+    }
+
+    function RemoveEArticleSetContextMenu(SetId) {
+        if ($(`#` + _EArticleSetContextMenuId(SetId)).length < 1) return;
+        $(`#` + _EArticleSetContextMenuId(SetId)).remove();
+    }
+
+
+    function ReadMD5() {
+        {
+            var BlobSlice_ = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
+                ChunkSize = 20 * 1024 * 1024,
+                Chunks = Math.ceil(_File.size / ChunkSize),
+                CurrentChunk = 0,
+                Spark_ = new SparkMD5.ArrayBuffer(),
+                FileReader_ = new FileReader();
+        }
+
+        FileReader_.onload = function (e) {
+            Spark_.append(e.target.result);
+            CurrentChunk++;
+            if (CurrentChunk < Chunks) {
+                loadNext();
+            } else {
+                ConverImgMD5 = String(Spark_.end());
+                UploadEArticleHomeInfo();
+            }
+        };
+        FileReader_.onerror = function () {
+            MakeAlert("danger","@Localizer["Some errors has occurred"]");
+        };
+        function loadNext() {
+            var Start = CurrentChunk * ChunkSize,
+                End = ((Start + ChunkSize) >= _File.size) ? _File.size : Start + ChunkSize;
+            FileReader_.readAsArrayBuffer(BlobSlice_.call(File_, Start, End));
+        }
+        loadNext();
+        }
+
+    function CheckKeyCodeConfirmation() {
+        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
+        if (keyCode == 13) {
+            var _Comment = $("#UserEArticleHomeInfo_Comment").val();
+            if (InitHomeComment != _Comment) {
+                UploadEArticleHomeInfo();
+            }
+        }
+    }
+
+    </script>
+
+    <script>
+
+    $(document).ready(function () {
+
+        $(".EArticleSetCard").contextmenu(function () {
+            var SetId = $(this).attr("SetId");
+            event.preventDefault();
+            return ShowEArticleSetContextMenu(SetId);
         });
+
+        $(document).on("mouseover",".EArticleSetCard",function () {
+            var SetId = $(this).attr("SetId");
+            //  console.log(">>>>>>"+SetId);
+            RemoveEArticleSetContextMenu(SetId);
+        });
+
+
+        $(".EArticle-Home-Img-Ele").css("background-image",
+        'url("@(Url.Action("GetEArticleHomeCover", new { area="EduHub",id=_UserEArticleHomeInfo.Id}))")');
+
+        $("#UserEArticleHomeInfo_Conver").on("click", function () {
+            $("#UserEArticleHomeInfo_Conver_Input").click();
+        });
+        $("#UserEArticleHomeInfo_Comment").keypress(function () {
+            CheckKeyCodeConfirmation();
+        });
+
+        $("#UserEArticleHomeInfo_Conver_Input").on("change", function () {
+            //  ReadMD5();
+            UploadEArticleHomeInfo();
+        });
+
+        $(".card").on("click", function () {
+            var SetId = $(this).attr("SetId");
+            GoToEArticleSetDetails(SetId);
+        });
+
+    });
 
     </script>
 }
 
 @section Styles{
     <style>
+        .EArticle-Set-Context-Menu {
+            border: solid;
+            border-color:coral;
+            border-radius: 8px;
+            z-index: 999;
+            padding: 2px;
+            position: absolute;
+            text-align:center;
+        }
+        .EArticle-Set-Context-Menu button{
+            margin-top:2px;
+            zoom:80%;
+        }
+
         .card {
             font-size: 80%;
             width: 90%;

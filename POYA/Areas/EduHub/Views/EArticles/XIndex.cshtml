@@ -56,15 +56,23 @@
     }
 </div>
 
-<div class="row" style="margin-top:10px;">
-    <div class="col col-4 col-sm-3 col-md-2 col-lg-2">
-        <a asp-action="Index" asp-controller="UserEArticleSets" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
-    </div>
-    <div class="col offset-sm-1 offset-md-2 offset-lg-2">
+<div class="col col-12" style="margin-top:10px;">
+    <div class="float-right">
         @(Html.PagedListPager((IPagedList<EArticle>)ViewData["_EArticles"], _page => Url.Action("XIndex", new { SetId = _SetId, _page = _page }),
             PagedListRenderOptions.OnlyShowFivePagesAtATime))
     </div>
 </div>
+
+<div id="OperationEle">
+    <a id="BackA" class="btn btn-info">&laquo; @Localizer["Back"]</a>
+    @if (_UserEArticleSet.UserId == ViewData["UserId_"].ToString())
+    {
+        <a asp-action="Edit" asp-controller="UserEArticleSets" asp-route-id="@_UserEArticleSet.Id" class="btn btn-primary">@Localizer["Edit"]</a>
+        <a asp-action="Delete" asp-controller="UserEArticleSets" asp-route-id="@_UserEArticleSet.Id" class="btn btn-danger">@Localizer["Delete"]</a>
+    }
+</div>
+
+
 @section Scripts{
     <script>
         /**
@@ -89,9 +97,14 @@
     </script>
 }
 
+
 @section Styles{
     <link href="~/css/PagedList.css" rel="stylesheet" type="text/css" />
-    <style>
+    <style>  
+        #OperationEle {
+            position: fixed;
+            bottom: 50px;
+        }
         .User-EArticle-Set {
             text-align: center;
             border-radius: 20px;

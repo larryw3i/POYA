@@ -938,4 +938,7 @@
   <data name="The extension of the file can only be jpg, jpeg or png" xml:space="preserve">
     <value>文件的扩展只能是jpg, jpeg 或 png</value>
   </data>
+  <data name="Date of creating" xml:space="preserve">
+    <value>创建时间</value>
+  </data>
 </root>
