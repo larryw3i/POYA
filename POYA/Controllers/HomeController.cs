@@ -103,6 +103,12 @@ namespace POYA.Controllers
             {
                 return Json(new { status = false, msg = "ExceedSize" });   //  _localizer["Oops...., the size of avatar should be less than 1M"] 
             }
+
+            var _allowedAvatarFileExtensions = new string[] { "image/jpg", "image/jpeg", "image/png" };
+            if (!_allowedAvatarFileExtensions.Contains(avatarFile.ContentType))
+            {
+                return Json(new { status = false,msg="RefuseExtension"});
+            }
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var memoryStream = new MemoryStream();
             await avatarFile.CopyToAsync(memoryStream);

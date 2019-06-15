@@ -8,7 +8,7 @@
         height: 50px;
         width: 50px;
         position: absolute;
-        box-shadow: 0px 0px 0px 2px #ff6a00 inset;
+        box-shadow: 0px 0px 0px 0.5px #ff6a00;
         opacity:0.0;
         animation: InitialAvatar 0.4s linear 1 forwards;
     }
@@ -19,15 +19,16 @@
         }
 
     @@keyframes InitialAvatar{
-        100%{
-            opacity:1.0;
+        100% {
+            opacity: 1.0;
+            box-shadow: 0px 0px 0px 2px #ff6a00;
         }
     }
 
     @@keyframes NavAvatarZoomIn {
         
         100% {
-            box-shadow: 0px 0px 0px 2px #ff00dc;
+            box-shadow: 0px 0px 0px 4px #ff00dc;
         }
     }
 </style>

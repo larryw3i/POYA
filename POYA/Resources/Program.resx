@@ -935,4 +935,7 @@
   <data name="The system detects that you may be a robot" xml:space="preserve">
     <value>The system detects that you may be a robot</value>
   </data>
+  <data name="The extension of the file can only be jpg, jpeg or png" xml:space="preserve">
+    <value>The extension of the file can only be jpg, jpeg or png</value>
+  </data>
 </root>

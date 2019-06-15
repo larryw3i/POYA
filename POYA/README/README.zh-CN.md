@@ -30,7 +30,7 @@
     "userName": "xxxxxx@xxxxxxxx.xxxx",
     "host": "xxxxxx.xxxxx.xxxx",
     "password": "xxxxx",
-    "port": 00,
+    "port": 0,
     "enableSsl": false
   },
   "ErrorLogHandle": {

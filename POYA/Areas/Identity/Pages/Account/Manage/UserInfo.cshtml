@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col col-4 col-sm-4 col-md-3">
         <form id="_UserAvatarForm">
-            <img name="UserAvatarImg" class="rounded-circle ZoomAvatar" />
+            <img name="UserAvatarImg" class="rounded-circle ZoomAvatar" title="@Localizer["jpg|jpeg|png|gif"]"/>
             <input id="_UserAvatarInput" type="file" accept=".jpg,.png,.jpeg" hidden />
         </form>
         <h6 id="_UploadAvatarMsgEle"></h6>
@@ -95,7 +95,7 @@
                             @Html.DisplayNameFor(m => m.Input.IsMaritalStatusOvert)
                         </label>
                     </div>
-                    <input asp-for="Input.MaritalStatus" class="form-control"/>
+                    <input asp-for="Input.MaritalStatus" class="form-control" />
                     <span asp-validation-for="Input.MaritalStatus" class="text-danger"></span>
                 </div>
             </div>
@@ -109,6 +109,7 @@
     <script>
         //========      VALUE   ========//
         var IsAvatarUploaded = false;
+        var _allowedAvatarFileExtensions = ["jpg","jpeg","png"];
 
     </script>
     <script>
@@ -132,6 +133,25 @@
                 _UploadAvatarMsgEle_.html("@Localizer["Oops...., the size of avatar should be less than 1M"]");
                 return;
             }
+            var _value_ = $("#_UserAvatarInput").val();
+            var index = _value_.lastIndexOf(".");
+            var _extension = _value_.substr(index + 1);
+            var _isExtensionAllowed = false;
+            //  console.log(">>>>" + _extension);
+            _allowedAvatarFileExtensions.forEach((value, index, array) => {
+                //  console.log(value);
+                if (_extension == value) {
+                    _isExtensionAllowed = true;
+                    //  console.log(">>>>>" + _isExtensionAllowed);
+                    return false;
+                }
+            });
+            if (!_isExtensionAllowed) {
+                //  console.log(">>>>>0" + _isExtensionAllowed);
+                _UploadAvatarMsgEle_.html("@Localizer["The extension of the file can only be jpg, jpeg or png"]");
+                return;
+            }
+
             if ($("#_UserAvatarInput").val() == "") return;
             var AvatarForm = new FormData();
             AvatarForm.append("avatarFile", _file_);
@@ -153,6 +173,8 @@
                     } else {
                         if (data["msg"] == "ExceedSize") {
                             _UploadAvatarMsgEle_.html("@Localizer["Oops...., the size of avatar should be less than 1M"]");
+                        } else if (data["msg"] == "RefuseExtension") {
+                            _UploadAvatarMsgEle_.html("@Localizer["The extension of the file can only be jpg, jpeg or png"]");
                         }
                     }
                 },
@@ -171,7 +193,7 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $("input").attr("autocomplete","off");
+            $("input").attr("autocomplete", "off");
             $("#_UserAvatarForm img:first").on("click", function () {
                 _UserAvatarFormClick();
                 event.preventDefault();
@@ -187,11 +209,12 @@
 }
 @section Styles {
     <style>
-        
+
         #_UploadAvatarMsgEle {
             font-size: 90%;
             word-break: break-all;
             word-wrap: break-word;
+            text-align:center;
         }
 
         .form-group .checkbox label {
