@@ -258,6 +258,9 @@ function KeepLogin() {
 //========   SERVICE_END    ========//
 
 //========      DATA        ========//
+function NewGuid() {
+    return `${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}-${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}-4${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1).substr(0, 3)}-${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}-${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}`.toLowerCase();
+}
 
 /**
  * Set key and value in querystring

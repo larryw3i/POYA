@@ -944,4 +944,10 @@
   <data name="Create directory in {0}" xml:space="preserve">
     <value>在 {0} 新建目录</value>
   </data>
+  <data name="The file is selected" xml:space="preserve">
+    <value>这个文件已经被选择了</value>
+  </data>
+  <data name="Reading" xml:space="preserve">
+    <value>正在读取</value>
+  </data>
 </root>

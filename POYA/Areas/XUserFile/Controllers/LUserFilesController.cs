@@ -206,14 +206,14 @@ namespace POYA.Areas.XUserFile.Controllers
         // POST: LUserFiles/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
+        #endregion
         public async Task<IActionResult> Create([FromForm] LFilePost XFilePost)
         {
             //  [Bind("Id,MD5,UserId,SharedCode,DOGenerating,Name,InDirId")] LUserFile lUserFile)
 
-            if (XFilePost._LFile.Length > 0)
+            if (XFilePost.LFile.Length > 0)
             {
                 var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                 var _LUserFiles = await _context.LUserFile.Where(p => p.UserId == UserId_).ToListAsync();
@@ -222,7 +222,7 @@ namespace POYA.Areas.XUserFile.Controllers
                     return Ok(new {Status=false, Msg =_localizer[ "The storage space is used up"] });
                 }
                 var MemoryStream_ = new MemoryStream();
-                await XFilePost._LFile.CopyToAsync(MemoryStream_);
+                await XFilePost.LFile.CopyToAsync(MemoryStream_);
                 var FileBytes = MemoryStream_.ToArray();
                 var MD5_ = _xUserFileHelper.GetFileMD5(FileBytes);
                 var FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + MD5_;
@@ -239,7 +239,7 @@ namespace POYA.Areas.XUserFile.Controllers
                     UserId = UserId_,
                     MD5 = MD5_,
                     InDirId = XFilePost.InDirId,
-                    Name = XFilePost._LFile.FileName,
+                    Name = XFilePost.LFile.FileName,
                     //  ContentType = _LFilePost._LFile.ContentType ?? "text/plain"
                 });
                 await _context.SaveChangesAsync();

@@ -944,4 +944,10 @@
   <data name="Create directory in {0}" xml:space="preserve">
     <value>Create directory in {0}</value>
   </data>
+  <data name="The file is selected" xml:space="preserve">
+    <value>The file is selected</value>
+  </data>
+  <data name="Reading" xml:space="preserve">
+    <value>Reading</value>
+  </data>
 </root>

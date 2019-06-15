@@ -265,6 +265,10 @@
   <ItemGroup>
     <Folder Include="Areas\EduHub\Data\EArticleFiles\" />
     <Folder Include="Areas\EduHub\Data\EArticleFiles\" />
+    <Folder Include="Areas\LFile\Controllers\" />
+    <Folder Include="Areas\LFile\Data\" />
+    <Folder Include="Areas\LFile\Models\" />
+    <Folder Include="Areas\LFile\Views\" />
     <Folder Include="Areas\XAd\Controllers\" />
     <Folder Include="Areas\XAd\Data\" />
     <Folder Include="Areas\XAd\Models\" />

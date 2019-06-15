@@ -199,11 +199,14 @@ namespace POYA.Areas.XUserFile.Models
 
     public class LFilePost
     {
+        #region 
+
         /// <summary>
         /// The id for callback
         /// </summary>
+        #endregion
         public int Id { get; set; }
-        public IFormFile _LFile { get; set; }
+        public IFormFile LFile { get; set; }
         public Guid InDirId { get; set; }
     }
 
