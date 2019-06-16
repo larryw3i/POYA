@@ -20,18 +20,21 @@
         </div>
     </div>
 *@
-<hr />
-<div class="row">
-    <div class="col col-12 User-EArticle-Set">
-        <span style="font-size:250%;font-weight:bolder">@(_UserEArticleSet.Name)</span><br />
-        <span class="float-right">
-            <span style="font-size:80%">@(_UserEArticleSet.Label)</span><br />
-            <span style="font-size:80%">@(_UserEArticleSet.Comment)</span><br />
-            <a asp-action="Create" asp-route-SetId="@(_SetId)">@Localizer["Write"] &raquo;</a>
-        </span>
+    <hr />
+    <div class="row">
+        <div class="col col-12 User-EArticle-Set">
+            <span style="font-size:250%;font-weight:bolder">@(_UserEArticleSet.Name)</span>
+            <br />
+            <span class="float-right">
+                <span style="font-size:80%">@(_UserEArticleSet.Label)</span>
+                <br />
+                <span style="font-size:80%">@(_UserEArticleSet.Comment)</span>
+                <br />
+                <a asp-action="Create" asp-route-SetId="@(_SetId)">@Localizer["Write"] &raquo;</a>
+            </span>
+        </div>
     </div>
-</div>
-<div class="row">
+    <div class="row">
     @foreach (var a in (ViewData["_EArticles"] as IPagedList<EArticle>))
     {
         var _EArticleFiles = EArticleFiles.FirstOrDefault(p => p.EArticleId == a.Id);
@@ -39,13 +42,13 @@
             <div class="card" name="EArticleHomeCard" style="margin-top:6px;" onclick="GoToDetails('@a.Id')">
                 @if (_EArticleFiles == null)
                 {
-                    <div class="card-img-top card-img-top-text" alt="@(a.Title)">
-                        <span style="font-size:80%;zoom:80%;">@(Html.Raw(a.Content))</span>
-                    </div>
+                <div class="card-img-top card-img-top-text" alt="@(a.Title)">
+                    <span style="font-size:80%;zoom:80%;">@(Html.Raw(a.Content))</span>
+                </div>
                 }
                 else
                 {
-                    <video src="@Url.Action("GetFile", "LUserFiles", new { id = EArticleFiles.FirstOrDefault(p=>p.EArticleId==a.Id).Id, area = "XUserFile" })" class="card-img-top" alt="@(a.Title)" preload="metadata"></video>
+                <video src="@Url.Action("GetFile", "LUserFiles", new { id = EArticleFiles.FirstOrDefault(p=>p.EArticleId==a.Id).Id, area = "XUserFile" })" class="card-img-top" alt="@(a.Title)" preload="metadata"></video>
                 }
                 <div class="card-body">
                     <p class="card-text">
@@ -55,30 +58,30 @@
             </div>
         </div>
     }
-</div>
+    </div>
 
-<div class="float-right PageEle">
-    <div>
-        <div class="form-inline">
-            <input type="text" style="width:70px;" class="form-control" id="_pageSize" title="@Localizer["Press ENTER to save"]" value="@_pageSize"/>
+    <div class="float-right PageEle">
+        <div>
+            <div class="form-inline">
+                <input type="text" style="width:70px;" class="form-control" id="_pageSize" title="@Localizer["Press ENTER to save"]" value="@_pageSize"/>
             @(Html.PagedListPager((IPagedList<EArticle>)ViewData["_EArticles"], _page => Url.Action("XIndex", new { SetId = _SetId, _page = _page }),
 PagedListRenderOptions.OnlyShowFivePagesAtATime))
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-<div id="OperationEle">
-    <a id="BackA" class="btn btn-info">&laquo; @Localizer["Back"]</a>
+        <div id="OperationEle">
+            <a id="BackA" class="btn btn-info">&laquo; @Localizer["Back"]</a>
     @if (_UserEArticleSet.UserId == ViewData["UserId_"].ToString())
     {
-        <a asp-action="Edit" asp-controller="UserEArticleSets" asp-route-id="@_UserEArticleSet.Id" class="btn btn-primary">@Localizer["Edit"]</a>
-        <a asp-action="Delete" asp-controller="UserEArticleSets" asp-route-id="@_UserEArticleSet.Id" class="btn btn-danger">@Localizer["Delete"]</a>
+            <a asp-action="Edit" asp-controller="UserEArticleSets" asp-route-id="@_UserEArticleSet.Id" class="btn btn-primary">@Localizer["Edit"]</a>
+            <a asp-action="Delete" asp-controller="UserEArticleSets" asp-route-id="@_UserEArticleSet.Id" class="btn btn-danger">@Localizer["Delete"]</a>
     }
-</div>
+        </div>
 
 
 @section Scripts{
-    <script>
+        <script>
         /**
          *
          * @@param { string} Id
@@ -98,13 +101,13 @@ PagedListRenderOptions.OnlyShowFivePagesAtATime))
                 */
             //  #endregion
         });
-    </script>
+        </script>
 }
 
 
 @section Styles{
-    <link href="~/css/PagedList.css" rel="stylesheet" type="text/css" />
-    <style>
+        <link href="~/css/PagedList.css" rel="stylesheet" type="text/css" />
+        <style>
 
         #_pageSize{
             width:80px;
@@ -155,9 +158,7 @@ PagedListRenderOptions.OnlyShowFivePagesAtATime))
         #SortBySelect {
             zoom: 120%;
             margin-top: 10px;
-        }
-
-        [name='EArticleHomeCard'] {
+        } [name='EArticleHomeCard'] {
             max-height: 120px;
             overflow: hidden
         }
@@ -190,60 +191,60 @@ PagedListRenderOptions.OnlyShowFivePagesAtATime))
         .EArticleSearchCol {
             zoom: 80%;
         }
-    </style>
+        </style>
 }
 
 
 @*
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
                     @Html.DisplayNameFor(model => model.UserId)
-                </th>
-                <th>
+                    </th>
+                    <th>
                     @Html.DisplayNameFor(model => model.SetId)
-                </th>
-                <th>
+                    </th>
+                    <th>
                     @Html.DisplayNameFor(model => model.CategoryId)
-                </th>
-                <th>
+                    </th>
+                    <th>
                     @Html.DisplayNameFor(model => model.AdditionalCategory)
-                </th>
-                <th>
+                    </th>
+                    <th>
                     @Html.DisplayNameFor(model => model.ComplexityRank)
-                </th>
-                <th>
+                    </th>
+                    <th>
                     @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th>
+                    </th>
+                    <th>
                     @Html.DisplayNameFor(model => model.Content)
-                </th>
-                <th>
+                    </th>
+                    <th>
                     @Html.DisplayNameFor(model => model.IsLegal)
-                </th>
-                <th>
+                    </th>
+                    <th>
                     @Html.DisplayNameFor(model => model.DOPublishing)
-                </th>
-                <th>
+                    </th>
+                    <th>
                     @Html.DisplayNameFor(model => model.DOUpdating)
-                </th>
-                <th>
+                    </th>
+                    <th>
                     @Html.DisplayNameFor(model => model.ClickCount)
-                </th>
-                <th>
+                    </th>
+                    <th>
                     @Html.DisplayNameFor(model => model.ClassId)
-                </th>
-                <th>
+                    </th>
+                    <th>
                     @Html.DisplayNameFor(model => model.LGradeId)
-                </th>
-                <th>
+                    </th>
+                    <th>
                     @Html.DisplayNameFor(model => model.ContentType)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
             @foreach (var item in Model)
             {
                 <tr>
@@ -296,6 +297,6 @@ PagedListRenderOptions.OnlyShowFivePagesAtATime))
                     </td>
                 </tr>
             }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 *@
