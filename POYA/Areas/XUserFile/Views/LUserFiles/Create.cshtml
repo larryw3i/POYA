@@ -40,11 +40,11 @@
             `<strong>@Localizer["Oops"]. . .</strong>@Localizer["File is limit to less than"]
             ${OptimizeSizeShow( @(LValue.MaxMultipartBodyLengthLimit/1_000_000))}`;
 
-        var RemoveFileDIV = (Id) => `RemoveFileDIV${Id}`;
-        var FileName = (Id) => `FileName_${Id}`;
-        var UploadProgress = (Id ) => `UploadProgress${Id}`;
-        var RemoveUploadedFileInput = (Id) => `RemoveUploadedFileInput${Id}`;
-        var FileInput = (Id) => `FileInput_${Id}`;
+        var GetRemoveFileDIVId = (Id) => `RemoveFileDIV_${Id}`;
+        var GetFileNameId = (Id) => `FileName_${Id}`;
+        var GetUploadProgressId = (Id ) => `UploadProgress_${Id}`;
+        //  var RemoveUploadedFileInput = (Id) => `RemoveUploadedFileInput${Id}`;
+        var GetFileInputId = (Id) => `FileInput_${Id}`;
         /**
         * Return the alert html string
         * @@param {string} ClassType The class type >_
@@ -64,15 +64,19 @@
         */
         var FileInfo = (Id = NewGuid()) => `
                         <div id='${Id}' name="FileDIV">
-                            <input id="${FileInput(Id)}" LID="${Id}" name="FileInput" type="file" onchange="GetMD58AddToArray('${Id}')" hidden/>
+                            <input id="${GetFileInputId(Id)}" LID="${Id}" name="FileInput" type="file" onchange="GetMD58AddToArray('${Id}')" hidden/>
                             <span>
-                                <span id="${RemoveFileDIV(Id)}" name="RemoveFileDIV" onclick="RemoveFileDIV('${Id}')">&times</span>
-                                <span id="${UpdateProgress(Id)}"></span>
-                                <span id="${FileName(Id)}" name="FileName"></span>
+                                <span id="${GetRemoveFileDIVId(Id)}" name="RemoveFileDIV" onclick="RemoveFileDIV('${Id}')">&times</span>
+                                <span id="${GetUploadProgressId(Id)}" class="UploadProgress"></span>
+                                <span id="${GetFileNameId(Id)}" name="FileName"></span>
                             </span>
                         </div>`;
 
         //========  UI      ========//
+
+        function MakeFileDivTitleToMD5(Id,MD5) {
+            $(`#${Id}`).attr("title",`MD5: ${MD5}`);
+        }
 
         /**
         * Make a alert
@@ -107,32 +111,32 @@
         * @@param {String}  Id The id of main div
         * @@param {string} Progress_ The progress , the percentage and the tip of finish
         */
-        function UpdateProgress(Id , Progress_) {
-                $(`#${UploadProgress(Id)}`).html(Progress_)
-            }
+        function UpdateProgress(Id, Progress_) {
+            $(`#${GetUploadProgressId(Id)}`).html(Progress_);
+        }
 
         function ShowLastFilePath(Id) {
-            $(`#${FileName(Id)}`).text($("input[name='FileInput']:last").val());
-                //  $("#" + Id).show();
+            $(`#${GetFileNameId(Id)}`).text($("input[name='FileInput']:last").val());
+            //  $("#" + Id).show();
 
-            }
+        }
 
-        function ReadMD5FinishTip(Id ) {
-                    UpdateProgress(Id,"");
+        function ReadMD5FinishTip(Id) {
+            UpdateProgress(Id, "");
 
-            }
+        }
 
         function SelectFile() {
-                if ($("input[name='FileInput']:last").val() == "") {
-                    //  $("input[name='FileInput']:last").hide();
-                    $("input[name='FileInput']:last").click();
-                } else {
-                    $(".form-group").append(FileInfo());
-                    ShowOrHideLastRemoveFileDIV(false);
-                    /// $("input[name='FileInput']:last").hide();
-                    $("input[name='FileInput']:last").click();
-                }
+            if ($("input[name='FileInput']:last").val() == "") {
+                //  $("input[name='FileInput']:last").hide();
+                $("input[name='FileInput']:last").click();
+            } else {
+                $(".form-group").append(FileInfo());
+                ShowOrHideLastRemoveFileDIV(false);
+                /// $("input[name='FileInput']:last").hide();
+                $("input[name='FileInput']:last").click();
             }
+        }
 
         /**
         * Show or hide last RemoveFileDIV, or it leads to a poor user experience
@@ -150,110 +154,113 @@
         * Remove file input after file is "upload"
         * @@param  {String}  Id The id of file div
         */
-        function RemoveUploadedFileInput  (Id = $.guid++)  {
-            $(`#${FileInput(Id)}`).remove();
+        function RemoveUploadedFileInput  (Id )  {
+            $(`#${GetFileInputId(Id)}`).remove();
         };
 
 
     //========  SERVICE     ========//
-            function CheckMD58UploadFiles () {
-                if (MD5Array.length < 1) return;
-                if (document.getElementsByName("FileInput").length < 1) return;
-                var File8MD5s = new Array();
-                MD5Array.forEach(function (value, index, array) {
-                    var Id_ = value["Id"];
-                    var FileName_ = document.getElementById(FileInput(Id_)).files[0].name;
-                    File8MD5s.push({ Id: Id_, FileName: FileName_, MD5: value["MD5"] });
-                });
-                //  console.log(File8MD5s);
+        function CheckMD58UploadFiles() {
+            if (MD5Array.length < 1) return;
+            if (document.getElementsByName("FileInput").length < 1) return;
+            var File8MD5s = new Array();
+            MD5Array.forEach(function (value, index, array) {
+                var Id_ = value["Id"];
+                var FileName_ = document.getElementById(GetFileInputId(Id_)).files[0].name;
+                File8MD5s.push({ Id: String(Id_), FileName: String(FileName_), MD5: String(value["MD5"]) });
+            });
+            console.log(`File8MD5s >${JSON.stringify( File8MD5s)}`);
+            $.ajax({
+                url: "@(Url.Action("CheckMD5"))",
+                type: "POST",
+                data: {
+                    LContrastMD5: {
+                        InDirId: InDirId, File8MD5s: File8MD5s
+                    }
+                },
+                dataType: "json",
+                headers: {
+                    "L-XSRF-TOKEN": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"
+                },
+
+                /**
+                 * Return the Id of uploaded file
+                 * @@param {Array<number>} IdArray Uploaded id array
+                 */
+                success: function (IdArray) {
+                    console.log("Contrast>>"+IdArray);
+                    IdArray.forEach(function (value) {
+                        RemoveItemInMD5Array(value);
+                        RemoveUploadedFileInput(value);
+                        UpdateProgress(value, "&radic;");
+                    });
+                    UploadFile();
+                },
+                error: function () {
+                    //  MakeAlert();
+                }
+            });
+        }
+
+        function UploadFile() {
+            if ($(`[name='FileInput']`).length < 1) return;
+            $(`[name='FileInput']`).each(function (index, element) {
+                if ($(element).val() == "") return;
+                var Id_ = $(this).attr("lid");  //   Number(this.id.split("_")[1]);
+                console.log(`Upload >${Id_}`);
+                var File_ = document.getElementById(this.id).files[0];
+                var _FormData = new FormData();
+                _FormData.append("LFile", File_, File_.name);
+                _FormData.append("InDirId", InDirId);
+                _FormData.append("Id", Id_);
                 $.ajax({
-                    url: "@(Url.Action("CheckMD5"))",
+                    url: "@(Url.Action("Create"))",
                     type: "POST",
-                    data: {
-                        LContrastMD5: {
-                            InDirId: InDirId, File8MD5s: File8MD5s
-                        }
-                    },
-                    dataType: "json",
+                    data: _FormData,
+                    processData: false,
+                    contentType: false,
+                    //  contentType: "multipart/form-data",
                     headers: {
                         "L-XSRF-TOKEN": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"
                     },
-
                     /**
-                     * Return the Id of uploaded file
-                     * @@param {Array<number>} IdArray Uploaded id array
+                     * REFERENCE    https://www.jianshu.com/p/eb119affdc25
+                     * THANK        https://www.jianshu.com/u/9ca9c65ce397
                      */
-                    success: function (IdArray) {
-                        //  console.log("Contrast>>"+IdArray);
-                        IdArray.forEach(function (value) {
-                            RemoveItemInMD5Array(value);
-                            RemoveUploadedFileInput(value);
-                            UpdateProgress(value,"&radic;" )
-                        });
-                        UploadFile();
+                    xhr: function () {
+                        var xhr = $.ajaxSettings.xhr();
+                        if (xhr.upload) {
+                            xhr.upload.addEventListener("progress", function (e) {
+                                var loaded = e.loaded;
+                                var tot = e.total;
+                                //  console.log(">>"+Id_);
+                                var per = Math.floor(100 * loaded / tot);
+                                UpdateProgress(Id_, per + "%");
+                                console.log(`Upload >>>>${per}`);
+                            }, false);
+                            return xhr;
+                        }
+                    },
+                    /**
+                     * Retuen the id
+                     */
+                    success: function (Response) {
+                        //  console.log("Upload file>>"+Response["Id"]);
+                        if (Response["Status"] == true) {
+                            console.log(`Response["Id"] > ${Response["Id"]}`);
+                            UpdateProgress(Response["Id"], "&radic;");
+                            RemoveItemInMD5Array(Response["Id"]);
+                            RemoveUploadedFileInput(Response["Id"]);
+                        } else {
+                            MakeAlert("warning", Response["Msg"]);
+                        }
                     },
                     error: function () {
-                        //  MakeAlert();
+                        MakeAlert("danger", "@Localizer["An error has occurred. . . , engineers are on their way"]");
                     }
                 });
-            }
-
-            function UploadFile () {
-                if ($(`[name='FileInput']`).length < 1) return;
-                $(`[name='FileInput']`).each(function (index, element) {
-                    if ($(element).val() == "") return;
-                    var Id_ = Number(this.id.split("_")[1]);
-                    var File_ = document.getElementById(this.id).files[0];
-                    var _FormData = new FormData();
-                    _FormData.append("LFile", File_, File_.name);
-                    _FormData.append("InDirId", InDirId);
-                    _FormData.append("Id", Id_);
-                    $.ajax({
-                        url: "@(Url.Action("Create"))",
-                        type:"POST",
-                        data:_FormData,
-                        processData: false,
-                        contentType: false,
-                        //  contentType: "multipart/form-data",
-                        headers: {
-                            "L-XSRF-TOKEN": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"
-                        },
-                        /**
-                         * REFERENCE    https://www.jianshu.com/p/eb119affdc25
-                         * THANK        https://www.jianshu.com/u/9ca9c65ce397
-                         */
-                        xhr: function () {
-                            var xhr = $.ajaxSettings.xhr();
-                            if (xhr.upload) {
-                                xhr.upload.addEventListener("progress", function (e) {
-                                    var loaded = e.loaded;
-                                    var tot = e.total;
-                                    //  console.log(">>"+Id_);
-                                    var per = Math.floor(100 * loaded / tot);
-                                    UpdateProgress(Id_, per + "%");
-                                }, false);
-                                return xhr;
-                            }
-                        },
-                        /**
-                         * Retuen the id
-                         */
-                        success: function (Response) {
-                            //  console.log("Upload file>>"+Response["Id"]);
-                            if (Response["Status"] == true) {
-                                UpdateProgress(Response["Id"], "&radic;");
-                                RemoveItemInMD5Array(Response["Id"]);
-                                RemoveUploadedFileInput(Response["Id"]);
-                            } else {
-                                MakeAlert("warning", Response["Msg"]);
-                            }
-                        },
-                        error: function () {
-                            MakeAlert("danger", "@Localizer["An error has occurred. . . , engineers are on their way"]");
-                        }
-                    });
-                });
-            }
+            });
+        }
 
         //========  DATA        ========//
 
@@ -277,7 +284,7 @@
         */
         function GetMD58AddToArray(Id) {
             $(`#${Id}`).show(); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            var File_ = document.getElementById(FileInput(Id)).files[0];
+            var File_ = document.getElementById(GetFileInputId(Id)).files[0];
             if (File_.size > MaxMultipartBodyLength) {   //  (FileLimit) * 1024 * 1024
                 ShowFileTooLarge8RemoveFileEle();
                 return;
@@ -311,6 +318,7 @@
                         ReadMD5FinishTip(Id);
                         ShowLastFilePath(Id);
                         ShowOrHideLastRemoveFileDIV(true);
+                        MakeFileDivTitleToMD5(Id, MD5);
                         //  console.log(MD5);
                     }
                 }
@@ -346,6 +354,16 @@
 
 @section Styles{
     <style>
+        .UploadProgress{
+            color:blue;
+        }
+        [name='RemoveFileDIV']{
+            color:red;
+        }
+        [name='RemoveFileDIV']:hover{
+            color:red;
+            zoom:120%;
+        }
         .form-group {
         }
 

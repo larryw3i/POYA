@@ -521,7 +521,7 @@ namespace POYA.Areas.XUserFile.Controllers
         {
             //  Console.WriteLine(">>>>" + JsonConvert.SerializeObject(_ContrastMD5));
             //  System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(_ContrastMD5));
-            var ContrastResult = new List<int>();
+            var ContrastResult = new List<string>();
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             foreach (var i in LContrastMD5.File8MD5s)
             {

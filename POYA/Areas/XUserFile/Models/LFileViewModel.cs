@@ -192,7 +192,7 @@ namespace POYA.Areas.XUserFile.Models
 
     public class File8MD5
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string FileName { get; set; }
         public string MD5 { get; set; }
     }
@@ -205,7 +205,7 @@ namespace POYA.Areas.XUserFile.Models
         /// The id for callback
         /// </summary>
         #endregion
-        public int Id { get; set; }
+        public string Id { get; set; }
         public IFormFile LFile { get; set; }
         public Guid InDirId { get; set; }
     }
