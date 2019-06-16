@@ -10,7 +10,7 @@
 <div class="row" name="FileUploadEle">
     <div class="col col-sm-10 col-md-8 col-lg-8">
         <div class="form-group">
-            <div class="input-group">
+            <div class="input-group File-Select-Upload">
                 <input type="text" id="SelectFileInput" class="form-control" placeholder="@Localizer["Select file"]" aria-label="@Localizer["Select file"]">
                 <div class="input-group-append">
                     <a id="SelectFileA" class="btn btn-outline-info">@Localizer["Select file"]</a>
@@ -40,7 +40,7 @@
             `<strong>@Localizer["Oops"]. . .</strong>@Localizer["File is limit to less than"]
             ${OptimizeSizeShow( @(LValue.MaxMultipartBodyLengthLimit/1_000_000))}`;
 
-        var GetRemoveFileDIVId = (Id) => `RemoveFileDIV_${Id}`;
+        var GetRemoveFileEleId = (Id) => `RemoveFileEle_${Id}`;
         var GetFileNameId = (Id) => `FileName_${Id}`;
         var GetUploadProgressId = (Id ) => `UploadProgress_${Id}`;
         //  var RemoveUploadedFileInput = (Id) => `RemoveUploadedFileInput${Id}`;
@@ -64,11 +64,11 @@
         */
         var FileInfo = (Id = NewGuid()) => `
                         <div id='${Id}' name="FileDIV">
-                            <input id="${GetFileInputId(Id)}" LID="${Id}" name="FileInput" type="file" onchange="GetMD58AddToArray('${Id}')" hidden/>
+                            <input id="${GetFileInputId(Id)}" LID="${Id}" name="FileInputEle" type="file" onchange="GetMD58AddToArray('${Id}')" hidden/>
                             <span>
-                                <span id="${GetRemoveFileDIVId(Id)}" name="RemoveFileDIV" onclick="RemoveFileDIV('${Id}')">&times</span>
+                                <span id="${GetRemoveFileEleId(Id)}" name="RemoveFileEle" onclick="RemoveFileEleClick('${Id}')">&times</span>
                                 <span id="${GetUploadProgressId(Id)}" class="UploadProgress"></span>
-                                <span id="${GetFileNameId(Id)}" name="FileName"></span>
+                                <span id="${GetFileNameId(Id)}" name="FileNameEle"></span>
                             </span>
                         </div>`;
 
@@ -92,7 +92,7 @@
             }, CloseAfter);
         }
 
-        function RemoveFileDIV(Id ) {
+        function RemoveFileEleClick(Id ) {
             $(`#${Id}`).remove();
             RemoveItemInMD5Array(Id); //  !!
         }
@@ -116,7 +116,7 @@
         }
 
         function ShowLastFilePath(Id) {
-            $(`#${GetFileNameId(Id)}`).text($("input[name='FileInput']:last").val());
+            $(`#${GetFileNameId(Id)}`).text($("input[name='FileInputEle']:last").val());
             //  $("#" + Id).show();
 
         }
@@ -127,14 +127,14 @@
         }
 
         function SelectFile() {
-            if ($("input[name='FileInput']:last").val() == "") {
+            if ($("input[name='FileInputEle']:last").val() == "") {
                 //  $("input[name='FileInput']:last").hide();
-                $("input[name='FileInput']:last").click();
+                $("input[name='FileInputEle']:last").click();
             } else {
                 $(".form-group").append(FileInfo());
-                ShowOrHideLastRemoveFileDIV(false);
+                ShowOrHideLastRemoveFileEle(false);
                 /// $("input[name='FileInput']:last").hide();
-                $("input[name='FileInput']:last").click();
+                $("input[name='FileInputEle']:last").click();
             }
         }
 
@@ -142,12 +142,12 @@
         * Show or hide last RemoveFileDIV, or it leads to a poor user experience
         * @@param {boolean} IsShow show or hide
         */
-        function ShowOrHideLastRemoveFileDIV (IsShow) {
+        function ShowOrHideLastRemoveFileEle (IsShow) {
             if (IsShow) {
-                $("[name='RemoveFileDIV']:last").show();
+                $("[name='RemoveFileEle']:last").show();
                 return;
             }
-            $("[name='RemoveFileDIV']:last").hide();
+            $("[name='RemoveFileEle']:last").hide();
         }
 
         /**
@@ -162,7 +162,7 @@
     //========  SERVICE     ========//
         function CheckMD58UploadFiles() {
             if (MD5Array.length < 1) return;
-            if (document.getElementsByName("FileInput").length < 1) return;
+            if (document.getElementsByName("FileInputEle").length < 1) return;
             var File8MD5s = new Array();
             MD5Array.forEach(function (value, index, array) {
                 var Id_ = value["Id"];
@@ -203,8 +203,8 @@
         }
 
         function UploadFile() {
-            if ($(`[name='FileInput']`).length < 1) return;
-            $(`[name='FileInput']`).each(function (index, element) {
+            if ($(`[name='FileInputEle']`).length < 1) return;
+            $(`[name='FileInputEle']`).each(function (index, element) {
                 if ($(element).val() == "") return;
                 var Id_ = $(this).attr("lid");  //   Number(this.id.split("_")[1]);
                 console.log(`Upload >${Id_}`);
@@ -310,14 +310,14 @@
                         }
                     });
                     if (IsSelected) {
-                        RemoveFileDIV(Id);
+                        RemoveFileEleClick(Id);
                         MakeAlert("warning", FileIsSelected);
                         //  _UI
                     } else {
                         MD5Array.push({ Id: Id, MD5: MD5 });
                         ReadMD5FinishTip(Id);
                         ShowLastFilePath(Id);
-                        ShowOrHideLastRemoveFileDIV(true);
+                        ShowOrHideLastRemoveFileEle(true);
                         MakeFileDivTitleToMD5(Id, MD5);
                         //  console.log(MD5);
                     }
@@ -341,7 +341,7 @@
             });
 
             $("#UploadA").on("click", function () {
-                if ($("[name='FileInput']").length < 1) return;
+                if ($("[name='FileInputEle']").length < 1) return;
                 CheckMD58UploadFiles();
                 event.preventDefault();
             });
@@ -354,16 +354,22 @@
 
 @section Styles{
     <style>
-        .UploadProgress{
-            color:blue;
-        }
-        [name='RemoveFileDIV']{
-            color:red;
-        }
-        [name='RemoveFileDIV']:hover{
-            color:red;
+        .File-Select-Upload{
             zoom:120%;
         }
+        .UploadProgress {
+            color: blue;
+        }
+
+        [name='RemoveFileEle'] {
+            color: red;
+        }
+
+            [name='RemoveFileEle']:hover {
+                color: red;
+                zoom: 120%;
+            }
+
         .form-group {
         }
 
