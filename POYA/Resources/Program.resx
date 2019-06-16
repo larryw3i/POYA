@@ -950,4 +950,88 @@
   <data name="Reading" xml:space="preserve">
     <value>Reading</value>
   </data>
+  <data name="\u4fe1\u606f\u4e0e\u7cfb\u7edf\u79d1\u5b66\u76f8\u5173\u5de5\u7a0b\u4e0e\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+    <value>Information and systems science related engineering and technology other disciplines</value>
+  </data>
+  <data name="\u5de5\u7a0b\u4e0e\u6280\u672f\u79d1\u5b66\u57fa\u7840\u5b66\u79d1\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+    <value>Engineering and technical science foundation discipline other disciplines</value>
+  </data>
+  <data name="\u9884\u9632\u533b\u5b66\u4e0e\u516c\u5171\u536b\u751f\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+    <value>Other disciplines of preventive medicine and public health</value>
+  </data>
+  <data name="\u836f\u6548\u5b66" xml:space="preserve">
+    <value>Pharmacodynamics</value>
+  </data>
+  <data name="\u8ba1\u91cf\u5b66" xml:space="preserve">
+    <value>Metrology</value>
+  </data>
+  <data name="\u751f\u7269\u5b66" xml:space="preserve">
+    <value>biology</value>
+  </data>
+  <data name="\u5fc3\u7406\u5b66" xml:space="preserve">
+    <value>psychology</value>
+  </data>
+  <data name="Complexity" xml:space="preserve">
+    <value>Complexity</value>
+  </data>
+  <data name="\u57fa\u7840\u533b\u5b66" xml:space="preserve">
+    <value>preclinical medicine</value>
+  </data>
+  <data name="\u9884\u9632\u533b\u5b66\u4e0e\u516c\u5171\u536b\u751f\u5b66" xml:space="preserve">
+    <value>Preventive medicine and public health</value>
+  </data>
+  <data name="\u4e2d\u533b\u5b66\u4e0e\u4e2d\u836f\u5b66" xml:space="preserve">
+    <value>Traditional Chinese medicine and pharmacy</value>
+  </data>
+  <data name="\u6d4b\u7ed8\u79d1\u5b66\u6280\u672f" xml:space="preserve">
+    <value>Surveying and Mapping</value>
+  </data>
+  <data name="\u52a8\u529b\u4e0e\u7535\u6c14\u5de5\u7a0b" xml:space="preserve">
+    <value>Power and electrical engineering</value>
+  </data>
+  <data name="\u7535\u5b50\u4e0e\u901a\u4fe1\u6280\u672f" xml:space="preserve">
+    <value>Electronics and Communications Technologies</value>
+  </data>
+  <data name="\u8ba1\u7b97\u673a\u79d1\u5b66\u6280\u672f" xml:space="preserve">
+    <value>Computer science and technology</value>
+  </data>
+  <data name="\u98df\u54c1\u79d1\u5b66\u6280\u672f" xml:space="preserve">
+    <value>Food Science and Technology</value>
+  </data>
+  <data name="\u6c34\u5229\u5de5\u7a0b" xml:space="preserve">
+    <value>water conservancy project</value>
+  </data>
+  <data name="\u822a\u7a7a\u3001\u822a\u5929\u79d1\u5b66\u6280\u672f" xml:space="preserve">
+    <value>Personal Stat</value>
+  </data>
+  <data name="\u54f2\u5b66" xml:space="preserve">
+    <value>philosophy</value>
+  </data>
+  <data name="\u827a\u672f\u5b66" xml:space="preserve">
+    <value>art</value>
+  </data>
+  <data name="\u7ecf\u6d4e\u5b66" xml:space="preserve">
+    <value>Economics</value>
+  </data>
+  <data name="\u793e\u4f1a\u5b66" xml:space="preserve">
+    <value>Sociology</value>
+  </data>
+  <data name="\u6c11\u65cf\u5b66\u4e0e\u6587\u5316\u5b66" xml:space="preserve">
+    <value>Ethnology and culture</value>
+  </data>
+  <data name="\u793e\u4f1a\u5b66\u53f2" xml:space="preserve">
+    <value>Geschichte der Soziologie</value>
+  </data>
+  <data name="\u4e16\u754c\u6c11\u65cf\u7814\u7a76" xml:space="preserve">
+    <value>MZG</value>
+  </data>
+  <data name="\u8003\u53e4\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+    <value>KGG</value>
+  </data>
+  <data name="\u53ef\u6301\u7eed\u53d1\u5c55\u7ecf\u6d4e\u5b66" xml:space="preserve">
+    <value>Economics of Sustainable Development</value>
+  </data>
+  <data name="\u6570\u7406\u903b\u8f91\u4e0e\u6570\u5b66\u57fa\u7840" xml:space="preserve">
+    <value>Mathematical Logic &amp; Mathematical Foundations</value>
+  </data>
 </root>
