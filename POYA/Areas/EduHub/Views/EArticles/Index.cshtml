@@ -22,26 +22,18 @@
     SortBySelect.ForEach(p => { if (p.Value == SortBy.ToString()) p.Selected = true; });
 
     var _search = ViewData["_search"]?.ToString();
+    var _pageSize = Context.Request.Cookies["PageSize"] ?? "8";
 }
 
 <div class="row">
     <div class="col col-3 ">
         <img src="~/img/article.webp" class=" main-icon" title="@Localizer["Article"]" />
-        @*<span style="font-size:200%">@Localizer["EduHub"]</span>*@
     </div>
     <a class="col offset-md-4 offset-sm-1 offset-md-4 offset-lg-5 col-2 col-md-1">
-        @*<img src="~/img/user_earticle.webp" style="max-height:50px;" />*@
     </a>
     <a class="col col-2 col-md-1" asp-action="Index" asp-controller="UserEArticleSets" title="@Localizer["My EArticle"]">
         <img src="~/img/user_earticle.webp" style="max-height:50px;" />
     </a>
-    @*
-
-        <a class="col col-2 col-md-1" asp-action="Index" asp-route-IsIndividual="@(IsIndividual?"false":"true")"
-           title="@@(IsIndividual?Localizer["View all"]:Localizer["Just me"])">
-            <img src="~/img/@@(IsIndividual?"total.webp":"individual.webp")" style="max-height:50px;" />
-        </a>
-    *@
     <div class="col col-2 col-md-1 col-lg-1">
         <select id="SortBySelect" name="SortBySelect" asp-items="SortBySelect"></select>
     </div>
@@ -87,14 +79,21 @@
     }
 </div>
 
-<div class="float-right">
-    @(Html.Raw(Html.PagedListPager((IPagedList<EArticle>)ViewData["EArticles"], _page => Url.Action("Index", new { _page = _page }),
-        PagedListRenderOptions.OnlyShowFivePagesAtATime)))
+<div class="float-right PageEle" >
+    <div>
+        <div class="form-inline">
+            <input type="text" style="width:70px;" class="form-control" id="_pageSize" title="@Localizer["Press ENTER to save"]" value="@_pageSize"/>
+            @(Html.Raw(Html.PagedListPager((IPagedList<EArticle>)ViewData["EArticles"], _page => Url.Action("Index", new { _page = _page }),
+                PagedListRenderOptions.OnlyShowFivePagesAtATime)))
+        </div>
+    </div>
 </div>
+
 @section Scripts{
 
     <script>
         //========      DATA    ========//
+
         function CheckKeyCode() {
             var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
             if (keyCode == 13) {
@@ -138,6 +137,7 @@
         $(document).ready(function () {
             ChangeSort();
             //  $("#EArticleSearchInput").focus();
+           
             $("#EArticleSearchBtn").on("click", function () {
                 _Search();
             });

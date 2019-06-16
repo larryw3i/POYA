@@ -110,9 +110,10 @@ namespace POYA.Areas.EduHub.Controllers
                 .Where(p => p.IsEArticleVideo && _EArticles.Select(s => s.Id)
                 .Contains(p.EArticleId)).ToListAsync();
             InitFileExtension(_EArticleFiles);
-
+            
             #region VIEWDATA
-            ViewData[nameof(_EArticles)] = _EArticles.OrderByDescending(p => p.DOPublishing).ToPagedList(_page ?? 1, 10);
+            ViewData[nameof(_EArticles)] = _EArticles.OrderByDescending(p => p.DOPublishing).ToPagedList(_page ?? 1, 
+                Convert.ToInt32(Request.Cookies["PageSize"]??"8"));
 
             ViewData["EArticleFile"] = _EArticleFiles;
             TempData[nameof(SetId)] = SetId;
@@ -183,7 +184,7 @@ namespace POYA.Areas.EduHub.Controllers
             }
             #endregion
 
-            var _EArticlePagedList = _EArticle.ToPagedList(_page, 10);
+            var _EArticlePagedList = _EArticle.ToPagedList(_page, Convert.ToInt32(Request.Cookies["PageSize"] ?? "8"));
             var _EArticlePagedListIDs = _EArticlePagedList.Select(p => p.Id);
             var _EArticleFiles = await _context.EArticleFiles
                 .Where(p => p.IsEArticleVideo && _EArticlePagedListIDs.Contains(p.EArticleId)).ToListAsync();

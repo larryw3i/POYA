@@ -258,6 +258,24 @@ function KeepLogin() {
 //========   SERVICE_END    ========//
 
 //========      DATA        ========//
+$("#_pageSize").on("input", function () {
+    var _value = $(this).val();
+    if (_value.length === 0) return;
+    $(this).val(isNaN(_value) ? 8 :  _value>20?20:_value );
+});
+$("#_pageSize").keypress(function () {
+    _pageSizeKeyPress();
+});
+
+function _pageSizeKeyPress() {
+    var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
+    if (Number(keyCode) === 13) {
+        var _val = Number($(`#_pageSize`).val().replace(/[^0-9]/ig, ""));
+        Cookies.set("PageSize",_val<8?8:_val);
+        location.reload();
+    }
+}
+
 function NewGuid() {
     return `${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}-${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}-4${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1).substr(0, 3)}-${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}-${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}${((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)}`.toLowerCase();
 }

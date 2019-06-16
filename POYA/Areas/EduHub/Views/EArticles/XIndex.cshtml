@@ -9,6 +9,7 @@
     var _SetId = TempData["SetId"];
     TempData.Keep();
     var _UserEArticleSet = ViewData[nameof(UserEArticleSet)] as UserEArticleSet;
+    var _pageSize = Context.Request.Cookies["PageSize"]??"8";
 }
 
 @*
@@ -56,10 +57,13 @@
     }
 </div>
 
-<div class="col col-12" style="margin-top:10px;">
-    <div class="float-right">
-        @(Html.PagedListPager((IPagedList<EArticle>)ViewData["_EArticles"], _page => Url.Action("XIndex", new { SetId = _SetId, _page = _page }),
-            PagedListRenderOptions.OnlyShowFivePagesAtATime))
+<div class="float-right PageEle">
+    <div>
+        <div class="form-inline">
+            <input type="text" style="width:70px;" class="form-control" id="_pageSize" title="@Localizer["Press ENTER to save"]" value="@_pageSize"/>
+            @(Html.PagedListPager((IPagedList<EArticle>)ViewData["_EArticles"], _page => Url.Action("XIndex", new { SetId = _SetId, _page = _page }),
+PagedListRenderOptions.OnlyShowFivePagesAtATime))
+        </div>
     </div>
 </div>
 
@@ -100,7 +104,11 @@
 
 @section Styles{
     <link href="~/css/PagedList.css" rel="stylesheet" type="text/css" />
-    <style>  
+    <style>
+
+        #_pageSize{
+            width:80px;
+        }
         #OperationEle {
             position: fixed;
             bottom: 50px;

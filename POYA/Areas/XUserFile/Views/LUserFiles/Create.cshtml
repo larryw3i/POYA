@@ -169,7 +169,7 @@
                 var FileName_ = document.getElementById(GetFileInputId(Id_)).files[0].name;
                 File8MD5s.push({ Id: String(Id_), FileName: String(FileName_), MD5: String(value["MD5"]) });
             });
-            console.log(`File8MD5s >${JSON.stringify( File8MD5s)}`);
+            //  console.log(`File8MD5s >${JSON.stringify( File8MD5s)}`);
             $.ajax({
                 url: "@(Url.Action("CheckMD5"))",
                 type: "POST",
@@ -188,7 +188,7 @@
                  * @@param {Array<number>} IdArray Uploaded id array
                  */
                 success: function (IdArray) {
-                    console.log("Contrast>>"+IdArray);
+                    //  console.log("Contrast>>"+IdArray);
                     IdArray.forEach(function (value) {
                         RemoveItemInMD5Array(value);
                         RemoveUploadedFileInput(value);
@@ -207,7 +207,7 @@
             $(`[name='FileInputEle']`).each(function (index, element) {
                 if ($(element).val() == "") return;
                 var Id_ = $(this).attr("lid");  //   Number(this.id.split("_")[1]);
-                console.log(`Upload >${Id_}`);
+                //  console.log(`Upload >${Id_}`);
                 var File_ = document.getElementById(this.id).files[0];
                 var _FormData = new FormData();
                 _FormData.append("LFile", File_, File_.name);
@@ -236,7 +236,7 @@
                                 //  console.log(">>"+Id_);
                                 var per = Math.floor(100 * loaded / tot);
                                 UpdateProgress(Id_, per + "%");
-                                console.log(`Upload >>>>${per}`);
+                                //  console.log(`Upload >>>>${per}`);
                             }, false);
                             return xhr;
                         }
@@ -247,7 +247,7 @@
                     success: function (Response) {
                         //  console.log("Upload file>>"+Response["Id"]);
                         if (Response["Status"] == true) {
-                            console.log(`Response["Id"] > ${Response["Id"]}`);
+                            //  console.log(`Response["Id"] > ${Response["Id"]}`);
                             UpdateProgress(Response["Id"], "&radic;");
                             RemoveItemInMD5Array(Response["Id"]);
                             RemoveUploadedFileInput(Response["Id"]);
@@ -324,7 +324,7 @@
                 }
             };
             FileReader_.onerror = function () {
-                console.warn('oops, something went wrong');
+                        MakeAlert("danger", "@Localizer["An error has occurred. . . , engineers are on their way"]");
             };
             function loadNext() {
                 var Start = CurrentChunk * ChunkSize,
