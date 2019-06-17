@@ -35,12 +35,16 @@
   },
   "ErrorLogHandle": {
     "ReceiveLogEmailAddress": "xxxxxxxx@xxx.xxx"
+  },
+  "Administration": {
+    "AdminEmail": "xxxxxxxxx@xxxx.xx"
   }
 } 
 ```     
 >✔ **DefaultConnection** 是数据库的连接字符串, 上面的值是MSSQL的连接字符串, 如果你使用SQLite, 那么它的DefaultConnection是  **"Data Source=app.db**   , 当然了, 你可以更改成你喜欢的数据库和相应的连接字符串, 然后在  **Startup.cs** 中修改  **services.AddDbContext**  里面的相应内容   
 ✔**EmailSender** 是你的邮件服务相关配置(为了能正常使用, 你可能要更改它的值), 它在用户注册和用户接受通知中起关键作用,  **userName** 是你的  **smtp** 用户名, 其它的三个你熟悉 **smtp** 的话你应该很容易明白它   
 ✔**ReceiveLogEmailAddress** 邮箱地址是用来接收错误信息的(未医先治)     
+✔**AdminEmail** 管理员邮箱, 通过这个邮箱可以确认添加开发者/内容审核管理员等等
 
 #### 1(多余的)    
 ***   

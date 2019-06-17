@@ -32,12 +32,16 @@ namespace POYA
         public IConfiguration Configuration { get; }
 
         public X_DOVEHelper x_DOVEHelper = new X_DOVEHelper();
-        public Startup(
-            IConfiguration configuration)
+
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
+
+        #region 
+
         // This method gets called by the runtime. Use this method to add services to the container.
+        #endregion
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -155,8 +159,13 @@ namespace POYA
 
 
         }
+
+        #region 
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)     //  , IServiceProvider serviceProvider
+        //  , IServiceProvider serviceProvider
+        #endregion
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env) 
         {
             if (env.IsDevelopment())
             {

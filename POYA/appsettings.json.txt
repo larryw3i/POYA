@@ -17,5 +17,8 @@
   },
   "ErrorLogHandle": {
     "ReceiveLogEmailAddress": "xxxxxxxx@xxx.xxx"
+  },
+  "Administration": {
+    "AdminEmail": "xxxxxxxx@xxx.xxxx"
   }
 } 
