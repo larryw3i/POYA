@@ -61,6 +61,7 @@ namespace POYA.Areas.EduHub.Models
         #endregion
         [NotMapped]
         public IFormFile CoverFile { get; set; }
+
         #endregion
     }
 }

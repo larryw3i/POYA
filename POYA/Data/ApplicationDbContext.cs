@@ -24,9 +24,9 @@ namespace POYA.Data
         public DbSet<POYA.Areas.EduHub.Models.EArticleUserReadRecord> EArticleUserReadRecords { get; set; }
         public DbSet<POYA.Areas.XLaw.Models.Complaint> Complaint { get; set; }
         public DbSet<POYA.Areas.XLaw.Models.Arbitrament> Arbitrament { get; set; }
-        public DbSet<EArticleFile> EArticleFiles { get; set; }
+        public DbSet<POYA.Areas.EduHub.Models.EArticleFile> EArticleFiles { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.UserEArticleSet> UserEArticleSet { get; set; }
-        public DbSet<POYA.Areas.EduHub.Models.UserEArticleHomeInfo> userEArticleHomeInfos { get; set; }
+        public DbSet<POYA.Areas.EduHub.Models.UserEArticleHomeInfo> UserEArticleHomeInfos { get; set; }
         public DbSet<POYA.Areas.DeveloperZone.Models.XDeveloper> XDeveloper { get; set; }
         public DbSet<POYA.Areas.DeveloperZone.Models.XDeveloperNote> XDeveloperNote { get; set; }
 

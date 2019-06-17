@@ -91,7 +91,7 @@ namespace POYA.Areas.EduHub.Controllers
                 Comment = _localizer["Click to add"]
             });
             #endregion
-            ViewData[nameof(UserEArticleHomeInfo)] = (await _context.userEArticleHomeInfos.Where(p => p.UserId == _UserId).FirstOrDefaultAsync()) ?? new UserEArticleHomeInfo { UserId = _UserId, Comment = _localizer["No set yet"] + "!" };
+            ViewData[nameof(UserEArticleHomeInfo)] = (await _context.UserEArticleHomeInfos.Where(p => p.UserId == _UserId).FirstOrDefaultAsync()) ?? new UserEArticleHomeInfo { UserId = _UserId, Comment = _localizer["No set yet"] + "!" };
             return View(_UserEArticleSet.OrderByDescending(p => p.DOCreating));
         }
 
@@ -274,7 +274,7 @@ namespace POYA.Areas.EduHub.Controllers
             }
             var _UserId = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id;
 
-            var _userEArticleHomeInfo = await _context.userEArticleHomeInfos.FirstOrDefaultAsync(p => p.UserId == _UserId && p.Id == id);
+            var _userEArticleHomeInfo = await _context.UserEArticleHomeInfos.FirstOrDefaultAsync(p => p.UserId == _UserId && p.Id == id);
 
             var _FileBytes = new byte[0];
             var _ContentType = "image/webp";    //  string.Empty;

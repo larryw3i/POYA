@@ -12,14 +12,17 @@
     var _pageSize = Context.Request.Cookies["PageSize"]??"8";
 }
 
-@*
+@{
+    /*
     <hr />
     <div class="row">
         <div class="col offset-10">
             <a asp-action="Create" asp-route-SetId="@(_SetId)" class="btn btn-outline-info">@Localizer["Write"] &raquo;</a>
         </div>
     </div>
-*@
+    
+    */
+}
     <hr />
     <div class="row">
         <div class="col col-12 User-EArticle-Set">
@@ -194,8 +197,8 @@ PagedListRenderOptions.OnlyShowFivePagesAtATime))
         </style>
 }
 
-
-@*
+@{
+/*
         <table class="table">
             <thead>
                 <tr>
@@ -299,4 +302,4 @@ PagedListRenderOptions.OnlyShowFivePagesAtATime))
             }
             </tbody>
         </table>
-*@
+*/}

@@ -76,7 +76,7 @@
                                 @Localizer["More"] @*<img src="~/img/collapse.webp" style="width:28px;height:15px" />*@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">@Localizer["Developers"]</a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="XDevelopers" asp-area="DeveloperZone">@Localizer["Developers"]</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Donate">@Localizer["Donate"]</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Privacy"]</a>
@@ -115,7 +115,7 @@
                     <option value="en-US" selected>@Localizer["en-US"]</option>
                 *@
             </select> -
-            <a asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Privacy"]</a> - <a href="#">@Localizer["More"]</a> 
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Privacy"]</a> - <a href="#">@Localizer["More"]</a>
         </div>
     </footer>
     <!--       JS       -->

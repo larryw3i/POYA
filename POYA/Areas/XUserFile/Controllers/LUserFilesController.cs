@@ -459,7 +459,7 @@ namespace POYA.Areas.XUserFile.Controllers
         public async Task<IActionResult> UploadEArticleHomeInfo([FromForm]UserEArticleHomeInfo userEArticleHomeInfo)
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var _userEArticleHomeInfo = await _context.userEArticleHomeInfos.FirstOrDefaultAsync(p => p.UserId == UserId_);
+            var _userEArticleHomeInfo = await _context.UserEArticleHomeInfos.FirstOrDefaultAsync(p => p.UserId == UserId_);
             var _MD5 = string.Empty;
             if (userEArticleHomeInfo?.CoverFile != null)
             {
@@ -467,7 +467,7 @@ namespace POYA.Areas.XUserFile.Controllers
             }
             if (_userEArticleHomeInfo == null)
             {
-                await _context.userEArticleHomeInfos.AddAsync(new UserEArticleHomeInfo
+                await _context.UserEArticleHomeInfos.AddAsync(new UserEArticleHomeInfo
                 {
                     UserId = UserId_,
                     Comment = userEArticleHomeInfo.Comment,

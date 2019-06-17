@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using POYA.Areas.DeveloperZone.Models;
@@ -34,7 +35,9 @@ namespace POYA.Areas.DeveloperZone.Controllers
         private readonly IAntiforgery _antiforgery;
         private readonly MimeHelper _mimeHelper;
         private readonly XUserFileHelper _xUserFileHelper;
+        private readonly IConfiguration _configuration;
         public XDevelopersController(
+            IConfiguration configuration,
             MimeHelper mimeHelper,
             IAntiforgery antiforgery,
             ILogger<Program> logger,
@@ -47,6 +50,7 @@ namespace POYA.Areas.DeveloperZone.Controllers
             IHostingEnvironment hostingEnv,
             IStringLocalizer<Program> localizer)
         {
+            _configuration = configuration;
             _hostingEnv = hostingEnv;
             _localizer = localizer;
             _context = context;
