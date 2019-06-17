@@ -7,6 +7,7 @@ using POYA.Models;
 using POYA.Areas.EduHub.Models;
 using POYA.Areas.XUserFile.Models;
 using POYA.Areas.XLaw.Models;
+using POYA.Areas.DeveloperZone.Models;
 namespace POYA.Data
 {
     public class ApplicationDbContext : IdentityDbContext
@@ -26,6 +27,8 @@ namespace POYA.Data
         public DbSet<EArticleFile> EArticleFiles { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.UserEArticleSet> UserEArticleSet { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.UserEArticleHomeInfo> userEArticleHomeInfos { get; set; }
+        public DbSet<POYA.Areas.DeveloperZone.Models.XDeveloper> XDeveloper { get; set; }
+        public DbSet<POYA.Areas.DeveloperZone.Models.XDeveloperNote> XDeveloperNote { get; set; }
 
 
         /*
