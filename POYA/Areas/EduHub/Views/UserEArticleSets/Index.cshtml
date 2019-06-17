@@ -10,17 +10,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _UserEArticleHomeInfo = ViewData["UserEArticleHomeInfo"] as UserEArticleHomeInfo;
 }
-
-@*
+@{
+/*
     <h1>Index</h1>
     <p>
         <a asp-action="Create">Create New</a>
     </p>
-*@
+*/
+}
 <div id="EArticleSetContextMenu_Ele"></div>
 <div class="row">
     <div class="col  col-12  EArticle-Home-Img-Ele">
-        <div class="float-left" onclick="location.href = '@(Url.Action("Index","EArticles"))'"
+        <div class="float-left" onclick='location.href = "@(Url.Action("Index","EArticles"))"'
              style="zoom:200%;position:fixed;cursor:pointer;color:brown">&laquo;&laquo;</div>
         <img class="rounded-circle mx-auto d-block EArticle-Home-Avatar"
              src="/Home/GetAvatar?random=@(new Random().Next())" />
@@ -30,10 +31,10 @@
             <input type="text"
                    id="UserEArticleHomeInfo_Comment"
                    value="@(_UserEArticleHomeInfo.Comment)"
-                   title="@Localizer["Press ENTER to save"]" />
+                   title='@Localizer["Press ENTER to save"]' />
         </div>
         <input type="file" id="UserEArticleHomeInfo_Conver_Input" hidden accept="image/*" />
-        <img class="EArticle-Home-BgImg-Edit" id="UserEArticleHomeInfo_Conver" src="~/img/edit.webp" title="@Localizer["Change cover"]" />
+        <img class="EArticle-Home-BgImg-Edit" id="UserEArticleHomeInfo_Conver" src="~/img/edit.webp" title='@Localizer["Change cover"]' />
     </div>
 </div>
 

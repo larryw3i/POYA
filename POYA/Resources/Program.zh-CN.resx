@@ -3137,4 +3137,19 @@
   <data name="\u673a\u68b0\u5de5\u7a0b" xml:space="preserve">
     <value>机械工程</value>
   </data>
+  <data name="ADD" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="Click to add" xml:space="preserve">
+    <value>点击添加</value>
+  </data>
+  <data name="The default" xml:space="preserve">
+    <value>默认</value>
+  </data>
+  <data name="default" xml:space="preserve">
+    <value>默认</value>
+  </data>
+  <data name="\u4e2d\u533b\u5b66" xml:space="preserve">
+    <value>中医学</value>
+  </data>
 </root>

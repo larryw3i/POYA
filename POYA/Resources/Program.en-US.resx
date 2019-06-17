@@ -3137,4 +3137,19 @@
   <data name="\u673a\u68b0\u5de5\u7a0b" xml:space="preserve">
     <value>Mechanical Engineering</value>
   </data>
+  <data name="ADD" xml:space="preserve">
+    <value>ADD</value>
+  </data>
+  <data name="Click to add" xml:space="preserve">
+    <value>Click to add</value>
+  </data>
+  <data name="The default" xml:space="preserve">
+    <value>The default</value>
+  </data>
+  <data name="default" xml:space="preserve">
+    <value>default</value>
+  </data>
+  <data name="\u4e2d\u533b\u5b66" xml:space="preserve">
+    <value>Traditional Chinese Medicine</value>
+  </data>
 </root>

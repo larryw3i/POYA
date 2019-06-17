@@ -25,7 +25,7 @@
 <div class="row">
     <div class="col offset-6">
         <div class="progress space-use-progress" title="@Localizer["Total"]: 5G @Localizer["Used"]: ~@_OptimizedUsedSpace">
-            <div class="progress-bar" role="progressbar" style="width:@SpaceRemainder%;" aria-valuemin="0"
+            <div class="progress-bar" role="progressbar" style='width:@SpaceRemainder%;' aria-valuemin="0"
                  aria-valuemax="100">@Localizer["surplus"]:@SpaceRemainder%</div>
             </div>
         </div>
@@ -96,9 +96,9 @@
                         @*
                             <a asp-action="Create" asp-route-_id="@item.Id" asp-controller="LSharings" title="@Localizer["Share"]">&#128226;</a>
                         *@
-                        <a asp-action="Edit" asp-route-id="@item.Id" title="@Localizer["Rename"]">&#9997;</a>
-                        <a asp-action="Details" asp-route-id="@item.Id" title="@Localizer["Details"]">&#9749;</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" title="@Localizer["Delete"]">&#10008;</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" title='@Localizer["Rename"]'>&#9997;</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" title='@Localizer["Details"]'>&#9749;</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" title='@Localizer["Delete"]'>&#10008;</a>
                     </td>
                 </tr>
             }

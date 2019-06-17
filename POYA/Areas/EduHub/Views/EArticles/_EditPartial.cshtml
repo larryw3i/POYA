@@ -19,6 +19,7 @@
     var EArticleFiles = IsEdit ? ViewData["EArticleFiles"] as List<EArticleFile> : null;
     var FileRemoveEleString = "FileRemoveEle_";
     var IsVideoFileUploaded = IsEdit ? EArticleFiles.Any(p => p.IsEArticleVideo) : false;
+    var _ViewDataDictionary = new ViewDataDictionary(ViewData) { { "MenuToolbar", "MenuToolbar" }, { "ContentEditor", "_ContentEditor" } };
 }
 
 <div class="row">
@@ -115,96 +116,17 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/wangEditor-3.1.1/release/wangEditor.min.js"></script>
 <script src="~/lib/js-spark-md5/spark-md5.min.js"></script>
+<partial name="_DefaultEditorPartial" view-data="_ViewDataDictionary" />
 <script>
 
+    @*
     var _Editor = window.wangEditor;
     var Editor = new _Editor("#MenuToolbar","#_ContentEditor");
-
+    *@
 
     var ID8MD5Array = new Array();
 
-    $(document).ready(function () {
 
-        ReadyEditor(Editor);
-
-        $("#video_list_div").hide();
-        $("#attachment_list_div").hide();
-        HandleCategorySelect();
-
-        $("#FirstCategorySelect").on("change", function () {
-            HandleCategorySelect();
-
-        });
-
-        $("#EArticles_Form_Submit_A").on("click", function () {
-            if ($("#Title").val().length < 2) return;
-            if (Editor.txt.html().length < 10) return;
-            FormSubmitClick();
-            event.preventDefault();
-        });
-
-        $("#_ContentEditor").on("click", function () {
-            $(".w-e-text").focus();
-        });
-
-        $("#VideoSelectEle").on("click", function () {
-
-            // console.log(">>>>>>>>"+$("#video_row_div input:last").val());
-            if (IsVideoFileSelected) return;
-            var _LastVideoInputVal = $("#video_row_div input:last").val();
-            //  console.log("Value of last video file input >_ " + _LastVideoInputVal + "\t" + _LastVideoInputVal.length);
-            if (_LastVideoInputVal == undefined|| _LastVideoInputVal.length > 0) {
-
-                let _LVideoFileInput = LVideoFileInput(_Data_.NewGuid());
-                $(_LVideoFileInput).attr("form", "EArticles_Form");
-                $("#video_row_div").append(_LVideoFileInput);
-
-            }
-            $("#video_row_div input:last").click();
-
-            event.preventDefault();
-        });
-        $("#AttachmentSelectBtn").on("click", function () {
-
-            var _LastAttachmentInputVal = $("#attachment_row_div input:last").val();
-            if (_LastAttachmentInputVal == undefined || _LastAttachmentInputVal.length > 0) {
-                let _LAttachmentFileInput = LAttachmentFileInput(_Data_.NewGuid());
-                $(_LAttachmentFileInput).attr("form", "EArticles_Form");
-                $("#attachment_row_div").append(_LAttachmentFileInput);
-            }
-            $("#attachment_row_div input:last").click();
-
-            event.preventDefault();
-        });
-
-        $("#attachment_div").mouseover(function () {
-            $("#attachment_list_div").show();
-        });
-
-
-        $("#attachment_div").mouseout(function () {
-
-            $("#attachment_list_div").hide();
-        });
-
-        $("#video_div").mouseover(function () {
-
-            $("#video_list_div").show();
-        });
-
-        $("#video_div").mouseout(function () {
-
-            $("#video_list_div").hide();
-        });
-        $("#_ContentEditor *").blur(function () {
-            if (Editor.txt.html().length < 20) {
-                $("#ContentValidation").html("@Localizer["The content of the article should be more than 20 characters"]!");
-            } else {
-                $("#ContentValidation").html("");
-            }
-        });
-
-    });
 
 
 
@@ -490,14 +412,100 @@
 
     }
 
+
+    function FormSubmitClick() {
+        CheckMD5();
+        // console.log(">>>")
+        }
+
+    $(document).ready(function () {
+
+        //  ReadyEditor(Editor);
+
+        $("#video_list_div").hide();
+        $("#attachment_list_div").hide();
+        HandleCategorySelect();
+
+        $("#FirstCategorySelect").on("change", function () {
+            HandleCategorySelect();
+
+        });
+
+        $("#EArticles_Form_Submit_A").on("click", function () {
+            if ($("#Title").val().length < 2) return;
+            if (Editor.txt.html().length < 10) return;
+            FormSubmitClick();
+            event.preventDefault();
+        });
+
+        $("#_ContentEditor").on("click", function () {
+            $(".w-e-text").focus();
+        });
+
+        $("#VideoSelectEle").on("click", function () {
+
+            // console.log(">>>>>>>>"+$("#video_row_div input:last").val());
+            if (IsVideoFileSelected) return;
+            var _LastVideoInputVal = $("#video_row_div input:last").val();
+            //  console.log("Value of last video file input >_ " + _LastVideoInputVal + "\t" + _LastVideoInputVal.length);
+            if (_LastVideoInputVal == undefined || _LastVideoInputVal.length > 0) {
+
+                let _LVideoFileInput = LVideoFileInput(_Data_.NewGuid());
+                $(_LVideoFileInput).attr("form", "EArticles_Form");
+                $("#video_row_div").append(_LVideoFileInput);
+
+            }
+            $("#video_row_div input:last").click();
+
+            event.preventDefault();
+        });
+        $("#AttachmentSelectBtn").on("click", function () {
+
+            var _LastAttachmentInputVal = $("#attachment_row_div input:last").val();
+            if (_LastAttachmentInputVal == undefined || _LastAttachmentInputVal.length > 0) {
+                let _LAttachmentFileInput = LAttachmentFileInput(_Data_.NewGuid());
+                $(_LAttachmentFileInput).attr("form", "EArticles_Form");
+                $("#attachment_row_div").append(_LAttachmentFileInput);
+            }
+            $("#attachment_row_div input:last").click();
+
+            event.preventDefault();
+        });
+
+        $("#attachment_div").mouseover(function () {
+            $("#attachment_list_div").show();
+        });
+
+
+        $("#attachment_div").mouseout(function () {
+
+            $("#attachment_list_div").hide();
+        });
+
+        $("#video_div").mouseover(function () {
+
+            $("#video_list_div").show();
+        });
+
+        $("#video_div").mouseout(function () {
+
+            $("#video_list_div").hide();
+        });
+        $("#_ContentEditor *").blur(function () {
+            if (Editor.txt.html().length < 20) {
+                $("#ContentValidation").html("@Localizer["The content of the article should be more than 20 characters"]!");
+            } else {
+                $("#ContentValidation").html("");
+            }
+        });
+
+    });
+
+    @*
     /**
      *
      * @@param Editor
      */
-    function FormSubmitClick() {
-        CheckMD5();
-        // console.log(">>>")
-    }
     function ReadyEditor(Editor) {
         //   CONTENT_EDITOR
 
@@ -576,7 +584,8 @@
         Editor.customConfig.zIndex = 1;
 
         Editor.create();
-    }
+        }
+    *@
     //
 </script>
 <style>
