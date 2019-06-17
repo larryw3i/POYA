@@ -511,12 +511,12 @@ namespace POYA.Areas.EduHub.Controllers
             eArticle.FirstCategorySelectListItems = Categories.Where(p => p.Code.Length == 3).Select(p => new SelectListItem
             {
                 Value = p.Id.ToString() + "_" + p.Code,
-                Text = p.Name
+                Text = p.Name.Replace("!","")
             }).ToList();
             eArticle.SecondCategorySelectListItems = Categories.Where(p => p.Code.Length == 5).Select(p => new SelectListItem
             {
                 Value = p.Id.ToString() + "_" + p.Code,
-                Text = p.Name
+                Text = p.Name.Replace("!","")
             }).ToList();
         }
 
