@@ -208,6 +208,7 @@ namespace POYA.Areas.XUserFile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequestSizeLimit(200_000_000)]
         #endregion
         public async Task<IActionResult> Create([FromForm] LFilePost XFilePost)
         {

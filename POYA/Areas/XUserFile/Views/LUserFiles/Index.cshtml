@@ -9,8 +9,9 @@
     var InDirName = ViewData["_InDirName"];
     var LastDirId = ViewData["_LastDirId"];  //  BUG >_  DELETE DIR
     var UsedSpace = (long)ViewData["UsedSpace"];    //  in byte
-    var SpaceRemainder = 100 - (long)(UsedSpace / (50 * Math.Pow(1024, 3)));
+    var SpaceRemainder = ((1.0 - (double)(UsedSpace / (5 * Math.Pow(1024, 3))))*100).ToString("0.0");
     var _OptimizedUsedSpace = ViewData["OptimizedUsedSpace"];
+    //  Console.WriteLine(">>>>>>>"+(long)(UsedSpace / (5 * Math.Pow(1024, 3)))*100);
 
 }
 

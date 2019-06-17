@@ -266,7 +266,6 @@
   <ItemGroup>
     <Folder Include="Areas\DeveloperZone\Controllers\" />
     <Folder Include="Areas\DeveloperZone\Data\" />
-    <Folder Include="Areas\DeveloperZone\Models\" />
     <Folder Include="Areas\DeveloperZone\Views\" />
     <Folder Include="Areas\EduHub\Data\EArticleFiles\" />
     <Folder Include="Areas\EduHub\Data\EArticleFiles\" />
