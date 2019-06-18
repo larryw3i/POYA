@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Ganss.XSS;
 using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -21,6 +22,7 @@ using POYA.Unities.Helpers;
 namespace POYA.Areas.DeveloperZone.Controllers
 {
     [Area("DeveloperZone")]
+    [Authorize(Roles = "2E3DA548-49C7-4074-8A75-40730E503342")]
     public class XDeveloperNotesController : Controller
     {
         #region     DI
