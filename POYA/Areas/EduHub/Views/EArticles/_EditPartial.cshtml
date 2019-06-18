@@ -19,7 +19,7 @@
     var EArticleFiles = IsEdit ? ViewData["EArticleFiles"] as List<EArticleFile> : null;
     var FileRemoveEleString = "FileRemoveEle_";
     var IsVideoFileUploaded = IsEdit ? EArticleFiles.Any(p => p.IsEArticleVideo) : false;
-    var _ViewDataDictionary = new ViewDataDictionary(ViewData) { { "MenuToolbar", "MenuToolbar" }, { "ContentEditor", "_ContentEditor" } };
+    var _ViewDataDictionary = new ViewDataDictionary(ViewData) { { "MenuToolbar", "MenuToolbar" }, { "ContentEditor", "ContentEditor" } };
 }
 
 <div class="row">
@@ -37,7 +37,7 @@
             <div class="form-group">
                 <div id="MenuToolbar" class="toolbar">
                 </div>
-                <div id="_ContentEditor" class="text">
+                <div id="ContentEditor" class="text">
                     @(Html.Raw(Model.Content))
                 </div>
                 <span id="ContentValidation" class="text-danger"></span>
@@ -182,7 +182,7 @@
             async: true,
             //  contentType: "multipart/form-data",
             headers: {
-                "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
+                "L-XSRF-TOKEN": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"
             },
             /**
              * REFERENCE    https://www.jianshu.com/p/eb119affdc25
@@ -207,7 +207,6 @@
              */
             success: function () {
                 history.go(-1);
-                //  window.location.href = "@Url.Action("Index")";
             }
             //
         });
@@ -265,7 +264,7 @@
                 type: "POST",
                 data: { "id": id },
                 headers: {
-                    "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
+                    "L-XSRF-TOKEN": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"
                 },
                 success: function () {
                     $(`#${FileRemoveEleId(id)}`).remove();
@@ -307,7 +306,7 @@
     function GetMD5(Id,  IsEArticleVideo = false) {
 
         var File_ = File_ = document.getElementById(Id).files[0];
-        $("#SaveProgressEle").html("@Localizer["Read file . . ."]");
+        $("#SaveProgressEle").html("@(Localizer["Read file"]) . . .");
 
 
         var BlobSlice_ = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
@@ -357,17 +356,14 @@
             ID8MD5Array.push({ ID: Id, MD5: MD5, IsEArticleVideo: IsEArticleVideo });
         }
     }
-    //
 
     function CheckMD5() {
-        // console.log("<<<<>>>");
         if (ID8MD5Array.length < 1) SubmitForm(Editor);;
-        // console.log(">>>>>>>>>", JSON.stringify(ID8MD5Array));
         var eArticleFileMD5s = new Array();
 
         ID8MD5Array.forEach((value, index, array) => {
             eArticleFileMD5s.push({
-                FileInputId:"",
+                FileInputId: "",
                 EArticleId: "@Model.Id",
                 FileName: $("#" + value["ID"]).val(),
                 MD5: value["MD5"],
@@ -375,33 +371,23 @@
             });
         });
 
-        // console.log(">>>>>", eArticleFileMD5s);
-
         $.ajax({
             url: "@Url.Action("LCheckMD5v1")",
             type: "POST",
             data: { eArticleFileMD5s: eArticleFileMD5s },
 
             headers: {
-                "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
+                "L-XSRF-TOKEN": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"
             },
             dataType: "json",
             success: function (Response) {
-                //  console.log(Response);
-                //  console.log(ID8MD5Array);
                 Response.forEach((value, index, array) => {
 
                     if (value["IsUploaded"] == true) {
                         ID8MD5Array.forEach((v, i, a) => {
                             if (v["MD5"] == value["FileMD5"]) {
-                                //  RemoveFile(v["ID"])
-                                //  console.log($(`#${v["ID"]}`).length);
-                                //  console.log($(`#${v["ID"]}`).length);
-                                /// if ($(`#${v["ID"]}`).length > 0) {
-                                    $(`#${v["ID"]}`).remove();
-                                //  } else {
-                                //  $(`#${v["ID"]}`).remove();
-                                //  }
+                                $(`#${v["ID"]}`).remove();
+
                             }
                         });
                     }
@@ -415,12 +401,10 @@
 
     function FormSubmitClick() {
         CheckMD5();
-        // console.log(">>>")
-        }
+    }
 
     $(document).ready(function () {
 
-        //  ReadyEditor(Editor);
 
         $("#video_list_div").hide();
         $("#attachment_list_div").hide();
@@ -438,16 +422,14 @@
             event.preventDefault();
         });
 
-        $("#_ContentEditor").on("click", function () {
+        $("#ContentEditor").on("click", function () {
             $(".w-e-text").focus();
         });
 
         $("#VideoSelectEle").on("click", function () {
 
-            // console.log(">>>>>>>>"+$("#video_row_div input:last").val());
             if (IsVideoFileSelected) return;
             var _LastVideoInputVal = $("#video_row_div input:last").val();
-            //  console.log("Value of last video file input >_ " + _LastVideoInputVal + "\t" + _LastVideoInputVal.length);
             if (_LastVideoInputVal == undefined || _LastVideoInputVal.length > 0) {
 
                 let _LVideoFileInput = LVideoFileInput(_Data_.NewGuid());
@@ -491,7 +473,7 @@
 
             $("#video_list_div").hide();
         });
-        $("#_ContentEditor *").blur(function () {
+        $("#ContentEditor *").blur(function () {
             if (Editor.txt.html().length < 20) {
                 $("#ContentValidation").html("@Localizer["The content of the article should be more than 20 characters"]!");
             } else {
@@ -500,93 +482,6 @@
         });
 
     });
-
-    @*
-    /**
-     *
-     * @@param Editor
-     */
-    function ReadyEditor(Editor) {
-        //   CONTENT_EDITOR
-
-        //   MENU CONFIGURE
-        Editor.customConfig.menus = [
-            'head',
-            'bold',
-            'fontSize',
-            'italic',
-            'underline',
-            'strikeThrough',
-            'foreColor',
-            'backColor',
-            'link',
-            'list',
-            'justify',
-            'quote',
-            'emoticon',
-            'image',
-            'table',
-            'code',
-            'undo',
-            'redo',
-        ];
-
-        //
-
-
-        //   LANGUAGE CONFIGURE
-
-        Editor.customConfig.lang = {
-
-            "\u8bbe\u7f6e\u6807\u9898": "@(Localizer["Title"])",
-            "\u6b63\u6587": "@(Localizer["Paragraph"])",
-            "\u94fe\u63a5\u6587\u5b57": "@(Localizer["Link text"])",
-            "\u56fe\u7247\u94fe\u63a5": "@(Localizer["Image link"])",
-            "\u94fe\u63a5": "@(Localizer["Link"])",
-            "\u4e0a\u4f20\u56fe\u7247": "@(Localizer["Upload image"])",
-            "\u4e0a\u4f20": "@(Localizer["Upload"])",
-            "\u521b\u5efa": "@(Localizer["Initial"])",
-            "\u63d2\u5165\u4ee3\u7801": "@(Localizer["Insert code"])",
-            "\u7f51\u7edc\u56fe\u7247": "@(Localizer["Image url"])",
-            "\u63d2\u5165\u8868\u683c": "@(Localizer["Table"])",
-            "\u884c": "@(Localizer["line"])",
-            "\u5217\u7684\u8868\u683c": "@(Localizer["col"])",
-            "\u63d2\u5165": "@(Localizer["Insert"])",
-            "\u5bf9\u9f50\u65b9\u5f0f": "@(Localizer["Align"])",
-            "\u5b57\u53f7": "@(Localizer["Font size"])",
-            "\u5b57\u4f53": "@(Localizer["Font"])",
-            "\u5b8b\u4f53": "@(Localizer["Simsun"])",
-            "\u5fae\u8f6f\u96c5\u9ed1": "@(Localizer["Microsoft YaHei"])",
-            "\u6587\u5b57\u989c\u8272": "@(Localizer["Font color"])",
-            "\u80cc\u666f\u8272": "@(Localizer["background color"])",
-            "\u8bbe\u7f6e\u5217\u8868": "@(Localizer["List"])",
-            "\u6709\u5e8f\u5217\u8868": "@(Localizer["ordered list"])",
-            "\u65e0\u5e8f\u5217\u8868": "@(Localizer["unordered list"])",
-            "\u9760\u5de6": "@(Localizer["Left"])",
-            "\u5c45\u4e2d": "@(Localizer["Center"])",
-            "\u9760\u53f3": "@(Localizer["Right"])",
-            "\u9ed8\u8ba4": "@(Localizer["Default"])",
-            "\u65b0\u6d6a": "@(Localizer["Sina"])",
-
-        };
-
-
-        //
-
-        //   UPLOAD IMAGE CONFIGURE
-        Editor.customConfig.uploadImgServer = '@(Url.Action("UploadEArticleImage"))';
-        Editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024;
-        Editor.customConfig.uploadImgMaxLength = 8;
-        Editor.customConfig.uploadImgHeaders = {
-            "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
-        };
-        Editor.customConfig.uploadFileName = 'EArticleImages';
-        Editor.customConfig.zIndex = 1;
-
-        Editor.create();
-        }
-    *@
-    //
 </script>
 <style>
 
@@ -594,24 +489,6 @@
         text-align: center;
     }
 
-    #_ContentEditor {
-        height: 500px;
-        border: dotted;
-        border-radius: 10px;
-        overflow: hidden;
-        word-wrap: break-word;
-        word-break: break-all;
-    }
-
-
-    .w-e-text {
-        overflow-y: scroll;
-    }
-
-    .w-e-toolbar {
-        display: flex;
-        flex-wrap: wrap;
-    }
 
     .LookForImageIcon {
         zoom: 200%;
@@ -629,5 +506,10 @@
     .FileInputRemoveEle:hover {
         color: red;
         zoom: 150%;
+    }
+
+    #SaveProgressEle {
+        font-size: 150%;
+        color: blue;
     }
 </style>
