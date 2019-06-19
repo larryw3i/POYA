@@ -21,6 +21,7 @@ using POYA.Unities.Helpers;
 namespace POYA.Areas.DeveloperZone.Controllers
 {
     [Area("DeveloperZone")]
+    [Authorize(Roles = "2E3DA548-49C7-4074-8A75-40730E503342")]
     public class XDevelopersController : Controller
     {
         #region     DI
@@ -65,7 +66,7 @@ namespace POYA.Areas.DeveloperZone.Controllers
 
         }
         #endregion
-
+        
 
         #region 
 

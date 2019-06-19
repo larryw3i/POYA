@@ -1,2 +1,5 @@
 {
+    "terminal.integrated.fontSize": 12,
+    "debug.console.fontSize": 12,
+    "rest-client.fontSize": 14
 }
