@@ -277,6 +277,9 @@
     <Folder Include="Areas\XAd\Views\" />
     <Folder Include="Areas\XLaw\Data\" />
     <Folder Include="Areas\XLaw\Data\" />
+    <Folder Include="Areas\XSchool\Controllers\" />
+    <Folder Include="Areas\XSchool\Data\" />
+    <Folder Include="Areas\XSchool\Views\" />
     <Folder Include="Areas\XUserFile\Data\" />
     <Folder Include="Areas\XUserFile\Data\" />
     <Folder Include="Data\LFiles\Avatars\" />
