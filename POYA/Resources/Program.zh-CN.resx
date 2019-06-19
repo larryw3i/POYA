@@ -3149,13 +3149,4 @@
   <data name="\u4e2d\u533b\u5b66" xml:space="preserve">
     <value>中医学</value>
   </data>
-  <data name="Read file" xml:space="preserve">
-    <value>读取文件</value>
-  </data>
-  <data name="Read file finish" xml:space="preserve">
-    <value>文件读取结束</value>
-  </data>
-  <data name="DeveloperZone" xml:space="preserve">
-    <value>开发者网络</value>
-  </data>
 </root>

@@ -3149,13 +3149,4 @@
   <data name="\u4e2d\u533b\u5b66" xml:space="preserve">
     <value>Traditional Chinese Medicine</value>
   </data>
-  <data name="Read file" xml:space="preserve">
-    <value>Read file</value>
-  </data>
-  <data name="Read file finish" xml:space="preserve">
-    <value>Read file finish</value>
-  </data>
-  <data name="DeveloperZone" xml:space="preserve">
-    <value>DeveloperZone</value>
-  </data>
 </root>
