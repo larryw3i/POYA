@@ -30,7 +30,7 @@ namespace POYA.Areas.EduHub.Controllers
     [Authorize]
     public class EArticlesController : Controller
     {
-        #region
+        #region     DI
         private readonly IHostingEnvironment _hostingEnv;
         private readonly IStringLocalizer<Program> _localizer;
         private readonly UserManager<IdentityUser> _userManager;

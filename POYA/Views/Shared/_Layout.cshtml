@@ -4,21 +4,23 @@
 @{
     #region
     var _THEME = Context.Request.Cookies["THEME"] ?? "Light";
-    //  _THEME = _THEME == "Light" ? "white" :
-    //    _THEME == "Dark" ? "black" : "#C7EDCC";
     var _Language_ = Context.Request.Cookies["CULTURE"] ?? "zh-CN";
+
     var _Language = new List<SelectListItem>
 {
             new SelectListItem { Value = "zh-CN", Text = "\u7b80\u4f53\u4e2d\u6587" },
             new SelectListItem { Value = "en-US", Text = "English" },
         };
+
     _Language.ForEach(p => { if (p.Value == _Language_) p.Selected = true; });
+
     var Theme = new List<SelectListItem>
 {
             new SelectListItem { Value = "Light", Text =Localizer[ "Light" ]},
             new SelectListItem { Value = "Dark", Text =Localizer[ "Dark" ]},
             new SelectListItem{ Value="Care",Text=Localizer[ "Care"]}
         };
+
     Theme.ForEach(p => { if (p.Value == _THEME) p.Selected = true; });
     #endregion
 }
@@ -72,9 +74,11 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @Localizer["More"] @*<img src="~/img/collapse.webp" style="width:28px;height:15px" />*@
+                                @Localizer["More"]
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-action="Index" asp-controller="LSchools" asp-area="XSchool">@Localizer["WeSchool"]</a>
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" asp-action="Index" asp-controller="XDevelopers" asp-area="DeveloperZone">@Localizer["Developers"]</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Donate">@Localizer["Donate"]</a>
@@ -84,12 +88,6 @@
                         <li class="nav-item">
                             <div class="nav-link ">
                                 <select id="Theme" name="Theme" asp-items="Theme" style="border:none">
-                                    @*
-                                        <option value="Light">@(Localizer["Light"]) </option>
-                                        <option value="Dark" selected>@(Localizer["Dark"])</option>
-                                        <option value="Care">@(Localizer["Care"])</option>
-                                        _CookieConsentPartial
-                                    *@
                                 </select>
                             </div>
                         </li>
@@ -110,10 +108,6 @@
         <div class="container" style="margin-top:-12px">
             &copy; 2019 - @Localizer["WSUDisk"] -
             <select id="_Language" name="_Language" asp-items="_Language" style="border:none">
-                @*
-                    <option value="zh-CN" >@Localizer["zh-CN"]</option>
-                    <option value="en-US" selected>@Localizer["en-US"]</option>
-                *@
             </select> -
             <a asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Privacy"]</a> - <a href="#">@Localizer["More"]</a>
         </div>
@@ -142,16 +136,3 @@
     <!--    JS_END      -->
 </body>
 </html>
-
-
-@*  crossorigin="anonymous"
-              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" 
-
-      crossorigin="anonymous"
-                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-
-    crossorigin="anonymous"
-                integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4="
-               
-    https://blog.csdn.net/LingHuChong20
-*@

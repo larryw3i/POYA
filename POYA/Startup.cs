@@ -62,7 +62,8 @@ namespace POYA
             */
             #endregion
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();

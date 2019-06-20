@@ -1,16 +1,14 @@
 ﻿# Custom ignore rule of some files and directorie
 
-# Directories 
 /bin/
 /obj/
-/Migrations/
-#	!/Data/
+/Migrations/*
 /Data/LFiles/Avatars/*
 /Data/LFiles/XUserFile/*
 /Data/Database/*
 /Areas/EduHub/Data/EArticleFiles/*
 
-# Files
+
 /appsettings.json
 /app.db
 /ScaffoldingReadme.txt
