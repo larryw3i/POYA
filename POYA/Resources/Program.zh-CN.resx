@@ -3149,4 +3149,7 @@
   <data name="\u4e2d\u533b\u5b66" xml:space="preserve">
     <value>中医学</value>
   </data>
+  <data name="We have sent a confirmation email to you, you can login after confirming it (Didn't you get the email? check it in spam)" xml:space="preserve">
+    <value>我们已经给你的邮箱发送验证信息了, 点击邮箱里的确认链接然后就可以登录了(没有找到?可能是被系统拦截了,  看看垃圾箱)</value>
+  </data>
 </root>

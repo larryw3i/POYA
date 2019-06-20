@@ -148,13 +148,11 @@
                     "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
                 },
                 success: function () {
-                    //  $("#UserEArticleHomeInfo_Comment").val();
                     InitHomeComment =String( $("#UserEArticleHomeInfo_Comment").val());
                     MakeAlert("info", "@Localizer[ "Update successfully"]" + "!")
                     if (IsUploadCoverFile) {
                         document.getElementById("UserEArticleHomeInfo_Conver_Input").value='';
                     }
-                    //  console.log(">>>>>>"+InitHomeComment);
                     $(".EArticle-Home-Img-Ele").css("background-image",
                         'url("@(Url.Action("GetEArticleHomeCover", new { area="EduHub",id=_UserEArticleHomeInfo.Id}))?random='+Math.floor(Math.random() * 100 + 1)+'")');
                 },

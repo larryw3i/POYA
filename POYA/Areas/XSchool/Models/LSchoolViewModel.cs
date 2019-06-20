@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace POYA.Areas.XSchool.Models
 {
-
     public class LSchool    //  ViewModel
     {
         public Guid Id { get; set; }

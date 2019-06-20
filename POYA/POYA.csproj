@@ -476,7 +476,7 @@
 
     <PackageReference Include="Microsoft.ML.TensorFlow" Version="0.13.0" />
 
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.10" />
 
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
 
@@ -530,19 +530,11 @@
 
   <ItemGroup>
 
-    <Folder Include="Areas\DeveloperZone\Data\" />
-
     <Folder Include="Areas\EduHub\Data\EArticleFiles\" />
 
     <Folder Include="Areas\EduHub\Data\EArticleFiles\" />
 
-    <Folder Include="Areas\LFile\Controllers\" />
-
-    <Folder Include="Areas\LFile\Data\" />
-
-    <Folder Include="Areas\LFile\Models\" />
-
-    <Folder Include="Areas\LFile\Views\" />
+    <Folder Include="Areas\EduHub\Data\" />
 
     <Folder Include="Areas\XAd\Controllers\" />
 
@@ -555,6 +547,16 @@
     <Folder Include="Areas\XLaw\Data\" />
 
     <Folder Include="Areas\XLaw\Data\" />
+
+    <Folder Include="Areas\XLaw\Data\" />
+
+    <Folder Include="Areas\XSchool\Controllers\" />
+
+    <Folder Include="Areas\XSchool\Data\" />
+
+    <Folder Include="Areas\XSchool\Views\" />
+
+    <Folder Include="Areas\XUserFile\Data\" />
 
     <Folder Include="Areas\XUserFile\Data\" />
 

@@ -3149,4 +3149,7 @@
   <data name="\u4e2d\u533b\u5b66" xml:space="preserve">
     <value>Traditional Chinese Medicine</value>
   </data>
+  <data name="We have sent a confirmation email to you, you can login after confirming it (Didn't you get the email? check it in spam)" xml:space="preserve">
+    <value>We have sent a confirmation email to you, you can login after confirming it (Didn't you get the email? check it in spam)</value>
+  </data>
 </root>
