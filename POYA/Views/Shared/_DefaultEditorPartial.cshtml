@@ -2,8 +2,8 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    var _MenuToolbar = ViewData["MenuToolbar"]??"MenuToolbar";
-    var _ContentEditor = ViewData["ContentEditor"]??"ContentEditor";
+    var _MenuToolbar = ViewData["MenuToolbar"];
+    var _ContentEditor = ViewData["ContentEditor"];
 }
 
 <script src="~/lib/wangEditor-3.1.1/release/wangEditor.min.js"></script>
@@ -11,9 +11,9 @@
     
     var _Editor = window.wangEditor;
     var Editor = new _Editor("#@_MenuToolbar", "#@_ContentEditor");
-        //========  CONTENT_EDITOR      ========//
+       //   CONTENT_EDITOR
 
-        //========  MENU CONFIGURE      ========//
+        //   MENU CONFIGURE
       Editor.customConfig.menus = [
             'head',
             'bold',
@@ -35,7 +35,10 @@
             'redo',
         ];
 
-        //========  LANGUAGE CONFIGURE  ========//
+        //
+
+
+        //   LANGUAGE CONFIGURE
 
         Editor.customConfig.lang = {
 
@@ -72,12 +75,14 @@
         };
 
 
-        //========  UPLOAD IMAGE CONFIGURE  ========//
+        //
+
+        //   UPLOAD IMAGE CONFIGURE
         Editor.customConfig.uploadImgServer = '@(Url.Action("UploadEArticleImage"))';
         Editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024;
         Editor.customConfig.uploadImgMaxLength = 8;
         Editor.customConfig.uploadImgHeaders = {
-            "L-XSRF-TOKEN": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"
+            "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
         };
         Editor.customConfig.uploadFileName = 'EArticleImages';
         Editor.customConfig.zIndex = 1;
@@ -85,24 +90,3 @@
         Editor.create();
 
 </script>
-<style>
-    #@_ContentEditor {
-        height: 500px;
-        border: dotted;
-        border-radius: 10px;
-        overflow: hidden;
-        word-wrap: break-word;
-        word-break: break-all;
-    }
-
-
-    .w-e-text {
-        overflow-y: scroll;
-    }
-
-    .w-e-toolbar {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-</style>

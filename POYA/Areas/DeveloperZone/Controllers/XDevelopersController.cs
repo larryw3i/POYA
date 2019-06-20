@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Antiforgery;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -21,6 +20,7 @@ using POYA.Unities.Helpers;
 namespace POYA.Areas.DeveloperZone.Controllers
 {
     [Area("DeveloperZone")]
+    [Authorize(Roles = "2E3DA548-49C7-4074-8A75-40730E503342")]
     public class XDevelopersController : Controller
     {
         #region     DI
@@ -65,7 +65,7 @@ namespace POYA.Areas.DeveloperZone.Controllers
 
         }
         #endregion
-
+        
 
         #region 
 
@@ -100,8 +100,6 @@ namespace POYA.Areas.DeveloperZone.Controllers
         #region 
 
         // GET: DeveloperZone/XDevelopers/Create
-        
-        [Authorize]
         #endregion
         public IActionResult Create()
         {
@@ -114,7 +112,6 @@ namespace POYA.Areas.DeveloperZone.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         #endregion
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserId,HomeCoverImgMD5,DOJoining")] XDeveloper xDeveloper)

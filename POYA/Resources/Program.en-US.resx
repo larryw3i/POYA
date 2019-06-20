@@ -3137,9 +3137,6 @@
   <data name="\u673a\u68b0\u5de5\u7a0b" xml:space="preserve">
     <value>Mechanical Engineering</value>
   </data>
-  <data name="ADD" xml:space="preserve">
-    <value>ADD</value>
-  </data>
   <data name="Click to add" xml:space="preserve">
     <value>Click to add</value>
   </data>
@@ -3151,14 +3148,5 @@
   </data>
   <data name="\u4e2d\u533b\u5b66" xml:space="preserve">
     <value>Traditional Chinese Medicine</value>
-  </data>
-  <data name="Read file" xml:space="preserve">
-    <value>Read file</value>
-  </data>
-  <data name="Read file finish" xml:space="preserve">
-    <value>Read file finish</value>
-  </data>
-  <data name="DeveloperZone" xml:space="preserve">
-    <value>DeveloperZone</value>
   </data>
 </root>

@@ -145,7 +145,7 @@
                 processData: false,
                 contentType: false,
                 headers: {
-                    "L-XSRF-TOKEN": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"
+                    "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
                 },
                 success: function () {
                     //  $("#UserEArticleHomeInfo_Comment").val();
