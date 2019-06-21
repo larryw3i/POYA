@@ -32,43 +32,6 @@ namespace POYA.Areas.XUserFile.Controllers
             _byte < Math.Pow(1024, 3) ? $"{(_byte / Math.Pow(1024, 2)).ToString("0.0")}M" :
             $"{(_byte / Math.Pow(1024, 3)).ToString("0.0")}G";
 
-
-        public List<string> GetMimes(string FileExtension, IHostingEnvironment env)
-        {
-            var _SlnPath = $"/Users/larry/source/repos/POYA";
-            var _MimeDirPath = $"{_SlnPath}/POYA/Data/LAppDoc";
-            var _mimeJson = File.ReadAllTextAsync(_MimeDirPath + "/lmime.json").GetAwaiter().GetResult();
-            var _mimes = (JArray)JsonConvert.DeserializeObject(_mimeJson);
-            var _mimes_ = new List<string>();
-            FileExtension = (FileExtension.Contains(".") ? FileExtension.Split(".").LastOrDefault() : FileExtension).ToLower();
-            foreach (var i in _mimes)
-            {
-                var _milk = i.ToString().Split('\n')[1];
-                var _extension = _milk.Split('\"')[1];
-                var _mime = _milk.Split("\"")[3];
-                if (FileExtension == _extension.ToLower()) _mimes_.Add(_mime);
-            }
-            if (_mimes_.Count() < 1) _mimes_.Add("text/plain");
-            return _mimes_;
-            #region OLD_VERSION
-            /*
-            var _CSV = File.ReadAllTextAsync(env.ContentRootPath + "/Data/LAppDoc/lmime.csv").GetAwaiter().GetResult();
-            var MediaTypes = CsvConvert.DeserializeObject<MediaType>(_CSV);
-            FileExtension = FileExtension.Contains(".") ? FileExtension.Split(".").LastOrDefault() : FileExtension;
-            //  Console.WriteLine(JsonConvert.SerializeObject(MediaTypes));
-            var MediaTypeList = MediaTypes.ToList();
-            var _MediaTypes = MediaTypeList.Where(p => p.Name == FileExtension).Select(p => p.Template).ToList(); // "text/plain";
-            //  _MediaTypes = _MediaTypes.Count() < 1 ? "text/plain" : _MediaTypes;
-            if (_MediaTypes.Count() < 1)
-            {
-                _MediaTypes.Add("text/plain");
-            }
-            return _MediaTypes;
-            */
-            #endregion
-
-        }
-
         #region 
 
         /// <summary>

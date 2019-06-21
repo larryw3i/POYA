@@ -34,9 +34,9 @@ namespace POYA.Areas.XLaw.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ComplaintsController> _logger;
         private readonly HtmlSanitizer _htmlSanitizer;
-        private readonly MimeHelper _mimeHelper;
+        //  private readonly MimeHelper _mimeHelper;
         public ComplaintsController(
-            MimeHelper mimeHelper,
+            //  MimeHelper mimeHelper,
             HtmlSanitizer htmlSanitizer,
             ILogger<ComplaintsController> logger,
             SignInManager<IdentityUser> signInManager,
@@ -57,7 +57,7 @@ namespace POYA.Areas.XLaw.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
-            _mimeHelper = mimeHelper;
+            //  _mimeHelper = mimeHelper;
         }
         #endregion
 

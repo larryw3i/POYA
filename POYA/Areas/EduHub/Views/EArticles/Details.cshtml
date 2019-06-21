@@ -29,7 +29,7 @@
         {
             <dd class="col offset-1 col-10">
                 <video style="width:100%" controls>
-                    <source src="@Url.Action("GetFile", "LUserFiles", new { id = i.Id, area = "XUserFile" })" type="@(i.ContentType)" />
+                    <source src="@Url.Action("GetFile", "LUserFiles", new { id = i.Id, area = "XUserFile" })" />
                 </video>
             </dd>
         }

@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
@@ -41,12 +42,12 @@ namespace POYA.Areas.EduHub.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<EArticlesController> _logger;
         private readonly HtmlSanitizer _htmlSanitizer;
-        private readonly MimeHelper _mimeHelper;
+        //  private readonly MimeHelper _mimeHelper;
         private readonly XUserFileHelper _xUserFileHelper;
         //  private readonly string _eArticleCategoryFilePath;
         private readonly Regex _unicode2StringRegex;
         public EArticlesController(
-            MimeHelper mimeHelper,
+            //  MimeHelper mimeHelper,
             HtmlSanitizer htmlSanitizer,
             ILogger<EArticlesController> logger,
             SignInManager<IdentityUser> signInManager,
@@ -67,7 +68,7 @@ namespace POYA.Areas.EduHub.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
-            _mimeHelper = mimeHelper;
+            //  _mimeHelper = mimeHelper;
             _xUserFileHelper = new XUserFileHelper();
             //  _eArticleCategoryFilePath = _hostingEnv.ContentRootPath + $"/Data/LAppDoc/earticle_category.csv";
             _unicode2StringRegex = new Regex(@"\\u([0-9A-F]{4})", RegexOptions.IgnoreCase | RegexOptions.Compiled);
@@ -643,7 +644,14 @@ namespace POYA.Areas.EduHub.Controllers
                 return NoContent();
             }
             var FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath);
-            return File(FileBytes, _xUserFileHelper.GetMimes(_LUserFile.Name, _hostingEnv).Last(), _LUserFile.Name, true);
+
+            var provider = new FileExtensionContentTypeProvider();
+            string contentType = string.Empty;
+            if (!provider.TryGetContentType(_LUserFile.Name, out contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+            return File(FileBytes, contentType, _LUserFile.Name, true);
         }
 
         private async Task<List<SelectListItem>> GetVideoSharedCodeSelectListItemsForUser()
@@ -654,9 +662,17 @@ namespace POYA.Areas.EduHub.Controllers
             var _VideoSharedCodeSelectListItems = new List<SelectListItem>() {
                 new SelectListItem{  Value=Guid.Empty.ToString(), Text="Select your video file",Selected=true}
             };
+
+            var provider = new FileExtensionContentTypeProvider();
+            string contentType = string.Empty;
+          
             _LUserFile.ForEach(p =>
             {
-                if (_xUserFileHelper.GetMimes(p.Name.Split(".").LastOrDefault(), _hostingEnv).LastOrDefault().StartsWith("video"))
+                if (!provider.TryGetContentType(p.Name, out contentType))
+                {
+                    contentType = "application/octet-stream";
+                }
+                if (contentType.StartsWith("video"))
                 {
                     _VideoSharedCodeSelectListItems.Add(
                         new SelectListItem {
@@ -712,11 +728,18 @@ namespace POYA.Areas.EduHub.Controllers
         {
             if (_EArticleFiles.Count > 0)
             {
+                var provider = new FileExtensionContentTypeProvider();
+                string contentType = string.Empty;
+
                 _EArticleFiles.ForEach(p =>
                 {
                     if (!String.IsNullOrWhiteSpace(p.FileName))
                     {
-                        p.ContentType = _xUserFileHelper.GetMimes(p.FileName, _hostingEnv).LastOrDefault();
+                        if (!provider.TryGetContentType(p.FileName, out contentType))
+                        {
+                            contentType = "application/octet-stream";
+                        }
+                        p.ContentType = contentType;    //  _xUserFileHelper.GetMimes(p.FileName, _hostingEnv).LastOrDefault();
                         p.FileName = Path.GetFileName(p.FileName);
                     }
 

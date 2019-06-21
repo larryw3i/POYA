@@ -32,10 +32,10 @@ namespace POYA.Areas.XSchool.Controllers
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly HtmlSanitizer _htmlSanitizer;
-        private readonly MimeHelper _mimeHelper;
+        //  private readonly MimeHelper _mimeHelper;
         private readonly XUserFileHelper _xUserFileHelper;
         public LSchoolNewsController(
-            MimeHelper mimeHelper,
+            //  MimeHelper mimeHelper,
             HtmlSanitizer htmlSanitizer,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
@@ -55,7 +55,7 @@ namespace POYA.Areas.XSchool.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
-            _mimeHelper = mimeHelper;
+            //  _mimeHelper = mimeHelper;
             _xUserFileHelper = new XUserFileHelper();
         }
         #endregion
@@ -215,5 +215,9 @@ namespace POYA.Areas.XSchool.Controllers
         {
             return _context.LSchoolNews.Any(e => e.Id == id);
         }
+
+        #region DEPOLLUTION
+
+        #endregion
     }
 }

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
@@ -40,10 +41,10 @@ namespace POYA.Areas.XUserFile.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<Program> _logger;
         private readonly IAntiforgery _antiforgery;
-        private readonly MimeHelper _mimeHelper;
+        //  private readonly MimeHelper _mimeHelper;
         private readonly XUserFileHelper _xUserFileHelper;
         public LUserFilesController(
-            MimeHelper mimeHelper,
+            //  MimeHelper mimeHelper,
             IAntiforgery antiforgery,
             ILogger<Program> logger,
             SignInManager<IdentityUser> signInManager,
@@ -63,7 +64,7 @@ namespace POYA.Areas.XUserFile.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
-            _mimeHelper = mimeHelper;
+            //  _mimeHelper = mimeHelper;
             _xUserFileHelper = new XUserFileHelper();
 
         }
@@ -188,8 +189,15 @@ namespace POYA.Areas.XUserFile.Controllers
             }
 
             var lUserFile = await _context.LUserFile.FirstOrDefaultAsync(m => m.Id == id);
+            var provider = new FileExtensionContentTypeProvider();
+            string contentType = string.Empty;
 
-            lUserFile.ContentType = _xUserFileHelper.GetMimes(lUserFile.Name, _hostingEnv).Last();
+            if (!provider.TryGetContentType(lUserFile.Name, out contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+
+            lUserFile.ContentType = contentType ;  //   _xUserFileHelper.GetMimes(lUserFile.Name, _hostingEnv).Last();
             return View(lUserFile);
         }
 
@@ -402,7 +410,14 @@ namespace POYA.Areas.XUserFile.Controllers
             {
                 return NotFound();
             }
-            lUserFile.ContentType = _xUserFileHelper.GetMimes(lUserFile.Name, _hostingEnv).Last();
+            var provider = new FileExtensionContentTypeProvider();
+            string contentType = string.Empty;
+            if (!provider.TryGetContentType(lUserFile.Name, out contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+
+            lUserFile.ContentType = contentType;    //   _xUserFileHelper.GetMimes(lUserFile.Name, _hostingEnv).Last();
             return View(lUserFile);
         }
 
@@ -561,24 +576,9 @@ namespace POYA.Areas.XUserFile.Controllers
             }
             var _UserId = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id;
 
-            #region 
-            /*
-                     #region EARTICLE_HOME_COVER
-                     var _userEArticleHomeInfo = await _context.userEArticleHomeInfos.FirstOrDefaultAsync(p => p.UserId == _UserId && p.Id == id);
-                     if (_userEArticleHomeInfo != null)
-                     {
-                         var _FilePath_ = X_DOVEValues.FileStoragePath(_hostingEnv) + _userEArticleHomeInfo.CoverFileMD5;
-                         if (!System.IO.File.Exists(_FilePath_))
-                         {
-                             return NoContent();
-                         }
-                         var _FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath_);
-                         return File(_FileBytes, _userEArticleHomeInfo.CoverFileContentType, $"EARTICLE_HOME_COVER_{_UserId}", true);
-                     }
-                     #endregion
-                     */
+            var provider = new FileExtensionContentTypeProvider();
+            string contentType = string.Empty;
 
-            #endregion
 
             #region EARTICLE_FILE
             var _EArticleFile = await _context.EArticleFiles.FirstOrDefaultAsync(p => p.Id == id);
@@ -590,7 +590,12 @@ namespace POYA.Areas.XUserFile.Controllers
                     return NoContent();
                 }
                 var _FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath_);
-                return File(_FileBytes, _xUserFileHelper.GetMimes(_EArticleFile.FileName, _hostingEnv).Last(), _EArticleFile.FileName, true);
+                if (!provider.TryGetContentType(_EArticleFile.FileName, out contentType))
+                {
+                    contentType = "application/octet-stream";
+                }
+
+                return File(_FileBytes, contentType, _EArticleFile.FileName, true);
             }
             #endregion
 
@@ -605,8 +610,14 @@ namespace POYA.Areas.XUserFile.Controllers
             {
                 return NotFound();
             }
+
+
+            if (!provider.TryGetContentType(_LUserFile.Name, out contentType))
+            {
+                contentType = "application/octet-stream";
+            }
             var FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath);
-            return File(FileBytes, _xUserFileHelper.GetMimes(_LUserFile.Name, _hostingEnv).Last(), _LUserFile.Name, true);
+            return File(FileBytes, contentType, _LUserFile.Name, true);
         }
 
         /*

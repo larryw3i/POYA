@@ -608,12 +608,6 @@
 
   <ItemGroup>
 
-    <Content Update="Data\LAppDoc\lmime.json">
-
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-
-    </Content>
-
     <Content Update="Views\Shared\_CookieConsentPartial.cshtml">
 
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -661,18 +655,6 @@
   <ItemGroup>
 
     <None Update="Data\LAppDoc\earticle_category.csv">
-
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-
-    </None>
-
-    <None Update="Data\LAppDoc\_earticle_category.csv">
-
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-
-    </None>
-
-    <None Update="Data\LAppDoc\lmime.csv">
 
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 
