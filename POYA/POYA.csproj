@@ -734,6 +734,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Data\ApplicationDbContext.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
 
     <Content Update="Views\Shared\_CookieConsentPartial.cshtml">
 

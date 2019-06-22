@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<POYA.Areas.EduHub.Models.EArticle>
 @using POYA.Areas.EduHub.Models
+@using POYA.Unities.Helpers;
 
 
 @{
@@ -11,7 +12,8 @@
     var _UserEArticleSet = ViewData[nameof(UserEArticleSet)] as UserEArticleSet;
     var _pageSize = Context.Request.Cookies["PageSize"] ?? "8";
     var _CurrentUserId = ViewData["CurrentUserId"];
-    var _IsOwn = _CurrentUserId.ToString() == _UserEArticleSet.UserId;
+    var _IsDefaultEArticleSet = _UserEArticleSet.Id == LValue.DefaultEArticleSetId;
+    var _IsOwn = _IsDefaultEArticleSet?true: _CurrentUserId.ToString() == _UserEArticleSet.UserId;
 }
 
 @{
@@ -80,7 +82,7 @@ PagedListRenderOptions.OnlyShowFivePagesAtATime))
 
 <div id="OperationEle">
     <a id="BackA" class="btn btn-info">&laquo; @Localizer["Back"]</a>
-    @if (_IsOwn)
+    @if (_IsOwn && !_IsDefaultEArticleSet)
     {
         <a asp-action="Edit" asp-controller="UserEArticleSets" asp-route-id="@_UserEArticleSet.Id" class="btn btn-primary">@Localizer["Edit"]</a>
         <a asp-action="Delete" asp-controller="UserEArticleSets" asp-route-id="@_UserEArticleSet.Id" class="btn btn-danger">@Localizer["Delete"]</a>

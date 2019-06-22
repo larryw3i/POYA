@@ -118,7 +118,7 @@ namespace POYA.Areas.EduHub.Controllers
 
             ViewData["EArticleFile"] = _EArticleFiles;
             TempData[nameof(SetId)] = SetId;
-            ViewData[nameof(UserEArticleSet)] = SetId == LValue.DefaultEArticleSetId ? new UserEArticleSet { Name = "Default", Label = string.Empty, Comment = string.Empty } : await _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == SetId);
+            ViewData[nameof(UserEArticleSet)] = SetId == LValue.DefaultEArticleSetId ? new UserEArticleSet { Name = "Default", Label = string.Empty, Comment = string.Empty,Id=LValue.DefaultEArticleSetId } : await _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == SetId);
             //  ViewData["UserId_"] = UserId_;
             ViewData["CurrentUserId"] =UserId_ ?? string.Empty; ;
             #endregion
@@ -260,7 +260,7 @@ namespace POYA.Areas.EduHub.Controllers
             ViewData["Category"] = $" {_localizer[Categories.FirstOrDefault(p => p.Code == CategoryCode).Name]} > {_localizer[Category.Name]} {(string.IsNullOrWhiteSpace(eArticle.AdditionalCategory) ? string.Empty : " > " + eArticle.AdditionalCategory)}"; //  csv.GetRecords<LEArticleCategory>().ToList();
             #endregion
 
-            eArticle.SetName = _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == eArticle.SetId).GetAwaiter().GetResult().Name;
+            eArticle.SetName =eArticle.SetId==LValue.DefaultEArticleSetId?_localizer["default"]: _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == eArticle.SetId).GetAwaiter().GetResult().Name;
             eArticle.UserName = _userManager.FindByIdAsync(eArticle.UserId).GetAwaiter().GetResult().UserName;
 
             return View(eArticle);

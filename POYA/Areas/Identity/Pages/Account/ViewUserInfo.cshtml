@@ -79,9 +79,9 @@
         *@
     </div>
     @*
-    <div class="col col-10 col-sm-8 col-md-9">
-    </div>
-        *@
+        <div class="col col-10 col-sm-8 col-md-9">
+        </div>
+    *@
 </div>
 <div class="row">
     <div class="col col-auto">
@@ -92,8 +92,8 @@
 @section Scripts{
     <script>
         $(document).on("click", "#_UserAvatar", function () {
-          window.location = "mailto:@(_UserEmail)";
-    });
+            window.location = "mailto:@(_UserEmail)";
+        });
     </script>
 }
 
@@ -102,16 +102,18 @@
         th {
             text-align: right;
         }
-        tr:hover{
-            background-color:rgba(255, 0, 220,0.8);
-            animation:TrAnimation 0.5s linear forwards;
+
+        tr:hover {
+            background-color: rgba(255, 0, 220,0.8);
+            animation: TrAnimation 0.5s linear forwards;
         }
+
         #UserInfoEle {
-            cursor:default;
+            cursor: default;
             border-radius: 8px;
             border: dotted;
-            border-color:rgb(255, 216, 0);
-            animation:UserInfoEleAnimation 5s linear infinite alternate;
+            border-color: rgb(255, 216, 0);
+            animation: UserInfoEleAnimation 5s linear infinite alternate;
         }
 
         #_UserAvatar {
@@ -124,24 +126,23 @@
                 animation: _UserAvatarAnimation 0.2s linear forwards;
             }
 
-        @@keyframes _UserAvatarAnimation { 
-           
+        @@keyframes _UserAvatarAnimation {
+
             100% {
                 transform: scale(1.2);
-                border-width:5px;
+                border-width: 5px;
             }
         }
 
-        @@keyframes UserInfoEleAnimation{
+        @@keyframes UserInfoEleAnimation {
             100% {
-                
-            border-color:rgb(255, 0, 220);
+                border-color: rgb(255, 0, 220);
             }
         }
 
-        @@keyframes TrAnimation{
-            100%{
-                transform:scale(1.1);
+        @@keyframes TrAnimation {
+            100% {
+                transform: scale(1.1);
             }
         }
     </style>
