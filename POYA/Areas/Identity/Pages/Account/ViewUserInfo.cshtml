@@ -14,7 +14,7 @@
         <img src="/Home/GetAvatar?UserId=@(_UserId)" id="_UserAvatar" class="rounded-circle" title="@Localizer["Send a email"]" /><br />
         <span>@(_UserName)</span>
     </div>
-    <div class="col col-3 col-sm-4 col-md-3" id="UserInfoEle">
+    <div class="col col-auto" id="UserInfoEle">
         <table class="table">
 
             <tbody>
@@ -78,7 +78,14 @@
             </div>
         *@
     </div>
+    @*
     <div class="col col-10 col-sm-8 col-md-9">
+    </div>
+        *@
+</div>
+<div class="row">
+    <div class="col col-auto">
+        <a class="btn btn-outline-info" id="BackEle">&laquo; @Localizer["Back"]</a>
     </div>
 </div>
 
@@ -117,7 +124,8 @@
                 animation: _UserAvatarAnimation 0.2s linear forwards;
             }
 
-        @@keyframes _UserAvatarAnimation {
+        @@keyframes _UserAvatarAnimation { 
+           
             100% {
                 transform: scale(1.2);
                 border-width:5px;
