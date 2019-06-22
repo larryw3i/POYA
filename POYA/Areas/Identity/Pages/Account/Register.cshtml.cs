@@ -14,12 +14,14 @@ using Microsoft.Extensions.Localization;
 using POYA.Data;
 using POYA.Unities.Helpers;
 using POYA.Models;
+using Microsoft.Extensions.Configuration;
+
 namespace POYA.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        #region
+        #region DI
         private readonly IHostingEnvironment _hostingEnv;
         private readonly IStringLocalizer<Program> _localizer;
         private readonly UserManager<IdentityUser> _userManager;
@@ -29,7 +31,9 @@ namespace POYA.Areas.Identity.Pages.Account
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ExternalLoginModel> _logger;
+        private readonly IConfiguration _configuration;
         public RegisterModel(
+            IConfiguration configuration,
             ILogger<ExternalLoginModel> logger,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
@@ -49,8 +53,11 @@ namespace POYA.Areas.Identity.Pages.Account
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
             _logger = logger;
+            _configuration = configuration;
         }
         #endregion
+
+
         [BindProperty]
         public InputModel Input { get; set; }
         public string ReturnUrl { get; set; }
@@ -87,6 +94,7 @@ namespace POYA.Areas.Identity.Pages.Account
                     return RedirectToPage("Login", new { IsFromRegister = true, returnUrl });
                 }
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)

@@ -59,20 +59,6 @@ namespace POYA.Unities.Helpers
 
         #region SOME METHODS
 
-        /// <summary>
-        /// Initial account data for user
-        /// </summary>
-        /// <param name="context">The ApplicationDbContext</param>
-        /// <param name="user">The User</param>
-        /// <returns></returns>
-        public async Task InitialAccountData(ApplicationDbContext context, IdentityUser user)
-        {
-            //  var context = ServiceLocator.Instance.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
-            var _X_doveUserInfo = new X_doveUserInfo() { UserId = user.Id };
-            await context.X_DoveUserInfos.AddAsync(_X_doveUserInfo);
-            //  await context.LUserMainSharedDirs.AddAsync(new LUserMainSharedDir {UserId=user.Id});
-            await context.SaveChangesAsync();
-        }
 
         /// <summary>
         /// Send error log to email

@@ -47,4 +47,11 @@ namespace POYA.Areas.XSchool.Models
         public bool IsConfirmed { get; set; } = false;
         public bool IsCancelled { get; set; } = false;
     }
+    public class LSchoolAffiliation
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid MasterLSchoolId { get; set; }
+        public Guid AffiliateLSchoolId { get; set; }
+        public string Commit { get; set; }
+    }
 }

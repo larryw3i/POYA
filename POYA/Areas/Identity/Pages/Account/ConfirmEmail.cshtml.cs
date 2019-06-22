@@ -10,6 +10,7 @@ using Microsoft.Extensions.Localization;
 using POYA.Data;
 using POYA.Unities.Helpers;
 using POYA.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace POYA.Areas.Identity.Pages.Account
 {
@@ -25,7 +26,9 @@ namespace POYA.Areas.Identity.Pages.Account
         private readonly ApplicationDbContext _context;
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IConfiguration _configuration;
         public ConfirmEmailModel(
+            IConfiguration configuration,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
             RoleManager<IdentityRole> roleManager,
@@ -63,9 +66,54 @@ namespace POYA.Areas.Identity.Pages.Account
                 throw new InvalidOperationException($"Error confirming email for user with ID '{userId}':");
             }
 
-            await _x_DOVEHelper.InitialAccountData(_context, user);
+            await InitializeAccountDataAsync( user);
+
+            await InitializeRoleAsync();
+            if (user.Email == _configuration["Administration:AdminEmail"])
+            {
+                await _userManager.AddToRoleAsync(user, "Admin");
+            }
+
 
             return Page();
+        }
+
+
+        #region 
+
+        /// <summary>
+        /// Initial account data for user
+        /// </summary>
+        /// <param name="context">The ApplicationDbContext</param>
+        /// <param name="user">The User</param>
+        /// <returns></returns>
+        #endregion
+        private async Task InitializeAccountDataAsync( IdentityUser user)
+        {
+            //  var context = ServiceLocator.Instance.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+            var _X_doveUserInfo = new X_doveUserInfo() { UserId = user.Id };
+            await _context.X_DoveUserInfos.AddAsync(_X_doveUserInfo);
+            //  await context.LUserMainSharedDirs.AddAsync(new LUserMainSharedDir {UserId=user.Id});
+            await _context.SaveChangesAsync();
+        }
+
+        #region 
+
+        #endregion
+        private async Task InitializeRoleAsync()
+        {
+            string[] roleNames = { "Admin", "User" };
+            IdentityResult roleResult;
+
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = await _roleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    //create the roles and seed them to the database: Question 1  
+                    roleResult = await _roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
         }
     }
 }

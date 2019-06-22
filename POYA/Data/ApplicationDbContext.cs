@@ -8,6 +8,7 @@ using POYA.Areas.EduHub.Models;
 using POYA.Areas.XUserFile.Models;
 using POYA.Areas.XLaw.Models;
 using POYA.Areas.XSchool.Models;
+using POYA.Areas.Identity;
 namespace POYA.Data
 {
     public class ApplicationDbContext : IdentityDbContext
@@ -30,9 +31,13 @@ namespace POYA.Data
         public DbSet<POYA.Areas.XSchool.Models.LSchool> LSchool { get; set; }
         public DbSet<POYA.Areas.XSchool.Models.LSchoolNews> LSchoolNews { get; set; }
         public DbSet<POYA.Areas.XSchool.Models.LSchoolAdmin> LSchoolAdmin { get; set; }
+        public DbSet<POYA.Areas.XSchool.Models.LSchoolAffiliation> LSchoolAffiliation { get; set; }
+        //  public DbSet<POYA.Areas.Identity.POYALRole> POYALRole { get; set; }
 
 
         /*
+        public DbSet<POYA.Areas.Identity.POYALRole> POYALRole { get; set; }
+
         public DbSet<POYA.Areas.DeveloperZone.Models.XDeveloper> XDeveloper { get; set; }
         public DbSet<POYA.Areas.DeveloperZone.Models.XDeveloperNote> XDeveloperNote { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.EArticleComment> EArticleComment { get; set; }
