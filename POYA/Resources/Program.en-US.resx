@@ -3152,4 +3152,19 @@
   <data name="We have sent a confirmation email to you, you can login after confirming it (Didn't you get the email? check it in spam)" xml:space="preserve">
     <value>We have sent a confirmation email to you, you can login after confirming it (Didn't you get the email? check it in spam)</value>
   </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="By" xml:space="preserve">
+    <value>By</value>
+  </data>
+  <data name="Send a email" xml:space="preserve">
+    <value>Send a email</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="Hometown" xml:space="preserve">
+    <value>Hometown</value>
+  </data>
 </root>

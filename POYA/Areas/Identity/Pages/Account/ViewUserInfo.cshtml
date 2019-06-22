@@ -2,43 +2,75 @@
 @model POYA.Areas.Identity.Pages.Account.ViewUserInfoModel
 @using POYA.Models;
 @{
-    var _User = ViewData["_User"] as IdentityUser;    //   = _User.UserName;
     var X_doveUserInfo = ViewData["X_doveUserInfo"] as X_doveUserInfo;  //  = await _context.X_DoveUserInfos.Select(p => new X_doveUserInfo
-    ViewData["Title"] = _User.UserName + "'s " + Localizer["Information"];
+    var _UserName = ViewData["UserName"];
+    ViewData["Title"] = _UserName + "'s " + Localizer["Information"];
+    var _UserId = ViewData["UserId"];//  = _User.Id;
+    var _UserEmail = ViewData["UserEmail"];//    = _User.Email;
+
 }
 <div class="row">
-    <div class="col col-3 col-sm-4 col-md-3">
-        <img style="max-height:100px;max-width:100px;border-radius:50%;border:solid;border-color:#EE7AE9;box-shadow: 2px 2px 8px #EE7AE9;" src="/Home/GetAvatar?UserId=@(_User.Id)" />
-        <ul>
-            @if (X_doveUserInfo.IsAddressOvert)
-            {
-                <li class="">@Localizer["Address"] o=> @(X_doveUserInfo.Address)</li>
-            }
-            @if (X_doveUserInfo.IsOriginalAddressOvert)
-            {
-                <li class="">@Localizer["Hometown"] o=> @(X_doveUserInfo.OriginalAddress)</li>
-            }
-            @if (X_doveUserInfo.IsDOBirthOvert && X_doveUserInfo.DOBirth != null)
-            {
-                <li class="">@Localizer["Birth date"] o=> @(X_doveUserInfo.DOBirth?.LocalDateTime.ToString("MM-dd-yyyy"))</li>
-            }
-            @if (X_doveUserInfo.IsHobbyOvert)
-            {
-                <li class="">@Localizer["Hobby"] o=> @(X_doveUserInfo.Hobby)</li>
-            }
-            @if (X_doveUserInfo.IsMaritalStatusOvert)
-            {
-                <li class="">@Localizer["Marital status"] o=> @(X_doveUserInfo.MaritalStatus)</li>
-            }
-            @if (X_doveUserInfo.IsGraduatedFromOvert)
-            {
-                <li class="">@Localizer["Graduated from"] o=> @(X_doveUserInfo.GraduatedFrom)</li>
-            }
-            @if (X_doveUserInfo.IsOccupationOvert)
-            {
-                <li class="">@Localizer["Occupation"] o=> @(X_doveUserInfo.Occupation)</li>
-            }
-        </ul>
+    <div class="col col-auto text-center">
+        <img src="/Home/GetAvatar?UserId=@(_UserId)" id="_UserAvatar" class="rounded-circle" title="@Localizer["Send a email"]" /><br />
+        <span>@(_UserName)</span>
+    </div>
+    <div class="col col-3 col-sm-4 col-md-3" id="UserInfoEle">
+        <table class="table">
+
+            <tbody>
+                @if (X_doveUserInfo.IsAddressOvert)
+                {
+                    <tr>
+                        <th scope="row">@Localizer["Address"]</th>
+                        <td>@(X_doveUserInfo.Address)</td>
+                    </tr>
+                }
+                @if (X_doveUserInfo.IsOriginalAddressOvert)
+                {
+                    <tr>
+                        <th scope="row">@Localizer["Hometown"]</th>
+                        <td>@(X_doveUserInfo.OriginalAddress)</td>
+                    </tr>
+                }
+                @if (X_doveUserInfo.IsDOBirthOvert && X_doveUserInfo.DOBirth != null)
+                {
+                    <tr>
+                        <th scope="row">@Localizer["Birth date"]</th>
+                        <td>@(X_doveUserInfo.DOBirth?.LocalDateTime.ToString("MM-dd-yyyy"))</td>
+                    </tr>
+                }
+                @if (X_doveUserInfo.IsHobbyOvert)
+                {
+                    <tr>
+                        <th scope="row">@Localizer["Hobby"]</th>
+                        <td>@(X_doveUserInfo.Hobby)</td>
+                    </tr>
+                }
+                @if (X_doveUserInfo.IsMaritalStatusOvert)
+                {
+                    <tr>
+                        <th scope="row">@Localizer["Marital status"]</th>
+                        <td>@(X_doveUserInfo.MaritalStatus)</td>
+                    </tr>
+                }
+                @if (X_doveUserInfo.IsGraduatedFromOvert)
+                {
+                    <tr>
+                        <th scope="row">@Localizer["Graduated from"]</th>
+                        <td>@(X_doveUserInfo.GraduatedFrom)</td>
+                    </tr>
+                }
+                @if (X_doveUserInfo.IsOccupationOvert)
+                {
+                    <tr>
+                        <th scope="row">@Localizer["Occupation"]</th>
+                        <td>@(X_doveUserInfo.Occupation)</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
         @*
             <div class="card-body">
                 <a href="#" class="card-link">Like</a>
@@ -49,3 +81,60 @@
     <div class="col col-10 col-sm-8 col-md-9">
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        $(document).on("click", "#_UserAvatar", function () {
+          window.location = "mailto:@(_UserEmail)";
+    });
+    </script>
+}
+
+@section Styles{
+    <style>
+        th {
+            text-align: right;
+        }
+        tr:hover{
+            background-color:rgba(255, 0, 220,0.8);
+            animation:TrAnimation 0.5s linear forwards;
+        }
+        #UserInfoEle {
+            cursor:default;
+            border-radius: 8px;
+            border: dotted;
+            border-color:rgb(255, 216, 0);
+            animation:UserInfoEleAnimation 5s linear infinite alternate;
+        }
+
+        #_UserAvatar {
+            height: 100px;
+            width: 100px;
+            border: #EE7AE9 solid;
+        }
+
+            #_UserAvatar:hover {
+                animation: _UserAvatarAnimation 0.2s linear forwards;
+            }
+
+        @@keyframes _UserAvatarAnimation {
+            100% {
+                transform: scale(1.2);
+                border-width:5px;
+            }
+        }
+
+        @@keyframes UserInfoEleAnimation{
+            100% {
+                
+            border-color:rgb(255, 0, 220);
+            }
+        }
+
+        @@keyframes TrAnimation{
+            100%{
+                transform:scale(1.1);
+            }
+        }
+    </style>
+}

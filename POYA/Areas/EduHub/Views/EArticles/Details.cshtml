@@ -21,6 +21,11 @@
         @(ViewData["UserRead"])  <span title="@($"{ViewData["UserRead"]} {Localizer["people viewed"]}")">&#128521;</span>
     </span>
 </h4>
+<div class="col col-12">
+    <div class="float-right earticle-from">
+        @(Localizer["From"]) <a asp-action="XIndex" asp-route-SetId="@(Model.SetId)">@(Model.SetName)</a> | @Localizer["By"] <a href="/Identity/Account/ViewUserInfo?UserId=@(Model.UserId)">@(Model.UserName)</a>
+    </div>
+</div>
 
 <div>
     <hr />
@@ -55,7 +60,7 @@
     </dl>
 </div>
 
-<div id="OperationEle" >
+<div id="OperationEle">
     <a id="BackA" class="btn btn-info">&laquo; @Localizer["Back"]</a>
     @if (Model.UserId == ViewData["UserId_"].ToString())
     {
@@ -71,9 +76,22 @@
 
 @section Styles{
     <style>
-        #OperationEle{
-            position:fixed;
-            bottom:50px;
+        .earticle-from{
+            background-color:rgba(255, 0, 220,0.5);
+            border-radius:8px;
+            padding:2px;
+            animation: PaddingAnimation 5s linear infinite alternate;
+        }
+        #OperationEle {
+            position: fixed;
+            bottom: 50px;
+        }
+
+        @@keyframes PaddingAnimation{
+            100%{
+            border-radius:2px;
+                background-color:rgba(0, 38, 255,0.2);
+            }
         }
     </style>
 }

@@ -34,7 +34,7 @@
                    title='@Localizer["Press ENTER to save"]' />
         </div>
         <input type="file" id="UserEArticleHomeInfo_Conver_Input" hidden accept="image/*" />
-        <img class="EArticle-Home-BgImg-Edit" id="UserEArticleHomeInfo_Conver" src="~/img/edit.webp" title='@Localizer["Change cover"]' />
+        <img class="EArticle-Home-BgImg-Edit" id="UserEArticleHomeInfo_Conver" src="@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/edit.webp"}))" title='@Localizer["Change cover"]' />
     </div>
 </div>
 

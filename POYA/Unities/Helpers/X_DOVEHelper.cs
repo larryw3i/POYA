@@ -128,26 +128,31 @@ namespace POYA.Unities.Helpers
         #endregion
     }
 
-    public class MimeHelper
-    {
+    #region 
+    /*
+   public class MimeHelper
+   {
 
-        public List<string> GetExtensions(string Mime, IHostingEnvironment env)
-        {
-            var _CSV = File.ReadAllTextAsync(env.ContentRootPath + "/Data/LAppDoc/lmime.csv").GetAwaiter().GetResult();
-            var MediaTypes = CsvConvert.DeserializeObject<MediaType>(_CSV);
-            var MediaTypeList = MediaTypes.ToList();    //  .Select(p=>new MediaType {  Name=});
-            var _Extensions = new List<string>();
-            Mime = Mime.Split(".").LastOrDefault().ToLower();
-            foreach (var i in MediaTypeList)
-            {
-                if (i.Template.ToLower() == Mime)
-                {
-                    _Extensions.Add(i.Name);
-                }
-            }
-            return _Extensions;
-        }
-    }
+       public List<string> GetExtensions(string Mime, IHostingEnvironment env)
+       {
+           var _CSV = File.ReadAllTextAsync(env.ContentRootPath + "/Data/LAppContent/lmime.csv").GetAwaiter().GetResult();
+           var MediaTypes = CsvConvert.DeserializeObject<MediaType>(_CSV);
+           var MediaTypeList = MediaTypes.ToList();    //  .Select(p=>new MediaType {  Name=});
+           var _Extensions = new List<string>();
+           Mime = Mime.Split(".").LastOrDefault().ToLower();
+           foreach (var i in MediaTypeList)
+           {
+               if (i.Template.ToLower() == Mime)
+               {
+                   _Extensions.Add(i.Name);
+               }
+           }
+           return _Extensions;
+       }
+   }
+   */
+    #endregion
+
 
     public static class X_DOVEValues
     {
@@ -197,6 +202,7 @@ namespace POYA.Unities.Helpers
         public static Guid PublicDirId { get; } = Guid.Parse("75EAD9A8-31C0-4491-8D8B-431A506C6567");
         public static Guid DefaultEArticleSetId { get; } = Guid.Parse("5F8EBDF5-1ADC-4891-85F6-FD0755223A06");
         public static Guid AddEArticleSetId { get; } = Guid.Parse("F834D7E8-BEB8-42F4-A724-25099054863D");
+        
         public static long MaxMultipartBodyLengthLimit = 200_000_000;
 
     }

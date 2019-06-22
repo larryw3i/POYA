@@ -27,8 +27,20 @@ namespace POYA.Areas.EduHub.Models
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
+        #region USER
 
         public string UserId { get; set; }
+
+        #region 
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        [NotMapped]
+        #endregion
+        public string UserName { get; set; }
+        #endregion
+
+        #region EARTICLE_SET
 
         #region 
         /// <summary>
@@ -36,6 +48,16 @@ namespace POYA.Areas.EduHub.Models
         /// </summary>
         #endregion
         public Guid SetId { get; set; }     //  = LValue.DefaultEArticleSetId;
+
+        #region 
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        [NotMapped]
+        #endregion
+        public string SetName { get; set; }
+
+        #endregion
 
         #region CATEGORY
 
@@ -86,12 +108,7 @@ namespace POYA.Areas.EduHub.Models
         public long ClickCount { get; set; } = 0;
 
         #region DEPOLLUTION
-        /// <summary>
-        /// <see cref="NotMappedAttribute" />
-        /// </summary>
-        [NotMapped]
-        public string UserName { get; set; }
-
+      
         [NotMapped]
         public long ReaderCount { get; set; } = 0;
 

@@ -141,7 +141,7 @@ namespace POYA
 
             services.AddSingleton<X_DOVEHelper>(x_DOVEHelper);
 
-            services.AddSingleton<MimeHelper>(new MimeHelper());
+            //  services.AddSingleton<MimeHelper>(new MimeHelper());
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

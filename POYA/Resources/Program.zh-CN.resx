@@ -3152,4 +3152,19 @@
   <data name="We have sent a confirmation email to you, you can login after confirming it (Didn't you get the email? check it in spam)" xml:space="preserve">
     <value>我们已经给你的邮箱发送验证信息了, 点击邮箱里的确认链接然后就可以登录了(没有找到?可能是被系统拦截了,  看看垃圾箱)</value>
   </data>
+  <data name="From" xml:space="preserve">
+    <value>来自</value>
+  </data>
+  <data name="By" xml:space="preserve">
+    <value>属于</value>
+  </data>
+  <data name="Send a email" xml:space="preserve">
+    <value>通过电子邮件联系ta</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>现居地</value>
+  </data>
+  <data name="Hometown" xml:space="preserve">
+    <value>原居地</value>
+  </data>
 </root>

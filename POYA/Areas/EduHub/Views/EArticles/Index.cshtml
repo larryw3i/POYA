@@ -27,12 +27,12 @@
 
     <div class="row">
         <div class="col col-3 ">
-            <img src="~/img/article.webp" class=" main-icon" title="@Localizer["Article"]" />
+            <img src="@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/article.webp"}))" class=" main-icon" title="@Localizer["Article"]" />
         </div>
         <a class="col offset-md-4 offset-sm-1 offset-md-4 offset-lg-5 col-2 col-md-1">
         </a>
         <a class="col col-2 col-md-1" asp-action="Index" asp-controller="UserEArticleSets" title="@Localizer["My EArticle"]">
-            <img src="~/img/user_earticle.webp" style="max-height:50px;" />
+            <img src="@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/user_earticle.webp"}))" style="max-height:50px;" />
         </a>
         <div class="col col-2 col-md-1 col-lg-1">
             <select id="SortBySelect" name="SortBySelect" asp-items="SortBySelect"></select>

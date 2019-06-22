@@ -52,7 +52,9 @@ namespace POYA.Areas.Identity.Pages.Account
                 return NotFound();
             }
             var _User = await _context.Users.FirstOrDefaultAsync(p => p.Id == UserId);
-            ViewData[nameof(_User)] = _User;
+            ViewData["UserId"] = _User.Id;
+            ViewData["UserEmail"] = _User.Email;
+            ViewData["UserName"] = _User.UserName;
             ViewData[nameof(X_doveUserInfo)] = await _context.X_DoveUserInfos.Select(p => new X_doveUserInfo
             {
                 #region

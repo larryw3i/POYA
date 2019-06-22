@@ -9,7 +9,9 @@
     var _SetId = TempData["SetId"];
     TempData.Keep();
     var _UserEArticleSet = ViewData[nameof(UserEArticleSet)] as UserEArticleSet;
-    var _pageSize = Context.Request.Cookies["PageSize"]??"8";
+    var _pageSize = Context.Request.Cookies["PageSize"] ?? "8";
+    var _CurrentUserId = ViewData["CurrentUserId"];
+    var _IsOwn = _CurrentUserId.ToString() == _UserEArticleSet.UserId;
 }
 
 @{
@@ -20,24 +22,27 @@
             <a asp-action="Create" asp-route-SetId="@(_SetId)" class="btn btn-outline-info">@Localizer["Write"] &raquo;</a>
         </div>
     </div>
-    
+
     */
 }
-    <hr />
-    <div class="row">
-        <div class="col col-12 User-EArticle-Set">
-            <span style="font-size:250%;font-weight:bolder">@(_UserEArticleSet.Name)</span>
+<hr />
+<div class="row">
+    <div class="col col-12 User-EArticle-Set">
+        <span style="font-size:250%;font-weight:bolder">@(_UserEArticleSet.Name)</span>
+        <br />
+        <span class="float-right">
+            <span style="font-size:80%">@(_UserEArticleSet.Label)</span>
             <br />
-            <span class="float-right">
-                <span style="font-size:80%">@(_UserEArticleSet.Label)</span>
-                <br />
-                <span style="font-size:80%">@(_UserEArticleSet.Comment)</span>
-                <br />
+            <span style="font-size:80%">@(_UserEArticleSet.Comment)</span>
+            <br />
+            @if (_IsOwn)
+            {
                 <a asp-action="Create" asp-route-SetId="@(_SetId)">@Localizer["Write"] &raquo;</a>
-            </span>
-        </div>
+            }
+        </span>
     </div>
-    <div class="row">
+</div>
+<div class="row">
     @foreach (var a in (ViewData["_EArticles"] as IPagedList<EArticle>))
     {
         var _EArticleFiles = EArticleFiles.FirstOrDefault(p => p.EArticleId == a.Id);
@@ -45,13 +50,13 @@
             <div class="card" name="EArticleHomeCard" style="margin-top:6px;" onclick="GoToDetails('@a.Id')">
                 @if (_EArticleFiles == null)
                 {
-                <div class="card-img-top card-img-top-text" alt="@(a.Title)">
-                    <span style="font-size:80%;zoom:80%;">@(Html.Raw(a.Content))</span>
-                </div>
+                    <div class="card-img-top card-img-top-text" alt="@(a.Title)">
+                        <span style="font-size:80%;zoom:80%;">@(Html.Raw(a.Content))</span>
+                    </div>
                 }
                 else
                 {
-                <video src="@Url.Action("GetFile", "LUserFiles", new { id = EArticleFiles.FirstOrDefault(p=>p.EArticleId==a.Id).Id, area = "XUserFile" })" class="card-img-top" alt="@(a.Title)" preload="metadata"></video>
+                    <video src="@Url.Action("GetFile", "LUserFiles", new { id = EArticleFiles.FirstOrDefault(p=>p.EArticleId==a.Id).Id, area = "XUserFile" })" class="card-img-top" alt="@(a.Title)" preload="metadata"></video>
                 }
                 <div class="card-body">
                     <p class="card-text">
@@ -61,30 +66,30 @@
             </div>
         </div>
     }
-    </div>
+</div>
 
-    <div class="float-right PageEle">
-        <div>
-            <div class="form-inline">
-                <input type="text" style="width:70px;" class="form-control" id="_pageSize" title="@Localizer["Press ENTER to save"]" value="@_pageSize"/>
+<div class="float-right PageEle">
+    <div>
+        <div class="form-inline">
+            <input type="text" style="width:70px;" class="form-control" id="_pageSize" title="@Localizer["Press ENTER to save"]" value="@_pageSize" />
             @(Html.PagedListPager((IPagedList<EArticle>)ViewData["_EArticles"], _page => Url.Action("XIndex", new { SetId = _SetId, _page = _page }),
 PagedListRenderOptions.OnlyShowFivePagesAtATime))
-                </div>
-            </div>
         </div>
+    </div>
+</div>
 
-        <div id="OperationEle">
-            <a id="BackA" class="btn btn-info">&laquo; @Localizer["Back"]</a>
-    @if (_UserEArticleSet.UserId == ViewData["UserId_"].ToString())
+<div id="OperationEle">
+    <a id="BackA" class="btn btn-info">&laquo; @Localizer["Back"]</a>
+    @if (_IsOwn)
     {
-            <a asp-action="Edit" asp-controller="UserEArticleSets" asp-route-id="@_UserEArticleSet.Id" class="btn btn-primary">@Localizer["Edit"]</a>
-            <a asp-action="Delete" asp-controller="UserEArticleSets" asp-route-id="@_UserEArticleSet.Id" class="btn btn-danger">@Localizer["Delete"]</a>
+        <a asp-action="Edit" asp-controller="UserEArticleSets" asp-route-id="@_UserEArticleSet.Id" class="btn btn-primary">@Localizer["Edit"]</a>
+        <a asp-action="Delete" asp-controller="UserEArticleSets" asp-route-id="@_UserEArticleSet.Id" class="btn btn-danger">@Localizer["Delete"]</a>
     }
-        </div>
+</div>
 
 
 @section Scripts{
-        <script>
+    <script>
         /**
          *
          * @@param { string} Id
@@ -104,13 +109,13 @@ PagedListRenderOptions.OnlyShowFivePagesAtATime))
                 */
             //  #endregion
         });
-        </script>
+    </script>
 }
 
 
 @section Styles{
-        <link href="~/css/PagedList.css" rel="stylesheet" type="text/css" />
-        <style>
+    <link href="~/css/PagedList.css" rel="stylesheet" type="text/css" />
+    <style>
 
         #_pageSize{
             width:80px;
@@ -194,112 +199,112 @@ PagedListRenderOptions.OnlyShowFivePagesAtATime))
         .EArticleSearchCol {
             zoom: 80%;
         }
-        </style>
+    </style>
 }
 
 @{
-/*
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                    @Html.DisplayNameFor(model => model.UserId)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.SetId)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.CategoryId)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.AdditionalCategory)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.ComplexityRank)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.Content)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.IsLegal)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.DOPublishing)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.DOUpdating)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.ClickCount)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.ClassId)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.LGradeId)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.ContentType)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SetId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CategoryId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AdditionalCategory)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ComplexityRank)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Content)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsLegal)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DOPublishing)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DOUpdating)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ClickCount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ClassId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LGradeId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ContentType)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
-*/}
+    /*
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                        @Html.DisplayNameFor(model => model.UserId)
+                        </th>
+                        <th>
+                        @Html.DisplayNameFor(model => model.SetId)
+                        </th>
+                        <th>
+                        @Html.DisplayNameFor(model => model.CategoryId)
+                        </th>
+                        <th>
+                        @Html.DisplayNameFor(model => model.AdditionalCategory)
+                        </th>
+                        <th>
+                        @Html.DisplayNameFor(model => model.ComplexityRank)
+                        </th>
+                        <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                        </th>
+                        <th>
+                        @Html.DisplayNameFor(model => model.Content)
+                        </th>
+                        <th>
+                        @Html.DisplayNameFor(model => model.IsLegal)
+                        </th>
+                        <th>
+                        @Html.DisplayNameFor(model => model.DOPublishing)
+                        </th>
+                        <th>
+                        @Html.DisplayNameFor(model => model.DOUpdating)
+                        </th>
+                        <th>
+                        @Html.DisplayNameFor(model => model.ClickCount)
+                        </th>
+                        <th>
+                        @Html.DisplayNameFor(model => model.ClassId)
+                        </th>
+                        <th>
+                        @Html.DisplayNameFor(model => model.LGradeId)
+                        </th>
+                        <th>
+                        @Html.DisplayNameFor(model => model.ContentType)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SetId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AdditionalCategory)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ComplexityRank)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Content)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsLegal)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DOPublishing)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DOUpdating)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClickCount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClassId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LGradeId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContentType)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+    */}

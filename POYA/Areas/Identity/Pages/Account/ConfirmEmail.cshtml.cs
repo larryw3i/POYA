@@ -68,13 +68,6 @@ namespace POYA.Areas.Identity.Pages.Account
 
             await InitializeAccountDataAsync( user);
 
-            await InitializeRoleAsync();
-            if (user.Email == _configuration["Administration:AdminEmail"])
-            {
-                await _userManager.AddToRoleAsync(user, "Admin");
-            }
-
-
             return Page();
         }
 
@@ -97,23 +90,6 @@ namespace POYA.Areas.Identity.Pages.Account
             await _context.SaveChangesAsync();
         }
 
-        #region 
-
-        #endregion
-        private async Task InitializeRoleAsync()
-        {
-            string[] roleNames = { "Admin", "User" };
-            IdentityResult roleResult;
-
-            foreach (var roleName in roleNames)
-            {
-                var roleExist = await _roleManager.RoleExistsAsync(roleName);
-                if (!roleExist)
-                {
-                    //create the roles and seed them to the database: Question 1  
-                    roleResult = await _roleManager.CreateAsync(new IdentityRole(roleName));
-                }
-            }
-        }
     }
+
 }

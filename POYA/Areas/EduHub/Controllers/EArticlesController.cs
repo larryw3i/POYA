@@ -80,14 +80,14 @@ namespace POYA.Areas.EduHub.Controllers
         /// Index for UserEArticleSets
         /// </summary>
         /// <returns></returns>
-
+        [AllowAnonymous]
         #endregion
         public async Task<IActionResult> XIndex(Guid? SetId, int? _page)
         {
             var TempSetId = Guid.Parse(TempData[nameof(SetId)]?.ToString() ?? Guid.Empty.ToString());
-            var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult().Id; //   ?? string.Empty;
+            var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id; //   ?? string.Empty;
 
-            if (SetId != LValue.DefaultEArticleSetId && !await _context.UserEArticleSet.AnyAsync(p => p.UserId == UserId_ && p.Id == SetId))
+            if (SetId != LValue.DefaultEArticleSetId && !await _context.UserEArticleSet.AnyAsync(p =>  p.Id == SetId))
             {
                 return NotFound();
             }
@@ -98,7 +98,7 @@ namespace POYA.Areas.EduHub.Controllers
             var _EArticles = await _context.EArticle.Where(p =>
                      (SetId == LValue.DefaultEArticleSetId ?
                      (p.SetId == Guid.Empty || p.SetId == null || p.SetId == LValue.DefaultEArticleSetId) :
-                     p.SetId == SetId) && p.UserId == UserId_).ToListAsync();
+                     p.SetId == SetId) ).ToListAsync();
             _EArticles.ForEach(p =>
             {
                 if (p.SetId == Guid.Empty || p.SetId == null)
@@ -119,7 +119,8 @@ namespace POYA.Areas.EduHub.Controllers
             ViewData["EArticleFile"] = _EArticleFiles;
             TempData[nameof(SetId)] = SetId;
             ViewData[nameof(UserEArticleSet)] = SetId == LValue.DefaultEArticleSetId ? new UserEArticleSet { Name = "Default", Label = string.Empty, Comment = string.Empty } : await _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == SetId);
-            ViewData["UserId_"] = UserId_;
+            //  ViewData["UserId_"] = UserId_;
+            ViewData["CurrentUserId"] =UserId_ ?? string.Empty; ;
             #endregion
 
             return View();
@@ -258,6 +259,9 @@ namespace POYA.Areas.EduHub.Controllers
             var CategoryCode = Category.Code.Substring(0, 3);
             ViewData["Category"] = $" {_localizer[Categories.FirstOrDefault(p => p.Code == CategoryCode).Name]} > {_localizer[Category.Name]} {(string.IsNullOrWhiteSpace(eArticle.AdditionalCategory) ? string.Empty : " > " + eArticle.AdditionalCategory)}"; //  csv.GetRecords<LEArticleCategory>().ToList();
             #endregion
+
+            eArticle.SetName = _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == eArticle.SetId).GetAwaiter().GetResult().Name;
+            eArticle.UserName = _userManager.FindByIdAsync(eArticle.UserId).GetAwaiter().GetResult().UserName;
 
             return View(eArticle);
         }
@@ -718,7 +722,7 @@ namespace POYA.Areas.EduHub.Controllers
 
         private List<LEArticleCategory> GetCategories()
         {
-            var _eArticleCategoryFilePath = _hostingEnv.ContentRootPath + $"/Data/LAppDoc/earticle_category.csv";
+            var _eArticleCategoryFilePath = _hostingEnv.ContentRootPath + $"/Data/LAppContent/earticle_category.csv";
             var reader = new StreamReader(_eArticleCategoryFilePath);
             var csv = new CsvReader(reader);
             return csv.GetRecords<LEArticleCategory>().ToList();

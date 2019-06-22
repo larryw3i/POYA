@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
@@ -76,6 +77,33 @@ namespace POYA.Controllers
 
         #region DEPOLLUTION
 
+        #region 
+        [ActionName("GetLAppContent")]
+        #endregion
+        public async Task<IActionResult> GetLAppContentAsync(string ContentNmae)
+        {
+            #region REFUSE
+            if (ContentNmae.Contains("..") ||
+                ContentNmae.StartsWith('/') ||
+                ContentNmae.StartsWith('\\') ||
+                ContentNmae.Contains('~') ||
+                ContentNmae.Contains("\\\\") ||
+                ContentNmae.Contains("//")||
+                ContentNmae.Contains("'")||
+                ContentNmae.Contains("\"")) return NoContent();
+            #endregion
+
+            var provider = new FileExtensionContentTypeProvider();
+            string contentType = string.Empty;
+            var _LAppContentPath = _hostingEnv.ContentRootPath+"/Data/LAppContent/";
+            var _FileBytes =await System.IO.File.ReadAllBytesAsync($"{_LAppContentPath}/{ContentNmae}");
+
+            if (!provider.TryGetContentType(ContentNmae, out contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+            return File(_FileBytes,contentType);
+        }
 
         public async Task<IActionResult> GetAvatar(string UserId = "")
         {
@@ -91,7 +119,7 @@ namespace POYA.Controllers
                     return File(AvatarBytes, "image/jpg");
                 }
             }
-            var DefauleAvatar = await System.IO.File.ReadAllBytesAsync(_hostingEnv.WebRootPath + @"/img/article_publish_ico.webp");
+            var DefauleAvatar = await System.IO.File.ReadAllBytesAsync(_hostingEnv.ContentRootPath+@"/Data/LAppContent/img/article_publish_ico.webp");
             return File(DefauleAvatar, "image/webp");
         }
 

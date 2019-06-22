@@ -42,7 +42,7 @@
 </style>
 
 <div id="DonateEle" title="@Localizer["Donate"]">
-    <img src="~/img/Donate.webp" class="rounded-circle" />
+    <img src="@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/Donate.webp"}))" class="rounded-circle" />
 </div>
 <script>
     document.querySelector("#DonateEle").onclick = function () {
