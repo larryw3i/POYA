@@ -153,8 +153,9 @@
                     if (IsUploadCoverFile) {
                         document.getElementById("UserEArticleHomeInfo_Conver_Input").value='';
                     }
+                    let _random = Math.floor(Math.random() * 100 + 1);
                     $(".EArticle-Home-Img-Ele").css("background-image",
-                        `url("@(Url.Action("GetEArticleHomeCover", new { id=_UserEArticleHomeInfo.Id}))?random=${Math.floor(Math.random() * 100 + 1)}")`);
+                        `url("@(Url.Action("GetEArticleHomeCover", new { id=_UserEArticleHomeInfo.Id}))?random=${_random}")`);
                 },
                 error: function () {
                     MakeAlert("danger", "@Localizer["Some errors has occurred"]" + "!");
@@ -274,9 +275,10 @@
             RemoveEArticleSetContextMenu(SetId);
         });
 
-
+        /*
         $(".EArticle-Home-Img-Ele").css("background-image",
-        'url("@(Url.Action("GetEArticleHomeCover", new { area="EduHub",id=_UserEArticleHomeInfo.Id}))")');
+            'url("@@(Url.Action("GetEArticleHomeCover", new { area="EduHub",id=_UserEArticleHomeInfo.Id}))")');
+        */
 
         $("#UserEArticleHomeInfo_Conver").on("click", function () {
             $("#UserEArticleHomeInfo_Conver_Input").click();

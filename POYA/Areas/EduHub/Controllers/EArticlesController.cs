@@ -327,7 +327,7 @@ namespace POYA.Areas.EduHub.Controllers
                 var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
                 #region PERMISSION_CHECK
-                if (!await _context.UserEArticleSet.AnyAsync(p => p.UserId == UserId_ && p.Id == Create_SetId)) return NotFound();
+                //  if (!await _context.UserEArticleSet.AnyAsync(p => p.UserId == UserId_ && p.Id == Create_SetId)) return NotFound();
                 #endregion
 
                 var _EArticleFiles = new List<EArticleFile>();
