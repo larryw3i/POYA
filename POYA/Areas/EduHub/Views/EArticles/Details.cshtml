@@ -17,7 +17,7 @@
         @(ViewData["Category"])
         @(new string('\u269D', Model.ComplexityRank + 1))
 
-        @(Model.ClickCount)<span title="@Localizer["click"]">&#128064;</span>
+        @(Model.ClickCount)<span title="@(Model.ClickCount) @Localizer["click"]">&#128064;</span>
         @(ViewData["UserRead"])  <span title="@($"{ViewData["UserRead"]} {Localizer["people viewed"]}")">&#128521;</span>
     </span>
 </h4>
@@ -45,7 +45,7 @@
             @Html.Raw(Model.Content)
 
             <div class="float-right" id="MailToEArticleUser">
-                <a href="mailto:@(Model.UserEmail)" title="@(Localizer["Mail to the author"])">&#128236;</a>
+                <a href="mailto:@(Model.UserEmail)" title="@(Localizer["Mail to the author"])" >&#128236;</a>
             </div>
 
         </dd>
@@ -59,7 +59,7 @@
                 @foreach (var i in _EArticleFiles_.Where(p => !p.IsEArticleVideo))
                 {
                     <br />
-                    <a asp-action="GetFile" asp-route-id="@(i.Id)" asp-controller="LUserFiles" asp-area="XUserFile" title="@Localizer["Get it"]">@(i.FileName)</a>
+                    <a asp-action="GetFile" asp-route-id="@(i.Id)" asp-controller="LUserFiles" asp-area="XUserFile" title="@Localizer["Get it"]" class="GetFile">@(i.FileName)</a>
                 }
             }
         </dd>
@@ -83,11 +83,22 @@
 @section Styles{
     <style>
 
+        .earticle-from:hover{
+            
+            animation: EArticleFromAnimation 0.2s linear  forwards;
+        }
+        
         #MailToEArticleUser {
             transform: scale(2);
+            
+            
+        }
+        #MailToEArticleUser:hover{
+            animation: MailToEArticleUserAnimation 0.2s linear  forwards;
         }
 
         .earticle-from {
+            cursor:pointer;
             background-color: rgba(255, 0, 220,0.5);
             border-radius: 8px;
             padding: 2px;
@@ -99,10 +110,22 @@
             bottom: 50px;
         }
 
+        @@keyframes EArticleFromAnimation{
+            100%{
+                transform:scale(1.2) translateY(-6px);
+            }
+        }
+
         @@keyframes PaddingAnimation {
             100% {
                 border-radius: 2px;
                 background-color: rgba(0, 38, 255,0.2);
+            }
+        }
+
+        @@keyframes MailToEArticleUserAnimation{
+            100%{
+                transform:scale(3);
             }
         }
     </style>
