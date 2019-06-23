@@ -120,9 +120,9 @@ namespace POYA.Areas.EduHub.Controllers
 
             ViewData["EArticleFile"] = _EArticleFiles;
             TempData[nameof(SetId)] = SetId;
-            ViewData[nameof(UserEArticleSet)] = SetId == LValue.DefaultEArticleSetId ? new UserEArticleSet { Name = "Default", Label = string.Empty, Comment = string.Empty, Id = LValue.DefaultEArticleSetId } : await _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == SetId);
+            ViewData[nameof(UserEArticleSet)] = SetId == LValue.DefaultEArticleSetId ? new UserEArticleSet { Name = "Default", Label = string.Empty, Comment = string.Empty, Id = LValue.DefaultEArticleSetId ,UserId=UserId_} : await _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == SetId);
             //  ViewData["UserId_"] = UserId_;
-            ViewData["CurrentUserId"] = UserId_ ?? string.Empty;
+            ViewData["CurrentUserId"] = _User?.Id ?? string.Empty;
             //  ViewData["EArticleUserEmail"] = _User.Email;
             #endregion
 
@@ -325,6 +325,11 @@ namespace POYA.Areas.EduHub.Controllers
 
                 var Create_SetId = Guid.Parse(TempData["Create_SetId"]?.ToString() ?? Guid.Empty.ToString());
                 var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
+                #region PERMISSION_CHECK
+                if (!await _context.UserEArticleSet.AnyAsync(p => p.UserId == UserId_ && p.Id == Create_SetId)) return NotFound();
+                #endregion
+
                 var _EArticleFiles = new List<EArticleFile>();
                 //  eArticle.Id = Guid.NewGuid();
                 eArticle.UserId = UserId_;
