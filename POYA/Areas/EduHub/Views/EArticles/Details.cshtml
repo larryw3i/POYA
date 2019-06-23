@@ -23,7 +23,7 @@
 </h4>
 <div class="col col-12">
     <div class="float-right earticle-from">
-        @(Localizer["From"]) <a asp-action="XIndex" asp-route-SetId="@(Model.SetId)">@(Model.SetName)</a> | @Localizer["By"] <a href="/Identity/Account/ViewUserInfo?UserId=@(Model.UserId)">@(Model.UserName)</a>
+        @(Localizer["From"]) <a asp-action="XIndex" asp-route-SetId="@(Model.SetId)" asp-route-UserId="@(Model.UserId)">@(Model.SetName)</a> | @Localizer["By"] <a asp-area="Identity" asp-page="/Account/ViewUserInfo" asp-route-UserId="@Model.UserId">@(Model.UserName)</a>
     </div>
 </div>
 
@@ -43,8 +43,14 @@
     <dl class="row" style="word-break:break-all;word-wrap:break-word">
         <dd class="col">
             @Html.Raw(Model.Content)
+
+            <div class="float-right" id="MailToEArticleUser">
+                <a href="mailto:@(Model.UserEmail)" title="@(Localizer["Mail to the author"])">&#128236;</a>
+            </div>
+
         </dd>
     </dl>
+
     <dl class="row">
         <dd class="col">
             @if (_EArticleFiles_.Where(p => !p.IsEArticleVideo).Count() > 0)
@@ -76,21 +82,27 @@
 
 @section Styles{
     <style>
-        .earticle-from{
-            background-color:rgba(255, 0, 220,0.5);
-            border-radius:8px;
-            padding:2px;
+
+        #MailToEArticleUser {
+            transform: scale(2);
+        }
+
+        .earticle-from {
+            background-color: rgba(255, 0, 220,0.5);
+            border-radius: 8px;
+            padding: 2px;
             animation: PaddingAnimation 5s linear infinite alternate;
         }
+
         #OperationEle {
             position: fixed;
             bottom: 50px;
         }
 
-        @@keyframes PaddingAnimation{
-            100%{
-            border-radius:2px;
-                background-color:rgba(0, 38, 255,0.2);
+        @@keyframes PaddingAnimation {
+            100% {
+                border-radius: 2px;
+                background-color: rgba(0, 38, 255,0.2);
             }
         }
     </style>

@@ -233,42 +233,42 @@ namespace POYA.Areas.EduHub.Controllers
             {
                 return _context.UserEArticleSet.Any(e => e.Id == id);
             }
-            #region DEPOLLUTION
-            #region 
-            /// <summary>
-            /// Get a file, it is a user's file or a file is shared
-            /// </summary>
-            /// <param name="id">The <see cref="LUserFile"/> id or the sharing id of <see cref="LSharing"/> </param>
-            /// <param name="LSharingId">The <see cref="LSharing"/> id should be passed if you get a file in shared directory</param>
-            /// <returns></returns>
-            #endregion
-            [AllowAnonymous]
-            public async Task<IActionResult> GetEArticleHomeCover(Guid? id)
+        #region DEPOLLUTION
+        #region 
+        /// <summary>
+        /// Get a file, it is a user's file or a file is shared
+        /// </summary>
+        /// <param name="id">The <see cref="LUserFile"/> id or the sharing id of <see cref="LSharing"/> </param>
+        /// <param name="LSharingId">The <see cref="LSharing"/> id should be passed if you get a file in shared directory</param>
+        /// <returns></returns>
+        #endregion
+        [AllowAnonymous]
+        public async Task<IActionResult> GetEArticleHomeCover(Guid? id)
+        {
+            if (id == null)
             {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-            //  var _UserId = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id;    //      p.UserId == _UserId &&
-            var _userEArticleHomeInfo = await _context.UserEArticleHomeInfos.FirstOrDefaultAsync(p =>  p.Id == id);
-                var _FileBytes = new byte[0];
-                var _ContentType = "image/webp";    //  string.Empty;
-                if (_userEArticleHomeInfo == null ||
-                    !System.IO.File.Exists(X_DOVEValues.FileStoragePath(_hostingEnv)
-                    + _userEArticleHomeInfo.CoverFileMD5))
-                {
-                    //  return File(_FileBytes, _userEArticleHomeInfo.CoverFileContentType, $"EARTICLE_HOME_COVER_{_UserId}", true);
-                    _FileBytes = await System.IO.File.ReadAllBytesAsync(_hostingEnv.WebRootPath + "/img/earticle_home_default_img.webp");
-                    //  _ContentType = ;
-                }
-                else
-                {
-                    var _FilePath_ = X_DOVEValues.FileStoragePath(_hostingEnv) + _userEArticleHomeInfo.CoverFileMD5;
-                    _FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath_);
-                    _ContentType = _userEArticleHomeInfo.CoverFileContentType;
-                }
-                return File(_FileBytes, _ContentType, $"EARTICLE_HOME_COVER_{_userEArticleHomeInfo.UserId}", true);
+                return NotFound();
             }
+            //  var _UserId = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id;    //      p.UserId == _UserId &&
+            var _userEArticleHomeInfo = await _context.UserEArticleHomeInfos.FirstOrDefaultAsync(p => p.Id == id);
+            var _FileBytes = new byte[0];
+            var _ContentType = "image/webp";    //  string.Empty;
+            if (_userEArticleHomeInfo == null ||
+                !System.IO.File.Exists(X_DOVEValues.FileStoragePath(_hostingEnv)
+                + _userEArticleHomeInfo.CoverFileMD5))
+            {
+                //  return File(_FileBytes, _userEArticleHomeInfo.CoverFileContentType, $"EARTICLE_HOME_COVER_{_UserId}", true);
+                _FileBytes = await System.IO.File.ReadAllBytesAsync(_hostingEnv.ContentRootPath + "/Data/LAppContent/img/earticle_home_default_img.webp");
+                //  _ContentType = ;
+            }
+            else
+            {
+                var _FilePath_ = X_DOVEValues.FileStoragePath(_hostingEnv) + _userEArticleHomeInfo.CoverFileMD5;
+                _FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath_);
+                _ContentType = _userEArticleHomeInfo.CoverFileContentType;
+            }
+            return File(_FileBytes, _ContentType, $"EARTICLE_HOME_COVER_{_userEArticleHomeInfo?.UserId??"In_nI"}", true);
+        }
             #endregion
         }
 }

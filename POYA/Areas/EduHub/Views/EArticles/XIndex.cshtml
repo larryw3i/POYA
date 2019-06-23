@@ -14,6 +14,7 @@
     var _CurrentUserId = ViewData["CurrentUserId"];
     var _IsDefaultEArticleSet = _UserEArticleSet.Id == LValue.DefaultEArticleSetId;
     var _IsOwn = _IsDefaultEArticleSet?true: _CurrentUserId.ToString() == _UserEArticleSet.UserId;
+    //  var _EArticleUserEmail = ViewData["EArticleUserEmail"];
 }
 
 @{

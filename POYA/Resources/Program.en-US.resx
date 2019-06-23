@@ -3167,4 +3167,7 @@
   <data name="Hometown" xml:space="preserve">
     <value>Hometown</value>
   </data>
+  <data name="Mail to the author" xml:space="preserve">
+    <value>Mail to the author</value>
+  </data>
 </root>

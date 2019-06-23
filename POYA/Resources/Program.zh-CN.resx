@@ -789,7 +789,7 @@
     <value>确定要删除 {0}</value>
   </data>
   <data name="Write your article" xml:space="preserve">
-    <value>写你的短文</value>
+    <value>写你的文章</value>
   </data>
   <data name="Forget password" xml:space="preserve">
     <value>忘记密码</value>
@@ -3166,5 +3166,8 @@
   </data>
   <data name="Hometown" xml:space="preserve">
     <value>原居地</value>
+  </data>
+  <data name="Mail to the author" xml:space="preserve">
+    <value>给作者发个邮件</value>
   </data>
 </root>

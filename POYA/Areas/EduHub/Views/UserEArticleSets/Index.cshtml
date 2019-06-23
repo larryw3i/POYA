@@ -154,7 +154,7 @@
                         document.getElementById("UserEArticleHomeInfo_Conver_Input").value='';
                     }
                     $(".EArticle-Home-Img-Ele").css("background-image",
-                        'url("@(Url.Action("GetEArticleHomeCover", new { area="EduHub",id=_UserEArticleHomeInfo.Id}))?random='+Math.floor(Math.random() * 100 + 1)+'")');
+                        `url("@(Url.Action("GetEArticleHomeCover", new { id=_UserEArticleHomeInfo.Id}))?random=${Math.floor(Math.random() * 100 + 1)}")`);
                 },
                 error: function () {
                     MakeAlert("danger", "@Localizer["Some errors has occurred"]" + "!");
@@ -344,7 +344,7 @@
 
         .EArticle-Home-Img-Ele {
             height: 150px;
-            background-image: url("/img/earticle_home_default_img.webp");
+            background-image: url("@(Url.Action("GetEArticleHomeCover",new {id= _UserEArticleHomeInfo.Id}))");
             background-position: center;
             border-radius: 10px;
         }

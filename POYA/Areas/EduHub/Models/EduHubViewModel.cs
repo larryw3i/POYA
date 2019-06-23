@@ -38,6 +38,14 @@ namespace POYA.Areas.EduHub.Models
         [NotMapped]
         #endregion
         public string UserName { get; set; }
+        #region 
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        [NotMapped]
+        #endregion
+        public string UserEmail { get; set; }
+
         #endregion
 
         #region EARTICLE_SET

@@ -82,12 +82,13 @@ namespace POYA.Areas.EduHub.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         #endregion
-        public async Task<IActionResult> XIndex(Guid? SetId, int? _page)
+        public async Task<IActionResult> XIndex(Guid? SetId, int? _page, string UserId = "")
         {
             var TempSetId = Guid.Parse(TempData[nameof(SetId)]?.ToString() ?? Guid.Empty.ToString());
-            var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id; //   ?? string.Empty;
+            var _User = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult();
+            var UserId_ = string.IsNullOrWhiteSpace(UserId) ? _User.Id : UserId; //   ?? string.Empty;
 
-            if (SetId != LValue.DefaultEArticleSetId && !await _context.UserEArticleSet.AnyAsync(p =>  p.Id == SetId))
+            if (SetId != LValue.DefaultEArticleSetId && !await _context.UserEArticleSet.AnyAsync(p => p.Id == SetId))
             {
                 return NotFound();
             }
@@ -98,7 +99,8 @@ namespace POYA.Areas.EduHub.Controllers
             var _EArticles = await _context.EArticle.Where(p =>
                      (SetId == LValue.DefaultEArticleSetId ?
                      (p.SetId == Guid.Empty || p.SetId == null || p.SetId == LValue.DefaultEArticleSetId) :
-                     p.SetId == SetId) ).ToListAsync();
+                     p.SetId == SetId) && p.UserId == UserId_).ToListAsync();
+
             _EArticles.ForEach(p =>
             {
                 if (p.SetId == Guid.Empty || p.SetId == null)
@@ -111,16 +113,17 @@ namespace POYA.Areas.EduHub.Controllers
                 .Where(p => p.IsEArticleVideo && _EArticles.Select(s => s.Id)
                 .Contains(p.EArticleId)).ToListAsync();
             InitFileExtension(_EArticleFiles);
-            
+
             #region VIEWDATA
-            ViewData[nameof(_EArticles)] = _EArticles.OrderByDescending(p => p.DOPublishing).ToPagedList(_page ?? 1, 
-                Convert.ToInt32(Request.Cookies["PageSize"]??"8"));
+            ViewData[nameof(_EArticles)] = _EArticles.OrderByDescending(p => p.DOPublishing).ToPagedList(_page ?? 1,
+                Convert.ToInt32(Request.Cookies["PageSize"] ?? "8"));
 
             ViewData["EArticleFile"] = _EArticleFiles;
             TempData[nameof(SetId)] = SetId;
-            ViewData[nameof(UserEArticleSet)] = SetId == LValue.DefaultEArticleSetId ? new UserEArticleSet { Name = "Default", Label = string.Empty, Comment = string.Empty,Id=LValue.DefaultEArticleSetId } : await _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == SetId);
+            ViewData[nameof(UserEArticleSet)] = SetId == LValue.DefaultEArticleSetId ? new UserEArticleSet { Name = "Default", Label = string.Empty, Comment = string.Empty, Id = LValue.DefaultEArticleSetId } : await _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == SetId);
             //  ViewData["UserId_"] = UserId_;
-            ViewData["CurrentUserId"] =UserId_ ?? string.Empty; ;
+            ViewData["CurrentUserId"] = UserId_ ?? string.Empty;
+            //  ViewData["EArticleUserEmail"] = _User.Email;
             #endregion
 
             return View();
@@ -226,6 +229,7 @@ namespace POYA.Areas.EduHub.Controllers
                 return NotFound();
             }
 
+            var _CurrentUser = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult();
             var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id ?? string.Empty;
             var eArticle = await _context.EArticle
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -234,6 +238,7 @@ namespace POYA.Areas.EduHub.Controllers
                 return NotFound();
             }
 
+            var _EArticleUser = _userManager.FindByIdAsync(eArticle.UserId)?.GetAwaiter().GetResult();
             //  ViewData["Click"] = await _context.EArticleClicks.Where(p => p.EArticleId == eArticle.Id).CountAsync();
             eArticle.ClickCount += 1;
             ViewData["UserRead"] = await _context.EArticleUserReadRecords.Where(p => p.EArticleId == eArticle.Id).Select(p => p.UserId)
@@ -261,7 +266,8 @@ namespace POYA.Areas.EduHub.Controllers
             #endregion
 
             eArticle.SetName =eArticle.SetId==LValue.DefaultEArticleSetId?_localizer["default"]: _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == eArticle.SetId).GetAwaiter().GetResult().Name;
-            eArticle.UserName = _userManager.FindByIdAsync(eArticle.UserId).GetAwaiter().GetResult().UserName;
+            eArticle.UserName = _EArticleUser.UserName;      //   _userManager.FindByIdAsync(eArticle.UserId).GetAwaiter().GetResult().UserName;
+            eArticle.UserEmail = _EArticleUser.Email;
 
             return View(eArticle);
         }
