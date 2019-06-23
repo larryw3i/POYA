@@ -27,8 +27,11 @@ using X.PagedList;
 
 namespace POYA.Areas.EduHub.Controllers
 {
+    #region 
+
     [Area("EduHub")]
     [Authorize]
+    #endregion
     public class EArticlesController : Controller
     {
         #region     DI
@@ -88,6 +91,8 @@ namespace POYA.Areas.EduHub.Controllers
             var _User = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult();
             var UserId_ = string.IsNullOrWhiteSpace(UserId) ? _User.Id : UserId; //   ?? string.Empty;
 
+            if (string.IsNullOrWhiteSpace(UserId_)) return NotFound();
+
             if (SetId != LValue.DefaultEArticleSetId && !await _context.UserEArticleSet.AnyAsync(p => p.Id == SetId))
             {
                 return NotFound();
@@ -96,6 +101,8 @@ namespace POYA.Areas.EduHub.Controllers
             SetId = SetId == null || SetId == Guid.Empty ?
                 (TempSetId == null ? LValue.DefaultEArticleSetId : TempSetId)
                 : SetId;
+
+            #region READY_EARTICLES
             var _EArticles = await _context.EArticle.Where(p =>
                      (SetId == LValue.DefaultEArticleSetId ?
                      (p.SetId == Guid.Empty || p.SetId == null || p.SetId == LValue.DefaultEArticleSetId) :
@@ -113,6 +120,31 @@ namespace POYA.Areas.EduHub.Controllers
                 .Where(p => p.IsEArticleVideo && _EArticles.Select(s => s.Id)
                 .Contains(p.EArticleId)).ToListAsync();
             InitFileExtension(_EArticleFiles);
+            #endregion
+
+
+            #region READY_USEREARTICLESET
+
+            var _UserEArticleSet = new UserEArticleSet();
+            if (SetId == LValue.DefaultEArticleSetId)
+            {
+                _UserEArticleSet = new UserEArticleSet
+                {
+                    Name = "Default",
+                    Label = string.Empty,
+                    Comment = string.Empty,
+                    Id = LValue.DefaultEArticleSetId,
+                    UserId = UserId_,
+                    UserName = _userManager.FindByIdAsync(UserId).GetAwaiter().GetResult().UserName
+                };
+            }
+            else
+            {
+                _UserEArticleSet = await _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == SetId);
+                _UserEArticleSet.UserName = _userManager.FindByIdAsync(_UserEArticleSet.UserId).GetAwaiter().GetResult().UserName;
+            }
+            #endregion
+
 
             #region VIEWDATA
             ViewData[nameof(_EArticles)] = _EArticles.OrderByDescending(p => p.DOPublishing).ToPagedList(_page ?? 1,
@@ -120,10 +152,8 @@ namespace POYA.Areas.EduHub.Controllers
 
             ViewData["EArticleFile"] = _EArticleFiles;
             TempData[nameof(SetId)] = SetId;
-            ViewData[nameof(UserEArticleSet)] = SetId == LValue.DefaultEArticleSetId ? new UserEArticleSet { Name = "Default", Label = string.Empty, Comment = string.Empty, Id = LValue.DefaultEArticleSetId ,UserId=UserId_} : await _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == SetId);
-            //  ViewData["UserId_"] = UserId_;
+            ViewData[nameof(UserEArticleSet)] = _UserEArticleSet;
             ViewData["CurrentUserId"] = _User?.Id ?? string.Empty;
-            //  ViewData["EArticleUserEmail"] = _User.Email;
             #endregion
 
             return View();
@@ -132,8 +162,8 @@ namespace POYA.Areas.EduHub.Controllers
         #region 
 
         // GET: EduHub/EArticles
-        #endregion
         [AllowAnonymous]
+        #endregion
         public async Task<IActionResult> Index(int? SortBy, int _page = 1, string _search = "")
         {
 
@@ -220,8 +250,8 @@ namespace POYA.Areas.EduHub.Controllers
         #region 
 
         // GET: EduHub/EArticles/Details/5
-        #endregion
         [AllowAnonymous]
+        #endregion
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -297,9 +327,9 @@ namespace POYA.Areas.EduHub.Controllers
         // POST: EduHub/EArticles/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
+        #endregion
         public async Task<IActionResult> Create(
             [Bind("Id,Title,Content,LVideos,LAttachments,CategoryId,AdditionalCategory,ComplexityRank")][FromForm]EArticle eArticle)
         {
@@ -386,9 +416,9 @@ namespace POYA.Areas.EduHub.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 
-        #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
+        #endregion
         public async Task<IActionResult> Edit(Guid id,
             [Bind("Id,Title,Content,LVideos,LAttachments,CategoryId,AdditionalCategory,ComplexityRank")] EArticle eArticle)
         {
@@ -460,9 +490,9 @@ namespace POYA.Areas.EduHub.Controllers
         #region 
 
         // POST: EduHub/EArticles/Delete/5
-        #endregion
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        #endregion
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
@@ -477,7 +507,6 @@ namespace POYA.Areas.EduHub.Controllers
         {
             return _context.EArticle.Any(e => e.Id == id);
         }
-
 
         #region DEPOLLUTION
 
@@ -536,8 +565,11 @@ namespace POYA.Areas.EduHub.Controllers
             }).ToList();
         }
 
+        #region 
+
         [HttpPost]
         [AutoValidateAntiforgeryToken]
+        #endregion
         public async Task<IActionResult> RemoveArticleFile(Guid? id)
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
@@ -558,8 +590,11 @@ namespace POYA.Areas.EduHub.Controllers
             return Ok();
         }
 
+        #region 
+
         [HttpPost]
         [AutoValidateAntiforgeryToken]
+        #endregion
         public async Task<IActionResult> LCheckMD5v1(IEnumerable<EArticleFileMD5> eArticleFileMD5s)
         {
             var _lMD5s = eArticleFileMD5s.ToList().Select(p => new LMD5 { FileMD5 = p.MD5, IsUploaded = false }).ToList();
@@ -588,8 +623,12 @@ namespace POYA.Areas.EduHub.Controllers
             await _context.SaveChangesAsync();
             return Ok(_lMD5s);
         }
+
+        #region 
+
         [HttpPost]
         [AutoValidateAntiforgeryToken]
+        #endregion
         public async Task<IActionResult> UploadEArticleImage([FromForm]IEnumerable<IFormFile> EArticleImages)
         {
             ///  MD5 should be checked first
@@ -638,8 +677,11 @@ namespace POYA.Areas.EduHub.Controllers
             return Ok(new { errno = 1 });
         }
 
+        #region 
+
         [HttpGet]
         [AllowAnonymous]
+        #endregion
         public async Task<IActionResult> GetEArticleImage(Guid? id)
         {
             if (id == null)

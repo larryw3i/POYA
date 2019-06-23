@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Identity
 @using POYA.Areas.EduHub.Models
 @using POYA.Unities.Helpers;
+@using POYA.Areas.EduHub.Controllers;
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
@@ -11,12 +12,12 @@
     var _UserEArticleHomeInfo = ViewData["UserEArticleHomeInfo"] as UserEArticleHomeInfo;
 }
 @{
-/*
-    <h1>Index</h1>
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-*/
+    /*
+        <h1>Index</h1>
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+    */
 }
 <div id="EArticleSetContextMenu_Ele"></div>
 <div class="row">
@@ -45,10 +46,10 @@
             <div class="card EArticleSetCard" SetId="@(i.Id)">
                 <div class="card-body text-center">
                     <h5 class="card-title">@(i.Name)</h5>
-                    <span class="card-text">@(i.Label)</span> 
+                    <span class="card-text">@(i.Label)</span>
                     <span>
                         @*
-                        <img src="~/img/edit.webp" class="float-right EArticleSetOperationEle"  SetId="@@(i.Id)" style="width:20px;height:20px;position:absolute" />
+                            <img src="~/img/edit.webp" class="float-right EArticleSetOperationEle"  SetId="@@(i.Id)" style="width:20px;height:20px;position:absolute" />
                         *@
                     </span>
                 </div>
@@ -125,7 +126,8 @@
     </script>
 
     <script>
-        /*====  SERVICE     ====*/
+    /*====  SERVICE     ====*/
+    //      AN BUG HERE AFTER FIRST UPOAD AND I CAN'T FIND IT       //
         function UploadEArticleHomeInfo() {
             if (String( $("#UserEArticleHomeInfo_Comment").val()) == InitHomeComment &&
                 $("#UserEArticleHomeInfo_Conver_Input").val().length < 1) return;
@@ -133,12 +135,12 @@
             var _userEArticleHomeInfo = new FormData();
             if (IsUploadCoverFile) {
                 var _File = document.getElementById("UserEArticleHomeInfo_Conver_Input").files[0];
-                _userEArticleHomeInfo.append("CoverFile", _File, _File.name);
+                _userEArticleHomeInfo.append("@(nameof(UserEArticleHomeInfo.CoverFile))", _File, _File.name);
             } else {
-                _userEArticleHomeInfo.append("Comment", $("#UserEArticleHomeInfo_Comment").val());
+                _userEArticleHomeInfo.append("@(nameof(UserEArticleHomeInfo.Comment))", $("#UserEArticleHomeInfo_Comment").val());
             }
             $.ajax({
-                url: "@(Url.Action("UploadEArticleHomeInfo","LUserFiles",new { area="XUserFile"}))",
+                url: "@(Url.Action(nameof(UserEArticleSetsController.UploadEArticleHomeInfo)))",
                 type: "POST",
                 data: _userEArticleHomeInfo,
                 //  dataType: "json",
@@ -261,43 +263,43 @@
 
     <script>
 
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        $(".EArticleSetCard").contextmenu(function () {
-            var SetId = $(this).attr("SetId");
-            event.preventDefault();
-            return ShowEArticleSetContextMenu(SetId);
+            $(".EArticleSetCard").contextmenu(function () {
+                var SetId = $(this).attr("SetId");
+                event.preventDefault();
+                return ShowEArticleSetContextMenu(SetId);
+            });
+
+            $(document).on("mouseover", ".EArticleSetCard", function () {
+                var SetId = $(this).attr("SetId");
+                //  console.log(">>>>>>"+SetId);
+                RemoveEArticleSetContextMenu(SetId);
+            });
+
+            /*
+            $(".EArticle-Home-Img-Ele").css("background-image",
+                'url("@@(Url.Action("GetEArticleHomeCover", new { area="EduHub",id=_UserEArticleHomeInfo.Id}))")');
+            */
+
+            $("#UserEArticleHomeInfo_Conver").on("click", function () {
+                $("#UserEArticleHomeInfo_Conver_Input").click();
+            });
+            $("#UserEArticleHomeInfo_Comment").keypress(function () {
+                CheckKeyCodeConfirmation();
+            });
+
+            $("#UserEArticleHomeInfo_Conver_Input").on("change", function () {
+                //  ReadMD5();
+                UploadEArticleHomeInfo();
+            });
+
+            $(".card").on("click", function () {
+                var SetId = $(this).attr("SetId");
+                GoToEArticleSetDetails(SetId);
+            });
+
         });
-
-        $(document).on("mouseover",".EArticleSetCard",function () {
-            var SetId = $(this).attr("SetId");
-            //  console.log(">>>>>>"+SetId);
-            RemoveEArticleSetContextMenu(SetId);
-        });
-
-        /*
-        $(".EArticle-Home-Img-Ele").css("background-image",
-            'url("@@(Url.Action("GetEArticleHomeCover", new { area="EduHub",id=_UserEArticleHomeInfo.Id}))")');
-        */
-
-        $("#UserEArticleHomeInfo_Conver").on("click", function () {
-            $("#UserEArticleHomeInfo_Conver_Input").click();
-        });
-        $("#UserEArticleHomeInfo_Comment").keypress(function () {
-            CheckKeyCodeConfirmation();
-        });
-
-        $("#UserEArticleHomeInfo_Conver_Input").on("change", function () {
-            //  ReadMD5();
-            UploadEArticleHomeInfo();
-        });
-
-        $(".card").on("click", function () {
-            var SetId = $(this).attr("SetId");
-            GoToEArticleSetDetails(SetId);
-        });
-
-    });
 
     </script>
 }

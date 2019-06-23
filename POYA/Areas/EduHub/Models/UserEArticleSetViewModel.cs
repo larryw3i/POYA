@@ -12,7 +12,17 @@ namespace POYA.Areas.EduHub.Models
     public class UserEArticleSet   //  ViewModel
     {
         public Guid Id { get; set; } = Guid.NewGuid();
+
+        #region USER
+
         public string UserId { get; set; }
+
+        #region 
+
+        [NotMapped]
+        #endregion
+        public string UserName { get; set; }
+        #endregion
 
         #region 
         [Display(Name = "Title")]

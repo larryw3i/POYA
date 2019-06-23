@@ -13,7 +13,7 @@
     var _pageSize = Context.Request.Cookies["PageSize"] ?? "8";
     var _CurrentUserId = ViewData["CurrentUserId"].ToString();
     var _IsDefaultEArticleSet = _UserEArticleSet.Id == LValue.DefaultEArticleSetId;
-    var _IsOwn =  _CurrentUserId == _UserEArticleSet.UserId && !string.IsNullOrEmpty(_CurrentUserId);
+    var _IsOwn = _CurrentUserId == _UserEArticleSet.UserId && !string.IsNullOrEmpty(_CurrentUserId);
     //  var _EArticleUserEmail = ViewData["EArticleUserEmail"];
 }
 
@@ -38,9 +38,15 @@
             <br />
             <span style="font-size:80%">@(_UserEArticleSet.Comment)</span>
             <br />
-            @if (_IsOwn )
+          
+            @if (_IsOwn)
             {
                 <a asp-action="Create" asp-route-SetId="@(_SetId)">@Localizer["Write"] &raquo;</a>
+            }
+            else
+            {
+                <span style="font-size:80%"> @Localizer["By"] <a asp-area="Identity" asp-page="/Account/ViewUserInfo" asp-route-UserId="@(_UserEArticleSet.UserId)">@(_UserEArticleSet.UserName)</a></span>
+
             }
         </span>
     </div>
@@ -74,16 +80,15 @@
 <div class="float-right PageEle">
     <div>
         <div class="form-inline">
-            <input type="text" style="width:70px;" class="form-control" id="_pageSize" title="@Localizer["Press ENTER to save"]" value="@_pageSize" />
-            @(Html.PagedListPager((IPagedList<EArticle>)ViewData["_EArticles"], _page => Url.Action("XIndex", new { SetId = _SetId, _page = _page }),
-PagedListRenderOptions.OnlyShowFivePagesAtATime))
+            <input type="text" style="width:70px;" class="form-control" id="_pageSize" title="@Localizer["Press ENTER to save"]" value="@_pageSize" /> 
+            @(Html.PagedListPager((IPagedList<EArticle>)ViewData["_EArticles"], _page => Url.Action("XIndex", new { SetId = _SetId, _page = _page }),  PagedListRenderOptions.OnlyShowFivePagesAtATime))
         </div>
     </div>
 </div>
 
 <div id="OperationEle">
     <a id="BackA" class="btn btn-info">&laquo; @Localizer["Back"]</a>
-    @if (_IsOwn )
+    @if (_IsOwn)
     {
         <a asp-action="Edit" asp-controller="UserEArticleSets" asp-route-id="@_UserEArticleSet.Id" class="btn btn-primary">@Localizer["Edit"]</a>
         <a asp-action="Delete" asp-controller="UserEArticleSets" asp-route-id="@_UserEArticleSet.Id" class="btn btn-danger">@Localizer["Delete"]</a>

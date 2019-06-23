@@ -13,12 +13,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using POYA.Areas.EduHub.Models;
+using POYA.Areas.XUserFile.Controllers;
 using POYA.Data;
 using POYA.Unities.Helpers;
 namespace POYA.Areas.EduHub.Controllers
 {
-    [Area("EduHub")]
+    #region 
+
     [Authorize]
+    [Area("EduHub")]
+    #endregion
     public class UserEArticleSetsController : Controller
     {
         #region     DI
@@ -32,6 +36,7 @@ namespace POYA.Areas.EduHub.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<UserEArticleSetsController> _logger;
         private readonly HtmlSanitizer _htmlSanitizer;
+        private readonly XUserFileHelper _xUserFileHelper;
         //  private readonly MimeHelper _mimeHelper;
         public UserEArticleSetsController(
             //  MimeHelper mimeHelper,
@@ -56,14 +61,19 @@ namespace POYA.Areas.EduHub.Controllers
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
             //  _mimeHelper = mimeHelper;
+            _xUserFileHelper = new XUserFileHelper();
         }
+
+        #region 
         /*
-        private readonly ApplicationDbContext _context;
-        public UserEArticleSetsController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-        */
+       private readonly ApplicationDbContext _context;
+       public UserEArticleSetsController(ApplicationDbContext context)
+       {
+           _context = context;
+       }
+       */
+        #endregion
+
         #endregion
 
         #region 
@@ -92,6 +102,7 @@ namespace POYA.Areas.EduHub.Controllers
             ViewData[nameof(UserEArticleHomeInfo)] = (await _context.UserEArticleHomeInfos.Where(p => p.UserId == _UserId).FirstOrDefaultAsync()) ?? new UserEArticleHomeInfo { UserId = _UserId, Comment = _localizer["No set yet"] + "!" };
             return View(_UserEArticleSet.OrderByDescending(p => p.DOCreating));
         }
+
         #region 
         // GET: EduHub/UserEArticleSets/Details/5
         #endregion
@@ -110,6 +121,7 @@ namespace POYA.Areas.EduHub.Controllers
             }
             return View(userEArticleSet);
         }
+
         #region 
         // GET: EduHub/UserEArticleSets/Create
         #endregion
@@ -118,13 +130,14 @@ namespace POYA.Areas.EduHub.Controllers
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             return View();
         }
+
         #region
         // POST: EduHub/UserEArticleSets/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
+        #endregion
         public async Task<IActionResult> Create([Bind("Id,Name,Label,Comment")] UserEArticleSet userEArticleSet)
         {
             if (ModelState.IsValid)
@@ -138,6 +151,7 @@ namespace POYA.Areas.EduHub.Controllers
             }
             return View(userEArticleSet);
         }
+
         #region 
         // GET: EduHub/UserEArticleSets/Edit/5
         #endregion
@@ -155,13 +169,14 @@ namespace POYA.Areas.EduHub.Controllers
             }
             return View(userEArticleSet);
         }
+
         #region
         // POST: EduHub/UserEArticleSets/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
+        #endregion
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Label,Comment")] UserEArticleSet userEArticleSet)
         {
             if (id != userEArticleSet.Id)
@@ -198,6 +213,7 @@ namespace POYA.Areas.EduHub.Controllers
             }
             return View(userEArticleSet);
         }
+
         #region 
         // GET: EduHub/UserEArticleSets/Delete/5
         #endregion
@@ -216,11 +232,12 @@ namespace POYA.Areas.EduHub.Controllers
             }
             return View(userEArticleSet);
         }
+
         #region 
         // POST: EduHub/UserEArticleSets/Delete/5
-        #endregion
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        #endregion
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
@@ -230,11 +247,59 @@ namespace POYA.Areas.EduHub.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
         private bool UserEArticleSetExists(Guid id)
         {
             return _context.UserEArticleSet.Any(e => e.Id == id);
         }
+
         #region DEPOLLUTION
+
+        #region 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userEArticleHomeInfo"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        #endregion
+        public async Task<IActionResult> UploadEArticleHomeInfo([FromForm]UserEArticleHomeInfo userEArticleHomeInfo)
+        {
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var _userEArticleHomeInfo = await _context.UserEArticleHomeInfos.FirstOrDefaultAsync(p => p.UserId == UserId_);
+            var _MD5 = string.Empty;
+            if (userEArticleHomeInfo?.CoverFile != null)
+            {
+                _MD5 = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, userEArticleHomeInfo.CoverFile);
+            }
+            if (_userEArticleHomeInfo == null)
+            {
+                _userEArticleHomeInfo = new UserEArticleHomeInfo
+                {
+                    UserId = UserId_,
+                    Comment = userEArticleHomeInfo.Comment,
+                    CoverFileMD5 = _MD5,
+                    Id = Guid.NewGuid(),
+                    CoverFileContentType = string.IsNullOrWhiteSpace(_MD5) ?
+                    "" : userEArticleHomeInfo.CoverFile.ContentType
+                };
+                await _context.UserEArticleHomeInfos.AddAsync(_userEArticleHomeInfo);
+            }
+            else
+            {
+                _userEArticleHomeInfo.Comment = string.IsNullOrWhiteSpace(userEArticleHomeInfo.Comment) ?
+                    _userEArticleHomeInfo.Comment : userEArticleHomeInfo.Comment;
+                _userEArticleHomeInfo.CoverFileMD5 = string.IsNullOrWhiteSpace(_MD5) ?
+                    _userEArticleHomeInfo.CoverFileMD5 : _MD5;
+                _userEArticleHomeInfo.CoverFileContentType = string.IsNullOrWhiteSpace(_MD5) ?
+                    _userEArticleHomeInfo.CoverFileContentType : userEArticleHomeInfo.CoverFile.ContentType;
+            }
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+
         #region 
         /// <summary>
         /// Get a file, it is a user's file or a file is shared
@@ -242,15 +307,15 @@ namespace POYA.Areas.EduHub.Controllers
         /// <param name="id">The <see cref="LUserFile"/> id or the sharing id of <see cref="LSharing"/> </param>
         /// <param name="LSharingId">The <see cref="LSharing"/> id should be passed if you get a file in shared directory</param>
         /// <returns></returns>
-        #endregion
         [AllowAnonymous]
+        #endregion
         public async Task<IActionResult> GetEArticleHomeCover(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            //  var _UserId = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id;    //      p.UserId == _UserId &&
+
             var _userEArticleHomeInfo = await _context.UserEArticleHomeInfos.FirstOrDefaultAsync(p => p.Id == id);
             var _FileBytes = new byte[0];
             var _ContentType = "image/webp";    //  string.Empty;
@@ -270,6 +335,7 @@ namespace POYA.Areas.EduHub.Controllers
             }
             return File(_FileBytes, _ContentType, $"EARTICLE_HOME_COVER_{_userEArticleHomeInfo?.UserId ?? "In_nI"}", true);
         }
+
         #endregion
     }
 }

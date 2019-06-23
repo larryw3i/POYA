@@ -70,17 +70,20 @@ namespace POYA.Areas.XUserFile.Controllers
         }
         #endregion
 
+        #region //
         /*
-        [ActionName("GetSharedImages")]
-        public async Task<IActionResult> Index()
-        {
-            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var _Extensions = _mimeHelper.GetExtensions("image", _hostingEnv);
-            var _LUserFiles = await _context.LUserFile.Where(p=>p.UserId==UserId_ && p.IsLegal).ToListAsync();
-            _LUserFiles = _LUserFiles.Where(p => _Extensions.Contains(p.Name.Split('.').LastOrDefault())).ToList();
-            return View("GetSharedImages", _LUserFiles);
-        }
-        */
+      [ActionName("GetSharedImages")]
+      public async Task<IActionResult> Index()
+      {
+          var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+          var _Extensions = _mimeHelper.GetExtensions("image", _hostingEnv);
+          var _LUserFiles = await _context.LUserFile.Where(p=>p.UserId==UserId_ && p.IsLegal).ToListAsync();
+          _LUserFiles = _LUserFiles.Where(p => _Extensions.Contains(p.Name.Split('.').LastOrDefault())).ToList();
+          return View("GetSharedImages", _LUserFiles);
+      }
+      */
+        #endregion
+
 
         #region
         // GET: LUserFiles
@@ -308,9 +311,9 @@ namespace POYA.Areas.XUserFile.Controllers
         // POST: LUserFiles/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
+        #endregion
         public async Task<IActionResult> Edit(Guid id,
             [Bind("Id,Name,CopyMove,InDirId,IsShared,SharingCode")] LUserFile lUserFile)
         {
@@ -423,9 +426,9 @@ namespace POYA.Areas.XUserFile.Controllers
 
         #region 
         // POST: LUserFiles/Delete/5
-        #endregion
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        #endregion
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
@@ -469,8 +472,12 @@ namespace POYA.Areas.XUserFile.Controllers
             return UsedSpace;
         }
 
+        #region 
+
         [HttpPost]
+        [Authorize(Roles = "06c05751-3d63-4fe0-bee0-1f2a7226a7c2")]
         [ValidateAntiForgeryToken]
+        #endregion
         public async Task<IActionResult> UploadEArticleHomeInfo([FromForm]UserEArticleHomeInfo userEArticleHomeInfo)
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
@@ -566,8 +573,8 @@ namespace POYA.Areas.XUserFile.Controllers
         /// <param name="id">The <see cref="LUserFile"/> id or the sharing id of <see cref="LSharing"/> </param>
         /// <param name="LSharingId">The <see cref="LSharing"/> id should be passed if you get a file in shared directory</param>
         /// <returns></returns>
-        #endregion
         [AllowAnonymous]
+        #endregion
         public async Task<IActionResult> GetFile(Guid? id)
         {
             if (id == null)
@@ -619,6 +626,7 @@ namespace POYA.Areas.XUserFile.Controllers
             var FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath);
             return File(FileBytes, contentType, _LUserFile.Name, true);
         }
+        #region 
 
         /*
         /// <summary>
@@ -650,6 +658,7 @@ namespace POYA.Areas.XUserFile.Controllers
         }
         */
 
+        #endregion
 
         #endregion
     }
