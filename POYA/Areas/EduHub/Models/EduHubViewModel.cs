@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace POYA.Areas.EduHub.Models
 {
+    #region 
+
     /*
     public class EVideo //  ViewModel
     {
@@ -22,6 +24,8 @@ namespace POYA.Areas.EduHub.Models
         public DateTimeOffset DOPublish { get; set; }
     }
     */
+
+    #endregion
 
     public class EArticle
     {
@@ -80,25 +84,50 @@ namespace POYA.Areas.EduHub.Models
         #endregion
         public Guid CategoryId { get; set; }
 
+        #region 
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
         [NotMapped]
+        #endregion
         public List<SelectListItem> FirstCategorySelectListItems { get; set; }
 
+        #region 
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
         [NotMapped]
+        #endregion
         public List<SelectListItem> SecondCategorySelectListItems { get; set; }
 
         public string AdditionalCategory { get; set; }
 
+        #region 
+        [Range(0,3)]
+        #endregion
         public int ComplexityRank { get; set; } = 0;
 
+        #region 
+
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
         [NotMapped]
+        #endregion
         public List<SelectListItem> ComplexityRankSelectListItems { get; set; }
 
         #endregion
 
+        #region 
+
         [StringLength(maximumLength: 50, MinimumLength = 2)]
+        #endregion
         public string Title { get; set; }
 
+        #region 
+
         [StringLength(maximumLength: 16384)]
+        #endregion
         public string Content { get; set; }
 
         #region 
@@ -116,13 +145,32 @@ namespace POYA.Areas.EduHub.Models
         public long ClickCount { get; set; } = 0;
 
         #region DEPOLLUTION
-      
+
+        #region 
+
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
         [NotMapped]
+        #endregion
         public long ReaderCount { get; set; } = 0;
 
+        #region 
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+
         [NotMapped]
+        #endregion
+
         public IEnumerable<IFormFile> LVideos { get; set; }
+
+        #region 
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
         [NotMapped]
+        #endregion
         public IEnumerable<IFormFile> LAttachments { get; set; }
         #endregion
 
