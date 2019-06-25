@@ -91,16 +91,14 @@ namespace POYA.Areas.EduHub.Controllers
             var _User = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult();
             var UserId_ = string.IsNullOrWhiteSpace(UserId) ? _User.Id : UserId; //   ?? string.Empty;
 
-            if (string.IsNullOrWhiteSpace(UserId_)) return NotFound();
+            if (string.IsNullOrWhiteSpace(UserId_)) return RedirectToPage(pageName: "/Account/Login",routeValues:new { area= "Identity" });
 
             if (SetId != LValue.DefaultEArticleSetId && !await _context.UserEArticleSet.AnyAsync(p => p.Id == SetId))
             {
                 return NotFound();
             }
 
-            SetId = SetId == null || SetId == Guid.Empty ?
-                (TempSetId == null ? LValue.DefaultEArticleSetId : TempSetId)
-                : SetId;
+            SetId = (SetId == null || SetId == Guid.Empty) ?(TempSetId == null ? LValue.DefaultEArticleSetId : TempSetId): SetId;
 
             #region READY_EARTICLES
             var _EArticles = await _context.EArticle.Where(p =>
@@ -125,21 +123,17 @@ namespace POYA.Areas.EduHub.Controllers
 
             #region READY_USEREARTICLESET
 
-            var _UserEArticleSet = new UserEArticleSet();
-            if (SetId == LValue.DefaultEArticleSetId)
+            var _UserEArticleSet = new UserEArticleSet
             {
-                _UserEArticleSet = new UserEArticleSet
-                {
-                    Name = "Default",
-                    Label = string.Empty,
-                    Comment = string.Empty,
-                    Id = LValue.DefaultEArticleSetId,
-                    UserId = UserId_,
-                    UserName = _userManager.FindByIdAsync(UserId).GetAwaiter().GetResult().UserName
-                };
-            }
-            else
-            {
+                Name = "Default",
+                Label = string.Empty,
+                Comment = string.Empty,
+                Id = LValue.DefaultEArticleSetId,
+                UserId = UserId_,
+                UserName = _userManager.FindByIdAsync(UserId_).GetAwaiter().GetResult().UserName
+            };
+
+            if (SetId != LValue.DefaultEArticleSetId) {
                 _UserEArticleSet = await _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == SetId);
                 _UserEArticleSet.UserName = _userManager.FindByIdAsync(_UserEArticleSet.UserId).GetAwaiter().GetResult().UserName;
             }
