@@ -3170,4 +3170,13 @@
   <data name="Mail to the author" xml:space="preserve">
     <value>Mail to the author</value>
   </data>
+  <data name="Ad" xml:space="preserve">
+    <value>Ad</value>
+  </data>
+  <data name="Become our advertiser" xml:space="preserve">
+    <value>Become our advertiser</value>
+  </data>
+  <data name="Our advertisers" xml:space="preserve">
+    <value>Our advertisers</value>
+  </data>
 </root>

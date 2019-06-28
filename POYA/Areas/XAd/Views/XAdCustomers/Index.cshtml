@@ -5,50 +5,118 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DORegistering)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DORegistering)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+
+<div class="row">
+    <div class="col col-12">
+        <p>
+            <a class="Become-advertiser float-right">@Localizer["Become our advertiser"]</a>
+        </p>
+
+        <div class="text-center our-advertisers">@Localizer["Our advertisers"]</div>
+        <hr />
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+    $(document).on("click", ".Become-advertiser", function () {
+        window.location = "@(Url.Action("Create"))";
+    });
+    </script>
 }
-    </tbody>
-</table>
+
+@section Styles{
+    <style>
+        .our-advertisers{
+            font-size:18px;
+            font-weight:600;
+            color:tomato;
+            cursor:pointer;
+        }
+        .Become-advertiser {
+            font-weight: 500;
+            font-size: 25px;
+            cursor: pointer;
+            animation: BecomeAdvertiser 5s linear infinite alternate;
+        }
+            .Become-advertiser:hover {
+                color: rgb(64, 67, 212);
+                animation: BecomeAdvertiserHover 0.22s linear infinite alternate;
+            }
+
+        @@keyframes BecomeAdvertiser {
+            0%{
+                color: rgb(242, 89, 11);
+            }
+            100% {
+                color: rgb(64, 67, 212);
+            }
+        }
+        
+        @@keyframes BecomeAdvertiserHover {
+            0%{
+                color: rgb(242, 89, 11);
+            }
+            
+            100% {
+                color: rgb(242, 89, 11);
+            transform:scale(1.05);
+            }
+        }
+    </style>
+}
+
+
+
+
+@*
+    <h1>Index</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DORegistering)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DORegistering)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+*@
+

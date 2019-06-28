@@ -15,14 +15,16 @@
         <img src="@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/wechat_pay.webp"}))" class="PayImg" title='@Localizer["Thank you very much"] !' />
     </div>
     <div class="col offset-3 col-3">
-        <img src="@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/alipay_pay.webp"}))" class="PayImg"  title='@Localizer["Thank you very much"] !' />
+        <img src="@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/alipay_pay.webp"}))" class="PayImg" title='@Localizer["Thank you very much"] !' />
     </div>
 </div>
 @section Styles{
     <style type="text/css">
-        .Donate8Story{
-            font-size:200%;
+        .Donate8Story {
+            font-size: 200%;
+            cursor: pointer;
         }
+
         .PayImg {
             max-height: 250px;
             max-width: 250px;
@@ -31,6 +33,27 @@
             box-shadow: 2px 2px 18px firebrick;
             border-width: 2px;
             border-radius: 12px;
+            cursor: pointer;
+        }
+
+            .PayImg:hover {
+                animation: PayImgHover 0.2s linear 1 forwards;
+            }
+
+        .Donate8Story > div:hover {
+            animation: Donate8StorySubDivHover 0.1s linear 1 forwards;
+        }
+
+        @@keyframes PayImgHover {
+            100% {
+                transform: scale(1.15);
+            }
+        }
+
+        @@keyframes Donate8StorySubDivHover {
+            100% {
+                transform: scale(1.1);
+            }
         }
     </style>
 }

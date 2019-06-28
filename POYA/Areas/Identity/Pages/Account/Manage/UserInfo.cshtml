@@ -10,14 +10,14 @@
 <div class="row">
     <div class="col col-4 col-sm-4 col-md-3 User-Avatar">
         <form id="_UserAvatarForm">
-            <img name="User_Avatar_Img" id="User_Avatar_Img" class="rounded-circle ZoomAvatar" title="@Localizer["The extension of the file can only be jpg, jpeg or png"]" 
-                 src="/Home/GetAvatar?random=@(new Random().Next(20))"/>
+            <img name="User_Avatar_Img" id="User_Avatar_Img" class="rounded-circle ZoomAvatar" title="@Localizer["The extension of the file can only be jpg, jpeg or png"]"
+                 src="/Home/GetAvatar?random=@(new Random().Next(20))" />
             <input id="_UserAvatarInput" type="file" accept=".jpg,.png,.jpeg" hidden />
         </form>
         <h6 id="_UploadAvatarMsgEle"></h6>
     </div>
     <div class=" col col-10 col-sm-8 col-md-9">
-        <form id="profile-form" method="post" >
+        <form id="profile-form" method="post">
             @*<div asp-validation-summary="All" class="text-danger"></div>*@
             <div style="border-radius:10px;border:solid;border-color:#EE7AE9;padding:20px;box-shadow: 4px 4px 10px #EE7AE9;">
                 <div class="form-group">
@@ -208,17 +208,17 @@
 }
 @section Styles {
     <style>
-        .User-Avatar{
+        .User-Avatar {
             text-align: center;
         }
 
-        #profile-form .form-group:hover,#update-profile-button:hover{
-            border:solid;
-            border-color:rgba(222, 13, 154,0.6);
-            background-color:rgba(222, 13, 154,0.6);
-            padding:8px;
-            border-radius:8px;
-            animation:InputControlAnimation 0.2s linear forwards;
+        #profile-form .form-group:hover, #update-profile-button:hover {
+            border: solid;
+            border-color: rgba(222, 13, 154,0.6);
+            background-color: rgba(222, 13, 154,0.6);
+            padding: 8px;
+            border-radius: 8px;
+            animation: InputControlAnimation 0.2s linear forwards;
         }
 
         #_UploadAvatarMsgEle {
@@ -247,16 +247,16 @@
             }
 
         @@keyframes AvatarAnimation {
-          
+
 
             100% {
-                transform:scale(1.2);
+                transform: scale(1.2);
             }
         }
 
-        @@keyframes InputControlAnimation{
-            100%{
-                transform:scale(1.1);
+        @@keyframes InputControlAnimation {
+            100% {
+                transform: scale(1.1);
             }
         }
     </style>

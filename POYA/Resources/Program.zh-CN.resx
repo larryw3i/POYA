@@ -3201,4 +3201,13 @@
   <data name="Mail to the author" xml:space="preserve">
     <value>给作者发个邮件</value>
   </data>
+  <data name="Ad" xml:space="preserve">
+    <value>广告</value>
+  </data>
+  <data name="Become our advertiser" xml:space="preserve">
+    <value>成为我们的广告用户</value>
+  </data>
+  <data name="Our advertisers" xml:space="preserve">
+    <value>我的的广告商</value>
+  </data>
 </root>
