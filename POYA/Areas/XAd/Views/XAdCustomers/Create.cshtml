@@ -1,13 +1,13 @@
 ﻿@model POYA.Areas.XAd.Models.XAdCustomer
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = Localizer["Become our advertiser"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
 
-<h4>XAdCustomer</h4>
+<h4>@ViewData["Title"]</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,35 +15,88 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control" autocomplete="off" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DORegistering" class="control-label"></label>
-                <input asp-for="DORegistering" class="form-control" />
-                <span asp-validation-for="DORegistering" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
+                <input asp-for="Address" class="form-control" autocomplete="off" />
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label asp-for="LicenseImgFiles" class="control-label"></label>
+                <div id="LicenseImgFileEle" class="col col-auto">
+                </div>
+                <a id="SelectLicenseImgFileEle" class="btn btn-outline-info">@Localizer["Select license image files"]</a>
+                <div id="LicenseImgFilevalidation"></div>
+            </div>
+
+            <div class="form-group">
+                <a id="BackEle" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
+                <input type="submit" value="@Localizer["Register"]" class="btn btn-outline-success" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+    var SizeOfFileHint = (xMByte) => `@(Localizer["The size of file should be not more than"]) ${xMByte}M`;
+    var LicenseImgPrefix = "LicenseImg_";
+    var LicenseImgFileInput = (id) => `<input id='${id}' name='LicenseImgFiles' class='XLicenseImgFiles' accept='image/*' hidden/>`;
+    var LicenseImg = (_LicenseImgFileInputId) => `<image id='${LicenseImgPrefix+_LicenseImgFileInputId}' class='XLicenseImg'/>`;
+        $(document).on("click", "#SelectLicenseImgFileEle", function () {
+
+            var _id = NewGuid();
+            $(`#LicenseImgFileEle`).append(LicenseImgFileInput(_id));
+            $(`#${_id}`).trigger(`click`);
+
+            $(`#LicenseImgFileEle input:last`).trigger(`click`);
+
+            event.preventDefault();
+        });
+    $(document).on("change", ".XLicenseImgFiles", function () {
+        var LicenseImgFileInputId = $(this).id;
+        var _File = document.getElementById(LicenseImgFileInputId).files[0];
+        if (_File.size > 2048) {
+            $(".LicenseImgFilevalidation").text(SizeOfFileHint(2));
+            setTimeout(function () {
+                $(".LicenseImgFilevalidation").hide();
+            }, 2500);
+            return;
+        }
+        $(`#${LicenseImgFileInputId}`).after(LicenseImg(LicenseImgFileInputId));
+        $(`#${LicenseImgPrefix + LicenseImgFileInputId}`).attr("src", new FileReader().readAsDataURL(_File));
+
+    });
+    </script>
 }
+
+
+
+@section Styles{
+    <style>
+        .XLicenseImg {
+            max-height: 90%;
+        }
+    </style>
+}
+
+
+@*
+
+
+        <h1>Create</h1>
+
+        <h4>XAdCustomer</h4>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+*@

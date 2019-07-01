@@ -3179,4 +3179,16 @@
   <data name="Our advertisers" xml:space="preserve">
     <value>Our advertisers</value>
   </data>
+  <data name="Business address" xml:space="preserve">
+    <value>Business address</value>
+  </data>
+  <data name="Store name" xml:space="preserve">
+    <value>Store name</value>
+  </data>
+  <data name="Select license image files" xml:space="preserve">
+    <value>Select license image files</value>
+  </data>
+  <data name="Upload license images" xml:space="preserve">
+    <value>Upload license images</value>
+  </data>
 </root>

@@ -3208,6 +3208,18 @@
     <value>成为我们的广告用户</value>
   </data>
   <data name="Our advertisers" xml:space="preserve">
-    <value>我的的广告商</value>
+    <value>我们的广告商</value>
+  </data>
+  <data name="Business address" xml:space="preserve">
+    <value>经营地址</value>
+  </data>
+  <data name="Store name" xml:space="preserve">
+    <value>店铺名</value>
+  </data>
+  <data name="Select license image files" xml:space="preserve">
+    <value>选择执照文件</value>
+  </data>
+  <data name="Upload license images" xml:space="preserve">
+    <value>上传执照照片</value>
   </data>
 </root>
