@@ -12,8 +12,19 @@
 <hr />
 <div class="row">
     <div class="col-12">
-        <form asp-action="Create" id="@RandomFormId"  enctype="multipart/form-data" >
+        <form asp-action="Create" id="@RandomFormId" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group col col-5">
+                <label asp-for="StoreIconFile" class="control-label"></label>
+                <div class="col col-12">
+                    <img id="_StoreIconFile_Img_" src="@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/earticle_home_default_img.webp"}))" class="rounded-circle" />
+                </div>
+                <input asp-for="StoreIconFile" hidden />
+                <span asp-validation-for="Name" class="text-danger"></span>
+                <span id="StoreIconFileValidation" class="text-danger"></span>
+            </div>
+
             <div class="form-group col col-5">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" autocomplete="off" />
@@ -84,9 +95,33 @@
         $(document).on('click', "#LicenseImgFileEle img", function () {
             var ImgId = $(this).attr("id");
             var InputId = ImgId.split("_")[1];
-            $(`#${ImgId},#${InputId}`).remove();
+            $(`#${ImgId}`).css("animation", "LicenseImgFileEleDelete 0.45s forwards linear");
+            setTimeout(function () {
+                $(`#${ImgId},#${InputId}`).remove();
+            },450);
         });
 
+        $(document).on("click", "#_StoreIconFile_Img_", function () {
+            $("#StoreIconFile").click();
+        });
+
+        $(document).on("change", `#StoreIconFile`, function () {
+
+            var StoreIconFileInputId = $(this).attr("id");
+            var _File_ = document.getElementById(StoreIconFileInputId).files[0];
+            if (_File_.size > 2048 * 1024) {
+                $("#StoreIconFileValidation").text(SizeOfFileHint(2));
+                setTimeout(function () {
+                    $("#StoreIconFileValidation").text("");
+                }, 2500);
+                return;
+            }
+            var _reader = new FileReader();
+            _reader.readAsDataURL(_File_);
+            _reader.onload = function (e) {
+                $(`#_StoreIconFile_Img_`).get(0).src = e.target.result;
+            }
+        });
     </script>
 }
 
@@ -94,25 +129,50 @@
 
 @section Styles{
     <style>
+        #_StoreIconFile_Img_ {
+            height: 100px;
+            width: 100px;
+            object-fit: cover;
+        }
+
+            #_StoreIconFile_Img_:hover {
+                animation: StoreIconFileImgAnimation 0.2s linear forwards;
+            }
+
         #SelectLicenseImgFileEle {
             margin-top: 8px;
         }
 
         .XLicenseImg {
+            animation: XLicenseImgAnimation 0.2s forwards linear;
             max-width: 80%;
             max-height: 200px;
             margin-top: 8px;
-            animation: XLicenseImgAnimation 0.2s forwards linear;
         }
 
+        @@keyframes StoreIconFileImgAnimation {
+            100% {
+                transform: scale(1.12);
+            }
+        }
 
         @@keyframes XLicenseImgAnimation {
             0% {
-                transform: scale(0.8);
+                transform: scale(0.5);
             }
 
             100% {
                 transform: scale(1);
+            }
+        }
+
+        @@keyframes LicenseImgFileEleDelete {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(0.1);
             }
         }
 

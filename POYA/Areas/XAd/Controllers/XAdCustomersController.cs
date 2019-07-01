@@ -72,7 +72,8 @@ namespace POYA.Areas.XAd.Controllers
         #endregion
         public async Task<IActionResult> Index()
         {
-            return View(await _context.XAdCustomer.ToListAsync());
+            var _XAdCustomer = await _context.XAdCustomer.Take(10).ToListAsync();
+            return View(_XAdCustomer);
         }
 
         #region 
@@ -113,7 +114,7 @@ namespace POYA.Areas.XAd.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         #endregion
-        public async Task<IActionResult> Create([Bind("Id,Name,UserId,DORegistering,LicenseImgFiles,Address")] XAdCustomer xAdCustomer)
+        public async Task<IActionResult> Create([Bind("Id,Name,UserId,DORegistering,LicenseImgFiles,Address,StoreIconFile")] XAdCustomer xAdCustomer)
         {
             if (ModelState.IsValid)
             {
@@ -122,40 +123,60 @@ namespace POYA.Areas.XAd.Controllers
                     return View(xAdCustomer);
                 }
 
-                #region CONTENTTYPE_VALIDATE
-                var IsContentTypeValid = true;
-                xAdCustomer.LicenseImgFiles.ForEach(p =>
+                #region ===>   FILES_VALIDATE
+                var IsFileValid = true;
+                var _xAdCustomerFiles = xAdCustomer.LicenseImgFiles; //  .Add(xAdCustomer.StoreIconFile);
+                _xAdCustomerFiles.Add(xAdCustomer.StoreIconFile);
+                _xAdCustomerFiles.ForEach(p =>
                 {
-                    if (p.ContentType.StartsWith("image/") || !p.FileName.Contains('.'))
+                    if (p.ContentType.StartsWith("image/") || !p.FileName.Contains('.') || p.Length > 2048 * 1024 || p.Length < 1)
                     {
-                        IsContentTypeValid = false;
+                        IsFileValid = false;
                     }
                 });
-                if (!IsContentTypeValid)
+                if (!IsFileValid)
                 {
                     return View(xAdCustomer);
                 }
 
                 #endregion
 
+                var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
                 xAdCustomer.Id = Guid.NewGuid();
-                _context.Add(xAdCustomer);
+
+                #region ===>    XADCUSTOMERLICENSE
+
                 var _XAdCustomerLicenses = new List<XAdCustomerLicense>();
                 foreach (var f in xAdCustomer.LicenseImgFiles)
                 {
-                    var _ = new MemoryStream();
-                    if (f.Length > 0)
-                    {
-                        var _memoryStream = new MemoryStream();
-                        await f.CopyToAsync(_memoryStream);
-                        var _bytes = _memoryStream.ToArray();
-                        var _md5 = new XUserFileHelper().GetFileMD5(_bytes);
-                        var _FileStream = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{_md5}.{f.FileName.Split('.').Last()}", FileMode.Create);
-                        await f.CopyToAsync(_FileStream);
-                        _XAdCustomerLicenses.Add(new XAdCustomerLicense { });
-                    }
-                }
+                    var _memoryStream = new MemoryStream();
+                    await f.CopyToAsync(_memoryStream);
+                    var _bytes = _memoryStream.ToArray();
+                    var _md5 = new XUserFileHelper().GetFileMD5(_bytes);
+                    var _FileStream = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{_md5}.{f.FileName.Split('.').Last()}", FileMode.Create);
+                    await f.CopyToAsync(_FileStream);
+                    _XAdCustomerLicenses.Add(new XAdCustomerLicense { Id = Guid.NewGuid(), XAdCustomerUserId = UserId_, ImgFileMD5 = _md5, XAdCustomerId =xAdCustomer.Id});
+
+                } 
                 await _context.XAdCustomerLicenses.AddRangeAsync(_XAdCustomerLicenses);
+
+                #endregion
+
+                #region ===>    STORE_ICON
+                var _memoryStream_ = new MemoryStream();
+                await xAdCustomer.StoreIconFile.CopyToAsync(_memoryStream_);
+                var _bytes_ = _memoryStream_.ToArray();
+                var _md5_ = new XUserFileHelper().GetFileMD5(_bytes_);
+                //  CHECK MD5 HERE  <<<<
+                var _FileStream_ = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{_md5_}.{xAdCustomer.StoreIconFile.FileName.Split('.').Last()}",
+                    FileMode.Create);
+                await xAdCustomer.StoreIconFile.CopyToAsync(_FileStream_);
+                xAdCustomer.StoreIconMD5 = _md5_;
+                #endregion
+
+                _context.Add(xAdCustomer);
+
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));

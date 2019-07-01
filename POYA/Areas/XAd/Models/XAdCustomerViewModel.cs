@@ -12,6 +12,21 @@ namespace POYA.Areas.XAd.Models
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
+        #region STORE_ICON
+
+        public string StoreIconMD5 { get; set; }
+        
+        #region 
+
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        [NotMapped]
+        [Display(Name="Store icon")]
+        #endregion
+        public IFormFile StoreIconFile { get; set; }
+        #endregion
+
         #region 
 
         [Display(Name = "Store name")]
@@ -21,8 +36,15 @@ namespace POYA.Areas.XAd.Models
         public string UserId { get; set; }
 
         #region  LICENSE_FILES
+
+        #region 
+
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
         [NotMapped]
-        [Display(Name= "Upload license images")]
+        [Display(Name = "Upload license images")]
+        #endregion
         public List<IFormFile> LicenseImgFiles { get; set; }
         #endregion
 
@@ -38,9 +60,28 @@ namespace POYA.Areas.XAd.Models
     public class XAdCustomerLicense
     {
         public Guid Id { get; set; } = Guid.NewGuid();
+
+        public string XAdCustomerUserId { get; set; }
+
+        public string ImgFileMD5 { get; set; }
+
+        #region     
+        /// <summary>
+        /// 
+        /// </summary>
+        #endregion
         public Guid XAdCustomerId { get; set; }
+
+        #region DISCARD
+
+        #region 
+        /// <summary>
+        /// DISCARD
+        /// </summary>
+        #endregion
         public Guid LicenseImgFileId { get; set; }
 
+        #endregion
     }
 
     public class XAdCustomerVerification

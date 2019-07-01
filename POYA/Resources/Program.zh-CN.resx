@@ -3222,4 +3222,7 @@
   <data name="Upload license images" xml:space="preserve">
     <value>上传执照照片</value>
   </data>
+  <data name="Store icon" xml:space="preserve">
+    <value>店铺图标</value>
+  </data>
 </root>

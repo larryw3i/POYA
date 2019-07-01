@@ -3191,4 +3191,7 @@
   <data name="Upload license images" xml:space="preserve">
     <value>Upload license images</value>
   </data>
+  <data name="Store icon" xml:space="preserve">
+    <value>Store icon</value>
+  </data>
 </root>
