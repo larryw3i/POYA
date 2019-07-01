@@ -3225,4 +3225,10 @@
   <data name="Store icon" xml:space="preserve">
     <value>店铺图标</value>
   </data>
+  <data name="The size of file should be not more than" xml:space="preserve">
+    <value>照片的大小不能大于  </value>
+  </data>
+  <data name="Click to delete" xml:space="preserve">
+    <value>点击删除</value>
+  </data>
 </root>

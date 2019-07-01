@@ -281,5 +281,16 @@ namespace POYA.Areas.XAd.Controllers
         {
             return _context.XAdCustomer.Any(e => e.Id == id);
         }
+
+        #region DEPOLLUTION
+        #region 
+
+        #endregion
+        public IActionResult GetXAdCustomerFiles(string MD5="")
+        {
+            return NoContent();
+        }
+
+        #endregion
     }
 }

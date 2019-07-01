@@ -3194,4 +3194,10 @@
   <data name="Store icon" xml:space="preserve">
     <value>Store icon</value>
   </data>
+  <data name="The size of file should be not more than" xml:space="preserve">
+    <value>The size of file should be not more than </value>
+  </data>
+  <data name="Click to delete" xml:space="preserve">
+    <value>Click to delete</value>
+  </data>
 </root>
