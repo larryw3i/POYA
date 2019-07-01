@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = Localizer["Become our advertiser"];
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var RandomFormId = Guid.NewGuid();
 }
 
 
@@ -10,24 +11,24 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col-12">
+        <form asp-action="Create" id="@RandomFormId"  enctype="multipart/form-data" >
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group col col-5">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" autocomplete="off" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col col-5">
                 <label asp-for="Address" class="control-label"></label>
                 <input asp-for="Address" class="form-control" autocomplete="off" />
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col col-12">
                 <label asp-for="LicenseImgFiles" class="control-label"></label>
-                <div id="LicenseImgFileEle" class="col col-auto">
+                <div id="LicenseImgFileEle" class="row">
                 </div>
                 <a id="SelectLicenseImgFileEle" class="btn btn-outline-info">@Localizer["Select license image files"]</a>
                 <div id="LicenseImgFilevalidation"></div>
@@ -46,34 +47,46 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
-    var SizeOfFileHint = (xMByte) => `@(Localizer["The size of file should be not more than"]) ${xMByte}M`;
-    var LicenseImgPrefix = "LicenseImg_";
-    var LicenseImgFileInput = (id) => `<input id='${id}' name='LicenseImgFiles' class='XLicenseImgFiles' accept='image/*' hidden/>`;
-    var LicenseImg = (_LicenseImgFileInputId) => `<image id='${LicenseImgPrefix+_LicenseImgFileInputId}' class='XLicenseImg'/>`;
+        var SizeOfFileHint = (xMByte) => `@(Localizer["The size of file should be not more than"]) ${xMByte}M`;
+        var ClickToDelete = `@(Localizer["Click to delete"])`;
+        var _RandomFormId = `@(RandomFormId)`;
+        var LicenseImgPrefix = "LicenseImg_";
+        var LicenseImgFileInput = (id) => `<input id='${id}' type='file' name='LicenseImgFiles' form='${_RandomFormId}' class='XLicenseImgFiles' accept='image/*' hidden/>`;
+        var LicenseImg = (_LicenseImgFileInputId) => `<img id='${LicenseImgPrefix + _LicenseImgFileInputId}' class='XLicenseImg col col-auto' title='${ClickToDelete}'/>`;
         $(document).on("click", "#SelectLicenseImgFileEle", function () {
-
-            var _id = NewGuid();
-            $(`#LicenseImgFileEle`).append(LicenseImgFileInput(_id));
-            $(`#${_id}`).trigger(`click`);
-
-            $(`#LicenseImgFileEle input:last`).trigger(`click`);
-
+            if ($(`#LicenseImgFileEle input:last`).val()!="") {
+                var _id = NewGuid();
+                $(`#LicenseImgFileEle`).append(LicenseImgFileInput(_id));
+                $(`#${_id}`).click();
+            } else {
+                $(`#LicenseImgFileEle input:last`).click();
+            }
             event.preventDefault();
         });
-    $(document).on("change", ".XLicenseImgFiles", function () {
-        var LicenseImgFileInputId = $(this).id;
-        var _File = document.getElementById(LicenseImgFileInputId).files[0];
-        if (_File.size > 2048) {
-            $(".LicenseImgFilevalidation").text(SizeOfFileHint(2));
-            setTimeout(function () {
-                $(".LicenseImgFilevalidation").hide();
-            }, 2500);
-            return;
-        }
-        $(`#${LicenseImgFileInputId}`).after(LicenseImg(LicenseImgFileInputId));
-        $(`#${LicenseImgPrefix + LicenseImgFileInputId}`).attr("src", new FileReader().readAsDataURL(_File));
+        $(document).on("change", ".XLicenseImgFiles", function () {
+            var LicenseImgFileInputId = $(this).attr("id");
+            var _File = document.getElementById(LicenseImgFileInputId).files[0];
+            if (_File.size > 2048 * 1024) {
+                $("#LicenseImgFilevalidation").text(SizeOfFileHint(2));
+                setTimeout(function () {
+                    $("#LicenseImgFilevalidation").hide();
+                }, 2500);
+                return;
+            }
+            $(`#${LicenseImgFileInputId}`).after(LicenseImg(LicenseImgFileInputId));
+            var reader = new FileReader();
+            reader.readAsDataURL(_File);
+            reader.onload = function (e) {
+                $(`#${LicenseImgPrefix + LicenseImgFileInputId}`).get(0).src = e.target.result;
+            }
+        });
 
-    });
+        $(document).on('click', "#LicenseImgFileEle img", function () {
+            var ImgId = $(this).attr("id");
+            var InputId = ImgId.split("_")[1];
+            $(`#${ImgId},#${InputId}`).remove();
+        });
+
     </script>
 }
 
@@ -81,8 +94,33 @@
 
 @section Styles{
     <style>
+        #SelectLicenseImgFileEle {
+            margin-top: 8px;
+        }
+
         .XLicenseImg {
-            max-height: 90%;
+            max-width: 80%;
+            max-height: 200px;
+            margin-top: 8px;
+            animation: XLicenseImgAnimation 0.2s forwards linear;
+        }
+
+
+        @@keyframes XLicenseImgAnimation {
+            0% {
+                transform: scale(0.8);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        #DeleteLicenseImgFile {
+            position: absolute;
+            z-index: 999;
+            color: red;
+            transform: scale(4);
         }
     </style>
 }

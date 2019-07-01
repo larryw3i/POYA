@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Ganss.XSS;
@@ -112,13 +113,51 @@ namespace POYA.Areas.XAd.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         #endregion
-        public async Task<IActionResult> Create([Bind("Id,Name,UserId,DORegistering,Address")] XAdCustomer xAdCustomer)
+        public async Task<IActionResult> Create([Bind("Id,Name,UserId,DORegistering,LicenseImgFiles,Address")] XAdCustomer xAdCustomer)
         {
             if (ModelState.IsValid)
             {
+                if (xAdCustomer.LicenseImgFiles.Count() < 3)
+                {
+                    return View(xAdCustomer);
+                }
+
+                #region CONTENTTYPE_VALIDATE
+                var IsContentTypeValid = true;
+                xAdCustomer.LicenseImgFiles.ForEach(p =>
+                {
+                    if (p.ContentType.StartsWith("image/") || !p.FileName.Contains('.'))
+                    {
+                        IsContentTypeValid = false;
+                    }
+                });
+                if (!IsContentTypeValid)
+                {
+                    return View(xAdCustomer);
+                }
+
+                #endregion
+
                 xAdCustomer.Id = Guid.NewGuid();
                 _context.Add(xAdCustomer);
+                var _XAdCustomerLicenses = new List<XAdCustomerLicense>();
+                foreach (var f in xAdCustomer.LicenseImgFiles)
+                {
+                    var _ = new MemoryStream();
+                    if (f.Length > 0)
+                    {
+                        var _memoryStream = new MemoryStream();
+                        await f.CopyToAsync(_memoryStream);
+                        var _bytes = _memoryStream.ToArray();
+                        var _md5 = new XUserFileHelper().GetFileMD5(_bytes);
+                        var _FileStream = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{_md5}.{f.FileName.Split('.').Last()}", FileMode.Create);
+                        await f.CopyToAsync(_FileStream);
+                        _XAdCustomerLicenses.Add(new XAdCustomerLicense { });
+                    }
+                }
+                await _context.XAdCustomerLicenses.AddRangeAsync(_XAdCustomerLicenses);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             return View(xAdCustomer);

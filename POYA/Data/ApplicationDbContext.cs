@@ -29,6 +29,7 @@ namespace POYA.Data
         public DbSet<POYA.Areas.EduHub.Models.UserEArticleSet> UserEArticleSet { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.UserEArticleHomeInfo> UserEArticleHomeInfos { get; set; }
         public DbSet<POYA.Areas.XAd.Models.XAdCustomer> XAdCustomer { get; set; }
+        public DbSet<POYA.Areas.XAd.Models.XAdCustomerLicense> XAdCustomerLicenses { get; set; }
 
         #region 
 

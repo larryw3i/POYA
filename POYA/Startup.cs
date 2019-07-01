@@ -24,6 +24,7 @@ using Ganss.XSS;
 using Microsoft.AspNetCore.Identity.UI;
 using Newtonsoft.Json.Serialization;
 using System.IO;
+using POYA.Areas.XAd.Controllers;
 
 namespace POYA
 {
@@ -211,7 +212,9 @@ namespace POYA
             var LFilesPath = env.ContentRootPath + "/Data/LFiles";
             var AvatarPath = $"{LFilesPath}/Avatars";
             var XUserFilePath = $"{LFilesPath}/XUserFile";
-            foreach (var p in new string[] { AvatarPath, XUserFilePath })
+
+            var InitialPaths = new string[] { AvatarPath, XUserFilePath, XAdCustomerHelper.XAdCustomerLicenseImgFilePath(env) };
+            foreach (var p in InitialPaths)
             {
                 if (!Directory.Exists(p))
                 {
