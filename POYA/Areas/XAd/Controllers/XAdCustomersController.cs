@@ -124,20 +124,13 @@ namespace POYA.Areas.XAd.Controllers
                 }
 
                 #region ===>   FILES_VALIDATE
-                var IsFileValid = true;
                 var _xAdCustomerFiles = xAdCustomer.LicenseImgFiles; //  .Add(xAdCustomer.StoreIconFile);
                 _xAdCustomerFiles.Add(xAdCustomer.StoreIconFile);
-                _xAdCustomerFiles.ForEach(p =>
-                {
-                    if (!p.ContentType.StartsWith("image/") || !p.FileName.Contains('.') || p.Length > 2048 * 1024 || p.Length < 1)
-                    {
-                        IsFileValid = false;
-                    }
-                });
-                if (!IsFileValid)
+                if(_xAdCustomerFiles.Any(p=>!p.ContentType.StartsWith("image/") || !p.FileName.Contains('.') || p.Length > 2048 * 1024 || p.Length < 1))
                 {
                     return View(xAdCustomer);
                 }
+           
 
                 #endregion
 
@@ -148,12 +141,19 @@ namespace POYA.Areas.XAd.Controllers
                 #region ===>    XADCUSTOMERLICENSE
 
                 var _XAdCustomerLicenses = new List<XAdCustomerLicense>();
+
+                var _FileMD5s = System.IO.Directory.GetFiles(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv)).Select(p => System.IO.Path.GetFileNameWithoutExtension(p));
+
                 foreach (var f in xAdCustomer.LicenseImgFiles)
                 {
                     var _memoryStream = new MemoryStream();
                     await f.CopyToAsync(_memoryStream);
                     var _bytes = _memoryStream.ToArray();
                     var _md5 = new XUserFileHelper().GetFileMD5(_bytes);
+                    if (_FileMD5s.Contains(_md5))
+                    {
+                        return View(xAdCustomer);
+                    }
                     var _FileStream = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{_md5}", FileMode.Create);
                     await f.CopyToAsync(_FileStream);
                     _FileStream.Close();
@@ -169,6 +169,10 @@ namespace POYA.Areas.XAd.Controllers
                 await xAdCustomer.StoreIconFile.CopyToAsync(_memoryStream_);
                 var _bytes_ = _memoryStream_.ToArray();
                 var _md5_ = new XUserFileHelper().GetFileMD5(_bytes_);
+                if (_FileMD5s.Contains(_md5_))
+                {
+                    return View(xAdCustomer);
+                }
                 //  CHECK MD5 HERE  <<<<
                 var _FileStream_ = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{_md5_}.{xAdCustomer.StoreIconFile.FileName.Split('.').Last()}",
                     FileMode.Create);

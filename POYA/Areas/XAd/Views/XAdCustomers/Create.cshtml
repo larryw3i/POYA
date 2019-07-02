@@ -88,6 +88,9 @@
                 $(`#Common-Tip`).html(_DefaultImageIsDisabled);
                 $(`#Common-Tip`).css(`animation`, `CommonTipAnimation 0.5s 3 linear`);
                 setTimeout(function () {
+                    $(`#Common-Tip`).html(_DefaultImageIsDisabled+` &#9757;`);
+                },1500);
+                setTimeout(function () {
                     $(`#Common-Tip`).html('');
                     $(`#Common-Tip`).css(`animation`, ``);
                 },3000);
@@ -194,7 +197,7 @@
 
         #_StoreIconFile_Img_ {
             max-height: 90%;
-            max-width: 90%;
+            max-width: 100%;
             object-fit: cover;
         }
 
