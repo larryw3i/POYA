@@ -15,6 +15,8 @@ namespace POYA.Areas.XAd.Models
         #region STORE_ICON
 
         public string StoreIconMD5 { get; set; }
+
+        public string StoreIconContentType { get; set; }
         
         #region 
 
@@ -65,10 +67,14 @@ namespace POYA.Areas.XAd.Models
 
         public string ImgFileMD5 { get; set; }
 
+        public string ImgFileContentType { get; set; }
+
         #region     
         /// <summary>
-        /// 
+        /// [NotMapped]<br/>
+        /// DISCARD
         /// </summary>
+        [NotMapped]
         #endregion
         public Guid XAdCustomerId { get; set; }
 
@@ -77,7 +83,9 @@ namespace POYA.Areas.XAd.Models
         #region 
         /// <summary>
         /// DISCARD
+        /// [NotMapped]
         /// </summary>
+        [NotMapped]
         #endregion
         public Guid LicenseImgFileId { get; set; }
 

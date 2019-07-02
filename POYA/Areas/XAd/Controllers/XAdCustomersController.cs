@@ -129,7 +129,7 @@ namespace POYA.Areas.XAd.Controllers
                 _xAdCustomerFiles.Add(xAdCustomer.StoreIconFile);
                 _xAdCustomerFiles.ForEach(p =>
                 {
-                    if (p.ContentType.StartsWith("image/") || !p.FileName.Contains('.') || p.Length > 2048 * 1024 || p.Length < 1)
+                    if (!p.ContentType.StartsWith("image/") || !p.FileName.Contains('.') || p.Length > 2048 * 1024 || p.Length < 1)
                     {
                         IsFileValid = false;
                     }
@@ -154,9 +154,10 @@ namespace POYA.Areas.XAd.Controllers
                     await f.CopyToAsync(_memoryStream);
                     var _bytes = _memoryStream.ToArray();
                     var _md5 = new XUserFileHelper().GetFileMD5(_bytes);
-                    var _FileStream = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{_md5}.{f.FileName.Split('.').Last()}", FileMode.Create);
+                    var _FileStream = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{_md5}", FileMode.Create);
                     await f.CopyToAsync(_FileStream);
-                    _XAdCustomerLicenses.Add(new XAdCustomerLicense { Id = Guid.NewGuid(), XAdCustomerUserId = UserId_, ImgFileMD5 = _md5, XAdCustomerId =xAdCustomer.Id});
+                    _FileStream.Close();
+                    _XAdCustomerLicenses.Add(new XAdCustomerLicense { Id = Guid.NewGuid(), XAdCustomerUserId = UserId_, ImgFileMD5 = _md5, ImgFileContentType=f.ContentType});
 
                 } 
                 await _context.XAdCustomerLicenses.AddRangeAsync(_XAdCustomerLicenses);
@@ -172,7 +173,9 @@ namespace POYA.Areas.XAd.Controllers
                 var _FileStream_ = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{_md5_}.{xAdCustomer.StoreIconFile.FileName.Split('.').Last()}",
                     FileMode.Create);
                 await xAdCustomer.StoreIconFile.CopyToAsync(_FileStream_);
+                _FileStream_.Close();
                 xAdCustomer.StoreIconMD5 = _md5_;
+                xAdCustomer.StoreIconContentType = xAdCustomer.StoreIconFile.ContentType;
                 #endregion
 
                 _context.Add(xAdCustomer);
@@ -284,11 +287,43 @@ namespace POYA.Areas.XAd.Controllers
 
         #region DEPOLLUTION
         #region 
-
+        [HttpGet]
+        [AllowAnonymous]
         #endregion
-        public IActionResult GetXAdCustomerFiles(string MD5="")
+        public async Task<IActionResult> GetXAdCustomerFilesAsync(string MD5="")
         {
-            return NoContent();
+            if (string.IsNullOrWhiteSpace(MD5))
+            {
+                return NotFound();
+            }
+
+            var _XAdCustomer = await _context.XAdCustomer.FirstOrDefaultAsync(p => p.StoreIconMD5 == MD5);
+            var _ContentType = _XAdCustomer?.StoreIconContentType ?? string.Empty;
+            var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id;
+            if (_XAdCustomer == null )
+            {
+                if (string.IsNullOrWhiteSpace(UserId_)) { return NotFound(); }
+                var _XAdCustomerLicenses = await _context.XAdCustomerLicenses.FirstOrDefaultAsync(P => P.XAdCustomerUserId == UserId_ && P.ImgFileMD5 == MD5);
+                if (_XAdCustomerLicenses==null)
+                {
+                    return NotFound();
+                }
+                _ContentType = _XAdCustomerLicenses.ImgFileContentType;
+            }
+
+            var _FilePath = XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{MD5}";
+
+            if (!System.IO.File.Exists(_FilePath))
+            {
+                return NotFound();
+            }
+            
+
+            var _FileStream = new FileStream(_FilePath, FileMode.Open, FileAccess.Read);
+            var FileBytes = new byte[(int)_FileStream.Length];
+            _FileStream.Read(FileBytes, 0, FileBytes.Length);
+            _FileStream.Close();
+            return File(FileBytes,_ContentType);
         }
 
         #endregion

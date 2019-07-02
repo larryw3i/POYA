@@ -78,7 +78,10 @@
             var LicenseImgFileInputId = $(this).attr("id");
             var _File = document.getElementById(LicenseImgFileInputId).files[0];
             if (_File.size > 2048 * 1024) {
-                $("#LicenseImgFilevalidation").text(SizeOfFileHint(2));
+                $("#LicenseImgFilevalidation").html(SizeOfFileHint(2));
+                
+                $(`#${LicenseImgFileInputId}`).remove();
+
                 setTimeout(function () {
                     $("#LicenseImgFilevalidation").hide();
                 }, 2500);
@@ -152,7 +155,7 @@
 
         @@keyframes StoreIconFileImgAnimation {
             100% {
-                transform: scale(1.12);
+                transform: scale(1.15);
             }
         }
 
