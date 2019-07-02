@@ -16,9 +16,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group col col-5">
-                <label asp-for="StoreIconFile" class="control-label"></label>
-                <div class="col col-12">
-                    <img id="_StoreIconFile_Img_" src="@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/earticle_home_default_img.webp"}))" class="rounded-circle" />
+                <label asp-for="StoreIconFile" class="control-label"></label><sup class="Upload-Tip">@Localizer["Click image to select store icon"]</sup>
+                <div class="col col-12 text-center">
+                    <span class="Default-Icon-Tip">@Localizer["The default image is disabled"]</span>
+                    <img id="_StoreIconFile_Img_" src="@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/earticle_home_default_img.webp"}))"
+                         title="@Localizer["Click to select store icon"]" />
                 </div>
                 <input asp-for="StoreIconFile" hidden />
                 <span asp-validation-for="Name" class="text-danger"></span>
@@ -37,17 +39,27 @@
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
 
+            <div class="form-group col col-5">
+                <label asp-for="Intro" class="control-label"></label>
+                <textarea asp-for="Intro" class="form-control" autocomplete="off"></textarea>
+                <span asp-validation-for="Intro" class="text-danger"></span>
+            </div>
+
+
             <div class="form-group col col-12">
-                <label asp-for="LicenseImgFiles" class="control-label"></label>
+                <label asp-for="LicenseImgFiles" class="control-label"></label><sup class="Upload-Tip Image-Count-Tip">@Localizer["Image count"] => 3~5</sup>
                 <div id="LicenseImgFileEle" class="row">
                 </div>
-                <a id="SelectLicenseImgFileEle" class="btn btn-outline-info">@Localizer["Select license image files"]</a>
+                <a id="SelectLicenseImgFileEle" class="btn btn-outline-info">
+                    @Localizer["Select license image files"] &#128449;
+                </a>
                 <div id="LicenseImgFilevalidation"></div>
             </div>
 
             <div class="form-group">
                 <a id="BackEle" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
-                <input type="submit" value="@Localizer["Register"]" class="btn btn-outline-success" />
+                <a id="XAdCustomerRegisterEle" class="btn btn-outline-success">@Localizer["Register"]</a>
+                <span id="Common-Tip"></span>
             </div>
         </form>
     </div>
@@ -61,10 +73,40 @@
         var SizeOfFileHint = (xMByte) => `@(Localizer["The size of file should be not more than"]) ${xMByte}M`;
         var ClickToDelete = `@(Localizer["Click to delete"])`;
         var _RandomFormId = `@(RandomFormId)`;
+        var _DefaultImageIsDisabled = `@Localizer["The default image is disabled"]`;
         var LicenseImgPrefix = "LicenseImg_";
         var LicenseImgFileInput = (id) => `<input id='${id}' type='file' name='LicenseImgFiles' form='${_RandomFormId}' class='XLicenseImgFiles' accept='image/*' hidden/>`;
         var LicenseImg = (_LicenseImgFileInputId) => `<img id='${LicenseImgPrefix + _LicenseImgFileInputId}' class='XLicenseImg col col-auto' title='${ClickToDelete}'/>`;
+        $(document).ready(function () {
+            setTimeout(function () {
+                $(".Default-Icon-Tip").hide();
+            },4000);
+        });
+
+        $(document).on(`click`, `#XAdCustomerRegisterEle`, function () {
+            if ($(`#StoreIconFile`).val().length < 1) {
+                $(`#Common-Tip`).html(_DefaultImageIsDisabled);
+                $(`#Common-Tip`).css(`animation`, `CommonTipAnimation 0.5s 3 linear`);
+                setTimeout(function () {
+                    $(`#Common-Tip`).html('');
+                    $(`#Common-Tip`).css(`animation`, ``);
+                },3000);
+                return;
+            }
+            $(`input`).each(function (index, element) {
+                if ($(element).val().length < 1) $(element).remove();
+            });
+            $(`#${_RandomFormId}`).submit();
+        });
+
         $(document).on("click", "#SelectLicenseImgFileEle", function () {
+            if ($(`.XLicenseImgFiles`).length > 4) {
+                $(`.Image-Count-Tip`).css(`animation`, `GlintBackgroundColor 0.5s 2 linear`);
+                setTimeout(function () {
+                    $(`.Image-Count-Tip`).css(`animation`, ``);
+                },1000);
+                return;
+            }
             if ($(`#LicenseImgFileEle input:last`).val()!="") {
                 var _id = NewGuid();
                 $(`#LicenseImgFileEle`).append(LicenseImgFileInput(_id));
@@ -79,7 +121,7 @@
             var _File = document.getElementById(LicenseImgFileInputId).files[0];
             if (_File.size > 2048 * 1024) {
                 $("#LicenseImgFilevalidation").html(SizeOfFileHint(2));
-                
+
                 $(`#${LicenseImgFileInputId}`).remove();
 
                 setTimeout(function () {
@@ -119,6 +161,7 @@
                 }, 2500);
                 return;
             }
+
             var _reader = new FileReader();
             _reader.readAsDataURL(_File_);
             _reader.onload = function (e) {
@@ -132,9 +175,26 @@
 
 @section Styles{
     <style>
+        .Default-Icon-Tip{
+            position:fixed;
+            z-index:999;
+            font-size: 80%;
+            color:honeydew;
+            border: dotted;
+            border-color:aliceblue;
+            border-radius: 5px;
+        }
+        .Upload-Tip {
+            font-size: 80%;
+            color: blue;
+            border: dotted;
+            border-color: coral;
+            border-radius: 5px;
+        }
+
         #_StoreIconFile_Img_ {
-            height: 100px;
-            width: 100px;
+            max-height: 90%;
+            max-width: 90%;
             object-fit: cover;
         }
 
@@ -144,6 +204,7 @@
 
         #SelectLicenseImgFileEle {
             margin-top: 8px;
+            transform: scale(1.2);
         }
 
         .XLicenseImg {
@@ -188,6 +249,39 @@
             z-index: 999;
             color: red;
             transform: scale(4);
+        }
+
+        @@keyframes GlintBackgroundColor{
+            0%{
+                background-color:red;
+                font-size:80%;
+            }
+            50%{
+                background-color:Highlight;
+                font-size:88%;
+            }
+            100%{
+                background-color:red;
+                font-size:80%;
+            }
+        }
+
+        @@keyframes CommonTipAnimation {
+              0%{
+                color:red;
+                font-size:100%;
+                font-weight:100;
+            }
+            50%{
+                color:Highlight;
+                font-size:120%;
+                font-weight:600;
+            }
+            100%{
+                color:red;
+                font-size:100%;
+                font-weight:100;
+            }
         }
     </style>
 }

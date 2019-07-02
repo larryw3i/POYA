@@ -16,10 +16,10 @@
 
         <div class="text-center our-advertisers">@Localizer["Our advertisers"]</div>
         <hr />
-        <div class="col col-auto Store-Icon-Col ">
+        <div class="col col-auto Store-Icon-Col text-center">
             @foreach(var m in Model)
             {
-                <img src="@Url.Action(nameof(XAdCustomersController.GetXAdCustomerFilesAsync),new { MD5=m.StoreIconMD5})" class="Store-Icon"/>
+                <img src="@Url.Action(nameof(XAdCustomersController.GetXAdCustomerFilesAsync),new { MD5=m.StoreIconMD5})" class="Store-Icon" id="@m.Id" title="@m.Name"/>
             }
         </div>
     </div>
@@ -27,17 +27,23 @@
 
 @section Scripts{
     <script>
+        var _XAdCustomersCreateUrl = `@(Url.Action("Create"))`;
+        var _XAdCustomersDetailsUrl = (_id) => `@Url.Action("Details")/${_id}`;
     $(document).on("click", ".Become-advertiser", function () {
-        window.location = "@(Url.Action("Create"))";
+        window.location = _XAdCustomersCreateUrl;
     });
+
+        $(document).on("click", `.Store-Icon`, function () {
+            window.location = _XAdCustomersDetailsUrl($(this).attr("id"));
+        });
     </script>
 }
 
 @section Styles{
     <style>
         .Store-Icon{
-            max-width:100px;
-            max-height:100px;
+            max-width:150px;
+            max-height:150px;
             margin-left:20px;
         }
         

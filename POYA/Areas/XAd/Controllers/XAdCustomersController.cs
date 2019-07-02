@@ -114,11 +114,11 @@ namespace POYA.Areas.XAd.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         #endregion
-        public async Task<IActionResult> Create([Bind("Id,Name,UserId,DORegistering,LicenseImgFiles,Address,StoreIconFile")] XAdCustomer xAdCustomer)
+        public async Task<IActionResult> Create([Bind("Id,Name,UserId,DORegistering,LicenseImgFiles,Address,StoreIconFile,Intro")] XAdCustomer xAdCustomer)
         {
             if (ModelState.IsValid)
             {
-                if (xAdCustomer.LicenseImgFiles.Count() < 3)
+                if (xAdCustomer.LicenseImgFiles.Count() < 3 || xAdCustomer.LicenseImgFiles.Count()>5 || xAdCustomer.StoreIconFile==null)
                 {
                     return View(xAdCustomer);
                 }

@@ -3231,4 +3231,25 @@
   <data name="Click to delete" xml:space="preserve">
     <value>点击删除</value>
   </data>
+  <data name="Click to uplod store icon" xml:space="preserve">
+    <value>点击上传图标</value>
+  </data>
+  <data name="Click image to uplod store icon" xml:space="preserve">
+    <value>点击图片上传图标</value>
+  </data>
+  <data name="Click image to select store icon" xml:space="preserve">
+    <value>点击图片选择图标</value>
+  </data>
+  <data name="Click to select store icon" xml:space="preserve">
+    <value>点击选择图标</value>
+  </data>
+  <data name="Image count" xml:space="preserve">
+    <value>照片数</value>
+  </data>
+  <data name="Introduction" xml:space="preserve">
+    <value>简介</value>
+  </data>
+  <data name="The default image is disabled" xml:space="preserve">
+    <value>默认图片不可用</value>
+  </data>
 </root>

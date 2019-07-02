@@ -32,6 +32,7 @@ namespace POYA.Areas.XAd.Models
         #region 
 
         [Display(Name = "Store name")]
+        [StringLength(maximumLength:20,MinimumLength =2)]
         #endregion
         public string Name { get; set; }
 
@@ -55,8 +56,18 @@ namespace POYA.Areas.XAd.Models
         #region 
 
         [Display(Name = "Business address")]
+        [StringLength(maximumLength: 80, MinimumLength = 2)]
         #endregion
         public string Address { get; set; }
+
+        #region 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Display(Name= "Introduction")]
+        [StringLength(maximumLength:128)]
+        #endregion
+        public string Intro { get; set; }
     }
 
     public class XAdCustomerLicense
