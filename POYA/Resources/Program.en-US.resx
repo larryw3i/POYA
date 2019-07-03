@@ -3221,4 +3221,10 @@
   <data name="The default image is disabled" xml:space="preserve">
     <value>The default image is disabled</value>
   </data>
+  <data name="The store icon is repeated" xml:space="preserve">
+    <value>The store icon is repeated</value>
+  </data>
+  <data name="The license photo is repeated" xml:space="preserve">
+    <value>The license photo is repeated</value>
+  </data>
 </root>

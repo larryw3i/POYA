@@ -118,7 +118,7 @@ namespace POYA.Areas.XAd.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (xAdCustomer.LicenseImgFiles.Count() < 3 || xAdCustomer.LicenseImgFiles.Count()>5 || xAdCustomer.StoreIconFile==null)
+                if ( xAdCustomer.StoreIconFile == null|| xAdCustomer.LicenseImgFiles?.Count() < 3 || xAdCustomer.LicenseImgFiles.Count()>5 )
                 {
                     return View(xAdCustomer);
                 }
@@ -150,13 +150,19 @@ namespace POYA.Areas.XAd.Controllers
                     await f.CopyToAsync(_memoryStream);
                     var _bytes = _memoryStream.ToArray();
                     var _md5 = new XUserFileHelper().GetFileMD5(_bytes);
-                    if (_FileMD5s.Contains(_md5))
+                 
+                    if (!_hostingEnv.IsDevelopment()&& _FileMD5s.Contains(_md5))
                     {
+                        ModelState.AddModelError(nameof(XAdCustomer.LicenseImgFiles),_localizer["The license photo is repeated"]);
                         return View(xAdCustomer);
                     }
-                    var _FileStream = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{_md5}", FileMode.Create);
-                    await f.CopyToAsync(_FileStream);
-                    _FileStream.Close();
+                    if (!_FileMD5s.Contains(_md5))
+                    {
+                        var _FileStream = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{_md5}", FileMode.Create);
+                        await f.CopyToAsync(_FileStream);
+                        _FileStream.Close();
+                     
+                    }
                     _XAdCustomerLicenses.Add(new XAdCustomerLicense { Id = Guid.NewGuid(), XAdCustomerUserId = UserId_, ImgFileMD5 = _md5, ImgFileContentType=f.ContentType});
 
                 } 
@@ -169,15 +175,21 @@ namespace POYA.Areas.XAd.Controllers
                 await xAdCustomer.StoreIconFile.CopyToAsync(_memoryStream_);
                 var _bytes_ = _memoryStream_.ToArray();
                 var _md5_ = new XUserFileHelper().GetFileMD5(_bytes_);
-                if (_FileMD5s.Contains(_md5_))
+
+                if (!_hostingEnv.IsDevelopment()&& _FileMD5s.Contains(_md5_))
                 {
+                    ModelState.AddModelError(nameof(XAdCustomer.LicenseImgFiles), _localizer["The store icon is repeated"]);
                     return View(xAdCustomer);
                 }
-                //  CHECK MD5 HERE  <<<<
-                var _FileStream_ = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{_md5_}.{xAdCustomer.StoreIconFile.FileName.Split('.').Last()}",
+                if ( !_FileMD5s.Contains(_md5_))
+                {
+                    var _FileStream_ = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{_md5_}.{xAdCustomer.StoreIconFile.FileName.Split('.').Last()}",
                     FileMode.Create);
-                await xAdCustomer.StoreIconFile.CopyToAsync(_FileStream_);
-                _FileStream_.Close();
+                    await xAdCustomer.StoreIconFile.CopyToAsync(_FileStream_);
+                    _FileStream_.Close();
+
+                }
+
                 xAdCustomer.StoreIconMD5 = _md5_;
                 xAdCustomer.StoreIconContentType = xAdCustomer.StoreIconFile.ContentType;
                 #endregion

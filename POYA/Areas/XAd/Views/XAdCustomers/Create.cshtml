@@ -50,6 +50,7 @@
                 <label asp-for="LicenseImgFiles" class="control-label"></label><sup class="Upload-Tip Image-Count-Tip">@Localizer["Image count"] => 3~5</sup>
                 <div id="LicenseImgFileEle" class="row">
                 </div>
+                <span asp-validation-for="LicenseImgFiles" class="text-danger"></span><br />
                 <a id="SelectLicenseImgFileEle" class="btn btn-outline-info">
                     @Localizer["Select license image files"] &#128449;
                 </a>
@@ -87,29 +88,30 @@
             if ($(`#StoreIconFile`).val().length < 1) {
                 $(`#Common-Tip`).html(_DefaultImageIsDisabled);
                 $(`#Common-Tip`).css(`animation`, `CommonTipAnimation 0.5s 3 linear`);
+                $(`#_StoreIconFile_Img_`).css(`animation`, `StoreIconFileImgAnimation 0.2s  linear infinite alternate`);
                 setTimeout(function () {
-                    $(`#Common-Tip`).html(_DefaultImageIsDisabled+` &#9757;`);
-                },1500);
+                    $(`#Common-Tip`).html(_DefaultImageIsDisabled + ` &#9757;`);
+                    $(`#_StoreIconFile_Img_`).css(`animation`, ``);
+                }, 1500);
+
                 setTimeout(function () {
                     $(`#Common-Tip`).html('');
-                    $(`#Common-Tip`).css(`animation`, ``);
-                },3000);
+                    $(`#Common-Tip,#_StoreIconFile_Img_`).css(`animation`, ``);
+                }, 3000);
                 return;
             }
             $(`input`).each(function (index, element) {
                 if ($(element).val().length < 1) $(element).remove();
             });
+            if (!IsFileCountValid()) return;
+         
             $(`#${_RandomFormId}`).submit();
         });
 
         $(document).on("click", "#SelectLicenseImgFileEle", function () {
-            if ($(`.XLicenseImgFiles`).length > 4) {
-                $(`.Image-Count-Tip`).css(`animation`, `GlintBackgroundColor 0.5s 2 linear`);
-                setTimeout(function () {
-                    $(`.Image-Count-Tip`).css(`animation`, ``);
-                },1000);
-                return;
-            }
+
+            if (!IsFileCountValid(true)) return;
+
             if ($(`#LicenseImgFileEle input:last`).val()!="") {
                 var _id = NewGuid();
                 $(`#LicenseImgFileEle`).append(LicenseImgFileInput(_id));
@@ -171,6 +173,20 @@
                 $(`#_StoreIconFile_Img_`).get(0).src = e.target.result;
             }
         });
+
+        function IsFileCountValid(IsSelectEleClick = false) {
+            var _FileCount = $(`.XLicenseImg`).length;
+            console.log(_FileCount);
+            if (IsSelectEleClick && _FileCount < 3) return true;
+            if (_FileCount >4 ||  _FileCount < 3) {
+                $(`.Image-Count-Tip`).css(`animation`, `GlintBackgroundColor 0.5s 2 linear`);
+                setTimeout(function () {
+                    $(`.Image-Count-Tip`).css(`animation`, ``);
+                }, 1000);
+                return false
+            }
+            return true;
+        }
     </script>
 }
 

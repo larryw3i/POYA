@@ -3252,4 +3252,10 @@
   <data name="The default image is disabled" xml:space="preserve">
     <value>默认图片不可用</value>
   </data>
+  <data name="The store icon is repeated" xml:space="preserve">
+    <value>图标重复了</value>
+  </data>
+  <data name="The license photo is repeated" xml:space="preserve">
+    <value>执照照片重复了</value>
+  </data>
 </root>
