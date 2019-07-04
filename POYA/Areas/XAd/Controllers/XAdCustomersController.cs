@@ -72,7 +72,7 @@ namespace POYA.Areas.XAd.Controllers
         #endregion
         public async Task<IActionResult> Index()
         {
-            var _XAdCustomer = await _context.XAdCustomer.Take(10).ToListAsync();
+            var _XAdCustomer = await _context.XAdCustomer.OrderByDescending(p=>p.DORegistering).Take(10).ToListAsync();
             return View(_XAdCustomer);
         }
 
@@ -87,8 +87,10 @@ namespace POYA.Areas.XAd.Controllers
                 return NotFound();
             }
 
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
             var xAdCustomer = await _context.XAdCustomer
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id && m.UserId==UserId_);
             if (xAdCustomer == null)
             {
                 return NotFound();

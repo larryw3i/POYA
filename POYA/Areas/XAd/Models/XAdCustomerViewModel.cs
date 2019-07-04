@@ -68,6 +68,11 @@ namespace POYA.Areas.XAd.Models
         [StringLength(maximumLength:128)]
         #endregion
         public string Intro { get; set; }
+
+        /// <summary>
+        /// For regulator, industry and commerce department, and so on
+        /// </summary>
+        public bool IsDeleted { get; set; } = false;
     }
 
     public class XAdCustomerLicense
