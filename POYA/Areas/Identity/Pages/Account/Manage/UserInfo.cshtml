@@ -135,7 +135,7 @@
             }
             var _value_ = $("#_UserAvatarInput").val();
             var index = _value_.lastIndexOf(".");
-            var _extension = _value_.substr(index + 1);
+            var _extension = String(_value_.substr(index + 1)).toLowerCase();
             var _isExtensionAllowed = false;
             //  console.log(">>>>" + _extension);
             _allowedAvatarFileExtensions.forEach((value, index, array) => {

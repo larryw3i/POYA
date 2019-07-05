@@ -126,7 +126,8 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
                     IsGraduatedFromOvert = p.IsGraduatedFromOvert,
                     GraduatedFrom = p.GraduatedFrom
                     #endregion
-                }).FirstOrDefaultAsync(p => p.UserId == user.Id);
+                })
+                .FirstOrDefaultAsync(p => p.UserId == user.Id);
             Input = _X_doveUserInfo == null ? new X_doveUserInfo() { } : new X_doveUserInfo
             {
                 #region

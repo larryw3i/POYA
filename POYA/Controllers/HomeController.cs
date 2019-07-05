@@ -133,7 +133,7 @@ namespace POYA.Controllers
             }
 
             var _allowedAvatarFileExtensions = new string[] { "image/jpg", "image/jpeg", "image/png" };
-            if (!_allowedAvatarFileExtensions.Contains(avatarFile.ContentType))
+            if (!_allowedAvatarFileExtensions.Contains(avatarFile.ContentType.ToLower()))
             {
                 return Json(new { status = false,msg="RefuseExtension"});
             }
