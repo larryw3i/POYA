@@ -212,8 +212,9 @@ namespace POYA
             var LFilesPath = env.ContentRootPath + "/Data/LFiles";
             var AvatarPath = $"{LFilesPath}/Avatars";
             var XUserFilePath = $"{LFilesPath}/XUserFile";
+            var EArticleFilesPath = $"{env.ContentRootPath}/Areas/EduHub/Data/EArticleFiles";
 
-            var InitialPaths = new string[] { AvatarPath, XUserFilePath, XAdCustomerHelper.XAdCustomerLicenseImgFilePath(env) };
+            var InitialPaths = new string[] { AvatarPath, XUserFilePath, XAdCustomerHelper.XAdCustomerLicenseImgFilePath(env),EArticleFilesPath };
             foreach (var p in InitialPaths)
             {
                 if (!Directory.Exists(p))
