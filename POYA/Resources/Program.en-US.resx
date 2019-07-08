@@ -3227,4 +3227,13 @@
   <data name="The license photo is repeated" xml:space="preserve">
     <value>The license photo is repeated</value>
   </data>
+  <data name="Related files" xml:space="preserve">
+    <value>Related files</value>
+  </data>
+  <data name="you got from the administrator" xml:space="preserve">
+    <value>you got from the administrator</value>
+  </data>
+  <data name="The -related files- you got from the administrator" xml:space="preserve">
+    <value>The -related files- you got from the administrator</value>
+  </data>
 </root>

@@ -374,6 +374,9 @@
     <Folder Include="Areas\EduHub\Data\EArticleFiles\" />
     <Folder Include="Areas\EduHub\Data\EArticleFiles\" />
     <Folder Include="Areas\EduHub\Data\" />
+    <Folder Include="Areas\XAdmin\Controllers\" />
+    <Folder Include="Areas\XAdmin\Data\" />
+    <Folder Include="Areas\XAdmin\Views\" />
     <Folder Include="Areas\XAd\Data\" />
     <Folder Include="Areas\XLaw\Data\" />
     <Folder Include="Areas\XLaw\Data\" />

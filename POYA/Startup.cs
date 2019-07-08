@@ -43,7 +43,7 @@ namespace POYA
 
         // This method gets called by the runtime. Use this method to add services to the container.
         #endregion
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IHostingEnvironment env)
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -87,6 +87,7 @@ namespace POYA
                     options.User.AllowedUserNameCharacters = null;
                     options.User.RequireUniqueEmail = true;
                 });
+
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -139,6 +140,8 @@ namespace POYA
             services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddSingleton<HtmlSanitizer>(new HtmlSanitizer());
+
+            services.AddSingleton<AppInitialization>(new AppInitialization(services,env));
 
             services.AddSingleton<X_DOVEHelper>(x_DOVEHelper);
 
@@ -208,21 +211,7 @@ namespace POYA
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            #region CUSTOM_APP_INITIALIZATION
-            var LFilesPath = env.ContentRootPath + "/Data/LFiles";
-            var AvatarPath = $"{LFilesPath}/Avatars";
-            var XUserFilePath = $"{LFilesPath}/XUserFile";
-            var EArticleFilesPath = $"{env.ContentRootPath}/Areas/EduHub/Data/EArticleFiles";
-
-            var InitialPaths = new string[] { AvatarPath, XUserFilePath, XAdCustomerHelper.XAdCustomerLicenseImgFilePath(env),EArticleFilesPath };
-            foreach (var p in InitialPaths)
-            {
-                if (!Directory.Exists(p))
-                {
-                    Directory.CreateDirectory(p);
-                }
-            }
-            #endregion
+      
         }
     }
 }

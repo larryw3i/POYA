@@ -3258,4 +3258,13 @@
   <data name="The license photo is repeated" xml:space="preserve">
     <value>执照照片重复了</value>
   </data>
+  <data name="Related files" xml:space="preserve">
+    <value>相关的文件</value>
+  </data>
+  <data name="you got from the administrator" xml:space="preserve">
+    <value>你从管理员那里获得</value>
+  </data>
+  <data name="The -related files- you got from the administrator" xml:space="preserve">
+    <value>你从管理员那里获取的相关文件</value>
+  </data>
 </root>

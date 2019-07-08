@@ -93,6 +93,7 @@ namespace POYA.Areas.Identity.Pages.Account
                     TempData[nameof(Input.Email)] = Input.Email;
                     return RedirectToPage("Login", new { IsFromRegister = true, returnUrl });
                 }
+
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
