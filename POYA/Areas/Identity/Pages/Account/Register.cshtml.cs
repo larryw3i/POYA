@@ -32,7 +32,9 @@ namespace POYA.Areas.Identity.Pages.Account
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ExternalLoginModel> _logger;
         private readonly IConfiguration _configuration;
+        private readonly AppInitialization _appInitialization;
         public RegisterModel(
+            AppInitialization appInitialization,
             IConfiguration configuration,
             ILogger<ExternalLoginModel> logger,
             SignInManager<IdentityUser> signInManager,
@@ -97,8 +99,14 @@ namespace POYA.Areas.Identity.Pages.Account
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                var _resultIsSucceeded = false;
 
-                if (result.Succeeded)
+                if (Input.Email == _configuration["Administration:AdminEmail"])
+                {
+                    _resultIsSucceeded = result.Succeeded && _userManager.AddToRoleAsync(user, _appInitialization._administrator).GetAwaiter().GetResult().Succeeded;
+                }
+
+                if (_resultIsSucceeded)
                 {
                     _logger.LogInformation("User created a new account with password");
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

@@ -141,7 +141,7 @@ namespace POYA
 
             services.AddSingleton<HtmlSanitizer>(new HtmlSanitizer());
 
-            services.AddSingleton<AppInitialization>(new AppInitialization(services,env));
+            services.AddSingleton<AppInitialization>(new AppInitialization(services,env,Configuration));
 
             services.AddSingleton<X_DOVEHelper>(x_DOVEHelper);
 
