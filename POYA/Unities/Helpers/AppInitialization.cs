@@ -35,15 +35,16 @@ namespace POYA.Unities.Helpers
             }
             #endregion
 
+/*
             #region INITIAL_USER_ROLE
             var _userRoles = new string[] { _administrator };
-            var _userRoles_ = _context.Roles.Select(p => p.Name).ToListAsync().GetAwaiter().GetResult();
+            //  var _userRoles_ = _context.Roles.Select(p => p.Name).ToListAsync().GetAwaiter().GetResult();
             _userRoles = _userRoles.Where(p => !_userRoles_.Contains(p)).ToArray();
             if (_userRoles.Count() > 0)
             {
                 foreach (var r in _userRoles)
                 {
-                    _context.Roles.AddAsync(new IdentityRole { Name = r }).GetAwaiter().GetResult();
+                    //_context.Roles.AddAsync(new IdentityRole { Name = r }).GetAwaiter().GetResult();
                     //  _roleManager.CreateAsync(
                 }
             }
@@ -68,6 +69,8 @@ namespace POYA.Unities.Helpers
                 }
             }
             #endregion
+
+            */
         }
     }
 }
