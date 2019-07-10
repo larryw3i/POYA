@@ -31,14 +31,14 @@
 
         var MD5Array = new Array();
 
-        var MaxMultipartBodyLength = @(LValue.MaxMultipartBodyLengthLimit);
+        var MaxMultipartBodyLength = @(X_DOVEValues.MaxMultipartBodyLengthLimit);
         var InDirId = "@ViewData["InDirId"]";
         //var L_XSRF_TOKEN = "@@(CSRF.GetAndStoreTokens(Context).RequestToken)";
         var FileIsSelected = "@Localizer[ "The file is selected"]";
 
         var FileIsTooLarge =
             `<strong>@Localizer["Oops"]. . .</strong>@Localizer["File is limit to less than"]
-            ${OptimizeSizeShow( @(LValue.MaxMultipartBodyLengthLimit/1_000_000))}`;
+            ${OptimizeSizeShow( @(X_DOVEValues.MaxMultipartBodyLengthLimit/1_000_000))}`;
 
         var GetRemoveFileEleId = (Id) => `RemoveFileEle_${Id}`;
         var GetFileNameId = (Id) => `FileName_${Id}`;

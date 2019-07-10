@@ -246,51 +246,54 @@ namespace POYA.Controllers
             }
             #region INITIAL_USER_ROLE
             var _userRoles = new string[] { X_DOVEValues._administrator };
-            var _userRoles_ = _context.Roles.Select(p => p.Name).ToListAsync().GetAwaiter().GetResult();
+            var _userRoles_ =await _context.Roles.Select(p => p.Name).ToListAsync();    //  .GetAwaiter().GetResult();
             _userRoles = _userRoles.Where(p => !_userRoles_.Contains(p)).ToArray();
             if (_userRoles.Count() > 0)
             {
                 foreach (var r in _userRoles)
                 {
-                    _context.Roles.AddAsync(new IdentityRole { Name = r }).GetAwaiter().GetResult();
+                    await _context.Roles.AddAsync(new IdentityRole { Name = r });   //  .GetAwaiter().GetResult();
                     //  _roleManager.CreateAsync(
                 }
             }
-            var _user = _context.Users.FirstOrDefaultAsync(p => p.Email == _configuration["Administration:AdminEmail"]).GetAwaiter().GetResult();    
+            
+            await _context.SaveChangesAsync();
+
+            var _user =await _context.Users.FirstOrDefaultAsync(p => p.Email == _configuration["Administration:AdminEmail"]);   //  .GetAwaiter().GetResult();    
             //  FindByEmailAsync(configuration["Administration:AdminEmail"]).GetAwaiter().GetResult();
             if (_user != null)
             {
 #if DEBUG
                 Console.WriteLine($"XMsg --->\tAdministrator is exist");
-                var _roleId = _context.Roles.FirstOrDefaultAsync(p=>p.Name==X_DOVEValues._administrator).GetAwaiter().GetResult().Name;
+                var _roleId =_context.Roles.FirstOrDefaultAsync(p=>p.Name==X_DOVEValues._administrator).GetAwaiter().GetResult().Id;
 #endif  
                 if (_roleId!=null && !_context.UserRoles.AnyAsync(p=>p.UserId==_user.Id && p.RoleId==_roleId).GetAwaiter().GetResult())   //  _userManager.IsInRoleAsync(_user, _administrator).GetAwaiter().GetResult()
                 {
 #if DEBUG
                     Console.WriteLine($"XMsg --->\tAdd role to administrator . . .");
 #endif
-                    _context.UserRoles.Add(new IdentityUserRole<string> {  RoleId=_roleId, UserId=_user.Id});
+                    await _context.UserRoles.AddAsync(new IdentityUserRole<string> {  RoleId=_roleId, UserId=_user.Id});
                     //  _userManager.AddToRoleAsync(_user, _administrator).GetAwaiter().GetResult();
 #if DEBUG
                     Console.WriteLine($"XMsg --->\tAdd role to administrator is finish");
 #endif
                 }
             }
+            await _context.SaveChangesAsync();
+
             #endregion
 
             #region MODIFY appsettings.json
             var _appsettingsPath=_hostingEnv.ContentRootPath+$"/appsettings.json";
-            dynamic _appsettings=JsonConvert.DeserializeObject(
-                System.IO.File.ReadAllTextAsync(_appsettingsPath).GetAwaiter().GetResult());
+            string _output =await System.IO.File.ReadAllTextAsync(_appsettingsPath);
+            dynamic _appsettings=JsonConvert.DeserializeObject(_output);
             _appsettings["IsInitialized"]=true;
-            string _output = Newtonsoft.Json.JsonConvert.SerializeObject(_appsettings, Newtonsoft.Json.Formatting.Indented);
+            _output = Newtonsoft.Json.JsonConvert.SerializeObject(_appsettings, Newtonsoft.Json.Formatting.Indented);
             await System.IO.File.WriteAllTextAsync(_appsettingsPath,_output);
             #endregion
 
         }
-
-
-
+        
         #endregion
 
     }

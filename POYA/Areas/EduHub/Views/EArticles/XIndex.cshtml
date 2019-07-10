@@ -12,7 +12,7 @@
     var _UserEArticleSet = ViewData[nameof(UserEArticleSet)] as UserEArticleSet;
     var _pageSize = Context.Request.Cookies["PageSize"] ?? "8";
     var _CurrentUserId = ViewData["CurrentUserId"].ToString();
-    var _IsDefaultEArticleSet = _UserEArticleSet.Id == LValue.DefaultEArticleSetId;
+    var _IsDefaultEArticleSet = _UserEArticleSet.Id == X_DOVEValues.DefaultEArticleSetId;
     var _IsOwn = _CurrentUserId == _UserEArticleSet.UserId && !string.IsNullOrEmpty(_CurrentUserId);
     //  var _EArticleUserEmail = ViewData["EArticleUserEmail"];
 }
