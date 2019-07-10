@@ -49,7 +49,7 @@ namespace POYA.Unities.Helpers
                 {
                     foreach (var r in _userRoles)
                     {
-                        _context.Roles.AddAsync(new IdentityRole { Name = r }).GetAwaiter().GetResult();
+                        _context.Roles.AddAsync(new IdentityRole { Name = r}).GetAwaiter().GetResult();
                         //  _roleManager.CreateAsync(
                     }
                 }

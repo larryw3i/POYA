@@ -10,18 +10,17 @@ namespace POYA.Unities.Helpers
     {
         public override Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
         {
-            var CultureCookie = httpContext.Request.Cookies["CULTURE"] == null ? "" : httpContext.Request.Cookies["CULTURE"].ToString();
-            var CultureQueryString = httpContext.Request.Query["culture"].ToString();
-            if (CultureQueryString != null && CultureQueryString != "")
+            var CULTURE_String="CULTURE";
+            var CultureCookie = httpContext.Request.Cookies[CULTURE_String]?.ToString() ?? ""; 
+            if (CultureCookie.StartsWith('-')) 
             {
-                if (CultureQueryString != CultureCookie)
-                {
-                    httpContext.Response.Cookies.Append(key: "CULTURE", value: CultureQueryString,
-                        options: new CookieOptions() { Expires = DateTime.Now.AddYears(1) });
-                }
-                return Task.FromResult(new ProviderCultureResult(CultureQueryString));
+                CultureCookie = CultureCookie.Substring(1);
+                httpContext.Response.Cookies.Append(key: CULTURE_String, value: CultureCookie,options: new CookieOptions() { Expires = DateTime.Now.AddYears(1) });
+            }else if (string.IsNullOrWhiteSpace(CultureCookie))
+            {
+                CultureCookie = "zh-CN";
+                httpContext.Response.Cookies.Append(key:CULTURE_String, value:CultureCookie, options: new CookieOptions() { Expires = DateTime.Now.AddYears(1) });
             }
-            if (CultureCookie == "") return Task.FromResult(new ProviderCultureResult("zh-CN"));
             return Task.FromResult(new ProviderCultureResult(CultureCookie));
         }
     }

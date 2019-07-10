@@ -225,15 +225,21 @@ var _Data_ = new Data_();
 var _UI_ = new UI_();
 var _Service_ = new Service_();
 
+//========      VALUE       ========//
+var CULTURE_String=`CULTURE`;
+var _Language_String=`_Language`;
+//========      VALUE_END   ========//
+
+
 
 $(document).ready(function () {
     _UI_.Initial();
     KeepLogin();
     $("#_Language").on("change", function () {
-        _Service_.ChangeLanguage();
+        ChangeLanguage();
     });
     $("#Theme").on("change", function () {
-        _UI_.ChangeTheme(true);
+        ChangeTheme(true);
     });
     $("#BackA,#BackEle").on("click", function () {
         history.go(-1);
@@ -241,10 +247,31 @@ $(document).ready(function () {
 });
 
 //========          UI      ========//
+function    ChangeTheme(IsGetValueFromSelectTag = false) {
+    var _theme_ = IsGetValueFromSelectTag ? _Value_.GetThemeInSelectTag() : _Value_.GetTheme();
+    if (IsGetValueFromSelectTag) {
+        Cookies.set(_Value_.THEME, _theme_, { expires: 365 });
+    }
+    location.reload();
+}
 
 //========        UI_END    ========//
 
 //========      SERVICE     ========//
+
+function  ChangeLanguage() {
+    var _Language_=$(`#${_Language_String} option:selected`).val().toString();
+    if(_Language_==Cookies.get(CULTURE_String))return;
+    Cookies.set(CULTURE_String,`-${_Language_}`);
+    location.reload();
+    /*
+    var _language = $(_Value_.Language + " option:selected").val();
+    window.CULTURE = _language;
+    window.location.href = _Data_.SetQueryString(window.location.href, "culture", _language);
+    */
+    return;
+}
+
 function KeepLogin() {
     setInterval(function () {
         $.ajax({

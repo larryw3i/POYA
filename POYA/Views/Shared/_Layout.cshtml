@@ -6,22 +6,20 @@
     var _THEME = Context.Request.Cookies["THEME"] ?? "Light";
     var _Language_ = Context.Request.Cookies["CULTURE"] ?? "zh-CN";
 
-    var _Language = new List<SelectListItem>
-{
+    var _LanguageSelectListItems = new List<SelectListItem>{
             new SelectListItem { Value = "zh-CN", Text = "\u7b80\u4f53\u4e2d\u6587" },
             new SelectListItem { Value = "en-US", Text = "English" },
         };
 
-    _Language.ForEach(p => { if (p.Value == _Language_) p.Selected = true; });
+    _LanguageSelectListItems.ForEach(p => { if (p.Value == _Language_) p.Selected = true; });
 
-    var Theme = new List<SelectListItem>
-{
+    var ThemeSelectListItems = new List<SelectListItem>{
             new SelectListItem { Value = "Light", Text =Localizer[ "Light" ]},
             new SelectListItem { Value = "Dark", Text =Localizer[ "Dark" ]},
             new SelectListItem{ Value="Care",Text=Localizer[ "Care"]}
         };
 
-    Theme.ForEach(p => { if (p.Value == _THEME) p.Selected = true; });
+    ThemeSelectListItems.ForEach(p => { if (p.Value == _THEME) p.Selected = true; });
     #endregion
 }
 @*<!DOCTYPE html>*@
@@ -43,7 +41,7 @@
               integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
-    <link href="@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/chat_with_friends_ico.webp"}))" rel="icon" type="image/webp">
+    <link href='@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/chat_with_friends_ico.webp"}))' rel="icon" type="image/webp">
     @(RenderSection("Styles", required: false))
     <partial name="_CssPartial.cshtml" />
     <!--    CSS_END     -->
@@ -55,42 +53,58 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="display:inline;word-break:keep-all;white-space:nowrap">
-                    <img id="navbarMainIcon" src="@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/chat_with_friends_ico.webp"}))" width="30" height="30" class="d-inline-block align-top">
+                    <img id="navbarMainIcon" src='@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/chat_with_friends_ico.webp"}))' width="30" height="30" class="d-inline-block align-top">
                     @Localizer["X-DOVE"]
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span><img src="@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/collapse.webp"}))" style="width:28px;height:15px" /></span>
+                    <span><img src='@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/collapse.webp"}))' style="width:28px;height:15px" /></span>
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex flex-sm-row-reverse" id="navbarSupportedContent">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                @Localizer["Home"]
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " asp-area="EduHub" asp-controller="EArticles" asp-action="Index">@Localizer["EduHub"]</a>
+                            <a class="nav-link " asp-area="EduHub" asp-controller="EArticles" asp-action="Index">
+                                @Localizer["EduHub"]
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " asp-area="XUserFile" asp-controller="LUserFiles" asp-action="Index">@Localizer["Storage"]</a>
+                            <a class="nav-link " asp-area="XUserFile" asp-controller="LUserFiles" asp-action="Index">
+                                @Localizer["Storage"]
+                            </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 @Localizer["More"]
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-action="Index" asp-controller="LSchools" asp-area="XSchool">@Localizer["WeEdu"]</a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="LSchools" asp-area="XSchool">
+                                    @Localizer["WeEdu"]
+                                </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="XDevelopers" asp-area="DeveloperZone">@Localizer["Developers"]</a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="XDevelopers" asp-area="DeveloperZone">
+                                    @Localizer["Developers"]
+                                </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Donate">@Localizer["Donate"]</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Privacy"]</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Donate">
+                                    @Localizer["Donate"]
+                                </a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                    @Localizer["Privacy"]
+                                </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="XAd" asp-controller="XAdCustomers" asp-action="Index">@Localizer["Ad"]</a>
+                                <a class="dropdown-item" asp-area="XAd" asp-controller="XAdCustomers" asp-action="Index">
+                                    @Localizer["Ad"]
+                                </a>
                             </div>
                         </li>
                         <li class="nav-item">
                             <div class="nav-link ">
-                                <select id="Theme" name="Theme" asp-items="Theme" style="border:none">
+                                <select id="Theme" name="Theme" asp-items="ThemeSelectListItems" style="border:none">
                                 </select>
                             </div>
                         </li>
@@ -110,9 +124,14 @@
     <footer class="border-top footer text-muted" style="position:fixed;z-index:999;height:40px">
         <div class="container" style="margin-top:-12px">
             &copy; 2019 - @Localizer["WSUDisk"] -
-            <select id="_Language" name="_Language" asp-items="_Language" style="border:none">
+            <select id="_Language" name="_Language" asp-items="_LanguageSelectListItems" style="border:none">
             </select> -
-            <a asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Privacy"]</a> - <a href="#">@Localizer["More"]</a>
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                @Localizer["Privacy"]
+            </a> - 
+            <a href="#">
+                @Localizer["More"]
+            </a>
         </div>
     </footer>
     <!--       JS       -->
