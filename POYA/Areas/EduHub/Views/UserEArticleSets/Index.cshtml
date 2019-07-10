@@ -177,7 +177,7 @@
      * @@param {String}SetId -The Card id
      */
     function GoToEArticleSetDetails(SetId) {
-           window.location.href = SetId == "@(X_DOVEValues.AddEArticleSetId)" ?
+           window.location.href = SetId == '@X_DOVEValues.AddEArticleSetId' ?
                     "@(Url.Action("Create","UserEArticleSets",new { area="EduHub"}))" :
             `@(Url.Action("XIndex","EArticles",new { area = "EduHub" }))?SetId=${SetId}`;
         event.preventDefault();

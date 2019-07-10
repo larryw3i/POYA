@@ -18,11 +18,14 @@ namespace POYA.Unities.Attributes
         /// The DOStartString be passed should be able to convert to DateTime type
         /// </summary>
         public string DOStartString { get; set; }
+
         /// <summary>
         /// The DOEndString be passed should be able to convert to DateTime type
         /// </summary>
         public string DOEndString { get; set; }
+
         public bool IsValueNullable { get; set; } = false;
+        
         public override bool IsValid(object value)
         {
             if (value == null && IsValueNullable)

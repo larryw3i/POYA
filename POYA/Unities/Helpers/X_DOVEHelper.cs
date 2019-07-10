@@ -87,7 +87,7 @@ namespace POYA.Unities.Helpers
                 subject: "X_DOVE_ERROR",
                 htmlMessage:
             #region     HTMLMESSAGE
-                @"
+                $@"
                     <table border='1'>
                         <tr>
                             <td style='min-width:10%'>
@@ -100,25 +100,25 @@ namespace POYA.Unities.Helpers
                         <tr>
                             <td style='min-width:10%'> Message
                             </td>
-                            <td> " + error.Message + @"
+                            <td> {error.Message  }
                             </td>
                         </tr> 
                         <tr>
                             <td style='min-width:10%'> Data
                             </td>
-                            <td> " + error.Data + @"
+                            <td> {error.Data }
                             </td>
                         </tr>  
                         <tr>
                             <td style='min-width:10%'> InnerException
                             </td>
-                            <td> " + error.InnerException + @"
+                            <td> {error.InnerException }
                             </td>
                         </tr>  
                         <tr>
                             <td style='min-width:10%'> StackTrace
                             </td>
-                            <td> " + _stackTrace + @"
+                            <td> { _stackTrace }
                             </td>
                         </tr>
                     </table>"
@@ -159,7 +159,7 @@ namespace POYA.Unities.Helpers
         /// <summary>
         /// The Guid of public directory
         /// </summary>
-        public static Guid PublicDirId = Guid.Parse("E1F500C2-FCF4-4BD8-B54A-A2A7A41F793C");
+        public static Guid PublicDirId{get;} = Guid.Parse("E1F500C2-FCF4-4BD8-B54A-A2A7A41F793C");
 
         /// <summary>
         /// env.ContentRootPath + $"/Data/LFiles/Avatars/"
@@ -197,7 +197,15 @@ namespace POYA.Unities.Helpers
         /// <returns></returns>
         public static Guid AddEArticleSetId { get; } = Guid.Parse("F834D7E8-BEB8-42F4-A724-25099054863D");
         
+        /// <summary>
+        /// The max multipart body length limit 
+        /// </summary>
         public static long MaxMultipartBodyLengthLimit = 200_000_000;
+
+        /// <summary>
+        /// "Administrator"
+        /// </summary>
+        public static string _administrator = "Administrator";
 
     }
 
@@ -206,6 +214,13 @@ namespace POYA.Unities.Helpers
 
     #region DISCARD
     /*
+
+        /// <summary>
+        /// Indicate whether the applicaton is initialized or not
+        /// </summary>
+        /// <value></value>
+        public static bool IsInitialized{get;set;}=false;
+
     public static class LValue
     {
         public static Guid PublicDirId { get; } = Guid.Parse("75EAD9A8-31C0-4491-8D8B-431A506C6567");

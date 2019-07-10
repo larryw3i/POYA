@@ -32,9 +32,9 @@ namespace POYA.Areas.Identity.Pages.Account
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ExternalLoginModel> _logger;
         private readonly IConfiguration _configuration;
-        private readonly AppInitialization _appInitialization;
+        //  private readonly AppInitialization _appInitialization;
         public RegisterModel(
-            AppInitialization appInitialization,
+            //  AppInitialization appInitialization,
             IConfiguration configuration,
             ILogger<ExternalLoginModel> logger,
             SignInManager<IdentityUser> signInManager,
@@ -103,7 +103,7 @@ namespace POYA.Areas.Identity.Pages.Account
 
                 if (Input.Email == _configuration["Administration:AdminEmail"])
                 {
-                    _resultIsSucceeded = result.Succeeded && _userManager.AddToRoleAsync(user, _appInitialization._administrator).GetAwaiter().GetResult().Succeeded;
+                    _resultIsSucceeded = result.Succeeded && _userManager.AddToRoleAsync(user, X_DOVEValues._administrator).GetAwaiter().GetResult().Succeeded;
                 }
 
                 if (_resultIsSucceeded)

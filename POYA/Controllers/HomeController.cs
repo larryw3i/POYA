@@ -16,8 +16,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using POYA.Areas.XAd.Controllers;
 using POYA.Data;
 using POYA.Models;
 using POYA.Unities.Attributes;
@@ -36,7 +39,9 @@ namespace POYA.Controllers
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<HomeController> _logger;
+        private readonly IConfiguration _configuration;
         public HomeController(
+            IConfiguration configuration,
             ILogger<HomeController> logger,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
@@ -47,6 +52,7 @@ namespace POYA.Controllers
            IHostingEnvironment hostingEnv,
            IStringLocalizer<Program> localizer)
         {
+            _configuration = configuration;
             _hostingEnv = hostingEnv;
             _localizer = localizer;
             _context = context;
@@ -55,11 +61,17 @@ namespace POYA.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
+
+            #region INITIALIZE
+            if(!Convert.ToBoolean(_configuration["IsInitialized"])) AppInitializationAsync().GetAwaiter().GetResult();
+            #endregion
         }
+
         #endregion
         public IActionResult Index()
         {
             //  throw new Exception("TEST"); 
+            
             return View();
         }
 
@@ -77,9 +89,7 @@ namespace POYA.Controllers
 
         #region DEPOLLUTION
 
-        #region 
         [ActionName("GetLAppContent")]
-        #endregion
         public async Task<IActionResult> GetLAppContentAsync(string ContentNmae)
         {
             #region REFUSE
@@ -157,14 +167,13 @@ namespace POYA.Controllers
             return Json(new { status = true }); //  , X_DOVE_XSRF_TOKEN
         }
 
-        #region 
+
         /// <summary>
         /// PART FROM   https://www.cnblogs.com/wjshan0808/p/5909174.html
         /// THANK       https://www.cnblogs.com/wjshan0808/
         /// </summary>
         /// <param name="ImageBytes">The MemoryStream of image</param> 
         /// <returns></returns>
-        #endregion
         private byte[] MakeCircleImage(MemoryStream ImageMemoryStream)
         {
             var img = Image.FromStream(ImageMemoryStream);
@@ -218,6 +227,69 @@ namespace POYA.Controllers
         {
             return Ok();
         }
+
+        private async Task  AppInitializationAsync()
+        {
+
+            var LFilesPath = _hostingEnv.ContentRootPath + "/Data/LFiles";
+            var AvatarPath = $"{LFilesPath}/Avatars";
+            var XUserFilePath = $"{LFilesPath}/XUserFile";
+            var EArticleFilesPath = $"{_hostingEnv.ContentRootPath}/Areas/EduHub/Data/EArticleFiles";
+
+            var InitialPaths = new string[] { AvatarPath, XUserFilePath, XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv), EArticleFilesPath };
+            foreach (var p in InitialPaths)
+            {
+                if (!Directory.Exists(p))
+                {
+                    Directory.CreateDirectory(p);
+                }
+            }
+            #region INITIAL_USER_ROLE
+            var _userRoles = new string[] { X_DOVEValues._administrator };
+            var _userRoles_ = _context.Roles.Select(p => p.Name).ToListAsync().GetAwaiter().GetResult();
+            _userRoles = _userRoles.Where(p => !_userRoles_.Contains(p)).ToArray();
+            if (_userRoles.Count() > 0)
+            {
+                foreach (var r in _userRoles)
+                {
+                    _context.Roles.AddAsync(new IdentityRole { Name = r }).GetAwaiter().GetResult();
+                    //  _roleManager.CreateAsync(
+                }
+            }
+            var _user = _context.Users.FirstOrDefaultAsync(p => p.Email == _configuration["Administration:AdminEmail"]).GetAwaiter().GetResult();    
+            //  FindByEmailAsync(configuration["Administration:AdminEmail"]).GetAwaiter().GetResult();
+            if (_user != null)
+            {
+#if DEBUG
+                Console.WriteLine($"XMsg --->\tAdministrator is exist");
+                var _roleId = _context.Roles.FirstOrDefaultAsync(p=>p.Name==X_DOVEValues._administrator).GetAwaiter().GetResult().Name;
+#endif  
+                if (_roleId!=null && !_context.UserRoles.AnyAsync(p=>p.UserId==_user.Id && p.RoleId==_roleId).GetAwaiter().GetResult())   //  _userManager.IsInRoleAsync(_user, _administrator).GetAwaiter().GetResult()
+                {
+#if DEBUG
+                    Console.WriteLine($"XMsg --->\tAdd role to administrator . . .");
+#endif
+                    _context.UserRoles.Add(new IdentityUserRole<string> {  RoleId=_roleId, UserId=_user.Id});
+                    //  _userManager.AddToRoleAsync(_user, _administrator).GetAwaiter().GetResult();
+#if DEBUG
+                    Console.WriteLine($"XMsg --->\tAdd role to administrator is finish");
+#endif
+                }
+            }
+            #endregion
+
+            #region MODIFY appsettings.json
+            var _appsettingsPath=_hostingEnv.ContentRootPath+$"/appsettings.json";
+            dynamic _appsettings=JsonConvert.DeserializeObject(
+                System.IO.File.ReadAllTextAsync(_appsettingsPath).GetAwaiter().GetResult());
+            _appsettings["IsInitialized"]=true;
+            string _output = Newtonsoft.Json.JsonConvert.SerializeObject(_appsettings, Newtonsoft.Json.Formatting.Indented);
+            await System.IO.File.WriteAllTextAsync(_appsettingsPath,_output);
+            #endregion
+
+        }
+
+
 
         #endregion
 

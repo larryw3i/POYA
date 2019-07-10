@@ -33,10 +33,12 @@ namespace POYA
         public IConfiguration Configuration { get; }
 
         public X_DOVEHelper x_DOVEHelper = new X_DOVEHelper();
+        
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            //  X_DOVEValues.IsInitialized= Convert.ToBoolean(Configuration[nameof(X_DOVEValues.IsInitialized)]);
         }
 
         #region 
@@ -141,7 +143,7 @@ namespace POYA
 
             services.AddSingleton<HtmlSanitizer>(new HtmlSanitizer());
 
-            services.AddSingleton<AppInitialization>(new AppInitialization(services,env,Configuration));
+            //  services.AddSingleton<AppInitialization>(new AppInitialization(services,env,Configuration));
 
             services.AddSingleton<X_DOVEHelper>(x_DOVEHelper);
 
@@ -161,7 +163,6 @@ namespace POYA
             });
 
             services.AddAntiforgery(options => options.HeaderName = "L-XSRF-TOKEN");
-
 
         }
 

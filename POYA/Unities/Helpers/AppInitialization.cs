@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace POYA.Unities.Helpers
 {
+    /// <summary>
+    /// DISCARD
+    /// </summary>
     public class AppInitialization
     {
         public string _administrator = "Administrator";
