@@ -55,8 +55,7 @@ namespace POYA
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             #region
             /*
@@ -66,7 +65,7 @@ namespace POYA
             #endregion
 
             services.AddDefaultIdentity<IdentityUser>()
-                .AddRoles<IdentityRole>()
+                .AddRoles<IdentityRole>()   //  .AddIdentity<ApplicationUser, IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -143,7 +142,7 @@ namespace POYA
 
             services.AddSingleton<HtmlSanitizer>(new HtmlSanitizer());
 
-            //  services.AddSingleton<AppInitialization>(new AppInitialization(services,env,Configuration));
+            services.AddSingleton<AppInitialization>(new AppInitialization(services));
 
             services.AddSingleton<X_DOVEHelper>(x_DOVEHelper);
 

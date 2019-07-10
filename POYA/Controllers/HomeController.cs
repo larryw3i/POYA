@@ -62,16 +62,13 @@ namespace POYA.Controllers
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
 
-            #region INITIALIZE
-            if(!Convert.ToBoolean(_configuration["IsInitialized"])) AppInitializationAsync().GetAwaiter().GetResult();
-            #endregion
         }
 
         #endregion
         public IActionResult Index()
         {
             //  throw new Exception("TEST"); 
-            
+
             return View();
         }
 
@@ -98,21 +95,21 @@ namespace POYA.Controllers
                 ContentNmae.StartsWith('\\') ||
                 ContentNmae.Contains('~') ||
                 ContentNmae.Contains("\\\\") ||
-                ContentNmae.Contains("//")||
-                ContentNmae.Contains("'")||
+                ContentNmae.Contains("//") ||
+                ContentNmae.Contains("'") ||
                 ContentNmae.Contains("\"")) return NoContent();
             #endregion
 
             var provider = new FileExtensionContentTypeProvider();
             string contentType = string.Empty;
-            var _LAppContentPath = _hostingEnv.ContentRootPath+"/Data/LAppContent/";
-            var _FileBytes =await System.IO.File.ReadAllBytesAsync($"{_LAppContentPath}/{ContentNmae}");
+            var _LAppContentPath = _hostingEnv.ContentRootPath + "/Data/LAppContent/";
+            var _FileBytes = await System.IO.File.ReadAllBytesAsync($"{_LAppContentPath}/{ContentNmae}");
 
             if (!provider.TryGetContentType(ContentNmae, out contentType))
             {
                 contentType = "application/octet-stream";
             }
-            return File(_FileBytes,contentType);
+            return File(_FileBytes, contentType);
         }
 
         public async Task<IActionResult> GetAvatar(string UserId = "")
@@ -129,7 +126,7 @@ namespace POYA.Controllers
                     return File(AvatarBytes, "image/jpg");
                 }
             }
-            var DefauleAvatar = await System.IO.File.ReadAllBytesAsync(_hostingEnv.ContentRootPath+@"/Data/LAppContent/img/article_publish_ico.webp");
+            var DefauleAvatar = await System.IO.File.ReadAllBytesAsync(_hostingEnv.ContentRootPath + @"/Data/LAppContent/img/article_publish_ico.webp");
             return File(DefauleAvatar, "image/webp");
         }
 
@@ -145,7 +142,7 @@ namespace POYA.Controllers
             var _allowedAvatarFileExtensions = new string[] { "image/jpg", "image/jpeg", "image/png" };
             if (!_allowedAvatarFileExtensions.Contains(avatarFile.ContentType.ToLower()))
             {
-                return Json(new { status = false,msg="RefuseExtension"});
+                return Json(new { status = false, msg = "RefuseExtension" });
             }
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var memoryStream = new MemoryStream();
@@ -158,7 +155,7 @@ namespace POYA.Controllers
                 var _X_doveUserInfo = await _context.X_DoveUserInfos.FirstOrDefaultAsync(p => p.UserId == _UserId);
                 if (_X_doveUserInfo != null && AvatarBytes == AvatarFileBytes)
                 {//  _X_doveUserInfo.AvatarBuffer
-                    return Json(new { status = true});  //  , X_DOVE_XSRF_TOKEN 
+                    return Json(new { status = true });  //  , X_DOVE_XSRF_TOKEN 
                 }
             }
             await System.IO.File.WriteAllBytesAsync(X_DOVEValues.AvatarStoragePath(_hostingEnv) + _UserId, AvatarBytes);
@@ -228,6 +225,7 @@ namespace POYA.Controllers
             return Ok();
         }
 
+        /*
         private async Task  AppInitializationAsync()
         {
 
@@ -293,7 +291,8 @@ namespace POYA.Controllers
             #endregion
 
         }
-        
+        */
+
         #endregion
 
     }
