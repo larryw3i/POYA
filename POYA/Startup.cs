@@ -156,7 +156,7 @@ namespace POYA
             #endregion
             services.Configure<FormOptions>(options =>
             {
-                options.MultipartBodyLengthLimit = LValue.MaxMultipartBodyLengthLimit;  //  FormOptions.DefaultMultipartBodyLengthLimit;
+                options.MultipartBodyLengthLimit = X_DOVEValues.MaxMultipartBodyLengthLimit;  //  FormOptions.DefaultMultipartBodyLengthLimit;
                 //  options.ValueLengthLimit = LValue.MaxMultipartBodyLengthLimit;
             });
 
@@ -186,7 +186,7 @@ namespace POYA
                 app.UseHsts();
             }
 
-            ServiceLocator.Instance = app.ApplicationServices;
+            //  ServiceLocator.Instance = app.ApplicationServices;
 
             app.UseHttpsRedirection();
 

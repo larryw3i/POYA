@@ -86,14 +86,14 @@ namespace POYA.Areas.EduHub.Controllers
             #region INITIALIZE_THE_DEFAULT
             _UserEArticleSet.Add(new UserEArticleSet
             {
-                Id = LValue.DefaultEArticleSetId,
+                Id = X_DOVEValues.DefaultEArticleSetId,
                 Comment = _localizer["The default"],
                 Name = _localizer["default"],
                 Label = _localizer["default"]
             });
             _UserEArticleSet.Add(new UserEArticleSet
             {
-                Id = LValue.AddEArticleSetId,
+                Id = X_DOVEValues.AddEArticleSetId,
                 Label = _localizer["Click to add"],
                 Name = _localizer["Add"],
                 Comment = _localizer["Click to add"]

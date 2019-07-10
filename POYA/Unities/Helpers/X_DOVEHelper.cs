@@ -185,18 +185,27 @@ namespace POYA.Unities.Helpers
         /// <returns></returns>
         public static string FileStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/XUserFile/";
 
+        /// <summary>
+        /// The default earticle set id
+        /// </summary>
+        /// <returns></returns>
+        public static Guid DefaultEArticleSetId { get; } = Guid.Parse("5F8EBDF5-1ADC-4891-85F6-FD0755223A06");
+
+        /// <summary>
+        /// The add-earticle-set id
+        /// </summary>
+        /// <returns></returns>
+        public static Guid AddEArticleSetId { get; } = Guid.Parse("F834D7E8-BEB8-42F4-A724-25099054863D");
+        
+        public static long MaxMultipartBodyLengthLimit = 200_000_000;
 
     }
 
-    /// <summary>
-    /// FROM    https://www.cnblogs.com/xishuai/p/asp-net-core-ioc-di-get-service.html
-    /// THANK   https://www.cnblogs.com/xishuai/
-    /// </summary>
-    public static class ServiceLocator
-    {
-        public static IServiceProvider Instance { get; set; }
-    }
 
+
+
+    #region DISCARD
+    /*
     public static class LValue
     {
         public static Guid PublicDirId { get; } = Guid.Parse("75EAD9A8-31C0-4491-8D8B-431A506C6567");
@@ -207,8 +216,17 @@ namespace POYA.Unities.Helpers
 
     }
 
-    #region DISCARD
-    /*
+
+    /// <summary>
+    /// FROM    https://www.cnblogs.com/xishuai/p/asp-net-core-ioc-di-get-service.html
+    /// THANK   https://www.cnblogs.com/xishuai/
+    /// </summary>
+    public static class ServiceLocator
+    {
+        public static IServiceProvider Instance { get; set; }
+    }
+
+
     public List<string> GetMimes(string FileExtension, IHostingEnvironment env)
     {
         var _SlnPath = $"/Users/larry/source/repos/POYA";

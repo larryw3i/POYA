@@ -35,7 +35,8 @@
                    title='@Localizer["Press ENTER to save"]' />
         </div>
         <input type="file" id="UserEArticleHomeInfo_Conver_Input" hidden accept="image/*" />
-        <img class="EArticle-Home-BgImg-Edit" id="UserEArticleHomeInfo_Conver" src="@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/edit.webp"}))" title='@Localizer["Change cover"]' />
+        <img class="EArticle-Home-BgImg-Edit" id="UserEArticleHomeInfo_Conver" src='@Url.Action("GetLAppContent","Home",new {ContentNmae= "img/edit.webp"})' 
+        title='@Localizer["Change cover"]' />
     </div>
 </div>
 
@@ -65,8 +66,8 @@
     var InitHomeComment = "@(_UserEArticleHomeInfo.Comment)";
     var ConverImgMD5 = "";
 
-    var AddEArticleSetId = "@(LValue.AddEArticleSetId)";
-    var DefaultEArticleSetId = "@(LValue.DefaultEArticleSetId)";
+    var AddEArticleSetId = "@X_DOVEValues.AddEArticleSetId";
+    var DefaultEArticleSetId = "@X_DOVEValues.DefaultEArticleSetId";
     /**
      * EArticleSetContextMenu_${SetId}
      * @@param {String}SetId -The EArticle set id
@@ -176,7 +177,7 @@
      * @@param {String}SetId -The Card id
      */
     function GoToEArticleSetDetails(SetId) {
-           window.location.href = SetId == "@(LValue.AddEArticleSetId)" ?
+           window.location.href = SetId == "@(X_DOVEValues.AddEArticleSetId)" ?
                     "@(Url.Action("Create","UserEArticleSets",new { area="EduHub"}))" :
             `@(Url.Action("XIndex","EArticles",new { area = "EduHub" }))?SetId=${SetId}`;
         event.preventDefault();

@@ -29,7 +29,7 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group ">
                 <div class="row">
-                    <input asp-for="Title" class="form-control col offset-3 col-6" placeholder="@(Localizer["Title"])" autocomplete="off" />
+                    <input asp-for="Title" class="form-control col offset-3 col-6" placeholder='@Localizer["Title"]' autocomplete="off" />
 
                 </div>
                 <span asp-validation-for="Title" class="text-danger"></span>

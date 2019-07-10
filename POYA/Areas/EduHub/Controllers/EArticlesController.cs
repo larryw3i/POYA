@@ -93,24 +93,24 @@ namespace POYA.Areas.EduHub.Controllers
 
             if (string.IsNullOrWhiteSpace(UserId_)) return RedirectToPage(pageName: "/Account/Login",routeValues:new { area= "Identity" });
 
-            if (SetId != LValue.DefaultEArticleSetId && !await _context.UserEArticleSet.AnyAsync(p => p.Id == SetId))
+            if (SetId != X_DOVEValues.DefaultEArticleSetId && !await _context.UserEArticleSet.AnyAsync(p => p.Id == SetId))
             {
                 return NotFound();
             }
 
-            SetId = (SetId == null || SetId == Guid.Empty) ?(TempSetId == null ? LValue.DefaultEArticleSetId : TempSetId): SetId;
+            SetId = (SetId == null || SetId == Guid.Empty) ?(TempSetId == null ? X_DOVEValues.DefaultEArticleSetId : TempSetId): SetId;
 
             #region READY_EARTICLES
             var _EArticles = await _context.EArticle.Where(p =>
-                     (SetId == LValue.DefaultEArticleSetId ?
-                     (p.SetId == Guid.Empty || p.SetId == null || p.SetId == LValue.DefaultEArticleSetId) :
+                     (SetId == X_DOVEValues.DefaultEArticleSetId ?
+                     (p.SetId == Guid.Empty || p.SetId == null || p.SetId == X_DOVEValues.DefaultEArticleSetId) :
                      p.SetId == SetId) && p.UserId == UserId_).ToListAsync();
 
             _EArticles.ForEach(p =>
             {
                 if (p.SetId == Guid.Empty || p.SetId == null)
                 {
-                    p.SetId = LValue.DefaultEArticleSetId;
+                    p.SetId = X_DOVEValues.DefaultEArticleSetId;
                 }
             });
 
@@ -128,12 +128,12 @@ namespace POYA.Areas.EduHub.Controllers
                 Name = "Default",
                 Label = string.Empty,
                 Comment = string.Empty,
-                Id = LValue.DefaultEArticleSetId,
+                Id = X_DOVEValues.DefaultEArticleSetId,
                 UserId = UserId_,
                 UserName = _userManager.FindByIdAsync(UserId_).GetAwaiter().GetResult().UserName
             };
 
-            if (SetId != LValue.DefaultEArticleSetId) {
+            if (SetId != X_DOVEValues.DefaultEArticleSetId) {
                 _UserEArticleSet = await _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == SetId);
                 _UserEArticleSet.UserName = _userManager.FindByIdAsync(_UserEArticleSet.UserId).GetAwaiter().GetResult().UserName;
             }
@@ -289,7 +289,7 @@ namespace POYA.Areas.EduHub.Controllers
             ViewData["Category"] = $" {_localizer[Categories.FirstOrDefault(p => p.Code == CategoryCode).Name]} > {_localizer[Category.Name]} {(string.IsNullOrWhiteSpace(eArticle.AdditionalCategory) ? string.Empty : " > " + eArticle.AdditionalCategory)}"; //  csv.GetRecords<LEArticleCategory>().ToList();
             #endregion
 
-            eArticle.SetName =eArticle.SetId==LValue.DefaultEArticleSetId?_localizer["default"]: _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == eArticle.SetId).GetAwaiter().GetResult().Name;
+            eArticle.SetName =eArticle.SetId==X_DOVEValues.DefaultEArticleSetId?_localizer["default"]: _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == eArticle.SetId).GetAwaiter().GetResult().Name;
             eArticle.UserName = _EArticleUser.UserName;      //   _userManager.FindByIdAsync(eArticle.UserId).GetAwaiter().GetResult().UserName;
             eArticle.UserEmail = _EArticleUser.Email;
 
@@ -306,7 +306,7 @@ namespace POYA.Areas.EduHub.Controllers
             if (SetId == null ||
                 !await _context.UserEArticleSet.AnyAsync(p => p.Id == SetId && p.UserId == UserId_))
             {
-                SetId = LValue.DefaultEArticleSetId;
+                SetId = X_DOVEValues.DefaultEArticleSetId;
             }
             var _LUserFile = await _context.LUserFile.Where(p => p.UserId == UserId_).ToListAsync();  //<<<<<<<<
 
@@ -653,7 +653,7 @@ namespace POYA.Areas.EduHub.Controllers
                     {
                         UserId = UserId_,
                         MD5 = MD5_,
-                        InDirId = LValue.PublicDirId,
+                        InDirId = X_DOVEValues.PublicDirId,
                         Name = img.FileName,
                         IsEArticleFile = true
                         //  ContentType = _LFilePost._LFile.ContentType ?? "text/plain"

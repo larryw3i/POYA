@@ -45,7 +45,9 @@
             }
             else
             {
-                <span style="font-size:80%"> @Localizer["By"] <a asp-area="Identity" asp-page="/Account/ViewUserInfo" asp-route-UserId="@(_UserEArticleSet.UserId)">@(_UserEArticleSet.UserName)</a></span>
+                <span style="font-size:80%"> @Localizer["By"] 
+                    <a asp-area="Identity" asp-page="/Account/ViewUserInfo" asp-route-UserId="@(_UserEArticleSet.UserId)">@(_UserEArticleSet.UserName)</a> 
+                </span>
 
             }
         </span>

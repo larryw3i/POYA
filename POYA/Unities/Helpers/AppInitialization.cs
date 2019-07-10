@@ -19,8 +19,6 @@ namespace POYA.Unities.Helpers
         public AppInitialization(IServiceCollection services, IHostingEnvironment env, IConfiguration configuration)
         {
 
-            var _context = services.BuildServiceProvider().GetService<ApplicationDbContext>();
-
             #region CUSTOM_APP_INITIALIZATION
             var LFilesPath = env.ContentRootPath + "/Data/LFiles";
             var AvatarPath = $"{LFilesPath}/Avatars";
