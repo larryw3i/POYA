@@ -90,7 +90,7 @@ namespace POYA.Areas.XAd.Controllers
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
             var xAdCustomer = await _context.XAdCustomer
-                .FirstOrDefaultAsync(m => m.Id == id && m.UserId==UserId_);
+                .FirstOrDefaultAsync(m => m.Id == id );
             if (xAdCustomer == null)
             {
                 return NotFound();
