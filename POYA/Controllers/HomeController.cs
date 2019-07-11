@@ -140,14 +140,17 @@ namespace POYA.Controllers
             }
 
             var _allowedAvatarFileExtensions = new string[] { "image/jpg", "image/jpeg", "image/png" };
-            if (!_allowedAvatarFileExtensions.Contains(avatarFile.ContentType.ToLower()))
+            var _isExtensionNeedChecking=false;
+            if (_isExtensionNeedChecking &&( !_allowedAvatarFileExtensions.Contains(avatarFile.ContentType.ToLower())))
             {
+                return Json(new { status = false, msg = "RefuseExtension" });
+            }else if(!avatarFile.ContentType.StartsWith("image/")){
                 return Json(new { status = false, msg = "RefuseExtension" });
             }
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var memoryStream = new MemoryStream();
             await avatarFile.CopyToAsync(memoryStream);
-            var AvatarBytes = MakeCircleImage(memoryStream);//   memoryStream.ToArray();   //  
+            var AvatarBytes =  memoryStream.ToArray();   //  MakeCircleImage(memoryStream);//  
             var AvatarFilePath = X_DOVEValues.AvatarStoragePath(_hostingEnv) + _UserId;
             if (System.IO.File.Exists(AvatarFilePath))
             {

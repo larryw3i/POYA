@@ -3236,4 +3236,7 @@
   <data name="The -related files- you got from the administrator" xml:space="preserve">
     <value>The -related files- you got from the administrator</value>
   </data>
+  <data name="The extension of the file can only be" xml:space="preserve">
+    <value>The extension of the file can only be </value>
+  </data>
 </root>

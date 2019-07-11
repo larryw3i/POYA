@@ -42,7 +42,7 @@
                 @if (X_doveUserInfo.IsHobbyOvert)
                 {
                     <tr>
-                        <th scope="row">@Localizer["Hobby"]</th>
+                        <th scope="row">@(Localizer["Hobby"])</th>
                         <td>@(X_doveUserInfo.Hobby)</td>
                     </tr>
                 }
@@ -71,21 +71,11 @@
             </tbody>
         </table>
 
-        @*
-            <div class="card-body">
-                <a href="#" class="card-link">Like</a>
-                <a href="#" class="card-link">Chat</a>
-            </div>
-        *@
     </div>
-    @*
-        <div class="col col-10 col-sm-8 col-md-9">
-        </div>
-    *@
 </div>
 <div class="row">
     <div class="col col-auto">
-        <a class="btn btn-outline-info" id="BackEle">&laquo; @Localizer["Back"]</a>
+        <a class="btn btn-outline-info" id="BackEle">&laquo; @(Localizer["Back"])</a>
     </div>
 </div>
 
