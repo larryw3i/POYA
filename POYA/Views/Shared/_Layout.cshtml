@@ -28,7 +28,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - @Localizer["X-DOVE"]</title>
+    <title>
+        @(ViewData["Title"]) - @(Localizer["X-DOVE"])
+    </title>
     <!--      CSS       -->
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -64,17 +66,17 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
-                                @Localizer["Home"]
+                                @(Localizer["Home"])
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link " asp-area="EduHub" asp-controller="EArticles" asp-action="Index">
-                                @Localizer["EduHub"]
+                                @(Localizer["EduHub"])
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link " asp-area="XUserFile" asp-controller="LUserFiles" asp-action="Index">
-                                @Localizer["Storage"]
+                                @(Localizer["Storage"])
                             </a>
                         </li>
                         <li class="nav-item dropdown">

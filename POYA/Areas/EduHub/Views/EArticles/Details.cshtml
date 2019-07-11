@@ -17,8 +17,8 @@
         @(ViewData["Category"])
         @(new string('\u269D', Model.ComplexityRank + 1))
 
-        @(Model.ClickCount)<span title="@(Model.ClickCount) @Localizer["click"]">&#128064;</span>
-        @(ViewData["UserRead"])  <span title="@($"{ViewData["UserRead"]} {Localizer["people viewed"]}")">&#128521;</span>
+        @(Model.ClickCount)<span title='@(Model.ClickCount) @(Localizer["click"])'>&#128064;</span>
+        @(ViewData["UserRead"])  <span title='@($"{ViewData["UserRead"]} {Localizer["people viewed"]}")'>&#128521;</span>
     </span>
 </h4>
 <div class="col col-12">
@@ -34,7 +34,7 @@
         {
             <dd class="col offset-1 col-10">
                 <video style="width:100%" controls>
-                    <source src="@Url.Action("GetFile", "LUserFiles", new { id = i.Id, area = "XUserFile" })" />
+                    <source src='@(Url.Action("GetFile", "LUserFiles", new { id = i.Id, area = "XUserFile" }))'/>
                 </video>
             </dd>
         }
@@ -43,7 +43,6 @@
     <dl class="row" style="word-break:break-all;word-wrap:break-word">
         <dd class="col">
             @Html.Raw(Model.Content)
-
             <div class="float-right" id="MailToEArticleUser">
                 <a href="mailto:@(Model.UserEmail)" title="@(Localizer["Mail to the author"])" >&#128236;</a>
             </div>
@@ -55,7 +54,9 @@
         <dd class="col">
             @if (_EArticleFiles_.Where(p => !p.IsEArticleVideo).Count() > 0)
             {
-                <span>@(_EArticleFiles_.Where(p => !p.IsEArticleVideo).Count() > 1 ? Localizer["The attachments of this article"] : Localizer["The attachment of this article"]) </span>
+                <span>
+                    @(_EArticleFiles_.Where(p => !p.IsEArticleVideo).Count() > 1 ? Localizer["The attachments of this article"] : Localizer["The attachment of this article"]) 
+                </span>
                 @foreach (var i in _EArticleFiles_.Where(p => !p.IsEArticleVideo))
                 {
                     <br />

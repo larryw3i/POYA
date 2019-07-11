@@ -104,9 +104,9 @@
             </div>
 
             <div class="form-group">
-                <a id="BackA" class="btn btn-outline-primary">&laquo; @Localizer["Back"]</a>
+                <a id="BackA" class="btn btn-outline-primary">&laquo; @(Localizer["Back"])</a>
                 <a class="btn btn-outline-info col-4" id="EArticles_Form_Submit_A">@(IsEdit ? Localizer["Save"] : Localizer["Publish"])</a>
-                <a asp-action="Donate" asp-controller="Home">@Localizer["Donate"]</a>
+                <a asp-action="Donate" asp-controller="Home" target="Donate">@(Localizer["Donate"])</a>
                 <span id="SaveProgressEle"></span>
             </div>
         </form>
@@ -119,16 +119,7 @@
 <partial name="_DefaultEditorPartial" view-data="_ViewDataDictionary" />
 <script>
 
-    @*
-    var _Editor = window.wangEditor;
-    var Editor = new _Editor("#MenuToolbar","#_ContentEditor");
-    *@
-
     var ID8MD5Array = new Array();
-
-
-
-
 
     var IsVideoFileSelected =@(IsVideoFileUploaded?"true":"false");
     var LAttachmentFileInputId = (id) => `LAttachments_${id}`;
@@ -147,8 +138,6 @@
     *  public bool IsEArticleVideo { get; set; } = false;
     * */
     function SubmitForm(Editor) {
-        // console.log(">>>>>>>><<<<<<<");
-        //  $("#Content").val(Editor.txt.html());
         let _EArticles_Form_Data_ = new FormData();
         _EArticles_Form_Data_.append("@(nameof(Model.Title))", $("#@nameof(Model.Title)").val());
         _EArticles_Form_Data_.append("@(nameof(Model.Content))", Editor.txt.html());
@@ -214,8 +203,6 @@
 
 
     }
-
-    //
 
     //    DATA
       var _CategoryId = "@Model.CategoryId";
@@ -444,10 +431,8 @@
 
         $("#VideoSelectEle").on("click", function () {
 
-            // console.log(">>>>>>>>"+$("#video_row_div input:last").val());
             if (IsVideoFileSelected) return;
             var _LastVideoInputVal = $("#video_row_div input:last").val();
-            //  console.log("Value of last video file input >_ " + _LastVideoInputVal + "\t" + _LastVideoInputVal.length);
             if (_LastVideoInputVal == undefined || _LastVideoInputVal.length > 0) {
 
                 let _LVideoFileInput = LVideoFileInput(_Data_.NewGuid());
@@ -493,13 +478,63 @@
         });
         $("#_ContentEditor *").blur(function () {
             if (Editor.txt.html().length < 20) {
-                $("#ContentValidation").html("@Localizer["The content of the article should be more than 20 characters"]!");
+                $("#ContentValidation").html("@(Localizer["The content of the article should be more than 20 characters"])!");
             } else {
                 $("#ContentValidation").html("");
             }
         });
 
     });
+</script>
+<style>
+
+    #Title {
+        text-align: center;
+    }
+
+    #_ContentEditor {
+        height: 500px;
+        border: dotted;
+        border-radius: 10px;
+        overflow: hidden;
+        word-wrap: break-word;
+        word-break: break-all;
+    }
+
+
+    .w-e-text {
+        overflow-y: scroll;
+    }
+
+    .w-e-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .LookForImageIcon {
+        zoom: 200%;
+    }
+
+    .SelectFileShowEle {
+        border: dotted;
+        border-radius: 8px;
+        padding: 2px;
+        max-width: 90%;
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+
+    .FileInputRemoveEle:hover {
+        color: red;
+        zoom: 150%;
+    }
+</style>
+
+
+    @*
+    var _Editor = window.wangEditor;
+    var Editor = new _Editor("#MenuToolbar","#_ContentEditor");
+    *@
 
     @*
     /**
@@ -586,48 +621,3 @@
         Editor.create();
         }
     *@
-    //
-</script>
-<style>
-
-    #Title {
-        text-align: center;
-    }
-
-    #_ContentEditor {
-        height: 500px;
-        border: dotted;
-        border-radius: 10px;
-        overflow: hidden;
-        word-wrap: break-word;
-        word-break: break-all;
-    }
-
-
-    .w-e-text {
-        overflow-y: scroll;
-    }
-
-    .w-e-toolbar {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .LookForImageIcon {
-        zoom: 200%;
-    }
-
-    .SelectFileShowEle {
-        border: dotted;
-        border-radius: 8px;
-        padding: 2px;
-        max-width: 90%;
-        word-break: break-all;
-        word-wrap: break-word;
-    }
-
-    .FileInputRemoveEle:hover {
-        color: red;
-        zoom: 150%;
-    }
-</style>

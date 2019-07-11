@@ -45,11 +45,11 @@ namespace POYA.Areas.EduHub.Controllers
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
             RoleManager<IdentityRole> roleManager,
-           IEmailSender emailSender,
-           UserManager<IdentityUser> userManager,
-           ApplicationDbContext context,
-           IHostingEnvironment hostingEnv,
-           IStringLocalizer<Program> localizer)
+            IEmailSender emailSender,
+            UserManager<IdentityUser> userManager,
+            ApplicationDbContext context,
+            IHostingEnvironment hostingEnv,
+            IStringLocalizer<Program> localizer)
         {
             _htmlSanitizer = htmlSanitizer;
             _hostingEnv = hostingEnv;
