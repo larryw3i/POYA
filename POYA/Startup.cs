@@ -124,7 +124,7 @@ namespace POYA
                opts.SupportedUICultures = supportedCultures;
                opts.RequestCultureProviders = new List<IRequestCultureProvider>
                  {
-                      new   X_DOVERequestCultureProvider()
+                      new   X_DOVERequestCultureProvider(),
                  };
            });
 

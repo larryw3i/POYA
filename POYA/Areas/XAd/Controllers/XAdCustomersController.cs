@@ -186,7 +186,7 @@ namespace POYA.Areas.XAd.Controllers
                 if (!_FileMD5s.Contains(_md5_))
                 {
                     var _FileStream_ = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) +
-                        $"/{_md5_}.{xAdCustomer.StoreIconFile.FileName.Split('.').Last()}",
+                        $"/{_md5_}",
                     FileMode.Create);
                     await xAdCustomer.StoreIconFile.CopyToAsync(_FileStream_);
                     _FileStream_.Close();
