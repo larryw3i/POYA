@@ -1,4 +1,3 @@
-
 /// <summary>
 /// The helping class of XLaw
 /// </summary>
