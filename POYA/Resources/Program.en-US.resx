@@ -3239,4 +3239,7 @@
   <data name="The extension of the file can only be" xml:space="preserve">
     <value>The extension of the file can only be </value>
   </data>
+  <data name="Date of registering" xml:space="preserve">
+    <value>Date of registering</value>
+  </data>
 </root>

@@ -72,7 +72,7 @@ namespace POYA.Areas.XAd.Controllers
         #endregion
         public async Task<IActionResult> Index()
         {
-            var _XAdCustomer = await _context.XAdCustomer.OrderByDescending(p=>p.DORegistering).Take(10).ToListAsync();
+            var _XAdCustomer = await _context.XAdCustomer.OrderByDescending(p => p.DORegistering).Take(10).ToListAsync();
             return View(_XAdCustomer);
         }
 
@@ -90,7 +90,7 @@ namespace POYA.Areas.XAd.Controllers
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
             var xAdCustomer = await _context.XAdCustomer
-                .FirstOrDefaultAsync(m => m.Id == id );
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (xAdCustomer == null)
             {
                 return NotFound();
@@ -116,11 +116,11 @@ namespace POYA.Areas.XAd.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         #endregion
-        public async Task<IActionResult> Create([Bind("Id,Name,UserId,DORegistering,LicenseImgFiles,Address,StoreIconFile,Intro")] XAdCustomer xAdCustomer)
+        public async Task<IActionResult> Create([Bind("Id,Name,DORegistering,LicenseImgFiles,Address,StoreIconFile,Intro")] XAdCustomer xAdCustomer)
         {
             if (ModelState.IsValid)
             {
-                if ( xAdCustomer.StoreIconFile == null|| xAdCustomer.LicenseImgFiles?.Count() < 3 || xAdCustomer.LicenseImgFiles.Count()>5 )
+                if (xAdCustomer.StoreIconFile == null || xAdCustomer.LicenseImgFiles?.Count() < 3 || xAdCustomer.LicenseImgFiles.Count() > 5)
                 {
                     return View(xAdCustomer);
                 }
@@ -128,11 +128,11 @@ namespace POYA.Areas.XAd.Controllers
                 #region ===>   FILES_VALIDATE
                 var _xAdCustomerFiles = xAdCustomer.LicenseImgFiles; //  .Add(xAdCustomer.StoreIconFile);
                 _xAdCustomerFiles.Add(xAdCustomer.StoreIconFile);
-                if(_xAdCustomerFiles.Any(p=>!p.ContentType.StartsWith("image/") || !p.FileName.Contains('.') || p.Length > 2048 * 1024 || p.Length < 1))
+                if (_xAdCustomerFiles.Any(p => !p.ContentType.StartsWith("image/") || !p.FileName.Contains('.') || p.Length > 2048 * 1024 || p.Length < 1))
                 {
                     return View(xAdCustomer);
                 }
-           
+
 
                 #endregion
 
@@ -152,10 +152,10 @@ namespace POYA.Areas.XAd.Controllers
                     await f.CopyToAsync(_memoryStream);
                     var _bytes = _memoryStream.ToArray();
                     var _md5 = new XUserFileHelper().GetFileMD5(_bytes);
-                 
-                    if (!_hostingEnv.IsDevelopment()&& _FileMD5s.Contains(_md5))
+
+                    if (!_hostingEnv.IsDevelopment() && _FileMD5s.Contains(_md5))
                     {
-                        ModelState.AddModelError(nameof(XAdCustomer.LicenseImgFiles),_localizer["The license photo is repeated"]);
+                        ModelState.AddModelError(nameof(XAdCustomer.LicenseImgFiles), _localizer["The license photo is repeated"]);
                         return View(xAdCustomer);
                     }
                     if (!_FileMD5s.Contains(_md5))
@@ -163,11 +163,11 @@ namespace POYA.Areas.XAd.Controllers
                         var _FileStream = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{_md5}", FileMode.Create);
                         await f.CopyToAsync(_FileStream);
                         _FileStream.Close();
-                     
-                    }
-                    _XAdCustomerLicenses.Add(new XAdCustomerLicense { Id = Guid.NewGuid(), XAdCustomerUserId = UserId_, ImgFileMD5 = _md5, ImgFileContentType=f.ContentType});
 
-                } 
+                    }
+                    _XAdCustomerLicenses.Add(new XAdCustomerLicense { Id = Guid.NewGuid(), XAdCustomerUserId = UserId_, ImgFileMD5 = _md5, ImgFileContentType = f.ContentType });
+
+                }
                 await _context.XAdCustomerLicenses.AddRangeAsync(_XAdCustomerLicenses);
 
                 #endregion
@@ -178,14 +178,15 @@ namespace POYA.Areas.XAd.Controllers
                 var _bytes_ = _memoryStream_.ToArray();
                 var _md5_ = new XUserFileHelper().GetFileMD5(_bytes_);
 
-                if (!_hostingEnv.IsDevelopment()&& _FileMD5s.Contains(_md5_))
+                if (!_hostingEnv.IsDevelopment() && _FileMD5s.Contains(_md5_))
                 {
                     ModelState.AddModelError(nameof(XAdCustomer.LicenseImgFiles), _localizer["The store icon is repeated"]);
                     return View(xAdCustomer);
                 }
-                if ( !_FileMD5s.Contains(_md5_))
+                if (!_FileMD5s.Contains(_md5_))
                 {
-                    var _FileStream_ = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{_md5_}.{xAdCustomer.StoreIconFile.FileName.Split('.').Last()}",
+                    var _FileStream_ = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) +
+                        $"/{_md5_}.{xAdCustomer.StoreIconFile.FileName.Split('.').Last()}",
                     FileMode.Create);
                     await xAdCustomer.StoreIconFile.CopyToAsync(_FileStream_);
                     _FileStream_.Close();
@@ -194,6 +195,7 @@ namespace POYA.Areas.XAd.Controllers
 
                 xAdCustomer.StoreIconMD5 = _md5_;
                 xAdCustomer.StoreIconContentType = xAdCustomer.StoreIconFile.ContentType;
+                xAdCustomer.UserId = UserId_;
                 #endregion
 
                 _context.Add(xAdCustomer);
@@ -308,7 +310,7 @@ namespace POYA.Areas.XAd.Controllers
         [HttpGet]
         [AllowAnonymous]
         #endregion
-        public async Task<IActionResult> GetXAdCustomerFilesAsync(string MD5="")
+        public async Task<IActionResult> GetXAdCustomerFilesAsync(string MD5 = "")
         {
             if (string.IsNullOrWhiteSpace(MD5))
             {
@@ -318,11 +320,11 @@ namespace POYA.Areas.XAd.Controllers
             var _XAdCustomer = await _context.XAdCustomer.FirstOrDefaultAsync(p => p.StoreIconMD5 == MD5);
             var _ContentType = _XAdCustomer?.StoreIconContentType ?? string.Empty;
             var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id;
-            if (_XAdCustomer == null )
+            if (_XAdCustomer == null)
             {
                 if (string.IsNullOrWhiteSpace(UserId_)) { return NotFound(); }
                 var _XAdCustomerLicenses = await _context.XAdCustomerLicenses.FirstOrDefaultAsync(P => P.XAdCustomerUserId == UserId_ && P.ImgFileMD5 == MD5);
-                if (_XAdCustomerLicenses==null)
+                if (_XAdCustomerLicenses == null)
                 {
                     return NotFound();
                 }
@@ -335,13 +337,13 @@ namespace POYA.Areas.XAd.Controllers
             {
                 return NotFound();
             }
-            
+
 
             var _FileStream = new FileStream(_FilePath, FileMode.Open, FileAccess.Read);
             var FileBytes = new byte[(int)_FileStream.Length];
             _FileStream.Read(FileBytes, 0, FileBytes.Length);
             _FileStream.Close();
-            return File(FileBytes,_ContentType);
+            return File(FileBytes, _ContentType);
         }
 
         #endregion

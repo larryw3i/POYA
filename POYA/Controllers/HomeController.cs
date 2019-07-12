@@ -46,11 +46,11 @@ namespace POYA.Controllers
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
             RoleManager<IdentityRole> roleManager,
-           IEmailSender emailSender,
-           UserManager<IdentityUser> userManager,
-           ApplicationDbContext context,
-           IHostingEnvironment hostingEnv,
-           IStringLocalizer<Program> localizer)
+	    IEmailSender emailSender,
+            UserManager<IdentityUser> userManager,
+            ApplicationDbContext context,
+            IHostingEnvironment hostingEnv,
+            IStringLocalizer<Program> localizer)
         {
             _configuration = configuration;
             _hostingEnv = hostingEnv;
@@ -68,7 +68,6 @@ namespace POYA.Controllers
         public IActionResult Index()
         {
             //  throw new Exception("TEST"); 
-
             return View();
         }
 
@@ -228,7 +227,7 @@ namespace POYA.Controllers
             return Ok();
         }
 
-        /*
+        /*	DISCARD
         private async Task  AppInitializationAsync()
         {
 
@@ -280,6 +279,7 @@ namespace POYA.Controllers
 #endif
                 }
             }
+
             await _context.SaveChangesAsync();
 
             #endregion

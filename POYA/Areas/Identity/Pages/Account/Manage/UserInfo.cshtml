@@ -11,7 +11,7 @@
     <div class="col col-4 col-sm-4 col-md-3 User-Avatar">
         <form id="_UserAvatarForm">
             <img name="User_Avatar_Img" id="User_Avatar_Img" class="rounded-circle ZoomAvatar" title='@Localizer["The extension of the file can only be jpg, jpeg or png"]'
-                 src="/Home/GetAvatar?random=@(new Random().Next(20))" />
+                 src='/Home/GetAvatar?random=@(new Random().Next(20))' />
             <input id="_UserAvatarInput" type="file" accept=".jpg,.gif,.jpeg" hidden />
         </form>
         <h6 id="_UploadAvatarMsgEle"></h6>

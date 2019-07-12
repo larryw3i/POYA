@@ -51,6 +51,7 @@ namespace POYA.Areas.XAd.Models
         public List<IFormFile> LicenseImgFiles { get; set; }
         #endregion
 
+        [Display(Name="Date of registering")]
         public DateTimeOffset DORegistering { get; set; } = DateTimeOffset.Now;
 
         #region 
