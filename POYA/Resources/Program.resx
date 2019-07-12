@@ -826,31 +826,31 @@
   <data name="Select attachment" xml:space="preserve">
     <value>Select attachment</value>
   </data>
-  <data name="u6570u5b66" xml:space="preserve">
+  <data name="\u6570\u5b66" xml:space="preserve">
     <value>Mathematics</value>
   </data>
-  <data name="u6570u5b66u53f2" xml:space="preserve">
+  <data name="\u6570\u5b66\u53f2" xml:space="preserve">
     <value>History of mathematics</value>
   </data>
-  <data name="u5730u7403u79d1u5b66" xml:space="preserve">
+  <data name="\u5730\u7403\u79d1\u5b66" xml:space="preserve">
     <value>Geoscience</value>
   </data>
-  <data name="u6c34u6587u5b66" xml:space="preserve">
+  <data name="\u6c34\u6587\u5b66" xml:space="preserve">
     <value>Hydrology</value>
   </data>
-  <data name="u7ec4u5408u6570u5b66" xml:space="preserve">
+  <data name="\u7ec4\u5408\u6570\u5b66" xml:space="preserve">
     <value>Combinatorics</value>
   </data>
-  <data name="u79bbu6563u6570u5b66" xml:space="preserve">
+  <data name="\u79bb\u6563\u6570\u5b66" xml:space="preserve">
     <value>Discrete mathematics</value>
   </data>
-  <data name="u81eau7136u79d1u5b66u76f8u5173u5de5u7a0bu4e0eu6280u672f" xml:space="preserve">
+  <data name="\u81ea\u7136\u79d1\u5b66\u76f8\u5173\u5de5\u7a0b\u4e0e\u6280\u672f" xml:space="preserve">
     <value>Natural science-related engineering and technology</value>
   </data>
-  <data name="u751fu7269u5de5u7a0b" xml:space="preserve">
+  <data name="\u751f\u7269\u5de5\u7a0b" xml:space="preserve">
     <value>Bioengineering</value>
   </data>
-  <data name="u8fd0u7b79u5b66" xml:space="preserve">
+  <data name="\u8fd0\u7b79\u5b66" xml:space="preserve">
     <value>Opsearch</value>
   </data>
   <data name="X-DOVE" xml:space="preserve">
@@ -949,2191 +949,2191 @@
   <data name="Reading" xml:space="preserve">
     <value>Reading</value>
   </data>
-  <data name="u4fe1u606fu4e0eu7cfbu7edfu79d1u5b66u76f8u5173u5de5u7a0bu4e0eu6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u4fe1\u606f\u4e0e\u7cfb\u7edf\u79d1\u5b66\u76f8\u5173\u5de5\u7a0b\u4e0e\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Information and systems science related engineering and technology other disciplines</value>
   </data>
-  <data name="u5de5u7a0bu4e0eu6280u672fu79d1u5b66u57fau7840u5b66u79d1u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u5de5\u7a0b\u4e0e\u6280\u672f\u79d1\u5b66\u57fa\u7840\u5b66\u79d1\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Engineering and technical science foundation discipline other disciplines</value>
   </data>
-  <data name="u9884u9632u533bu5b66u4e0eu516cu5171u536bu751fu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u9884\u9632\u533b\u5b66\u4e0e\u516c\u5171\u536b\u751f\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of preventive medicine and public health</value>
   </data>
-  <data name="u836fu6548u5b66" xml:space="preserve">
+  <data name="\u836f\u6548\u5b66" xml:space="preserve">
     <value>Pharmacodynamics</value>
   </data>
-  <data name="u8ba1u91cfu5b66" xml:space="preserve">
+  <data name="\u8ba1\u91cf\u5b66" xml:space="preserve">
     <value>Metrology</value>
   </data>
-  <data name="u751fu7269u5b66" xml:space="preserve">
+  <data name="\u751f\u7269\u5b66" xml:space="preserve">
     <value>biology</value>
   </data>
-  <data name="u5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>psychology</value>
   </data>
   <data name="Complexity" xml:space="preserve">
     <value>Complexity</value>
   </data>
-  <data name="u57fau7840u533bu5b66" xml:space="preserve">
+  <data name="\u57fa\u7840\u533b\u5b66" xml:space="preserve">
     <value>preclinical medicine</value>
   </data>
-  <data name="u9884u9632u533bu5b66u4e0eu516cu5171u536bu751fu5b66" xml:space="preserve">
+  <data name="\u9884\u9632\u533b\u5b66\u4e0e\u516c\u5171\u536b\u751f\u5b66" xml:space="preserve">
     <value>Preventive medicine and public health</value>
   </data>
-  <data name="u4e2du533bu5b66u4e0eu4e2du836fu5b66" xml:space="preserve">
+  <data name="\u4e2d\u533b\u5b66\u4e0e\u4e2d\u836f\u5b66" xml:space="preserve">
     <value>Traditional Chinese medicine and pharmacy</value>
   </data>
-  <data name="u6d4bu7ed8u79d1u5b66u6280u672f" xml:space="preserve">
+  <data name="\u6d4b\u7ed8\u79d1\u5b66\u6280\u672f" xml:space="preserve">
     <value>Surveying and Mapping</value>
   </data>
-  <data name="u52a8u529bu4e0eu7535u6c14u5de5u7a0b" xml:space="preserve">
+  <data name="\u52a8\u529b\u4e0e\u7535\u6c14\u5de5\u7a0b" xml:space="preserve">
     <value>Power and electrical engineering</value>
   </data>
-  <data name="u7535u5b50u4e0eu901au4fe1u6280u672f" xml:space="preserve">
+  <data name="\u7535\u5b50\u4e0e\u901a\u4fe1\u6280\u672f" xml:space="preserve">
     <value>Electronics and Communications Technologies</value>
   </data>
-  <data name="u8ba1u7b97u673au79d1u5b66u6280u672f" xml:space="preserve">
+  <data name="\u8ba1\u7b97\u673a\u79d1\u5b66\u6280\u672f" xml:space="preserve">
     <value>Computer science and technology</value>
   </data>
-  <data name="u98dfu54c1u79d1u5b66u6280u672f" xml:space="preserve">
+  <data name="\u98df\u54c1\u79d1\u5b66\u6280\u672f" xml:space="preserve">
     <value>Food Science and Technology</value>
   </data>
-  <data name="u6c34u5229u5de5u7a0b" xml:space="preserve">
+  <data name="\u6c34\u5229\u5de5\u7a0b" xml:space="preserve">
     <value>water conservancy project</value>
   </data>
-  <data name="u822au7a7au3001u822au5929u79d1u5b66u6280u672f" xml:space="preserve">
+  <data name="\u822a\u7a7a\u3001\u822a\u5929\u79d1\u5b66\u6280\u672f" xml:space="preserve">
     <value>Personal Stat</value>
   </data>
-  <data name="u54f2u5b66" xml:space="preserve">
+  <data name="\u54f2\u5b66" xml:space="preserve">
     <value>philosophy</value>
   </data>
-  <data name="u827au672fu5b66" xml:space="preserve">
+  <data name="\u827a\u672f\u5b66" xml:space="preserve">
     <value>art</value>
   </data>
-  <data name="u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Economics</value>
   </data>
-  <data name="u793eu4f1au5b66" xml:space="preserve">
+  <data name="\u793e\u4f1a\u5b66" xml:space="preserve">
     <value>Sociology</value>
   </data>
-  <data name="u6c11u65cfu5b66u4e0eu6587u5316u5b66" xml:space="preserve">
+  <data name="\u6c11\u65cf\u5b66\u4e0e\u6587\u5316\u5b66" xml:space="preserve">
     <value>Ethnology and culture</value>
   </data>
-  <data name="u793eu4f1au5b66u53f2" xml:space="preserve">
+  <data name="\u793e\u4f1a\u5b66\u53f2" xml:space="preserve">
     <value>Geschichte der Soziologie</value>
   </data>
-  <data name="u4e16u754cu6c11u65cfu7814u7a76" xml:space="preserve">
+  <data name="\u4e16\u754c\u6c11\u65cf\u7814\u7a76" xml:space="preserve">
     <value>MZG</value>
   </data>
-  <data name="u8003u53e4u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u8003\u53e4\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>KGG</value>
   </data>
-  <data name="u53efu6301u7eedu53d1u5c55u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u53ef\u6301\u7eed\u53d1\u5c55\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Economics of Sustainable Development</value>
   </data>
-  <data name="u6570u7406u903bu8f91u4e0eu6570u5b66u57fau7840" xml:space="preserve">
+  <data name="\u6570\u7406\u903b\u8f91\u4e0e\u6570\u5b66\u57fa\u7840" xml:space="preserve">
     <value>Mathematical Logic and Mathematical Foundations</value>
   </data>
-  <data name="u65f6u95f4u6d4bu91cfu5b66" xml:space="preserve">
+  <data name="\u65f6\u95f4\u6d4b\u91cf\u5b66" xml:space="preserve">
     <value>Chronometry</value>
   </data>
-  <data name="u5e94u7528u7edfu8ba1u6570u5b66" xml:space="preserve">
+  <data name="\u5e94\u7528\u7edf\u8ba1\u6570\u5b66" xml:space="preserve">
     <value>Applied statistical mathematics</value>
   </data>
-  <data name="u6570u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u6570\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Mathematics other subjects</value>
   </data>
-  <data name="u79efu5206u65b9u7a0b" xml:space="preserve">
+  <data name="\u79ef\u5206\u65b9\u7a0b" xml:space="preserve">
     <value>Integral equation</value>
   </data>
-  <data name="u6570u8bba" xml:space="preserve">
+  <data name="\u6570\u8bba" xml:space="preserve">
     <value>Number theory</value>
   </data>
-  <data name="u4ee3u6570u5b66" xml:space="preserve">
+  <data name="\u4ee3\u6570\u5b66" xml:space="preserve">
     <value>Algebra</value>
   </data>
-  <data name="u4ee3u6570u51e0u4f55u5b66" xml:space="preserve">
+  <data name="\u4ee3\u6570\u51e0\u4f55\u5b66" xml:space="preserve">
     <value>Algebra geometry </value>
   </data>
-  <data name="u62d3u6251u5b66" xml:space="preserve">
+  <data name="\u62d3\u6251\u5b66" xml:space="preserve">
     <value>Topology</value>
   </data>
-  <data name="u6570u5b66u5206u6790" xml:space="preserve">
+  <data name="\u6570\u5b66\u5206\u6790" xml:space="preserve">
     <value>Distribution</value>
   </data>
-  <data name="u975eu6807u51c6u5206u6790" xml:space="preserve">
+  <data name="\u975e\u6807\u51c6\u5206\u6790" xml:space="preserve">
     <value>Non-standard analysis</value>
   </data>
-  <data name="u51fdu6570u8bba" xml:space="preserve">
+  <data name="\u51fd\u6570\u8bba" xml:space="preserve">
     <value>Functional theory</value>
   </data>
-  <data name="u5e38u5faeu5206u65b9u7a0b" xml:space="preserve">
+  <data name="\u5e38\u5fae\u5206\u65b9\u7a0b" xml:space="preserve">
     <value>Ordinary differential equation</value>
   </data>
-  <data name="u504fu5faeu5206u65b9u7a0b" xml:space="preserve">
+  <data name="\u504f\u5fae\u5206\u65b9\u7a0b" xml:space="preserve">
     <value>Partial differential equation</value>
   </data>
-  <data name="u52a8u529bu7cfbu7edf" xml:space="preserve">
+  <data name="\u52a8\u529b\u7cfb\u7edf" xml:space="preserve">
     <value>Dynamical system</value>
   </data>
-  <data name="u6cdbu51fdu5206u6790" xml:space="preserve">
+  <data name="\u6cdb\u51fd\u5206\u6790" xml:space="preserve">
     <value>Functional analysis</value>
   </data>
-  <data name="u8ba1u7b97u6570u5b66" xml:space="preserve">
+  <data name="\u8ba1\u7b97\u6570\u5b66" xml:space="preserve">
     <value>Computational Mathematics</value>
   </data>
-  <data name="u6982u7387u8bba" xml:space="preserve">
+  <data name="\u6982\u7387\u8bba" xml:space="preserve">
     <value>Probability theory</value>
   </data>
-  <data name="u6570u7406u7edfu8ba1u5b66" xml:space="preserve">
+  <data name="\u6570\u7406\u7edf\u8ba1\u5b66" xml:space="preserve">
     <value>Mathematical statistics</value>
   </data>
-  <data name="u6a21u7ccau6570u5b66" xml:space="preserve">
+  <data name="\u6a21\u7cca\u6570\u5b66" xml:space="preserve">
     <value>Fuzzy mathematics</value>
   </data>
-  <data name="u8ba1u7b97u673au6570u5b66" xml:space="preserve">
+  <data name="\u8ba1\u7b97\u673a\u6570\u5b66" xml:space="preserve">
     <value>Computer math</value>
   </data>
-  <data name="u5e94u7528u6570u5b66" xml:space="preserve">
+  <data name="\u5e94\u7528\u6570\u5b66" xml:space="preserve">
     <value>Applied Mathematics</value>
   </data>
-  <data name="u4fe1u606fu79d1u5b66u4e0eu7cfbu7edfu79d1u5b66" xml:space="preserve">
+  <data name="\u4fe1\u606f\u79d1\u5b66\u4e0e\u7cfb\u7edf\u79d1\u5b66" xml:space="preserve">
     <value>Information Science and Systems Science</value>
   </data>
-  <data name="u4fe1u606fu79d1u5b66u4e0eu7cfbu7edfu79d1u5b66u57fau7840u5b66u79d1" xml:space="preserve">
+  <data name="\u4fe1\u606f\u79d1\u5b66\u4e0e\u7cfb\u7edf\u79d1\u5b66\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
     <value>Basic disciplines in information science and systems science</value>
   </data>
-  <data name="u7cfbu7edfu5b66" xml:space="preserve">
+  <data name="\u7cfb\u7edf\u5b66" xml:space="preserve">
     <value>Systematic</value>
   </data>
-  <data name="u63a7u5236u7406u8bba" xml:space="preserve">
+  <data name="\u63a7\u5236\u7406\u8bba" xml:space="preserve">
     <value>Control theory</value>
   </data>
-  <data name="u7cfbu7edfu8bc4u4f30u4e0eu53efu884cu6027u5206u6790" xml:space="preserve">
+  <data name="\u7cfb\u7edf\u8bc4\u4f30\u4e0e\u53ef\u884c\u6027\u5206\u6790" xml:space="preserve">
     <value>System evaluation and feasibility analysis</value>
   </data>
-  <data name="u7cfbu7edfu5de5u7a0bu65b9u6cd5u8bba" xml:space="preserve">
+  <data name="\u7cfb\u7edf\u5de5\u7a0b\u65b9\u6cd5\u8bba" xml:space="preserve">
     <value>System Engineering Methodology</value>
   </data>
-  <data name="u4fe1u606fu79d1u5b66u4e0eu7cfbu7edfu79d1u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u4fe1\u606f\u79d1\u5b66\u4e0e\u7cfb\u7edf\u79d1\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines in information science and systems science</value>
   </data>
-  <data name="u529bu5b66" xml:space="preserve">
+  <data name="\u529b\u5b66" xml:space="preserve">
     <value>Mechanics</value>
   </data>
-  <data name="u57fau7840u529bu5b66" xml:space="preserve">
+  <data name="\u57fa\u7840\u529b\u5b66" xml:space="preserve">
     <value>Basic mechanics</value>
   </data>
-  <data name="u56fau4f53u529bu5b66" xml:space="preserve">
+  <data name="\u56fa\u4f53\u529b\u5b66" xml:space="preserve">
     <value>Solid mechanics</value>
   </data>
-  <data name="u632fu52a8u4e0eu6ce2" xml:space="preserve">
+  <data name="\u632f\u52a8\u4e0e\u6ce2" xml:space="preserve">
     <value>Vibration and waves</value>
   </data>
-  <data name="u6d41u4f53u529bu5b66" xml:space="preserve">
+  <data name="\u6d41\u4f53\u529b\u5b66" xml:space="preserve">
     <value>Fluid mechanics</value>
   </data>
-  <data name="u6d41u53d8u5b66" xml:space="preserve">
+  <data name="\u6d41\u53d8\u5b66" xml:space="preserve">
     <value>rheology</value>
   </data>
-  <data name="u7206u70b8u529bu5b66" xml:space="preserve">
+  <data name="\u7206\u70b8\u529b\u5b66" xml:space="preserve">
     <value>Explosive mechanics</value>
   </data>
-  <data name="u7269u7406u529bu5b66" xml:space="preserve">
+  <data name="\u7269\u7406\u529b\u5b66" xml:space="preserve">
     <value>Physical mechanics</value>
   </data>
-  <data name="u751fu7269u529bu5b66" xml:space="preserve">
+  <data name="\u751f\u7269\u529b\u5b66" xml:space="preserve">
     <value>biology</value>
   </data>
-  <data name="u7edfu8ba1u529bu5b66" xml:space="preserve">
+  <data name="\u7edf\u8ba1\u529b\u5b66" xml:space="preserve">
     <value>Statistical mechanics</value>
   </data>
-  <data name="u5e94u7528u529bu5b66" xml:space="preserve">
+  <data name="\u5e94\u7528\u529b\u5b66" xml:space="preserve">
     <value>Applied Mechanics</value>
   </data>
-  <data name="u529bu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u529b\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of mechanics</value>
   </data>
-  <data name="u7269u7406u5b66" xml:space="preserve">
+  <data name="\u7269\u7406\u5b66" xml:space="preserve">
     <value>Physics</value>
   </data>
-  <data name="u7269u7406u5b66u53f2" xml:space="preserve">
+  <data name="\u7269\u7406\u5b66\u53f2" xml:space="preserve">
     <value>History of physics</value>
   </data>
-  <data name="u7406u8bbau7269u7406u5b66" xml:space="preserve">
+  <data name="\u7406\u8bba\u7269\u7406\u5b66" xml:space="preserve">
     <value>Theoretical physics</value>
   </data>
-  <data name="u58f0u5b66" xml:space="preserve">
+  <data name="\u58f0\u5b66" xml:space="preserve">
     <value>Acoustics</value>
   </data>
-  <data name="u70edu5b66" xml:space="preserve">
+  <data name="\u70ed\u5b66" xml:space="preserve">
     <value>Thermal physics</value>
   </data>
-  <data name="u5149u5b66" xml:space="preserve">
+  <data name="\u5149\u5b66" xml:space="preserve">
     <value>Optics</value>
   </data>
-  <data name="u7535u78c1u5b66" xml:space="preserve">
+  <data name="\u7535\u78c1\u5b66" xml:space="preserve">
     <value>Electromagnetics</value>
   </data>
-  <data name="u65e0u7ebfu7535u7269u7406" xml:space="preserve">
+  <data name="\u65e0\u7ebf\u7535\u7269\u7406" xml:space="preserve">
     <value>Radio physics</value>
   </data>
-  <data name="u7535u5b50u7269u7406u5b66" xml:space="preserve">
+  <data name="\u7535\u5b50\u7269\u7406\u5b66" xml:space="preserve">
     <value>Electronic physics</value>
   </data>
-  <data name="u51ddu805au6001u7269u7406u5b66" xml:space="preserve">
+  <data name="\u51dd\u805a\u6001\u7269\u7406\u5b66" xml:space="preserve">
     <value>Condensed matter physics</value>
   </data>
-  <data name="u7b49u79bbu5b50u4f53u7269u7406u5b66" xml:space="preserve">
+  <data name="\u7b49\u79bb\u5b50\u4f53\u7269\u7406\u5b66" xml:space="preserve">
     <value>Plasma physics</value>
   </data>
-  <data name="u539fu5b50u5206u5b50u7269u7406u5b66" xml:space="preserve">
+  <data name="\u539f\u5b50\u5206\u5b50\u7269\u7406\u5b66" xml:space="preserve">
     <value>Atomic and molecular physics</value>
   </data>
-  <data name="u539fu5b50u6838u7269u7406u5b66" xml:space="preserve">
+  <data name="\u539f\u5b50\u6838\u7269\u7406\u5b66" xml:space="preserve">
     <value>Nuclear physics</value>
   </data>
-  <data name="u9ad8u80fdu7269u7406u5b66" xml:space="preserve">
+  <data name="\u9ad8\u80fd\u7269\u7406\u5b66" xml:space="preserve">
     <value>High energy physics</value>
   </data>
-  <data name="u8ba1u7b97u7269u7406u5b66" xml:space="preserve">
+  <data name="\u8ba1\u7b97\u7269\u7406\u5b66" xml:space="preserve">
     <value>Computational physics</value>
   </data>
-  <data name="u5e94u7528u7269u7406u5b66" xml:space="preserve">
+  <data name="\u5e94\u7528\u7269\u7406\u5b66" xml:space="preserve">
     <value>Applied physics</value>
   </data>
-  <data name="u7269u7406u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u7269\u7406\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines in physics</value>
   </data>
-  <data name="u5316u5b66u53f2" xml:space="preserve">
+  <data name="\u5316\u5b66\u53f2" xml:space="preserve">
     <value>Chemistry history</value>
   </data>
-  <data name="u65e0u673au5316u5b66" xml:space="preserve">
+  <data name="\u65e0\u673a\u5316\u5b66" xml:space="preserve">
     <value>Inorganic chemistry</value>
   </data>
-  <data name="u6709u673au5316u5b66" xml:space="preserve">
+  <data name="\u6709\u673a\u5316\u5b66" xml:space="preserve">
     <value>Organic chemistry</value>
   </data>
-  <data name="u5206u6790u5316u5b66" xml:space="preserve">
+  <data name="\u5206\u6790\u5316\u5b66" xml:space="preserve">
     <value>Analytical Chemistry</value>
   </data>
-  <data name="u7269u7406u5316u5b66" xml:space="preserve">
+  <data name="\u7269\u7406\u5316\u5b66" xml:space="preserve">
     <value>Physical chemistry</value>
   </data>
-  <data name="u5316u5b66u7269u7406u5b66" xml:space="preserve">
+  <data name="\u5316\u5b66\u7269\u7406\u5b66" xml:space="preserve">
     <value>Chemical physics</value>
   </data>
-  <data name="u9ad8u5206u5b50u7269u7406" xml:space="preserve">
+  <data name="\u9ad8\u5206\u5b50\u7269\u7406" xml:space="preserve">
     <value>Polymer physics</value>
   </data>
-  <data name="u9ad8u5206u5b50u5316u5b66" xml:space="preserve">
+  <data name="\u9ad8\u5206\u5b50\u5316\u5b66" xml:space="preserve">
     <value>Polymer chemistry</value>
   </data>
-  <data name="u6838u5316u5b66" xml:space="preserve">
+  <data name="\u6838\u5316\u5b66" xml:space="preserve">
     <value>Nuclear chemistry</value>
   </data>
-  <data name="u5e94u7528u5316u5b66" xml:space="preserve">
+  <data name="\u5e94\u7528\u5316\u5b66" xml:space="preserve">
     <value>Applied Chemistry</value>
   </data>
-  <data name="u5316u5b66u751fu7269u5b66" xml:space="preserve">
+  <data name="\u5316\u5b66\u751f\u7269\u5b66" xml:space="preserve">
     <value>Chemical biology</value>
   </data>
-  <data name="u6750u6599u5316u5b66" xml:space="preserve">
+  <data name="\u6750\u6599\u5316\u5b66" xml:space="preserve">
     <value>material chemistry</value>
   </data>
-  <data name="u5316u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u5316\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of chemistry</value>
   </data>
-  <data name="u5929u6587u5b66" xml:space="preserve">
+  <data name="\u5929\u6587\u5b66" xml:space="preserve">
     <value>Astronomy</value>
   </data>
-  <data name="u5929u6587u5b66u53f2" xml:space="preserve">
+  <data name="\u5929\u6587\u5b66\u53f2" xml:space="preserve">
     <value>History of astronomy</value>
   </data>
-  <data name="u5929u4f53u529bu5b66" xml:space="preserve">
+  <data name="\u5929\u4f53\u529b\u5b66" xml:space="preserve">
     <value>Celestial mechanics</value>
   </data>
-  <data name="u5929u4f53u7269u7406u5b66" xml:space="preserve">
+  <data name="\u5929\u4f53\u7269\u7406\u5b66" xml:space="preserve">
     <value>Astrophysicist</value>
   </data>
-  <data name="u5b87u5b99u5316u5b66" xml:space="preserve">
+  <data name="\u5b87\u5b99\u5316\u5b66" xml:space="preserve">
     <value>Cosmic Chemistry</value>
   </data>
-  <data name="u5929u4f53u6d4bu91cfu5b66" xml:space="preserve">
+  <data name="\u5929\u4f53\u6d4b\u91cf\u5b66" xml:space="preserve">
     <value>Astrometry</value>
   </data>
-  <data name="u5c04u7535u5929u6587u5b66" xml:space="preserve">
+  <data name="\u5c04\u7535\u5929\u6587\u5b66" xml:space="preserve">
     <value>Radio astronomy</value>
   </data>
-  <data name="u7a7au95f4u5929u6587u5b66" xml:space="preserve">
+  <data name="\u7a7a\u95f4\u5929\u6587\u5b66" xml:space="preserve">
     <value>Space astronomy</value>
   </data>
-  <data name="u5929u4f53u6f14u5316u5b66" xml:space="preserve">
+  <data name="\u5929\u4f53\u6f14\u5316\u5b66" xml:space="preserve">
     <value>Cosmogony</value>
   </data>
-  <data name="u661fu7cfbu4e0eu5b87u5b99u5b66" xml:space="preserve">
+  <data name="\u661f\u7cfb\u4e0e\u5b87\u5b99\u5b66" xml:space="preserve">
     <value>Galaxies and cosmology</value>
   </data>
-  <data name="u6052u661fu4e0eu94f6u6cb3u7cfb" xml:space="preserve">
+  <data name="\u6052\u661f\u4e0e\u94f6\u6cb3\u7cfb" xml:space="preserve">
     <value>Stars and the Milky Way</value>
   </data>
-  <data name="u592au9633u4e0eu592au9633u7cfb" xml:space="preserve">
+  <data name="\u592a\u9633\u4e0e\u592a\u9633\u7cfb" xml:space="preserve">
     <value>The sun and the solar system</value>
   </data>
-  <data name="u5929u4f53u751fu7269u5b66" xml:space="preserve">
+  <data name="\u5929\u4f53\u751f\u7269\u5b66" xml:space="preserve">
     <value>Astrobiology</value>
   </data>
-  <data name="u5929u6587u5730u7403u52a8u529bu5b66" xml:space="preserve">
+  <data name="\u5929\u6587\u5730\u7403\u52a8\u529b\u5b66" xml:space="preserve">
     <value>Astronomical geodynamics</value>
   </data>
-  <data name="u5929u6587u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u5929\u6587\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of astronomy</value>
   </data>
-  <data name="u5730u7403u79d1u5b66u53f2" xml:space="preserve">
+  <data name="\u5730\u7403\u79d1\u5b66\u53f2" xml:space="preserve">
     <value>History of Earth Science</value>
   </data>
-  <data name="u5927u6c14u79d1u5b66" xml:space="preserve">
+  <data name="\u5927\u6c14\u79d1\u5b66" xml:space="preserve">
     <value>Atmospheric Sciences</value>
   </data>
-  <data name="u56fau4f53u5730u7403u7269u7406u5b66" xml:space="preserve">
+  <data name="\u56fa\u4f53\u5730\u7403\u7269\u7406\u5b66" xml:space="preserve">
     <value>Solid geophysics</value>
   </data>
-  <data name="u7a7au95f4u7269u7406u5b66" xml:space="preserve">
+  <data name="\u7a7a\u95f4\u7269\u7406\u5b66" xml:space="preserve">
     <value>Space physics</value>
   </data>
-  <data name="u5730u7403u5316u5b66" xml:space="preserve">
+  <data name="\u5730\u7403\u5316\u5b66" xml:space="preserve">
     <value>Geochemistry</value>
   </data>
-  <data name="u5927u5730u6d4bu91cfu5b66" xml:space="preserve">
+  <data name="\u5927\u5730\u6d4b\u91cf\u5b66" xml:space="preserve">
     <value>Geodesy</value>
   </data>
-  <data name="u5730u56feu5b66" xml:space="preserve">
+  <data name="\u5730\u56fe\u5b66" xml:space="preserve">
     <value>Cartography</value>
   </data>
-  <data name="u5730u7406u5b66" xml:space="preserve">
+  <data name="\u5730\u7406\u5b66" xml:space="preserve">
     <value>Geography</value>
   </data>
-  <data name="u5730u8d28u5b66" xml:space="preserve">
+  <data name="\u5730\u8d28\u5b66" xml:space="preserve">
     <value>Geology</value>
   </data>
-  <data name="u6d77u6d0bu79d1u5b66" xml:space="preserve">
+  <data name="\u6d77\u6d0b\u79d1\u5b66" xml:space="preserve">
     <value>Oceanography</value>
   </data>
-  <data name="u5730u7403u79d1u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u5730\u7403\u79d1\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other subjects in earth science</value>
   </data>
-  <data name="u751fu7269u6570u5b66" xml:space="preserve">
+  <data name="\u751f\u7269\u6570\u5b66" xml:space="preserve">
     <value>Biomathe</value>
   </data>
-  <data name="u751fu7269u7269u7406u5b66" xml:space="preserve">
+  <data name="\u751f\u7269\u7269\u7406\u5b66" xml:space="preserve">
     <value>Biophysics</value>
   </data>
-  <data name="u751fu7269u5316u5b66" xml:space="preserve">
+  <data name="\u751f\u7269\u5316\u5b66" xml:space="preserve">
     <value>Biochemistry</value>
   </data>
-  <data name="u7ec6u80deu751fu7269u5b66" xml:space="preserve">
+  <data name="\u7ec6\u80de\u751f\u7269\u5b66" xml:space="preserve">
     <value>Cytologist</value>
   </data>
-  <data name="u514du75abu5b66" xml:space="preserve">
+  <data name="\u514d\u75ab\u5b66" xml:space="preserve">
     <value>Immunology</value>
   </data>
-  <data name="u751fu7406u5b66" xml:space="preserve">
+  <data name="\u751f\u7406\u5b66" xml:space="preserve">
     <value>Physiology</value>
   </data>
-  <data name="u53d1u80b2u751fu7269u5b66" xml:space="preserve">
+  <data name="\u53d1\u80b2\u751f\u7269\u5b66" xml:space="preserve">
     <value>Developmental Biology</value>
   </data>
-  <data name="u9057u4f20u5b66" xml:space="preserve">
+  <data name="\u9057\u4f20\u5b66" xml:space="preserve">
     <value>Genetics</value>
   </data>
-  <data name="u653eu5c04u751fu7269u5b66" xml:space="preserve">
+  <data name="\u653e\u5c04\u751f\u7269\u5b66" xml:space="preserve">
     <value>Radiobiology</value>
   </data>
-  <data name="u5206u5b50u751fu7269u5b66" xml:space="preserve">
+  <data name="\u5206\u5b50\u751f\u7269\u5b66" xml:space="preserve">
     <value>Molecular biology</value>
   </data>
-  <data name="u4e13u9898u751fu7269u5b66u7814u7a76" xml:space="preserve">
+  <data name="\u4e13\u9898\u751f\u7269\u5b66\u7814\u7a76" xml:space="preserve">
     <value>Thematic biology research</value>
   </data>
-  <data name="u751fu7269u8fdbu5316u8bba" xml:space="preserve">
+  <data name="\u751f\u7269\u8fdb\u5316\u8bba" xml:space="preserve">
     <value>Biological evolution</value>
   </data>
-  <data name="u751fu6001u5b66" xml:space="preserve">
+  <data name="\u751f\u6001\u5b66" xml:space="preserve">
     <value>Ecology</value>
   </data>
-  <data name="u795eu7ecfu751fu7269u5b66" xml:space="preserve">
+  <data name="\u795e\u7ecf\u751f\u7269\u5b66" xml:space="preserve">
     <value>Neurobiology</value>
   </data>
-  <data name="u690du7269u5b66" xml:space="preserve">
+  <data name="\u690d\u7269\u5b66" xml:space="preserve">
     <value>Botany</value>
   </data>
-  <data name="u6606u866bu5b66" xml:space="preserve">
+  <data name="\u6606\u866b\u5b66" xml:space="preserve">
     <value>Entomology</value>
   </data>
-  <data name="u52a8u7269u5b66" xml:space="preserve">
+  <data name="\u52a8\u7269\u5b66" xml:space="preserve">
     <value>Zoology</value>
   </data>
-  <data name="u5faeu751fu7269u5b66" xml:space="preserve">
+  <data name="\u5fae\u751f\u7269\u5b66" xml:space="preserve">
     <value>Microbiology</value>
   </data>
-  <data name="u75c5u6bd2u5b66" xml:space="preserve">
+  <data name="\u75c5\u6bd2\u5b66" xml:space="preserve">
     <value>Virology</value>
   </data>
-  <data name="u4ebau7c7bu5b66" xml:space="preserve">
+  <data name="\u4eba\u7c7b\u5b66" xml:space="preserve">
     <value>Anthropologist</value>
   </data>
-  <data name="u751fu7269u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u751f\u7269\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines in biology</value>
   </data>
-  <data name="u5fc3u7406u5b66u53f2" xml:space="preserve">
+  <data name="\u5fc3\u7406\u5b66\u53f2" xml:space="preserve">
     <value>History of psychology</value>
   </data>
-  <data name="u8ba4u77e5u5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u8ba4\u77e5\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>Cognitive psychology</value>
   </data>
-  <data name="u793eu4f1au5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u793e\u4f1a\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>Social psychology</value>
   </data>
-  <data name="u5b9eu9a8cu5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u5b9e\u9a8c\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>Experimental psychology</value>
   </data>
-  <data name="u53d1u5c55u5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u53d1\u5c55\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>Developmental psychology</value>
   </data>
-  <data name="u533bu5b66u5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u533b\u5b66\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>Medical psychology</value>
   </data>
-  <data name="u4ebau683cu5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u4eba\u683c\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>Personality psychology</value>
   </data>
-  <data name="u4e34u5e8au4e0eu54a8u8be2u5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u4e34\u5e8a\u4e0e\u54a8\u8be2\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>Clinical and consulting psychology</value>
   </data>
-  <data name="u5fc3u7406u6d4bu91cf" xml:space="preserve">
+  <data name="\u5fc3\u7406\u6d4b\u91cf" xml:space="preserve">
     <value>Psychological measurement</value>
   </data>
-  <data name="u5fc3u7406u7edfu8ba1" xml:space="preserve">
+  <data name="\u5fc3\u7406\u7edf\u8ba1" xml:space="preserve">
     <value>Psychological statistics</value>
   </data>
-  <data name="u751fu7406u5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u751f\u7406\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>Physiological psychology</value>
   </data>
-  <data name="u5de5u4e1au5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u5de5\u4e1a\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>Industrial psychology</value>
   </data>
-  <data name="u7ba1u7406u5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u7ba1\u7406\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>Managerial Psychology</value>
   </data>
-  <data name="u5e94u7528u5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u5e94\u7528\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>Applied psychology</value>
   </data>
-  <data name="u6559u80b2u5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u6559\u80b2\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>Educational psychology</value>
   </data>
-  <data name="u6cd5u5236u5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u6cd5\u5236\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>Legal psychology</value>
   </data>
-  <data name="u5fc3u7406u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u5fc3\u7406\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of psychology</value>
   </data>
-  <data name="u519cu5b66" xml:space="preserve">
+  <data name="\u519c\u5b66" xml:space="preserve">
     <value>Agriculture</value>
   </data>
-  <data name="u519cu4e1au53f2" xml:space="preserve">
+  <data name="\u519c\u4e1a\u53f2" xml:space="preserve">
     <value>Agricultural history</value>
   </data>
-  <data name="u519cu4e1au57fau7840u5b66u79d1" xml:space="preserve">
+  <data name="\u519c\u4e1a\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
     <value>Basic agricultural science</value>
   </data>
-  <data name="u519cu827au5b66" xml:space="preserve">
+  <data name="\u519c\u827a\u5b66" xml:space="preserve">
     <value>agronomy</value>
   </data>
-  <data name="u56edu827au5b66" xml:space="preserve">
+  <data name="\u56ed\u827a\u5b66" xml:space="preserve">
     <value>Horticulture</value>
   </data>
-  <data name="u519cu4ea7u54c1u8d2eu85cfu4e0eu52a0u5de5" xml:space="preserve">
+  <data name="\u519c\u4ea7\u54c1\u8d2e\u85cf\u4e0e\u52a0\u5de5" xml:space="preserve">
     <value>Storage and processing of agricultural products</value>
   </data>
-  <data name="u571fu58e4u5b66" xml:space="preserve">
+  <data name="\u571f\u58e4\u5b66" xml:space="preserve">
     <value>Soil science</value>
   </data>
-  <data name="u690du7269u4fddu62a4u5b66" xml:space="preserve">
+  <data name="\u690d\u7269\u4fdd\u62a4\u5b66" xml:space="preserve">
     <value>Plant protection</value>
   </data>
-  <data name="u519cu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u519c\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other subjects in agronomy</value>
   </data>
-  <data name="u6797u5b66" xml:space="preserve">
+  <data name="\u6797\u5b66" xml:space="preserve">
     <value>Forestry</value>
   </data>
-  <data name="u6797u4e1au57fau7840u5b66u79d1" xml:space="preserve">
+  <data name="\u6797\u4e1a\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
     <value>Forestry basics</value>
   </data>
-  <data name="u6797u6728u9057u4f20u80b2u79cdu5b66" xml:space="preserve">
+  <data name="\u6797\u6728\u9057\u4f20\u80b2\u79cd\u5b66" xml:space="preserve">
     <value>Forest genetics and breeding</value>
   </data>
-  <data name="u68eeu6797u57f9u80b2u5b66" xml:space="preserve">
+  <data name="\u68ee\u6797\u57f9\u80b2\u5b66" xml:space="preserve">
     <value>Forest cultivation</value>
   </data>
-  <data name="u68eeu6797u7ecfu7406u5b66" xml:space="preserve">
+  <data name="\u68ee\u6797\u7ecf\u7406\u5b66" xml:space="preserve">
     <value>Forest manager learn</value>
   </data>
-  <data name="u68eeu6797u4fddu62a4u5b66" xml:space="preserve">
+  <data name="\u68ee\u6797\u4fdd\u62a4\u5b66" xml:space="preserve">
     <value>Forest conservation</value>
   </data>
-  <data name="u91ceu751fu52a8u7269u4fddu62a4u4e0eu7ba1u7406" xml:space="preserve">
+  <data name="\u91ce\u751f\u52a8\u7269\u4fdd\u62a4\u4e0e\u7ba1\u7406" xml:space="preserve">
     <value>Wildlife Conservation and Management</value>
   </data>
-  <data name="u9632u62a4u6797u5b66" xml:space="preserve">
+  <data name="\u9632\u62a4\u6797\u5b66" xml:space="preserve">
     <value>Protective forest science</value>
   </data>
-  <data name="u7ecfu6d4eu6797u5b66" xml:space="preserve">
+  <data name="\u7ecf\u6d4e\u6797\u5b66" xml:space="preserve">
     <value>Economic forestry</value>
   </data>
-  <data name="u56edu6797u5b66" xml:space="preserve">
+  <data name="\u56ed\u6797\u5b66" xml:space="preserve">
     <value>Gardening</value>
   </data>
-  <data name="u6797u4e1au5de5u7a0b" xml:space="preserve">
+  <data name="\u6797\u4e1a\u5de5\u7a0b" xml:space="preserve">
     <value>Forestry engineering</value>
   </data>
-  <data name="u68eeu6797u7edfu8ba1u5b66" xml:space="preserve">
+  <data name="\u68ee\u6797\u7edf\u8ba1\u5b66" xml:space="preserve">
     <value>Forest statistics</value>
   </data>
-  <data name="u6797u4e1au7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u6797\u4e1a\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Forestry economics</value>
   </data>
-  <data name="u6797u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u6797\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Lin Xue other disciplines</value>
   </data>
-  <data name="u755cu7267u3001u517du533bu79d1u5b66" xml:space="preserve">
+  <data name="\u755c\u7267\u3001\u517d\u533b\u79d1\u5b66" xml:space="preserve">
     <value>Animal husbandry, veterinary science</value>
   </data>
-  <data name="u755cu7267u3001u517du533bu79d1u5b66u57fau7840u5b66u79d1" xml:space="preserve">
+  <data name="\u755c\u7267\u3001\u517d\u533b\u79d1\u5b66\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
     <value>Basic disciplines in animal husbandry and veterinary science</value>
   </data>
-  <data name="u755cu7267u5b66" xml:space="preserve">
+  <data name="\u755c\u7267\u5b66" xml:space="preserve">
     <value>Animal husbandry</value>
   </data>
-  <data name="u517du533bu5b66" xml:space="preserve">
+  <data name="\u517d\u533b\u5b66" xml:space="preserve">
     <value>Veterinary Science</value>
   </data>
-  <data name="u755cu7267u3001u517du533bu79d1u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u755c\u7267\u3001\u517d\u533b\u79d1\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines in animal husbandry and veterinary science</value>
   </data>
-  <data name="u6c34u4ea7u5b66" xml:space="preserve">
+  <data name="\u6c34\u4ea7\u5b66" xml:space="preserve">
     <value>Aquatic studies</value>
   </data>
-  <data name="u6c34u4ea7u5b66u57fau7840u5b66u79d1" xml:space="preserve">
+  <data name="\u6c34\u4ea7\u5b66\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
     <value>Basic discipline of aquaculture</value>
   </data>
-  <data name="u6c34u4ea7u589eu6b96u5b66" xml:space="preserve">
+  <data name="\u6c34\u4ea7\u589e\u6b96\u5b66" xml:space="preserve">
     <value>Aquatic proliferation</value>
   </data>
-  <data name="u6c34u4ea7u517bu6b96u5b66" xml:space="preserve">
+  <data name="\u6c34\u4ea7\u517b\u6b96\u5b66" xml:space="preserve">
     <value>Aquaculture</value>
   </data>
-  <data name="u6c34u4ea7u9972u6599u5b66" xml:space="preserve">
+  <data name="\u6c34\u4ea7\u9972\u6599\u5b66" xml:space="preserve">
     <value>Aquatic feed learning</value>
   </data>
-  <data name="u6c34u4ea7u4fddu62a4u5b66" xml:space="preserve">
+  <data name="\u6c34\u4ea7\u4fdd\u62a4\u5b66" xml:space="preserve">
     <value>Aquatic Protection</value>
   </data>
-  <data name="u6355u635eu5b66" xml:space="preserve">
+  <data name="\u6355\u635e\u5b66" xml:space="preserve">
     <value>Fishing learning</value>
   </data>
-  <data name="u6c34u4ea7u54c1u8d2eu85cfu4e0eu52a0u5de5" xml:space="preserve">
+  <data name="\u6c34\u4ea7\u54c1\u8d2e\u85cf\u4e0e\u52a0\u5de5" xml:space="preserve">
     <value>Aquatic product storage and processing</value>
   </data>
-  <data name="u6c34u4ea7u5de5u7a0bu5b66" xml:space="preserve">
+  <data name="\u6c34\u4ea7\u5de5\u7a0b\u5b66" xml:space="preserve">
     <value>Aquatic Engineering</value>
   </data>
-  <data name="u6c34u4ea7u8d44u6e90u5b66" xml:space="preserve">
+  <data name="\u6c34\u4ea7\u8d44\u6e90\u5b66" xml:space="preserve">
     <value>Aquatic resources science</value>
   </data>
-  <data name="u6c34u4ea7u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u6c34\u4ea7\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Aquatic Economics</value>
   </data>
-  <data name="u6c34u4ea7u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u6c34\u4ea7\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines in aquaculture</value>
   </data>
-  <data name="u533bu5b66u53f2" xml:space="preserve">
+  <data name="\u533b\u5b66\u53f2" xml:space="preserve">
     <value>Medical history</value>
   </data>
-  <data name="u533bu5b66u751fu7269u5316u5b66" xml:space="preserve">
+  <data name="\u533b\u5b66\u751f\u7269\u5316\u5b66" xml:space="preserve">
     <value>Medical biochemistry</value>
   </data>
-  <data name="u4ebau4f53u89e3u5256u5b66" xml:space="preserve">
+  <data name="\u4eba\u4f53\u89e3\u5256\u5b66" xml:space="preserve">
     <value>Human anatomy</value>
   </data>
-  <data name="u533bu5b66u7ec6u80deu751fu7269u5b66" xml:space="preserve">
+  <data name="\u533b\u5b66\u7ec6\u80de\u751f\u7269\u5b66" xml:space="preserve">
     <value>Medical Cell Biology</value>
   </data>
-  <data name="u4ebau4f53u751fu7406u5b66" xml:space="preserve">
+  <data name="\u4eba\u4f53\u751f\u7406\u5b66" xml:space="preserve">
     <value>Human physiology</value>
   </data>
-  <data name="u4ebau4f53u7ec4u7ec7u80dau80ceu5b66" xml:space="preserve">
+  <data name="\u4eba\u4f53\u7ec4\u7ec7\u80da\u80ce\u5b66" xml:space="preserve">
     <value>Human tissue embryology</value>
   </data>
-  <data name="u533bu5b66u9057u4f20u5b66" xml:space="preserve">
+  <data name="\u533b\u5b66\u9057\u4f20\u5b66" xml:space="preserve">
     <value>Medical Genetics</value>
   </data>
-  <data name="u653eu5c04u533bu5b66" xml:space="preserve">
+  <data name="\u653e\u5c04\u533b\u5b66" xml:space="preserve">
     <value>Radiation medicine</value>
   </data>
-  <data name="u4ebau4f53u514du75abu5b66" xml:space="preserve">
+  <data name="\u4eba\u4f53\u514d\u75ab\u5b66" xml:space="preserve">
     <value>Human immunology</value>
   </data>
-  <data name="u533bu5b66u5bc4u751fu866bu5b66" xml:space="preserve">
+  <data name="\u533b\u5b66\u5bc4\u751f\u866b\u5b66" xml:space="preserve">
     <value>Medical parasitology</value>
   </data>
-  <data name="u533bu5b66u5faeu751fu7269u5b66" xml:space="preserve">
+  <data name="\u533b\u5b66\u5fae\u751f\u7269\u5b66" xml:space="preserve">
     <value>Microorganism medicine</value>
   </data>
-  <data name="u75c5u7406u5b66" xml:space="preserve">
+  <data name="\u75c5\u7406\u5b66" xml:space="preserve">
     <value>Pathology</value>
   </data>
-  <data name="u836fu7406u5b66" xml:space="preserve">
+  <data name="\u836f\u7406\u5b66" xml:space="preserve">
     <value>Pharmacology</value>
   </data>
-  <data name="u533bu5b66u5b9eu9a8cu52a8u7269u5b66" xml:space="preserve">
+  <data name="\u533b\u5b66\u5b9e\u9a8c\u52a8\u7269\u5b66" xml:space="preserve">
     <value>Medical laboratory zoology</value>
   </data>
-  <data name="u533bu5b66u7edfu8ba1u5b66" xml:space="preserve">
+  <data name="\u533b\u5b66\u7edf\u8ba1\u5b66" xml:space="preserve">
     <value>Medical statistics</value>
   </data>
-  <data name="u57fau7840u533bu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u57fa\u7840\u533b\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other subjects of basic medicine</value>
   </data>
-  <data name="u4e34u5e8au533bu5b66" xml:space="preserve">
+  <data name="\u4e34\u5e8a\u533b\u5b66" xml:space="preserve">
     <value>Clinical medicine</value>
   </data>
-  <data name="u4e34u5e8au8bcau65adu5b66" xml:space="preserve">
+  <data name="\u4e34\u5e8a\u8bca\u65ad\u5b66" xml:space="preserve">
     <value>Clinical diagnostics</value>
   </data>
-  <data name="u4fddu5065u533bu5b66" xml:space="preserve">
+  <data name="\u4fdd\u5065\u533b\u5b66" xml:space="preserve">
     <value>Health medicine</value>
   </data>
-  <data name="u7406u7597u5b66" xml:space="preserve">
+  <data name="\u7406\u7597\u5b66" xml:space="preserve">
     <value>Physical Therapy*</value>
   </data>
-  <data name="u9ebbu9189u5b66" xml:space="preserve">
+  <data name="\u9ebb\u9189\u5b66" xml:space="preserve">
     <value>Anesthesiology</value>
   </data>
-  <data name="u5185u79d1u5b66" xml:space="preserve">
+  <data name="\u5185\u79d1\u5b66" xml:space="preserve">
     <value>Internal Medicine</value>
   </data>
-  <data name="u5916u79d1u5b66" xml:space="preserve">
+  <data name="\u5916\u79d1\u5b66" xml:space="preserve">
     <value>Surgery</value>
   </data>
-  <data name="u5987u4ea7u79d1u5b66" xml:space="preserve">
+  <data name="\u5987\u4ea7\u79d1\u5b66" xml:space="preserve">
     <value>Obstetrics and Gynecology:</value>
   </data>
-  <data name="u513fu79d1u5b66" xml:space="preserve">
+  <data name="\u513f\u79d1\u5b66" xml:space="preserve">
     <value>pediatrics:</value>
   </data>
-  <data name="u773cu79d1u5b66" xml:space="preserve">
+  <data name="\u773c\u79d1\u5b66" xml:space="preserve">
     <value>Ophthalmology</value>
   </data>
-  <data name="u8033u9f3bu54bdu5589u79d1u5b66" xml:space="preserve">
+  <data name="\u8033\u9f3b\u54bd\u5589\u79d1\u5b66" xml:space="preserve">
     <value>Otolaryngology</value>
   </data>
-  <data name="u53e3u8154u533bu5b66" xml:space="preserve">
+  <data name="\u53e3\u8154\u533b\u5b66" xml:space="preserve">
     <value>Stomatology</value>
   </data>
-  <data name="u76aeu80a4u75c5u5b66" xml:space="preserve">
+  <data name="\u76ae\u80a4\u75c5\u5b66" xml:space="preserve">
     <value>Dermatology</value>
   </data>
-  <data name="u6027u533bu5b66" xml:space="preserve">
+  <data name="\u6027\u533b\u5b66" xml:space="preserve">
     <value>Sexual medicine</value>
   </data>
-  <data name="u795eu7ecfu75c5u5b66" xml:space="preserve">
+  <data name="\u795e\u7ecf\u75c5\u5b66" xml:space="preserve">
     <value>Neurologic:</value>
   </data>
-  <data name="u7cbeu795eu75c5u5b66" xml:space="preserve">
+  <data name="\u7cbe\u795e\u75c5\u5b66" xml:space="preserve">
     <value>psychiatry</value>
   </data>
-  <data name="u91cdu75c7u533bu5b66" xml:space="preserve">
+  <data name="\u91cd\u75c7\u533b\u5b66" xml:space="preserve">
     <value>Critical medicine</value>
   </data>
-  <data name="u6025u8bcau533bu5b66" xml:space="preserve">
+  <data name="\u6025\u8bca\u533b\u5b66" xml:space="preserve">
     <value>Emergency medicine</value>
   </data>
-  <data name="u6838u533bu5b66" xml:space="preserve">
+  <data name="\u6838\u533b\u5b66" xml:space="preserve">
     <value>Nuclear Medicine</value>
   </data>
-  <data name="u5168u79d1u533bu5b66" xml:space="preserve">
+  <data name="\u5168\u79d1\u533b\u5b66" xml:space="preserve">
     <value>General medicine</value>
   </data>
-  <data name="u80bfu7624u5b66" xml:space="preserve">
+  <data name="\u80bf\u7624\u5b66" xml:space="preserve">
     <value>Oncology</value>
   </data>
-  <data name="u62a4u7406u5b66" xml:space="preserve">
+  <data name="\u62a4\u7406\u5b66" xml:space="preserve">
     <value>Nurses</value>
   </data>
-  <data name="u4e34u5e8au533bu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u4e34\u5e8a\u533b\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other subjects in clinical medicine</value>
   </data>
-  <data name="u8425u517bu5b66" xml:space="preserve">
+  <data name="\u8425\u517b\u5b66" xml:space="preserve">
     <value>Nutrition</value>
   </data>
-  <data name="u6bd2u7406u5b66" xml:space="preserve">
+  <data name="\u6bd2\u7406\u5b66" xml:space="preserve">
     <value>Toxicology</value>
   </data>
-  <data name="u6d88u6bd2u5b66" xml:space="preserve">
+  <data name="\u6d88\u6bd2\u5b66" xml:space="preserve">
     <value>Disinfection</value>
   </data>
-  <data name="u6d41u884cu75c5u5b66" xml:space="preserve">
+  <data name="\u6d41\u884c\u75c5\u5b66" xml:space="preserve">
     <value>Epidemiology</value>
   </data>
-  <data name="u5a92u4ecbu751fu7269u63a7u5236u5b66" xml:space="preserve">
+  <data name="\u5a92\u4ecb\u751f\u7269\u63a7\u5236\u5b66" xml:space="preserve">
     <value>Media Biology Control</value>
   </data>
-  <data name="u73afu5883u533bu5b66" xml:space="preserve">
+  <data name="\u73af\u5883\u533b\u5b66" xml:space="preserve">
     <value>Environmental medicine</value>
   </data>
-  <data name="u804cu4e1au75c5u5b66" xml:space="preserve">
+  <data name="\u804c\u4e1a\u75c5\u5b66" xml:space="preserve">
     <value>Occupational disease</value>
   </data>
-  <data name="u5730u65b9u75c5u5b66" xml:space="preserve">
+  <data name="\u5730\u65b9\u75c5\u5b66" xml:space="preserve">
     <value>Endemic disease</value>
   </data>
-  <data name="u70edu5e26u533bu5b66" xml:space="preserve">
+  <data name="\u70ed\u5e26\u533b\u5b66" xml:space="preserve">
     <value>Tropical medicine</value>
   </data>
-  <data name="u793eu4f1au533bu5b66" xml:space="preserve">
+  <data name="\u793e\u4f1a\u533b\u5b66" xml:space="preserve">
     <value>Social medicine</value>
   </data>
-  <data name="u536bu751fu68c0u9a8cu5b66" xml:space="preserve">
+  <data name="\u536b\u751f\u68c0\u9a8c\u5b66" xml:space="preserve">
     <value>Health inspection</value>
   </data>
-  <data name="u98dfu54c1u536bu751fu5b66" xml:space="preserve">
+  <data name="\u98df\u54c1\u536b\u751f\u5b66" xml:space="preserve">
     <value>Food hygiene</value>
   </data>
-  <data name="u513fu5c11u4e0eu5b66u6821u536bu751fu5b66" xml:space="preserve">
+  <data name="\u513f\u5c11\u4e0e\u5b66\u6821\u536b\u751f\u5b66" xml:space="preserve">
     <value>Children and school hygiene</value>
   </data>
-  <data name="u5987u5e7cu536bu751fu5b66" xml:space="preserve">
+  <data name="\u5987\u5e7c\u536b\u751f\u5b66" xml:space="preserve">
     <value>Maternal and child hygiene</value>
   </data>
-  <data name="u73afu5883u536bu751fu5b66" xml:space="preserve">
+  <data name="\u73af\u5883\u536b\u751f\u5b66" xml:space="preserve">
     <value>Environmental hygiene</value>
   </data>
-  <data name="u52b3u52a8u536bu751fu5b66" xml:space="preserve">
+  <data name="\u52b3\u52a8\u536b\u751f\u5b66" xml:space="preserve">
     <value>Labor hygiene</value>
   </data>
-  <data name="u653eu5c04u536bu751fu5b66" xml:space="preserve">
+  <data name="\u653e\u5c04\u536b\u751f\u5b66" xml:space="preserve">
     <value>Radiation Hygiene</value>
   </data>
-  <data name="u536bu751fu5de5u7a0bu5b66" xml:space="preserve">
+  <data name="\u536b\u751f\u5de5\u7a0b\u5b66" xml:space="preserve">
     <value>Health Engineering</value>
   </data>
-  <data name="u536bu751fu7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u536b\u751f\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Health economics</value>
   </data>
-  <data name="u536bu751fu7edfu8ba1u5b66" xml:space="preserve">
+  <data name="\u536b\u751f\u7edf\u8ba1\u5b66" xml:space="preserve">
     <value>Health statistics</value>
   </data>
-  <data name="u4f18u751fu5b66" xml:space="preserve">
+  <data name="\u4f18\u751f\u5b66" xml:space="preserve">
     <value>eugenics</value>
   </data>
-  <data name="u5065u5eb7u4fc3u8fdbu4e0eu5065u5eb7u6559u80b2u5b66" xml:space="preserve">
+  <data name="\u5065\u5eb7\u4fc3\u8fdb\u4e0e\u5065\u5eb7\u6559\u80b2\u5b66" xml:space="preserve">
     <value>Health promotion and health education</value>
   </data>
-  <data name="u536bu751fu7ba1u7406u5b66" xml:space="preserve">
+  <data name="\u536b\u751f\u7ba1\u7406\u5b66" xml:space="preserve">
     <value>Health Management</value>
   </data>
-  <data name="u519bu4e8bu533bu5b66u4e0eu7279u79cdu533bu5b66" xml:space="preserve">
+  <data name="\u519b\u4e8b\u533b\u5b66\u4e0e\u7279\u79cd\u533b\u5b66" xml:space="preserve">
     <value>Military medicine and special medicine</value>
   </data>
-  <data name="u519bu4e8bu533bu5b66u4e0eu7279u79cdu533bu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u519b\u4e8b\u533b\u5b66\u4e0e\u7279\u79cd\u533b\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines in military medicine and specialty medicine</value>
   </data>
-  <data name="u836fu7269u5316u5b66" xml:space="preserve">
+  <data name="\u836f\u7269\u5316\u5b66" xml:space="preserve">
     <value>Medicinal chemistry</value>
   </data>
-  <data name="u751fu7269u836fu7269u5b66" xml:space="preserve">
+  <data name="\u751f\u7269\u836f\u7269\u5b66" xml:space="preserve">
     <value>Biopharmaceuticals</value>
   </data>
-  <data name="u5faeu751fu7269u836fu7269u5b66" xml:space="preserve">
+  <data name="\u5fae\u751f\u7269\u836f\u7269\u5b66" xml:space="preserve">
     <value>Microbial pharmacology</value>
   </data>
-  <data name="u653eu5c04u6027u836fu7269u5b66" xml:space="preserve">
+  <data name="\u653e\u5c04\u6027\u836f\u7269\u5b66" xml:space="preserve">
     <value>Radiopharmaceuticals</value>
   </data>
-  <data name="u836fu5242u5b66" xml:space="preserve">
+  <data name="\u836f\u5242\u5b66" xml:space="preserve">
     <value>Pharmacy</value>
   </data>
-  <data name="u836fu7269u7ba1u7406u5b66" xml:space="preserve">
+  <data name="\u836f\u7269\u7ba1\u7406\u5b66" xml:space="preserve">
     <value>Drug management</value>
   </data>
-  <data name="u836fu7269u7edfu8ba1u5b66" xml:space="preserve">
+  <data name="\u836f\u7269\u7edf\u8ba1\u5b66" xml:space="preserve">
     <value>Drug statistics</value>
   </data>
-  <data name="u836fu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u836f\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of pharmacy</value>
   </data>
-  <data name="u6c11u65cfu533bu5b66" xml:space="preserve">
+  <data name="\u6c11\u65cf\u533b\u5b66" xml:space="preserve">
     <value>Ethnic medicine</value>
   </data>
-  <data name="u4e2du897fu533bu7ed3u5408u533bu5b66" xml:space="preserve">
+  <data name="\u4e2d\u897f\u533b\u7ed3\u5408\u533b\u5b66" xml:space="preserve">
     <value>Integrated Chinese and Western Medicine</value>
   </data>
-  <data name="u4e2du533bu5b66u4e0eu4e2du836fu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u4e2d\u533b\u5b66\u4e0e\u4e2d\u836f\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Chinese medicine and other subjects of Chinese medicine</value>
   </data>
-  <data name="u5de5u7a0bu6570u5b66" xml:space="preserve">
+  <data name="\u5de5\u7a0b\u6570\u5b66" xml:space="preserve">
     <value>Engineering Mathematics</value>
   </data>
-  <data name="u5de5u7a0bu63a7u5236u8bba" xml:space="preserve">
+  <data name="\u5de5\u7a0b\u63a7\u5236\u8bba" xml:space="preserve">
     <value>Engineering cybernetics</value>
   </data>
-  <data name="u5de5u7a0bu529bu5b66" xml:space="preserve">
+  <data name="\u5de5\u7a0b\u529b\u5b66" xml:space="preserve">
     <value>Applied mechanics</value>
   </data>
-  <data name="u5de5u7a0bu7269u7406u5b66" xml:space="preserve">
+  <data name="\u5de5\u7a0b\u7269\u7406\u5b66" xml:space="preserve">
     <value>Engineering physics</value>
   </data>
-  <data name="u5de5u7a0bu5730u8d28u5b66" xml:space="preserve">
+  <data name="\u5de5\u7a0b\u5730\u8d28\u5b66" xml:space="preserve">
     <value>Engineering geology</value>
   </data>
-  <data name="u5de5u7a0bu6c34u6587u5b66" xml:space="preserve">
+  <data name="\u5de5\u7a0b\u6c34\u6587\u5b66" xml:space="preserve">
     <value>Engineering hydrology</value>
   </data>
-  <data name="u5de5u7a0bu4effu751fu5b66" xml:space="preserve">
+  <data name="\u5de5\u7a0b\u4eff\u751f\u5b66" xml:space="preserve">
     <value>Engineering bionics</value>
   </data>
-  <data name="u5de5u7a0bu5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u5de5\u7a0b\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>Engineering psychology</value>
   </data>
-  <data name="u6807u51c6u79d1u5b66u6280u672f" xml:space="preserve">
+  <data name="\u6807\u51c6\u79d1\u5b66\u6280\u672f" xml:space="preserve">
     <value>Standard science and technology</value>
   </data>
-  <data name="u5de5u7a0bu56feu5b66" xml:space="preserve">
+  <data name="\u5de5\u7a0b\u56fe\u5b66" xml:space="preserve">
     <value>Engineering Graphics</value>
   </data>
-  <data name="u52d8u67e5u6280u672f" xml:space="preserve">
+  <data name="\u52d8\u67e5\u6280\u672f" xml:space="preserve">
     <value>Exploration technology</value>
   </data>
-  <data name="u5de5u7a0bu901au7528u6280u672f" xml:space="preserve">
+  <data name="\u5de5\u7a0b\u901a\u7528\u6280\u672f" xml:space="preserve">
     <value>Engineering general technology</value>
   </data>
-  <data name="u5de5u4e1au5de5u7a0bu5b66" xml:space="preserve">
+  <data name="\u5de5\u4e1a\u5de5\u7a0b\u5b66" xml:space="preserve">
     <value>Industrial Engineers</value>
   </data>
-  <data name="u63a7u5236u79d1u5b66u4e0eu6280u672f" xml:space="preserve">
+  <data name="\u63a7\u5236\u79d1\u5b66\u4e0e\u6280\u672f" xml:space="preserve">
     <value>Control science and technology</value>
   </data>
-  <data name="u4effu771fu79d1u5b66u6280u672f" xml:space="preserve">
+  <data name="\u4eff\u771f\u79d1\u5b66\u6280\u672f" xml:space="preserve">
     <value>Simulation science and technology</value>
   </data>
-  <data name="u4fe1u606fu5b89u5168u6280u672f" xml:space="preserve">
+  <data name="\u4fe1\u606f\u5b89\u5168\u6280\u672f" xml:space="preserve">
     <value>Information security technology</value>
   </data>
-  <data name="u4fe1u606fu6280u672fu7cfbu7edfu6027u5e94u7528" xml:space="preserve">
+  <data name="\u4fe1\u606f\u6280\u672f\u7cfb\u7edf\u6027\u5e94\u7528" xml:space="preserve">
     <value>Information technology systemic application</value>
   </data>
-  <data name="u7269u7406u5b66u76f8u5173u5de5u7a0bu4e0eu6280u672f" xml:space="preserve">
+  <data name="\u7269\u7406\u5b66\u76f8\u5173\u5de5\u7a0b\u4e0e\u6280\u672f" xml:space="preserve">
     <value>Physics related engineering and technology</value>
   </data>
-  <data name="u5149u5b66u5de5u7a0b" xml:space="preserve">
+  <data name="\u5149\u5b66\u5de5\u7a0b" xml:space="preserve">
     <value>Optical engineering</value>
   </data>
-  <data name="u6d77u6d0bu5de5u7a0bu4e0eu6280u672f" xml:space="preserve">
+  <data name="\u6d77\u6d0b\u5de5\u7a0b\u4e0e\u6280\u672f" xml:space="preserve">
     <value>Marine engineering and technology</value>
   </data>
-  <data name="u519cu4e1au5de5u7a0b" xml:space="preserve">
+  <data name="\u519c\u4e1a\u5de5\u7a0b" xml:space="preserve">
     <value>Agricultural Engineering</value>
   </data>
-  <data name="u751fu7269u533bu5b66u5de5u7a0bu5b66" xml:space="preserve">
+  <data name="\u751f\u7269\u533b\u5b66\u5de5\u7a0b\u5b66" xml:space="preserve">
     <value>Biomedical Engineering</value>
   </data>
-  <data name="u5927u5730u6d4bu91cfu6280u672f" xml:space="preserve">
+  <data name="\u5927\u5730\u6d4b\u91cf\u6280\u672f" xml:space="preserve">
     <value>Geodetic technology</value>
   </data>
-  <data name="u6444u5f71u6d4bu91cfu4e0eu9065u611fu6280u672f" xml:space="preserve">
+  <data name="\u6444\u5f71\u6d4b\u91cf\u4e0e\u9065\u611f\u6280\u672f" xml:space="preserve">
     <value>Photogrammetry and remote sensing technology</value>
   </data>
-  <data name="u5730u56feu5236u56feu6280u672f" xml:space="preserve">
+  <data name="\u5730\u56fe\u5236\u56fe\u6280\u672f" xml:space="preserve">
     <value>Map drawing technology</value>
   </data>
-  <data name="u5de5u7a0bu6d4bu91cfu6280u672f" xml:space="preserve">
+  <data name="\u5de5\u7a0b\u6d4b\u91cf\u6280\u672f" xml:space="preserve">
     <value>Engineering measurement technology</value>
   </data>
-  <data name="u6d77u6d0bu6d4bu7ed8" xml:space="preserve">
+  <data name="\u6d77\u6d0b\u6d4b\u7ed8" xml:space="preserve">
     <value>Marine mapping</value>
   </data>
-  <data name="u6d4bu7ed8u4eeau5668" xml:space="preserve">
+  <data name="\u6d4b\u7ed8\u4eea\u5668" xml:space="preserve">
     <value>Surveying instruments</value>
   </data>
-  <data name="u6d4bu7ed8u79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u6d4b\u7ed8\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of surveying and mapping science and technology</value>
   </data>
-  <data name="u6750u6599u79d1u5b66" xml:space="preserve">
+  <data name="\u6750\u6599\u79d1\u5b66" xml:space="preserve">
     <value>Materials science</value>
   </data>
-  <data name="u6750u6599u79d1u5b66u57fau7840u5b66u79d1" xml:space="preserve">
+  <data name="\u6750\u6599\u79d1\u5b66\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
     <value>Basic science of materials science</value>
   </data>
-  <data name="u6750u6599u8868u9762u4e0eu754cu9762" xml:space="preserve">
+  <data name="\u6750\u6599\u8868\u9762\u4e0e\u754c\u9762" xml:space="preserve">
     <value>Material surface and interface</value>
   </data>
-  <data name="u6750u6599u5931u6548u4e0eu4fddu62a4" xml:space="preserve">
+  <data name="\u6750\u6599\u5931\u6548\u4e0e\u4fdd\u62a4" xml:space="preserve">
     <value>Material failure and protection</value>
   </data>
-  <data name="u6750u6599u68c0u6d4bu4e0eu5206u6790u6280u672f" xml:space="preserve">
+  <data name="\u6750\u6599\u68c0\u6d4b\u4e0e\u5206\u6790\u6280\u672f" xml:space="preserve">
     <value>Material testing and analysis technology</value>
   </data>
-  <data name="u6750u6599u5b9eu9a8c" xml:space="preserve">
+  <data name="\u6750\u6599\u5b9e\u9a8c" xml:space="preserve">
     <value>Material experiment</value>
   </data>
-  <data name="u6750u6599u5408u6210u4e0eu52a0u5de5u5de5u827a" xml:space="preserve">
+  <data name="\u6750\u6599\u5408\u6210\u4e0e\u52a0\u5de5\u5de5\u827a" xml:space="preserve">
     <value>Material synthesis and processing technology</value>
   </data>
-  <data name="u91d1u5c5eu6750u6599" xml:space="preserve">
+  <data name="\u91d1\u5c5e\u6750\u6599" xml:space="preserve">
     <value>Metal Material</value>
   </data>
-  <data name="u65e0u673au975eu91d1u5c5eu6750u6599" xml:space="preserve">
+  <data name="\u65e0\u673a\u975e\u91d1\u5c5e\u6750\u6599" xml:space="preserve">
     <value>Inorganic non-metallic materials</value>
   </data>
-  <data name="u6709u673au9ad8u5206u5b50u6750u6599" xml:space="preserve">
+  <data name="\u6709\u673a\u9ad8\u5206\u5b50\u6750\u6599" xml:space="preserve">
     <value>Organic polymer materials</value>
   </data>
-  <data name="u590du5408u6750u6599" xml:space="preserve">
+  <data name="\u590d\u5408\u6750\u6599" xml:space="preserve">
     <value>composite</value>
   </data>
-  <data name="u751fu7269u6750u6599" xml:space="preserve">
+  <data name="\u751f\u7269\u6750\u6599" xml:space="preserve">
     <value>biomaterials</value>
   </data>
-  <data name="u7eb3u7c73u6750u6599" xml:space="preserve">
+  <data name="\u7eb3\u7c73\u6750\u6599" xml:space="preserve">
     <value>Nanomaterials</value>
   </data>
-  <data name="u6750u6599u79d1u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u6750\u6599\u79d1\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines in materials science</value>
   </data>
-  <data name="u77ffu5c71u5de5u7a0bu6280u672f" xml:space="preserve">
+  <data name="\u77ff\u5c71\u5de5\u7a0b\u6280\u672f" xml:space="preserve">
     <value>Mining engineering technology</value>
   </data>
-  <data name="u77ffu5c71u5730u8d28u5b66" xml:space="preserve">
+  <data name="\u77ff\u5c71\u5730\u8d28\u5b66" xml:space="preserve">
     <value>Mine geology</value>
   </data>
-  <data name="u77ffu5c71u6d4bu91cf" xml:space="preserve">
+  <data name="\u77ff\u5c71\u6d4b\u91cf" xml:space="preserve">
     <value>Mine measurement</value>
   </data>
-  <data name="u77ffu5c71u8bbeu8ba1" xml:space="preserve">
+  <data name="\u77ff\u5c71\u8bbe\u8ba1" xml:space="preserve">
     <value>Mine design</value>
   </data>
-  <data name="u77ffu5c71u5730u9762u5de5u7a0b" xml:space="preserve">
+  <data name="\u77ff\u5c71\u5730\u9762\u5de5\u7a0b" xml:space="preserve">
     <value>Mine ground engineering</value>
   </data>
-  <data name="u4e95u5df7u5de5u7a0b" xml:space="preserve">
+  <data name="\u4e95\u5df7\u5de5\u7a0b" xml:space="preserve">
     <value>Lane engineering</value>
   </data>
-  <data name="u91c7u77ffu5de5u7a0b" xml:space="preserve">
+  <data name="\u91c7\u77ff\u5de5\u7a0b" xml:space="preserve">
     <value>mining project</value>
   </data>
-  <data name="u9009u77ffu5de5u7a0b" xml:space="preserve">
+  <data name="\u9009\u77ff\u5de5\u7a0b" xml:space="preserve">
     <value>Mineral processing project</value>
   </data>
-  <data name="u94bbu4e95u5de5u7a0b" xml:space="preserve">
+  <data name="\u94bb\u4e95\u5de5\u7a0b" xml:space="preserve">
     <value>Drilling engineering</value>
   </data>
-  <data name="u6cb9u6c14u7530u4e95u5f00u53d1u5de5u7a0b" xml:space="preserve">
+  <data name="\u6cb9\u6c14\u7530\u4e95\u5f00\u53d1\u5de5\u7a0b" xml:space="preserve">
     <value>Oil and gas field well development project</value>
   </data>
-  <data name="u77f3u6cb9u3001u5929u7136u6c14u50a8u5b58u4e0eu8fd0u8f93u5de5u7a0b" xml:space="preserve">
+  <data name="\u77f3\u6cb9\u3001\u5929\u7136\u6c14\u50a8\u5b58\u4e0e\u8fd0\u8f93\u5de5\u7a0b" xml:space="preserve">
     <value>Oil and gas storage and transportation projects</value>
   </data>
-  <data name="u77ffu5c71u673au68b0u5de5u7a0b" xml:space="preserve">
+  <data name="\u77ff\u5c71\u673a\u68b0\u5de5\u7a0b" xml:space="preserve">
     <value>Mining machinery engineering</value>
   </data>
-  <data name="u77ffu5c71u7535u6c14u5de5u7a0b" xml:space="preserve">
+  <data name="\u77ff\u5c71\u7535\u6c14\u5de5\u7a0b" xml:space="preserve">
     <value>Mine electrical engineering</value>
   </data>
-  <data name="u91c7u77ffu73afu5883u5de5u7a0b" xml:space="preserve">
+  <data name="\u91c7\u77ff\u73af\u5883\u5de5\u7a0b" xml:space="preserve">
     <value>Mining environment engineering</value>
   </data>
-  <data name="u77ffu5c71u5b89u5168" xml:space="preserve">
+  <data name="\u77ff\u5c71\u5b89\u5168" xml:space="preserve">
     <value>Mine safety</value>
   </data>
-  <data name="u77ffu5c71u7efcu5408u5229u7528u5de5u7a0b" xml:space="preserve">
+  <data name="\u77ff\u5c71\u7efc\u5408\u5229\u7528\u5de5\u7a0b" xml:space="preserve">
     <value>Mine comprehensive utilization project</value>
   </data>
-  <data name="u77ffu5c71u5de5u7a0bu6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u77ff\u5c71\u5de5\u7a0b\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines in mining engineering technology</value>
   </data>
-  <data name="u51b6u91d1u5de5u7a0bu6280u672f" xml:space="preserve">
+  <data name="\u51b6\u91d1\u5de5\u7a0b\u6280\u672f" xml:space="preserve">
     <value>Metallurgical engineering technology</value>
   </data>
-  <data name="u51b6u91d1u7269u7406u5316u5b66" xml:space="preserve">
+  <data name="\u51b6\u91d1\u7269\u7406\u5316\u5b66" xml:space="preserve">
     <value>Metallurgical physical chemistry</value>
   </data>
-  <data name="u51b6u91d1u53cdu5e94u5de5u7a0b" xml:space="preserve">
+  <data name="\u51b6\u91d1\u53cd\u5e94\u5de5\u7a0b" xml:space="preserve">
     <value>Metallurgical reaction engineering</value>
   </data>
-  <data name="u51b6u91d1u539fu6599u4e0eu9884u5904u7406" xml:space="preserve">
+  <data name="\u51b6\u91d1\u539f\u6599\u4e0e\u9884\u5904\u7406" xml:space="preserve">
     <value>Metallurgical raw materials and pretreatment</value>
   </data>
-  <data name="u51b6u91d1u70edu80fdu5de5u7a0b" xml:space="preserve">
+  <data name="\u51b6\u91d1\u70ed\u80fd\u5de5\u7a0b" xml:space="preserve">
     <value>Metallurgical thermal engineering</value>
   </data>
-  <data name="u51b6u91d1u6280u672f" xml:space="preserve">
+  <data name="\u51b6\u91d1\u6280\u672f" xml:space="preserve">
     <value>Metallurgical technology</value>
   </data>
-  <data name="u94a2u94c1u51b6u91d1" xml:space="preserve">
+  <data name="\u94a2\u94c1\u51b6\u91d1" xml:space="preserve">
     <value>Ferrous Metallurgy</value>
   </data>
-  <data name="u6709u8272u91d1u5c5eu51b6u91d1" xml:space="preserve">
+  <data name="\u6709\u8272\u91d1\u5c5e\u51b6\u91d1" xml:space="preserve">
     <value>Non-ferrous metallurgy</value>
   </data>
-  <data name="u8f67u5236" xml:space="preserve">
+  <data name="\u8f67\u5236" xml:space="preserve">
     <value>Rolling</value>
   </data>
-  <data name="u51b6u91d1u673au68b0u53cau81eau52a8u5316" xml:space="preserve">
+  <data name="\u51b6\u91d1\u673a\u68b0\u53ca\u81ea\u52a8\u5316" xml:space="preserve">
     <value>Metallurgical machinery and automation</value>
   </data>
-  <data name="u51b6u91d1u5de5u7a0bu6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u51b6\u91d1\u5de5\u7a0b\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of metallurgical engineering technology</value>
   </data>
-  <data name="u673au68b0u53f2" xml:space="preserve">
+  <data name="\u673a\u68b0\u53f2" xml:space="preserve">
     <value>Mechanical history</value>
   </data>
-  <data name="u673au68b0u5b66" xml:space="preserve">
+  <data name="\u673a\u68b0\u5b66" xml:space="preserve">
     <value>Mechanics</value>
   </data>
-  <data name="u673au68b0u8bbeu8ba1" xml:space="preserve">
+  <data name="\u673a\u68b0\u8bbe\u8ba1" xml:space="preserve">
     <value>Start mechanical design</value>
   </data>
-  <data name="u673au68b0u5236u9020u5de5u827au4e0eu8bbeu5907" xml:space="preserve">
+  <data name="\u673a\u68b0\u5236\u9020\u5de5\u827a\u4e0e\u8bbe\u5907" xml:space="preserve">
     <value>Mechanical manufacturing process and equipment</value>
   </data>
-  <data name="u5200u5177u6280u672f" xml:space="preserve">
+  <data name="\u5200\u5177\u6280\u672f" xml:space="preserve">
     <value>Tool technology</value>
   </data>
-  <data name="u673au5e8au6280u672f" xml:space="preserve">
+  <data name="\u673a\u5e8a\u6280\u672f" xml:space="preserve">
     <value>Machine tool technology</value>
   </data>
-  <data name="u6d41u4f53u4f20u52a8u4e0eu63a7u5236" xml:space="preserve">
+  <data name="\u6d41\u4f53\u4f20\u52a8\u4e0e\u63a7\u5236" xml:space="preserve">
     <value>Fluid drive and control</value>
   </data>
-  <data name="u673au68b0u5236u9020u81eau52a8u5316" xml:space="preserve">
+  <data name="\u673a\u68b0\u5236\u9020\u81ea\u52a8\u5316" xml:space="preserve">
     <value>Mechanical manufacturing automation</value>
   </data>
-  <data name="u673au68b0u5de5u7a0bu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u673a\u68b0\u5de5\u7a0b\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Mechanical engineering other disciplines</value>
   </data>
-  <data name="u5de5u7a0bu70edu7269u7406" xml:space="preserve">
+  <data name="\u5de5\u7a0b\u70ed\u7269\u7406" xml:space="preserve">
     <value>Engineering Thermophysics</value>
   </data>
-  <data name="u70edu5de5u5b66" xml:space="preserve">
+  <data name="\u70ed\u5de5\u5b66" xml:space="preserve">
     <value>Heat engineering</value>
   </data>
-  <data name="u52a8u529bu673au68b0u5de5u7a0b" xml:space="preserve">
+  <data name="\u52a8\u529b\u673a\u68b0\u5de5\u7a0b" xml:space="preserve">
     <value>Power Mechanical Engineering</value>
   </data>
-  <data name="u5236u51b7u4e0eu4f4eu6e29u5de5u7a0b" xml:space="preserve">
+  <data name="\u5236\u51b7\u4e0e\u4f4e\u6e29\u5de5\u7a0b" xml:space="preserve">
     <value>Refrigeration and cryogenic engineering</value>
   </data>
-  <data name="u52a8u529bu4e0eu7535u6c14u5de5u7a0bu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u52a8\u529b\u4e0e\u7535\u6c14\u5de5\u7a0b\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Power and electrical engineering other disciplines</value>
   </data>
-  <data name="u80fdu6e90u79d1u5b66u6280u672f" xml:space="preserve">
+  <data name="\u80fd\u6e90\u79d1\u5b66\u6280\u672f" xml:space="preserve">
     <value>Energy science and technology</value>
   </data>
-  <data name="u80fdu6e90u5316u5b66" xml:space="preserve">
+  <data name="\u80fd\u6e90\u5316\u5b66" xml:space="preserve">
     <value>Energy Chemistry</value>
   </data>
-  <data name="u80fdu6e90u5730u7406u5b66" xml:space="preserve">
+  <data name="\u80fd\u6e90\u5730\u7406\u5b66" xml:space="preserve">
     <value>Energy Geography</value>
   </data>
-  <data name="u80fdu6e90u8ba1u7b97u4e0eu6d4bu91cf" xml:space="preserve">
+  <data name="\u80fd\u6e90\u8ba1\u7b97\u4e0e\u6d4b\u91cf" xml:space="preserve">
     <value>Energy calculation and measurement</value>
   </data>
-  <data name="u50a8u80fdu6280u672f" xml:space="preserve">
+  <data name="\u50a8\u80fd\u6280\u672f" xml:space="preserve">
     <value>Energy Storage</value>
   </data>
-  <data name="u8282u80fdu6280u672f" xml:space="preserve">
+  <data name="\u8282\u80fd\u6280\u672f" xml:space="preserve">
     <value>Read post jnjs</value>
   </data>
-  <data name="u4e00u6b21u80fdu6e90" xml:space="preserve">
+  <data name="\u4e00\u6b21\u80fd\u6e90" xml:space="preserve">
     <value>non-renewable energy</value>
   </data>
-  <data name="u4e8cu6b21u80fdu6e90" xml:space="preserve">
+  <data name="\u4e8c\u6b21\u80fd\u6e90" xml:space="preserve">
     <value>Secondary energy</value>
   </data>
-  <data name="u80fdu6e90u7cfbu7edfu5de5u7a0b" xml:space="preserve">
+  <data name="\u80fd\u6e90\u7cfb\u7edf\u5de5\u7a0b" xml:space="preserve">
     <value>Energy Systems Engineering</value>
   </data>
-  <data name="u80fdu6e90u79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u80fd\u6e90\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of energy science and technology</value>
   </data>
-  <data name="u6838u79d1u5b66u6280u672f" xml:space="preserve">
+  <data name="\u6838\u79d1\u5b66\u6280\u672f" xml:space="preserve">
     <value>Nuclear science and technology</value>
   </data>
-  <data name="u8f90u5c04u7269u7406u4e0eu6280u672f" xml:space="preserve">
+  <data name="\u8f90\u5c04\u7269\u7406\u4e0e\u6280\u672f" xml:space="preserve">
     <value>Radiation Physics and Technology</value>
   </data>
-  <data name="u6838u63a2u6d4bu6280u672fu4e0eu6838u7535u5b50u5b66" xml:space="preserve">
+  <data name="\u6838\u63a2\u6d4b\u6280\u672f\u4e0e\u6838\u7535\u5b50\u5b66" xml:space="preserve">
     <value>Nuclear detection technology and nuclear electronics</value>
   </data>
-  <data name="u653eu5c04u6027u8ba1u91cfu5b66" xml:space="preserve">
+  <data name="\u653e\u5c04\u6027\u8ba1\u91cf\u5b66" xml:space="preserve">
     <value>Radioactivity metrology</value>
   </data>
-  <data name="u6838u4eeau5668u3001u4eeau8868" xml:space="preserve">
+  <data name="\u6838\u4eea\u5668\u3001\u4eea\u8868" xml:space="preserve">
     <value>Instrument</value>
   </data>
-  <data name="u6838u6750u6599u4e0eu5de5u827au6280u672f" xml:space="preserve">
+  <data name="\u6838\u6750\u6599\u4e0e\u5de5\u827a\u6280\u672f" xml:space="preserve">
     <value>Nuclear materials and process technology</value>
   </data>
-  <data name="u7c92u5b50u52a0u901fu5668" xml:space="preserve">
+  <data name="\u7c92\u5b50\u52a0\u901f\u5668" xml:space="preserve">
     <value>Particle Accelerator</value>
   </data>
-  <data name="u88c2u53d8u5806u5de5u7a0bu6280u672f" xml:space="preserve">
+  <data name="\u88c2\u53d8\u5806\u5de5\u7a0b\u6280\u672f" xml:space="preserve">
     <value>Fission reactor engineering technology</value>
   </data>
-  <data name="u6838u805au53d8u5de5u7a0bu6280u672f" xml:space="preserve">
+  <data name="\u6838\u805a\u53d8\u5de5\u7a0b\u6280\u672f" xml:space="preserve">
     <value>Nuclear fusion engineering technology</value>
   </data>
-  <data name="u6838u52a8u529bu5de5u7a0bu6280u672f" xml:space="preserve">
+  <data name="\u6838\u52a8\u529b\u5de5\u7a0b\u6280\u672f" xml:space="preserve">
     <value>Nuclear power engineering technology</value>
   </data>
-  <data name="u540cu4f4du7d20u6280u672f" xml:space="preserve">
+  <data name="\u540c\u4f4d\u7d20\u6280\u672f" xml:space="preserve">
     <value>Isotope technology</value>
   </data>
-  <data name="u6838u7206u70b8u5de5u7a0b" xml:space="preserve">
+  <data name="\u6838\u7206\u70b8\u5de5\u7a0b" xml:space="preserve">
     <value>Nuclear explosion project</value>
   </data>
-  <data name="u6838u5b89u5168" xml:space="preserve">
+  <data name="\u6838\u5b89\u5168" xml:space="preserve">
     <value>Audit Security</value>
   </data>
-  <data name="u4e4fu71c3u6599u540eu5904u7406u6280u672f" xml:space="preserve">
+  <data name="\u4e4f\u71c3\u6599\u540e\u5904\u7406\u6280\u672f" xml:space="preserve">
     <value>Spent fuel aftertreatment technology</value>
   </data>
-  <data name="u8f90u5c04u9632u62a4u6280u672f" xml:space="preserve">
+  <data name="\u8f90\u5c04\u9632\u62a4\u6280\u672f" xml:space="preserve">
     <value>Radiation protection technology</value>
   </data>
-  <data name="u6838u8bbeu65bdu9000u5f79u6280u672f" xml:space="preserve">
+  <data name="\u6838\u8bbe\u65bd\u9000\u5f79\u6280\u672f" xml:space="preserve">
     <value>Nuclear facility decommissioning technology</value>
   </data>
-  <data name="u653eu5c04u6027u4e09u5e9fu5904u7406u3001u5904u7f6eu6280u672f" xml:space="preserve">
+  <data name="\u653e\u5c04\u6027\u4e09\u5e9f\u5904\u7406\u3001\u5904\u7f6e\u6280\u672f" xml:space="preserve">
     <value>Radioactive three waste treatment and disposal technology</value>
   </data>
-  <data name="u6838u79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u6838\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines in nuclear science and technology</value>
   </data>
-  <data name="u7535u5b50u6280u672f" xml:space="preserve">
+  <data name="\u7535\u5b50\u6280\u672f" xml:space="preserve">
     <value>Electronic technology</value>
   </data>
-  <data name="u5149u7535u5b50u5b66u4e0eu6fc0u5149u6280u672f" xml:space="preserve">
+  <data name="\u5149\u7535\u5b50\u5b66\u4e0e\u6fc0\u5149\u6280\u672f" xml:space="preserve">
     <value>Optoelectronics and laser technology</value>
   </data>
-  <data name="u534au5bfcu4f53u6280u672f" xml:space="preserve">
+  <data name="\u534a\u5bfc\u4f53\u6280\u672f" xml:space="preserve">
     <value>Semiconductor technology</value>
   </data>
-  <data name="u4fe1u606fu5904u7406u6280u672f" xml:space="preserve">
+  <data name="\u4fe1\u606f\u5904\u7406\u6280\u672f" xml:space="preserve">
     <value>Information processing technology</value>
   </data>
-  <data name="u5e7fu64adu4e0eu7535u89c6u5de5u7a0bu6280u672f" xml:space="preserve">
+  <data name="\u5e7f\u64ad\u4e0e\u7535\u89c6\u5de5\u7a0b\u6280\u672f" xml:space="preserve">
     <value>Broadcast and TV engineering technology</value>
   </data>
-  <data name="u96f7u8fbeu5de5u7a0b" xml:space="preserve">
+  <data name="\u96f7\u8fbe\u5de5\u7a0b" xml:space="preserve">
     <value>Radar engineering</value>
   </data>
-  <data name="u7535u5b50u4e0eu901au4fe1u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u7535\u5b50\u4e0e\u901a\u4fe1\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines in electronics and communication technology</value>
   </data>
-  <data name="u8ba1u7b97u673au79d1u5b66u6280u672fu57fau7840u5b66u79d1" xml:space="preserve">
+  <data name="\u8ba1\u7b97\u673a\u79d1\u5b66\u6280\u672f\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
     <value>Basic discipline of computer science and technology</value>
   </data>
-  <data name="u4ebau5de5u667au80fd" xml:space="preserve">
+  <data name="\u4eba\u5de5\u667a\u80fd" xml:space="preserve">
     <value>Stay one step ahead with recommendations based on artificial intelligence. Get alerts and reminders that help you build customer relationships. Know when to reach out to a contact who has been inactive or follow up with a prospect who opened your email.</value>
   </data>
-  <data name="u8ba1u7b97u673au7cfbu7edfu7ed3u6784" xml:space="preserve">
+  <data name="\u8ba1\u7b97\u673a\u7cfb\u7edf\u7ed3\u6784" xml:space="preserve">
     <value>Computer architecture</value>
   </data>
-  <data name="u8ba1u7b97u673au8f6fu4ef6" xml:space="preserve">
+  <data name="\u8ba1\u7b97\u673a\u8f6f\u4ef6" xml:space="preserve">
     <value>Computer Software</value>
   </data>
-  <data name="u8ba1u7b97u673au5de5u7a0b" xml:space="preserve">
+  <data name="\u8ba1\u7b97\u673a\u5de5\u7a0b" xml:space="preserve">
     <value>computer engineering</value>
   </data>
-  <data name="u8ba1u7b97u673au5e94u7528" xml:space="preserve">
+  <data name="\u8ba1\u7b97\u673a\u5e94\u7528" xml:space="preserve">
     <value>Computers - Application Software</value>
   </data>
-  <data name="u8ba1u7b97u673au79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u8ba1\u7b97\u673a\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines in computer science and technology</value>
   </data>
-  <data name="u5316u5b66u5de5u7a0b" xml:space="preserve">
+  <data name="\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
     <value>Chemical Engineering</value>
   </data>
-  <data name="u5316u5b66u5de5u7a0bu57fau7840u5b66u79d1" xml:space="preserve">
+  <data name="\u5316\u5b66\u5de5\u7a0b\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
     <value>Basic discipline in chemical engineering</value>
   </data>
-  <data name="u5316u5de5u6d4bu91cfu6280u672fu4e0eu4eeau5668u4eeau8868" xml:space="preserve">
+  <data name="\u5316\u5de5\u6d4b\u91cf\u6280\u672f\u4e0e\u4eea\u5668\u4eea\u8868" xml:space="preserve">
     <value>Chemical measurement technology and instrumentation</value>
   </data>
-  <data name="u5316u5de5u4f20u9012u8fc7u7a0b" xml:space="preserve">
+  <data name="\u5316\u5de5\u4f20\u9012\u8fc7\u7a0b" xml:space="preserve">
     <value>Chemical transfer process</value>
   </data>
-  <data name="u5316u5b66u5206u79bbu5de5u7a0b" xml:space="preserve">
+  <data name="\u5316\u5b66\u5206\u79bb\u5de5\u7a0b" xml:space="preserve">
     <value>Chemical separation engineering</value>
   </data>
-  <data name="u5316u5b66u53cdu5e94u5de5u7a0b" xml:space="preserve">
+  <data name="\u5316\u5b66\u53cd\u5e94\u5de5\u7a0b" xml:space="preserve">
     <value>Chemical Reaction Engineering</value>
   </data>
-  <data name="u5316u5de5u7cfbu7edfu5de5u7a0b" xml:space="preserve">
+  <data name="\u5316\u5de5\u7cfb\u7edf\u5de5\u7a0b" xml:space="preserve">
     <value>Chemical system engineering</value>
   </data>
-  <data name="u5316u5de5u673au68b0u4e0eu8bbeu5907" xml:space="preserve">
+  <data name="\u5316\u5de5\u673a\u68b0\u4e0e\u8bbe\u5907" xml:space="preserve">
     <value>Chemical machinery and equipment</value>
   </data>
-  <data name="u65e0u673au5316u5b66u5de5u7a0b" xml:space="preserve">
+  <data name="\u65e0\u673a\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
     <value>Inorganic chemical engineering</value>
   </data>
-  <data name="u6709u673au5316u5b66u5de5u7a0b" xml:space="preserve">
+  <data name="\u6709\u673a\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
     <value>Organic Chemical Engineering</value>
   </data>
-  <data name="u7535u5316u5b66u5de5u7a0b" xml:space="preserve">
+  <data name="\u7535\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
     <value>Electrochemical engineering</value>
   </data>
-  <data name="u9ad8u805au7269u5de5u7a0b" xml:space="preserve">
+  <data name="\u9ad8\u805a\u7269\u5de5\u7a0b" xml:space="preserve">
     <value>Polymer Engineering</value>
   </data>
-  <data name="u7164u5316u5b66u5de5u7a0b" xml:space="preserve">
+  <data name="\u7164\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
     <value>Coal chemical engineering</value>
   </data>
-  <data name="u77f3u6cb9u5316u5b66u5de5u7a0b" xml:space="preserve">
+  <data name="\u77f3\u6cb9\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
     <value>Petrochemical engineering</value>
   </data>
-  <data name="u5929u7136u6c14u5316u5b66u5de5u7a0b" xml:space="preserve">
+  <data name="\u5929\u7136\u6c14\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
     <value>Natural gas chemical engineering</value>
   </data>
-  <data name="u7cbeu7ec6u5316u5b66u5de5u7a0b" xml:space="preserve">
+  <data name="\u7cbe\u7ec6\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
     <value>Fine chemical engineering</value>
   </data>
-  <data name="u9020u7eb8u6280u672f" xml:space="preserve">
+  <data name="\u9020\u7eb8\u6280\u672f" xml:space="preserve">
     <value>Paper technology</value>
   </data>
-  <data name="u6bdbu76aeu4e0eu5236u9769u5de5u7a0b" xml:space="preserve">
+  <data name="\u6bdb\u76ae\u4e0e\u5236\u9769\u5de5\u7a0b" xml:space="preserve">
     <value>Fur and tanning works</value>
   </data>
-  <data name="u5236u836fu5de5u7a0b" xml:space="preserve">
+  <data name="\u5236\u836f\u5de5\u7a0b" xml:space="preserve">
     <value>Pharmaceutical industry</value>
   </data>
-  <data name="u751fu7269u5316u5b66u5de5u7a0b" xml:space="preserve">
+  <data name="\u751f\u7269\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
     <value>Biochemical engineering</value>
   </data>
-  <data name="u5316u5b66u5de5u7a0bu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u5316\u5b66\u5de5\u7a0b\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines in chemical engineering</value>
   </data>
-  <data name="u4ea7u54c1u5e94u7528u76f8u5173u5de5u7a0bu4e0eu6280u672f" xml:space="preserve">
+  <data name="\u4ea7\u54c1\u5e94\u7528\u76f8\u5173\u5de5\u7a0b\u4e0e\u6280\u672f" xml:space="preserve">
     <value>Product application related engineering and technology</value>
   </data>
-  <data name="u4eeau5668u4eeau8868u6280u672f" xml:space="preserve">
+  <data name="\u4eea\u5668\u4eea\u8868\u6280\u672f" xml:space="preserve">
     <value>Instrumentation technology</value>
   </data>
-  <data name="u5175u5668u79d1u5b66u4e0eu6280u672f" xml:space="preserve">
+  <data name="\u5175\u5668\u79d1\u5b66\u4e0e\u6280\u672f" xml:space="preserve">
     <value>Weapon science and technology</value>
   </data>
-  <data name="u4ea7u54c1u5e94u7528u4e13u7528u6027u6280u672f" xml:space="preserve">
+  <data name="\u4ea7\u54c1\u5e94\u7528\u4e13\u7528\u6027\u6280\u672f" xml:space="preserve">
     <value>Product application specific technology</value>
   </data>
-  <data name="u4ea7u54c1u5e94u7528u76f8u5173u5de5u7a0bu4e0eu6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u4ea7\u54c1\u5e94\u7528\u76f8\u5173\u5de5\u7a0b\u4e0e\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Product application related engineering and other disciplines</value>
   </data>
-  <data name="u7ebau7ec7u79d1u5b66u6280u672f" xml:space="preserve">
+  <data name="\u7eba\u7ec7\u79d1\u5b66\u6280\u672f" xml:space="preserve">
     <value>Textile science and technology</value>
   </data>
-  <data name="u7ebau7ec7u79d1u5b66u6280u672fu57fau7840u5b66u79d1" xml:space="preserve">
+  <data name="\u7eba\u7ec7\u79d1\u5b66\u6280\u672f\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
     <value>Basic discipline of textile science and technology</value>
   </data>
-  <data name="u7ebau7ec7u6750u6599" xml:space="preserve">
+  <data name="\u7eba\u7ec7\u6750\u6599" xml:space="preserve">
     <value>Textile material</value>
   </data>
-  <data name="u7ea4u7ef4u5236u9020u6280u672f" xml:space="preserve">
+  <data name="\u7ea4\u7ef4\u5236\u9020\u6280\u672f" xml:space="preserve">
     <value>Fiber manufacturing technology</value>
   </data>
-  <data name="u7ebau7ec7u6280u672f" xml:space="preserve">
+  <data name="\u7eba\u7ec7\u6280\u672f" xml:space="preserve">
     <value>Fabric Manufacture</value>
   </data>
-  <data name="u67d3u6574u6280u672f" xml:space="preserve">
+  <data name="\u67d3\u6574\u6280\u672f" xml:space="preserve">
     <value>Dyeing and finishing technology</value>
   </data>
-  <data name="u670du88c5u6280u672f" xml:space="preserve">
+  <data name="\u670d\u88c5\u6280\u672f" xml:space="preserve">
     <value>Clothing technology</value>
   </data>
-  <data name="u7ebau7ec7u673au68b0u4e0eu8bbeu5907" xml:space="preserve">
+  <data name="\u7eba\u7ec7\u673a\u68b0\u4e0e\u8bbe\u5907" xml:space="preserve">
     <value>Textile machinery and equipment</value>
   </data>
-  <data name="u7ebau7ec7u79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u7eba\u7ec7\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines in textile science and technology</value>
   </data>
-  <data name="u98dfu54c1u79d1u5b66u6280u672fu57fau7840u5b66u79d1" xml:space="preserve">
+  <data name="\u98df\u54c1\u79d1\u5b66\u6280\u672f\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
     <value>Basic discipline of food science and technology</value>
   </data>
-  <data name="u98dfu54c1u52a0u5de5u6280u672f" xml:space="preserve">
+  <data name="\u98df\u54c1\u52a0\u5de5\u6280\u672f" xml:space="preserve">
     <value>Food processing technology</value>
   </data>
-  <data name="u98dfu54c1u5305u88c5u4e0eu50a8u85cf" xml:space="preserve">
+  <data name="\u98df\u54c1\u5305\u88c5\u4e0e\u50a8\u85cf" xml:space="preserve">
     <value>Food packaging and storage</value>
   </data>
-  <data name="u98dfu54c1u673au68b0" xml:space="preserve">
+  <data name="\u98df\u54c1\u673a\u68b0" xml:space="preserve">
     <value>Food Machinery</value>
   </data>
-  <data name="u98dfu54c1u52a0u5de5u7684u526fu4ea7u54c1u52a0u5de5u4e0eu5229u7528" xml:space="preserve">
+  <data name="\u98df\u54c1\u52a0\u5de5\u7684\u526f\u4ea7\u54c1\u52a0\u5de5\u4e0e\u5229\u7528" xml:space="preserve">
     <value>Processing and utilization of by-products of food processing</value>
   </data>
-  <data name="u98dfu54c1u5de5u4e1au4f01u4e1au7ba1u7406u5b66" xml:space="preserve">
+  <data name="\u98df\u54c1\u5de5\u4e1a\u4f01\u4e1a\u7ba1\u7406\u5b66" xml:space="preserve">
     <value>Food Industry Business Management</value>
   </data>
-  <data name="u98dfu54c1u5de5u7a0bu4e0eu7caeu6cb9u5de5u7a0b" xml:space="preserve">
+  <data name="\u98df\u54c1\u5de5\u7a0b\u4e0e\u7cae\u6cb9\u5de5\u7a0b" xml:space="preserve">
     <value>Food Engineering and Grain and Oil Engineering</value>
   </data>
-  <data name="u98dfu54c1u79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u98df\u54c1\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines in food science and technology</value>
   </data>
-  <data name="u571fu6728u5efau7b51u5de5u7a0b" xml:space="preserve">
+  <data name="\u571f\u6728\u5efa\u7b51\u5de5\u7a0b" xml:space="preserve">
     <value>Civil engineering construction</value>
   </data>
-  <data name="u5efau7b51u53f2" xml:space="preserve">
+  <data name="\u5efa\u7b51\u53f2" xml:space="preserve">
     <value>Architectural history</value>
   </data>
-  <data name="u571fu6728u5efau7b51u5de5u7a0bu57fau7840u5b66u79d1" xml:space="preserve">
+  <data name="\u571f\u6728\u5efa\u7b51\u5de5\u7a0b\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
     <value>Basic discipline of civil engineering engineering</value>
   </data>
-  <data name="u571fu6728u5efau7b51u5de5u7a0bu6d4bu91cf" xml:space="preserve">
+  <data name="\u571f\u6728\u5efa\u7b51\u5de5\u7a0b\u6d4b\u91cf" xml:space="preserve">
     <value>Civil engineering construction measurement</value>
   </data>
-  <data name="u5efau7b51u6750u6599" xml:space="preserve">
+  <data name="\u5efa\u7b51\u6750\u6599" xml:space="preserve">
     <value>Building Supply Retail</value>
   </data>
-  <data name="u5de5u7a0bu7ed3u6784" xml:space="preserve">
+  <data name="\u5de5\u7a0b\u7ed3\u6784" xml:space="preserve">
     <value>STRUCTURE OF WORK UNDER</value>
   </data>
-  <data name="u571fu6728u5efau7b51u7ed3u6784" xml:space="preserve">
+  <data name="\u571f\u6728\u5efa\u7b51\u7ed3\u6784" xml:space="preserve">
     <value>Civil engineering structure</value>
   </data>
-  <data name="u571fu6728u5efau7b51u5de5u7a0bu8bbeu8ba1" xml:space="preserve">
+  <data name="\u571f\u6728\u5efa\u7b51\u5de5\u7a0b\u8bbe\u8ba1" xml:space="preserve">
     <value>Civil engineering design</value>
   </data>
-  <data name="u571fu6728u5efau7b51u5de5u7a0bu65bdu5de5" xml:space="preserve">
+  <data name="\u571f\u6728\u5efa\u7b51\u5de5\u7a0b\u65bd\u5de5" xml:space="preserve">
     <value>Civil engineering construction</value>
   </data>
-  <data name="u571fu6728u5de5u7a0bu673au68b0u4e0eu8bbeu5907" xml:space="preserve">
+  <data name="\u571f\u6728\u5de5\u7a0b\u673a\u68b0\u4e0e\u8bbe\u5907" xml:space="preserve">
     <value>Civil engineering machinery and equipment</value>
   </data>
-  <data name="u5e02u653fu5de5u7a0b" xml:space="preserve">
+  <data name="\u5e02\u653f\u5de5\u7a0b" xml:space="preserve">
     <value>Municipal engineering</value>
   </data>
-  <data name="u5efau7b51u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u5efa\u7b51\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Construction economics</value>
   </data>
-  <data name="u571fu6728u5efau7b51u5de5u7a0bu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u571f\u6728\u5efa\u7b51\u5de5\u7a0b\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines in civil engineering</value>
   </data>
-  <data name="u6c34u5229u5de5u7a0bu57fau7840u5b66u79d1" xml:space="preserve">
+  <data name="\u6c34\u5229\u5de5\u7a0b\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
     <value>Basic discipline of water conservancy engineering</value>
   </data>
-  <data name="u6c34u5229u5de5u7a0bu6d4bu91cf" xml:space="preserve">
+  <data name="\u6c34\u5229\u5de5\u7a0b\u6d4b\u91cf" xml:space="preserve">
     <value>Water engineering measurement</value>
   </data>
-  <data name="u6c34u5de5u6750u6599" xml:space="preserve">
+  <data name="\u6c34\u5de5\u6750\u6599" xml:space="preserve">
     <value>Hydraulic materials</value>
   </data>
-  <data name="u6c34u5de5u7ed3u6784" xml:space="preserve">
+  <data name="\u6c34\u5de5\u7ed3\u6784" xml:space="preserve">
     <value>Hydraulic structure</value>
   </data>
-  <data name="u6c34u529bu673au68b0" xml:space="preserve">
+  <data name="\u6c34\u529b\u673a\u68b0" xml:space="preserve">
     <value>Hydraulic machinery</value>
   </data>
-  <data name="u6c34u5229u5de5u7a0bu65bdu5de5" xml:space="preserve">
+  <data name="\u6c34\u5229\u5de5\u7a0b\u65bd\u5de5" xml:space="preserve">
     <value>Water conservancy project construction</value>
   </data>
-  <data name="u6c34u5904u7406" xml:space="preserve">
+  <data name="\u6c34\u5904\u7406" xml:space="preserve">
     <value>Water supply, sewage and waste disposal</value>
   </data>
-  <data name="u6cb3u6d41u6ce5u6c99u5de5u7a0bu5b66" xml:space="preserve">
+  <data name="\u6cb3\u6d41\u6ce5\u6c99\u5de5\u7a0b\u5b66" xml:space="preserve">
     <value>River sediment engineering</value>
   </data>
-  <data name="u73afu5883u6c34u5229" xml:space="preserve">
+  <data name="\u73af\u5883\u6c34\u5229" xml:space="preserve">
     <value>Environmental water conservancy</value>
   </data>
-  <data name="u6c34u5229u7ba1u7406" xml:space="preserve">
+  <data name="\u6c34\u5229\u7ba1\u7406" xml:space="preserve">
     <value>Water management</value>
   </data>
-  <data name="u9632u6d2au5de5u7a0b" xml:space="preserve">
+  <data name="\u9632\u6d2a\u5de5\u7a0b" xml:space="preserve">
     <value>Flood control project</value>
   </data>
-  <data name="u6c34u5229u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u6c34\u5229\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Water Economics</value>
   </data>
-  <data name="u6c34u5229u5de5u7a0bu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u6c34\u5229\u5de5\u7a0b\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of water conservancy projects</value>
   </data>
-  <data name="u4ea4u901au8fd0u8f93u5de5u7a0b" xml:space="preserve">
+  <data name="\u4ea4\u901a\u8fd0\u8f93\u5de5\u7a0b" xml:space="preserve">
     <value>Transport Engineering</value>
   </data>
-  <data name="u9053u8defu5de5u7a0b" xml:space="preserve">
+  <data name="\u9053\u8def\u5de5\u7a0b" xml:space="preserve">
     <value>Road works</value>
   </data>
-  <data name="u516cu8defu8fd0u8f93" xml:space="preserve">
+  <data name="\u516c\u8def\u8fd0\u8f93" xml:space="preserve">
     <value>Highway Transportation Technology</value>
   </data>
-  <data name="u94c1u8defu8fd0u8f93" xml:space="preserve">
+  <data name="\u94c1\u8def\u8fd0\u8f93" xml:space="preserve">
     <value>Rail</value>
   </data>
-  <data name="u6c34u8defu8fd0u8f93" xml:space="preserve">
+  <data name="\u6c34\u8def\u8fd0\u8f93" xml:space="preserve">
     <value>Water Transportation</value>
   </data>
-  <data name="u8239u8236u3001u8230u8239u5de5u7a0b" xml:space="preserve">
+  <data name="\u8239\u8236\u3001\u8230\u8239\u5de5\u7a0b" xml:space="preserve">
     <value>Ship</value>
   </data>
-  <data name="u822au7a7au8fd0u8f93" xml:space="preserve">
+  <data name="\u822a\u7a7a\u8fd0\u8f93" xml:space="preserve">
     <value>Airborne</value>
   </data>
-  <data name="u4ea4u901au8fd0u8f93u7cfbu7edfu5de5u7a0b" xml:space="preserve">
+  <data name="\u4ea4\u901a\u8fd0\u8f93\u7cfb\u7edf\u5de5\u7a0b" xml:space="preserve">
     <value>Transportation system engineering</value>
   </data>
-  <data name="u4ea4u901au8fd0u8f93u5b89u5168u5de5u7a0b" xml:space="preserve">
+  <data name="\u4ea4\u901a\u8fd0\u8f93\u5b89\u5168\u5de5\u7a0b" xml:space="preserve">
     <value>Transportation safety engineering</value>
   </data>
-  <data name="u4ea4u901au8fd0u8f93u5de5u7a0bu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u4ea4\u901a\u8fd0\u8f93\u5de5\u7a0b\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of transportation engineering</value>
   </data>
-  <data name="u822au7a7au3001u822au5929u79d1u5b66u6280u672fu57fau7840u5b66u79d1" xml:space="preserve">
+  <data name="\u822a\u7a7a\u3001\u822a\u5929\u79d1\u5b66\u6280\u672f\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
     <value>Basic disciplines in aviation and aerospace science and technology</value>
   </data>
-  <data name="u822au7a7au5668u7ed3u6784u4e0eu8bbeu8ba1" xml:space="preserve">
+  <data name="\u822a\u7a7a\u5668\u7ed3\u6784\u4e0e\u8bbe\u8ba1" xml:space="preserve">
     <value>Aircraft structure and design</value>
   </data>
-  <data name="u822au5929u5668u7ed3u6784u4e0eu8bbeu8ba1" xml:space="preserve">
+  <data name="\u822a\u5929\u5668\u7ed3\u6784\u4e0e\u8bbe\u8ba1" xml:space="preserve">
     <value>Spacecraft structure and design</value>
   </data>
-  <data name="u822au7a7au3001u822au5929u63a8u8fdbu7cfbu7edf" xml:space="preserve">
+  <data name="\u822a\u7a7a\u3001\u822a\u5929\u63a8\u8fdb\u7cfb\u7edf" xml:space="preserve">
     <value>Aviation, aerospace propulsion system</value>
   </data>
-  <data name="u98deu884cu5668u4eeau8868u3001u8bbeu5907" xml:space="preserve">
+  <data name="\u98de\u884c\u5668\u4eea\u8868\u3001\u8bbe\u5907" xml:space="preserve">
     <value>Aircraft instrumentation, equipment</value>
   </data>
-  <data name="u98deu884cu5668u63a7u5236u3001u5bfcu822au6280u672f" xml:space="preserve">
+  <data name="\u98de\u884c\u5668\u63a7\u5236\u3001\u5bfc\u822a\u6280\u672f" xml:space="preserve">
     <value>Aircraft control, navigation technology</value>
   </data>
-  <data name="u822au7a7au3001u822au5929u6750u6599" xml:space="preserve">
+  <data name="\u822a\u7a7a\u3001\u822a\u5929\u6750\u6599" xml:space="preserve">
     <value>Aviation and aerospace materials</value>
   </data>
-  <data name="u98deu884cu5668u5236u9020u6280u672f" xml:space="preserve">
+  <data name="\u98de\u884c\u5668\u5236\u9020\u6280\u672f" xml:space="preserve">
     <value>Aircraft manufacturing technology</value>
   </data>
-  <data name="u98deu884cu5668u8bd5u9a8cu6280u672f" xml:space="preserve">
+  <data name="\u98de\u884c\u5668\u8bd5\u9a8c\u6280\u672f" xml:space="preserve">
     <value>Aircraft test technology</value>
   </data>
-  <data name="u98deu884cu5668u53d1u5c04u4e0eu56deu6536u3001u98deu884cu6280u672f" xml:space="preserve">
+  <data name="\u98de\u884c\u5668\u53d1\u5c04\u4e0e\u56de\u6536\u3001\u98de\u884c\u6280\u672f" xml:space="preserve">
     <value>Aircraft launch and recycling, flight technology</value>
   </data>
-  <data name="u822au7a7au822au5929u5730u9762u8bbeu65bdu3001u6280u672fu4fddu969c" xml:space="preserve">
+  <data name="\u822a\u7a7a\u822a\u5929\u5730\u9762\u8bbe\u65bd\u3001\u6280\u672f\u4fdd\u969c" xml:space="preserve">
     <value>Aerospace ground facilities, technical support</value>
   </data>
-  <data name="u822au7a7au3001u822au5929u7cfbu7edfu5de5u7a0b" xml:space="preserve">
+  <data name="\u822a\u7a7a\u3001\u822a\u5929\u7cfb\u7edf\u5de5\u7a0b" xml:space="preserve">
     <value>Aviation, aerospace systems engineering</value>
   </data>
-  <data name="u822au7a7au3001u822au5929u79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u822a\u7a7a\u3001\u822a\u5929\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Aviation, aerospace science and technology other disciplines</value>
   </data>
-  <data name="u73afu5883u79d1u5b66u6280u672fu53cau8d44u6e90u79d1u5b66u6280u672f" xml:space="preserve">
+  <data name="\u73af\u5883\u79d1\u5b66\u6280\u672f\u53ca\u8d44\u6e90\u79d1\u5b66\u6280\u672f" xml:space="preserve">
     <value>Environmental Science and Technology and Resource Science and Technology</value>
   </data>
-  <data name="u73afu5883u79d1u5b66u6280u672fu57fau7840u5b66u79d1" xml:space="preserve">
+  <data name="\u73af\u5883\u79d1\u5b66\u6280\u672f\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
     <value>Basic discipline of environmental science and technology</value>
   </data>
-  <data name="u73afu5883u5b66" xml:space="preserve">
+  <data name="\u73af\u5883\u5b66" xml:space="preserve">
     <value>Environmental studies</value>
   </data>
-  <data name="u73afu5883u5de5u7a0bu5b66" xml:space="preserve">
+  <data name="\u73af\u5883\u5de5\u7a0b\u5b66" xml:space="preserve">
     <value>Environmental Engineering</value>
   </data>
-  <data name="u73afu5883u79d1u5b66u6280u672fu53cau8d44u6e90u79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u73af\u5883\u79d1\u5b66\u6280\u672f\u53ca\u8d44\u6e90\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Environmental science and technology and resources science and technology other disciplines</value>
   </data>
-  <data name="u5b89u5168u79d1u5b66u6280u672f" xml:space="preserve">
+  <data name="\u5b89\u5168\u79d1\u5b66\u6280\u672f" xml:space="preserve">
     <value>Safety science and technology</value>
   </data>
-  <data name="u5b89u5168u79d1u5b66u6280u672fu57fau7840u5b66u79d1" xml:space="preserve">
+  <data name="\u5b89\u5168\u79d1\u5b66\u6280\u672f\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
     <value>Basic discipline of safety science and technology</value>
   </data>
-  <data name="u5b89u5168u793eu4f1au79d1u5b66" xml:space="preserve">
+  <data name="\u5b89\u5168\u793e\u4f1a\u79d1\u5b66" xml:space="preserve">
     <value>Safety Social Science</value>
   </data>
-  <data name="u5b89u5168u7269u8d28u5b66" xml:space="preserve">
+  <data name="\u5b89\u5168\u7269\u8d28\u5b66" xml:space="preserve">
     <value>Safety material science</value>
   </data>
-  <data name="u5b89u5168u4ebau4f53u5b66" xml:space="preserve">
+  <data name="\u5b89\u5168\u4eba\u4f53\u5b66" xml:space="preserve">
     <value>Safe ergonomics</value>
   </data>
-  <data name="u5b89u5168u7cfbu7edfu5b66" xml:space="preserve">
+  <data name="\u5b89\u5168\u7cfb\u7edf\u5b66" xml:space="preserve">
     <value>Safety system learning</value>
   </data>
-  <data name="u5b89u5168u5de5u7a0bu6280u672fu79d1u5b66" xml:space="preserve">
+  <data name="\u5b89\u5168\u5de5\u7a0b\u6280\u672f\u79d1\u5b66" xml:space="preserve">
     <value>Safety Engineering Technology Science</value>
   </data>
-  <data name="u5b89u5168u536bu751fu5de5u7a0bu6280u672f" xml:space="preserve">
+  <data name="\u5b89\u5168\u536b\u751f\u5de5\u7a0b\u6280\u672f" xml:space="preserve">
     <value>Safety and sanitary engineering technology</value>
   </data>
-  <data name="u5b89u5168u793eu4f1au5de5u7a0b" xml:space="preserve">
+  <data name="\u5b89\u5168\u793e\u4f1a\u5de5\u7a0b" xml:space="preserve">
     <value>Safety social engineering</value>
   </data>
-  <data name="u90e8u95e8u5b89u5168u5de5u7a0bu7406u8bba" xml:space="preserve">
+  <data name="\u90e8\u95e8\u5b89\u5168\u5de5\u7a0b\u7406\u8bba" xml:space="preserve">
     <value>Departmental safety engineering theory</value>
   </data>
-  <data name="u516cu5171u5b89u5168" xml:space="preserve">
+  <data name="\u516c\u5171\u5b89\u5168" xml:space="preserve">
     <value>Public Safety</value>
   </data>
-  <data name="u5b89u5168u79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u5b89\u5168\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Safety science and technology other disciplines</value>
   </data>
-  <data name="u7ba1u7406u601du60f3u53f2" xml:space="preserve">
+  <data name="\u7ba1\u7406\u601d\u60f3\u53f2" xml:space="preserve">
     <value>Management history</value>
   </data>
-  <data name="u7ba1u7406u7406u8bba" xml:space="preserve">
+  <data name="\u7ba1\u7406\u7406\u8bba" xml:space="preserve">
     <value>Management theory</value>
   </data>
-  <data name="u7ba1u7406u8ba1u91cfu5b66" xml:space="preserve">
+  <data name="\u7ba1\u7406\u8ba1\u91cf\u5b66" xml:space="preserve">
     <value>Management metrology</value>
   </data>
-  <data name="u90e8u95e8u7ecfu6d4eu7ba1u7406" xml:space="preserve">
+  <data name="\u90e8\u95e8\u7ecf\u6d4e\u7ba1\u7406" xml:space="preserve">
     <value>Departmental economic management</value>
   </data>
-  <data name="u533au57dfu7ecfu6d4eu7ba1u7406" xml:space="preserve">
+  <data name="\u533a\u57df\u7ecf\u6d4e\u7ba1\u7406" xml:space="preserve">
     <value>Regional economic management</value>
   </data>
-  <data name="u79d1u5b66u5b66u4e0eu79d1u6280u7ba1u7406" xml:space="preserve">
+  <data name="\u79d1\u5b66\u5b66\u4e0e\u79d1\u6280\u7ba1\u7406" xml:space="preserve">
     <value>Science and technology management</value>
   </data>
-  <data name="u516cu5171u7ba1u7406" xml:space="preserve">
+  <data name="\u516c\u5171\u7ba1\u7406" xml:space="preserve">
     <value>Public Administration</value>
   </data>
-  <data name="u7ba1u7406u5de5u7a0b" xml:space="preserve">
+  <data name="\u7ba1\u7406\u5de5\u7a0b" xml:space="preserve">
     <value>Management engineering</value>
   </data>
-  <data name="u4ebau529bu8d44u6e90u5f00u53d1u4e0eu7ba1u7406" xml:space="preserve">
+  <data name="\u4eba\u529b\u8d44\u6e90\u5f00\u53d1\u4e0e\u7ba1\u7406" xml:space="preserve">
     <value>Human resource development and management</value>
   </data>
-  <data name="u672au6765u5b66" xml:space="preserve">
+  <data name="\u672a\u6765\u5b66" xml:space="preserve">
     <value>Technology Future</value>
   </data>
-  <data name="u7ba1u7406u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u7ba1\u7406\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Management of other disciplines</value>
   </data>
-  <data name="u9a6cu514bu601du4e3bu4e49" xml:space="preserve">
+  <data name="\u9a6c\u514b\u601d\u4e3b\u4e49" xml:space="preserve">
     <value>Marxist</value>
   </data>
-  <data name="u9a6cu3001u6069u3001u5217u3001u65afu601du60f3u7814u7a76" xml:space="preserve">
+  <data name="\u9a6c\u3001\u6069\u3001\u5217\u3001\u65af\u601d\u60f3\u7814\u7a76" xml:space="preserve">
     <value>Ma, En, Lie, and Si thought research</value>
   </data>
-  <data name="u6bdbu6cfdu4e1cu601du60f3u7814u7a76" xml:space="preserve">
+  <data name="\u6bdb\u6cfd\u4e1c\u601d\u60f3\u7814\u7a76" xml:space="preserve">
     <value>Mao Zedong Thought Research</value>
   </data>
-  <data name="u9a6cu514bu601du4e3bu4e49u601du60f3u53f2" xml:space="preserve">
+  <data name="\u9a6c\u514b\u601d\u4e3b\u4e49\u601d\u60f3\u53f2" xml:space="preserve">
     <value>History of Marxist thought</value>
   </data>
-  <data name="u79d1u5b66u793eu4f1au4e3bu4e49" xml:space="preserve">
+  <data name="\u79d1\u5b66\u793e\u4f1a\u4e3b\u4e49" xml:space="preserve">
     <value>science communism</value>
   </data>
-  <data name="u793eu4f1au4e3bu4e49u8fd0u52a8u53f2" xml:space="preserve">
+  <data name="\u793e\u4f1a\u4e3b\u4e49\u8fd0\u52a8\u53f2" xml:space="preserve">
     <value>History of socialist movements</value>
   </data>
-  <data name="u56fdu5916u9a6cu514bu601du4e3bu4e49u7814u7a76" xml:space="preserve">
+  <data name="\u56fd\u5916\u9a6c\u514b\u601d\u4e3b\u4e49\u7814\u7a76" xml:space="preserve">
     <value>Foreign Marxist studies</value>
   </data>
-  <data name="u9a6cu514bu601du4e3bu4e49u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u9a6c\u514b\u601d\u4e3b\u4e49\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of Marxism</value>
   </data>
-  <data name="u9a6cu514bu601du4e3bu4e49u54f2u5b66" xml:space="preserve">
+  <data name="\u9a6c\u514b\u601d\u4e3b\u4e49\u54f2\u5b66" xml:space="preserve">
     <value>Marxist Philosophy</value>
   </data>
-  <data name="u81eau7136u8fa9u8bc1u6cd5" xml:space="preserve">
+  <data name="\u81ea\u7136\u8fa9\u8bc1\u6cd5" xml:space="preserve">
     <value>Dialectics of nature</value>
   </data>
-  <data name="u4e2du56fdu54f2u5b66u53f2" xml:space="preserve">
+  <data name="\u4e2d\u56fd\u54f2\u5b66\u53f2" xml:space="preserve">
     <value>History of Chinese philosophy</value>
   </data>
-  <data name="u4e1cu65b9u54f2u5b66u53f2" xml:space="preserve">
+  <data name="\u4e1c\u65b9\u54f2\u5b66\u53f2" xml:space="preserve">
     <value>History of Eastern Philosophy</value>
   </data>
-  <data name="u897fu65b9u54f2u5b66u53f2" xml:space="preserve">
+  <data name="\u897f\u65b9\u54f2\u5b66\u53f2" xml:space="preserve">
     <value>F</value>
   </data>
-  <data name="u73b0u4ee3u5916u56fdu54f2u5b66" xml:space="preserve">
+  <data name="\u73b0\u4ee3\u5916\u56fd\u54f2\u5b66" xml:space="preserve">
     <value>Modern foreign philosophy</value>
   </data>
-  <data name="u903bu8f91u5b66" xml:space="preserve">
+  <data name="\u903b\u8f91\u5b66" xml:space="preserve">
     <value>logic</value>
   </data>
-  <data name="u4f26u7406u5b66" xml:space="preserve">
+  <data name="\u4f26\u7406\u5b66" xml:space="preserve">
     <value>Ethics</value>
   </data>
-  <data name="u7f8eu5b66" xml:space="preserve">
+  <data name="\u7f8e\u5b66" xml:space="preserve">
     <value>numbers, score, percent, a, plus, perfect, school, quiz, score, test, exam, 100, full, office</value>
   </data>
-  <data name="u54f2u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u54f2\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of philosophy</value>
   </data>
-  <data name="u5b97u6559u5b66" xml:space="preserve">
+  <data name="\u5b97\u6559\u5b66" xml:space="preserve">
     <value>Religious Studies</value>
   </data>
-  <data name="u5b97u6559u5b66u7406u8bba" xml:space="preserve">
+  <data name="\u5b97\u6559\u5b66\u7406\u8bba" xml:space="preserve">
     <value>Religious theory</value>
   </data>
-  <data name="u65e0u795eu8bba" xml:space="preserve">
+  <data name="\u65e0\u795e\u8bba" xml:space="preserve">
     <value>atheist</value>
   </data>
-  <data name="u539fu59cbu5b97u6559" xml:space="preserve">
+  <data name="\u539f\u59cb\u5b97\u6559" xml:space="preserve">
     <value>Primitive religion</value>
   </data>
-  <data name="u53e4u4ee3u5b97u6559" xml:space="preserve">
+  <data name="\u53e4\u4ee3\u5b97\u6559" xml:space="preserve">
     <value>Ancient religion</value>
   </data>
-  <data name="u4f5bu6559" xml:space="preserve">
+  <data name="\u4f5b\u6559" xml:space="preserve">
     <value>buddhist, religion, symbol</value>
   </data>
-  <data name="u57fau7763u6559" xml:space="preserve">
+  <data name="\u57fa\u7763\u6559" xml:space="preserve">
     <value>Christian Rap</value>
   </data>
-  <data name="u4f0au65afu5170u6559" xml:space="preserve">
+  <data name="\u4f0a\u65af\u5170\u6559" xml:space="preserve">
     <value>islam, muslim, religion, symbol</value>
   </data>
-  <data name="u9053u6559" xml:space="preserve">
+  <data name="\u9053\u6559" xml:space="preserve">
     <value>religion, sign, symbol, tao, taoist</value>
   </data>
-  <data name="u5370u5ea6u6559" xml:space="preserve">
+  <data name="\u5370\u5ea6\u6559" xml:space="preserve">
     <value>hinduism, sound, spiritual, icon, dharmic, buddhism, jainism, meditate, hindu, religion</value>
   </data>
-  <data name="u72b9u592au6559" xml:space="preserve">
+  <data name="\u72b9\u592a\u6559" xml:space="preserve">
     <value>synagogue</value>
   </data>
-  <data name="u8884u6559" xml:space="preserve">
+  <data name="\u8884\u6559" xml:space="preserve">
     <value>Martyrdom</value>
   </data>
-  <data name="u6469u5c3cu6559" xml:space="preserve">
+  <data name="\u6469\u5c3c\u6559" xml:space="preserve">
     <value>Manichean</value>
   </data>
-  <data name="u9521u514bu6559" xml:space="preserve">
+  <data name="\u9521\u514b\u6559" xml:space="preserve">
     <value>Gurmukhi Ura</value>
   </data>
-  <data name="u8006u90a3u6559" xml:space="preserve">
+  <data name="\u8006\u90a3\u6559" xml:space="preserve">
     <value>hinduism, sound, spiritual, icon, dharmic, buddhism, jainism, meditate, hindu, religion</value>
   </data>
-  <data name="u795eu9053u6559" xml:space="preserve">
+  <data name="\u795e\u9053\u6559" xml:space="preserve">
     <value>Shinto</value>
   </data>
-  <data name="u4e2du56fdu6c11u95f4u5b97u6559u4e0eu6c11u95f4u4fe1u4ef0" xml:space="preserve">
+  <data name="\u4e2d\u56fd\u6c11\u95f4\u5b97\u6559\u4e0e\u6c11\u95f4\u4fe1\u4ef0" xml:space="preserve">
     <value>Chinese folk religion and folk beliefs</value>
   </data>
-  <data name="u4e2du56fdu5c11u6570u6c11u65cfu5b97u6559" xml:space="preserve">
+  <data name="\u4e2d\u56fd\u5c11\u6570\u6c11\u65cf\u5b97\u6559" xml:space="preserve">
     <value>Chinese minority religion</value>
   </data>
-  <data name="u5f53u4ee3u5b97u6559" xml:space="preserve">
+  <data name="\u5f53\u4ee3\u5b97\u6559" xml:space="preserve">
     <value>Contemporary religion</value>
   </data>
-  <data name="u5b97u6559u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u5b97\u6559\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of religion</value>
   </data>
-  <data name="u8bedu8a00u5b66" xml:space="preserve">
+  <data name="\u8bed\u8a00\u5b66" xml:space="preserve">
     <value>Receptive language</value>
   </data>
-  <data name="u666eu901au8bedu8a00u5b66" xml:space="preserve">
+  <data name="\u666e\u901a\u8bed\u8a00\u5b66" xml:space="preserve">
     <value>General linguistics</value>
   </data>
-  <data name="u6bd4u8f83u8bedu8a00u5b66" xml:space="preserve">
+  <data name="\u6bd4\u8f83\u8bed\u8a00\u5b66" xml:space="preserve">
     <value>Comparative linguistics</value>
   </data>
-  <data name="u8bedu8a00u5730u7406u5b66" xml:space="preserve">
+  <data name="\u8bed\u8a00\u5730\u7406\u5b66" xml:space="preserve">
     <value>Language Geography</value>
   </data>
-  <data name="u793eu4f1au8bedu8a00u5b66" xml:space="preserve">
+  <data name="\u793e\u4f1a\u8bed\u8a00\u5b66" xml:space="preserve">
     <value>Sociolinguistics</value>
   </data>
-  <data name="u5fc3u7406u8bedu8a00u5b66" xml:space="preserve">
+  <data name="\u5fc3\u7406\u8bed\u8a00\u5b66" xml:space="preserve">
     <value>Psycholinguistics</value>
   </data>
-  <data name="u5e94u7528u8bedu8a00u5b66" xml:space="preserve">
+  <data name="\u5e94\u7528\u8bed\u8a00\u5b66" xml:space="preserve">
     <value>Applied Linguistics</value>
   </data>
-  <data name="u6c49u8bedu7814u7a76" xml:space="preserve">
+  <data name="\u6c49\u8bed\u7814\u7a76" xml:space="preserve">
     <value>Chinese studies</value>
   </data>
-  <data name="u4e2du56fdu5c11u6570u6c11u65cfu8bedu8a00u6587u5b57" xml:space="preserve">
+  <data name="\u4e2d\u56fd\u5c11\u6570\u6c11\u65cf\u8bed\u8a00\u6587\u5b57" xml:space="preserve">
     <value>Chinese minority language</value>
   </data>
-  <data name="u5916u56fdu8bedu8a00" xml:space="preserve">
+  <data name="\u5916\u56fd\u8bed\u8a00" xml:space="preserve">
     <value>Foreign language</value>
   </data>
-  <data name="u8bedu8a00u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u8bed\u8a00\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Linguistics in other disciplines</value>
   </data>
-  <data name="u6587u5b66u7406u8bba" xml:space="preserve">
+  <data name="\u6587\u5b66\u7406\u8bba" xml:space="preserve">
     <value>Literary theory</value>
   </data>
-  <data name="u6587u827au7f8eu5b66" xml:space="preserve">
+  <data name="\u6587\u827a\u7f8e\u5b66" xml:space="preserve">
     <value>Literary aesthetics</value>
   </data>
-  <data name="u6587u5b66u6279u8bc4" xml:space="preserve">
+  <data name="\u6587\u5b66\u6279\u8bc4" xml:space="preserve">
     <value>Literary criticism</value>
   </data>
-  <data name="u6bd4u8f83u6587u5b66" xml:space="preserve">
+  <data name="\u6bd4\u8f83\u6587\u5b66" xml:space="preserve">
     <value>Comparative literature</value>
   </data>
-  <data name="u4e2du56fdu53e4u4ee3u6587u5b66" xml:space="preserve">
+  <data name="\u4e2d\u56fd\u53e4\u4ee3\u6587\u5b66" xml:space="preserve">
     <value>Ancient Chinese Literature</value>
   </data>
-  <data name="u4e2du56fdu8fd1u4ee3u6587u5b66" xml:space="preserve">
+  <data name="\u4e2d\u56fd\u8fd1\u4ee3\u6587\u5b66" xml:space="preserve">
     <value>Chinese modern literature</value>
   </data>
-  <data name="u4e2du56fdu73b0u4ee3u6587u5b66" xml:space="preserve">
+  <data name="\u4e2d\u56fd\u73b0\u4ee3\u6587\u5b66" xml:space="preserve">
     <value>Chinese modern literature</value>
   </data>
-  <data name="u4e2du56fdu5404u4f53u6587u5b66" xml:space="preserve">
+  <data name="\u4e2d\u56fd\u5404\u4f53\u6587\u5b66" xml:space="preserve">
     <value>Chinese literature</value>
   </data>
-  <data name="u4e2du56fdu6c11u95f4u6587u5b66" xml:space="preserve">
+  <data name="\u4e2d\u56fd\u6c11\u95f4\u6587\u5b66" xml:space="preserve">
     <value>Chinese folk literature</value>
   </data>
-  <data name="u4e2du56fdu513fu7ae5u6587u5b66" xml:space="preserve">
+  <data name="\u4e2d\u56fd\u513f\u7ae5\u6587\u5b66" xml:space="preserve">
     <value>Chinese Children's Literature</value>
   </data>
-  <data name="u4e2du56fdu5c11u6570u6c11u65cfu6587u5b66" xml:space="preserve">
+  <data name="\u4e2d\u56fd\u5c11\u6570\u6c11\u65cf\u6587\u5b66" xml:space="preserve">
     <value>Chinese minority literature</value>
   </data>
-  <data name="u4e16u754cu6587u5b66u53f2" xml:space="preserve">
+  <data name="\u4e16\u754c\u6587\u5b66\u53f2" xml:space="preserve">
     <value>History of world literature</value>
   </data>
-  <data name="u4e1cu65b9u6587u5b66" xml:space="preserve">
+  <data name="\u4e1c\u65b9\u6587\u5b66" xml:space="preserve">
     <value>Oriental literature</value>
   </data>
-  <data name="u4fc4u56fdu6587u5b66" xml:space="preserve">
+  <data name="\u4fc4\u56fd\u6587\u5b66" xml:space="preserve">
     <value>Russian literature</value>
   </data>
-  <data name="u82f1u56fdu6587u5b66" xml:space="preserve">
+  <data name="\u82f1\u56fd\u6587\u5b66" xml:space="preserve">
     <value>British literature</value>
   </data>
-  <data name="u6cd5u56fdu6587u5b66" xml:space="preserve">
+  <data name="\u6cd5\u56fd\u6587\u5b66" xml:space="preserve">
     <value>French literature</value>
   </data>
-  <data name="u5fb7u56fdu6587u5b66" xml:space="preserve">
+  <data name="\u5fb7\u56fd\u6587\u5b66" xml:space="preserve">
     <value>German literature</value>
   </data>
-  <data name="u610fu5927u5229u6587u5b66" xml:space="preserve">
+  <data name="\u610f\u5927\u5229\u6587\u5b66" xml:space="preserve">
     <value>Italian literature</value>
   </data>
-  <data name="u7f8eu56fdu6587u5b66" xml:space="preserve">
+  <data name="\u7f8e\u56fd\u6587\u5b66" xml:space="preserve">
     <value>American literature</value>
   </data>
-  <data name="u5317u6b27u6587u5b66" xml:space="preserve">
+  <data name="\u5317\u6b27\u6587\u5b66" xml:space="preserve">
     <value>Nordic literature</value>
   </data>
-  <data name="u4e1cu6b27u6587u5b66" xml:space="preserve">
+  <data name="\u4e1c\u6b27\u6587\u5b66" xml:space="preserve">
     <value>Eastern European literature</value>
   </data>
-  <data name="u62c9u7f8eu6587u5b66" xml:space="preserve">
+  <data name="\u62c9\u7f8e\u6587\u5b66" xml:space="preserve">
     <value>Latin American literature</value>
   </data>
-  <data name="u975eu6d32u6587u5b66" xml:space="preserve">
+  <data name="\u975e\u6d32\u6587\u5b66" xml:space="preserve">
     <value>African literature</value>
   </data>
-  <data name="u5927u6d0bu6d32u6587u5b66" xml:space="preserve">
+  <data name="\u5927\u6d0b\u6d32\u6587\u5b66" xml:space="preserve">
     <value>Oceania literature</value>
   </data>
-  <data name="u827au672fu5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u827a\u672f\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>ART PSYCHOLOGY</value>
   </data>
-  <data name="u97f3u4e50" xml:space="preserve">
+  <data name="\u97f3\u4e50" xml:space="preserve">
     <value>Music</value>
   </data>
-  <data name="u620fu5267" xml:space="preserve">
+  <data name="\u620f\u5267" xml:space="preserve">
     <value>DRAMA</value>
   </data>
-  <data name="u620fu66f2" xml:space="preserve">
+  <data name="\u620f\u66f2" xml:space="preserve">
     <value>drama</value>
   </data>
-  <data name="u821eu8e48" xml:space="preserve">
+  <data name="\u821e\u8e48" xml:space="preserve">
     <value>Dance</value>
   </data>
-  <data name="u7535u5f71" xml:space="preserve">
+  <data name="\u7535\u5f71" xml:space="preserve">
     <value>Movies</value>
   </data>
-  <data name="u5e7fu64adu7535u89c6u6587u827a" xml:space="preserve">
+  <data name="\u5e7f\u64ad\u7535\u89c6\u6587\u827a" xml:space="preserve">
     <value>Radio and television literature</value>
   </data>
-  <data name="u7f8eu672f" xml:space="preserve">
+  <data name="\u7f8e\u672f" xml:space="preserve">
     <value>Gallery</value>
   </data>
-  <data name="u5de5u827au7f8eu672f" xml:space="preserve">
+  <data name="\u5de5\u827a\u7f8e\u672f" xml:space="preserve">
     <value>Arts and Crafts</value>
   </data>
-  <data name="u4e66u6cd5" xml:space="preserve">
+  <data name="\u4e66\u6cd5" xml:space="preserve">
     <value>Calligraphy</value>
   </data>
-  <data name="u827au672fu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u827a\u672f\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of art</value>
   </data>
-  <data name="u5386u53f2u5b66" xml:space="preserve">
+  <data name="\u5386\u53f2\u5b66" xml:space="preserve">
     <value>Refinery Process Historian</value>
   </data>
-  <data name="u53f2u5b66u53f2" xml:space="preserve">
+  <data name="\u53f2\u5b66\u53f2" xml:space="preserve">
     <value>History of history</value>
   </data>
-  <data name="u53f2u5b66u7406u8bba" xml:space="preserve">
+  <data name="\u53f2\u5b66\u7406\u8bba" xml:space="preserve">
     <value>Historiography theory</value>
   </data>
-  <data name="u5386u53f2u6587u732eu5b66" xml:space="preserve">
+  <data name="\u5386\u53f2\u6587\u732e\u5b66" xml:space="preserve">
     <value>Historical philology</value>
   </data>
-  <data name="u4e2du56fdu901au53f2" xml:space="preserve">
+  <data name="\u4e2d\u56fd\u901a\u53f2" xml:space="preserve">
     <value>Chinese history</value>
   </data>
-  <data name="u4e2du56fdu53e4u4ee3u53f2" xml:space="preserve">
+  <data name="\u4e2d\u56fd\u53e4\u4ee3\u53f2" xml:space="preserve">
     <value>ancient Chinese history</value>
   </data>
-  <data name="u4e2du56fdu8fd1u4ee3u53f2u3001u73b0u4ee3u53f2" xml:space="preserve">
+  <data name="\u4e2d\u56fd\u8fd1\u4ee3\u53f2\u3001\u73b0\u4ee3\u53f2" xml:space="preserve">
     <value>Modern Chinese history, modern history</value>
   </data>
-  <data name="u4e16u754cu901au53f2" xml:space="preserve">
+  <data name="\u4e16\u754c\u901a\u53f2" xml:space="preserve">
     <value>World history</value>
   </data>
-  <data name="u4e9au6d32u53f2" xml:space="preserve">
+  <data name="\u4e9a\u6d32\u53f2" xml:space="preserve">
     <value>Asian history</value>
   </data>
-  <data name="u975eu6d32u53f2" xml:space="preserve">
+  <data name="\u975e\u6d32\u53f2" xml:space="preserve">
     <value>African history</value>
   </data>
-  <data name="u7f8eu6d32u53f2" xml:space="preserve">
+  <data name="\u7f8e\u6d32\u53f2" xml:space="preserve">
     <value>American history</value>
   </data>
-  <data name="u6b27u6d32u53f2" xml:space="preserve">
+  <data name="\u6b27\u6d32\u53f2" xml:space="preserve">
     <value>European history</value>
   </data>
-  <data name="u6fb3u6d32u3001u5927u6d0bu6d32u53f2" xml:space="preserve">
+  <data name="\u6fb3\u6d32\u3001\u5927\u6d0b\u6d32\u53f2" xml:space="preserve">
     <value>Australia, Oceania history</value>
   </data>
-  <data name="u4e13u95e8u53f2" xml:space="preserve">
+  <data name="\u4e13\u95e8\u53f2" xml:space="preserve">
     <value>Special history</value>
   </data>
-  <data name="u5386u53f2u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u5386\u53f2\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>History of other disciplines</value>
   </data>
-  <data name="u8003u53e4u7406u8bba" xml:space="preserve">
+  <data name="\u8003\u53e4\u7406\u8bba" xml:space="preserve">
     <value>Archaeological theory</value>
   </data>
-  <data name="u8003u53e4u5b66u53f2" xml:space="preserve">
+  <data name="\u8003\u53e4\u5b66\u53f2" xml:space="preserve">
     <value>History of archaeology</value>
   </data>
-  <data name="u8003u53e4u6280u672f" xml:space="preserve">
+  <data name="\u8003\u53e4\u6280\u672f" xml:space="preserve">
     <value>Archaeological technology</value>
   </data>
-  <data name="u4e2du56fdu8003u53e4" xml:space="preserve">
+  <data name="\u4e2d\u56fd\u8003\u53e4" xml:space="preserve">
     <value>Chinese archaeology</value>
   </data>
-  <data name="u5916u56fdu8003u53e4" xml:space="preserve">
+  <data name="\u5916\u56fd\u8003\u53e4" xml:space="preserve">
     <value>Foreign archaeology</value>
   </data>
-  <data name="u4e13u95e8u8003u53e4" xml:space="preserve">
+  <data name="\u4e13\u95e8\u8003\u53e4" xml:space="preserve">
     <value>Specialized archaeology</value>
   </data>
-  <data name="u653fu6cbbu7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u653f\u6cbb\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Political economy</value>
   </data>
-  <data name="u5b8fu89c2u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u5b8f\u89c2\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Macroeconomics</value>
   </data>
-  <data name="u5faeu89c2u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u5fae\u89c2\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Microeconomics</value>
   </data>
-  <data name="u6bd4u8f83u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u6bd4\u8f83\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Comparative economics</value>
   </data>
-  <data name="u7ecfu6d4eu5730u7406u5b66" xml:space="preserve">
+  <data name="\u7ecf\u6d4e\u5730\u7406\u5b66" xml:space="preserve">
     <value>Economic geography</value>
   </data>
-  <data name="u751fu4ea7u529bu7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u751f\u4ea7\u529b\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Productivity Economics</value>
   </data>
-  <data name="u7ecfu6d4eu601du60f3u53f2" xml:space="preserve">
+  <data name="\u7ecf\u6d4e\u601d\u60f3\u53f2" xml:space="preserve">
     <value>History of economic thought</value>
   </data>
-  <data name="u7ecfu6d4eu53f2" xml:space="preserve">
+  <data name="\u7ecf\u6d4e\u53f2" xml:space="preserve">
     <value>Economic history</value>
   </data>
-  <data name="u4e16u754cu7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u4e16\u754c\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>World Economics</value>
   </data>
-  <data name="u56fdu6c11u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u56fd\u6c11\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>National Economics</value>
   </data>
-  <data name="u7ba1u7406u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u7ba1\u7406\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Management Economics</value>
   </data>
-  <data name="u6570u91cfu7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u6570\u91cf\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>quantitative Economics</value>
   </data>
-  <data name="u4f1au8ba1u5b66" xml:space="preserve">
+  <data name="\u4f1a\u8ba1\u5b66" xml:space="preserve">
     <value>Accountancy</value>
   </data>
-  <data name="u5ba1u8ba1u5b66" xml:space="preserve">
+  <data name="\u5ba1\u8ba1\u5b66" xml:space="preserve">
     <value>Audit</value>
   </data>
-  <data name="u6280u672fu7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u6280\u672f\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Technical economics</value>
   </data>
-  <data name="u751fu6001u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u751f\u6001\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Ecological economics</value>
   </data>
-  <data name="u52b3u52a8u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u52b3\u52a8\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Labor Economics</value>
   </data>
-  <data name="u57ceu5e02u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u57ce\u5e02\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Urban economics</value>
   </data>
-  <data name="u8d44u6e90u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u8d44\u6e90\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Resource Economics</value>
   </data>
-  <data name="u73afu5883u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u73af\u5883\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Environmental economics</value>
   </data>
-  <data name="u7269u6d41u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u7269\u6d41\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Logistics Economics</value>
   </data>
-  <data name="u5de5u4e1au7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u5de5\u4e1a\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Industrial economics</value>
   </data>
-  <data name="u519cu6751u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u519c\u6751\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Rural economics</value>
   </data>
-  <data name="u519cu4e1au7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u519c\u4e1a\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Agricultural economics</value>
   </data>
-  <data name="u4ea4u901au8fd0u8f93u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u4ea4\u901a\u8fd0\u8f93\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Transportation Economics</value>
   </data>
-  <data name="u5546u4e1au7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u5546\u4e1a\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Business economics</value>
   </data>
-  <data name="u4ef7u683cu5b66" xml:space="preserve">
+  <data name="\u4ef7\u683c\u5b66" xml:space="preserve">
     <value>Price learning</value>
   </data>
-  <data name="u65c5u6e38u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u65c5\u6e38\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Tourism Economics</value>
   </data>
-  <data name="u4fe1u606fu7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u4fe1\u606f\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>Information Economics</value>
   </data>
-  <data name="u8d22u653fu5b66" xml:space="preserve">
+  <data name="\u8d22\u653f\u5b66" xml:space="preserve">
     <value>Public finance</value>
   </data>
-  <data name="u91d1u878du5b66" xml:space="preserve">
+  <data name="\u91d1\u878d\u5b66" xml:space="preserve">
     <value>Finance</value>
   </data>
-  <data name="u4fddu9669u5b66" xml:space="preserve">
+  <data name="\u4fdd\u9669\u5b66" xml:space="preserve">
     <value>Insurance</value>
   </data>
-  <data name="u56fdu9632u7ecfu6d4eu5b66" xml:space="preserve">
+  <data name="\u56fd\u9632\u7ecf\u6d4e\u5b66" xml:space="preserve">
     <value>National Defense Economics</value>
   </data>
-  <data name="u7ecfu6d4eu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u7ecf\u6d4e\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of economics</value>
   </data>
-  <data name="u653fu6cbbu5b66" xml:space="preserve">
+  <data name="\u653f\u6cbb\u5b66" xml:space="preserve">
     <value>Political science</value>
   </data>
-  <data name="u653fu6cbbu5b66u7406u8bba" xml:space="preserve">
+  <data name="\u653f\u6cbb\u5b66\u7406\u8bba" xml:space="preserve">
     <value>Political theory</value>
   </data>
-  <data name="u653fu6cbbu5236u5ea6" xml:space="preserve">
+  <data name="\u653f\u6cbb\u5236\u5ea6" xml:space="preserve">
     <value>policy</value>
   </data>
-  <data name="u884cu653fu5b66" xml:space="preserve">
+  <data name="\u884c\u653f\u5b66" xml:space="preserve">
     <value>Administration</value>
   </data>
-  <data name="u56fdu9645u653fu6cbbu5b66" xml:space="preserve">
+  <data name="\u56fd\u9645\u653f\u6cbb\u5b66" xml:space="preserve">
     <value>International Politics</value>
   </data>
-  <data name="u653fu6cbbu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u653f\u6cbb\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of political science</value>
   </data>
-  <data name="u6cd5u5b66" xml:space="preserve">
+  <data name="\u6cd5\u5b66" xml:space="preserve">
     <value>doctor, jd, juris, degree, school, lawyer, legal</value>
   </data>
-  <data name="u7406u8bbau6cd5u5b66" xml:space="preserve">
+  <data name="\u7406\u8bba\u6cd5\u5b66" xml:space="preserve">
     <value>Theoretical law</value>
   </data>
-  <data name="u6cd5u5f8bu53f2u5b66" xml:space="preserve">
+  <data name="\u6cd5\u5f8b\u53f2\u5b66" xml:space="preserve">
     <value>Legal history</value>
   </data>
-  <data name="u90e8u95e8u6cd5u5b66" xml:space="preserve">
+  <data name="\u90e8\u95e8\u6cd5\u5b66" xml:space="preserve">
     <value>Departmental law</value>
   </data>
-  <data name="u56fdu9645u6cd5u5b66" xml:space="preserve">
+  <data name="\u56fd\u9645\u6cd5\u5b66" xml:space="preserve">
     <value>International law</value>
   </data>
-  <data name="u6cd5u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u6cd5\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of law</value>
   </data>
-  <data name="u519bu4e8bu5b66" xml:space="preserve">
+  <data name="\u519b\u4e8b\u5b66" xml:space="preserve">
     <value>Military science</value>
   </data>
-  <data name="u519bu4e8bu7406u8bba" xml:space="preserve">
+  <data name="\u519b\u4e8b\u7406\u8bba" xml:space="preserve">
     <value>Military theory</value>
   </data>
-  <data name="u519bu4e8bu53f2" xml:space="preserve">
+  <data name="\u519b\u4e8b\u53f2" xml:space="preserve">
     <value>Military history</value>
   </data>
-  <data name="u519bu4e8bu5fc3u7406u5b66" xml:space="preserve">
+  <data name="\u519b\u4e8b\u5fc3\u7406\u5b66" xml:space="preserve">
     <value>Military psychology</value>
   </data>
-  <data name="u6218u7565u5b66" xml:space="preserve">
+  <data name="\u6218\u7565\u5b66" xml:space="preserve">
     <value>Strategy</value>
   </data>
-  <data name="u6218u5f79u5b66" xml:space="preserve">
+  <data name="\u6218\u5f79\u5b66" xml:space="preserve">
     <value>Battle school</value>
   </data>
-  <data name="u6218u672fu5b66" xml:space="preserve">
+  <data name="\u6218\u672f\u5b66" xml:space="preserve">
     <value>Tactics</value>
   </data>
-  <data name="u519bu961fu6307u6325u5b66" xml:space="preserve">
+  <data name="\u519b\u961f\u6307\u6325\u5b66" xml:space="preserve">
     <value>Army commander</value>
   </data>
-  <data name="u519bu5236u5b66" xml:space="preserve">
+  <data name="\u519b\u5236\u5b66" xml:space="preserve">
     <value>Military system</value>
   </data>
-  <data name="u519bu961fu653fu6cbbu5de5u4f5cu5b66" xml:space="preserve">
+  <data name="\u519b\u961f\u653f\u6cbb\u5de5\u4f5c\u5b66" xml:space="preserve">
     <value>Army political work school</value>
   </data>
-  <data name="u519bu4e8bu540eu52e4u5b66" xml:space="preserve">
+  <data name="\u519b\u4e8b\u540e\u52e4\u5b66" xml:space="preserve">
     <value>Military logistics</value>
   </data>
-  <data name="u519bu4e8bu5730u5b66" xml:space="preserve">
+  <data name="\u519b\u4e8b\u5730\u5b66" xml:space="preserve">
     <value>Military geology</value>
   </data>
-  <data name="u519bu4e8bu6280u672f" xml:space="preserve">
+  <data name="\u519b\u4e8b\u6280\u672f" xml:space="preserve">
     <value>defense-technology</value>
   </data>
-  <data name="u519bu4e8bu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u519b\u4e8b\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines in military science</value>
   </data>
-  <data name="u793eu4f1au5b66u7406u8bba" xml:space="preserve">
+  <data name="\u793e\u4f1a\u5b66\u7406\u8bba" xml:space="preserve">
     <value>Sociological theory</value>
   </data>
-  <data name="u793eu4f1au5b66u65b9u6cd5" xml:space="preserve">
+  <data name="\u793e\u4f1a\u5b66\u65b9\u6cd5" xml:space="preserve">
     <value>Sociological methods</value>
   </data>
-  <data name="u5b9eu9a8cu793eu4f1au5b66" xml:space="preserve">
+  <data name="\u5b9e\u9a8c\u793e\u4f1a\u5b66" xml:space="preserve">
     <value>Experimental sociology</value>
   </data>
-  <data name="u6570u7406u793eu4f1au5b66" xml:space="preserve">
+  <data name="\u6570\u7406\u793e\u4f1a\u5b66" xml:space="preserve">
     <value>Mathematical sociology</value>
   </data>
-  <data name="u5e94u7528u793eu4f1au5b66" xml:space="preserve">
+  <data name="\u5e94\u7528\u793e\u4f1a\u5b66" xml:space="preserve">
     <value>Applied Sociology</value>
   </data>
-  <data name="u6bd4u8f83u793eu4f1au5b66" xml:space="preserve">
+  <data name="\u6bd4\u8f83\u793e\u4f1a\u5b66" xml:space="preserve">
     <value>Comparative sociology</value>
   </data>
-  <data name="u793eu4f1au5730u7406u5b66" xml:space="preserve">
+  <data name="\u793e\u4f1a\u5730\u7406\u5b66" xml:space="preserve">
     <value>Social geography</value>
   </data>
-  <data name="u6587u5316u793eu4f1au5b66" xml:space="preserve">
+  <data name="\u6587\u5316\u793e\u4f1a\u5b66" xml:space="preserve">
     <value>Cultural sociology</value>
   </data>
-  <data name="u5386u53f2u793eu4f1au5b66" xml:space="preserve">
+  <data name="\u5386\u53f2\u793e\u4f1a\u5b66" xml:space="preserve">
     <value>Historical sociology</value>
   </data>
-  <data name="u7ecfu6d4eu793eu4f1au5b66" xml:space="preserve">
+  <data name="\u7ecf\u6d4e\u793e\u4f1a\u5b66" xml:space="preserve">
     <value>Economic sociology</value>
   </data>
-  <data name="u519bu4e8bu793eu4f1au5b66" xml:space="preserve">
+  <data name="\u519b\u4e8b\u793e\u4f1a\u5b66" xml:space="preserve">
     <value>Military sociology</value>
   </data>
-  <data name="u516cu5171u5173u7cfbu5b66" xml:space="preserve">
+  <data name="\u516c\u5171\u5173\u7cfb\u5b66" xml:space="preserve">
     <value>Public relations</value>
   </data>
-  <data name="u793eu4f1au4ebau7c7bu5b66" xml:space="preserve">
+  <data name="\u793e\u4f1a\u4eba\u7c7b\u5b66" xml:space="preserve">
     <value>Social anthropology</value>
   </data>
-  <data name="u7ec4u7ec7u793eu4f1au5b66" xml:space="preserve">
+  <data name="\u7ec4\u7ec7\u793e\u4f1a\u5b66" xml:space="preserve">
     <value>Organizational sociology</value>
   </data>
-  <data name="u53d1u5c55u793eu4f1au5b66" xml:space="preserve">
+  <data name="\u53d1\u5c55\u793e\u4f1a\u5b66" xml:space="preserve">
     <value>Develop sociology</value>
   </data>
-  <data name="u798fu5229u793eu4f1au5b66" xml:space="preserve">
+  <data name="\u798f\u5229\u793e\u4f1a\u5b66" xml:space="preserve">
     <value>Welfare sociology</value>
   </data>
-  <data name="u4ebau53e3u5b66" xml:space="preserve">
+  <data name="\u4eba\u53e3\u5b66" xml:space="preserve">
     <value>Demography</value>
   </data>
-  <data name="u52b3u52a8u79d1u5b66" xml:space="preserve">
+  <data name="\u52b3\u52a8\u79d1\u5b66" xml:space="preserve">
     <value>Labor science</value>
   </data>
-  <data name="u793eu4f1au5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
+  <data name="\u793e\u4f1a\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
     <value>Other disciplines of sociology</value>
   </data>
-  <data name="u6c11u65cfu95eeu9898u7406u8bba" xml:space="preserve">
+  <data name="\u6c11\u65cf\u95ee\u9898\u7406\u8bba" xml:space="preserve">
     <value>Theory of ethnic issues</value>
   </data>
-  <data name="u6c11u65cfu53f2u5b66" xml:space="preserve">
+  <data name="\u6c11\u65cf\u53f2\u5b66" xml:space="preserve">
     <value>National history</value>
   </data>
-  <data name="u8499u53e4u5b66" xml:space="preserve">
+  <data name="\u8499\u53e4\u5b66" xml:space="preserve">
     <value>Mongolian studies</value>
   </data>
-  <data name="u85cfu5b66" xml:space="preserve">
+  <data name="\u85cf\u5b66" xml:space="preserve">
     <value>Tibetan studies</value>
   </data>
-  <data name="u65b0u7586u6c11u65cfu7814u7a76" xml:space="preserve">
+  <data name="\u65b0\u7586\u6c11\u65cf\u7814\u7a76" xml:space="preserve">
     <value>Xinjiang ethnic studies</value>
   </data>
-  <data name="u6587u5316u4ebau7c7bu5b66u4e0eu6c11u4fd7u5b66" xml:space="preserve">
+  <data name="\u6587\u5316\u4eba\u7c7b\u5b66\u4e0e\u6c11\u4fd7\u5b66" xml:space="preserve">
     <value>Cultural anthropology and folklore</value>
   </data>
-  <data name="u836fu5b66" xml:space="preserve">
+  <data name="\u836f\u5b66" xml:space="preserve">
     <value>Pharmacy</value>
   </data>
-  <data name="u4f01u4e1au7ba1u7406" xml:space="preserve">
+  <data name="\u4f01\u4e1a\u7ba1\u7406" xml:space="preserve">
     <value>Corporate Administration</value>
   </data>
-  <data name="u5de5u7a0bu4e0eu6280u672fu79d1u5b66u57fau7840u5b66u79d1" xml:space="preserve">
+  <data name="\u5de5\u7a0b\u4e0e\u6280\u672f\u79d1\u5b66\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
     <value>Basic disciplines in engineering and technology science</value>
   </data>
-  <data name="u4fe1u606fu4e0eu7cfbu7edfu79d1u5b66u76f8u5173u5de5u7a0bu4e0eu6280u672f" xml:space="preserve">
+  <data name="\u4fe1\u606f\u4e0e\u7cfb\u7edf\u79d1\u5b66\u76f8\u5173\u5de5\u7a0b\u4e0e\u6280\u672f" xml:space="preserve">
     <value>Information and systems science related engineering and technology</value>
   </data>
-  <data name="u7ba1u7406u5b66" xml:space="preserve">
+  <data name="\u7ba1\u7406\u5b66" xml:space="preserve">
     <value>Management</value>
   </data>
-  <data name="u519bu4e8bu533bu5b66" xml:space="preserve">
+  <data name="\u519b\u4e8b\u533b\u5b66" xml:space="preserve">
     <value>Military medicine</value>
   </data>
-  <data name="u7279u79cdu533bu5b66" xml:space="preserve">
+  <data name="\u7279\u79cd\u533b\u5b66" xml:space="preserve">
     <value>Special Medicine</value>
   </data>
-  <data name="u8003u53e4u5b66" xml:space="preserve">
+  <data name="\u8003\u53e4\u5b66" xml:space="preserve">
     <value>Archaeology</value>
   </data>
-  <data name="u5316u5b66" xml:space="preserve">
+  <data name="\u5316\u5b66" xml:space="preserve">
     <value>Chemistry</value>
   </data>
-  <data name="u51e0u4f55u5b66" xml:space="preserve">
+  <data name="\u51e0\u4f55\u5b66" xml:space="preserve">
     <value>Geometry</value>
   </data>
-  <data name="u4e2du836fu5b66" xml:space="preserve">
+  <data name="\u4e2d\u836f\u5b66" xml:space="preserve">
     <value>Science of chinese materia medica</value>
   </data>
-  <data name="u7535u6c14u5de5u7a0b" xml:space="preserve">
+  <data name="\u7535\u6c14\u5de5\u7a0b" xml:space="preserve">
     <value>Electric Engineering</value>
   </data>
-  <data name="u901au4fe1u6280u672f" xml:space="preserve">
+  <data name="\u901a\u4fe1\u6280\u672f" xml:space="preserve">
     <value>Communication Technology</value>
   </data>
-  <data name="u6587u5b66" xml:space="preserve">
+  <data name="\u6587\u5b66" xml:space="preserve">
     <value>Literature</value>
   </data>
-  <data name="u673au68b0u5de5u7a0b" xml:space="preserve">
+  <data name="\u673a\u68b0\u5de5\u7a0b" xml:space="preserve">
     <value>Mechanical Engineering</value>
   </data>
   <data name="Click to add" xml:space="preserve">
@@ -3145,7 +3145,7 @@
   <data name="default" xml:space="preserve">
     <value>default</value>
   </data>
-  <data name="u4e2du533bu5b66" xml:space="preserve">
+  <data name="\u4e2d\u533b\u5b66" xml:space="preserve">
     <value>Traditional Chinese Medicine</value>
   </data>
   <data name="We have sent a confirmation email to you, you can login after confirming it (Didn't you get the email? check it in spam)" xml:space="preserve">
