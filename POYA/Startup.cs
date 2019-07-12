@@ -120,28 +120,21 @@ namespace POYA
                         new CultureInfo("en-US"),
                         new CultureInfo("zh-CN")
                };
+               opts.DefaultRequestCulture = new RequestCulture("zh-CN");
                opts.SupportedCultures = supportedCultures;
                opts.SupportedUICultures = supportedCultures;
                opts.RequestCultureProviders = new List<IRequestCultureProvider>{
-                      new   X_DOVERequestCultureProvider(),
+                      new X_DOVERequestCultureProvider(),
                 };
            });
 
-            #region
-            /*
-            services.Configure<FormOptions>(options =>
-            {
-                options.MultipartBodyLengthLimit = 10_485_760;
-            });
-            */
-            #endregion
 
             // using Microsoft.AspNetCore.Identity.UI.Services;
             services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddSingleton<HtmlSanitizer>(new HtmlSanitizer());
 
-            services.AddSingleton<AppInitialization>(new AppInitialization(services));
+            //  services.AddSingleton<AppInitialization>(new AppInitialization(services));
 
             services.AddSingleton<X_DOVEHelper>(x_DOVEHelper);
 
@@ -196,8 +189,6 @@ namespace POYA
             app.UseAuthentication();
 
             app.UseRequestLocalization();
-
-            //  app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
 
             app.UseSession();
 

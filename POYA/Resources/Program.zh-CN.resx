@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<root>
-  <!-- 
+<root><!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -60,45 +59,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -229,7 +228,7 @@
     <value>账号</value>
   </data>
   <data name="You've successfully authenticated with" xml:space="preserve">
-    <value>成功关联 &gt;_</value>
+    <value>成功关联 >_</value>
   </data>
   <data name="Please enter an email address for this site below and click the Register button to finish logging in" xml:space="preserve">
     <value>快设置一个独立账号吧</value>
@@ -268,7 +267,7 @@
     <value>双重保护</value>
   </data>
   <data name="Your login is protected with an authenticator app. Enter your authenticator code below" xml:space="preserve">
-    <value>APP已为你保驾护航了, 请输入验证码&gt;_</value>
+    <value>APP已为你保驾护航了, 请输入验证码>_</value>
   </data>
   <data name="Don't have access to your authenticator device? You can" xml:space="preserve">
     <value>没有验证的设备? 你可以</value>
@@ -286,7 +285,7 @@
     <value>重置密码</value>
   </data>
   <data name="Your password has been reset, Please" xml:space="preserve">
-    <value>密码已重置了, 点击 &gt;_</value>
+    <value>密码已重置了, 点击 >_</value>
   </data>
   <data name="click here to log in" xml:space="preserve">
     <value>登录</value>
@@ -324,8 +323,8 @@
   <data name="Chat With Friends" xml:space="preserve">
     <value>和校友交流</value>
   </data>
-  <data name="Services &amp; Help" xml:space="preserve">
-    <value>提供服务&amp;获取帮助</value>
+  <data name="Services and Help" xml:space="preserve">
+    <value>提供服务和获取帮助</value>
   </data>
   <data name="AND MORE" xml:space="preserve">
     <value>还有</value>
@@ -355,7 +354,7 @@
     <value>返回</value>
   </data>
   <data name="for" xml:space="preserve">
-    <value>&gt;_ </value>
+    <value>>_ </value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
@@ -403,7 +402,7 @@
     <value>删除文件</value>
   </data>
   <data name="Details of" xml:space="preserve">
-    <value>详细 &gt;_</value>
+    <value>详细 >_</value>
   </data>
   <data name="Root directory" xml:space="preserve">
     <value>根目录</value>
@@ -469,7 +468,7 @@
     <value>确认邮箱</value>
   </data>
   <data name="Please confirm your account by" xml:space="preserve">
-    <value>快来确认邮箱吧 &gt;_ </value>
+    <value>快来确认邮箱吧 >_ </value>
   </data>
   <data name="clicking here" xml:space="preserve">
     <value>(^_^)// 点我</value>
@@ -478,7 +477,7 @@
     <value>你的邮箱还没有注册, 快注册吧</value>
   </data>
   <data name="Unable to load user with ID" xml:space="preserve">
-    <value>加载用户信息失败了, ID &gt;_</value>
+    <value>加载用户信息失败了, ID >_</value>
   </data>
   <data name="Your password has been changed" xml:space="preserve">
     <value>更改密码成功</value>
@@ -517,7 +516,7 @@
     <value>你的网盘</value>
   </data>
   <data name="Please reset your password by" xml:space="preserve">
-    <value>重置密码? &gt;_ </value>
+    <value>重置密码? >_ </value>
   </data>
   <data name="Invalid login attempt" xml:space="preserve">
     <value>登录失败了. . .</value>
@@ -858,31 +857,31 @@
   <data name="Select attachment" xml:space="preserve">
     <value>选择</value>
   </data>
-  <data name="\u6570\u5b66" xml:space="preserve">
+  <data name="u6570u5b66" xml:space="preserve">
     <value>数学</value>
   </data>
-  <data name="\u6570\u5b66\u53f2" xml:space="preserve">
+  <data name="u6570u5b66u53f2" xml:space="preserve">
     <value>数学史</value>
   </data>
-  <data name="\u5730\u7403\u79d1\u5b66" xml:space="preserve">
+  <data name="u5730u7403u79d1u5b66" xml:space="preserve">
     <value>地球科学</value>
   </data>
-  <data name="\u6c34\u6587\u5b66" xml:space="preserve">
+  <data name="u6c34u6587u5b66" xml:space="preserve">
     <value>水文学</value>
   </data>
-  <data name="\u7ec4\u5408\u6570\u5b66" xml:space="preserve">
+  <data name="u7ec4u5408u6570u5b66" xml:space="preserve">
     <value>组合数学</value>
   </data>
-  <data name="\u79bb\u6563\u6570\u5b66" xml:space="preserve">
+  <data name="u79bbu6563u6570u5b66" xml:space="preserve">
     <value>离散数学</value>
   </data>
-  <data name="\u81ea\u7136\u79d1\u5b66\u76f8\u5173\u5de5\u7a0b\u4e0e\u6280\u672f" xml:space="preserve">
+  <data name="u81eau7136u79d1u5b66u76f8u5173u5de5u7a0bu4e0eu6280u672f" xml:space="preserve">
     <value>自然科学相关工程与技术</value>
   </data>
-  <data name="\u751f\u7269\u5de5\u7a0b" xml:space="preserve">
+  <data name="u751fu7269u5de5u7a0b" xml:space="preserve">
     <value>生物工程</value>
   </data>
-  <data name="\u8fd0\u7b79\u5b66" xml:space="preserve">
+  <data name="u8fd0u7b79u5b66" xml:space="preserve">
     <value>运筹学</value>
   </data>
   <data name="X-DOVE" xml:space="preserve">
@@ -981,2191 +980,2191 @@
   <data name="Reading" xml:space="preserve">
     <value>正在读取</value>
   </data>
-  <data name="\u4fe1\u606f\u4e0e\u7cfb\u7edf\u79d1\u5b66\u76f8\u5173\u5de5\u7a0b\u4e0e\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u4fe1u606fu4e0eu7cfbu7edfu79d1u5b66u76f8u5173u5de5u7a0bu4e0eu6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>信息与系统科学相关工程与技术其他学科</value>
   </data>
-  <data name="\u5de5\u7a0b\u4e0e\u6280\u672f\u79d1\u5b66\u57fa\u7840\u5b66\u79d1\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u5de5u7a0bu4e0eu6280u672fu79d1u5b66u57fau7840u5b66u79d1u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>工程与技术科学基础学科其他学科</value>
   </data>
-  <data name="\u9884\u9632\u533b\u5b66\u4e0e\u516c\u5171\u536b\u751f\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u9884u9632u533bu5b66u4e0eu516cu5171u536bu751fu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>预防医学与公共卫生学其他学科</value>
   </data>
-  <data name="\u836f\u6548\u5b66" xml:space="preserve">
+  <data name="u836fu6548u5b66" xml:space="preserve">
     <value>药效学</value>
   </data>
-  <data name="\u8ba1\u91cf\u5b66" xml:space="preserve">
+  <data name="u8ba1u91cfu5b66" xml:space="preserve">
     <value>计量学</value>
   </data>
-  <data name="\u751f\u7269\u5b66" xml:space="preserve">
+  <data name="u751fu7269u5b66" xml:space="preserve">
     <value>生物学</value>
   </data>
-  <data name="\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u5fc3u7406u5b66" xml:space="preserve">
     <value>心理学</value>
   </data>
   <data name="Complexity" xml:space="preserve">
     <value>复杂</value>
   </data>
-  <data name="\u57fa\u7840\u533b\u5b66" xml:space="preserve">
+  <data name="u57fau7840u533bu5b66" xml:space="preserve">
     <value>基础医学</value>
   </data>
-  <data name="\u9884\u9632\u533b\u5b66\u4e0e\u516c\u5171\u536b\u751f\u5b66" xml:space="preserve">
+  <data name="u9884u9632u533bu5b66u4e0eu516cu5171u536bu751fu5b66" xml:space="preserve">
     <value>预防医学与公共卫生学</value>
   </data>
-  <data name="\u4e2d\u533b\u5b66\u4e0e\u4e2d\u836f\u5b66" xml:space="preserve">
+  <data name="u4e2du533bu5b66u4e0eu4e2du836fu5b66" xml:space="preserve">
     <value>中医学与中药学</value>
   </data>
-  <data name="\u6d4b\u7ed8\u79d1\u5b66\u6280\u672f" xml:space="preserve">
+  <data name="u6d4bu7ed8u79d1u5b66u6280u672f" xml:space="preserve">
     <value>测绘科学技术</value>
   </data>
-  <data name="\u52a8\u529b\u4e0e\u7535\u6c14\u5de5\u7a0b" xml:space="preserve">
+  <data name="u52a8u529bu4e0eu7535u6c14u5de5u7a0b" xml:space="preserve">
     <value>动力与电气工程</value>
   </data>
-  <data name="\u7535\u5b50\u4e0e\u901a\u4fe1\u6280\u672f" xml:space="preserve">
+  <data name="u7535u5b50u4e0eu901au4fe1u6280u672f" xml:space="preserve">
     <value>电子与通信技术</value>
   </data>
-  <data name="\u8ba1\u7b97\u673a\u79d1\u5b66\u6280\u672f" xml:space="preserve">
+  <data name="u8ba1u7b97u673au79d1u5b66u6280u672f" xml:space="preserve">
     <value>计算机科学技术</value>
   </data>
-  <data name="\u98df\u54c1\u79d1\u5b66\u6280\u672f" xml:space="preserve">
+  <data name="u98dfu54c1u79d1u5b66u6280u672f" xml:space="preserve">
     <value>食品科学技术</value>
   </data>
-  <data name="\u6c34\u5229\u5de5\u7a0b" xml:space="preserve">
+  <data name="u6c34u5229u5de5u7a0b" xml:space="preserve">
     <value>水利工程</value>
   </data>
-  <data name="\u822a\u7a7a\u3001\u822a\u5929\u79d1\u5b66\u6280\u672f" xml:space="preserve">
+  <data name="u822au7a7au3001u822au5929u79d1u5b66u6280u672f" xml:space="preserve">
     <value>航空、航天科学技术</value>
   </data>
-  <data name="\u54f2\u5b66" xml:space="preserve">
+  <data name="u54f2u5b66" xml:space="preserve">
     <value>哲学</value>
   </data>
-  <data name="\u827a\u672f\u5b66" xml:space="preserve">
+  <data name="u827au672fu5b66" xml:space="preserve">
     <value>艺术学</value>
   </data>
-  <data name="\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u7ecfu6d4eu5b66" xml:space="preserve">
     <value>经济学</value>
   </data>
-  <data name="\u793e\u4f1a\u5b66" xml:space="preserve">
+  <data name="u793eu4f1au5b66" xml:space="preserve">
     <value>社会学</value>
   </data>
-  <data name="\u6c11\u65cf\u5b66\u4e0e\u6587\u5316\u5b66" xml:space="preserve">
+  <data name="u6c11u65cfu5b66u4e0eu6587u5316u5b66" xml:space="preserve">
     <value>民族学与文化学</value>
   </data>
-  <data name="\u793e\u4f1a\u5b66\u53f2" xml:space="preserve">
+  <data name="u793eu4f1au5b66u53f2" xml:space="preserve">
     <value>社会学史</value>
   </data>
-  <data name="\u4e16\u754c\u6c11\u65cf\u7814\u7a76" xml:space="preserve">
+  <data name="u4e16u754cu6c11u65cfu7814u7a76" xml:space="preserve">
     <value>世界民族研究</value>
   </data>
-  <data name="\u8003\u53e4\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u8003u53e4u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>考古学其他学科</value>
   </data>
-  <data name="\u53ef\u6301\u7eed\u53d1\u5c55\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u53efu6301u7eedu53d1u5c55u7ecfu6d4eu5b66" xml:space="preserve">
     <value>可持续发展经济学</value>
   </data>
-  <data name="\u6570\u7406\u903b\u8f91\u4e0e\u6570\u5b66\u57fa\u7840" xml:space="preserve">
+  <data name="u6570u7406u903bu8f91u4e0eu6570u5b66u57fau7840" xml:space="preserve">
     <value>数理逻辑与数学基础</value>
   </data>
-  <data name="\u65f6\u95f4\u6d4b\u91cf\u5b66" xml:space="preserve">
+  <data name="u65f6u95f4u6d4bu91cfu5b66" xml:space="preserve">
     <value>时间测量学</value>
   </data>
-  <data name="\u5e94\u7528\u7edf\u8ba1\u6570\u5b66" xml:space="preserve">
+  <data name="u5e94u7528u7edfu8ba1u6570u5b66" xml:space="preserve">
     <value>应用统计数学</value>
   </data>
-  <data name="\u6570\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u6570u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>数学其他学科</value>
   </data>
-  <data name="\u79ef\u5206\u65b9\u7a0b" xml:space="preserve">
+  <data name="u79efu5206u65b9u7a0b" xml:space="preserve">
     <value>积分方程</value>
   </data>
-  <data name="\u6570\u8bba" xml:space="preserve">
+  <data name="u6570u8bba" xml:space="preserve">
     <value>数论</value>
   </data>
-  <data name="\u4ee3\u6570\u5b66" xml:space="preserve">
+  <data name="u4ee3u6570u5b66" xml:space="preserve">
     <value>代数学</value>
   </data>
-  <data name="\u4ee3\u6570\u51e0\u4f55\u5b66" xml:space="preserve">
+  <data name="u4ee3u6570u51e0u4f55u5b66" xml:space="preserve">
     <value>代数几何学</value>
   </data>
-  <data name="\u62d3\u6251\u5b66" xml:space="preserve">
+  <data name="u62d3u6251u5b66" xml:space="preserve">
     <value>拓扑学</value>
   </data>
-  <data name="\u6570\u5b66\u5206\u6790" xml:space="preserve">
+  <data name="u6570u5b66u5206u6790" xml:space="preserve">
     <value>数学分析</value>
   </data>
-  <data name="\u975e\u6807\u51c6\u5206\u6790" xml:space="preserve">
+  <data name="u975eu6807u51c6u5206u6790" xml:space="preserve">
     <value>非标准分析</value>
   </data>
-  <data name="\u51fd\u6570\u8bba" xml:space="preserve">
+  <data name="u51fdu6570u8bba" xml:space="preserve">
     <value>函数论</value>
   </data>
-  <data name="\u5e38\u5fae\u5206\u65b9\u7a0b" xml:space="preserve">
+  <data name="u5e38u5faeu5206u65b9u7a0b" xml:space="preserve">
     <value>常微分方程</value>
   </data>
-  <data name="\u504f\u5fae\u5206\u65b9\u7a0b" xml:space="preserve">
+  <data name="u504fu5faeu5206u65b9u7a0b" xml:space="preserve">
     <value>偏微分方程</value>
   </data>
-  <data name="\u52a8\u529b\u7cfb\u7edf" xml:space="preserve">
+  <data name="u52a8u529bu7cfbu7edf" xml:space="preserve">
     <value>动力系统</value>
   </data>
-  <data name="\u6cdb\u51fd\u5206\u6790" xml:space="preserve">
+  <data name="u6cdbu51fdu5206u6790" xml:space="preserve">
     <value>泛函分析</value>
   </data>
-  <data name="\u8ba1\u7b97\u6570\u5b66" xml:space="preserve">
+  <data name="u8ba1u7b97u6570u5b66" xml:space="preserve">
     <value>计算数学</value>
   </data>
-  <data name="\u6982\u7387\u8bba" xml:space="preserve">
+  <data name="u6982u7387u8bba" xml:space="preserve">
     <value>概率论</value>
   </data>
-  <data name="\u6570\u7406\u7edf\u8ba1\u5b66" xml:space="preserve">
+  <data name="u6570u7406u7edfu8ba1u5b66" xml:space="preserve">
     <value>数理统计学</value>
   </data>
-  <data name="\u6a21\u7cca\u6570\u5b66" xml:space="preserve">
+  <data name="u6a21u7ccau6570u5b66" xml:space="preserve">
     <value>模糊数学</value>
   </data>
-  <data name="\u8ba1\u7b97\u673a\u6570\u5b66" xml:space="preserve">
+  <data name="u8ba1u7b97u673au6570u5b66" xml:space="preserve">
     <value>计算机数学</value>
   </data>
-  <data name="\u5e94\u7528\u6570\u5b66" xml:space="preserve">
+  <data name="u5e94u7528u6570u5b66" xml:space="preserve">
     <value>应用数学</value>
   </data>
-  <data name="\u4fe1\u606f\u79d1\u5b66\u4e0e\u7cfb\u7edf\u79d1\u5b66" xml:space="preserve">
+  <data name="u4fe1u606fu79d1u5b66u4e0eu7cfbu7edfu79d1u5b66" xml:space="preserve">
     <value>信息科学与系统科学</value>
   </data>
-  <data name="\u4fe1\u606f\u79d1\u5b66\u4e0e\u7cfb\u7edf\u79d1\u5b66\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
+  <data name="u4fe1u606fu79d1u5b66u4e0eu7cfbu7edfu79d1u5b66u57fau7840u5b66u79d1" xml:space="preserve">
     <value>信息科学与系统科学基础学科</value>
   </data>
-  <data name="\u7cfb\u7edf\u5b66" xml:space="preserve">
+  <data name="u7cfbu7edfu5b66" xml:space="preserve">
     <value>系统学</value>
   </data>
-  <data name="\u63a7\u5236\u7406\u8bba" xml:space="preserve">
+  <data name="u63a7u5236u7406u8bba" xml:space="preserve">
     <value>控制理论</value>
   </data>
-  <data name="\u7cfb\u7edf\u8bc4\u4f30\u4e0e\u53ef\u884c\u6027\u5206\u6790" xml:space="preserve">
+  <data name="u7cfbu7edfu8bc4u4f30u4e0eu53efu884cu6027u5206u6790" xml:space="preserve">
     <value>系统评估与可行性分析</value>
   </data>
-  <data name="\u7cfb\u7edf\u5de5\u7a0b\u65b9\u6cd5\u8bba" xml:space="preserve">
+  <data name="u7cfbu7edfu5de5u7a0bu65b9u6cd5u8bba" xml:space="preserve">
     <value>系统工程方法论</value>
   </data>
-  <data name="\u4fe1\u606f\u79d1\u5b66\u4e0e\u7cfb\u7edf\u79d1\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u4fe1u606fu79d1u5b66u4e0eu7cfbu7edfu79d1u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>信息科学与系统科学其他学科</value>
   </data>
-  <data name="\u529b\u5b66" xml:space="preserve">
+  <data name="u529bu5b66" xml:space="preserve">
     <value>力学</value>
   </data>
-  <data name="\u57fa\u7840\u529b\u5b66" xml:space="preserve">
+  <data name="u57fau7840u529bu5b66" xml:space="preserve">
     <value>基础力学</value>
   </data>
-  <data name="\u56fa\u4f53\u529b\u5b66" xml:space="preserve">
+  <data name="u56fau4f53u529bu5b66" xml:space="preserve">
     <value>固体力学</value>
   </data>
-  <data name="\u632f\u52a8\u4e0e\u6ce2" xml:space="preserve">
+  <data name="u632fu52a8u4e0eu6ce2" xml:space="preserve">
     <value>振动与波</value>
   </data>
-  <data name="\u6d41\u4f53\u529b\u5b66" xml:space="preserve">
+  <data name="u6d41u4f53u529bu5b66" xml:space="preserve">
     <value>流体力学</value>
   </data>
-  <data name="\u6d41\u53d8\u5b66" xml:space="preserve">
+  <data name="u6d41u53d8u5b66" xml:space="preserve">
     <value>流变学</value>
   </data>
-  <data name="\u7206\u70b8\u529b\u5b66" xml:space="preserve">
+  <data name="u7206u70b8u529bu5b66" xml:space="preserve">
     <value>爆炸力学</value>
   </data>
-  <data name="\u7269\u7406\u529b\u5b66" xml:space="preserve">
+  <data name="u7269u7406u529bu5b66" xml:space="preserve">
     <value>物理力学</value>
   </data>
-  <data name="\u751f\u7269\u529b\u5b66" xml:space="preserve">
+  <data name="u751fu7269u529bu5b66" xml:space="preserve">
     <value>生物力学</value>
   </data>
-  <data name="\u7edf\u8ba1\u529b\u5b66" xml:space="preserve">
+  <data name="u7edfu8ba1u529bu5b66" xml:space="preserve">
     <value>统计力学</value>
   </data>
-  <data name="\u5e94\u7528\u529b\u5b66" xml:space="preserve">
+  <data name="u5e94u7528u529bu5b66" xml:space="preserve">
     <value>应用力学</value>
   </data>
-  <data name="\u529b\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u529bu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>力学其他学科</value>
   </data>
-  <data name="\u7269\u7406\u5b66" xml:space="preserve">
+  <data name="u7269u7406u5b66" xml:space="preserve">
     <value>物理学</value>
   </data>
-  <data name="\u7269\u7406\u5b66\u53f2" xml:space="preserve">
+  <data name="u7269u7406u5b66u53f2" xml:space="preserve">
     <value>物理学史</value>
   </data>
-  <data name="\u7406\u8bba\u7269\u7406\u5b66" xml:space="preserve">
+  <data name="u7406u8bbau7269u7406u5b66" xml:space="preserve">
     <value>理论物理学</value>
   </data>
-  <data name="\u58f0\u5b66" xml:space="preserve">
+  <data name="u58f0u5b66" xml:space="preserve">
     <value>声学</value>
   </data>
-  <data name="\u70ed\u5b66" xml:space="preserve">
+  <data name="u70edu5b66" xml:space="preserve">
     <value>热学</value>
   </data>
-  <data name="\u5149\u5b66" xml:space="preserve">
+  <data name="u5149u5b66" xml:space="preserve">
     <value>光学</value>
   </data>
-  <data name="\u7535\u78c1\u5b66" xml:space="preserve">
+  <data name="u7535u78c1u5b66" xml:space="preserve">
     <value>电磁学</value>
   </data>
-  <data name="\u65e0\u7ebf\u7535\u7269\u7406" xml:space="preserve">
+  <data name="u65e0u7ebfu7535u7269u7406" xml:space="preserve">
     <value>无线电物理</value>
   </data>
-  <data name="\u7535\u5b50\u7269\u7406\u5b66" xml:space="preserve">
+  <data name="u7535u5b50u7269u7406u5b66" xml:space="preserve">
     <value>电子物理学</value>
   </data>
-  <data name="\u51dd\u805a\u6001\u7269\u7406\u5b66" xml:space="preserve">
+  <data name="u51ddu805au6001u7269u7406u5b66" xml:space="preserve">
     <value>凝聚态物理学</value>
   </data>
-  <data name="\u7b49\u79bb\u5b50\u4f53\u7269\u7406\u5b66" xml:space="preserve">
+  <data name="u7b49u79bbu5b50u4f53u7269u7406u5b66" xml:space="preserve">
     <value>等离子体物理学</value>
   </data>
-  <data name="\u539f\u5b50\u5206\u5b50\u7269\u7406\u5b66" xml:space="preserve">
+  <data name="u539fu5b50u5206u5b50u7269u7406u5b66" xml:space="preserve">
     <value>原子分子物理学</value>
   </data>
-  <data name="\u539f\u5b50\u6838\u7269\u7406\u5b66" xml:space="preserve">
+  <data name="u539fu5b50u6838u7269u7406u5b66" xml:space="preserve">
     <value>原子核物理学</value>
   </data>
-  <data name="\u9ad8\u80fd\u7269\u7406\u5b66" xml:space="preserve">
+  <data name="u9ad8u80fdu7269u7406u5b66" xml:space="preserve">
     <value>高能物理学</value>
   </data>
-  <data name="\u8ba1\u7b97\u7269\u7406\u5b66" xml:space="preserve">
+  <data name="u8ba1u7b97u7269u7406u5b66" xml:space="preserve">
     <value>计算物理学</value>
   </data>
-  <data name="\u5e94\u7528\u7269\u7406\u5b66" xml:space="preserve">
+  <data name="u5e94u7528u7269u7406u5b66" xml:space="preserve">
     <value>应用物理学</value>
   </data>
-  <data name="\u7269\u7406\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u7269u7406u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>物理学其他学科</value>
   </data>
-  <data name="\u5316\u5b66\u53f2" xml:space="preserve">
+  <data name="u5316u5b66u53f2" xml:space="preserve">
     <value>化学史</value>
   </data>
-  <data name="\u65e0\u673a\u5316\u5b66" xml:space="preserve">
+  <data name="u65e0u673au5316u5b66" xml:space="preserve">
     <value>无机化学</value>
   </data>
-  <data name="\u6709\u673a\u5316\u5b66" xml:space="preserve">
+  <data name="u6709u673au5316u5b66" xml:space="preserve">
     <value>有机化学</value>
   </data>
-  <data name="\u5206\u6790\u5316\u5b66" xml:space="preserve">
+  <data name="u5206u6790u5316u5b66" xml:space="preserve">
     <value>分析化学</value>
   </data>
-  <data name="\u7269\u7406\u5316\u5b66" xml:space="preserve">
+  <data name="u7269u7406u5316u5b66" xml:space="preserve">
     <value>物理化学</value>
   </data>
-  <data name="\u5316\u5b66\u7269\u7406\u5b66" xml:space="preserve">
+  <data name="u5316u5b66u7269u7406u5b66" xml:space="preserve">
     <value>化学物理学</value>
   </data>
-  <data name="\u9ad8\u5206\u5b50\u7269\u7406" xml:space="preserve">
+  <data name="u9ad8u5206u5b50u7269u7406" xml:space="preserve">
     <value>高分子物理</value>
   </data>
-  <data name="\u9ad8\u5206\u5b50\u5316\u5b66" xml:space="preserve">
+  <data name="u9ad8u5206u5b50u5316u5b66" xml:space="preserve">
     <value>高分子化学</value>
   </data>
-  <data name="\u6838\u5316\u5b66" xml:space="preserve">
+  <data name="u6838u5316u5b66" xml:space="preserve">
     <value>核化学</value>
   </data>
-  <data name="\u5e94\u7528\u5316\u5b66" xml:space="preserve">
+  <data name="u5e94u7528u5316u5b66" xml:space="preserve">
     <value>应用化学</value>
   </data>
-  <data name="\u5316\u5b66\u751f\u7269\u5b66" xml:space="preserve">
+  <data name="u5316u5b66u751fu7269u5b66" xml:space="preserve">
     <value>化学生物学</value>
   </data>
-  <data name="\u6750\u6599\u5316\u5b66" xml:space="preserve">
+  <data name="u6750u6599u5316u5b66" xml:space="preserve">
     <value>材料化学</value>
   </data>
-  <data name="\u5316\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u5316u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>化学其他学科</value>
   </data>
-  <data name="\u5929\u6587\u5b66" xml:space="preserve">
+  <data name="u5929u6587u5b66" xml:space="preserve">
     <value>天文学</value>
   </data>
-  <data name="\u5929\u6587\u5b66\u53f2" xml:space="preserve">
+  <data name="u5929u6587u5b66u53f2" xml:space="preserve">
     <value>天文学史</value>
   </data>
-  <data name="\u5929\u4f53\u529b\u5b66" xml:space="preserve">
+  <data name="u5929u4f53u529bu5b66" xml:space="preserve">
     <value>天体力学</value>
   </data>
-  <data name="\u5929\u4f53\u7269\u7406\u5b66" xml:space="preserve">
+  <data name="u5929u4f53u7269u7406u5b66" xml:space="preserve">
     <value>天体物理学</value>
   </data>
-  <data name="\u5b87\u5b99\u5316\u5b66" xml:space="preserve">
+  <data name="u5b87u5b99u5316u5b66" xml:space="preserve">
     <value>宇宙化学</value>
   </data>
-  <data name="\u5929\u4f53\u6d4b\u91cf\u5b66" xml:space="preserve">
+  <data name="u5929u4f53u6d4bu91cfu5b66" xml:space="preserve">
     <value>天体测量学</value>
   </data>
-  <data name="\u5c04\u7535\u5929\u6587\u5b66" xml:space="preserve">
+  <data name="u5c04u7535u5929u6587u5b66" xml:space="preserve">
     <value>射电天文学</value>
   </data>
-  <data name="\u7a7a\u95f4\u5929\u6587\u5b66" xml:space="preserve">
+  <data name="u7a7au95f4u5929u6587u5b66" xml:space="preserve">
     <value>空间天文学</value>
   </data>
-  <data name="\u5929\u4f53\u6f14\u5316\u5b66" xml:space="preserve">
+  <data name="u5929u4f53u6f14u5316u5b66" xml:space="preserve">
     <value>天体演化学</value>
   </data>
-  <data name="\u661f\u7cfb\u4e0e\u5b87\u5b99\u5b66" xml:space="preserve">
+  <data name="u661fu7cfbu4e0eu5b87u5b99u5b66" xml:space="preserve">
     <value>星系与宇宙学</value>
   </data>
-  <data name="\u6052\u661f\u4e0e\u94f6\u6cb3\u7cfb" xml:space="preserve">
+  <data name="u6052u661fu4e0eu94f6u6cb3u7cfb" xml:space="preserve">
     <value>恒星与银河系</value>
   </data>
-  <data name="\u592a\u9633\u4e0e\u592a\u9633\u7cfb" xml:space="preserve">
+  <data name="u592au9633u4e0eu592au9633u7cfb" xml:space="preserve">
     <value>太阳与太阳系</value>
   </data>
-  <data name="\u5929\u4f53\u751f\u7269\u5b66" xml:space="preserve">
+  <data name="u5929u4f53u751fu7269u5b66" xml:space="preserve">
     <value>天体生物学</value>
   </data>
-  <data name="\u5929\u6587\u5730\u7403\u52a8\u529b\u5b66" xml:space="preserve">
+  <data name="u5929u6587u5730u7403u52a8u529bu5b66" xml:space="preserve">
     <value>天文地球动力学</value>
   </data>
-  <data name="\u5929\u6587\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u5929u6587u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>天文学其他学科</value>
   </data>
-  <data name="\u5730\u7403\u79d1\u5b66\u53f2" xml:space="preserve">
+  <data name="u5730u7403u79d1u5b66u53f2" xml:space="preserve">
     <value>地球科学史</value>
   </data>
-  <data name="\u5927\u6c14\u79d1\u5b66" xml:space="preserve">
+  <data name="u5927u6c14u79d1u5b66" xml:space="preserve">
     <value>大气科学</value>
   </data>
-  <data name="\u56fa\u4f53\u5730\u7403\u7269\u7406\u5b66" xml:space="preserve">
+  <data name="u56fau4f53u5730u7403u7269u7406u5b66" xml:space="preserve">
     <value>固体地球物理学</value>
   </data>
-  <data name="\u7a7a\u95f4\u7269\u7406\u5b66" xml:space="preserve">
+  <data name="u7a7au95f4u7269u7406u5b66" xml:space="preserve">
     <value>空间物理学</value>
   </data>
-  <data name="\u5730\u7403\u5316\u5b66" xml:space="preserve">
+  <data name="u5730u7403u5316u5b66" xml:space="preserve">
     <value>地球化学</value>
   </data>
-  <data name="\u5927\u5730\u6d4b\u91cf\u5b66" xml:space="preserve">
+  <data name="u5927u5730u6d4bu91cfu5b66" xml:space="preserve">
     <value>大地测量学</value>
   </data>
-  <data name="\u5730\u56fe\u5b66" xml:space="preserve">
+  <data name="u5730u56feu5b66" xml:space="preserve">
     <value>地图学</value>
   </data>
-  <data name="\u5730\u7406\u5b66" xml:space="preserve">
+  <data name="u5730u7406u5b66" xml:space="preserve">
     <value>地理学</value>
   </data>
-  <data name="\u5730\u8d28\u5b66" xml:space="preserve">
+  <data name="u5730u8d28u5b66" xml:space="preserve">
     <value>地质学</value>
   </data>
-  <data name="\u6d77\u6d0b\u79d1\u5b66" xml:space="preserve">
+  <data name="u6d77u6d0bu79d1u5b66" xml:space="preserve">
     <value>海洋科学</value>
   </data>
-  <data name="\u5730\u7403\u79d1\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u5730u7403u79d1u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>地球科学其他学科</value>
   </data>
-  <data name="\u751f\u7269\u6570\u5b66" xml:space="preserve">
+  <data name="u751fu7269u6570u5b66" xml:space="preserve">
     <value>生物数学</value>
   </data>
-  <data name="\u751f\u7269\u7269\u7406\u5b66" xml:space="preserve">
+  <data name="u751fu7269u7269u7406u5b66" xml:space="preserve">
     <value>生物物理学</value>
   </data>
-  <data name="\u751f\u7269\u5316\u5b66" xml:space="preserve">
+  <data name="u751fu7269u5316u5b66" xml:space="preserve">
     <value>生物化学</value>
   </data>
-  <data name="\u7ec6\u80de\u751f\u7269\u5b66" xml:space="preserve">
+  <data name="u7ec6u80deu751fu7269u5b66" xml:space="preserve">
     <value>细胞生物学</value>
   </data>
-  <data name="\u514d\u75ab\u5b66" xml:space="preserve">
+  <data name="u514du75abu5b66" xml:space="preserve">
     <value>免疫学</value>
   </data>
-  <data name="\u751f\u7406\u5b66" xml:space="preserve">
+  <data name="u751fu7406u5b66" xml:space="preserve">
     <value>生理学</value>
   </data>
-  <data name="\u53d1\u80b2\u751f\u7269\u5b66" xml:space="preserve">
+  <data name="u53d1u80b2u751fu7269u5b66" xml:space="preserve">
     <value>发育生物学</value>
   </data>
-  <data name="\u9057\u4f20\u5b66" xml:space="preserve">
+  <data name="u9057u4f20u5b66" xml:space="preserve">
     <value>遗传学</value>
   </data>
-  <data name="\u653e\u5c04\u751f\u7269\u5b66" xml:space="preserve">
+  <data name="u653eu5c04u751fu7269u5b66" xml:space="preserve">
     <value>放射生物学</value>
   </data>
-  <data name="\u5206\u5b50\u751f\u7269\u5b66" xml:space="preserve">
+  <data name="u5206u5b50u751fu7269u5b66" xml:space="preserve">
     <value>分子生物学</value>
   </data>
-  <data name="\u4e13\u9898\u751f\u7269\u5b66\u7814\u7a76" xml:space="preserve">
+  <data name="u4e13u9898u751fu7269u5b66u7814u7a76" xml:space="preserve">
     <value>专题生物学研究</value>
   </data>
-  <data name="\u751f\u7269\u8fdb\u5316\u8bba" xml:space="preserve">
+  <data name="u751fu7269u8fdbu5316u8bba" xml:space="preserve">
     <value>生物进化论</value>
   </data>
-  <data name="\u751f\u6001\u5b66" xml:space="preserve">
+  <data name="u751fu6001u5b66" xml:space="preserve">
     <value>生态学</value>
   </data>
-  <data name="\u795e\u7ecf\u751f\u7269\u5b66" xml:space="preserve">
+  <data name="u795eu7ecfu751fu7269u5b66" xml:space="preserve">
     <value>神经生物学</value>
   </data>
-  <data name="\u690d\u7269\u5b66" xml:space="preserve">
+  <data name="u690du7269u5b66" xml:space="preserve">
     <value>植物学</value>
   </data>
-  <data name="\u6606\u866b\u5b66" xml:space="preserve">
+  <data name="u6606u866bu5b66" xml:space="preserve">
     <value>昆虫学</value>
   </data>
-  <data name="\u52a8\u7269\u5b66" xml:space="preserve">
+  <data name="u52a8u7269u5b66" xml:space="preserve">
     <value>动物学</value>
   </data>
-  <data name="\u5fae\u751f\u7269\u5b66" xml:space="preserve">
+  <data name="u5faeu751fu7269u5b66" xml:space="preserve">
     <value>微生物学</value>
   </data>
-  <data name="\u75c5\u6bd2\u5b66" xml:space="preserve">
+  <data name="u75c5u6bd2u5b66" xml:space="preserve">
     <value>病毒学</value>
   </data>
-  <data name="\u4eba\u7c7b\u5b66" xml:space="preserve">
+  <data name="u4ebau7c7bu5b66" xml:space="preserve">
     <value>人类学</value>
   </data>
-  <data name="\u751f\u7269\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u751fu7269u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>生物学其他学科</value>
   </data>
-  <data name="\u5fc3\u7406\u5b66\u53f2" xml:space="preserve">
+  <data name="u5fc3u7406u5b66u53f2" xml:space="preserve">
     <value>心理学史</value>
   </data>
-  <data name="\u8ba4\u77e5\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u8ba4u77e5u5fc3u7406u5b66" xml:space="preserve">
     <value>认知心理学</value>
   </data>
-  <data name="\u793e\u4f1a\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u793eu4f1au5fc3u7406u5b66" xml:space="preserve">
     <value>社会心理学</value>
   </data>
-  <data name="\u5b9e\u9a8c\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u5b9eu9a8cu5fc3u7406u5b66" xml:space="preserve">
     <value>实验心理学</value>
   </data>
-  <data name="\u53d1\u5c55\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u53d1u5c55u5fc3u7406u5b66" xml:space="preserve">
     <value>发展心理学</value>
   </data>
-  <data name="\u533b\u5b66\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u533bu5b66u5fc3u7406u5b66" xml:space="preserve">
     <value>医学心理学</value>
   </data>
-  <data name="\u4eba\u683c\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u4ebau683cu5fc3u7406u5b66" xml:space="preserve">
     <value>人格心理学</value>
   </data>
-  <data name="\u4e34\u5e8a\u4e0e\u54a8\u8be2\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u4e34u5e8au4e0eu54a8u8be2u5fc3u7406u5b66" xml:space="preserve">
     <value>临床与咨询心理学</value>
   </data>
-  <data name="\u5fc3\u7406\u6d4b\u91cf" xml:space="preserve">
+  <data name="u5fc3u7406u6d4bu91cf" xml:space="preserve">
     <value>心理测量</value>
   </data>
-  <data name="\u5fc3\u7406\u7edf\u8ba1" xml:space="preserve">
+  <data name="u5fc3u7406u7edfu8ba1" xml:space="preserve">
     <value>心理统计</value>
   </data>
-  <data name="\u751f\u7406\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u751fu7406u5fc3u7406u5b66" xml:space="preserve">
     <value>生理心理学</value>
   </data>
-  <data name="\u5de5\u4e1a\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u5de5u4e1au5fc3u7406u5b66" xml:space="preserve">
     <value>工业心理学</value>
   </data>
-  <data name="\u7ba1\u7406\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u7ba1u7406u5fc3u7406u5b66" xml:space="preserve">
     <value>管理心理学</value>
   </data>
-  <data name="\u5e94\u7528\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u5e94u7528u5fc3u7406u5b66" xml:space="preserve">
     <value>应用心理学</value>
   </data>
-  <data name="\u6559\u80b2\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u6559u80b2u5fc3u7406u5b66" xml:space="preserve">
     <value>教育心理学</value>
   </data>
-  <data name="\u6cd5\u5236\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u6cd5u5236u5fc3u7406u5b66" xml:space="preserve">
     <value>法制心理学</value>
   </data>
-  <data name="\u5fc3\u7406\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u5fc3u7406u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>心理学其他学科</value>
   </data>
-  <data name="\u519c\u5b66" xml:space="preserve">
+  <data name="u519cu5b66" xml:space="preserve">
     <value>农学</value>
   </data>
-  <data name="\u519c\u4e1a\u53f2" xml:space="preserve">
+  <data name="u519cu4e1au53f2" xml:space="preserve">
     <value>农业史</value>
   </data>
-  <data name="\u519c\u4e1a\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
+  <data name="u519cu4e1au57fau7840u5b66u79d1" xml:space="preserve">
     <value>农业基础学科</value>
   </data>
-  <data name="\u519c\u827a\u5b66" xml:space="preserve">
+  <data name="u519cu827au5b66" xml:space="preserve">
     <value>农艺学</value>
   </data>
-  <data name="\u56ed\u827a\u5b66" xml:space="preserve">
+  <data name="u56edu827au5b66" xml:space="preserve">
     <value>园艺学</value>
   </data>
-  <data name="\u519c\u4ea7\u54c1\u8d2e\u85cf\u4e0e\u52a0\u5de5" xml:space="preserve">
+  <data name="u519cu4ea7u54c1u8d2eu85cfu4e0eu52a0u5de5" xml:space="preserve">
     <value>农产品贮藏与加工</value>
   </data>
-  <data name="\u571f\u58e4\u5b66" xml:space="preserve">
+  <data name="u571fu58e4u5b66" xml:space="preserve">
     <value>土壤学</value>
   </data>
-  <data name="\u690d\u7269\u4fdd\u62a4\u5b66" xml:space="preserve">
+  <data name="u690du7269u4fddu62a4u5b66" xml:space="preserve">
     <value>植物保护学</value>
   </data>
-  <data name="\u519c\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u519cu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>农学其他学科</value>
   </data>
-  <data name="\u6797\u5b66" xml:space="preserve">
+  <data name="u6797u5b66" xml:space="preserve">
     <value>林学</value>
   </data>
-  <data name="\u6797\u4e1a\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
+  <data name="u6797u4e1au57fau7840u5b66u79d1" xml:space="preserve">
     <value>林业基础学科</value>
   </data>
-  <data name="\u6797\u6728\u9057\u4f20\u80b2\u79cd\u5b66" xml:space="preserve">
+  <data name="u6797u6728u9057u4f20u80b2u79cdu5b66" xml:space="preserve">
     <value>林木遗传育种学</value>
   </data>
-  <data name="\u68ee\u6797\u57f9\u80b2\u5b66" xml:space="preserve">
+  <data name="u68eeu6797u57f9u80b2u5b66" xml:space="preserve">
     <value>森林培育学</value>
   </data>
-  <data name="\u68ee\u6797\u7ecf\u7406\u5b66" xml:space="preserve">
+  <data name="u68eeu6797u7ecfu7406u5b66" xml:space="preserve">
     <value>森林经理学</value>
   </data>
-  <data name="\u68ee\u6797\u4fdd\u62a4\u5b66" xml:space="preserve">
+  <data name="u68eeu6797u4fddu62a4u5b66" xml:space="preserve">
     <value>森林保护学</value>
   </data>
-  <data name="\u91ce\u751f\u52a8\u7269\u4fdd\u62a4\u4e0e\u7ba1\u7406" xml:space="preserve">
+  <data name="u91ceu751fu52a8u7269u4fddu62a4u4e0eu7ba1u7406" xml:space="preserve">
     <value>野生动物保护与管理</value>
   </data>
-  <data name="\u9632\u62a4\u6797\u5b66" xml:space="preserve">
+  <data name="u9632u62a4u6797u5b66" xml:space="preserve">
     <value>防护林学</value>
   </data>
-  <data name="\u7ecf\u6d4e\u6797\u5b66" xml:space="preserve">
+  <data name="u7ecfu6d4eu6797u5b66" xml:space="preserve">
     <value>经济林学</value>
   </data>
-  <data name="\u56ed\u6797\u5b66" xml:space="preserve">
+  <data name="u56edu6797u5b66" xml:space="preserve">
     <value>园林学</value>
   </data>
-  <data name="\u6797\u4e1a\u5de5\u7a0b" xml:space="preserve">
+  <data name="u6797u4e1au5de5u7a0b" xml:space="preserve">
     <value>林业工程</value>
   </data>
-  <data name="\u68ee\u6797\u7edf\u8ba1\u5b66" xml:space="preserve">
+  <data name="u68eeu6797u7edfu8ba1u5b66" xml:space="preserve">
     <value>森林统计学</value>
   </data>
-  <data name="\u6797\u4e1a\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u6797u4e1au7ecfu6d4eu5b66" xml:space="preserve">
     <value>林业经济学</value>
   </data>
-  <data name="\u6797\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u6797u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>林学其他学科</value>
   </data>
-  <data name="\u755c\u7267\u3001\u517d\u533b\u79d1\u5b66" xml:space="preserve">
+  <data name="u755cu7267u3001u517du533bu79d1u5b66" xml:space="preserve">
     <value>畜牧、兽医科学</value>
   </data>
-  <data name="\u755c\u7267\u3001\u517d\u533b\u79d1\u5b66\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
+  <data name="u755cu7267u3001u517du533bu79d1u5b66u57fau7840u5b66u79d1" xml:space="preserve">
     <value>畜牧、兽医科学基础学科</value>
   </data>
-  <data name="\u755c\u7267\u5b66" xml:space="preserve">
+  <data name="u755cu7267u5b66" xml:space="preserve">
     <value>畜牧学</value>
   </data>
-  <data name="\u517d\u533b\u5b66" xml:space="preserve">
+  <data name="u517du533bu5b66" xml:space="preserve">
     <value>兽医学</value>
   </data>
-  <data name="\u755c\u7267\u3001\u517d\u533b\u79d1\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u755cu7267u3001u517du533bu79d1u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>畜牧、兽医科学其他学科</value>
   </data>
-  <data name="\u6c34\u4ea7\u5b66" xml:space="preserve">
+  <data name="u6c34u4ea7u5b66" xml:space="preserve">
     <value>水产学</value>
   </data>
-  <data name="\u6c34\u4ea7\u5b66\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
+  <data name="u6c34u4ea7u5b66u57fau7840u5b66u79d1" xml:space="preserve">
     <value>水产学基础学科</value>
   </data>
-  <data name="\u6c34\u4ea7\u589e\u6b96\u5b66" xml:space="preserve">
+  <data name="u6c34u4ea7u589eu6b96u5b66" xml:space="preserve">
     <value>水产增殖学</value>
   </data>
-  <data name="\u6c34\u4ea7\u517b\u6b96\u5b66" xml:space="preserve">
+  <data name="u6c34u4ea7u517bu6b96u5b66" xml:space="preserve">
     <value>水产养殖学</value>
   </data>
-  <data name="\u6c34\u4ea7\u9972\u6599\u5b66" xml:space="preserve">
+  <data name="u6c34u4ea7u9972u6599u5b66" xml:space="preserve">
     <value>水产饲料学</value>
   </data>
-  <data name="\u6c34\u4ea7\u4fdd\u62a4\u5b66" xml:space="preserve">
+  <data name="u6c34u4ea7u4fddu62a4u5b66" xml:space="preserve">
     <value>水产保护学</value>
   </data>
-  <data name="\u6355\u635e\u5b66" xml:space="preserve">
+  <data name="u6355u635eu5b66" xml:space="preserve">
     <value>捕捞学</value>
   </data>
-  <data name="\u6c34\u4ea7\u54c1\u8d2e\u85cf\u4e0e\u52a0\u5de5" xml:space="preserve">
+  <data name="u6c34u4ea7u54c1u8d2eu85cfu4e0eu52a0u5de5" xml:space="preserve">
     <value>水产品贮藏与加工</value>
   </data>
-  <data name="\u6c34\u4ea7\u5de5\u7a0b\u5b66" xml:space="preserve">
+  <data name="u6c34u4ea7u5de5u7a0bu5b66" xml:space="preserve">
     <value>水产工程学</value>
   </data>
-  <data name="\u6c34\u4ea7\u8d44\u6e90\u5b66" xml:space="preserve">
+  <data name="u6c34u4ea7u8d44u6e90u5b66" xml:space="preserve">
     <value>水产资源学</value>
   </data>
-  <data name="\u6c34\u4ea7\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u6c34u4ea7u7ecfu6d4eu5b66" xml:space="preserve">
     <value>水产经济学</value>
   </data>
-  <data name="\u6c34\u4ea7\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u6c34u4ea7u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>水产学其他学科</value>
   </data>
-  <data name="\u533b\u5b66\u53f2" xml:space="preserve">
+  <data name="u533bu5b66u53f2" xml:space="preserve">
     <value>医学史</value>
   </data>
-  <data name="\u533b\u5b66\u751f\u7269\u5316\u5b66" xml:space="preserve">
+  <data name="u533bu5b66u751fu7269u5316u5b66" xml:space="preserve">
     <value>医学生物化学</value>
   </data>
-  <data name="\u4eba\u4f53\u89e3\u5256\u5b66" xml:space="preserve">
+  <data name="u4ebau4f53u89e3u5256u5b66" xml:space="preserve">
     <value>人体解剖学</value>
   </data>
-  <data name="\u533b\u5b66\u7ec6\u80de\u751f\u7269\u5b66" xml:space="preserve">
+  <data name="u533bu5b66u7ec6u80deu751fu7269u5b66" xml:space="preserve">
     <value>医学细胞生物学</value>
   </data>
-  <data name="\u4eba\u4f53\u751f\u7406\u5b66" xml:space="preserve">
+  <data name="u4ebau4f53u751fu7406u5b66" xml:space="preserve">
     <value>人体生理学</value>
   </data>
-  <data name="\u4eba\u4f53\u7ec4\u7ec7\u80da\u80ce\u5b66" xml:space="preserve">
+  <data name="u4ebau4f53u7ec4u7ec7u80dau80ceu5b66" xml:space="preserve">
     <value>人体组织胚胎学</value>
   </data>
-  <data name="\u533b\u5b66\u9057\u4f20\u5b66" xml:space="preserve">
+  <data name="u533bu5b66u9057u4f20u5b66" xml:space="preserve">
     <value>医学遗传学</value>
   </data>
-  <data name="\u653e\u5c04\u533b\u5b66" xml:space="preserve">
+  <data name="u653eu5c04u533bu5b66" xml:space="preserve">
     <value>放射医学</value>
   </data>
-  <data name="\u4eba\u4f53\u514d\u75ab\u5b66" xml:space="preserve">
+  <data name="u4ebau4f53u514du75abu5b66" xml:space="preserve">
     <value>人体免疫学</value>
   </data>
-  <data name="\u533b\u5b66\u5bc4\u751f\u866b\u5b66" xml:space="preserve">
+  <data name="u533bu5b66u5bc4u751fu866bu5b66" xml:space="preserve">
     <value>医学寄生虫学</value>
   </data>
-  <data name="\u533b\u5b66\u5fae\u751f\u7269\u5b66" xml:space="preserve">
+  <data name="u533bu5b66u5faeu751fu7269u5b66" xml:space="preserve">
     <value>医学微生物学</value>
   </data>
-  <data name="\u75c5\u7406\u5b66" xml:space="preserve">
+  <data name="u75c5u7406u5b66" xml:space="preserve">
     <value>病理学</value>
   </data>
-  <data name="\u836f\u7406\u5b66" xml:space="preserve">
+  <data name="u836fu7406u5b66" xml:space="preserve">
     <value>药理学</value>
   </data>
-  <data name="\u533b\u5b66\u5b9e\u9a8c\u52a8\u7269\u5b66" xml:space="preserve">
+  <data name="u533bu5b66u5b9eu9a8cu52a8u7269u5b66" xml:space="preserve">
     <value>医学实验动物学</value>
   </data>
-  <data name="\u533b\u5b66\u7edf\u8ba1\u5b66" xml:space="preserve">
+  <data name="u533bu5b66u7edfu8ba1u5b66" xml:space="preserve">
     <value>医学统计学</value>
   </data>
-  <data name="\u57fa\u7840\u533b\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u57fau7840u533bu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>基础医学其他学科</value>
   </data>
-  <data name="\u4e34\u5e8a\u533b\u5b66" xml:space="preserve">
+  <data name="u4e34u5e8au533bu5b66" xml:space="preserve">
     <value>临床医学</value>
   </data>
-  <data name="\u4e34\u5e8a\u8bca\u65ad\u5b66" xml:space="preserve">
+  <data name="u4e34u5e8au8bcau65adu5b66" xml:space="preserve">
     <value>临床诊断学</value>
   </data>
-  <data name="\u4fdd\u5065\u533b\u5b66" xml:space="preserve">
+  <data name="u4fddu5065u533bu5b66" xml:space="preserve">
     <value>保健医学</value>
   </data>
-  <data name="\u7406\u7597\u5b66" xml:space="preserve">
+  <data name="u7406u7597u5b66" xml:space="preserve">
     <value>理疗学</value>
   </data>
-  <data name="\u9ebb\u9189\u5b66" xml:space="preserve">
+  <data name="u9ebbu9189u5b66" xml:space="preserve">
     <value>麻醉学</value>
   </data>
-  <data name="\u5185\u79d1\u5b66" xml:space="preserve">
+  <data name="u5185u79d1u5b66" xml:space="preserve">
     <value>内科学</value>
   </data>
-  <data name="\u5916\u79d1\u5b66" xml:space="preserve">
+  <data name="u5916u79d1u5b66" xml:space="preserve">
     <value>外科学</value>
   </data>
-  <data name="\u5987\u4ea7\u79d1\u5b66" xml:space="preserve">
+  <data name="u5987u4ea7u79d1u5b66" xml:space="preserve">
     <value>妇产科学</value>
   </data>
-  <data name="\u513f\u79d1\u5b66" xml:space="preserve">
+  <data name="u513fu79d1u5b66" xml:space="preserve">
     <value>儿科学</value>
   </data>
-  <data name="\u773c\u79d1\u5b66" xml:space="preserve">
+  <data name="u773cu79d1u5b66" xml:space="preserve">
     <value>眼科学</value>
   </data>
-  <data name="\u8033\u9f3b\u54bd\u5589\u79d1\u5b66" xml:space="preserve">
+  <data name="u8033u9f3bu54bdu5589u79d1u5b66" xml:space="preserve">
     <value>耳鼻咽喉科学</value>
   </data>
-  <data name="\u53e3\u8154\u533b\u5b66" xml:space="preserve">
+  <data name="u53e3u8154u533bu5b66" xml:space="preserve">
     <value>口腔医学</value>
   </data>
-  <data name="\u76ae\u80a4\u75c5\u5b66" xml:space="preserve">
+  <data name="u76aeu80a4u75c5u5b66" xml:space="preserve">
     <value>皮肤病学</value>
   </data>
-  <data name="\u6027\u533b\u5b66" xml:space="preserve">
+  <data name="u6027u533bu5b66" xml:space="preserve">
     <value>性医学</value>
   </data>
-  <data name="\u795e\u7ecf\u75c5\u5b66" xml:space="preserve">
+  <data name="u795eu7ecfu75c5u5b66" xml:space="preserve">
     <value>神经病学</value>
   </data>
-  <data name="\u7cbe\u795e\u75c5\u5b66" xml:space="preserve">
+  <data name="u7cbeu795eu75c5u5b66" xml:space="preserve">
     <value>精神病学</value>
   </data>
-  <data name="\u91cd\u75c7\u533b\u5b66" xml:space="preserve">
+  <data name="u91cdu75c7u533bu5b66" xml:space="preserve">
     <value>重症医学</value>
   </data>
-  <data name="\u6025\u8bca\u533b\u5b66" xml:space="preserve">
+  <data name="u6025u8bcau533bu5b66" xml:space="preserve">
     <value>急诊医学</value>
   </data>
-  <data name="\u6838\u533b\u5b66" xml:space="preserve">
+  <data name="u6838u533bu5b66" xml:space="preserve">
     <value>核医学</value>
   </data>
-  <data name="\u5168\u79d1\u533b\u5b66" xml:space="preserve">
+  <data name="u5168u79d1u533bu5b66" xml:space="preserve">
     <value>全科医学</value>
   </data>
-  <data name="\u80bf\u7624\u5b66" xml:space="preserve">
+  <data name="u80bfu7624u5b66" xml:space="preserve">
     <value>肿瘤学</value>
   </data>
-  <data name="\u62a4\u7406\u5b66" xml:space="preserve">
+  <data name="u62a4u7406u5b66" xml:space="preserve">
     <value>护理学</value>
   </data>
-  <data name="\u4e34\u5e8a\u533b\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u4e34u5e8au533bu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>临床医学其他学科</value>
   </data>
-  <data name="\u8425\u517b\u5b66" xml:space="preserve">
+  <data name="u8425u517bu5b66" xml:space="preserve">
     <value>营养学</value>
   </data>
-  <data name="\u6bd2\u7406\u5b66" xml:space="preserve">
+  <data name="u6bd2u7406u5b66" xml:space="preserve">
     <value>毒理学</value>
   </data>
-  <data name="\u6d88\u6bd2\u5b66" xml:space="preserve">
+  <data name="u6d88u6bd2u5b66" xml:space="preserve">
     <value>消毒学</value>
   </data>
-  <data name="\u6d41\u884c\u75c5\u5b66" xml:space="preserve">
+  <data name="u6d41u884cu75c5u5b66" xml:space="preserve">
     <value>流行病学</value>
   </data>
-  <data name="\u5a92\u4ecb\u751f\u7269\u63a7\u5236\u5b66" xml:space="preserve">
+  <data name="u5a92u4ecbu751fu7269u63a7u5236u5b66" xml:space="preserve">
     <value>媒介生物控制学</value>
   </data>
-  <data name="\u73af\u5883\u533b\u5b66" xml:space="preserve">
+  <data name="u73afu5883u533bu5b66" xml:space="preserve">
     <value>环境医学</value>
   </data>
-  <data name="\u804c\u4e1a\u75c5\u5b66" xml:space="preserve">
+  <data name="u804cu4e1au75c5u5b66" xml:space="preserve">
     <value>职业病学</value>
   </data>
-  <data name="\u5730\u65b9\u75c5\u5b66" xml:space="preserve">
+  <data name="u5730u65b9u75c5u5b66" xml:space="preserve">
     <value>地方病学</value>
   </data>
-  <data name="\u70ed\u5e26\u533b\u5b66" xml:space="preserve">
+  <data name="u70edu5e26u533bu5b66" xml:space="preserve">
     <value>热带医学</value>
   </data>
-  <data name="\u793e\u4f1a\u533b\u5b66" xml:space="preserve">
+  <data name="u793eu4f1au533bu5b66" xml:space="preserve">
     <value>社会医学</value>
   </data>
-  <data name="\u536b\u751f\u68c0\u9a8c\u5b66" xml:space="preserve">
+  <data name="u536bu751fu68c0u9a8cu5b66" xml:space="preserve">
     <value>卫生检验学</value>
   </data>
-  <data name="\u98df\u54c1\u536b\u751f\u5b66" xml:space="preserve">
+  <data name="u98dfu54c1u536bu751fu5b66" xml:space="preserve">
     <value>食品卫生学</value>
   </data>
-  <data name="\u513f\u5c11\u4e0e\u5b66\u6821\u536b\u751f\u5b66" xml:space="preserve">
+  <data name="u513fu5c11u4e0eu5b66u6821u536bu751fu5b66" xml:space="preserve">
     <value>儿少与学校卫生学</value>
   </data>
-  <data name="\u5987\u5e7c\u536b\u751f\u5b66" xml:space="preserve">
+  <data name="u5987u5e7cu536bu751fu5b66" xml:space="preserve">
     <value>妇幼卫生学</value>
   </data>
-  <data name="\u73af\u5883\u536b\u751f\u5b66" xml:space="preserve">
+  <data name="u73afu5883u536bu751fu5b66" xml:space="preserve">
     <value>环境卫生学</value>
   </data>
-  <data name="\u52b3\u52a8\u536b\u751f\u5b66" xml:space="preserve">
+  <data name="u52b3u52a8u536bu751fu5b66" xml:space="preserve">
     <value>劳动卫生学</value>
   </data>
-  <data name="\u653e\u5c04\u536b\u751f\u5b66" xml:space="preserve">
+  <data name="u653eu5c04u536bu751fu5b66" xml:space="preserve">
     <value>放射卫生学</value>
   </data>
-  <data name="\u536b\u751f\u5de5\u7a0b\u5b66" xml:space="preserve">
+  <data name="u536bu751fu5de5u7a0bu5b66" xml:space="preserve">
     <value>卫生工程学</value>
   </data>
-  <data name="\u536b\u751f\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u536bu751fu7ecfu6d4eu5b66" xml:space="preserve">
     <value>卫生经济学</value>
   </data>
-  <data name="\u536b\u751f\u7edf\u8ba1\u5b66" xml:space="preserve">
+  <data name="u536bu751fu7edfu8ba1u5b66" xml:space="preserve">
     <value>卫生统计学</value>
   </data>
-  <data name="\u4f18\u751f\u5b66" xml:space="preserve">
+  <data name="u4f18u751fu5b66" xml:space="preserve">
     <value>优生学</value>
   </data>
-  <data name="\u5065\u5eb7\u4fc3\u8fdb\u4e0e\u5065\u5eb7\u6559\u80b2\u5b66" xml:space="preserve">
+  <data name="u5065u5eb7u4fc3u8fdbu4e0eu5065u5eb7u6559u80b2u5b66" xml:space="preserve">
     <value>健康促进与健康教育学</value>
   </data>
-  <data name="\u536b\u751f\u7ba1\u7406\u5b66" xml:space="preserve">
+  <data name="u536bu751fu7ba1u7406u5b66" xml:space="preserve">
     <value>卫生管理学</value>
   </data>
-  <data name="\u519b\u4e8b\u533b\u5b66\u4e0e\u7279\u79cd\u533b\u5b66" xml:space="preserve">
+  <data name="u519bu4e8bu533bu5b66u4e0eu7279u79cdu533bu5b66" xml:space="preserve">
     <value>军事医学与特种医学</value>
   </data>
-  <data name="\u519b\u4e8b\u533b\u5b66\u4e0e\u7279\u79cd\u533b\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u519bu4e8bu533bu5b66u4e0eu7279u79cdu533bu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>军事医学与特种医学其他学科</value>
   </data>
-  <data name="\u836f\u7269\u5316\u5b66" xml:space="preserve">
+  <data name="u836fu7269u5316u5b66" xml:space="preserve">
     <value>药物化学</value>
   </data>
-  <data name="\u751f\u7269\u836f\u7269\u5b66" xml:space="preserve">
+  <data name="u751fu7269u836fu7269u5b66" xml:space="preserve">
     <value>生物药物学</value>
   </data>
-  <data name="\u5fae\u751f\u7269\u836f\u7269\u5b66" xml:space="preserve">
+  <data name="u5faeu751fu7269u836fu7269u5b66" xml:space="preserve">
     <value>微生物药物学</value>
   </data>
-  <data name="\u653e\u5c04\u6027\u836f\u7269\u5b66" xml:space="preserve">
+  <data name="u653eu5c04u6027u836fu7269u5b66" xml:space="preserve">
     <value>放射性药物学</value>
   </data>
-  <data name="\u836f\u5242\u5b66" xml:space="preserve">
+  <data name="u836fu5242u5b66" xml:space="preserve">
     <value>药剂学</value>
   </data>
-  <data name="\u836f\u7269\u7ba1\u7406\u5b66" xml:space="preserve">
+  <data name="u836fu7269u7ba1u7406u5b66" xml:space="preserve">
     <value>药物管理学</value>
   </data>
-  <data name="\u836f\u7269\u7edf\u8ba1\u5b66" xml:space="preserve">
+  <data name="u836fu7269u7edfu8ba1u5b66" xml:space="preserve">
     <value>药物统计学</value>
   </data>
-  <data name="\u836f\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u836fu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>药学其他学科</value>
   </data>
-  <data name="\u6c11\u65cf\u533b\u5b66" xml:space="preserve">
+  <data name="u6c11u65cfu533bu5b66" xml:space="preserve">
     <value>民族医学</value>
   </data>
-  <data name="\u4e2d\u897f\u533b\u7ed3\u5408\u533b\u5b66" xml:space="preserve">
+  <data name="u4e2du897fu533bu7ed3u5408u533bu5b66" xml:space="preserve">
     <value>中西医结合医学</value>
   </data>
-  <data name="\u4e2d\u533b\u5b66\u4e0e\u4e2d\u836f\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u4e2du533bu5b66u4e0eu4e2du836fu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>中医学与中药学其他学科</value>
   </data>
-  <data name="\u5de5\u7a0b\u6570\u5b66" xml:space="preserve">
+  <data name="u5de5u7a0bu6570u5b66" xml:space="preserve">
     <value>工程数学</value>
   </data>
-  <data name="\u5de5\u7a0b\u63a7\u5236\u8bba" xml:space="preserve">
+  <data name="u5de5u7a0bu63a7u5236u8bba" xml:space="preserve">
     <value>工程控制论</value>
   </data>
-  <data name="\u5de5\u7a0b\u529b\u5b66" xml:space="preserve">
+  <data name="u5de5u7a0bu529bu5b66" xml:space="preserve">
     <value>工程力学</value>
   </data>
-  <data name="\u5de5\u7a0b\u7269\u7406\u5b66" xml:space="preserve">
+  <data name="u5de5u7a0bu7269u7406u5b66" xml:space="preserve">
     <value>工程物理学</value>
   </data>
-  <data name="\u5de5\u7a0b\u5730\u8d28\u5b66" xml:space="preserve">
+  <data name="u5de5u7a0bu5730u8d28u5b66" xml:space="preserve">
     <value>工程地质学</value>
   </data>
-  <data name="\u5de5\u7a0b\u6c34\u6587\u5b66" xml:space="preserve">
+  <data name="u5de5u7a0bu6c34u6587u5b66" xml:space="preserve">
     <value>工程水文学</value>
   </data>
-  <data name="\u5de5\u7a0b\u4eff\u751f\u5b66" xml:space="preserve">
+  <data name="u5de5u7a0bu4effu751fu5b66" xml:space="preserve">
     <value>工程仿生学</value>
   </data>
-  <data name="\u5de5\u7a0b\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u5de5u7a0bu5fc3u7406u5b66" xml:space="preserve">
     <value>工程心理学</value>
   </data>
-  <data name="\u6807\u51c6\u79d1\u5b66\u6280\u672f" xml:space="preserve">
+  <data name="u6807u51c6u79d1u5b66u6280u672f" xml:space="preserve">
     <value>标准科学技术</value>
   </data>
-  <data name="\u5de5\u7a0b\u56fe\u5b66" xml:space="preserve">
+  <data name="u5de5u7a0bu56feu5b66" xml:space="preserve">
     <value>工程图学</value>
   </data>
-  <data name="\u52d8\u67e5\u6280\u672f" xml:space="preserve">
+  <data name="u52d8u67e5u6280u672f" xml:space="preserve">
     <value>勘查技术</value>
   </data>
-  <data name="\u5de5\u7a0b\u901a\u7528\u6280\u672f" xml:space="preserve">
+  <data name="u5de5u7a0bu901au7528u6280u672f" xml:space="preserve">
     <value>工程通用技术</value>
   </data>
-  <data name="\u5de5\u4e1a\u5de5\u7a0b\u5b66" xml:space="preserve">
+  <data name="u5de5u4e1au5de5u7a0bu5b66" xml:space="preserve">
     <value>工业工程学</value>
   </data>
-  <data name="\u63a7\u5236\u79d1\u5b66\u4e0e\u6280\u672f" xml:space="preserve">
+  <data name="u63a7u5236u79d1u5b66u4e0eu6280u672f" xml:space="preserve">
     <value>控制科学与技术</value>
   </data>
-  <data name="\u4eff\u771f\u79d1\u5b66\u6280\u672f" xml:space="preserve">
+  <data name="u4effu771fu79d1u5b66u6280u672f" xml:space="preserve">
     <value>仿真科学技术</value>
   </data>
-  <data name="\u4fe1\u606f\u5b89\u5168\u6280\u672f" xml:space="preserve">
+  <data name="u4fe1u606fu5b89u5168u6280u672f" xml:space="preserve">
     <value>信息安全技术</value>
   </data>
-  <data name="\u4fe1\u606f\u6280\u672f\u7cfb\u7edf\u6027\u5e94\u7528" xml:space="preserve">
+  <data name="u4fe1u606fu6280u672fu7cfbu7edfu6027u5e94u7528" xml:space="preserve">
     <value>信息技术系统性应用</value>
   </data>
-  <data name="\u7269\u7406\u5b66\u76f8\u5173\u5de5\u7a0b\u4e0e\u6280\u672f" xml:space="preserve">
+  <data name="u7269u7406u5b66u76f8u5173u5de5u7a0bu4e0eu6280u672f" xml:space="preserve">
     <value>物理学相关工程与技术</value>
   </data>
-  <data name="\u5149\u5b66\u5de5\u7a0b" xml:space="preserve">
+  <data name="u5149u5b66u5de5u7a0b" xml:space="preserve">
     <value>光学工程</value>
   </data>
-  <data name="\u6d77\u6d0b\u5de5\u7a0b\u4e0e\u6280\u672f" xml:space="preserve">
+  <data name="u6d77u6d0bu5de5u7a0bu4e0eu6280u672f" xml:space="preserve">
     <value>海洋工程与技术</value>
   </data>
-  <data name="\u519c\u4e1a\u5de5\u7a0b" xml:space="preserve">
+  <data name="u519cu4e1au5de5u7a0b" xml:space="preserve">
     <value>农业工程</value>
   </data>
-  <data name="\u751f\u7269\u533b\u5b66\u5de5\u7a0b\u5b66" xml:space="preserve">
+  <data name="u751fu7269u533bu5b66u5de5u7a0bu5b66" xml:space="preserve">
     <value>生物医学工程学</value>
   </data>
-  <data name="\u5927\u5730\u6d4b\u91cf\u6280\u672f" xml:space="preserve">
+  <data name="u5927u5730u6d4bu91cfu6280u672f" xml:space="preserve">
     <value>大地测量技术</value>
   </data>
-  <data name="\u6444\u5f71\u6d4b\u91cf\u4e0e\u9065\u611f\u6280\u672f" xml:space="preserve">
+  <data name="u6444u5f71u6d4bu91cfu4e0eu9065u611fu6280u672f" xml:space="preserve">
     <value>摄影测量与遥感技术</value>
   </data>
-  <data name="\u5730\u56fe\u5236\u56fe\u6280\u672f" xml:space="preserve">
+  <data name="u5730u56feu5236u56feu6280u672f" xml:space="preserve">
     <value>地图制图技术</value>
   </data>
-  <data name="\u5de5\u7a0b\u6d4b\u91cf\u6280\u672f" xml:space="preserve">
+  <data name="u5de5u7a0bu6d4bu91cfu6280u672f" xml:space="preserve">
     <value>工程测量技术</value>
   </data>
-  <data name="\u6d77\u6d0b\u6d4b\u7ed8" xml:space="preserve">
+  <data name="u6d77u6d0bu6d4bu7ed8" xml:space="preserve">
     <value>海洋测绘</value>
   </data>
-  <data name="\u6d4b\u7ed8\u4eea\u5668" xml:space="preserve">
+  <data name="u6d4bu7ed8u4eeau5668" xml:space="preserve">
     <value>测绘仪器</value>
   </data>
-  <data name="\u6d4b\u7ed8\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u6d4bu7ed8u79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>测绘科学技术其他学科</value>
   </data>
-  <data name="\u6750\u6599\u79d1\u5b66" xml:space="preserve">
+  <data name="u6750u6599u79d1u5b66" xml:space="preserve">
     <value>材料科学</value>
   </data>
-  <data name="\u6750\u6599\u79d1\u5b66\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
+  <data name="u6750u6599u79d1u5b66u57fau7840u5b66u79d1" xml:space="preserve">
     <value>材料科学基础学科</value>
   </data>
-  <data name="\u6750\u6599\u8868\u9762\u4e0e\u754c\u9762" xml:space="preserve">
+  <data name="u6750u6599u8868u9762u4e0eu754cu9762" xml:space="preserve">
     <value>材料表面与界面</value>
   </data>
-  <data name="\u6750\u6599\u5931\u6548\u4e0e\u4fdd\u62a4" xml:space="preserve">
+  <data name="u6750u6599u5931u6548u4e0eu4fddu62a4" xml:space="preserve">
     <value>材料失效与保护</value>
   </data>
-  <data name="\u6750\u6599\u68c0\u6d4b\u4e0e\u5206\u6790\u6280\u672f" xml:space="preserve">
+  <data name="u6750u6599u68c0u6d4bu4e0eu5206u6790u6280u672f" xml:space="preserve">
     <value>材料检测与分析技术</value>
   </data>
-  <data name="\u6750\u6599\u5b9e\u9a8c" xml:space="preserve">
+  <data name="u6750u6599u5b9eu9a8c" xml:space="preserve">
     <value>材料实验</value>
   </data>
-  <data name="\u6750\u6599\u5408\u6210\u4e0e\u52a0\u5de5\u5de5\u827a" xml:space="preserve">
+  <data name="u6750u6599u5408u6210u4e0eu52a0u5de5u5de5u827a" xml:space="preserve">
     <value>材料合成与加工工艺</value>
   </data>
-  <data name="\u91d1\u5c5e\u6750\u6599" xml:space="preserve">
+  <data name="u91d1u5c5eu6750u6599" xml:space="preserve">
     <value>金属材料</value>
   </data>
-  <data name="\u65e0\u673a\u975e\u91d1\u5c5e\u6750\u6599" xml:space="preserve">
+  <data name="u65e0u673au975eu91d1u5c5eu6750u6599" xml:space="preserve">
     <value>无机非金属材料</value>
   </data>
-  <data name="\u6709\u673a\u9ad8\u5206\u5b50\u6750\u6599" xml:space="preserve">
+  <data name="u6709u673au9ad8u5206u5b50u6750u6599" xml:space="preserve">
     <value>有机高分子材料</value>
   </data>
-  <data name="\u590d\u5408\u6750\u6599" xml:space="preserve">
+  <data name="u590du5408u6750u6599" xml:space="preserve">
     <value>复合材料</value>
   </data>
-  <data name="\u751f\u7269\u6750\u6599" xml:space="preserve">
+  <data name="u751fu7269u6750u6599" xml:space="preserve">
     <value>生物材料</value>
   </data>
-  <data name="\u7eb3\u7c73\u6750\u6599" xml:space="preserve">
+  <data name="u7eb3u7c73u6750u6599" xml:space="preserve">
     <value>纳米材料</value>
   </data>
-  <data name="\u6750\u6599\u79d1\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u6750u6599u79d1u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>材料科学其他学科</value>
   </data>
-  <data name="\u77ff\u5c71\u5de5\u7a0b\u6280\u672f" xml:space="preserve">
+  <data name="u77ffu5c71u5de5u7a0bu6280u672f" xml:space="preserve">
     <value>矿山工程技术</value>
   </data>
-  <data name="\u77ff\u5c71\u5730\u8d28\u5b66" xml:space="preserve">
+  <data name="u77ffu5c71u5730u8d28u5b66" xml:space="preserve">
     <value>矿山地质学</value>
   </data>
-  <data name="\u77ff\u5c71\u6d4b\u91cf" xml:space="preserve">
+  <data name="u77ffu5c71u6d4bu91cf" xml:space="preserve">
     <value>矿山测量</value>
   </data>
-  <data name="\u77ff\u5c71\u8bbe\u8ba1" xml:space="preserve">
+  <data name="u77ffu5c71u8bbeu8ba1" xml:space="preserve">
     <value>矿山设计</value>
   </data>
-  <data name="\u77ff\u5c71\u5730\u9762\u5de5\u7a0b" xml:space="preserve">
+  <data name="u77ffu5c71u5730u9762u5de5u7a0b" xml:space="preserve">
     <value>矿山地面工程</value>
   </data>
-  <data name="\u4e95\u5df7\u5de5\u7a0b" xml:space="preserve">
+  <data name="u4e95u5df7u5de5u7a0b" xml:space="preserve">
     <value>井巷工程</value>
   </data>
-  <data name="\u91c7\u77ff\u5de5\u7a0b" xml:space="preserve">
+  <data name="u91c7u77ffu5de5u7a0b" xml:space="preserve">
     <value>采矿工程</value>
   </data>
-  <data name="\u9009\u77ff\u5de5\u7a0b" xml:space="preserve">
+  <data name="u9009u77ffu5de5u7a0b" xml:space="preserve">
     <value>选矿工程</value>
   </data>
-  <data name="\u94bb\u4e95\u5de5\u7a0b" xml:space="preserve">
+  <data name="u94bbu4e95u5de5u7a0b" xml:space="preserve">
     <value>钻井工程</value>
   </data>
-  <data name="\u6cb9\u6c14\u7530\u4e95\u5f00\u53d1\u5de5\u7a0b" xml:space="preserve">
+  <data name="u6cb9u6c14u7530u4e95u5f00u53d1u5de5u7a0b" xml:space="preserve">
     <value>油气田井开发工程</value>
   </data>
-  <data name="\u77f3\u6cb9\u3001\u5929\u7136\u6c14\u50a8\u5b58\u4e0e\u8fd0\u8f93\u5de5\u7a0b" xml:space="preserve">
+  <data name="u77f3u6cb9u3001u5929u7136u6c14u50a8u5b58u4e0eu8fd0u8f93u5de5u7a0b" xml:space="preserve">
     <value>石油、天然气储存与运输工程</value>
   </data>
-  <data name="\u77ff\u5c71\u673a\u68b0\u5de5\u7a0b" xml:space="preserve">
+  <data name="u77ffu5c71u673au68b0u5de5u7a0b" xml:space="preserve">
     <value>矿山机械工程</value>
   </data>
-  <data name="\u77ff\u5c71\u7535\u6c14\u5de5\u7a0b" xml:space="preserve">
+  <data name="u77ffu5c71u7535u6c14u5de5u7a0b" xml:space="preserve">
     <value>矿山电气工程</value>
   </data>
-  <data name="\u91c7\u77ff\u73af\u5883\u5de5\u7a0b" xml:space="preserve">
+  <data name="u91c7u77ffu73afu5883u5de5u7a0b" xml:space="preserve">
     <value>采矿环境工程</value>
   </data>
-  <data name="\u77ff\u5c71\u5b89\u5168" xml:space="preserve">
+  <data name="u77ffu5c71u5b89u5168" xml:space="preserve">
     <value>矿山安全</value>
   </data>
-  <data name="\u77ff\u5c71\u7efc\u5408\u5229\u7528\u5de5\u7a0b" xml:space="preserve">
+  <data name="u77ffu5c71u7efcu5408u5229u7528u5de5u7a0b" xml:space="preserve">
     <value>矿山综合利用工程</value>
   </data>
-  <data name="\u77ff\u5c71\u5de5\u7a0b\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u77ffu5c71u5de5u7a0bu6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>矿山工程技术其他学科</value>
   </data>
-  <data name="\u51b6\u91d1\u5de5\u7a0b\u6280\u672f" xml:space="preserve">
+  <data name="u51b6u91d1u5de5u7a0bu6280u672f" xml:space="preserve">
     <value>冶金工程技术</value>
   </data>
-  <data name="\u51b6\u91d1\u7269\u7406\u5316\u5b66" xml:space="preserve">
+  <data name="u51b6u91d1u7269u7406u5316u5b66" xml:space="preserve">
     <value>冶金物理化学</value>
   </data>
-  <data name="\u51b6\u91d1\u53cd\u5e94\u5de5\u7a0b" xml:space="preserve">
+  <data name="u51b6u91d1u53cdu5e94u5de5u7a0b" xml:space="preserve">
     <value>冶金反应工程</value>
   </data>
-  <data name="\u51b6\u91d1\u539f\u6599\u4e0e\u9884\u5904\u7406" xml:space="preserve">
+  <data name="u51b6u91d1u539fu6599u4e0eu9884u5904u7406" xml:space="preserve">
     <value>冶金原料与预处理</value>
   </data>
-  <data name="\u51b6\u91d1\u70ed\u80fd\u5de5\u7a0b" xml:space="preserve">
+  <data name="u51b6u91d1u70edu80fdu5de5u7a0b" xml:space="preserve">
     <value>冶金热能工程</value>
   </data>
-  <data name="\u51b6\u91d1\u6280\u672f" xml:space="preserve">
+  <data name="u51b6u91d1u6280u672f" xml:space="preserve">
     <value>冶金技术</value>
   </data>
-  <data name="\u94a2\u94c1\u51b6\u91d1" xml:space="preserve">
+  <data name="u94a2u94c1u51b6u91d1" xml:space="preserve">
     <value>钢铁冶金</value>
   </data>
-  <data name="\u6709\u8272\u91d1\u5c5e\u51b6\u91d1" xml:space="preserve">
+  <data name="u6709u8272u91d1u5c5eu51b6u91d1" xml:space="preserve">
     <value>有色金属冶金</value>
   </data>
-  <data name="\u8f67\u5236" xml:space="preserve">
+  <data name="u8f67u5236" xml:space="preserve">
     <value>轧制</value>
   </data>
-  <data name="\u51b6\u91d1\u673a\u68b0\u53ca\u81ea\u52a8\u5316" xml:space="preserve">
+  <data name="u51b6u91d1u673au68b0u53cau81eau52a8u5316" xml:space="preserve">
     <value>冶金机械及自动化</value>
   </data>
-  <data name="\u51b6\u91d1\u5de5\u7a0b\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u51b6u91d1u5de5u7a0bu6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>冶金工程技术其他学科</value>
   </data>
-  <data name="\u673a\u68b0\u53f2" xml:space="preserve">
+  <data name="u673au68b0u53f2" xml:space="preserve">
     <value>机械史</value>
   </data>
-  <data name="\u673a\u68b0\u5b66" xml:space="preserve">
+  <data name="u673au68b0u5b66" xml:space="preserve">
     <value>机械学</value>
   </data>
-  <data name="\u673a\u68b0\u8bbe\u8ba1" xml:space="preserve">
+  <data name="u673au68b0u8bbeu8ba1" xml:space="preserve">
     <value>机械设计</value>
   </data>
-  <data name="\u673a\u68b0\u5236\u9020\u5de5\u827a\u4e0e\u8bbe\u5907" xml:space="preserve">
+  <data name="u673au68b0u5236u9020u5de5u827au4e0eu8bbeu5907" xml:space="preserve">
     <value>机械制造工艺与设备</value>
   </data>
-  <data name="\u5200\u5177\u6280\u672f" xml:space="preserve">
+  <data name="u5200u5177u6280u672f" xml:space="preserve">
     <value>刀具技术</value>
   </data>
-  <data name="\u673a\u5e8a\u6280\u672f" xml:space="preserve">
+  <data name="u673au5e8au6280u672f" xml:space="preserve">
     <value>机床技术</value>
   </data>
-  <data name="\u6d41\u4f53\u4f20\u52a8\u4e0e\u63a7\u5236" xml:space="preserve">
+  <data name="u6d41u4f53u4f20u52a8u4e0eu63a7u5236" xml:space="preserve">
     <value>流体传动与控制</value>
   </data>
-  <data name="\u673a\u68b0\u5236\u9020\u81ea\u52a8\u5316" xml:space="preserve">
+  <data name="u673au68b0u5236u9020u81eau52a8u5316" xml:space="preserve">
     <value>机械制造自动化</value>
   </data>
-  <data name="\u673a\u68b0\u5de5\u7a0b\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u673au68b0u5de5u7a0bu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>机械工程其他学科</value>
   </data>
-  <data name="\u5de5\u7a0b\u70ed\u7269\u7406" xml:space="preserve">
+  <data name="u5de5u7a0bu70edu7269u7406" xml:space="preserve">
     <value>工程热物理</value>
   </data>
-  <data name="\u70ed\u5de5\u5b66" xml:space="preserve">
+  <data name="u70edu5de5u5b66" xml:space="preserve">
     <value>热工学</value>
   </data>
-  <data name="\u52a8\u529b\u673a\u68b0\u5de5\u7a0b" xml:space="preserve">
+  <data name="u52a8u529bu673au68b0u5de5u7a0b" xml:space="preserve">
     <value>动力机械工程</value>
   </data>
-  <data name="\u5236\u51b7\u4e0e\u4f4e\u6e29\u5de5\u7a0b" xml:space="preserve">
+  <data name="u5236u51b7u4e0eu4f4eu6e29u5de5u7a0b" xml:space="preserve">
     <value>制冷与低温工程</value>
   </data>
-  <data name="\u52a8\u529b\u4e0e\u7535\u6c14\u5de5\u7a0b\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u52a8u529bu4e0eu7535u6c14u5de5u7a0bu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>动力与电气工程其他学科</value>
   </data>
-  <data name="\u80fd\u6e90\u79d1\u5b66\u6280\u672f" xml:space="preserve">
+  <data name="u80fdu6e90u79d1u5b66u6280u672f" xml:space="preserve">
     <value>能源科学技术</value>
   </data>
-  <data name="\u80fd\u6e90\u5316\u5b66" xml:space="preserve">
+  <data name="u80fdu6e90u5316u5b66" xml:space="preserve">
     <value>能源化学</value>
   </data>
-  <data name="\u80fd\u6e90\u5730\u7406\u5b66" xml:space="preserve">
+  <data name="u80fdu6e90u5730u7406u5b66" xml:space="preserve">
     <value>能源地理学</value>
   </data>
-  <data name="\u80fd\u6e90\u8ba1\u7b97\u4e0e\u6d4b\u91cf" xml:space="preserve">
+  <data name="u80fdu6e90u8ba1u7b97u4e0eu6d4bu91cf" xml:space="preserve">
     <value>能源计算与测量</value>
   </data>
-  <data name="\u50a8\u80fd\u6280\u672f" xml:space="preserve">
+  <data name="u50a8u80fdu6280u672f" xml:space="preserve">
     <value>储能技术</value>
   </data>
-  <data name="\u8282\u80fd\u6280\u672f" xml:space="preserve">
+  <data name="u8282u80fdu6280u672f" xml:space="preserve">
     <value>节能技术</value>
   </data>
-  <data name="\u4e00\u6b21\u80fd\u6e90" xml:space="preserve">
+  <data name="u4e00u6b21u80fdu6e90" xml:space="preserve">
     <value>一次能源</value>
   </data>
-  <data name="\u4e8c\u6b21\u80fd\u6e90" xml:space="preserve">
+  <data name="u4e8cu6b21u80fdu6e90" xml:space="preserve">
     <value>二次能源</value>
   </data>
-  <data name="\u80fd\u6e90\u7cfb\u7edf\u5de5\u7a0b" xml:space="preserve">
+  <data name="u80fdu6e90u7cfbu7edfu5de5u7a0b" xml:space="preserve">
     <value>能源系统工程</value>
   </data>
-  <data name="\u80fd\u6e90\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u80fdu6e90u79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>能源科学技术其他学科</value>
   </data>
-  <data name="\u6838\u79d1\u5b66\u6280\u672f" xml:space="preserve">
+  <data name="u6838u79d1u5b66u6280u672f" xml:space="preserve">
     <value>核科学技术</value>
   </data>
-  <data name="\u8f90\u5c04\u7269\u7406\u4e0e\u6280\u672f" xml:space="preserve">
+  <data name="u8f90u5c04u7269u7406u4e0eu6280u672f" xml:space="preserve">
     <value>辐射物理与技术</value>
   </data>
-  <data name="\u6838\u63a2\u6d4b\u6280\u672f\u4e0e\u6838\u7535\u5b50\u5b66" xml:space="preserve">
+  <data name="u6838u63a2u6d4bu6280u672fu4e0eu6838u7535u5b50u5b66" xml:space="preserve">
     <value>核探测技术与核电子学</value>
   </data>
-  <data name="\u653e\u5c04\u6027\u8ba1\u91cf\u5b66" xml:space="preserve">
+  <data name="u653eu5c04u6027u8ba1u91cfu5b66" xml:space="preserve">
     <value>放射性计量学</value>
   </data>
-  <data name="\u6838\u4eea\u5668\u3001\u4eea\u8868" xml:space="preserve">
+  <data name="u6838u4eeau5668u3001u4eeau8868" xml:space="preserve">
     <value>核仪器、仪表</value>
   </data>
-  <data name="\u6838\u6750\u6599\u4e0e\u5de5\u827a\u6280\u672f" xml:space="preserve">
+  <data name="u6838u6750u6599u4e0eu5de5u827au6280u672f" xml:space="preserve">
     <value>核材料与工艺技术</value>
   </data>
-  <data name="\u7c92\u5b50\u52a0\u901f\u5668" xml:space="preserve">
+  <data name="u7c92u5b50u52a0u901fu5668" xml:space="preserve">
     <value>粒子加速器</value>
   </data>
-  <data name="\u88c2\u53d8\u5806\u5de5\u7a0b\u6280\u672f" xml:space="preserve">
+  <data name="u88c2u53d8u5806u5de5u7a0bu6280u672f" xml:space="preserve">
     <value>裂变堆工程技术</value>
   </data>
-  <data name="\u6838\u805a\u53d8\u5de5\u7a0b\u6280\u672f" xml:space="preserve">
+  <data name="u6838u805au53d8u5de5u7a0bu6280u672f" xml:space="preserve">
     <value>核聚变工程技术</value>
   </data>
-  <data name="\u6838\u52a8\u529b\u5de5\u7a0b\u6280\u672f" xml:space="preserve">
+  <data name="u6838u52a8u529bu5de5u7a0bu6280u672f" xml:space="preserve">
     <value>核动力工程技术</value>
   </data>
-  <data name="\u540c\u4f4d\u7d20\u6280\u672f" xml:space="preserve">
+  <data name="u540cu4f4du7d20u6280u672f" xml:space="preserve">
     <value>同位素技术</value>
   </data>
-  <data name="\u6838\u7206\u70b8\u5de5\u7a0b" xml:space="preserve">
+  <data name="u6838u7206u70b8u5de5u7a0b" xml:space="preserve">
     <value>核爆炸工程</value>
   </data>
-  <data name="\u6838\u5b89\u5168" xml:space="preserve">
+  <data name="u6838u5b89u5168" xml:space="preserve">
     <value>核安全</value>
   </data>
-  <data name="\u4e4f\u71c3\u6599\u540e\u5904\u7406\u6280\u672f" xml:space="preserve">
+  <data name="u4e4fu71c3u6599u540eu5904u7406u6280u672f" xml:space="preserve">
     <value>乏燃料后处理技术</value>
   </data>
-  <data name="\u8f90\u5c04\u9632\u62a4\u6280\u672f" xml:space="preserve">
+  <data name="u8f90u5c04u9632u62a4u6280u672f" xml:space="preserve">
     <value>辐射防护技术</value>
   </data>
-  <data name="\u6838\u8bbe\u65bd\u9000\u5f79\u6280\u672f" xml:space="preserve">
+  <data name="u6838u8bbeu65bdu9000u5f79u6280u672f" xml:space="preserve">
     <value>核设施退役技术</value>
   </data>
-  <data name="\u653e\u5c04\u6027\u4e09\u5e9f\u5904\u7406\u3001\u5904\u7f6e\u6280\u672f" xml:space="preserve">
+  <data name="u653eu5c04u6027u4e09u5e9fu5904u7406u3001u5904u7f6eu6280u672f" xml:space="preserve">
     <value>放射性三废处理、处置技术</value>
   </data>
-  <data name="\u6838\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u6838u79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>核科学技术其他学科</value>
   </data>
-  <data name="\u7535\u5b50\u6280\u672f" xml:space="preserve">
+  <data name="u7535u5b50u6280u672f" xml:space="preserve">
     <value>电子技术</value>
   </data>
-  <data name="\u5149\u7535\u5b50\u5b66\u4e0e\u6fc0\u5149\u6280\u672f" xml:space="preserve">
+  <data name="u5149u7535u5b50u5b66u4e0eu6fc0u5149u6280u672f" xml:space="preserve">
     <value>光电子学与激光技术</value>
   </data>
-  <data name="\u534a\u5bfc\u4f53\u6280\u672f" xml:space="preserve">
+  <data name="u534au5bfcu4f53u6280u672f" xml:space="preserve">
     <value>半导体技术</value>
   </data>
-  <data name="\u4fe1\u606f\u5904\u7406\u6280\u672f" xml:space="preserve">
+  <data name="u4fe1u606fu5904u7406u6280u672f" xml:space="preserve">
     <value>信息处理技术</value>
   </data>
-  <data name="\u5e7f\u64ad\u4e0e\u7535\u89c6\u5de5\u7a0b\u6280\u672f" xml:space="preserve">
+  <data name="u5e7fu64adu4e0eu7535u89c6u5de5u7a0bu6280u672f" xml:space="preserve">
     <value>广播与电视工程技术</value>
   </data>
-  <data name="\u96f7\u8fbe\u5de5\u7a0b" xml:space="preserve">
+  <data name="u96f7u8fbeu5de5u7a0b" xml:space="preserve">
     <value>雷达工程</value>
   </data>
-  <data name="\u7535\u5b50\u4e0e\u901a\u4fe1\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u7535u5b50u4e0eu901au4fe1u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>电子与通信技术其他学科</value>
   </data>
-  <data name="\u8ba1\u7b97\u673a\u79d1\u5b66\u6280\u672f\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
+  <data name="u8ba1u7b97u673au79d1u5b66u6280u672fu57fau7840u5b66u79d1" xml:space="preserve">
     <value>计算机科学技术基础学科</value>
   </data>
-  <data name="\u4eba\u5de5\u667a\u80fd" xml:space="preserve">
+  <data name="u4ebau5de5u667au80fd" xml:space="preserve">
     <value>人工智能</value>
   </data>
-  <data name="\u8ba1\u7b97\u673a\u7cfb\u7edf\u7ed3\u6784" xml:space="preserve">
+  <data name="u8ba1u7b97u673au7cfbu7edfu7ed3u6784" xml:space="preserve">
     <value>计算机系统结构</value>
   </data>
-  <data name="\u8ba1\u7b97\u673a\u8f6f\u4ef6" xml:space="preserve">
+  <data name="u8ba1u7b97u673au8f6fu4ef6" xml:space="preserve">
     <value>计算机软件</value>
   </data>
-  <data name="\u8ba1\u7b97\u673a\u5de5\u7a0b" xml:space="preserve">
+  <data name="u8ba1u7b97u673au5de5u7a0b" xml:space="preserve">
     <value>计算机工程</value>
   </data>
-  <data name="\u8ba1\u7b97\u673a\u5e94\u7528" xml:space="preserve">
+  <data name="u8ba1u7b97u673au5e94u7528" xml:space="preserve">
     <value>计算机应用</value>
   </data>
-  <data name="\u8ba1\u7b97\u673a\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u8ba1u7b97u673au79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>计算机科学技术其他学科</value>
   </data>
-  <data name="\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
+  <data name="u5316u5b66u5de5u7a0b" xml:space="preserve">
     <value>化学工程</value>
   </data>
-  <data name="\u5316\u5b66\u5de5\u7a0b\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
+  <data name="u5316u5b66u5de5u7a0bu57fau7840u5b66u79d1" xml:space="preserve">
     <value>化学工程基础学科</value>
   </data>
-  <data name="\u5316\u5de5\u6d4b\u91cf\u6280\u672f\u4e0e\u4eea\u5668\u4eea\u8868" xml:space="preserve">
+  <data name="u5316u5de5u6d4bu91cfu6280u672fu4e0eu4eeau5668u4eeau8868" xml:space="preserve">
     <value>化工测量技术与仪器仪表</value>
   </data>
-  <data name="\u5316\u5de5\u4f20\u9012\u8fc7\u7a0b" xml:space="preserve">
+  <data name="u5316u5de5u4f20u9012u8fc7u7a0b" xml:space="preserve">
     <value>化工传递过程</value>
   </data>
-  <data name="\u5316\u5b66\u5206\u79bb\u5de5\u7a0b" xml:space="preserve">
+  <data name="u5316u5b66u5206u79bbu5de5u7a0b" xml:space="preserve">
     <value>化学分离工程</value>
   </data>
-  <data name="\u5316\u5b66\u53cd\u5e94\u5de5\u7a0b" xml:space="preserve">
+  <data name="u5316u5b66u53cdu5e94u5de5u7a0b" xml:space="preserve">
     <value>化学反应工程</value>
   </data>
-  <data name="\u5316\u5de5\u7cfb\u7edf\u5de5\u7a0b" xml:space="preserve">
+  <data name="u5316u5de5u7cfbu7edfu5de5u7a0b" xml:space="preserve">
     <value>化工系统工程</value>
   </data>
-  <data name="\u5316\u5de5\u673a\u68b0\u4e0e\u8bbe\u5907" xml:space="preserve">
+  <data name="u5316u5de5u673au68b0u4e0eu8bbeu5907" xml:space="preserve">
     <value>化工机械与设备</value>
   </data>
-  <data name="\u65e0\u673a\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
+  <data name="u65e0u673au5316u5b66u5de5u7a0b" xml:space="preserve">
     <value>无机化学工程</value>
   </data>
-  <data name="\u6709\u673a\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
+  <data name="u6709u673au5316u5b66u5de5u7a0b" xml:space="preserve">
     <value>有机化学工程</value>
   </data>
-  <data name="\u7535\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
+  <data name="u7535u5316u5b66u5de5u7a0b" xml:space="preserve">
     <value>电化学工程</value>
   </data>
-  <data name="\u9ad8\u805a\u7269\u5de5\u7a0b" xml:space="preserve">
+  <data name="u9ad8u805au7269u5de5u7a0b" xml:space="preserve">
     <value>高聚物工程</value>
   </data>
-  <data name="\u7164\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
+  <data name="u7164u5316u5b66u5de5u7a0b" xml:space="preserve">
     <value>煤化学工程</value>
   </data>
-  <data name="\u77f3\u6cb9\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
+  <data name="u77f3u6cb9u5316u5b66u5de5u7a0b" xml:space="preserve">
     <value>石油化学工程</value>
   </data>
-  <data name="\u5929\u7136\u6c14\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
+  <data name="u5929u7136u6c14u5316u5b66u5de5u7a0b" xml:space="preserve">
     <value>天然气化学工程</value>
   </data>
-  <data name="\u7cbe\u7ec6\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
+  <data name="u7cbeu7ec6u5316u5b66u5de5u7a0b" xml:space="preserve">
     <value>精细化学工程</value>
   </data>
-  <data name="\u9020\u7eb8\u6280\u672f" xml:space="preserve">
+  <data name="u9020u7eb8u6280u672f" xml:space="preserve">
     <value>造纸技术</value>
   </data>
-  <data name="\u6bdb\u76ae\u4e0e\u5236\u9769\u5de5\u7a0b" xml:space="preserve">
+  <data name="u6bdbu76aeu4e0eu5236u9769u5de5u7a0b" xml:space="preserve">
     <value>毛皮与制革工程</value>
   </data>
-  <data name="\u5236\u836f\u5de5\u7a0b" xml:space="preserve">
+  <data name="u5236u836fu5de5u7a0b" xml:space="preserve">
     <value>制药工程</value>
   </data>
-  <data name="\u751f\u7269\u5316\u5b66\u5de5\u7a0b" xml:space="preserve">
+  <data name="u751fu7269u5316u5b66u5de5u7a0b" xml:space="preserve">
     <value>生物化学工程</value>
   </data>
-  <data name="\u5316\u5b66\u5de5\u7a0b\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u5316u5b66u5de5u7a0bu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>化学工程其他学科</value>
   </data>
-  <data name="\u4ea7\u54c1\u5e94\u7528\u76f8\u5173\u5de5\u7a0b\u4e0e\u6280\u672f" xml:space="preserve">
+  <data name="u4ea7u54c1u5e94u7528u76f8u5173u5de5u7a0bu4e0eu6280u672f" xml:space="preserve">
     <value>产品应用相关工程与技术</value>
   </data>
-  <data name="\u4eea\u5668\u4eea\u8868\u6280\u672f" xml:space="preserve">
+  <data name="u4eeau5668u4eeau8868u6280u672f" xml:space="preserve">
     <value>仪器仪表技术</value>
   </data>
-  <data name="\u5175\u5668\u79d1\u5b66\u4e0e\u6280\u672f" xml:space="preserve">
+  <data name="u5175u5668u79d1u5b66u4e0eu6280u672f" xml:space="preserve">
     <value>兵器科学与技术</value>
   </data>
-  <data name="\u4ea7\u54c1\u5e94\u7528\u4e13\u7528\u6027\u6280\u672f" xml:space="preserve">
+  <data name="u4ea7u54c1u5e94u7528u4e13u7528u6027u6280u672f" xml:space="preserve">
     <value>产品应用专用性技术</value>
   </data>
-  <data name="\u4ea7\u54c1\u5e94\u7528\u76f8\u5173\u5de5\u7a0b\u4e0e\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u4ea7u54c1u5e94u7528u76f8u5173u5de5u7a0bu4e0eu6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>产品应用相关工程与技术其他学科</value>
   </data>
-  <data name="\u7eba\u7ec7\u79d1\u5b66\u6280\u672f" xml:space="preserve">
+  <data name="u7ebau7ec7u79d1u5b66u6280u672f" xml:space="preserve">
     <value>纺织科学技术</value>
   </data>
-  <data name="\u7eba\u7ec7\u79d1\u5b66\u6280\u672f\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
+  <data name="u7ebau7ec7u79d1u5b66u6280u672fu57fau7840u5b66u79d1" xml:space="preserve">
     <value>纺织科学技术基础学科</value>
   </data>
-  <data name="\u7eba\u7ec7\u6750\u6599" xml:space="preserve">
+  <data name="u7ebau7ec7u6750u6599" xml:space="preserve">
     <value>纺织材料</value>
   </data>
-  <data name="\u7ea4\u7ef4\u5236\u9020\u6280\u672f" xml:space="preserve">
+  <data name="u7ea4u7ef4u5236u9020u6280u672f" xml:space="preserve">
     <value>纤维制造技术</value>
   </data>
-  <data name="\u7eba\u7ec7\u6280\u672f" xml:space="preserve">
+  <data name="u7ebau7ec7u6280u672f" xml:space="preserve">
     <value>纺织技术</value>
   </data>
-  <data name="\u67d3\u6574\u6280\u672f" xml:space="preserve">
+  <data name="u67d3u6574u6280u672f" xml:space="preserve">
     <value>染整技术</value>
   </data>
-  <data name="\u670d\u88c5\u6280\u672f" xml:space="preserve">
+  <data name="u670du88c5u6280u672f" xml:space="preserve">
     <value>服装技术</value>
   </data>
-  <data name="\u7eba\u7ec7\u673a\u68b0\u4e0e\u8bbe\u5907" xml:space="preserve">
+  <data name="u7ebau7ec7u673au68b0u4e0eu8bbeu5907" xml:space="preserve">
     <value>纺织机械与设备</value>
   </data>
-  <data name="\u7eba\u7ec7\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u7ebau7ec7u79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>纺织科学技术其他学科</value>
   </data>
-  <data name="\u98df\u54c1\u79d1\u5b66\u6280\u672f\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
+  <data name="u98dfu54c1u79d1u5b66u6280u672fu57fau7840u5b66u79d1" xml:space="preserve">
     <value>食品科学技术基础学科</value>
   </data>
-  <data name="\u98df\u54c1\u52a0\u5de5\u6280\u672f" xml:space="preserve">
+  <data name="u98dfu54c1u52a0u5de5u6280u672f" xml:space="preserve">
     <value>食品加工技术</value>
   </data>
-  <data name="\u98df\u54c1\u5305\u88c5\u4e0e\u50a8\u85cf" xml:space="preserve">
+  <data name="u98dfu54c1u5305u88c5u4e0eu50a8u85cf" xml:space="preserve">
     <value>食品包装与储藏</value>
   </data>
-  <data name="\u98df\u54c1\u673a\u68b0" xml:space="preserve">
+  <data name="u98dfu54c1u673au68b0" xml:space="preserve">
     <value>食品机械</value>
   </data>
-  <data name="\u98df\u54c1\u52a0\u5de5\u7684\u526f\u4ea7\u54c1\u52a0\u5de5\u4e0e\u5229\u7528" xml:space="preserve">
+  <data name="u98dfu54c1u52a0u5de5u7684u526fu4ea7u54c1u52a0u5de5u4e0eu5229u7528" xml:space="preserve">
     <value>食品加工的副产品加工与利用</value>
   </data>
-  <data name="\u98df\u54c1\u5de5\u4e1a\u4f01\u4e1a\u7ba1\u7406\u5b66" xml:space="preserve">
+  <data name="u98dfu54c1u5de5u4e1au4f01u4e1au7ba1u7406u5b66" xml:space="preserve">
     <value>食品工业企业管理学</value>
   </data>
-  <data name="\u98df\u54c1\u5de5\u7a0b\u4e0e\u7cae\u6cb9\u5de5\u7a0b" xml:space="preserve">
+  <data name="u98dfu54c1u5de5u7a0bu4e0eu7caeu6cb9u5de5u7a0b" xml:space="preserve">
     <value>食品工程与粮油工程</value>
   </data>
-  <data name="\u98df\u54c1\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u98dfu54c1u79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>食品科学技术其他学科</value>
   </data>
-  <data name="\u571f\u6728\u5efa\u7b51\u5de5\u7a0b" xml:space="preserve">
+  <data name="u571fu6728u5efau7b51u5de5u7a0b" xml:space="preserve">
     <value>土木建筑工程</value>
   </data>
-  <data name="\u5efa\u7b51\u53f2" xml:space="preserve">
+  <data name="u5efau7b51u53f2" xml:space="preserve">
     <value>建筑史</value>
   </data>
-  <data name="\u571f\u6728\u5efa\u7b51\u5de5\u7a0b\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
+  <data name="u571fu6728u5efau7b51u5de5u7a0bu57fau7840u5b66u79d1" xml:space="preserve">
     <value>土木建筑工程基础学科</value>
   </data>
-  <data name="\u571f\u6728\u5efa\u7b51\u5de5\u7a0b\u6d4b\u91cf" xml:space="preserve">
+  <data name="u571fu6728u5efau7b51u5de5u7a0bu6d4bu91cf" xml:space="preserve">
     <value>土木建筑工程测量</value>
   </data>
-  <data name="\u5efa\u7b51\u6750\u6599" xml:space="preserve">
+  <data name="u5efau7b51u6750u6599" xml:space="preserve">
     <value>建筑材料</value>
   </data>
-  <data name="\u5de5\u7a0b\u7ed3\u6784" xml:space="preserve">
+  <data name="u5de5u7a0bu7ed3u6784" xml:space="preserve">
     <value>工程结构</value>
   </data>
-  <data name="\u571f\u6728\u5efa\u7b51\u7ed3\u6784" xml:space="preserve">
+  <data name="u571fu6728u5efau7b51u7ed3u6784" xml:space="preserve">
     <value>土木建筑结构</value>
   </data>
-  <data name="\u571f\u6728\u5efa\u7b51\u5de5\u7a0b\u8bbe\u8ba1" xml:space="preserve">
+  <data name="u571fu6728u5efau7b51u5de5u7a0bu8bbeu8ba1" xml:space="preserve">
     <value>土木建筑工程设计</value>
   </data>
-  <data name="\u571f\u6728\u5efa\u7b51\u5de5\u7a0b\u65bd\u5de5" xml:space="preserve">
+  <data name="u571fu6728u5efau7b51u5de5u7a0bu65bdu5de5" xml:space="preserve">
     <value>土木建筑工程施工</value>
   </data>
-  <data name="\u571f\u6728\u5de5\u7a0b\u673a\u68b0\u4e0e\u8bbe\u5907" xml:space="preserve">
+  <data name="u571fu6728u5de5u7a0bu673au68b0u4e0eu8bbeu5907" xml:space="preserve">
     <value>土木工程机械与设备</value>
   </data>
-  <data name="\u5e02\u653f\u5de5\u7a0b" xml:space="preserve">
+  <data name="u5e02u653fu5de5u7a0b" xml:space="preserve">
     <value>市政工程</value>
   </data>
-  <data name="\u5efa\u7b51\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u5efau7b51u7ecfu6d4eu5b66" xml:space="preserve">
     <value>建筑经济学</value>
   </data>
-  <data name="\u571f\u6728\u5efa\u7b51\u5de5\u7a0b\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u571fu6728u5efau7b51u5de5u7a0bu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>土木建筑工程其他学科</value>
   </data>
-  <data name="\u6c34\u5229\u5de5\u7a0b\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
+  <data name="u6c34u5229u5de5u7a0bu57fau7840u5b66u79d1" xml:space="preserve">
     <value>水利工程基础学科</value>
   </data>
-  <data name="\u6c34\u5229\u5de5\u7a0b\u6d4b\u91cf" xml:space="preserve">
+  <data name="u6c34u5229u5de5u7a0bu6d4bu91cf" xml:space="preserve">
     <value>水利工程测量</value>
   </data>
-  <data name="\u6c34\u5de5\u6750\u6599" xml:space="preserve">
+  <data name="u6c34u5de5u6750u6599" xml:space="preserve">
     <value>水工材料</value>
   </data>
-  <data name="\u6c34\u5de5\u7ed3\u6784" xml:space="preserve">
+  <data name="u6c34u5de5u7ed3u6784" xml:space="preserve">
     <value>水工结构</value>
   </data>
-  <data name="\u6c34\u529b\u673a\u68b0" xml:space="preserve">
+  <data name="u6c34u529bu673au68b0" xml:space="preserve">
     <value>水力机械</value>
   </data>
-  <data name="\u6c34\u5229\u5de5\u7a0b\u65bd\u5de5" xml:space="preserve">
+  <data name="u6c34u5229u5de5u7a0bu65bdu5de5" xml:space="preserve">
     <value>水利工程施工</value>
   </data>
-  <data name="\u6c34\u5904\u7406" xml:space="preserve">
+  <data name="u6c34u5904u7406" xml:space="preserve">
     <value>水处理</value>
   </data>
-  <data name="\u6cb3\u6d41\u6ce5\u6c99\u5de5\u7a0b\u5b66" xml:space="preserve">
+  <data name="u6cb3u6d41u6ce5u6c99u5de5u7a0bu5b66" xml:space="preserve">
     <value>河流泥沙工程学</value>
   </data>
-  <data name="\u73af\u5883\u6c34\u5229" xml:space="preserve">
+  <data name="u73afu5883u6c34u5229" xml:space="preserve">
     <value>环境水利</value>
   </data>
-  <data name="\u6c34\u5229\u7ba1\u7406" xml:space="preserve">
+  <data name="u6c34u5229u7ba1u7406" xml:space="preserve">
     <value>水利管理</value>
   </data>
-  <data name="\u9632\u6d2a\u5de5\u7a0b" xml:space="preserve">
+  <data name="u9632u6d2au5de5u7a0b" xml:space="preserve">
     <value>防洪工程</value>
   </data>
-  <data name="\u6c34\u5229\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u6c34u5229u7ecfu6d4eu5b66" xml:space="preserve">
     <value>水利经济学</value>
   </data>
-  <data name="\u6c34\u5229\u5de5\u7a0b\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u6c34u5229u5de5u7a0bu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>水利工程其他学科</value>
   </data>
-  <data name="\u4ea4\u901a\u8fd0\u8f93\u5de5\u7a0b" xml:space="preserve">
+  <data name="u4ea4u901au8fd0u8f93u5de5u7a0b" xml:space="preserve">
     <value>交通运输工程</value>
   </data>
-  <data name="\u9053\u8def\u5de5\u7a0b" xml:space="preserve">
+  <data name="u9053u8defu5de5u7a0b" xml:space="preserve">
     <value>道路工程</value>
   </data>
-  <data name="\u516c\u8def\u8fd0\u8f93" xml:space="preserve">
+  <data name="u516cu8defu8fd0u8f93" xml:space="preserve">
     <value>公路运输</value>
   </data>
-  <data name="\u94c1\u8def\u8fd0\u8f93" xml:space="preserve">
+  <data name="u94c1u8defu8fd0u8f93" xml:space="preserve">
     <value>铁路运输</value>
   </data>
-  <data name="\u6c34\u8def\u8fd0\u8f93" xml:space="preserve">
+  <data name="u6c34u8defu8fd0u8f93" xml:space="preserve">
     <value>水路运输</value>
   </data>
-  <data name="\u8239\u8236\u3001\u8230\u8239\u5de5\u7a0b" xml:space="preserve">
+  <data name="u8239u8236u3001u8230u8239u5de5u7a0b" xml:space="preserve">
     <value>船舶、舰船工程</value>
   </data>
-  <data name="\u822a\u7a7a\u8fd0\u8f93" xml:space="preserve">
+  <data name="u822au7a7au8fd0u8f93" xml:space="preserve">
     <value>航空运输</value>
   </data>
-  <data name="\u4ea4\u901a\u8fd0\u8f93\u7cfb\u7edf\u5de5\u7a0b" xml:space="preserve">
+  <data name="u4ea4u901au8fd0u8f93u7cfbu7edfu5de5u7a0b" xml:space="preserve">
     <value>交通运输系统工程</value>
   </data>
-  <data name="\u4ea4\u901a\u8fd0\u8f93\u5b89\u5168\u5de5\u7a0b" xml:space="preserve">
+  <data name="u4ea4u901au8fd0u8f93u5b89u5168u5de5u7a0b" xml:space="preserve">
     <value>交通运输安全工程</value>
   </data>
-  <data name="\u4ea4\u901a\u8fd0\u8f93\u5de5\u7a0b\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u4ea4u901au8fd0u8f93u5de5u7a0bu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>交通运输工程其他学科</value>
   </data>
-  <data name="\u822a\u7a7a\u3001\u822a\u5929\u79d1\u5b66\u6280\u672f\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
+  <data name="u822au7a7au3001u822au5929u79d1u5b66u6280u672fu57fau7840u5b66u79d1" xml:space="preserve">
     <value>航空、航天科学技术基础学科</value>
   </data>
-  <data name="\u822a\u7a7a\u5668\u7ed3\u6784\u4e0e\u8bbe\u8ba1" xml:space="preserve">
+  <data name="u822au7a7au5668u7ed3u6784u4e0eu8bbeu8ba1" xml:space="preserve">
     <value>航空器结构与设计</value>
   </data>
-  <data name="\u822a\u5929\u5668\u7ed3\u6784\u4e0e\u8bbe\u8ba1" xml:space="preserve">
+  <data name="u822au5929u5668u7ed3u6784u4e0eu8bbeu8ba1" xml:space="preserve">
     <value>航天器结构与设计</value>
   </data>
-  <data name="\u822a\u7a7a\u3001\u822a\u5929\u63a8\u8fdb\u7cfb\u7edf" xml:space="preserve">
+  <data name="u822au7a7au3001u822au5929u63a8u8fdbu7cfbu7edf" xml:space="preserve">
     <value>航空、航天推进系统</value>
   </data>
-  <data name="\u98de\u884c\u5668\u4eea\u8868\u3001\u8bbe\u5907" xml:space="preserve">
+  <data name="u98deu884cu5668u4eeau8868u3001u8bbeu5907" xml:space="preserve">
     <value>飞行器仪表、设备</value>
   </data>
-  <data name="\u98de\u884c\u5668\u63a7\u5236\u3001\u5bfc\u822a\u6280\u672f" xml:space="preserve">
+  <data name="u98deu884cu5668u63a7u5236u3001u5bfcu822au6280u672f" xml:space="preserve">
     <value>飞行器控制、导航技术</value>
   </data>
-  <data name="\u822a\u7a7a\u3001\u822a\u5929\u6750\u6599" xml:space="preserve">
+  <data name="u822au7a7au3001u822au5929u6750u6599" xml:space="preserve">
     <value>航空、航天材料</value>
   </data>
-  <data name="\u98de\u884c\u5668\u5236\u9020\u6280\u672f" xml:space="preserve">
+  <data name="u98deu884cu5668u5236u9020u6280u672f" xml:space="preserve">
     <value>飞行器制造技术</value>
   </data>
-  <data name="\u98de\u884c\u5668\u8bd5\u9a8c\u6280\u672f" xml:space="preserve">
+  <data name="u98deu884cu5668u8bd5u9a8cu6280u672f" xml:space="preserve">
     <value>飞行器试验技术</value>
   </data>
-  <data name="\u98de\u884c\u5668\u53d1\u5c04\u4e0e\u56de\u6536\u3001\u98de\u884c\u6280\u672f" xml:space="preserve">
+  <data name="u98deu884cu5668u53d1u5c04u4e0eu56deu6536u3001u98deu884cu6280u672f" xml:space="preserve">
     <value>飞行器发射与回收、飞行技术</value>
   </data>
-  <data name="\u822a\u7a7a\u822a\u5929\u5730\u9762\u8bbe\u65bd\u3001\u6280\u672f\u4fdd\u969c" xml:space="preserve">
+  <data name="u822au7a7au822au5929u5730u9762u8bbeu65bdu3001u6280u672fu4fddu969c" xml:space="preserve">
     <value>航空航天地面设施、技术保障</value>
   </data>
-  <data name="\u822a\u7a7a\u3001\u822a\u5929\u7cfb\u7edf\u5de5\u7a0b" xml:space="preserve">
+  <data name="u822au7a7au3001u822au5929u7cfbu7edfu5de5u7a0b" xml:space="preserve">
     <value>航空、航天系统工程</value>
   </data>
-  <data name="\u822a\u7a7a\u3001\u822a\u5929\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u822au7a7au3001u822au5929u79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>航空、航天科学技术其他学科</value>
   </data>
-  <data name="\u73af\u5883\u79d1\u5b66\u6280\u672f\u53ca\u8d44\u6e90\u79d1\u5b66\u6280\u672f" xml:space="preserve">
+  <data name="u73afu5883u79d1u5b66u6280u672fu53cau8d44u6e90u79d1u5b66u6280u672f" xml:space="preserve">
     <value>环境科学技术及资源科学技术</value>
   </data>
-  <data name="\u73af\u5883\u79d1\u5b66\u6280\u672f\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
+  <data name="u73afu5883u79d1u5b66u6280u672fu57fau7840u5b66u79d1" xml:space="preserve">
     <value>环境科学技术基础学科</value>
   </data>
-  <data name="\u73af\u5883\u5b66" xml:space="preserve">
+  <data name="u73afu5883u5b66" xml:space="preserve">
     <value>环境学</value>
   </data>
-  <data name="\u73af\u5883\u5de5\u7a0b\u5b66" xml:space="preserve">
+  <data name="u73afu5883u5de5u7a0bu5b66" xml:space="preserve">
     <value>环境工程学</value>
   </data>
-  <data name="\u73af\u5883\u79d1\u5b66\u6280\u672f\u53ca\u8d44\u6e90\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u73afu5883u79d1u5b66u6280u672fu53cau8d44u6e90u79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>环境科学技术及资源科学技术其他学科</value>
   </data>
-  <data name="\u5b89\u5168\u79d1\u5b66\u6280\u672f" xml:space="preserve">
+  <data name="u5b89u5168u79d1u5b66u6280u672f" xml:space="preserve">
     <value>安全科学技术</value>
   </data>
-  <data name="\u5b89\u5168\u79d1\u5b66\u6280\u672f\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
+  <data name="u5b89u5168u79d1u5b66u6280u672fu57fau7840u5b66u79d1" xml:space="preserve">
     <value>安全科学技术基础学科</value>
   </data>
-  <data name="\u5b89\u5168\u793e\u4f1a\u79d1\u5b66" xml:space="preserve">
+  <data name="u5b89u5168u793eu4f1au79d1u5b66" xml:space="preserve">
     <value>安全社会科学</value>
   </data>
-  <data name="\u5b89\u5168\u7269\u8d28\u5b66" xml:space="preserve">
+  <data name="u5b89u5168u7269u8d28u5b66" xml:space="preserve">
     <value>安全物质学</value>
   </data>
-  <data name="\u5b89\u5168\u4eba\u4f53\u5b66" xml:space="preserve">
+  <data name="u5b89u5168u4ebau4f53u5b66" xml:space="preserve">
     <value>安全人体学</value>
   </data>
-  <data name="\u5b89\u5168\u7cfb\u7edf\u5b66" xml:space="preserve">
+  <data name="u5b89u5168u7cfbu7edfu5b66" xml:space="preserve">
     <value>安全系统学</value>
   </data>
-  <data name="\u5b89\u5168\u5de5\u7a0b\u6280\u672f\u79d1\u5b66" xml:space="preserve">
+  <data name="u5b89u5168u5de5u7a0bu6280u672fu79d1u5b66" xml:space="preserve">
     <value>安全工程技术科学</value>
   </data>
-  <data name="\u5b89\u5168\u536b\u751f\u5de5\u7a0b\u6280\u672f" xml:space="preserve">
+  <data name="u5b89u5168u536bu751fu5de5u7a0bu6280u672f" xml:space="preserve">
     <value>安全卫生工程技术</value>
   </data>
-  <data name="\u5b89\u5168\u793e\u4f1a\u5de5\u7a0b" xml:space="preserve">
+  <data name="u5b89u5168u793eu4f1au5de5u7a0b" xml:space="preserve">
     <value>安全社会工程</value>
   </data>
-  <data name="\u90e8\u95e8\u5b89\u5168\u5de5\u7a0b\u7406\u8bba" xml:space="preserve">
+  <data name="u90e8u95e8u5b89u5168u5de5u7a0bu7406u8bba" xml:space="preserve">
     <value>部门安全工程理论</value>
   </data>
-  <data name="\u516c\u5171\u5b89\u5168" xml:space="preserve">
+  <data name="u516cu5171u5b89u5168" xml:space="preserve">
     <value>公共安全</value>
   </data>
-  <data name="\u5b89\u5168\u79d1\u5b66\u6280\u672f\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u5b89u5168u79d1u5b66u6280u672fu5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>安全科学技术其他学科</value>
   </data>
-  <data name="\u7ba1\u7406\u601d\u60f3\u53f2" xml:space="preserve">
+  <data name="u7ba1u7406u601du60f3u53f2" xml:space="preserve">
     <value>管理思想史</value>
   </data>
-  <data name="\u7ba1\u7406\u7406\u8bba" xml:space="preserve">
+  <data name="u7ba1u7406u7406u8bba" xml:space="preserve">
     <value>管理理论</value>
   </data>
-  <data name="\u7ba1\u7406\u8ba1\u91cf\u5b66" xml:space="preserve">
+  <data name="u7ba1u7406u8ba1u91cfu5b66" xml:space="preserve">
     <value>管理计量学</value>
   </data>
-  <data name="\u90e8\u95e8\u7ecf\u6d4e\u7ba1\u7406" xml:space="preserve">
+  <data name="u90e8u95e8u7ecfu6d4eu7ba1u7406" xml:space="preserve">
     <value>部门经济管理</value>
   </data>
-  <data name="\u533a\u57df\u7ecf\u6d4e\u7ba1\u7406" xml:space="preserve">
+  <data name="u533au57dfu7ecfu6d4eu7ba1u7406" xml:space="preserve">
     <value>区域经济管理</value>
   </data>
-  <data name="\u79d1\u5b66\u5b66\u4e0e\u79d1\u6280\u7ba1\u7406" xml:space="preserve">
+  <data name="u79d1u5b66u5b66u4e0eu79d1u6280u7ba1u7406" xml:space="preserve">
     <value>科学学与科技管理</value>
   </data>
-  <data name="\u516c\u5171\u7ba1\u7406" xml:space="preserve">
+  <data name="u516cu5171u7ba1u7406" xml:space="preserve">
     <value>公共管理</value>
   </data>
-  <data name="\u7ba1\u7406\u5de5\u7a0b" xml:space="preserve">
+  <data name="u7ba1u7406u5de5u7a0b" xml:space="preserve">
     <value>管理工程</value>
   </data>
-  <data name="\u4eba\u529b\u8d44\u6e90\u5f00\u53d1\u4e0e\u7ba1\u7406" xml:space="preserve">
+  <data name="u4ebau529bu8d44u6e90u5f00u53d1u4e0eu7ba1u7406" xml:space="preserve">
     <value>人力资源开发与管理</value>
   </data>
-  <data name="\u672a\u6765\u5b66" xml:space="preserve">
+  <data name="u672au6765u5b66" xml:space="preserve">
     <value>未来学</value>
   </data>
-  <data name="\u7ba1\u7406\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u7ba1u7406u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>管理学其他学科</value>
   </data>
-  <data name="\u9a6c\u514b\u601d\u4e3b\u4e49" xml:space="preserve">
+  <data name="u9a6cu514bu601du4e3bu4e49" xml:space="preserve">
     <value>马克思主义</value>
   </data>
-  <data name="\u9a6c\u3001\u6069\u3001\u5217\u3001\u65af\u601d\u60f3\u7814\u7a76" xml:space="preserve">
+  <data name="u9a6cu3001u6069u3001u5217u3001u65afu601du60f3u7814u7a76" xml:space="preserve">
     <value>马、恩、列、斯思想研究</value>
   </data>
-  <data name="\u6bdb\u6cfd\u4e1c\u601d\u60f3\u7814\u7a76" xml:space="preserve">
+  <data name="u6bdbu6cfdu4e1cu601du60f3u7814u7a76" xml:space="preserve">
     <value>毛泽东思想研究</value>
   </data>
-  <data name="\u9a6c\u514b\u601d\u4e3b\u4e49\u601d\u60f3\u53f2" xml:space="preserve">
+  <data name="u9a6cu514bu601du4e3bu4e49u601du60f3u53f2" xml:space="preserve">
     <value>马克思主义思想史</value>
   </data>
-  <data name="\u79d1\u5b66\u793e\u4f1a\u4e3b\u4e49" xml:space="preserve">
+  <data name="u79d1u5b66u793eu4f1au4e3bu4e49" xml:space="preserve">
     <value>科学社会主义</value>
   </data>
-  <data name="\u793e\u4f1a\u4e3b\u4e49\u8fd0\u52a8\u53f2" xml:space="preserve">
+  <data name="u793eu4f1au4e3bu4e49u8fd0u52a8u53f2" xml:space="preserve">
     <value>社会主义运动史</value>
   </data>
-  <data name="\u56fd\u5916\u9a6c\u514b\u601d\u4e3b\u4e49\u7814\u7a76" xml:space="preserve">
+  <data name="u56fdu5916u9a6cu514bu601du4e3bu4e49u7814u7a76" xml:space="preserve">
     <value>国外马克思主义研究</value>
   </data>
-  <data name="\u9a6c\u514b\u601d\u4e3b\u4e49\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u9a6cu514bu601du4e3bu4e49u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>马克思主义其他学科</value>
   </data>
-  <data name="\u9a6c\u514b\u601d\u4e3b\u4e49\u54f2\u5b66" xml:space="preserve">
+  <data name="u9a6cu514bu601du4e3bu4e49u54f2u5b66" xml:space="preserve">
     <value>马克思主义哲学</value>
   </data>
-  <data name="\u81ea\u7136\u8fa9\u8bc1\u6cd5" xml:space="preserve">
+  <data name="u81eau7136u8fa9u8bc1u6cd5" xml:space="preserve">
     <value>自然辩证法</value>
   </data>
-  <data name="\u4e2d\u56fd\u54f2\u5b66\u53f2" xml:space="preserve">
+  <data name="u4e2du56fdu54f2u5b66u53f2" xml:space="preserve">
     <value>中国哲学史</value>
   </data>
-  <data name="\u4e1c\u65b9\u54f2\u5b66\u53f2" xml:space="preserve">
+  <data name="u4e1cu65b9u54f2u5b66u53f2" xml:space="preserve">
     <value>东方哲学史</value>
   </data>
-  <data name="\u897f\u65b9\u54f2\u5b66\u53f2" xml:space="preserve">
+  <data name="u897fu65b9u54f2u5b66u53f2" xml:space="preserve">
     <value>西方哲学史</value>
   </data>
-  <data name="\u73b0\u4ee3\u5916\u56fd\u54f2\u5b66" xml:space="preserve">
+  <data name="u73b0u4ee3u5916u56fdu54f2u5b66" xml:space="preserve">
     <value>现代外国哲学</value>
   </data>
-  <data name="\u903b\u8f91\u5b66" xml:space="preserve">
+  <data name="u903bu8f91u5b66" xml:space="preserve">
     <value>逻辑学</value>
   </data>
-  <data name="\u4f26\u7406\u5b66" xml:space="preserve">
+  <data name="u4f26u7406u5b66" xml:space="preserve">
     <value>伦理学</value>
   </data>
-  <data name="\u7f8e\u5b66" xml:space="preserve">
+  <data name="u7f8eu5b66" xml:space="preserve">
     <value>美学</value>
   </data>
-  <data name="\u54f2\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u54f2u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>哲学其他学科</value>
   </data>
-  <data name="\u5b97\u6559\u5b66" xml:space="preserve">
+  <data name="u5b97u6559u5b66" xml:space="preserve">
     <value>宗教学</value>
   </data>
-  <data name="\u5b97\u6559\u5b66\u7406\u8bba" xml:space="preserve">
+  <data name="u5b97u6559u5b66u7406u8bba" xml:space="preserve">
     <value>宗教学理论</value>
   </data>
-  <data name="\u65e0\u795e\u8bba" xml:space="preserve">
+  <data name="u65e0u795eu8bba" xml:space="preserve">
     <value>无神论</value>
   </data>
-  <data name="\u539f\u59cb\u5b97\u6559" xml:space="preserve">
+  <data name="u539fu59cbu5b97u6559" xml:space="preserve">
     <value>原始宗教</value>
   </data>
-  <data name="\u53e4\u4ee3\u5b97\u6559" xml:space="preserve">
+  <data name="u53e4u4ee3u5b97u6559" xml:space="preserve">
     <value>古代宗教</value>
   </data>
-  <data name="\u4f5b\u6559" xml:space="preserve">
+  <data name="u4f5bu6559" xml:space="preserve">
     <value>佛教</value>
   </data>
-  <data name="\u57fa\u7763\u6559" xml:space="preserve">
+  <data name="u57fau7763u6559" xml:space="preserve">
     <value>基督教</value>
   </data>
-  <data name="\u4f0a\u65af\u5170\u6559" xml:space="preserve">
+  <data name="u4f0au65afu5170u6559" xml:space="preserve">
     <value>伊斯兰教</value>
   </data>
-  <data name="\u9053\u6559" xml:space="preserve">
+  <data name="u9053u6559" xml:space="preserve">
     <value>道教</value>
   </data>
-  <data name="\u5370\u5ea6\u6559" xml:space="preserve">
+  <data name="u5370u5ea6u6559" xml:space="preserve">
     <value>印度教</value>
   </data>
-  <data name="\u72b9\u592a\u6559" xml:space="preserve">
+  <data name="u72b9u592au6559" xml:space="preserve">
     <value>犹太教</value>
   </data>
-  <data name="\u8884\u6559" xml:space="preserve">
+  <data name="u8884u6559" xml:space="preserve">
     <value>袄教</value>
   </data>
-  <data name="\u6469\u5c3c\u6559" xml:space="preserve">
+  <data name="u6469u5c3cu6559" xml:space="preserve">
     <value>摩尼教</value>
   </data>
-  <data name="\u9521\u514b\u6559" xml:space="preserve">
+  <data name="u9521u514bu6559" xml:space="preserve">
     <value>锡克教</value>
   </data>
-  <data name="\u8006\u90a3\u6559" xml:space="preserve">
+  <data name="u8006u90a3u6559" xml:space="preserve">
     <value>耆那教</value>
   </data>
-  <data name="\u795e\u9053\u6559" xml:space="preserve">
+  <data name="u795eu9053u6559" xml:space="preserve">
     <value>神道教</value>
   </data>
-  <data name="\u4e2d\u56fd\u6c11\u95f4\u5b97\u6559\u4e0e\u6c11\u95f4\u4fe1\u4ef0" xml:space="preserve">
+  <data name="u4e2du56fdu6c11u95f4u5b97u6559u4e0eu6c11u95f4u4fe1u4ef0" xml:space="preserve">
     <value>中国民间宗教与民间信仰</value>
   </data>
-  <data name="\u4e2d\u56fd\u5c11\u6570\u6c11\u65cf\u5b97\u6559" xml:space="preserve">
+  <data name="u4e2du56fdu5c11u6570u6c11u65cfu5b97u6559" xml:space="preserve">
     <value>中国少数民族宗教</value>
   </data>
-  <data name="\u5f53\u4ee3\u5b97\u6559" xml:space="preserve">
+  <data name="u5f53u4ee3u5b97u6559" xml:space="preserve">
     <value>当代宗教</value>
   </data>
-  <data name="\u5b97\u6559\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u5b97u6559u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>宗教学其他学科</value>
   </data>
-  <data name="\u8bed\u8a00\u5b66" xml:space="preserve">
+  <data name="u8bedu8a00u5b66" xml:space="preserve">
     <value>语言学</value>
   </data>
-  <data name="\u666e\u901a\u8bed\u8a00\u5b66" xml:space="preserve">
+  <data name="u666eu901au8bedu8a00u5b66" xml:space="preserve">
     <value>普通语言学</value>
   </data>
-  <data name="\u6bd4\u8f83\u8bed\u8a00\u5b66" xml:space="preserve">
+  <data name="u6bd4u8f83u8bedu8a00u5b66" xml:space="preserve">
     <value>比较语言学</value>
   </data>
-  <data name="\u8bed\u8a00\u5730\u7406\u5b66" xml:space="preserve">
+  <data name="u8bedu8a00u5730u7406u5b66" xml:space="preserve">
     <value>语言地理学</value>
   </data>
-  <data name="\u793e\u4f1a\u8bed\u8a00\u5b66" xml:space="preserve">
+  <data name="u793eu4f1au8bedu8a00u5b66" xml:space="preserve">
     <value>社会语言学</value>
   </data>
-  <data name="\u5fc3\u7406\u8bed\u8a00\u5b66" xml:space="preserve">
+  <data name="u5fc3u7406u8bedu8a00u5b66" xml:space="preserve">
     <value>心理语言学</value>
   </data>
-  <data name="\u5e94\u7528\u8bed\u8a00\u5b66" xml:space="preserve">
+  <data name="u5e94u7528u8bedu8a00u5b66" xml:space="preserve">
     <value>应用语言学</value>
   </data>
-  <data name="\u6c49\u8bed\u7814\u7a76" xml:space="preserve">
+  <data name="u6c49u8bedu7814u7a76" xml:space="preserve">
     <value>汉语研究</value>
   </data>
-  <data name="\u4e2d\u56fd\u5c11\u6570\u6c11\u65cf\u8bed\u8a00\u6587\u5b57" xml:space="preserve">
+  <data name="u4e2du56fdu5c11u6570u6c11u65cfu8bedu8a00u6587u5b57" xml:space="preserve">
     <value>中国少数民族语言文字</value>
   </data>
-  <data name="\u5916\u56fd\u8bed\u8a00" xml:space="preserve">
+  <data name="u5916u56fdu8bedu8a00" xml:space="preserve">
     <value>外国语言</value>
   </data>
-  <data name="\u8bed\u8a00\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u8bedu8a00u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>语言学其他学科</value>
   </data>
-  <data name="\u6587\u5b66\u7406\u8bba" xml:space="preserve">
+  <data name="u6587u5b66u7406u8bba" xml:space="preserve">
     <value>文学理论</value>
   </data>
-  <data name="\u6587\u827a\u7f8e\u5b66" xml:space="preserve">
+  <data name="u6587u827au7f8eu5b66" xml:space="preserve">
     <value>文艺美学</value>
   </data>
-  <data name="\u6587\u5b66\u6279\u8bc4" xml:space="preserve">
+  <data name="u6587u5b66u6279u8bc4" xml:space="preserve">
     <value>文学批评</value>
   </data>
-  <data name="\u6bd4\u8f83\u6587\u5b66" xml:space="preserve">
+  <data name="u6bd4u8f83u6587u5b66" xml:space="preserve">
     <value>比较文学</value>
   </data>
-  <data name="\u4e2d\u56fd\u53e4\u4ee3\u6587\u5b66" xml:space="preserve">
+  <data name="u4e2du56fdu53e4u4ee3u6587u5b66" xml:space="preserve">
     <value>中国古代文学</value>
   </data>
-  <data name="\u4e2d\u56fd\u8fd1\u4ee3\u6587\u5b66" xml:space="preserve">
+  <data name="u4e2du56fdu8fd1u4ee3u6587u5b66" xml:space="preserve">
     <value>中国近代文学</value>
   </data>
-  <data name="\u4e2d\u56fd\u73b0\u4ee3\u6587\u5b66" xml:space="preserve">
+  <data name="u4e2du56fdu73b0u4ee3u6587u5b66" xml:space="preserve">
     <value>中国现代文学</value>
   </data>
-  <data name="\u4e2d\u56fd\u5404\u4f53\u6587\u5b66" xml:space="preserve">
+  <data name="u4e2du56fdu5404u4f53u6587u5b66" xml:space="preserve">
     <value>中国各体文学</value>
   </data>
-  <data name="\u4e2d\u56fd\u6c11\u95f4\u6587\u5b66" xml:space="preserve">
+  <data name="u4e2du56fdu6c11u95f4u6587u5b66" xml:space="preserve">
     <value>中国民间文学</value>
   </data>
-  <data name="\u4e2d\u56fd\u513f\u7ae5\u6587\u5b66" xml:space="preserve">
+  <data name="u4e2du56fdu513fu7ae5u6587u5b66" xml:space="preserve">
     <value>中国儿童文学</value>
   </data>
-  <data name="\u4e2d\u56fd\u5c11\u6570\u6c11\u65cf\u6587\u5b66" xml:space="preserve">
+  <data name="u4e2du56fdu5c11u6570u6c11u65cfu6587u5b66" xml:space="preserve">
     <value>中国少数民族文学</value>
   </data>
-  <data name="\u4e16\u754c\u6587\u5b66\u53f2" xml:space="preserve">
+  <data name="u4e16u754cu6587u5b66u53f2" xml:space="preserve">
     <value>世界文学史</value>
   </data>
-  <data name="\u4e1c\u65b9\u6587\u5b66" xml:space="preserve">
+  <data name="u4e1cu65b9u6587u5b66" xml:space="preserve">
     <value>东方文学</value>
   </data>
-  <data name="\u4fc4\u56fd\u6587\u5b66" xml:space="preserve">
+  <data name="u4fc4u56fdu6587u5b66" xml:space="preserve">
     <value>俄国文学</value>
   </data>
-  <data name="\u82f1\u56fd\u6587\u5b66" xml:space="preserve">
+  <data name="u82f1u56fdu6587u5b66" xml:space="preserve">
     <value>英国文学</value>
   </data>
-  <data name="\u6cd5\u56fd\u6587\u5b66" xml:space="preserve">
+  <data name="u6cd5u56fdu6587u5b66" xml:space="preserve">
     <value>法国文学</value>
   </data>
-  <data name="\u5fb7\u56fd\u6587\u5b66" xml:space="preserve">
+  <data name="u5fb7u56fdu6587u5b66" xml:space="preserve">
     <value>德国文学</value>
   </data>
-  <data name="\u610f\u5927\u5229\u6587\u5b66" xml:space="preserve">
+  <data name="u610fu5927u5229u6587u5b66" xml:space="preserve">
     <value>意大利文学</value>
   </data>
-  <data name="\u7f8e\u56fd\u6587\u5b66" xml:space="preserve">
+  <data name="u7f8eu56fdu6587u5b66" xml:space="preserve">
     <value>美国文学</value>
   </data>
-  <data name="\u5317\u6b27\u6587\u5b66" xml:space="preserve">
+  <data name="u5317u6b27u6587u5b66" xml:space="preserve">
     <value>北欧文学</value>
   </data>
-  <data name="\u4e1c\u6b27\u6587\u5b66" xml:space="preserve">
+  <data name="u4e1cu6b27u6587u5b66" xml:space="preserve">
     <value>东欧文学</value>
   </data>
-  <data name="\u62c9\u7f8e\u6587\u5b66" xml:space="preserve">
+  <data name="u62c9u7f8eu6587u5b66" xml:space="preserve">
     <value>拉美文学</value>
   </data>
-  <data name="\u975e\u6d32\u6587\u5b66" xml:space="preserve">
+  <data name="u975eu6d32u6587u5b66" xml:space="preserve">
     <value>非洲文学</value>
   </data>
-  <data name="\u5927\u6d0b\u6d32\u6587\u5b66" xml:space="preserve">
+  <data name="u5927u6d0bu6d32u6587u5b66" xml:space="preserve">
     <value>大洋洲文学</value>
   </data>
-  <data name="\u827a\u672f\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u827au672fu5fc3u7406u5b66" xml:space="preserve">
     <value>艺术心理学</value>
   </data>
-  <data name="\u97f3\u4e50" xml:space="preserve">
+  <data name="u97f3u4e50" xml:space="preserve">
     <value>音乐</value>
   </data>
-  <data name="\u620f\u5267" xml:space="preserve">
+  <data name="u620fu5267" xml:space="preserve">
     <value>戏剧</value>
   </data>
-  <data name="\u620f\u66f2" xml:space="preserve">
+  <data name="u620fu66f2" xml:space="preserve">
     <value>戏曲</value>
   </data>
-  <data name="\u821e\u8e48" xml:space="preserve">
+  <data name="u821eu8e48" xml:space="preserve">
     <value>舞蹈</value>
   </data>
-  <data name="\u7535\u5f71" xml:space="preserve">
+  <data name="u7535u5f71" xml:space="preserve">
     <value>电影</value>
   </data>
-  <data name="\u5e7f\u64ad\u7535\u89c6\u6587\u827a" xml:space="preserve">
+  <data name="u5e7fu64adu7535u89c6u6587u827a" xml:space="preserve">
     <value>广播电视文艺</value>
   </data>
-  <data name="\u7f8e\u672f" xml:space="preserve">
+  <data name="u7f8eu672f" xml:space="preserve">
     <value>美术</value>
   </data>
-  <data name="\u5de5\u827a\u7f8e\u672f" xml:space="preserve">
+  <data name="u5de5u827au7f8eu672f" xml:space="preserve">
     <value>工艺美术</value>
   </data>
-  <data name="\u4e66\u6cd5" xml:space="preserve">
+  <data name="u4e66u6cd5" xml:space="preserve">
     <value>书法</value>
   </data>
-  <data name="\u827a\u672f\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u827au672fu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>艺术学其他学科</value>
   </data>
-  <data name="\u5386\u53f2\u5b66" xml:space="preserve">
+  <data name="u5386u53f2u5b66" xml:space="preserve">
     <value>历史学</value>
   </data>
-  <data name="\u53f2\u5b66\u53f2" xml:space="preserve">
+  <data name="u53f2u5b66u53f2" xml:space="preserve">
     <value>史学史</value>
   </data>
-  <data name="\u53f2\u5b66\u7406\u8bba" xml:space="preserve">
+  <data name="u53f2u5b66u7406u8bba" xml:space="preserve">
     <value>史学理论</value>
   </data>
-  <data name="\u5386\u53f2\u6587\u732e\u5b66" xml:space="preserve">
+  <data name="u5386u53f2u6587u732eu5b66" xml:space="preserve">
     <value>历史文献学</value>
   </data>
-  <data name="\u4e2d\u56fd\u901a\u53f2" xml:space="preserve">
+  <data name="u4e2du56fdu901au53f2" xml:space="preserve">
     <value>中国通史</value>
   </data>
-  <data name="\u4e2d\u56fd\u53e4\u4ee3\u53f2" xml:space="preserve">
+  <data name="u4e2du56fdu53e4u4ee3u53f2" xml:space="preserve">
     <value>中国古代史</value>
   </data>
-  <data name="\u4e2d\u56fd\u8fd1\u4ee3\u53f2\u3001\u73b0\u4ee3\u53f2" xml:space="preserve">
+  <data name="u4e2du56fdu8fd1u4ee3u53f2u3001u73b0u4ee3u53f2" xml:space="preserve">
     <value>中国近代史、现代史</value>
   </data>
-  <data name="\u4e16\u754c\u901a\u53f2" xml:space="preserve">
+  <data name="u4e16u754cu901au53f2" xml:space="preserve">
     <value>世界通史</value>
   </data>
-  <data name="\u4e9a\u6d32\u53f2" xml:space="preserve">
+  <data name="u4e9au6d32u53f2" xml:space="preserve">
     <value>亚洲史</value>
   </data>
-  <data name="\u975e\u6d32\u53f2" xml:space="preserve">
+  <data name="u975eu6d32u53f2" xml:space="preserve">
     <value>非洲史</value>
   </data>
-  <data name="\u7f8e\u6d32\u53f2" xml:space="preserve">
+  <data name="u7f8eu6d32u53f2" xml:space="preserve">
     <value>美洲史</value>
   </data>
-  <data name="\u6b27\u6d32\u53f2" xml:space="preserve">
+  <data name="u6b27u6d32u53f2" xml:space="preserve">
     <value>欧洲史</value>
   </data>
-  <data name="\u6fb3\u6d32\u3001\u5927\u6d0b\u6d32\u53f2" xml:space="preserve">
+  <data name="u6fb3u6d32u3001u5927u6d0bu6d32u53f2" xml:space="preserve">
     <value>澳洲、大洋洲史</value>
   </data>
-  <data name="\u4e13\u95e8\u53f2" xml:space="preserve">
+  <data name="u4e13u95e8u53f2" xml:space="preserve">
     <value>专门史</value>
   </data>
-  <data name="\u5386\u53f2\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u5386u53f2u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>历史学其他学科</value>
   </data>
-  <data name="\u8003\u53e4\u7406\u8bba" xml:space="preserve">
+  <data name="u8003u53e4u7406u8bba" xml:space="preserve">
     <value>考古理论</value>
   </data>
-  <data name="\u8003\u53e4\u5b66\u53f2" xml:space="preserve">
+  <data name="u8003u53e4u5b66u53f2" xml:space="preserve">
     <value>考古学史</value>
   </data>
-  <data name="\u8003\u53e4\u6280\u672f" xml:space="preserve">
+  <data name="u8003u53e4u6280u672f" xml:space="preserve">
     <value>考古技术</value>
   </data>
-  <data name="\u4e2d\u56fd\u8003\u53e4" xml:space="preserve">
+  <data name="u4e2du56fdu8003u53e4" xml:space="preserve">
     <value>中国考古</value>
   </data>
-  <data name="\u5916\u56fd\u8003\u53e4" xml:space="preserve">
+  <data name="u5916u56fdu8003u53e4" xml:space="preserve">
     <value>外国考古</value>
   </data>
-  <data name="\u4e13\u95e8\u8003\u53e4" xml:space="preserve">
+  <data name="u4e13u95e8u8003u53e4" xml:space="preserve">
     <value>专门考古</value>
   </data>
-  <data name="\u653f\u6cbb\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u653fu6cbbu7ecfu6d4eu5b66" xml:space="preserve">
     <value>政治经济学</value>
   </data>
-  <data name="\u5b8f\u89c2\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u5b8fu89c2u7ecfu6d4eu5b66" xml:space="preserve">
     <value>宏观经济学</value>
   </data>
-  <data name="\u5fae\u89c2\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u5faeu89c2u7ecfu6d4eu5b66" xml:space="preserve">
     <value>微观经济学</value>
   </data>
-  <data name="\u6bd4\u8f83\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u6bd4u8f83u7ecfu6d4eu5b66" xml:space="preserve">
     <value>比较经济学</value>
   </data>
-  <data name="\u7ecf\u6d4e\u5730\u7406\u5b66" xml:space="preserve">
+  <data name="u7ecfu6d4eu5730u7406u5b66" xml:space="preserve">
     <value>经济地理学</value>
   </data>
-  <data name="\u751f\u4ea7\u529b\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u751fu4ea7u529bu7ecfu6d4eu5b66" xml:space="preserve">
     <value>生产力经济学</value>
   </data>
-  <data name="\u7ecf\u6d4e\u601d\u60f3\u53f2" xml:space="preserve">
+  <data name="u7ecfu6d4eu601du60f3u53f2" xml:space="preserve">
     <value>经济思想史</value>
   </data>
-  <data name="\u7ecf\u6d4e\u53f2" xml:space="preserve">
+  <data name="u7ecfu6d4eu53f2" xml:space="preserve">
     <value>经济史</value>
   </data>
-  <data name="\u4e16\u754c\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u4e16u754cu7ecfu6d4eu5b66" xml:space="preserve">
     <value>世界经济学</value>
   </data>
-  <data name="\u56fd\u6c11\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u56fdu6c11u7ecfu6d4eu5b66" xml:space="preserve">
     <value>国民经济学</value>
   </data>
-  <data name="\u7ba1\u7406\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u7ba1u7406u7ecfu6d4eu5b66" xml:space="preserve">
     <value>管理经济学</value>
   </data>
-  <data name="\u6570\u91cf\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u6570u91cfu7ecfu6d4eu5b66" xml:space="preserve">
     <value>数量经济学</value>
   </data>
-  <data name="\u4f1a\u8ba1\u5b66" xml:space="preserve">
+  <data name="u4f1au8ba1u5b66" xml:space="preserve">
     <value>会计学</value>
   </data>
-  <data name="\u5ba1\u8ba1\u5b66" xml:space="preserve">
+  <data name="u5ba1u8ba1u5b66" xml:space="preserve">
     <value>审计学</value>
   </data>
-  <data name="\u6280\u672f\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u6280u672fu7ecfu6d4eu5b66" xml:space="preserve">
     <value>技术经济学</value>
   </data>
-  <data name="\u751f\u6001\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u751fu6001u7ecfu6d4eu5b66" xml:space="preserve">
     <value>生态经济学</value>
   </data>
-  <data name="\u52b3\u52a8\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u52b3u52a8u7ecfu6d4eu5b66" xml:space="preserve">
     <value>劳动经济学</value>
   </data>
-  <data name="\u57ce\u5e02\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u57ceu5e02u7ecfu6d4eu5b66" xml:space="preserve">
     <value>城市经济学</value>
   </data>
-  <data name="\u8d44\u6e90\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u8d44u6e90u7ecfu6d4eu5b66" xml:space="preserve">
     <value>资源经济学</value>
   </data>
-  <data name="\u73af\u5883\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u73afu5883u7ecfu6d4eu5b66" xml:space="preserve">
     <value>环境经济学</value>
   </data>
-  <data name="\u7269\u6d41\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u7269u6d41u7ecfu6d4eu5b66" xml:space="preserve">
     <value>物流经济学</value>
   </data>
-  <data name="\u5de5\u4e1a\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u5de5u4e1au7ecfu6d4eu5b66" xml:space="preserve">
     <value>工业经济学</value>
   </data>
-  <data name="\u519c\u6751\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u519cu6751u7ecfu6d4eu5b66" xml:space="preserve">
     <value>农村经济学</value>
   </data>
-  <data name="\u519c\u4e1a\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u519cu4e1au7ecfu6d4eu5b66" xml:space="preserve">
     <value>农业经济学</value>
   </data>
-  <data name="\u4ea4\u901a\u8fd0\u8f93\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u4ea4u901au8fd0u8f93u7ecfu6d4eu5b66" xml:space="preserve">
     <value>交通运输经济学</value>
   </data>
-  <data name="\u5546\u4e1a\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u5546u4e1au7ecfu6d4eu5b66" xml:space="preserve">
     <value>商业经济学</value>
   </data>
-  <data name="\u4ef7\u683c\u5b66" xml:space="preserve">
+  <data name="u4ef7u683cu5b66" xml:space="preserve">
     <value>价格学</value>
   </data>
-  <data name="\u65c5\u6e38\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u65c5u6e38u7ecfu6d4eu5b66" xml:space="preserve">
     <value>旅游经济学</value>
   </data>
-  <data name="\u4fe1\u606f\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u4fe1u606fu7ecfu6d4eu5b66" xml:space="preserve">
     <value>信息经济学</value>
   </data>
-  <data name="\u8d22\u653f\u5b66" xml:space="preserve">
+  <data name="u8d22u653fu5b66" xml:space="preserve">
     <value>财政学</value>
   </data>
-  <data name="\u91d1\u878d\u5b66" xml:space="preserve">
+  <data name="u91d1u878du5b66" xml:space="preserve">
     <value>金融学</value>
   </data>
-  <data name="\u4fdd\u9669\u5b66" xml:space="preserve">
+  <data name="u4fddu9669u5b66" xml:space="preserve">
     <value>保险学</value>
   </data>
-  <data name="\u56fd\u9632\u7ecf\u6d4e\u5b66" xml:space="preserve">
+  <data name="u56fdu9632u7ecfu6d4eu5b66" xml:space="preserve">
     <value>国防经济学</value>
   </data>
-  <data name="\u7ecf\u6d4e\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u7ecfu6d4eu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>经济学其他学科</value>
   </data>
-  <data name="\u653f\u6cbb\u5b66" xml:space="preserve">
+  <data name="u653fu6cbbu5b66" xml:space="preserve">
     <value>政治学</value>
   </data>
-  <data name="\u653f\u6cbb\u5b66\u7406\u8bba" xml:space="preserve">
+  <data name="u653fu6cbbu5b66u7406u8bba" xml:space="preserve">
     <value>政治学理论</value>
   </data>
-  <data name="\u653f\u6cbb\u5236\u5ea6" xml:space="preserve">
+  <data name="u653fu6cbbu5236u5ea6" xml:space="preserve">
     <value>政治制度</value>
   </data>
-  <data name="\u884c\u653f\u5b66" xml:space="preserve">
+  <data name="u884cu653fu5b66" xml:space="preserve">
     <value>行政学</value>
   </data>
-  <data name="\u56fd\u9645\u653f\u6cbb\u5b66" xml:space="preserve">
+  <data name="u56fdu9645u653fu6cbbu5b66" xml:space="preserve">
     <value>国际政治学</value>
   </data>
-  <data name="\u653f\u6cbb\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u653fu6cbbu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>政治学其他学科</value>
   </data>
-  <data name="\u6cd5\u5b66" xml:space="preserve">
+  <data name="u6cd5u5b66" xml:space="preserve">
     <value>法学</value>
   </data>
-  <data name="\u7406\u8bba\u6cd5\u5b66" xml:space="preserve">
+  <data name="u7406u8bbau6cd5u5b66" xml:space="preserve">
     <value>理论法学</value>
   </data>
-  <data name="\u6cd5\u5f8b\u53f2\u5b66" xml:space="preserve">
+  <data name="u6cd5u5f8bu53f2u5b66" xml:space="preserve">
     <value>法律史学</value>
   </data>
-  <data name="\u90e8\u95e8\u6cd5\u5b66" xml:space="preserve">
+  <data name="u90e8u95e8u6cd5u5b66" xml:space="preserve">
     <value>部门法学</value>
   </data>
-  <data name="\u56fd\u9645\u6cd5\u5b66" xml:space="preserve">
+  <data name="u56fdu9645u6cd5u5b66" xml:space="preserve">
     <value>国际法学</value>
   </data>
-  <data name="\u6cd5\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u6cd5u5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>法学其他学科</value>
   </data>
-  <data name="\u519b\u4e8b\u5b66" xml:space="preserve">
+  <data name="u519bu4e8bu5b66" xml:space="preserve">
     <value>军事学</value>
   </data>
-  <data name="\u519b\u4e8b\u7406\u8bba" xml:space="preserve">
+  <data name="u519bu4e8bu7406u8bba" xml:space="preserve">
     <value>军事理论</value>
   </data>
-  <data name="\u519b\u4e8b\u53f2" xml:space="preserve">
+  <data name="u519bu4e8bu53f2" xml:space="preserve">
     <value>军事史</value>
   </data>
-  <data name="\u519b\u4e8b\u5fc3\u7406\u5b66" xml:space="preserve">
+  <data name="u519bu4e8bu5fc3u7406u5b66" xml:space="preserve">
     <value>军事心理学</value>
   </data>
-  <data name="\u6218\u7565\u5b66" xml:space="preserve">
+  <data name="u6218u7565u5b66" xml:space="preserve">
     <value>战略学</value>
   </data>
-  <data name="\u6218\u5f79\u5b66" xml:space="preserve">
+  <data name="u6218u5f79u5b66" xml:space="preserve">
     <value>战役学</value>
   </data>
-  <data name="\u6218\u672f\u5b66" xml:space="preserve">
+  <data name="u6218u672fu5b66" xml:space="preserve">
     <value>战术学</value>
   </data>
-  <data name="\u519b\u961f\u6307\u6325\u5b66" xml:space="preserve">
+  <data name="u519bu961fu6307u6325u5b66" xml:space="preserve">
     <value>军队指挥学</value>
   </data>
-  <data name="\u519b\u5236\u5b66" xml:space="preserve">
+  <data name="u519bu5236u5b66" xml:space="preserve">
     <value>军制学</value>
   </data>
-  <data name="\u519b\u961f\u653f\u6cbb\u5de5\u4f5c\u5b66" xml:space="preserve">
+  <data name="u519bu961fu653fu6cbbu5de5u4f5cu5b66" xml:space="preserve">
     <value>军队政治工作学</value>
   </data>
-  <data name="\u519b\u4e8b\u540e\u52e4\u5b66" xml:space="preserve">
+  <data name="u519bu4e8bu540eu52e4u5b66" xml:space="preserve">
     <value>军事后勤学</value>
   </data>
-  <data name="\u519b\u4e8b\u5730\u5b66" xml:space="preserve">
+  <data name="u519bu4e8bu5730u5b66" xml:space="preserve">
     <value>军事地学</value>
   </data>
-  <data name="\u519b\u4e8b\u6280\u672f" xml:space="preserve">
+  <data name="u519bu4e8bu6280u672f" xml:space="preserve">
     <value>军事技术</value>
   </data>
-  <data name="\u519b\u4e8b\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u519bu4e8bu5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>军事学其他学科</value>
   </data>
-  <data name="\u793e\u4f1a\u5b66\u7406\u8bba" xml:space="preserve">
+  <data name="u793eu4f1au5b66u7406u8bba" xml:space="preserve">
     <value>社会学理论</value>
   </data>
-  <data name="\u793e\u4f1a\u5b66\u65b9\u6cd5" xml:space="preserve">
+  <data name="u793eu4f1au5b66u65b9u6cd5" xml:space="preserve">
     <value>社会学方法</value>
   </data>
-  <data name="\u5b9e\u9a8c\u793e\u4f1a\u5b66" xml:space="preserve">
+  <data name="u5b9eu9a8cu793eu4f1au5b66" xml:space="preserve">
     <value>实验社会学</value>
   </data>
-  <data name="\u6570\u7406\u793e\u4f1a\u5b66" xml:space="preserve">
+  <data name="u6570u7406u793eu4f1au5b66" xml:space="preserve">
     <value>数理社会学</value>
   </data>
-  <data name="\u5e94\u7528\u793e\u4f1a\u5b66" xml:space="preserve">
+  <data name="u5e94u7528u793eu4f1au5b66" xml:space="preserve">
     <value>应用社会学</value>
   </data>
-  <data name="\u6bd4\u8f83\u793e\u4f1a\u5b66" xml:space="preserve">
+  <data name="u6bd4u8f83u793eu4f1au5b66" xml:space="preserve">
     <value>比较社会学</value>
   </data>
-  <data name="\u793e\u4f1a\u5730\u7406\u5b66" xml:space="preserve">
+  <data name="u793eu4f1au5730u7406u5b66" xml:space="preserve">
     <value>社会地理学</value>
   </data>
-  <data name="\u6587\u5316\u793e\u4f1a\u5b66" xml:space="preserve">
+  <data name="u6587u5316u793eu4f1au5b66" xml:space="preserve">
     <value>文化社会学</value>
   </data>
-  <data name="\u5386\u53f2\u793e\u4f1a\u5b66" xml:space="preserve">
+  <data name="u5386u53f2u793eu4f1au5b66" xml:space="preserve">
     <value>历史社会学</value>
   </data>
-  <data name="\u7ecf\u6d4e\u793e\u4f1a\u5b66" xml:space="preserve">
+  <data name="u7ecfu6d4eu793eu4f1au5b66" xml:space="preserve">
     <value>经济社会学</value>
   </data>
-  <data name="\u519b\u4e8b\u793e\u4f1a\u5b66" xml:space="preserve">
+  <data name="u519bu4e8bu793eu4f1au5b66" xml:space="preserve">
     <value>军事社会学</value>
   </data>
-  <data name="\u516c\u5171\u5173\u7cfb\u5b66" xml:space="preserve">
+  <data name="u516cu5171u5173u7cfbu5b66" xml:space="preserve">
     <value>公共关系学</value>
   </data>
-  <data name="\u793e\u4f1a\u4eba\u7c7b\u5b66" xml:space="preserve">
+  <data name="u793eu4f1au4ebau7c7bu5b66" xml:space="preserve">
     <value>社会人类学</value>
   </data>
-  <data name="\u7ec4\u7ec7\u793e\u4f1a\u5b66" xml:space="preserve">
+  <data name="u7ec4u7ec7u793eu4f1au5b66" xml:space="preserve">
     <value>组织社会学</value>
   </data>
-  <data name="\u53d1\u5c55\u793e\u4f1a\u5b66" xml:space="preserve">
+  <data name="u53d1u5c55u793eu4f1au5b66" xml:space="preserve">
     <value>发展社会学</value>
   </data>
-  <data name="\u798f\u5229\u793e\u4f1a\u5b66" xml:space="preserve">
+  <data name="u798fu5229u793eu4f1au5b66" xml:space="preserve">
     <value>福利社会学</value>
   </data>
-  <data name="\u4eba\u53e3\u5b66" xml:space="preserve">
+  <data name="u4ebau53e3u5b66" xml:space="preserve">
     <value>人口学</value>
   </data>
-  <data name="\u52b3\u52a8\u79d1\u5b66" xml:space="preserve">
+  <data name="u52b3u52a8u79d1u5b66" xml:space="preserve">
     <value>劳动科学</value>
   </data>
-  <data name="\u793e\u4f1a\u5b66\u5176\u4ed6\u5b66\u79d1" xml:space="preserve">
+  <data name="u793eu4f1au5b66u5176u4ed6u5b66u79d1" xml:space="preserve">
     <value>社会学其他学科</value>
   </data>
-  <data name="\u6c11\u65cf\u95ee\u9898\u7406\u8bba" xml:space="preserve">
+  <data name="u6c11u65cfu95eeu9898u7406u8bba" xml:space="preserve">
     <value>民族问题理论</value>
   </data>
-  <data name="\u6c11\u65cf\u53f2\u5b66" xml:space="preserve">
+  <data name="u6c11u65cfu53f2u5b66" xml:space="preserve">
     <value>民族史学</value>
   </data>
-  <data name="\u8499\u53e4\u5b66" xml:space="preserve">
+  <data name="u8499u53e4u5b66" xml:space="preserve">
     <value>蒙古学</value>
   </data>
-  <data name="\u85cf\u5b66" xml:space="preserve">
+  <data name="u85cfu5b66" xml:space="preserve">
     <value>藏学</value>
   </data>
-  <data name="\u65b0\u7586\u6c11\u65cf\u7814\u7a76" xml:space="preserve">
+  <data name="u65b0u7586u6c11u65cfu7814u7a76" xml:space="preserve">
     <value>新疆民族研究</value>
   </data>
-  <data name="\u6587\u5316\u4eba\u7c7b\u5b66\u4e0e\u6c11\u4fd7\u5b66" xml:space="preserve">
+  <data name="u6587u5316u4ebau7c7bu5b66u4e0eu6c11u4fd7u5b66" xml:space="preserve">
     <value>文化人类学与民俗学</value>
   </data>
-  <data name="\u836f\u5b66" xml:space="preserve">
+  <data name="u836fu5b66" xml:space="preserve">
     <value>药学</value>
   </data>
-  <data name="\u5de5\u7a0b\u4e0e\u6280\u672f\u79d1\u5b66\u57fa\u7840\u5b66\u79d1" xml:space="preserve">
+  <data name="u5de5u7a0bu4e0eu6280u672fu79d1u5b66u57fau7840u5b66u79d1" xml:space="preserve">
     <value>工程与技术科学基础学科</value>
   </data>
-  <data name="\u4fe1\u606f\u4e0e\u7cfb\u7edf\u79d1\u5b66\u76f8\u5173\u5de5\u7a0b\u4e0e\u6280\u672f" xml:space="preserve">
+  <data name="u4fe1u606fu4e0eu7cfbu7edfu79d1u5b66u76f8u5173u5de5u7a0bu4e0eu6280u672f" xml:space="preserve">
     <value>信息与系统科学相关工程与技术</value>
   </data>
-  <data name="\u4f01\u4e1a\u7ba1\u7406" xml:space="preserve">
+  <data name="u4f01u4e1au7ba1u7406" xml:space="preserve">
     <value>企业管理</value>
   </data>
-  <data name="\u7ba1\u7406\u5b66" xml:space="preserve">
+  <data name="u7ba1u7406u5b66" xml:space="preserve">
     <value>管理学</value>
   </data>
-  <data name="\u519b\u4e8b\u533b\u5b66" xml:space="preserve">
+  <data name="u519bu4e8bu533bu5b66" xml:space="preserve">
     <value>军事医学</value>
   </data>
-  <data name="\u7279\u79cd\u533b\u5b66" xml:space="preserve">
+  <data name="u7279u79cdu533bu5b66" xml:space="preserve">
     <value>特种医学</value>
   </data>
-  <data name="\u8003\u53e4\u5b66" xml:space="preserve">
+  <data name="u8003u53e4u5b66" xml:space="preserve">
     <value>考古学</value>
   </data>
-  <data name="\u5316\u5b66" xml:space="preserve">
+  <data name="u5316u5b66" xml:space="preserve">
     <value>化学</value>
   </data>
-  <data name="\u51e0\u4f55\u5b66" xml:space="preserve">
+  <data name="u51e0u4f55u5b66" xml:space="preserve">
     <value>几何学</value>
   </data>
-  <data name="\u4e2d\u836f\u5b66" xml:space="preserve">
+  <data name="u4e2du836fu5b66" xml:space="preserve">
     <value>中药学</value>
   </data>
-  <data name="\u7535\u6c14\u5de5\u7a0b" xml:space="preserve">
+  <data name="u7535u6c14u5de5u7a0b" xml:space="preserve">
     <value>电气工程</value>
   </data>
-  <data name="\u901a\u4fe1\u6280\u672f" xml:space="preserve">
+  <data name="u901au4fe1u6280u672f" xml:space="preserve">
     <value>通信技术</value>
   </data>
-  <data name="\u6587\u5b66" xml:space="preserve">
+  <data name="u6587u5b66" xml:space="preserve">
     <value>文学</value>
   </data>
-  <data name="\u673a\u68b0\u5de5\u7a0b" xml:space="preserve">
+  <data name="u673au68b0u5de5u7a0b" xml:space="preserve">
     <value>机械工程</value>
   </data>
   <data name="Click to add" xml:space="preserve">
@@ -3177,7 +3176,7 @@
   <data name="default" xml:space="preserve">
     <value>默认</value>
   </data>
-  <data name="\u4e2d\u533b\u5b66" xml:space="preserve">
+  <data name="u4e2du533bu5b66" xml:space="preserve">
     <value>中医学</value>
   </data>
   <data name="We have sent a confirmation email to you, you can login after confirming it (Didn't you get the email? check it in spam)" xml:space="preserve">

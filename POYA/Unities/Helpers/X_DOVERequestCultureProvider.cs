@@ -12,6 +12,7 @@ namespace POYA.Unities.Helpers
         {
             var CULTURE_String="CULTURE";
             var CultureCookie = httpContext.Request.Cookies[CULTURE_String]?.ToString() ?? ""; 
+            Console.WriteLine("=======================>"+CultureCookie);
             if (CultureCookie.StartsWith('-')) 
             {
                 CultureCookie = CultureCookie.Substring(1);
@@ -21,6 +22,7 @@ namespace POYA.Unities.Helpers
                 CultureCookie = "zh-CN";
                 httpContext.Response.Cookies.Append(key:CULTURE_String, value:CultureCookie, options: new CookieOptions() { Expires = DateTime.Now.AddYears(1) });
             }
+            Console.WriteLine("=======================>"+CultureCookie);
             return Task.FromResult(new ProviderCultureResult(CultureCookie));
         }
     }
