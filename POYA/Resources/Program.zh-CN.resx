@@ -124,7 +124,7 @@
     <value>最近使用的密码</value>
   </data>
   <data name="The {0} must be at least {2} and at max {1} characters long" xml:space="preserve">
-    <value>{0} 的长度要在{2}~{1}之间哦!</value>
+    <value>{0} 的长度要在{2}~{1}之间哦</value>
   </data>
   <data name="New password" xml:space="preserve">
     <value>新密码</value>
@@ -133,7 +133,7 @@
     <value>再输一次</value>
   </data>
   <data name="The new password and confirmation password do not match" xml:space="preserve">
-    <value>糟糕! 两次密码不匹配, 再试试吧!</value>
+    <value>糟糕! 两次密码不匹配, 再试试吧</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>密码</value>
@@ -187,16 +187,16 @@
     <value>分享它?</value>
   </data>
   <data name="Upload unsuccessfully" xml:space="preserve">
-    <value>上传失败!</value>
+    <value>上传失败</value>
   </data>
   <data name="it's length is 0" xml:space="preserve">
     <value>文件大小为0</value>
   </data>
   <data name="Upload successfully" xml:space="preserve">
-    <value>上传成功!</value>
+    <value>上传成功</value>
   </data>
   <data name="An error has occurred, the engineer is on his way" xml:space="preserve">
-    <value>既然出错了~~, 工程师正在赶来!</value>
+    <value>既然出错了~~, 工程师正在赶来</value>
   </data>
   <data name="Reset password" xml:space="preserve">
     <value>重置密码</value>
@@ -247,13 +247,13 @@
     <value>重置密码</value>
   </data>
   <data name="Please check your email to reset your password" xml:space="preserve">
-    <value>重置密码的链接已经发送到你的邮箱, 快去看看吧!</value>
+    <value>重置密码的链接已经发送到你的邮箱, 快去看看吧</value>
   </data>
   <data name="Locked out" xml:space="preserve">
     <value>锁住</value>
   </data>
   <data name="This account has been locked out, please try again later" xml:space="preserve">
-    <value>账号被锁住了, 请稍后再试吧!</value>
+    <value>账号被锁住了, 请稍后再试吧</value>
   </data>
   <data name="Log in" xml:space="preserve">
     <value>登录</value>
@@ -280,7 +280,7 @@
     <value>退出</value>
   </data>
   <data name="You have successfully logged out of the application" xml:space="preserve">
-    <value>退出成功!</value>
+    <value>退出成功</value>
   </data>
   <data name="Reset password confirmation" xml:space="preserve">
     <value>重置密码</value>
@@ -295,13 +295,13 @@
     <value>出错了~~</value>
   </data>
   <data name="An error occurred while processing your request" xml:space="preserve">
-    <value>出错了, 工程师正在赶来!</value>
+    <value>出错了, 工程师正在赶来</value>
   </data>
   <data name="Donate" xml:space="preserve">
     <value>捐款</value>
   </data>
   <data name="Thank you very much" xml:space="preserve">
-    <value>谢谢你的支持!</value>
+    <value>谢谢你的支持</value>
   </data>
   <data name="Home Page" xml:space="preserve">
     <value>主页</value>
@@ -475,13 +475,13 @@
     <value>(^_^)// 点我</value>
   </data>
   <data name="Your e-mail is not registered in POYA yet, register it Now" xml:space="preserve">
-    <value>你的邮箱还没有注册, 快注册吧!</value>
+    <value>你的邮箱还没有注册, 快注册吧</value>
   </data>
   <data name="Unable to load user with ID" xml:space="preserve">
     <value>加载用户信息失败了, ID &gt;_</value>
   </data>
   <data name="Your password has been changed" xml:space="preserve">
-    <value>更改密码成功!</value>
+    <value>更改密码成功</value>
   </data>
   <data name="Password not correct" xml:space="preserve">
     <value>密码错误</value>
@@ -502,13 +502,13 @@
     <value>你的个人信息已被更改成功</value>
   </data>
   <data name="Verification email sent. Please check your email" xml:space="preserve">
-    <value>邮箱已送出, 快去看看吧!</value>
+    <value>邮箱已送出, 快去看看吧</value>
   </data>
   <data name="Your password has been set" xml:space="preserve">
-    <value>设置密码成功!</value>
+    <value>设置密码成功</value>
   </data>
   <data name="The password and confirmation password do not match" xml:space="preserve">
-    <value>糟糕! 两次密码不匹配, 再试试吧!</value>
+    <value>糟糕! 两次密码不匹配, 再试试吧</value>
   </data>
   <data name="Upload one or more files(less than 10M per file) using this form" xml:space="preserve">
     <value>选择你要上传的文件(可选多个文件哦! 每个文件限10M, 在跟进哦! 谅解一下)</value>
@@ -523,13 +523,13 @@
     <value>登录失败了. . .</value>
   </data>
   <data name="We have sent a confirmation email to you, you can login after confirming it" xml:space="preserve">
-    <value>用于验证身份的邮件已发送, 去确认它然后登录吧!</value>
+    <value>用于验证身份的邮件已发送, 去确认它然后登录吧</value>
   </data>
   <data name="User name is used, make another choice" xml:space="preserve">
-    <value>用户名被使用了, 试试其它的吧!</value>
+    <value>用户名被使用了, 试试其它的吧</value>
   </data>
   <data name="Your email is already registered in POYA, log in Now" xml:space="preserve">
-    <value>你已经注册了哦, 登录吧!</value>
+    <value>你已经注册了哦, 登录吧</value>
   </data>
   <data name="Request sharingcode of file" xml:space="preserve">
     <value>共享密码</value>
@@ -619,7 +619,7 @@
     <value>{0} 应该在 {1}~{2} 之间</value>
   </data>
   <data name="The {0} is required" xml:space="preserve">
-    <value>{0} 需要填哦!</value>
+    <value>{0} 需要填哦</value>
   </data>
   <data name="Type your email here" xml:space="preserve">
     <value>输入邮箱</value>
@@ -736,7 +736,7 @@
     <value>文件夹是空的</value>
   </data>
   <data name="(^_^) You are rebot maybe! take a rest please" xml:space="preserve">
-    <value>(^_^), 不行, 好像你是机械人, 休息一下吧!</value>
+    <value>(^_^), 不行, 好像你是机械人, 休息一下吧</value>
   </data>
   <data name="Get {0} shared from your friend" xml:space="preserve">
     <value>你朋友分享的{0}</value>

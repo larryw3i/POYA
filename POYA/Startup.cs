@@ -25,6 +25,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Newtonsoft.Json.Serialization;
 using System.IO;
 using POYA.Areas.XAd.Controllers;
+using Microsoft.Extensions.Options;
 
 namespace POYA
 {
@@ -113,8 +114,7 @@ namespace POYA
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.Configure<RequestLocalizationOptions>(opts =>
-           {
+            services.Configure<RequestLocalizationOptions>(opts =>{
                var supportedCultures = new List<CultureInfo>
                {
                         new CultureInfo("en-US"),
@@ -122,10 +122,9 @@ namespace POYA
                };
                opts.SupportedCultures = supportedCultures;
                opts.SupportedUICultures = supportedCultures;
-               opts.RequestCultureProviders = new List<IRequestCultureProvider>
-                 {
+               opts.RequestCultureProviders = new List<IRequestCultureProvider>{
                       new   X_DOVERequestCultureProvider(),
-                 };
+                };
            });
 
             #region
@@ -197,6 +196,8 @@ namespace POYA
             app.UseAuthentication();
 
             app.UseRequestLocalization();
+
+            //  app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
 
             app.UseSession();
 
