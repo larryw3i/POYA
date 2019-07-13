@@ -263,7 +263,7 @@ function    ChangeTheme(IsGetValueFromSelectTag = false) {
 function  ChangeLanguage() {
     var _Language_=$(`#${_Language_String} option:selected`).val().toString();
     if(_Language_==Cookies.get(CULTURE_String))return;
-    Cookies.set(CULTURE_String,`-${_Language_}`);
+    Cookies.set(CULTURE_String,`${_Language_}`);
     location.reload();
     /*
     var _language = $(_Value_.Language + " option:selected").val();

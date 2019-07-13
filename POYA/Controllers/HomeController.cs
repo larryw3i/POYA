@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.StaticFiles;
@@ -46,7 +47,7 @@ namespace POYA.Controllers
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
             RoleManager<IdentityRole> roleManager,
-	    IEmailSender emailSender,
+        IEmailSender emailSender,
             UserManager<IdentityUser> userManager,
             ApplicationDbContext context,
             IHostingEnvironment hostingEnv,
@@ -139,17 +140,19 @@ namespace POYA.Controllers
             }
 
             var _allowedAvatarFileExtensions = new string[] { "image/jpg", "image/jpeg", "image/png" };
-            var _isExtensionNeedChecking=false;
-            if (_isExtensionNeedChecking &&( !_allowedAvatarFileExtensions.Contains(avatarFile.ContentType.ToLower())))
+            var _isExtensionNeedChecking = false;
+            if (_isExtensionNeedChecking && (!_allowedAvatarFileExtensions.Contains(avatarFile.ContentType.ToLower())))
             {
                 return Json(new { status = false, msg = "RefuseExtension" });
-            }else if(!avatarFile.ContentType.StartsWith("image/")){
+            }
+            else if (!avatarFile.ContentType.StartsWith("image/"))
+            {
                 return Json(new { status = false, msg = "RefuseExtension" });
             }
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var memoryStream = new MemoryStream();
             await avatarFile.CopyToAsync(memoryStream);
-            var AvatarBytes =  memoryStream.ToArray();   //  MakeCircleImage(memoryStream);//  
+            var AvatarBytes = memoryStream.ToArray();   //  MakeCircleImage(memoryStream);//  
             var AvatarFilePath = X_DOVEValues.AvatarStoragePath(_hostingEnv) + _UserId;
             if (System.IO.File.Exists(AvatarFilePath))
             {
@@ -226,6 +229,19 @@ namespace POYA.Controllers
         {
             return Ok();
         }
+
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+
+            return LocalRedirect(returnUrl);
+        }
+
 
         /*	DISCARD
         private async Task  AppInitializationAsync()

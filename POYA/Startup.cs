@@ -101,6 +101,7 @@ namespace POYA
                 options.SlidingExpiration = true;
             });
 
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddMvc()
                 .AddJsonOptions(options => { options.SerializerSettings.ContractResolver = new DefaultContractResolver(); })
                 .AddDataAnnotationsLocalization(options =>
@@ -112,19 +113,17 @@ namespace POYA
                 .AddSessionStateTempDataProvider()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.Configure<RequestLocalizationOptions>(opts =>{
                var supportedCultures = new List<CultureInfo>
                {
                         new CultureInfo("en-US"),
-                        new CultureInfo("zh-CN")
+                        new CultureInfo("zh-Hans")
                };
                opts.SupportedCultures = supportedCultures;
                opts.SupportedUICultures = supportedCultures;
                opts.RequestCultureProviders = new List<IRequestCultureProvider>{
-                      //    new CookieRequestCultureProvider(){ CookieName="CULTURE"},
-                      new X_DOVERequestCultureProvider()
+                       new X_DOVERequestCultureProvider()
                 };
            });
 
