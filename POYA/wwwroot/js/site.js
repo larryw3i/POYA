@@ -228,6 +228,7 @@ var _Service_ = new Service_();
 //========      VALUE       ========//
 var CULTURE_String=`CULTURE`;
 var _Language_String=`_Language`;
+var AspNetCore_Culture_String=`.AspNetCore.Culture`;
 //========      VALUE_END   ========//
 
 

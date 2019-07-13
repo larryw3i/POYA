@@ -120,11 +120,11 @@ namespace POYA
                         new CultureInfo("en-US"),
                         new CultureInfo("zh-CN")
                };
-               opts.DefaultRequestCulture = new RequestCulture("zh-CN");
                opts.SupportedCultures = supportedCultures;
                opts.SupportedUICultures = supportedCultures;
                opts.RequestCultureProviders = new List<IRequestCultureProvider>{
-                      new X_DOVERequestCultureProvider(),
+                      //    new CookieRequestCultureProvider(){ CookieName="CULTURE"},
+                      new X_DOVERequestCultureProvider()
                 };
            });
 
