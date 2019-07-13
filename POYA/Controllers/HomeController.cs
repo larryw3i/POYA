@@ -30,7 +30,7 @@ namespace POYA.Controllers
 {
     public class HomeController : Controller
     {
-        #region
+        #region DI
         private readonly IHostingEnvironment _hostingEnv;
         private readonly IStringLocalizer<Program> _localizer;
         private readonly UserManager<IdentityUser> _userManager;
@@ -66,13 +66,12 @@ namespace POYA.Controllers
         }
 
         #endregion
+        
         public IActionResult Index()
         {
-            //  throw new Exception("TEST"); 
             return View();
         }
 
-        //  [Authorize]
         public IActionResult Privacy()
         {
             return View();
@@ -82,6 +81,10 @@ namespace POYA.Controllers
         {
             return View();
         }
+
+        // public IActionResult Test(){
+        //     return View();
+        // }
 
 
         #region DEPOLLUTION
@@ -136,7 +139,7 @@ namespace POYA.Controllers
         {
             if (avatarFile.Length > 1024 * 1024)
             {
-                return Json(new { status = false, msg = "ExceedSize" });   //  _localizer["Oops...., the size of avatar should be less than 1M"] 
+                return Json(new { status = false, msg = "ExceedSize" });  
             }
 
             var _allowedAvatarFileExtensions = new string[] { "image/jpg", "image/jpeg", "image/png" };
@@ -159,14 +162,12 @@ namespace POYA.Controllers
                 var AvatarFileBytes = await System.IO.File.ReadAllBytesAsync(AvatarFilePath);
                 var _X_doveUserInfo = await _context.X_DoveUserInfos.FirstOrDefaultAsync(p => p.UserId == _UserId);
                 if (_X_doveUserInfo != null && AvatarBytes == AvatarFileBytes)
-                {//  _X_doveUserInfo.AvatarBuffer
+                {
                     return Json(new { status = true });  //  , X_DOVE_XSRF_TOKEN 
                 }
             }
             await System.IO.File.WriteAllBytesAsync(X_DOVEValues.AvatarStoragePath(_hostingEnv) + _UserId, AvatarBytes);
-            //  X_DOVE_XSRF_TOKEN = Guid.NewGuid().ToString();
-            //  TempData["X_DOVE_XSRF_TOKEN"] = X_DOVE_XSRF_TOKEN;
-            return Json(new { status = true }); //  , X_DOVE_XSRF_TOKEN
+            return Json(new { status = true }); 
         }
 
 
@@ -241,76 +242,6 @@ namespace POYA.Controllers
 
             return LocalRedirect(returnUrl);
         }
-
-
-        /*	DISCARD
-        private async Task  AppInitializationAsync()
-        {
-
-            var LFilesPath = _hostingEnv.ContentRootPath + "/Data/LFiles";
-            var AvatarPath = $"{LFilesPath}/Avatars";
-            var XUserFilePath = $"{LFilesPath}/XUserFile";
-            var EArticleFilesPath = $"{_hostingEnv.ContentRootPath}/Areas/EduHub/Data/EArticleFiles";
-
-            var InitialPaths = new string[] { AvatarPath, XUserFilePath, XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv), EArticleFilesPath };
-            foreach (var p in InitialPaths)
-            {
-                if (!Directory.Exists(p))
-                {
-                    Directory.CreateDirectory(p);
-                }
-            }
-            #region INITIAL_USER_ROLE
-            var _userRoles = new string[] { X_DOVEValues._administrator };
-            var _userRoles_ =await _context.Roles.Select(p => p.Name).ToListAsync();    //  .GetAwaiter().GetResult();
-            _userRoles = _userRoles.Where(p => !_userRoles_.Contains(p)).ToArray();
-            if (_userRoles.Count() > 0)
-            {
-                foreach (var r in _userRoles)
-                {
-                    await _context.Roles.AddAsync(new IdentityRole { Name = r });   //  .GetAwaiter().GetResult();
-                    //  _roleManager.CreateAsync(
-                }
-            }
-            
-            await _context.SaveChangesAsync();
-
-            var _user =await _context.Users.FirstOrDefaultAsync(p => p.Email == _configuration["Administration:AdminEmail"]);   //  .GetAwaiter().GetResult();    
-            //  FindByEmailAsync(configuration["Administration:AdminEmail"]).GetAwaiter().GetResult();
-            if (_user != null)
-            {
-#if DEBUG
-                Console.WriteLine($"XMsg --->\tAdministrator is exist");
-                var _roleId =_context.Roles.FirstOrDefaultAsync(p=>p.Name==X_DOVEValues._administrator).GetAwaiter().GetResult().Id;
-#endif  
-                if (_roleId!=null && !_context.UserRoles.AnyAsync(p=>p.UserId==_user.Id && p.RoleId==_roleId).GetAwaiter().GetResult())   //  _userManager.IsInRoleAsync(_user, _administrator).GetAwaiter().GetResult()
-                {
-#if DEBUG
-                    Console.WriteLine($"XMsg --->\tAdd role to administrator . . .");
-#endif
-                    await _context.UserRoles.AddAsync(new IdentityUserRole<string> {  RoleId=_roleId, UserId=_user.Id});
-                    //  _userManager.AddToRoleAsync(_user, _administrator).GetAwaiter().GetResult();
-#if DEBUG
-                    Console.WriteLine($"XMsg --->\tAdd role to administrator is finish");
-#endif
-                }
-            }
-
-            await _context.SaveChangesAsync();
-
-            #endregion
-
-            #region MODIFY appsettings.json
-            var _appsettingsPath=_hostingEnv.ContentRootPath+$"/appsettings.json";
-            string _output =await System.IO.File.ReadAllTextAsync(_appsettingsPath);
-            dynamic _appsettings=JsonConvert.DeserializeObject(_output);
-            _appsettings["IsInitialized"]=true;
-            _output = Newtonsoft.Json.JsonConvert.SerializeObject(_appsettings, Newtonsoft.Json.Formatting.Indented);
-            await System.IO.File.WriteAllTextAsync(_appsettingsPath,_output);
-            #endregion
-
-        }
-        */
 
         #endregion
 

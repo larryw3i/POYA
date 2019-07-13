@@ -1,0 +1,37 @@
+@{
+    ViewData["Title"] = Localizer["Test"];
+}
+
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="col col-12">
+
+    <div id="toolbar-container"></div>
+    <div id="editor">
+        <p>This is the initial editor content.</p>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script src="~/lib/ckeditor5-build-decoupled-document-12.2.0/ckeditor5-build-decoupled-document/ckeditor.js"></script>
+    <script>
+        DecoupledEditor
+            .create( document.querySelector( '#editor' ) )
+            .then( editor => {
+                const toolbarContainer = document.querySelector( '#toolbar-container' );
+
+                toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+}
+
+@section Styles{
+    <style>
+
+    </style>
+}
