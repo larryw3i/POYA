@@ -98,12 +98,12 @@ namespace POYA.Areas.Identity.Pages.Account
 
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
 
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var resultOfCreateUser = await _userManager.CreateAsync(user, Input.Password);
                 var _resultIsSucceeded = false;
 
                 if (Input.Email == _configuration["Administration:AdminEmail"])
                 {
-                    _resultIsSucceeded = result.Succeeded && _userManager.AddToRoleAsync(user, X_DOVEValues._administrator).GetAwaiter().GetResult().Succeeded;
+                    _resultIsSucceeded = resultOfCreateUser.Succeeded && _userManager.AddToRoleAsync(user, X_DOVEValues._administrator).GetAwaiter().GetResult().Succeeded;
                 }
 
                 if (_resultIsSucceeded)
@@ -122,7 +122,7 @@ namespace POYA.Areas.Identity.Pages.Account
                     TempData[nameof(Input.Email)] = Input.Email;
                     return RedirectToPage("Login", new { IsFromRegister = true, returnUrl, IsEmailConfirmed = false });
                 }
-                foreach (var error in result.Errors)
+                foreach (var error in resultOfCreateUser.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
