@@ -127,8 +127,6 @@ namespace POYA
                 };
            });
 
-
-            // using Microsoft.AspNetCore.Identity.UI.Services;
             services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddSingleton<HtmlSanitizer>(new HtmlSanitizer());
@@ -137,19 +135,13 @@ namespace POYA
 
             services.AddSingleton<X_DOVEHelper>(x_DOVEHelper);
 
-            //  services.AddSingleton<MimeHelper>(new MimeHelper());
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddSession();
 
-            #region
-            //  services.Configure<HtmlSanitizer>(opts => {  });
-            #endregion
             services.Configure<FormOptions>(options =>
             {
-                options.MultipartBodyLengthLimit = X_DOVEValues.MaxMultipartBodyLengthLimit;  //  FormOptions.DefaultMultipartBodyLengthLimit;
-                //  options.ValueLengthLimit = LValue.MaxMultipartBodyLengthLimit;
+                options.MultipartBodyLengthLimit = X_DOVEValues.MaxMultipartBodyLengthLimit;
             });
 
             services.AddAntiforgery(options => options.HeaderName = "L-XSRF-TOKEN");
@@ -167,17 +159,13 @@ namespace POYA
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                //  app.UseExceptionHandler(builder => builder.Run(async context => await x_DOVEHelper.ErrorEventAsync(context, env)));
             }
             else
             {
-                //  app.UseDeveloperExceptionPage();
                 app.UseExceptionHandler(builder => builder.Run(async context => await x_DOVEHelper.ErrorEventAsync(Configuration, context)));
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
-            //  ServiceLocator.Instance = app.ApplicationServices;
 
             app.UseHttpsRedirection();
 
