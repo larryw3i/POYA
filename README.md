@@ -38,7 +38,7 @@ The contents of **appsettings.json** are:
   "Administration": {
     "AdminEmail": "xxxxxxxxx@xxx.xxx"
   },
-  "IsInitialized":false,
+  "IsInitialized":false
 } 
 ```     
 >✔ **DefaultConnection >_** The connection string of database, the above is the connection string of the MSSQL, the  connection string is **"Data Source=app.db"** if you use **SQLite**. You can customize your connection string and modify **services.AddDbContext**  in **Startup.cs** file accordingly  
@@ -46,7 +46,8 @@ The contents of **appsettings.json** are:
 ✔**EmailSender>_** It is the configuration of the mail service(you need to change its value in order to the project to work properly), it plays a key role in user registration and user receiving notifications      
 
 ✔**ReceiveLogEmailAddress** This e-mail address is used to receive error messages    
-✔**AdminEmail** The email of administrator(the original administrator), This administrator can add developers and content review administrators, and more. . .   
+✔**AdminEmail** The email of administrator(the original administrator), This administrator can add developers and content review administrators, and more. . .     
+✔**IsInitialized** Initializing the ApplicationDbContext in the Controller is  simple relatively, so "IsInitialized" is used to indicate whether the application is initialized(you don't need to change it manually, but you should make a migratioin before the first **dotnet run**, although exceptions are ignored)
 
 
 #### 1(inessential)    

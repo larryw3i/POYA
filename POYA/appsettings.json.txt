@@ -20,5 +20,6 @@
   },
   "Administration": {
     "AdminEmail": "xxxxxxxx@xxx.xxxx"
-  }
+  },
+  "IsInitialized": true
 } 
