@@ -21,6 +21,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using POYA.Areas.XAd.Controllers;
 using POYA.Data;
 using POYA.Models;
@@ -47,7 +48,7 @@ namespace POYA.Controllers
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
             RoleManager<IdentityRole> roleManager,
-        IEmailSender emailSender,
+            IEmailSender emailSender,
             UserManager<IdentityUser> userManager,
             ApplicationDbContext context,
             IHostingEnvironment hostingEnv,
@@ -62,11 +63,11 @@ namespace POYA.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
-
+            AppInitialization();
         }
 
         #endregion
-        
+
         public IActionResult Index()
         {
             return View();
@@ -139,7 +140,7 @@ namespace POYA.Controllers
         {
             if (avatarFile.Length > 1024 * 1024)
             {
-                return Json(new { status = false, msg = "ExceedSize" });  
+                return Json(new { status = false, msg = "ExceedSize" });
             }
 
             var _allowedAvatarFileExtensions = new string[] { "image/jpg", "image/jpeg", "image/png" };
@@ -167,7 +168,7 @@ namespace POYA.Controllers
                 }
             }
             await System.IO.File.WriteAllBytesAsync(X_DOVEValues.AvatarStoragePath(_hostingEnv) + _UserId, AvatarBytes);
-            return Json(new { status = true }); 
+            return Json(new { status = true });
         }
 
 
@@ -241,6 +242,68 @@ namespace POYA.Controllers
             );
 
             return LocalRedirect(returnUrl);
+        }
+
+        private void AppInitialization()
+        {
+            if (Convert.ToBoolean(_configuration["IsInitialized"]) == false)
+            {
+                var LFilesPath = _hostingEnv.ContentRootPath + "/Data/LFiles";
+                var AvatarPath = $"{LFilesPath}/Avatars";
+                var XUserFilePath = $"{LFilesPath}/XUserFile";
+                var EArticleFilesPath = $"{_hostingEnv.ContentRootPath}/Areas/EduHub/Data/EArticleFiles";
+
+                var InitialPaths = new string[] { AvatarPath, XUserFilePath, XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv), EArticleFilesPath };
+                foreach (var p in InitialPaths)
+                {
+                    if (!Directory.Exists(p))
+                    {
+                        Directory.CreateDirectory(p);
+                    }
+                }
+                #region INITIAL_USER_ROLE
+
+                try
+                {
+                    var _userRoles = new string[] { X_DOVEValues._administrator };
+                    var _userRoles_ = _context.Roles.Select(p => p.Name).ToListAsync().GetAwaiter().GetResult();
+                    _userRoles = _userRoles.Where(p => !_userRoles_.Contains(p)).ToArray();
+                    if (_userRoles.Count() > 0)
+                    {
+                        foreach (var r in _userRoles)
+                        {
+                            _context.Roles.AddAsync(new IdentityRole { Name = r.ToUpper(), NormalizedName = r.ToUpper() }).GetAwaiter().GetResult();
+                        }
+                    }
+
+                    _context.SaveChangesAsync().GetAwaiter().GetResult();
+
+                    var _user = _context.Users.FirstOrDefaultAsync(p => p.Email == _configuration["Administration:AdminEmail"]).GetAwaiter().GetResult();
+                    if (_user != null)
+                    {
+                        var _roleId = _context.Roles.FirstOrDefaultAsync(p => p.Name == X_DOVEValues._administrator).GetAwaiter().GetResult().Id;
+                        if (_roleId != null && !_context.UserRoles.AnyAsync(p => p.UserId == _user.Id && p.RoleId == _roleId).GetAwaiter().GetResult())
+                        {
+                            _context.UserRoles.AddAsync(new IdentityUserRole<string> { RoleId = _roleId, UserId = _user.Id }).GetAwaiter().GetResult();
+                        }
+                    }
+                    #region MODIFY appsettings.json
+                    var _appsettings_jsonPath = _hostingEnv.ContentRootPath + "/appsettings.json";
+                    _context.SaveChangesAsync().GetAwaiter().GetResult();
+                    var jo = JObject.Parse(System.IO.File.ReadAllTextAsync(_appsettings_jsonPath).GetAwaiter().GetResult());
+                    jo["IsInitialized"] = true;
+                    System.IO.File.WriteAllTextAsync(_appsettings_jsonPath, Convert.ToString(jo)).GetAwaiter().GetResult();
+                    #endregion
+                }
+                catch (Exception e)
+                {
+#if DEBUG
+                    Console.WriteLine($"XMSG ---> You should make a migration\n{e.Message}");
+#endif
+                }
+                #endregion
+
+            }
         }
 
         #endregion

@@ -39,6 +39,7 @@ namespace POYA.Unities.Helpers
                     Directory.CreateDirectory(p);
                 }
             }
+            /*
             #region INITIAL_USER_ROLE
             try
             {
@@ -84,6 +85,7 @@ namespace POYA.Unities.Helpers
             }
 
             #endregion
+            */
 
 
             #region DEPOLLUTION
