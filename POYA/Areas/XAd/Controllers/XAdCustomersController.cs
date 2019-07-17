@@ -97,6 +97,7 @@ namespace POYA.Areas.XAd.Controllers
             }
             
             xAdCustomer.UserName = await _context.Users.Where(p=>p.Id==xAdCustomer.UserId).Select(p=>p.UserName).FirstOrDefaultAsync();
+            ViewData["CurrentUserId"]=UserId_;
 
             return View(xAdCustomer);
         }

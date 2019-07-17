@@ -49,19 +49,19 @@
 
 
             <div class="form-group col col-12">
-                <label asp-for="LicenseImgFiles" class="control-label"></label><sup class="Upload-Tip Image-Count-Tip">@Localizer["Image count"] => 3~5</sup>
+                <label asp-for="LicenseImgFiles" class="control-label"></label><sup class="Upload-Tip Image-Count-Tip">@(Localizer["Image count"]) => 3~5</sup>
                 <div id="LicenseImgFileEle" class="row">
                 </div>
                 <span asp-validation-for="LicenseImgFiles" class="text-danger"></span><br />
                 <a id="SelectLicenseImgFileEle" class="btn btn-outline-info">
-                    @Localizer["Select license image files"] &#128449;
+                    @(Localizer["Select license image files"]) &#128449;
                 </a>
                 <div id="LicenseImgFilevalidation"></div>
             </div>
 
             <div class="form-group">
-                <a id="BackEle" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
-                <a id="XAdCustomerRegisterEle" class="btn btn-outline-success">@Localizer["Register"]</a>
+                <a id="BackEle" class="btn btn-outline-info">&laquo; @(Localizer["Back"])</a>
+                <a id="XAdCustomerRegisterEle" class="btn btn-outline-success">@(Localizer["Register"])</a>
                 <span id="Common-Tip"></span>
             </div>
         </form>
@@ -102,7 +102,7 @@
                 }, 3000);
                 return;
             }
-            $(`input`).each(function (index, element) {
+            $(`input[name='LicenseImgFiles']`).each(function (index, element) {
                 if ($(element).val().length < 1) $(element).remove();
             });
             if (!IsFileCountValid()) return;
@@ -307,16 +307,3 @@
     </style>
 }
 
-
-@*
-
-
-        <h1>Create</h1>
-
-        <h4>XAdCustomer</h4>
-
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
-
-*@

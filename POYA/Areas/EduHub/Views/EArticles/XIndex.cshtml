@@ -90,7 +90,7 @@
 
 <div id="OperationEle">
     <a id="BackA" class="btn btn-info">&laquo; @Localizer["Back"]</a>
-    @if (_IsOwn)
+    @if (_IsOwn && !_IsDefaultEArticleSet)
     {
         <a asp-action="Edit" asp-controller="UserEArticleSets" asp-route-id="@_UserEArticleSet.Id" class="btn btn-primary">@Localizer["Edit"]</a>
         <a asp-action="Delete" asp-controller="UserEArticleSets" asp-route-id="@_UserEArticleSet.Id" class="btn btn-danger">@Localizer["Delete"]</a>
@@ -132,7 +132,7 @@
         }
         #OperationEle {
             position: fixed;
-            bottom: 50px;
+            bottom: 80px;
         }
         .User-EArticle-Set {
             text-align: center;
