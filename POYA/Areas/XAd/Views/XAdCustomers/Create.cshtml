@@ -18,9 +18,11 @@
             <div class="form-group col col-5">
                 <label asp-for="StoreIconFile" class="control-label"></label><sup class="Upload-Tip">@Localizer["Click image to select store icon"]</sup>
                 <div class="col col-12 text-center">
-                    <span class="Default-Icon-Tip">@Localizer["The default image is disabled"]</span>
-                    <img id="_StoreIconFile_Img_" src="@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/earticle_home_default_img.webp"}))"
-                         title="@Localizer["Click to select store icon"]" />
+                    <span class="Default-Icon-Tip">
+                        @(Localizer["The default image is disabled"])
+                    </span>
+                    <img id="_StoreIconFile_Img_" src='@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/earticle_home_default_img.webp"}))' 
+                         title='@Localizer["Click to select store icon"]' />
                 </div>
                 <input asp-for="StoreIconFile" hidden />
                 <span asp-validation-for="Name" class="text-danger"></span>

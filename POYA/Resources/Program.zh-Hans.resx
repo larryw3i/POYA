@@ -3156,4 +3156,13 @@
   <data name="Date of registering" xml:space="preserve">
     <value>注册日期</value>
   </data>
+  <data name="Registrant" xml:space="preserve">
+    <value>注册人</value>
+  </data>  
+  <data name="English (United States)" xml:space="preserve">
+    <value>English(United States)</value>
+  </data>
+  <data name="Chinese (Simplified)" xml:space="preserve">
+    <value>中文(简体)</value>
+  </data>
 </root>

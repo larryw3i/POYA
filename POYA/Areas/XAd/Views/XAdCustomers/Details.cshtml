@@ -17,6 +17,12 @@
             @(Html.DisplayFor(model => model.Name))
         </dd>
         <dt class = "col-sm-2">
+            @(Html.DisplayNameFor(model => model.UserName))
+        </dt>
+        <dd class = "col-sm-10">
+            @(Html.DisplayFor(model => model.UserName))
+        </dd>
+        <dt class = "col-sm-2">
             @(Html.DisplayNameFor(model => model.DORegistering))
         </dt>
         <dd class = "col-sm-10">
@@ -49,5 +55,21 @@
         max-height: 50%;
         max-width: 50%;
     }
+    .Store-Icon:hover{
+        animation: StoreIconHoverAnimation 0.2s linear forwards;
+    }
+
+    @@keyframes StoreIconHoverAnimation{
+        0%{
+            transform: scale(1);
+        }
+        75%{
+            transform: scale(1.08);
+        }
+        100%{
+            transform:scale(1.05);
+        }
+    }
+
 </style>
 }

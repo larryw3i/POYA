@@ -36,7 +36,20 @@ namespace POYA.Areas.XAd.Models
         #endregion
         public string Name { get; set; }
 
+        #region USER
         public string UserId { get; set; }
+        
+        #region 
+        /// <summary>
+        /// [NotMapped]
+        /// </summary>
+        /// <value></value>
+        [NotMapped]
+        [Display(Name="Registrant")]
+        #endregion
+        public string UserName{get;set;}
+
+        #endregion
 
         #region  LICENSE_FILES
 
