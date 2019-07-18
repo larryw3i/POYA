@@ -3165,4 +3165,7 @@
   <data name="Chinese (Simplified)" xml:space="preserve">
     <value>中文(简体)</value>
   </data>
+  <data name="It will be deleted when you save, cancel by clicking again" xml:space="preserve">
+    <value>It will be deleted when you save, cancel by clicking again</value>
+  </data>
 </root>

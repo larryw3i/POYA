@@ -87,6 +87,11 @@ namespace POYA.Areas.XAd.Models
         /// For regulator, industry and commerce department, and so on
         /// </summary>
         public bool IsDeleted { get; set; } = false;
+
+        #region 
+        [NotMapped]
+        #endregion
+        public List<Guid> WillBeDeletedLicenseImgIds{get;set;}
     }
 
     public class XAdCustomerLicense

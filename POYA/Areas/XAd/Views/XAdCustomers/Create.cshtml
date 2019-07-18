@@ -78,6 +78,7 @@
     <script>
         var _IsEdit=Boolean(@(IsEdit?1:0));
         var _DefaultStoreIconUrl=`@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/earticle_home_default_img.webp"}))`;
+        var _EditLicenseImgUrlPrefix=`@(Url.Action(nameof( XAdCustomersController.GetXAdCustomerFilesAsync)))`;
         var SizeOfFileHint = (xMByte) => `@(Localizer["The size of file should be not more than"]) ${xMByte}M`;
         var ClickToDelete = `@(Localizer["Click to delete"])`;
         var _RandomFormId = `@(RandomFormId)`;
@@ -85,8 +86,10 @@
         var LicenseImgPrefix = "LicenseImg_";
         var LicenseImgFileInput = (id) => `<input id='${id}' type='file' name='LicenseImgFiles' form='${_RandomFormId}' class='XLicenseImgFiles' accept='image/*' hidden/>`;
         var LicenseImgTag = (_LicenseImgFileInputId) => `<img id='${LicenseImgPrefix + _LicenseImgFileInputId}' class='XLicenseImg col col-auto' title='${ClickToDelete}'/>`;
-        var WillBeDeletedLicenseImgIds=new Array(); //  ******
+        var WillBeDeletedLicenseImgIds=new Array(); 
         var EditLicenseImgFileIds= $.parseJSON(`@(Html.Raw(IsEdit?JsonConvert.SerializeObject(_XAdCustomerLicenses.Select(p=>new{Id=p.Id,MD5=p.ImgFileMD5}).ToArray()):"[]"))`);
+        var WillBeDeleteTitle=`@(Html.Raw( Localizer["It will be deleted when you save, cancel by clicking again"]))`;
+        var WIllBeDeletedIdInput=(_value)=>`<input name='WillBeDeletedLicenseImgIds' class='WillBeDeletedLicenseImgIds' value='${_value}' form='${_RandomFormId}' hiddren/>`;
 
         $(document).ready(function () {
             EditReady();
@@ -97,7 +100,7 @@
 
         $(document).on(`click`, `#XAdCustomerRegisterEle`, function () {
             if(_IsEdit){
-
+                
                 return;
             }
             if($(`#_StoreIconFile_Img_`).attr(`src`)==_DefaultStoreIconUrl){
@@ -158,12 +161,35 @@
         });
 
         $(document).on('click', "#LicenseImgFileEle img", function () {
+            var _this=$(this);
+            var ImgSrc=_this.attr("src").toString();
             var ImgId = $(this).attr("id");
             var InputId = ImgId.split("_")[1];
-            $(`#${ImgId}`).css("animation", "LicenseImgFileEleDelete 0.45s forwards linear");
-            setTimeout(function () {
-                $(`#${ImgId},#${InputId}`).remove();
-            },450);
+            if(ImgSrc.startsWith(_EditLicenseImgUrlPrefix)){
+                if(_this.is(`.WillBeDeletedIndicator`)){
+                    _this.removeClass('WillBeDeletedIndicator');
+                    $(`.WillBeDeletedLicenseImgIds[value=${InputId}]`).remove();
+                    /*
+                    WillBeDeletedLicenseImgIds.forEach((value, index, array)=>{
+                        if(value==InputId){
+                            array.splice(index,1);
+                        }
+                    });
+                    */
+                    _this.attr(`title`,ClickToDelete);
+                }else{
+                    _this.addClass("WillBeDeletedIndicator");
+                    _this.attr(`title`,WillBeDeleteTitle);
+                    //  WillBeDeletedLicenseImgIds.push(InputId);
+
+                    $(`#${_RandomFormId}`).append(WIllBeDeletedIdInput(InputId));
+                }
+            }else{
+                $(`#${ImgId}`).css("animation", "LicenseImgFileEleDelete 0.45s forwards linear");
+                setTimeout(function () {
+                    $(`#${ImgId},#${InputId}`).remove();
+                },450);
+            }
         });
 
         $(document).on("click", "#_StoreIconFile_Img_", function () {
@@ -190,7 +216,7 @@
         });
 
         function IsFileCountValid(IsSelectEleClick = false) {
-            var _FileCount = $(`.XLicenseImg`).length;
+            var _FileCount = $(`.XLicenseImg:not(.WillBeDeletedIndicator)`).length;
             if (IsSelectEleClick && _FileCount < 3) return true;
             if (_FileCount >4 ||  _FileCount < 3) {
                 $(`.Image-Count-Tip`).css(`animation`, `GlintBackgroundColor 0.5s 2 linear`);
@@ -206,7 +232,8 @@
             if(!_IsEdit)return;
             EditLicenseImgFileIds.forEach((value,index,array)=>{
                 $(`#LicenseImgFileEle`).append(LicenseImgTag(value["Id"]));
-                $(`#${LicenseImgPrefix}${value["Id"]}`).attr(`src`,`@(Url.Action(nameof( XAdCustomersController.GetXAdCustomerFilesAsync)))?MD5=${value["MD5"]}`);
+                var _EditImgTag=$(`#${LicenseImgPrefix}${value["Id"]}`);
+                _EditImgTag.attr(`src`,`${_EditLicenseImgUrlPrefix}?MD5=${value["MD5"]}`);
             });
         }
     </script>
@@ -216,6 +243,10 @@
 
 @section Styles{
     <style>
+        .WillBeDeletedIndicator{
+            opacity: 0.5;
+            background-color: rgba(255, 0, 0, 0.5);
+        }
         .Default-Icon-Tip{
             position:fixed;
             z-index:999;
