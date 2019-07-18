@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using POYA.Areas.EduHub.Controllers;
 using POYA.Areas.XAd.Models;
 using POYA.Areas.XUserFile.Controllers;
@@ -245,7 +246,7 @@ namespace POYA.Areas.XAd.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         #endregion
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,UserId,DORegistering,Address")] XAdCustomer xAdCustomer)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,LicenseImgFiles,Address,StoreIconFile,Intro,WillBeDeletedLicenseImgIds")] XAdCustomer xAdCustomer)
         {
             if (id != xAdCustomer.Id)
             {

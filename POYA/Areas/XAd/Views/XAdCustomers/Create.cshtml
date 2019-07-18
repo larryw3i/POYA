@@ -76,7 +76,7 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
-        var _IsEdit=Boolean(@(IsEdit?1:0));
+        var _IsEdit=new Boolean(@(IsEdit?1:0));
         var _DefaultStoreIconUrl=`@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/earticle_home_default_img.webp"}))`;
         var _EditLicenseImgUrlPrefix=`@(Url.Action(nameof( XAdCustomersController.GetXAdCustomerFilesAsync)))`;
         var SizeOfFileHint = (xMByte) => `@(Localizer["The size of file should be not more than"]) ${xMByte}M`;
@@ -89,7 +89,7 @@
         var WillBeDeletedLicenseImgIds=new Array(); 
         var EditLicenseImgFileIds= $.parseJSON(`@(Html.Raw(IsEdit?JsonConvert.SerializeObject(_XAdCustomerLicenses.Select(p=>new{Id=p.Id,MD5=p.ImgFileMD5}).ToArray()):"[]"))`);
         var WillBeDeleteTitle=`@(Html.Raw( Localizer["It will be deleted when you save, cancel by clicking again"]))`;
-        var WIllBeDeletedIdInput=(_value)=>`<input name='WillBeDeletedLicenseImgIds' class='WillBeDeletedLicenseImgIds' value='${_value}' form='${_RandomFormId}' hiddren/>`;
+        var WIllBeDeletedIdInput=(_value)=>`<input name='WillBeDeletedLicenseImgIds' class='WillBeDeletedLicenseImgIds' value='${_value}' form='${_RandomFormId}' hidden />`;
 
         $(document).ready(function () {
             EditReady();
@@ -99,10 +99,7 @@
         });
 
         $(document).on(`click`, `#XAdCustomerRegisterEle`, function () {
-            if(_IsEdit){
-                
-                return;
-            }
+            
             if($(`#_StoreIconFile_Img_`).attr(`src`)==_DefaultStoreIconUrl){
                 $(`#Common-Tip`).html(_DefaultImageIsDisabled);
                 $(`#Common-Tip`).css(`animation`, `CommonTipAnimation 0.5s 3 linear`);
@@ -169,18 +166,10 @@
                 if(_this.is(`.WillBeDeletedIndicator`)){
                     _this.removeClass('WillBeDeletedIndicator');
                     $(`.WillBeDeletedLicenseImgIds[value=${InputId}]`).remove();
-                    /*
-                    WillBeDeletedLicenseImgIds.forEach((value, index, array)=>{
-                        if(value==InputId){
-                            array.splice(index,1);
-                        }
-                    });
-                    */
-                    _this.attr(`title`,ClickToDelete);
+                    ttr(`title`,ClickToDelete);
                 }else{
                     _this.addClass("WillBeDeletedIndicator");
                     _this.attr(`title`,WillBeDeleteTitle);
-                    //  WillBeDeletedLicenseImgIds.push(InputId);
 
                     $(`#${_RandomFormId}`).append(WIllBeDeletedIdInput(InputId));
                 }
