@@ -106,8 +106,13 @@ namespace POYA.Areas.XAd.Controllers
 
         // GET: XAd/XAdCustomers/Create
         #endregion
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var _XAdCustomer=await _context.XAdCustomer.FirstOrDefaultAsync(p=>p.UserId==UserId_);
+            if(_XAdCustomer!=null){
+                return RedirectToAction(nameof(Details),new{id =_XAdCustomer.Id});
+            }
             return View();
         }
 
@@ -127,7 +132,6 @@ namespace POYA.Areas.XAd.Controllers
                 {
                     return View(xAdCustomer);
                 }
-
                 #region ===>   FILES_VALIDATE
                 var _xAdCustomerFiles = xAdCustomer.LicenseImgFiles; //  .Add(xAdCustomer.StoreIconFile);
                 _xAdCustomerFiles.Add(xAdCustomer.StoreIconFile);
@@ -221,12 +225,16 @@ namespace POYA.Areas.XAd.Controllers
                 return NotFound();
             }
 
-            var xAdCustomer = await _context.XAdCustomer.FindAsync(id);
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
+            var xAdCustomer = await _context.XAdCustomer.FirstOrDefaultAsync(p=>p.UserId==UserId_ && p.Id==id);
             if (xAdCustomer == null)
             {
                 return NotFound();
             }
-            return View(xAdCustomer);
+            ViewData["IsEdit"]=true;
+            ViewData[nameof(_context.XAdCustomerLicenses)]=await _context.XAdCustomerLicenses.Where(p=>p.XAdCustomerUserId==UserId_ ).ToListAsync();
+            return View("Create",xAdCustomer);
         }
 
         #region 

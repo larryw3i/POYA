@@ -1,27 +1,32 @@
 ﻿@model POYA.Areas.XAd.Models.XAdCustomer
+@using POYA.Areas.XAd.Controllers;
+@using Newtonsoft.Json;
+@using POYA.Areas.XAd.Models;
 
 @{
     ViewData["Title"] = Localizer["Become our advertiser"];
     Layout = "~/Views/Shared/_Layout.cshtml";
     var RandomFormId = Guid.NewGuid();
+    var IsEdit=Convert.ToBoolean( ViewData["IsEdit"]??false);
+    var _XAdCustomerLicenses = IsEdit? (ViewData["XAdCustomerLicenses"] as List<XAdCustomerLicense>):null;
 }
 
 
-<h4>@ViewData["Title"]</h4>
+<h4>@(ViewData["Title"])</h4>
 
 <hr />
 <div class="row">
     <div class="col-12">
-        <form asp-action="Create" id="@RandomFormId" enctype="multipart/form-data">
+        <form asp-action='@(IsEdit?"Edit":"Create")' id="@RandomFormId" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group col col-5">
-                <label asp-for="StoreIconFile" class="control-label"></label><sup class="Upload-Tip">@Localizer["Click image to select store icon"]</sup>
+                <label asp-for="StoreIconFile" class="control-label"></label><sup class="Upload-Tip">@(Localizer["Click image to select store icon"])</sup>
                 <div class="col col-12 text-center">
                     <span class="Default-Icon-Tip">
                         @(Localizer["The default image is disabled"])
                     </span>
-                    <img id="_StoreIconFile_Img_" src='@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/earticle_home_default_img.webp"}))' 
+                    <img id="_StoreIconFile_Img_" src='@(IsEdit?Url.Action("GetXAdCustomerFilesAsync",new { MD5=Model.StoreIconMD5}):Url.Action("GetLAppContent","Home",new {ContentNmae= "img/earticle_home_default_img.webp"}))' 
                          title='@Localizer["Click to select store icon"]' />
                 </div>
                 <input asp-for="StoreIconFile" hidden />
@@ -61,33 +66,41 @@
 
             <div class="form-group">
                 <a id="BackEle" class="btn btn-outline-info">&laquo; @(Localizer["Back"])</a>
-                <a id="XAdCustomerRegisterEle" class="btn btn-outline-success">@(Localizer["Register"])</a>
+                <a id="XAdCustomerRegisterEle" class="btn btn-outline-success">@(IsEdit?Localizer["Save"]: Localizer["Register"])</a>
                 <span id="Common-Tip"></span>
             </div>
         </form>
     </div>
 </div>
 
-
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
+        var _IsEdit=Boolean(@(IsEdit?1:0));
+        var _DefaultStoreIconUrl=`@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/earticle_home_default_img.webp"}))`;
         var SizeOfFileHint = (xMByte) => `@(Localizer["The size of file should be not more than"]) ${xMByte}M`;
         var ClickToDelete = `@(Localizer["Click to delete"])`;
         var _RandomFormId = `@(RandomFormId)`;
         var _DefaultImageIsDisabled = `@Localizer["The default image is disabled"]`;
         var LicenseImgPrefix = "LicenseImg_";
         var LicenseImgFileInput = (id) => `<input id='${id}' type='file' name='LicenseImgFiles' form='${_RandomFormId}' class='XLicenseImgFiles' accept='image/*' hidden/>`;
-        var LicenseImg = (_LicenseImgFileInputId) => `<img id='${LicenseImgPrefix + _LicenseImgFileInputId}' class='XLicenseImg col col-auto' title='${ClickToDelete}'/>`;
+        var LicenseImgTag = (_LicenseImgFileInputId) => `<img id='${LicenseImgPrefix + _LicenseImgFileInputId}' class='XLicenseImg col col-auto' title='${ClickToDelete}'/>`;
+        var WillBeDeletedLicenseImgIds=new Array(); //  ******
+        var EditLicenseImgFileIds= $.parseJSON(`@(Html.Raw(IsEdit?JsonConvert.SerializeObject(_XAdCustomerLicenses.Select(p=>new{Id=p.Id,MD5=p.ImgFileMD5}).ToArray()):"[]"))`);
+
         $(document).ready(function () {
+            EditReady();
             setTimeout(function () {
                 $(".Default-Icon-Tip").hide();
             },4000);
         });
 
         $(document).on(`click`, `#XAdCustomerRegisterEle`, function () {
-            if ($(`#StoreIconFile`).val().length < 1) {
+            if(_IsEdit){
+
+                return;
+            }
+            if($(`#_StoreIconFile_Img_`).attr(`src`)==_DefaultStoreIconUrl){
                 $(`#Common-Tip`).html(_DefaultImageIsDisabled);
                 $(`#Common-Tip`).css(`animation`, `CommonTipAnimation 0.5s 3 linear`);
                 $(`#_StoreIconFile_Img_`).css(`animation`, `StoreIconFileImgAnimation 0.2s  linear infinite alternate`);
@@ -136,7 +149,7 @@
                 }, 2500);
                 return;
             }
-            $(`#${LicenseImgFileInputId}`).after(LicenseImg(LicenseImgFileInputId));
+            $(`#${LicenseImgFileInputId}`).after(LicenseImgTag(LicenseImgFileInputId));
             var reader = new FileReader();
             reader.readAsDataURL(_File);
             reader.onload = function (e) {
@@ -178,7 +191,6 @@
 
         function IsFileCountValid(IsSelectEleClick = false) {
             var _FileCount = $(`.XLicenseImg`).length;
-            console.log(_FileCount);
             if (IsSelectEleClick && _FileCount < 3) return true;
             if (_FileCount >4 ||  _FileCount < 3) {
                 $(`.Image-Count-Tip`).css(`animation`, `GlintBackgroundColor 0.5s 2 linear`);
@@ -188,6 +200,14 @@
                 return false
             }
             return true;
+        }
+
+        function EditReady(){
+            if(!_IsEdit)return;
+            EditLicenseImgFileIds.forEach((value,index,array)=>{
+                $(`#LicenseImgFileEle`).append(LicenseImgTag(value["Id"]));
+                $(`#${LicenseImgPrefix}${value["Id"]}`).attr(`src`,`@(Url.Action(nameof( XAdCustomersController.GetXAdCustomerFilesAsync)))?MD5=${value["MD5"]}`);
+            });
         }
     </script>
 }
