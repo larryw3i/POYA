@@ -127,13 +127,4 @@ namespace POYA.Areas.XAd.Models
         #endregion
     }
 
-    public class XAdCustomerVerification
-    {
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public Guid XAdCustomerId { get; set; }
-        public string VerificationAdminId { get; set; }
-        public DateTimeOffset DOVerification { get; set; } = DateTimeOffset.Now;
-        public bool IsVerified { get; set; } = false;
-    }
-
 }
