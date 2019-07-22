@@ -58,15 +58,8 @@ namespace POYA
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
-            #region
-            /*
             services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            */
-            #endregion
-
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddRoles<IdentityRole>()   //  .AddIdentity<ApplicationUser, IdentityRole>()
+                .AddRoles<IdentityRole>()  
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -75,14 +68,14 @@ namespace POYA
                 options =>
                 {
                     options.SignIn.RequireConfirmedEmail = true;
-                    // Password settings.
+                    // Password settings
                     options.Password.RequireDigit = true;
                     options.Password.RequireLowercase = true;
                     options.Password.RequireNonAlphanumeric = true;
                     options.Password.RequireUppercase = true;
                     options.Password.RequiredLength = 8;
                     options.Password.RequiredUniqueChars = 1;
-                    // Lockout settings.
+                    // Lockout settings
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                     options.Lockout.MaxFailedAccessAttempts = 5;
                     options.Lockout.AllowedForNewUsers = true;
