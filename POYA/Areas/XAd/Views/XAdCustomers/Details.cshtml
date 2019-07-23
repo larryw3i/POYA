@@ -3,6 +3,8 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@using POYA.Data;
+@using POYA.Areas.XAd.Models;
 
 @{
     ViewData["Title"] =Localizer[ "Details"];
@@ -45,6 +47,14 @@
             @(Html.DisplayFor(model => model.Intro))
         </dd>
     </dl>
+    @if(Model.UserId==_CurrentUserId){
+        <span class="User-License-Images-Text">@Localizer["Your license images"]</span>
+        <div class="Store-License-Container">
+            @foreach(var lm in ViewData[nameof(ApplicationDbContext.XAdCustomerLicenses)] as List<XAdCustomerLicense>){
+                <img src='@Url.Action(nameof(XAdCustomersController.GetXAdCustomerFilesAsync),new { MD5=lm.ImgFileMD5})' class="Store-License" title='@(Model.Name) @Localizer["license image"]'/>
+            }
+        </div>
+    }
 
 </div>
 
@@ -63,11 +73,22 @@
 
 @section Styles{
 <style>
+    .User-License-Images-Text{
+        font-weight:800;
+    }
+    .Store-License-Container{
+        padding:20px;
+    }
     .Store-Icon{
         max-height: 50%;
         max-width: 50%;
     }
-    .Store-Icon:hover{
+    .Store-License{
+        max-height: 20%;
+        max-width: 20%;
+        margin-left: 10px;
+    }
+    .Store-Icon:hover,.Store-License:hover{
         animation: StoreIconHoverAnimation 0.2s linear forwards;
     }
 

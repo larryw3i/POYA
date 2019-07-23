@@ -98,8 +98,12 @@ namespace POYA.Areas.XAd.Controllers
             }
             
             xAdCustomer.UserName = await _context.Users.Where(p=>p.Id==xAdCustomer.UserId).Select(p=>p.UserName).FirstOrDefaultAsync();
-            ViewData["CurrentUserId"]=UserId_;
-
+            ViewData["CurrentUserId"] = UserId_;
+            
+            if(xAdCustomer.UserId==UserId_)
+            {
+                ViewData[nameof(_context.XAdCustomerLicenses)]=await _context.XAdCustomerLicenses.Where(p=>p.XAdCustomerUserId==UserId_).ToListAsync();
+            }
             return View(xAdCustomer);
         }
 
@@ -252,6 +256,7 @@ namespace POYA.Areas.XAd.Controllers
             {
                 return NotFound();
             }
+
 
             if (ModelState.IsValid)
             {
