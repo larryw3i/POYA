@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Data\LAppContent\earticle_category.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 
@@ -64,6 +67,11 @@
     <PackageReference Include="System.Xml.XDocument" Version="4.3.0" />
     <PackageReference Include="X.PagedList.Mvc.Core" Version="7.6.0" />
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

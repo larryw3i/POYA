@@ -257,6 +257,15 @@ namespace POYA.Areas.XAd.Controllers
                 return NotFound();
             }
 
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var _LicenseImgCount = (_context.XAdCustomerLicenses.Where(p => p.XAdCustomerUserId == UserId_).CountAsync().GetAwaiter().GetResult()
+                - xAdCustomer.WillBeDeletedLicenseImgIds.Count()
+                + xAdCustomer.LicenseImgFiles.Count());
+
+            if (3 < _LicenseImgCount || _LicenseImgCount > 5)
+            {
+
+            }
 
             if (ModelState.IsValid)
             {

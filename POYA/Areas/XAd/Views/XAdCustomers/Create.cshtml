@@ -26,7 +26,7 @@
                     <span class="Default-Icon-Tip">
                         @(Localizer["The default image is disabled"])
                     </span>
-                    <img id="_StoreIconFile_Img_" src='@(IsEdit?Url.Action("GetXAdCustomerFilesAsync",new { MD5=Model.StoreIconMD5}):Url.Action("GetLAppContent","Home",new {ContentNmae= "img/earticle_home_default_img.webp"}))' 
+                    <img id="_StoreIconFile_Img_" src="~/img/earticle_home_default_img.webp" 
                          title='@Localizer["Click to select store icon"]' />
                 </div>
                 <input asp-for="StoreIconFile" hidden />
@@ -76,8 +76,8 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
-        var _IsEdit=new Boolean(@(IsEdit?1:0));
-        var _DefaultStoreIconUrl=`@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/earticle_home_default_img.webp"}))`;
+        var _IsEdit= Boolean(@(IsEdit?1:0));
+        var _DefaultStoreIconUrl="~/img/earticle_home_default_img.webp";
         var _EditLicenseImgUrlPrefix=`@(Url.Action(nameof( XAdCustomersController.GetXAdCustomerFilesAsync)))`;
         var SizeOfFileHint = (xMByte) => `@(Localizer["The size of file should be not more than"]) ${xMByte}M`;
         var ClickToDelete = `@(Localizer["Click to delete"])`;
@@ -218,7 +218,8 @@
         }
 
         function EditReady(){
-            if(!_IsEdit)return;
+            if (!_IsEdit) return;
+            $(`#_StoreIconFile_Img_`).attr(`src`,`${_EditLicenseImgUrlPrefix}?MD5=@(Model?.StoreIconMD5)`);
             EditLicenseImgFileIds.forEach((value,index,array)=>{
                 $(`#LicenseImgFileEle`).append(LicenseImgTag(value["Id"]));
                 var _EditImgTag=$(`#${LicenseImgPrefix}${value["Id"]}`);

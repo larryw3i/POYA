@@ -18,54 +18,67 @@
         <table class="table">
 
             <tbody>
-                @if (X_doveUserInfo.IsAddressOvert)
+                @if (!(X_doveUserInfo.IsAddressOvert || 
+                    X_doveUserInfo.IsDOBirthOvert || 
+                    X_doveUserInfo.IsGraduatedFromOvert || 
+                    X_doveUserInfo.IsHobbyOvert ||
+                    X_doveUserInfo.IsMaritalStatusOvert || 
+                    X_doveUserInfo.IsOccupationOvert ||
+                    X_doveUserInfo.IsOriginalAddressOvert ))
                 {
-                    <tr>
-                        <th scope="row">@Localizer["Address"]</th>
-                        <td>@(X_doveUserInfo.Address)</td>
-                    </tr>
+                    <tr><td>@_UserName @Localizer["hid his information"]</td></tr>
                 }
-                @if (X_doveUserInfo.IsOriginalAddressOvert)
+                else
                 {
-                    <tr>
-                        <th scope="row">@Localizer["Hometown"]</th>
-                        <td>@(X_doveUserInfo.OriginalAddress)</td>
-                    </tr>
-                }
-                @if (X_doveUserInfo.IsDOBirthOvert && X_doveUserInfo.DOBirth != null)
-                {
-                    <tr>
-                        <th scope="row">@Localizer["Birth date"]</th>
-                        <td>@(X_doveUserInfo.DOBirth?.LocalDateTime.ToString("MM-dd-yyyy"))</td>
-                    </tr>
-                }
-                @if (X_doveUserInfo.IsHobbyOvert)
-                {
-                    <tr>
-                        <th scope="row">@(Localizer["Hobby"])</th>
-                        <td>@(X_doveUserInfo.Hobby)</td>
-                    </tr>
-                }
-                @if (X_doveUserInfo.IsMaritalStatusOvert)
-                {
-                    <tr>
-                        <th scope="row">@Localizer["Marital status"]</th>
-                        <td>@(X_doveUserInfo.MaritalStatus)</td>
-                    </tr>
-                }
-                @if (X_doveUserInfo.IsGraduatedFromOvert)
-                {
-                    <tr>
-                        <th scope="row">@Localizer["Graduated from"]</th>
-                        <td>@(X_doveUserInfo.GraduatedFrom)</td>
-                    </tr>
-                }
-                @if (X_doveUserInfo.IsOccupationOvert)
-                {
-                    <tr>
-                        <th scope="row">@Localizer["Occupation"]</th>
-                        <td>@(X_doveUserInfo.Occupation)</td>
-                    </tr>
+                    @if (X_doveUserInfo.IsAddressOvert)
+                    {
+                        <tr>
+                            <th scope="row">@Localizer["Address"]</th>
+                            <td>@(X_doveUserInfo.Address)</td>
+                        </tr>
+                    }
+                    @if (X_doveUserInfo.IsOriginalAddressOvert)
+                    {
+                        <tr>
+                            <th scope="row">@Localizer["Hometown"]</th>
+                            <td>@(X_doveUserInfo.OriginalAddress)</td>
+                        </tr>
+                    }
+                    @if (X_doveUserInfo.IsDOBirthOvert && X_doveUserInfo.DOBirth != null)
+                    {
+                        <tr>
+                            <th scope="row">@Localizer["Birth date"]</th>
+                            <td>@(X_doveUserInfo.DOBirth?.LocalDateTime.ToString("MM-dd-yyyy"))</td>
+                        </tr>
+                    }
+                    @if (X_doveUserInfo.IsHobbyOvert)
+                    {
+                        <tr>
+                            <th scope="row">@(Localizer["Hobby"])</th>
+                            <td>@(X_doveUserInfo.Hobby)</td>
+                        </tr>
+                    }
+                    @if (X_doveUserInfo.IsMaritalStatusOvert)
+                    {
+                        <tr>
+                            <th scope="row">@Localizer["Marital status"]</th>
+                            <td>@(X_doveUserInfo.MaritalStatus)</td>
+                        </tr>
+                    }
+                    @if (X_doveUserInfo.IsGraduatedFromOvert)
+                    {
+                        <tr>
+                            <th scope="row">@Localizer["Graduated from"]</th>
+                            <td>@(X_doveUserInfo.GraduatedFrom)</td>
+                        </tr>
+                    }
+                    @if (X_doveUserInfo.IsOccupationOvert)
+                    {
+                        <tr>
+                            <th scope="row">@Localizer["Occupation"]</th>
+                            <td>@(X_doveUserInfo.Occupation)</td>
+                        </tr>
+                    }
                 }
 
             </tbody>

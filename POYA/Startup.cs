@@ -35,7 +35,6 @@ namespace POYA
 
         public X_DOVEHelper x_DOVEHelper = new X_DOVEHelper();
         
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -56,7 +55,7 @@ namespace POYA
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()  

@@ -48,7 +48,7 @@
               integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
-    <link href='@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/chat_with_friends_ico.webp"}))' rel="icon" type="image/webp">
+    <link href='~/img/chat_with_friends_ico.webp' rel="icon" type="image/webp">
     @(RenderSection("Styles", required: false))
     <partial name="_CssPartial.cshtml" />
 </head>
@@ -58,11 +58,11 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="display:inline;word-break:keep-all;white-space:nowrap">
-                    <img id="navbarMainIcon" src='@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/chat_with_friends_ico.webp"}))' width="30" height="30" class="d-inline-block align-top">
+                    <img id="navbarMainIcon" src='~/img/chat_with_friends_ico.webp' width="30" height="30" class="d-inline-block align-top">
                     @Localizer["X-DOVE"]
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span><img src='@(Url.Action("GetLAppContent","Home",new {ContentNmae= "img/collapse.webp"}))' style="width:28px;height:15px" /></span>
+                    <span><img src='~/img/collapse.webp' style="width:28px;height:15px" /></span>
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex flex-sm-row-reverse" id="navbarSupportedContent">
                     <partial name="_LoginPartial" />

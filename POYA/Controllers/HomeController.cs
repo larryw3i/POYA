@@ -83,11 +83,6 @@ namespace POYA.Controllers
             return View();
         }
 
-        // public IActionResult Test(){
-        //     return View();
-        // }
-
-
         #region DEPOLLUTION
 
         [ActionName("GetLAppContent")]
@@ -121,7 +116,6 @@ namespace POYA.Controllers
             var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             UserId = string.IsNullOrWhiteSpace(UserId) ? CurrentUserId : UserId;
             var AvatarFilePath = X_DOVEValues.AvatarStoragePath(_hostingEnv) + UserId;
-            //  var _X_doveUserInfo=await _context.X_DoveUserInfos.Where(p => p.UserId == UserId).FirstOrDefaultAsync();
             if (System.IO.File.Exists(AvatarFilePath))
             {
                 var AvatarBytes = await System.IO.File.ReadAllBytesAsync(AvatarFilePath);
@@ -130,7 +124,7 @@ namespace POYA.Controllers
                     return File(AvatarBytes, "image/jpg");
                 }
             }
-            var DefauleAvatar = await System.IO.File.ReadAllBytesAsync(_hostingEnv.ContentRootPath + @"/Data/LAppContent/img/article_publish_ico.webp");
+            var DefauleAvatar = await System.IO.File.ReadAllBytesAsync(_hostingEnv.WebRootPath + @"/img/article_publish_ico.webp");
             return File(DefauleAvatar, "image/webp");
         }
 
