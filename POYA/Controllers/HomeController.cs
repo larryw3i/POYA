@@ -247,7 +247,7 @@ namespace POYA.Controllers
                 var XUserFilePath = $"{LFilesPath}/XUserFile";
                 var EArticleFilesPath = $"{_hostingEnv.ContentRootPath}/Areas/EduHub/Data/EArticleFiles";
 
-                var InitialPaths = new string[] { AvatarPath, XUserFilePath, XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv), EArticleFilesPath };
+                var InitialPaths = new string[] { AvatarPath, XUserFilePath, XAdCustomerHelper.XAdImgFilePath(_hostingEnv), EArticleFilesPath };
                 foreach (var p in InitialPaths)
                 {
                     if (!Directory.Exists(p))

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Ganss.XSS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using POYA.Areas.EduHub.Controllers;
 using POYA.Areas.XAd.Models;
 using POYA.Areas.XUserFile.Controllers;
@@ -38,10 +40,9 @@ namespace POYA.Areas.XAd.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<XAdCustomersController> _logger;
         private readonly HtmlSanitizer _htmlSanitizer;
-        //  private readonly MimeHelper _mimeHelper;
         private readonly XUserFileHelper _xUserFileHelper;
+      
         public XAdCustomersController(
-            //  MimeHelper mimeHelper,
             HtmlSanitizer htmlSanitizer,
             ILogger<XAdCustomersController> logger,
             SignInManager<IdentityUser> signInManager,
@@ -65,6 +66,28 @@ namespace POYA.Areas.XAd.Controllers
             //  _mimeHelper = mimeHelper;
             _xUserFileHelper = new XUserFileHelper();
         }
+
+        #region SOME_STRING
+
+        #region
+
+        /// <summary>
+        /// _JObject[RESULT_String]=true/false
+        /// </summary>
+        #endregion
+        private readonly string RESULT_IS_SUCCESSFUL_String   
+            = "RESULT";
+        private readonly string REASON_String   
+            = "REASON";
+        private readonly string REASON_REPEAT_String
+            = "REPEAT";
+        private readonly string RESULT_MD5_String
+            = "MD5";
+        private readonly string REASON_LENGTH_LESS_THAN_0_String
+            = "MD5";
+        
+        #endregion
+
         #endregion
 
         #region 
@@ -156,7 +179,7 @@ namespace POYA.Areas.XAd.Controllers
 
                 var _XAdCustomerLicenses = new List<XAdCustomerLicense>();
 
-                var _FileMD5s = System.IO.Directory.GetFiles(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv)).Select(p => System.IO.Path.GetFileNameWithoutExtension(p));
+                var _FileMD5s = System.IO.Directory.GetFiles(XAdCustomerHelper.XAdImgFilePath(_hostingEnv)).Select(p => System.IO.Path.GetFileNameWithoutExtension(p));
 
                 foreach (var f in xAdCustomer.LicenseImgFiles)
                 {
@@ -172,7 +195,7 @@ namespace POYA.Areas.XAd.Controllers
                     }
                     if (!_FileMD5s.Contains(_md5))
                     {
-                        var _FileStream = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{_md5}", FileMode.Create);
+                        var _FileStream = new FileStream(XAdCustomerHelper.XAdImgFilePath(_hostingEnv) + $"/{_md5}", FileMode.Create);
                         await f.CopyToAsync(_FileStream);
                         _FileStream.Close();
 
@@ -195,14 +218,14 @@ namespace POYA.Areas.XAd.Controllers
                     ModelState.AddModelError(nameof(XAdCustomer.LicenseImgFiles), _localizer["The store icon is repeated"]);
                     return View(xAdCustomer);
                 }
+
                 if (!_FileMD5s.Contains(_md5_))
                 {
-                    var _FileStream_ = new FileStream(XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) +
+                    var _FileStream_ = new FileStream(XAdCustomerHelper.XAdImgFilePath(_hostingEnv) +
                         $"/{_md5_}",
                     FileMode.Create);
                     await xAdCustomer.StoreIconFile.CopyToAsync(_FileStream_);
                     _FileStream_.Close();
-
                 }
 
                 xAdCustomer.StoreIconMD5 = _md5_;
@@ -258,20 +281,70 @@ namespace POYA.Areas.XAd.Controllers
             }
 
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var _LicenseImgCount = (_context.XAdCustomerLicenses.Where(p => p.XAdCustomerUserId == UserId_).CountAsync().GetAwaiter().GetResult()
+            var _LicenseImgCount = _context.XAdCustomerLicenses.Where(p => p.XAdCustomerUserId == UserId_).CountAsync().GetAwaiter().GetResult()
                 - xAdCustomer.WillBeDeletedLicenseImgIds.Count()
-                + xAdCustomer.LicenseImgFiles.Count());
+                + xAdCustomer.LicenseImgFiles.Count();
 
             if (3 < _LicenseImgCount || _LicenseImgCount > 5)
             {
-
+                return NotFound();
             }
+
+            {   //  SIZE CHECK
+                var IsSizeValid = true;
+                xAdCustomer.LicenseImgFiles.RemoveAll(p=>p.Length<1);
+                var _FilesLength = xAdCustomer.LicenseImgFiles.Select(p=>p.Length).ToList();
+                _FilesLength.Add(xAdCustomer?.StoreIconFile?.Length??0);
+                _FilesLength.ForEach(p =>
+                {
+                    if (p > 2 * 1024 * 1024)
+                    {
+                        IsSizeValid = false;
+                    }
+                });
+                if (!IsSizeValid)
+                {
+                    return NotFound();
+                }
+            } 
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(xAdCustomer);
+                    var _xAdCustomer = await _context.XAdCustomer.FirstOrDefaultAsync(p=>p.UserId==UserId_);    //  _context.Update(xAdCustomer);
+                    if (_xAdCustomer == null)
+                    {
+                        return NotFound();
+                    }
+
+                    if (xAdCustomer?.StoreIconFile != null)
+                    {
+                        var _JObject = await SaveImgAndGetMD5sAsync(xAdCustomer.StoreIconFile);
+                        if (Convert.ToBoolean( _JObject[RESULT_IS_SUCCESSFUL_String])==false)
+                        {
+                            var _REASON = _JObject[REASON_String].ToString();
+                            if(_REASON==REASON_REPEAT_String)
+                            {
+                                ModelState.AddModelError(nameof(XAdCustomer.LicenseImgFiles), _localizer["The store icon is repeated"]);
+                            }
+                            return View(xAdCustomer);
+                        }
+                        var _MD5 =_JObject[RESULT_MD5_String].ToString();
+                        _xAdCustomer.StoreIconMD5 = _MD5;
+                      
+                    }
+                    if (xAdCustomer.WillBeDeletedLicenseImgIds.Count() > 0)
+                    {
+                        _context.XAdCustomerLicenses
+                            .RemoveRange(await _context.XAdCustomerLicenses.Where(p=>xAdCustomer.WillBeDeletedLicenseImgIds.Contains(p.Id)).ToListAsync());
+                    }
+
+                    foreach(var f in xAdCustomer.LicenseImgFiles)
+                    {
+
+                    }
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -287,7 +360,7 @@ namespace POYA.Areas.XAd.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(xAdCustomer);
+            return View("Create",xAdCustomer);
         }
 
         #region 
@@ -357,7 +430,7 @@ namespace POYA.Areas.XAd.Controllers
                 _ContentType = _XAdCustomerLicenses.ImgFileContentType;
             }
 
-            var _FilePath = XAdCustomerHelper.XAdCustomerLicenseImgFilePath(_hostingEnv) + $"/{MD5}";
+            var _FilePath = XAdCustomerHelper.XAdImgFilePath(_hostingEnv) + $"/{MD5}";
 
             if (!System.IO.File.Exists(_FilePath))
             {
@@ -370,6 +443,53 @@ namespace POYA.Areas.XAd.Controllers
             _FileStream.Read(FileBytes, 0, FileBytes.Length);
             _FileStream.Close();
             return File(FileBytes, _ContentType);
+        }
+
+        #region 
+
+        #endregion
+        public async Task<JObject> SaveImgAndGetMD5sAsync(IFormFile _FormFile)
+        {
+            var _JObject = new JObject();
+
+            if (_FormFile.Length < 1)
+            {
+                _JObject[RESULT_IS_SUCCESSFUL_String] = false;
+                _JObject[REASON_String] = REASON_LENGTH_LESS_THAN_0_String;
+                return _JObject;
+
+            }
+
+            var _FileMD5s = Directory.GetFiles(XAdCustomerHelper.XAdImgFilePath(_hostingEnv))
+                     .Select(p => Path.GetFileNameWithoutExtension(p));
+
+            if (_FormFile.Length > 0)
+            {
+                var _memoryStream_ = new MemoryStream();
+                await _FormFile.CopyToAsync(_memoryStream_);
+                var _bytes_ = _memoryStream_.ToArray();
+                var _md5_ = new XUserFileHelper().GetFileMD5(_bytes_);
+
+                if (!_hostingEnv.IsDevelopment() && _FileMD5s.Contains(_md5_))
+                {
+                    _JObject[RESULT_IS_SUCCESSFUL_String] = false;
+                    _JObject[REASON_String] = REASON_REPEAT_String;
+                    return _JObject;
+                }
+
+                if (!_FileMD5s.Contains(_md5_))
+                {
+                    var _FileStream_ = new FileStream(XAdCustomerHelper.XAdImgFilePath(_hostingEnv) +
+                        $"/{_md5_}",
+                    FileMode.Create);
+                    await _FormFile.CopyToAsync(_FileStream_);
+                    _FileStream_.Close();
+                }
+                _JObject[RESULT_IS_SUCCESSFUL_String] = true;
+                _JObject[RESULT_MD5_String] = _md5_;
+            }
+            return _JObject;
+
         }
 
         #endregion

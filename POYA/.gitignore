@@ -8,6 +8,7 @@
 /Data/Database/*
 /Areas/EduHub/Data/EArticleFiles/*
 /Areas/XAd/Data/LicenseImgFiles/*
+/Areas/XAd/Data/XAdImgFiles/*
 
 /appsettings.json
 /app.db

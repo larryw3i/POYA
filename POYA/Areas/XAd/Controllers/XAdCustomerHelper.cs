@@ -10,11 +10,11 @@ namespace POYA.Areas.XAd.Controllers
     {
         #region 
         /// <summary>
-        /// _hostingEnv.ContentRootPath + $"/Areas/XAd/Data/LicenseImgFiles"
+        /// (IHostingEnvironment _hostingEnv) => _hostingEnv.ContentRootPath + $"/Areas/XAd/Data/XAdImgFiles"
         /// </summary>
         /// <param name="_hostingEnv"></param>
         /// <returns></returns>
         #endregion
-        public static string XAdCustomerLicenseImgFilePath(IHostingEnvironment _hostingEnv) => _hostingEnv.ContentRootPath + $"/Areas/XAd/Data/LicenseImgFiles";
+        public static string XAdImgFilePath(IHostingEnvironment _hostingEnv) => _hostingEnv.ContentRootPath + $"/Areas/XAd/Data/XAdImgFiles";
     }
 }

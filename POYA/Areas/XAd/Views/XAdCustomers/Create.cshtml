@@ -139,7 +139,7 @@
         $(document).on("change", ".XLicenseImgFiles", function () {
             var LicenseImgFileInputId = $(this).attr("id");
             var _File = document.getElementById(LicenseImgFileInputId).files[0];
-            if (_File.size > 2048 * 1024) {
+            if (_File.size > 2*1024 * 1024) {
                 $("#LicenseImgFilevalidation").html(SizeOfFileHint(2));
 
                 $(`#${LicenseImgFileInputId}`).remove();
