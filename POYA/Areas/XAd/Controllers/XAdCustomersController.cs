@@ -342,6 +342,18 @@ namespace POYA.Areas.XAd.Controllers
 
                     foreach(var f in xAdCustomer.LicenseImgFiles)
                     {
+                        var _JObject = await SaveImgAndGetMD5sAsync(f);
+                        if (Convert.ToBoolean(_JObject[RESULT_IS_SUCCESSFUL_String]) == false)
+                        {
+                            var _REASON = _JObject[REASON_String].ToString();
+                            if (_REASON == REASON_REPEAT_String)
+                            {
+                                ModelState.AddModelError(nameof(XAdCustomer.LicenseImgFiles), _localizer["The license image is repeated"]);
+                            }
+                            return View(xAdCustomer);
+                        }
+                        var _MD5 = _JObject[RESULT_MD5_String].ToString();
+                        await _context.XAdCustomerLicenses.AddAsync(new XAdCustomerLicense {  ImgFileContentType=f.ContentType, ImgFileMD5=_MD5, XAdCustomerUserId=UserId_});
 
                     }
 
