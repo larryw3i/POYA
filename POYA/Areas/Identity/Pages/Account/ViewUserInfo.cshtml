@@ -11,7 +11,7 @@
 }
 <div class="row">
     <div class="col col-auto text-center">
-        <img src="/Home/GetAvatar?UserId=@(_UserId)" id="_UserAvatar" class="rounded-circle" title="@Localizer["Send a email"]" /><br />
+        <img src="/Home/GetAvatar?UserId=@(_UserId)" id="_UserAvatar" class="rounded-circle" title='@Localizer["Send a email"]' /><br />
         <span>@(_UserName)</span>
     </div>
     <div class="col col-auto" id="UserInfoEle">
@@ -26,28 +26,28 @@
                     X_doveUserInfo.IsOccupationOvert ||
                     X_doveUserInfo.IsOriginalAddressOvert ))
                 {
-                    <tr><td>@_UserName @Localizer["hid his information"]</td></tr>
+                    <tr><td>@_UserName @(Localizer["hid his information"])</td></tr>
                 }
                 else
                 {
                     @if (X_doveUserInfo.IsAddressOvert)
                     {
                         <tr>
-                            <th scope="row">@Localizer["Address"]</th>
+                            <th scope="row">@(Localizer["Address"])</th>
                             <td>@(X_doveUserInfo.Address)</td>
                         </tr>
                     }
                     @if (X_doveUserInfo.IsOriginalAddressOvert)
                     {
                         <tr>
-                            <th scope="row">@Localizer["Hometown"]</th>
+                            <th scope="row">@(Localizer["Hometown"])</th>
                             <td>@(X_doveUserInfo.OriginalAddress)</td>
                         </tr>
                     }
                     @if (X_doveUserInfo.IsDOBirthOvert && X_doveUserInfo.DOBirth != null)
                     {
                         <tr>
-                            <th scope="row">@Localizer["Birth date"]</th>
+                            <th scope="row">@(Localizer["Birth date"])</th>
                             <td>@(X_doveUserInfo.DOBirth?.LocalDateTime.ToString("MM-dd-yyyy"))</td>
                         </tr>
                     }
@@ -61,21 +61,21 @@
                     @if (X_doveUserInfo.IsMaritalStatusOvert)
                     {
                         <tr>
-                            <th scope="row">@Localizer["Marital status"]</th>
+                            <th scope="row">@(Localizer["Marital status"])</th>
                             <td>@(X_doveUserInfo.MaritalStatus)</td>
                         </tr>
                     }
                     @if (X_doveUserInfo.IsGraduatedFromOvert)
                     {
                         <tr>
-                            <th scope="row">@Localizer["Graduated from"]</th>
+                            <th scope="row">@(Localizer["Graduated from"])</th>
                             <td>@(X_doveUserInfo.GraduatedFrom)</td>
                         </tr>
                     }
                     @if (X_doveUserInfo.IsOccupationOvert)
                     {
                         <tr>
-                            <th scope="row">@Localizer["Occupation"]</th>
+                            <th scope="row">@(Localizer["Occupation"])</th>
                             <td>@(X_doveUserInfo.Occupation)</td>
                         </tr>
                     }

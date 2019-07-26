@@ -39,7 +39,7 @@
             <a asp-action="Create" asp-route-InDirId="@InDirId">@Localizer["Upload"]</a>
             <a asp-action="Create" asp-controller="LDirs" asp-route-InDirId="@InDirId">@Localizer["New"]</a> )
             <br />
-            <span class="_PathSpan">@ViewData["_Path"]</span>
+            <span class="_PathSpan">@(ViewData["_Path"])</span>
         </div>
 
     </div>
@@ -159,17 +159,3 @@
         </style>
     }
 
-    @*
-
-                        <td>
-                            <input name="FilCheckBox" id="FilCheckBox_@(item.Id)" class=".Zoom190p" type="checkbox" value="@(item.Id)" />
-                        </td>
-
-                            <a asp-action="Move" asp-route-id="@(item.Id)" title="@Localizer["Move"]">&#9986;</a>
-                            <a asp-action="Copy" asp-route-id="@(item.Id)" title="@Localizer["Copy"]">&#9903;</a>
-
-        <a asp-action="Move" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@(d.Id)" title="@Localizer["Move"]">&#9986;</a>
-        <a asp-action="Copy" asp-controller="LDirs" asp-route-ReturnUrl="@ReturnUrl" asp-route-id="@(d.Id)" title="@Localizer["Copy"]">&#9903;</a>
-
-        asp-action="Create" asp-controller="LDirs" asp-route-InDirId="@ViewData["InDirId"]"
-    *@

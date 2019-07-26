@@ -27,11 +27,11 @@
 
     <div class="row">
         <div class="col col-3 ">
-            <img src="~/img/article.webp" class=" main-icon" title="@Localizer["Article"]" />
+            <img src="~/img/article.webp" class=" main-icon" title='@Localizer["Article"]'/>
         </div>
         <a class="col offset-md-4 offset-sm-1 offset-md-4 offset-lg-5 col-2 col-md-1">
         </a>
-        <a class="col col-2 col-md-1" asp-action="Index" asp-controller="UserEArticleSets" title="@Localizer["My EArticle"]">
+        <a class="col col-2 col-md-1" asp-action="Index" asp-controller="UserEArticleSets" title='@Localizer["My EArticle"]'>
             <img src="~/img/user_earticle.webp" style="max-height:50px;" />
         </a>
         <div class="col col-2 col-md-1 col-lg-1">
@@ -43,9 +43,9 @@
     <div class="row">
         <div class="col offset-5 offset-sm-5 offset-md-7 offset-lg-8 offset-xl-8 EArticleSearchCol">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="@(Localizer["Search"]+" . . .")" aria-label="@(Localizer["Search"]+". . .")" aria-describedby="EArticleSearchBtn" id="EArticleSearchInput" value="@_search">
+                <input type="text" class="form-control" placeholder='@(Localizer["Search"]+" . . .")' aria-label='@(Localizer["Search"]+". . .")' aria-describedby="EArticleSearchBtn" id="EArticleSearchInput" value="@_search">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-info" type="button" id="EArticleSearchBtn">@Localizer["Search"]</button>
+                        <button class="btn btn-outline-info" type="button" id="EArticleSearchBtn">@(Localizer["Search"])</button>
                     </div>
                 </div>
             </div>
@@ -82,7 +82,7 @@
         <div class="float-right PageEle">
             <div>
                 <div class="form-inline">
-                    <input type="text" style="width:70px;" class="form-control" id="_pageSize" title="@Localizer["Press ENTER to save"]" value="@_pageSize"/>
+                    <input type="text" style="width:70px;" class="form-control" id="_pageSize" title='@Localizer["Press ENTER to save"]' value="@_pageSize"/>
             @(Html.PagedListPager((IPagedList<EArticle>)ViewData["EArticles"], _page => Url.Action("Index", new { _page = _page }),
                 PagedListRenderOptions.OnlyShowFivePagesAtATime))
                     </div>
@@ -197,66 +197,3 @@
         }
             </style>
 }
-
-@*
-
-
-
-            <table class="table">
-
-                <tbody>
-            @foreach (var item in ViewData["EArticles"] as IPagedList<EArticle>)
-            {
-                    <tr>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@item.Id" title="@(item.Title)" class="title">@Html.DisplayFor(modelItem => item.Title)</a>
-                            <span class="author">
-                            @($"{item.UserName}") &#9998; @($"{item.DOPublishing.LocalDateTime.ToShortDateString()}")
-                            @if (item.DOUpdating != null)
-                            {
-                                <span style="font-size:150%">&#10226;</span>
-                                <span>@(item.DOUpdating?.LocalDateTime.ToShortDateString())</span>
-                            }
-
-
-                            </span>
-                        @if (UserId == item.UserId)
-                        {
-                            <a asp-action="Edit" asp-route-id="@item.Id" title="@Localizer["Edit"]">&#9997;</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id" title="@Localizer["Delete"]">&#10008;</a>
-                        }
-                        </td>
-
-                    </tr>
-            }
-                </tbody>
-            </table>
-
-
-            <thead>
-                <tr>
-                    <th>
-                    @Html.DisplayNameFor(model => model.UserId)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.SubjectId)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.GradeId)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.TypeId)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.Content)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.IsLegal)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-*@

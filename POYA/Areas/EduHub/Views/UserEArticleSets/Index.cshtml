@@ -12,17 +12,11 @@
     var _UserEArticleHomeInfo = ViewData["UserEArticleHomeInfo"] as UserEArticleHomeInfo;
 }
 @{
-    /*
-        <h1>Index</h1>
-        <p>
-            <a asp-action="Create">Create New</a>
-        </p>
-    */
 }
 <div id="EArticleSetContextMenu_Ele"></div>
 <div class="row">
     <div class="col  col-12  EArticle-Home-Img-Ele">
-        <div class="float-left" onclick='location.href = "@(Url.Action("Index","EArticles"))"'
+        <div class="float-left" onclick='location.href = `@(Url.Action("Index","EArticles"))`'
              style="zoom:200%;position:fixed;cursor:pointer;color:brown">&laquo;&laquo;</div>
         <img class="rounded-circle mx-auto d-block EArticle-Home-Avatar"
              src="/Home/GetAvatar?random=@(new Random().Next())" />
@@ -49,9 +43,6 @@
                     <h5 class="card-title">@(i.Name)</h5>
                     <span class="card-text">@(i.Label)</span>
                     <span>
-                        @*
-                            <img src="~/img/edit.webp" class="float-right EArticleSetOperationEle"  SetId="@@(i.Id)" style="width:20px;height:20px;position:absolute" />
-                        *@
                     </span>
                 </div>
             </div>
@@ -89,7 +80,7 @@
         return `
         <div class="EArticle-Set-Context-Menu" id="${_EArticleSetContextMenuId(SetId)}" SetId="${SetId}">
             <div>
-                <button type="button" class="btn btn-success" onclick="GoToEArticleSetDetails('${SetId}')">${SetId==AddEArticleSetId?"@Localizer["Add"]":"@Localizer["Details"]"} </button>
+                <button type="button" class="btn btn-success" onclick="GoToEArticleSetDetails('${SetId}')">${SetId==AddEArticleSetId?`@Localizer["Add"]`:`@Localizer["Details"]`} </button>
             </div>
             ${CommonSetIsEle}
         </div>
@@ -152,7 +143,7 @@
                 },
                 success: function () {
                     InitHomeComment =String( $("#UserEArticleHomeInfo_Comment").val());
-                    MakeAlert("info", "@Localizer[ "Update successfully"]" + "!")
+                    MakeAlert("info", `@Localizer[ "Update successfully"]` + "!")
                     if (IsUploadCoverFile) {
                         document.getElementById("UserEArticleHomeInfo_Conver_Input").value='';
                     }
@@ -161,7 +152,7 @@
                         `url("@(Url.Action("GetEArticleHomeCover", new { id=_UserEArticleHomeInfo.Id}))?random=${_random}")`);
                 },
                 error: function () {
-                    MakeAlert("danger", "@Localizer["Some errors has occurred"]" + "!");
+                    MakeAlert("danger", `@Localizer["Some errors has occurred"]" + "!`);
                 }
             });
 
@@ -178,7 +169,7 @@
      */
     function GoToEArticleSetDetails(SetId) {
            window.location.href = SetId == '@X_DOVEValues.AddEArticleSetId' ?
-                    "@(Url.Action("Create","UserEArticleSets",new { area="EduHub"}))" :
+                    `@(Url.Action("Create","UserEArticleSets",new { area="EduHub"}))`:
             `@(Url.Action("XIndex","EArticles",new { area = "EduHub" }))?SetId=${SetId}`;
         event.preventDefault();
     }
@@ -240,7 +231,7 @@
             }
         };
         FileReader_.onerror = function () {
-            MakeAlert("danger","@Localizer["Some errors has occurred"]");
+            MakeAlert("danger",`@Localizer["Some errors has occurred"]`);
         };
         function loadNext() {
             var Start = CurrentChunk * ChunkSize,
@@ -349,7 +340,7 @@
 
         .EArticle-Home-Img-Ele {
             height: 150px;
-            background-image: url("@(Url.Action("GetEArticleHomeCover",new {id= _UserEArticleHomeInfo.Id}))");
+            background-image: url('@(Url.Action("GetEArticleHomeCover",new {id= _UserEArticleHomeInfo.Id}))');
             background-position: center;
             border-radius: 10px;
         }
@@ -368,63 +359,3 @@
 
     </style>
 }
-
-@*
-
-    <table class="table">
-
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Label)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DOCreating)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Comment)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-            <img src="~/img/earticle_home_default_img.webp" class="img-fluid EArticle-Home-Img" />
-        .EArticle-Home-Img {
-                width: 100%;
-                height: 200px;
-                border-radius: 10px;
-            }
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.UserId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Label)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DOCreating)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Comment)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-*@

@@ -3,9 +3,9 @@
 @{
     ViewData["Title"] = Localizer["Two-factor authentication"];
 }
-<h1>@ViewData["Title"]</h1>
+<h1>@(ViewData["Title"])</h1>
 <hr />
-<p>@Localizer["Your login is protected with an authenticator app. Enter your authenticator code below"]</p>
+<p>@(Localizer["Your login is protected with an authenticator app. Enter your authenticator code below"])</p>
 <div class="row">
     <div class="col-md-4">
         <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
@@ -20,7 +20,7 @@
                 <div class="checkbox">
                     <label asp-for="Input.RememberMachine">
                         <input asp-for="Input.RememberMachine" />
-                        @Html.DisplayNameFor(m => m.Input.RememberMachine)
+                        @(Html.DisplayNameFor(m => m.Input.RememberMachine))
                     </label>
                 </div>
             </div>
@@ -31,8 +31,8 @@
     </div>
 </div>
 <p>
-    @Localizer["Don't have access to your authenticator device? You can"]
-    <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">@Localizer["log in with a recovery code"]</a>
+    @(Localizer["Don't have access to your authenticator device? You can"])
+    <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">@(Localizer["log in with a recovery code"])</a>
 </p>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

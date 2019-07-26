@@ -32,7 +32,7 @@
         var MD5Array = new Array();
 
         var MaxMultipartBodyLength = @(X_DOVEValues.MaxMultipartBodyLengthLimit);
-        var InDirId = "@ViewData["InDirId"]";
+        var InDirId = `@(ViewData["InDirId"])`;
         //var L_XSRF_TOKEN = "@@(CSRF.GetAndStoreTokens(Context).RequestToken)";
         var FileIsSelected = "@Localizer[ "The file is selected"]";
 

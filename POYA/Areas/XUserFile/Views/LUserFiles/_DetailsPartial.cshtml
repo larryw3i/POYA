@@ -28,16 +28,16 @@
             }
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @(Html.DisplayNameFor(model => model.Name))
         </dt>
         <dd class="col-sm-10">
-            <a asp-action="GetFile" asp-route-id="@(Model.Id)" title="@Localizer["Get it"]">@(Model.Name) &#8675;</a>
+            <a asp-action="GetFile" asp-route-id="@(Model.Id)" title='@Localizer["Get it"]'>@(Model.Name) &#8675;</a>
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DOCreate)
+            @(Html.DisplayNameFor(model => model.DOCreate))
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DOCreate.LocalDateTime)
+            @(Html.DisplayFor(model => model.DOCreate.LocalDateTime))
         </dd>
 
     </dl>

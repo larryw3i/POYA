@@ -58,7 +58,7 @@
                 </div>
                 <div class="row">
                     <div class="col col-3">
-                        <span>@Localizer["Complexity"]</span> ?
+                        <span>@(Localizer["Complexity"])</span> ?
                         <span>
                             <select asp-for="ComplexityRank" asp-items="Model.ComplexityRankSelectListItems" class="form-control"></select>
                         </span>
@@ -68,7 +68,7 @@
             <div class="form-group offset-1">
                 <div class="row">
                     <div class="col col-5" id="video_div">
-                        <span class="row">@Localizer["Upload videos for your article"]</span>
+                        <span class="row">@(Localizer["Upload videos for your article"])</span>
                         <div class="col" id="video_list_div">
                             @if (IsEdit)
                             {
@@ -121,7 +121,7 @@
 
     var ID8MD5Array = new Array();
 
-    var IsVideoFileSelected =@(IsVideoFileUploaded?"true":"false");
+    var IsVideoFileSelected =Boolean(`@(IsVideoFileUploaded?"":"0")`); //   @(IsVideoFileUploaded?"true":"false");
     var LAttachmentFileInputId = (id) => `LAttachments_${id}`;
     var LVideoFileInputId = (id) => `LVideos_${id}`;
     var LAttachmentFileInput = (id) => `<input type='file' hidden name='LAttachments' id='${this.LAttachmentFileInputId(id)}' onchange='LAttachmentsOnChange("${id}")'/>`;
@@ -163,7 +163,7 @@
         });
         $.ajax({
             //
-            url: "@(Url.Action(IsEdit?"Edit":"Create"))",
+            url: `@(Url.Action(IsEdit?"Edit":"Create"))`,
             type: "POST",
             data: _EArticles_Form_Data_,
             processData: false,
@@ -207,7 +207,7 @@
     //    DATA
       var _CategoryId = "@Model.CategoryId";
         var _GuidEmpty = "@(Guid.Empty)";
-        var _IsEdit =@(IsEdit?"true":"false");
+        var _IsEdit =Boolean(`@IsEdit?"":"0"`);   //  @(IsEdit?"true":"false");
     function HandleCategorySelect() {
 
         if (_CategoryId != _GuidEmpty) {
@@ -248,7 +248,7 @@
     function RemoveFile(id, IsVideoFileInput = false, IsUploadedFile = false) {
         if (IsUploadedFile) {
             $.ajax({
-                url: "@Url.Action("RemoveArticleFile")",
+                url: `@Url.Action("RemoveArticleFile")`,
                 type: "POST",
                 data: { "id": id },
                 headers: {
@@ -294,7 +294,7 @@
     function GetMD5(Id,  IsEArticleVideo = false) {
 
         var File_ = File_ = document.getElementById(Id).files[0];
-        $("#SaveProgressEle").html("@Localizer["Read file . . ."]");
+        $("#SaveProgressEle").html(`@Localizer["Read file . . ."]`);
 
 
         var BlobSlice_ = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
@@ -310,7 +310,7 @@
                 loadNext();
             } else {
                 let MD5 = String(Spark_.end());
-                $("#SaveProgressEle").html("@Localizer["Read file finish"]");
+                $("#SaveProgressEle").html(`@Localizer["Read file finish"]`);
 
                 // console.log(MD5);
                 if (!ID8MD5Array.some((value, index, array) => { value["ID"] == Id && value["MD5"] == MD5 })) {
@@ -365,7 +365,7 @@
         // console.log(">>>>>", eArticleFileMD5s);
 
         $.ajax({
-            url: "@Url.Action("LCheckMD5v1")",
+            url: `@Url.Action("LCheckMD5v1")`,
             type: "POST",
             data: { eArticleFileMD5s: eArticleFileMD5s },
 
@@ -478,7 +478,7 @@
         });
         $("#_ContentEditor *").blur(function () {
             if (Editor.txt.html().length < 20) {
-                $("#ContentValidation").html("@(Localizer["The content of the article should be more than 20 characters"])!");
+                $("#ContentValidation").html(`@(Localizer["The content of the article should be more than 20 characters"])!`);
             } else {
                 $("#ContentValidation").html("");
             }
@@ -531,93 +531,3 @@
 </style>
 
 
-    @*
-    var _Editor = window.wangEditor;
-    var Editor = new _Editor("#MenuToolbar","#_ContentEditor");
-    *@
-
-    @*
-    /**
-     *
-     * @@param Editor
-     */
-    function ReadyEditor(Editor) {
-        //   CONTENT_EDITOR
-
-        //   MENU CONFIGURE
-        Editor.customConfig.menus = [
-            'head',
-            'bold',
-            'fontSize',
-            'italic',
-            'underline',
-            'strikeThrough',
-            'foreColor',
-            'backColor',
-            'link',
-            'list',
-            'justify',
-            'quote',
-            'emoticon',
-            'image',
-            'table',
-            'code',
-            'undo',
-            'redo',
-        ];
-
-        //
-
-
-        //   LANGUAGE CONFIGURE
-
-        Editor.customConfig.lang = {
-
-            "\u8bbe\u7f6e\u6807\u9898": "@(Localizer["Title"])",
-            "\u6b63\u6587": "@(Localizer["Paragraph"])",
-            "\u94fe\u63a5\u6587\u5b57": "@(Localizer["Link text"])",
-            "\u56fe\u7247\u94fe\u63a5": "@(Localizer["Image link"])",
-            "\u94fe\u63a5": "@(Localizer["Link"])",
-            "\u4e0a\u4f20\u56fe\u7247": "@(Localizer["Upload image"])",
-            "\u4e0a\u4f20": "@(Localizer["Upload"])",
-            "\u521b\u5efa": "@(Localizer["Initial"])",
-            "\u63d2\u5165\u4ee3\u7801": "@(Localizer["Insert code"])",
-            "\u7f51\u7edc\u56fe\u7247": "@(Localizer["Image url"])",
-            "\u63d2\u5165\u8868\u683c": "@(Localizer["Table"])",
-            "\u884c": "@(Localizer["line"])",
-            "\u5217\u7684\u8868\u683c": "@(Localizer["col"])",
-            "\u63d2\u5165": "@(Localizer["Insert"])",
-            "\u5bf9\u9f50\u65b9\u5f0f": "@(Localizer["Align"])",
-            "\u5b57\u53f7": "@(Localizer["Font size"])",
-            "\u5b57\u4f53": "@(Localizer["Font"])",
-            "\u5b8b\u4f53": "@(Localizer["Simsun"])",
-            "\u5fae\u8f6f\u96c5\u9ed1": "@(Localizer["Microsoft YaHei"])",
-            "\u6587\u5b57\u989c\u8272": "@(Localizer["Font color"])",
-            "\u80cc\u666f\u8272": "@(Localizer["background color"])",
-            "\u8bbe\u7f6e\u5217\u8868": "@(Localizer["List"])",
-            "\u6709\u5e8f\u5217\u8868": "@(Localizer["ordered list"])",
-            "\u65e0\u5e8f\u5217\u8868": "@(Localizer["unordered list"])",
-            "\u9760\u5de6": "@(Localizer["Left"])",
-            "\u5c45\u4e2d": "@(Localizer["Center"])",
-            "\u9760\u53f3": "@(Localizer["Right"])",
-            "\u9ed8\u8ba4": "@(Localizer["Default"])",
-            "\u65b0\u6d6a": "@(Localizer["Sina"])",
-
-        };
-
-
-        //
-
-        //   UPLOAD IMAGE CONFIGURE
-        Editor.customConfig.uploadImgServer = '@(Url.Action("UploadEArticleImage"))';
-        Editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024;
-        Editor.customConfig.uploadImgMaxLength = 8;
-        Editor.customConfig.uploadImgHeaders = {
-            "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
-        };
-        Editor.customConfig.uploadFileName = 'EArticleImages';
-        Editor.customConfig.zIndex = 1;
-
-        Editor.create();
-        }
-    *@

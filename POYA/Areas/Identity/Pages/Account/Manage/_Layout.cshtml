@@ -1,9 +1,9 @@
 ﻿@{
     Layout = "/Views/Shared/_Layout.cshtml";   // "/Areas/Identity/Pages/_Layout.cshtml";
 }
-<h1>@Localizer["Manage your account"]</h1>
+<h1>@(Localizer["Manage your account"])</h1>
 <div>
-    <h4>@Localizer["Change your account settings"]</h4>
+    <h4>@(Localizer["Change your account settings"])</h4>
     <hr />
     <div class="row">
         <div class="col-md-3">
@@ -15,8 +15,8 @@
     </div>
 </div>
 @section Scripts {
-    @RenderSection("Scripts", required: false)
+    @(RenderSection("Scripts", required: false))
 }
 @section Styles{
-    @RenderSection("Styles", required: false)
+    @(RenderSection("Styles", required: false))
 }
