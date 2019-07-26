@@ -85,32 +85,7 @@ namespace POYA.Controllers
 
         #region DEPOLLUTION
 
-        [ActionName("GetLAppContent")]
-        public async Task<IActionResult> GetLAppContentAsync(string ContentNmae)
-        {
-            #region REFUSE
-            if (ContentNmae.Contains("..") ||
-                ContentNmae.StartsWith('/') ||
-                ContentNmae.StartsWith('\\') ||
-                ContentNmae.Contains('~') ||
-                ContentNmae.Contains("\\\\") ||
-                ContentNmae.Contains("//") ||
-                ContentNmae.Contains("'") ||
-                ContentNmae.Contains("\"")) return NoContent();
-            #endregion
-
-            var provider = new FileExtensionContentTypeProvider();
-            string contentType = string.Empty;
-            var _LAppContentPath = _hostingEnv.ContentRootPath + "/Data/LAppContent/";
-            var _FileBytes = await System.IO.File.ReadAllBytesAsync($"{_LAppContentPath}/{ContentNmae}");
-
-            if (!provider.TryGetContentType(ContentNmae, out contentType))
-            {
-                contentType = "application/octet-stream";
-            }
-            return File(_FileBytes, contentType);
-        }
-
+     
         public async Task<IActionResult> GetAvatar(string UserId = "")
         {
             var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -298,6 +273,24 @@ namespace POYA.Controllers
                 #endregion
 
             }
+        }
+
+        public IActionResult GetJsOrCss(string PathWithPostfix){
+            if(PathWithPostfix.StartsWith('/'))PathWithPostfix=PathWithPostfix.Substring(1);
+            if(PathWithPostfix==".js"||PathWithPostfix==".css")PathWithPostfix="Home"+PathWithPostfix;
+            if(!_x_DOVEHelper.IsSafePath(PathWithPostfix))return NoContent();
+            var IsCss=PathWithPostfix.Split('.').LastOrDefault().ToLower()=="css";
+            var _FIlePath=$"{_hostingEnv.WebRootPath}/{(IsCss?"css":"js")}/{PathWithPostfix}";
+            var _Directory=_FIlePath.Substring(0,_FIlePath.LastIndexOf('/'));
+            if(!System.IO.Directory.Exists(_Directory))  
+                System.IO.Directory.CreateDirectory(_Directory);
+            if(!System.IO.File.Exists(_FIlePath))       
+                System.IO.File.Create(_FIlePath).Close();
+            return File(
+                System.IO.File.ReadAllBytesAsync(_FIlePath).GetAwaiter().GetResult(),
+                IsCss?"text/css":"application/x-javascript", 
+                true
+            );
         }
 
         #endregion

@@ -159,7 +159,7 @@ namespace POYA.Areas.XUserFile.Controllers
             _LastDirId = await _context.LDir.Where(p => p.Id == InDirId && p.UserId == UserId_).Select(p => p.InDirId).FirstOrDefaultAsync();
             _LDirs = await _context.LDir.Where(p => p.UserId == UserId_ && p.InDirId == InDirId && !LUserFileIds.Contains(p.Id))
                 .ToListAsync();
-            _Path = _x_DOVEHelper.GetInPathOfFileOrDir(context: _context, InDirId: InDirId ?? Guid.Empty);
+            _Path = X_DOVEValues.GetParentsPathOfFileOrDir(context: _context, InDirId: InDirId ?? Guid.Empty);
 
             //  (await _context.LDir.Where(p => p.Id == InDirId).Select(p => p.Name).FirstOrDefaultAsync()) ?? "root";
             // InDirId == Guid.Empty ? InDirId
@@ -258,20 +258,6 @@ namespace POYA.Areas.XUserFile.Controllers
                 return Ok(new { Status=true, XFilePost.Id });
             }
             return Ok();
-            #region     //
-            /*
-            // process uploaded files
-            // Don't rely on or trust the FileName property without validation
-            if (ModelState.IsValid)
-            {
-                lUserFile.Id = Guid.NewGuid();
-                _context.Add(lUserFile);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            */
-            //      return Ok();     //   View(lUserFile);
-            #endregion
         }
 
         #region 
@@ -295,8 +281,7 @@ namespace POYA.Areas.XUserFile.Controllers
             var AllUserSubDirs = await _context.LDir.Where(p => p.Id != Guid.Empty && p.UserId == UserId_).ToListAsync();
 
             lUserFile.UserAllSubDirSelectListItems = new List<SelectListItem>() { new SelectListItem { Text = "root/", Value = Guid.Empty.ToString() } };
-            //  lUserFile.UserAllSubDirSelectListItems.Add(new SelectListItem {  Text="root/",Value=Guid.Empty.ToString()});
-            lUserFile.UserAllSubDirSelectListItems.AddRange(AllUserSubDirs.Select(p => new SelectListItem { Text = $"{_x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId)}{p.Name}", Value = p.Id.ToString() }).OrderBy(p => p.Text).ToList());
+            lUserFile.UserAllSubDirSelectListItems.AddRange(AllUserSubDirs.Select(p => new SelectListItem { Text = $"{X_DOVEValues.GetParentsPathOfFileOrDir(_context, p.InDirId)}{p.Name}", Value = p.Id.ToString() }).OrderBy(p => p.Text).ToList());
             lUserFile.CopyMoveSelectListItems = new List<SelectListItem>() {
                 new SelectListItem { Text =_localizer[ "Rename"], Value = "0", Selected = true },
                 new SelectListItem { Text =_localizer[ "Also copy"], Value = "1" },
@@ -369,10 +354,6 @@ namespace POYA.Areas.XUserFile.Controllers
                     else
                     {
                         _lUserFile.Name = lUserFile.Name;
-                        #region
-                        //  _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name, _hostingEnv).Last();
-                        //  _lUserFile.ContentType = _mimeHelper.GetMime(lUserFile.Name).Last();   // new Mime().Lookup(lUserFile.Name);
-                        #endregion
                         _context.Update(_lUserFile);
                         await _context.SaveChangesAsync();
                         InDirId = _lUserFile.InDirId;

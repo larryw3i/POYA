@@ -324,7 +324,7 @@ namespace POYA.Areas.EduHub.Controllers
                 + _userEArticleHomeInfo.CoverFileMD5))
             {
                 //  return File(_FileBytes, _userEArticleHomeInfo.CoverFileContentType, $"EARTICLE_HOME_COVER_{_UserId}", true);
-                _FileBytes = await System.IO.File.ReadAllBytesAsync(_hostingEnv.ContentRootPath + "/Data/LAppContent/img/earticle_home_default_img.webp");
+                _FileBytes = await System.IO.File.ReadAllBytesAsync(_hostingEnv.WebRootPath + "/img/earticle_home_default_img.webp");
                 //  _ContentType = ;
             }
             else

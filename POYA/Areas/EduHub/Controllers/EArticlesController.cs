@@ -727,7 +727,7 @@ namespace POYA.Areas.EduHub.Controllers
                 {
                     _VideoSharedCodeSelectListItems.Add(
                         new SelectListItem {
-                            Text = _x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId) + p.Name,
+                            Text = X_DOVEValues.GetParentsPathOfFileOrDir(_context, p.InDirId) + p.Name,
                             Value = p.Id.ToString() }   //<<<<<<<<
                         );
                 }
@@ -769,7 +769,7 @@ namespace POYA.Areas.EduHub.Controllers
 
         private List<LEArticleCategory> GetCategories()
         {
-            var _eArticleCategoryFilePath = _hostingEnv.ContentRootPath + $"/Data/LAppContent/earticle_category.csv";
+            var _eArticleCategoryFilePath = _hostingEnv.WebRootPath + $"/app_data/earticle_category.csv";
             var reader = new StreamReader(_eArticleCategoryFilePath);
             var csv = new CsvReader(reader);
             return csv.GetRecords<LEArticleCategory>().ToList();

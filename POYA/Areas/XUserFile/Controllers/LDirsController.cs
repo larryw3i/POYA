@@ -79,7 +79,7 @@ namespace POYA.Areas.XUserFile.Controllers
                 return NotFound();
             }   //  lDir.ReturnUrl = ReturnUrl ?? Url.Content("~/");
             lDir.InDirName = (await _context.LDir.Select(p => new { p.Id, p.Name }).FirstOrDefaultAsync(p => p.Id == lDir.InDirId))?.Name ?? "root";
-            lDir.InFullPath = _x_DOVEHelper.GetInPathOfFileOrDir(_context, lDir.InDirId);
+            lDir.InFullPath = X_DOVEValues.GetParentsPathOfFileOrDir(_context, lDir.InDirId);
             return View(lDir);  //   LocalRedirect(ReturnUrl); //  View(lDir);
         }
 
@@ -153,7 +153,7 @@ namespace POYA.Areas.XUserFile.Controllers
 
             lDir.UserAllSubDirSelectListItems = new List<SelectListItem>() { new SelectListItem { Value = Guid.Empty.ToString(), Text = "root/" } };
 
-            lDir.UserAllSubDirSelectListItems.AddRange(UserDirs.Select(p => new SelectListItem { Text = $"{_x_DOVEHelper.GetInPathOfFileOrDir(_context, p.InDirId)}{p.Name}/", Value = p.Id.ToString() }).OrderBy(p => p.Text).ToList());
+            lDir.UserAllSubDirSelectListItems.AddRange(UserDirs.Select(p => new SelectListItem { Text = $"{X_DOVEValues.GetParentsPathOfFileOrDir(_context, p.InDirId)}{p.Name}/", Value = p.Id.ToString() }).OrderBy(p => p.Text).ToList());
 
             lDir.CopyMoveSelectListItems = new List<SelectListItem>() {
                 new SelectListItem{Text=_localizer[ "Rename"],Value=((int)CopyMove.DoNoThing).ToString(),Selected=true},
@@ -165,7 +165,7 @@ namespace POYA.Areas.XUserFile.Controllers
 
 
 
-            lDir.InFullPath = _x_DOVEHelper.GetInPathOfFileOrDir(_context, lDir.InDirId);
+            lDir.InFullPath = X_DOVEValues.GetParentsPathOfFileOrDir(_context, lDir.InDirId);
 
             return View(lDir);
         }
@@ -321,7 +321,7 @@ namespace POYA.Areas.XUserFile.Controllers
                 return NotFound();
             }
             lDir.InDirName = (await _context.LDir.Select(p => new { p.Id, p.Name }).FirstOrDefaultAsync(p => p.Id == lDir.InDirId))?.Name ?? "root";
-            lDir.InFullPath = _x_DOVEHelper.GetInPathOfFileOrDir(_context, lDir.InDirId);
+            lDir.InFullPath = X_DOVEValues.GetParentsPathOfFileOrDir(_context, lDir.InDirId);
 
             return View(lDir);
         }

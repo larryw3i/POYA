@@ -28,7 +28,6 @@
 
     #endregion
 }
-@*<!DOCTYPE html>*@
 <html>
 
 <head>
@@ -49,6 +48,7 @@
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
     <link href='~/img/chat_with_friends_ico.webp' rel="icon" type="image/webp">
+    <link rel="stylesheet" href='@(Url.Action("GetJsOrCss","Home",new{PathWithPostfix=Context.Request.Path+".css"}))'/>
     @(RenderSection("Styles", required: false))
     <partial name="_CssPartial.cshtml" />
 </head>
@@ -161,6 +161,7 @@
     <script src="~/lib/js-cookie/js.cookie.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/vue-dev/dist/vue.min.js"></script>
+    <script src='@(Url.Action("GetJsOrCss","Home",new{PathWithPostfix=Context.Request.Path+".js"}))'></script>
     @(RenderSection("Scripts", required: false))
 </body>
 </html>
