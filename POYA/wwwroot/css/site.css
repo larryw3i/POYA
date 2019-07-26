@@ -66,60 +66,322 @@ body {
     text-align: right
 }
 
-/*
-.home-carousel {
-    background-color: black;
-    opacity: 0.2;
-}
-.carousel-caption h5, .carousel-caption p{
-    color:blue;
+
+@keyframes EArticleFromAnimation{
+    100%{
+        transform:scale(1.2) translateY(-6px);
+    }
 }
 
-[name='UserAvatarImg'], [name='LogoutImg'] {
-    position: absolute;
+@keyframes PaddingAnimation {
+    100% {
+        border-radius: 2px;
+        background-color: rgba(0, 38, 255,0.2);
+    }
 }
 
-[name='UserAvatarImg'] {
-    max-height: 50px;
-    max-width: 50px;
+@keyframes MailToEArticleUserAnimation{
+    100%{
+        transform:scale(3);
+    }
 }
 
-[name='LogoutImg'] {
-    width: 18px;
-    height: 20px
+@keyframes AnimationBoxShadow {
+
+
+    100% {
+        box-shadow: 5px 5px 8px #888888;
+    }
 }
 
-case "Dark":
-        $("#_body,footer").css({ "background-color": "black", "color": "#C7EDCC" });
-        $(".table").css("color", "#C7EDCC");
-        $("input[class=form-control],textarea[class=form-control]").css({ "background-color": "#C7EDCC" });
-        $("button").css({ "color": "#C7EDCC" });
-        $("select").css({ "background-color": "black", "color": "#C7EDCC" });
-        break;
-    case "Light":
-        $("#_body,footer").css({ "background-color": "white", "color": "black" });
-        $(".table").css("color", "black");
-        $("input[class=form-control],textarea[class=form-control]").css({ "background-color": "white" });
-        $("button").css({ "color": "black" });
-        $("select").css({ "background-color": "white" });
-        break;
-    default:
-        $("#_body,footer").css({ "background-color": "#C7EDCC", "color": "black" });
-        $(".table").css("color", "black");
-        $("button").css({ "color": "black" });
-        $("select").css({ "background-color": "#C7EDCC", "color": "black" });
-        $("input[type!='submit']").css({ "background-color": "white", "color": "black" });
+@keyframes BgAnimation {
+    10% {
+        background: rgba(223,5,44,0.2);
+    }
 
-dl {
-    border-color: #C7EDCC
+    25% {
+        background: rgba(24,133,76,0.4);
+    }
+
+    50% {
+        background: rgba(12,223,98,0.3);
+    }
 }
 
-[name='UserAvatarImg']:hover {
+@keyframes AnimationBoxShadow {
+    0% {
+        box-shadow: 1px 1px 1px #888888;
+    }
 
-}
-#navbarMainIcon{
-    width:10px;
-    height:10px;
+    100% {
+        box-shadow: 5px 5px 8px #888888;
+    }
 }
 
-*/
+@keyframes AnimationBoxShadow {
+    0% {
+        box-shadow: 1px 1px 1px #888888;
+    }
+
+    25% {
+        box-shadow: 3px 3px 5px #888888;
+    }
+
+    50% {
+        box-shadow: 5px 5px 8px #888888;
+    }
+
+    75% {
+        box-shadow: 3px 3px 5px #888888;
+    }
+
+    100% {
+        box-shadow: 1px 1px 1px #888888;
+    }
+}
+
+@keyframes AvatarScale {
+    0% {
+        height: 55px;
+        width: 55px;
+        margin-top: 20px;
+        border: 1px solid #ff00dc;
+        box-shadow: 0px 0px 0px #ff00dc;
+    }
+
+    100% {
+        height: 75px;
+        width: 75px;
+        margin-top: 5px;
+        border: 4px solid #ff00dc;
+        box-shadow: 0px 0px 9px #ff00dc;
+    }
+}
+
+@keyframes AccountManageNavItemAnimation{
+    100%{
+        transform:scale(1.2);
+    }
+}
+
+@keyframes AvatarAnimation {
+
+
+    100% {
+        transform: scale(1.2);
+    }
+}
+
+@keyframes InputControlAnimation {
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+
+@keyframes _UserAvatarAnimation {
+
+    100% {
+        transform: scale(1.2);
+        border-width: 5px;
+    }
+}
+
+@keyframes UserInfoEleAnimation {
+    100% {
+        border-color: rgb(255, 0, 220);
+    }
+}
+
+@keyframes TrAnimation {
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes StoreIconFileImgAnimation {
+    100% {
+        transform: scale(1.15);
+    }
+}
+
+@keyframes XLicenseImgAnimation {
+    0% {
+        transform: scale(0.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes LicenseImgFileEleDelete {
+    0% {
+        transform: scale(1);
+    }
+
+    10% {
+        transform: scale(1.12);
+    }
+
+    100% {
+        transform: scale(0.1);
+    }
+}
+
+@keyframes GlintBackgroundColor{
+    0%{
+        background-color:red;
+        font-size:80%;
+    }
+    50%{
+        background-color:Highlight;
+        font-size:88%;
+    }
+    100%{
+        background-color:red;
+        font-size:80%;
+    }
+}
+
+@keyframes CommonTipAnimation {
+      0%{
+        color:red;
+        font-size:100%;
+        font-weight:100;
+    }
+    50%{
+        color:Highlight;
+        font-size:120%;
+        font-weight:600;
+    }
+    100%{
+        color:red;
+        font-size:100%;
+        font-weight:100;
+    }
+}
+
+@keyframes StoreIconHoverAnimation{
+    0%{
+        transform: scale(1);
+    }
+    75%{
+        transform: scale(1.08);
+    }
+    100%{
+        transform:scale(1.05);
+    }
+}
+
+
+@keyframes BecomeAdvertiser {
+    0%{
+        color: rgb(242, 89, 11);
+    }
+    100% {
+        color: rgb(64, 67, 212);
+    }
+}
+
+@keyframes BecomeAdvertiserHover {
+    0%{
+        color: rgb(242, 89, 11);
+    }
+    
+    100% {
+        color: rgb(242, 89, 11);
+    transform:scale(1.05);
+    }
+}
+
+@keyframes StoreIconAnimation{
+    45%{
+        transform:scale(1.3);
+    }
+    100%{
+        transform:scale(1.2);
+    }
+}
+
+
+@keyframes PayImgHover {
+    100% {
+        transform: scale(1.15);
+    }
+}
+
+@keyframes Donate8StorySubDivHover {
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes zoomOutImg {
+    0% {
+        height: 150%;
+    }
+
+    100% {
+        height: 100%;
+    }
+}
+
+@keyframes zoomInImg {
+    0% {
+        width: 50%;
+    }
+
+    100% {
+        width: 150%;
+    }
+}
+
+@keyframes rotateImg {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+
+@keyframes DonateImgRotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes DonateImgHover {
+    0% {
+        box-shadow: 0px 0px 0px 0px #ff00dc;
+    }
+
+    100% {
+        box-shadow: 0px 0px 0px 6px #ff00dc;
+        transform:scale(1.2);
+    }
+}
+
+
+@keyframes InitialAvatar{
+    100% {
+        opacity: 1.0;
+        box-shadow: 0px 0px 0px 2px #ff6a00;
+    }
+}
+
+@keyframes NavAvatarZoomIn {
+    
+    100% {
+        box-shadow: 0px 0px 0px 4px #ff00dc;
+    }
+}
