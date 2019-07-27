@@ -29,7 +29,7 @@
                     <img id="_StoreIconFile_Img_" src="~/img/earticle_home_default_img.webp" 
                          title='@Localizer["Click to select store icon"]' />
                 </div>
-                <input asp-for="StoreIconFile" hidden />
+                <input asp-for="StoreIconFile" hidden accept="image/*"/>
                 <span asp-validation-for="Name" class="text-danger"></span>
                 <span id="StoreIconFileValidation" class="text-danger"></span>
             </div>
@@ -76,7 +76,7 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
-        var _IsEdit= Boolean(@(IsEdit?1:0));
+        var _IsEdit= Boolean(`@(IsEdit?"1":"")`);
         var _DefaultStoreIconUrl="~/img/earticle_home_default_img.webp";
         var _EditLicenseImgUrlPrefix=`@(Url.Action(nameof( XAdCustomersController.GetXAdCustomerFilesAsync)))`;
         var SizeOfFileHint = (xMByte) => `@(Localizer["The size of file should be not more than"]) ${xMByte}M`;
@@ -87,7 +87,8 @@
         var LicenseImgFileInput = (id) => `<input id='${id}' type='file' name='LicenseImgFiles' form='${_RandomFormId}' class='XLicenseImgFiles' accept='image/*' hidden/>`;
         var LicenseImgTag = (_LicenseImgFileInputId) => `<img id='${LicenseImgPrefix + _LicenseImgFileInputId}' class='XLicenseImg col col-auto' title='${ClickToDelete}'/>`;
         var WillBeDeletedLicenseImgIds=new Array(); 
-        var EditLicenseImgFileIds= $.parseJSON(`@(Html.Raw(IsEdit?JsonConvert.SerializeObject(_XAdCustomerLicenses.Select(p=>new{Id=p.Id,MD5=p.ImgFileMD5}).ToArray()):"[]"))`);
+        var EditLicenseImgFileIds= 
+                $.parseJSON(`@(Html.Raw(IsEdit?JsonConvert.SerializeObject(_XAdCustomerLicenses.Select(p=>new{Id=p.Id,MD5=p.ImgFileMD5}).ToArray()):"[]"))`);
         var WillBeDeleteTitle=`@(Html.Raw( Localizer["It will be deleted when you save, cancel by clicking again"]))`;
         var WIllBeDeletedIdInput=(_value)=>`<input name='WillBeDeletedLicenseImgIds' class='WillBeDeletedLicenseImgIds' value='${_value}' form='${_RandomFormId}' hidden />`;
 
@@ -132,7 +133,7 @@
                 $(`#LicenseImgFileEle`).append(LicenseImgFileInput(_id));
                 $(`#${_id}`).click();
             } else {
-                $(`#LicenseImgFileEle input:last`).click();
+                $(`#LicenseImgFileEle input:last`).click();System.Reflection.AssemblyCopyrightAttribute
             }
             event.preventDefault();
         });
@@ -283,9 +284,6 @@
             z-index: 999;
             color: red;
             transform: scale(4);
-        }
-
-    
+        }   
     </style>
 }
-
