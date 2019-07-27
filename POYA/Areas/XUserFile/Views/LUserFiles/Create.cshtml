@@ -31,14 +31,14 @@
 
         var MD5Array = new Array();
 
-        var MaxMultipartBodyLength = @(X_DOVEValues.MaxMultipartBodyLengthLimit);
+        var MaxMultipartBodyLength =Number(`@(X_DOVEValues.MaxMultipartBodyLengthLimit)`);
         var InDirId = `@(ViewData["InDirId"])`;
         //var L_XSRF_TOKEN = "@@(CSRF.GetAndStoreTokens(Context).RequestToken)";
-        var FileIsSelected = "@Localizer[ "The file is selected"]";
+        var FileIsSelected = `@Localizer[ "The file is selected"]`;
 
         var FileIsTooLarge =
             `<strong>@Localizer["Oops"]. . .</strong>@Localizer["File is limit to less than"]
-            ${OptimizeSizeShow( @(X_DOVEValues.MaxMultipartBodyLengthLimit/1_000_000))}`;
+            ${OptimizeSizeShow( `@(X_DOVEValues.MaxMultipartBodyLengthLimit/1_000_000)`)}`;
 
         var GetRemoveFileEleId = (Id) => `RemoveFileEle_${Id}`;
         var GetFileNameId = (Id) => `FileName_${Id}`;
@@ -103,7 +103,7 @@
         }
 
         function ReadMD5Tip(Id) {
-            UpdateProgress(Id, "@(Localizer["Reading"]). . .");
+            UpdateProgress(Id, `@(Localizer["Reading"]). . .`);
         }
 
         /**
@@ -171,7 +171,7 @@
             });
             //  console.log(`File8MD5s >${JSON.stringify( File8MD5s)}`);
             $.ajax({
-                url: "@(Url.Action("CheckMD5"))",
+                url: `@(Url.Action("CheckMD5"))`,
                 type: "POST",
                 data: {
                     LContrastMD5: {
@@ -214,7 +214,7 @@
                 _FormData.append("InDirId", InDirId);
                 _FormData.append("Id", Id_);
                 $.ajax({
-                    url: "@(Url.Action("Create"))",
+                    url: `@(Url.Action("Create"))`,
                     type: "POST",
                     data: _FormData,
                     processData: false,
@@ -256,7 +256,7 @@
                         }
                     },
                     error: function () {
-                        MakeAlert("danger", "@Localizer["An error has occurred. . . , engineers are on their way"]");
+                        MakeAlert("danger", `@Localizer["An error has occurred. . . , engineers are on their way"]`);
                     }
                 });
             });
@@ -283,7 +283,7 @@
         * @@param {String} Id The id of file
         */
         function GetMD58AddToArray(Id) {
-            $(`#${Id}`).show(); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            $(`#${Id}`).show();
             var File_ = document.getElementById(GetFileInputId(Id)).files[0];
             if (File_.size > MaxMultipartBodyLength) {   //  (FileLimit) * 1024 * 1024
                 ShowFileTooLarge8RemoveFileEle();
@@ -324,7 +324,7 @@
                 }
             };
             FileReader_.onerror = function () {
-                        MakeAlert("danger", "@Localizer["An error has occurred. . . , engineers are on their way"]");
+                        MakeAlert("danger", `@Localizer["An error has occurred. . . , engineers are on their way"]`);
             };
             function loadNext() {
                 var Start = CurrentChunk * ChunkSize,
@@ -370,8 +370,6 @@
                 zoom: 120%;
             }
 
-        .form-group {
-        }
 
         #BackA {
             margin-top: 10px;
@@ -382,41 +380,3 @@
         }
     </style>
 }
-
-
-@*
-
-
-        [name='FileDIV']:after {
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            </div>
-        </form>
-
-    <div class="form-group">
-        <label asp-for="UserId" class="control-label"></label>
-        <input asp-for="UserId" class="form-control" />
-        <span asp-validation-for="UserId" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="SharedCode" class="control-label"></label>
-        <input asp-for="SharedCode" class="form-control" />
-        <span asp-validation-for="SharedCode" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="DOGenerating" class="control-label"></label>
-        <input asp-for="DOGenerating" class="form-control" />
-        <span asp-validation-for="DOGenerating" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="InDirId" class="control-label"></label>
-        <input asp-for="InDirId" class="form-control" />
-        <span asp-validation-for="InDirId" class="text-danger"></span>
-    </div>
-*@

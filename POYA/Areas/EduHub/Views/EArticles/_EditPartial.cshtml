@@ -80,11 +80,11 @@
                             }
                         </div>
                         <div class="row" id="video_row_div">
-                            <a class="btn btn-outline-info" id="VideoSelectEle">@Localizer["Select video"]</a>
+                            <a class="btn btn-outline-info" id="VideoSelectEle">@(Localizer["Select video"])</a>
                         </div>
                     </div>
                     <div class="col offset-1 col-5" id="attachment_div">
-                        <span class="row">@Localizer["Upload attachments for your article"]</span>
+                        <span class="row">@(Localizer["Upload attachments for your article"])</span>
                         <div class="col" id="attachment_list_div">
                             @if (IsEdit)
                             {
@@ -96,7 +96,7 @@
                             }
                         </div>
                         <div class="row" id="attachment_row_div">
-                            <a class="btn btn-outline-info" id="AttachmentSelectBtn">@Localizer["Select attachment"]</a>
+                            <a class="btn btn-outline-info" id="AttachmentSelectBtn">@(Localizer["Select attachment"])</a>
                         </div>
 
                     </div>
@@ -294,7 +294,7 @@
     function GetMD5(Id,  IsEArticleVideo = false) {
 
         var File_ = File_ = document.getElementById(Id).files[0];
-        $("#SaveProgressEle").html(`@Localizer["Read file . . ."]`);
+        $("#SaveProgressEle").html(`@Localizer["Read file"] . . .`);
 
 
         var BlobSlice_ = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,

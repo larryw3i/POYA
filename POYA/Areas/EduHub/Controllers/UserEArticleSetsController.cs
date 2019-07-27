@@ -323,9 +323,7 @@ namespace POYA.Areas.EduHub.Controllers
                 !System.IO.File.Exists(X_DOVEValues.FileStoragePath(_hostingEnv)
                 + _userEArticleHomeInfo.CoverFileMD5))
             {
-                //  return File(_FileBytes, _userEArticleHomeInfo.CoverFileContentType, $"EARTICLE_HOME_COVER_{_UserId}", true);
                 _FileBytes = await System.IO.File.ReadAllBytesAsync(_hostingEnv.WebRootPath + "/img/earticle_home_default_img.webp");
-                //  _ContentType = ;
             }
             else
             {
