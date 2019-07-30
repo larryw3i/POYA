@@ -277,24 +277,31 @@ namespace POYA.Areas.XAd.Controllers
         {
             if (id != xAdCustomer.Id)
             {
+                Console.WriteLine($">> ID");
                 return NotFound();
             }
 
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var _LicenseImgCount = _context.XAdCustomerLicenses.Where(p => p.XAdCustomerUserId == UserId_).CountAsync().GetAwaiter().GetResult()
-                - xAdCustomer.WillBeDeletedLicenseImgIds.Count()
-                + xAdCustomer.LicenseImgFiles.Count();
+                - (xAdCustomer.WillBeDeletedLicenseImgIds?.Count()??0)
+                + (xAdCustomer.LicenseImgFiles?.Count()??0);
 
-            if (3 < _LicenseImgCount || _LicenseImgCount > 5)
+            if (3 > _LicenseImgCount || _LicenseImgCount > 5)
             {
+                Console.WriteLine($">> Length {_LicenseImgCount}");
                 return NotFound();
             }
+            var IsLicenseImgFilesNull = (xAdCustomer.LicenseImgFiles?.Count() ?? 0) < 1;
+            var IsStoreIconFileull = xAdCustomer?.StoreIconFile == null;
 
-            {   //  SIZE CHECK
+            if (!IsLicenseImgFilesNull || !IsStoreIconFileull)
+            {
+                //  IMAGE SIZE CHECK
                 var IsSizeValid = true;
-                xAdCustomer.LicenseImgFiles.RemoveAll(p=>p.Length<1);
-                var _FilesLength = xAdCustomer.LicenseImgFiles.Select(p=>p.Length).ToList();
-                _FilesLength.Add(xAdCustomer?.StoreIconFile?.Length??0);
+                if(!IsLicenseImgFilesNull)xAdCustomer.LicenseImgFiles.RemoveAll(p => p.Length < 1);
+
+                var _FilesLength = IsLicenseImgFilesNull ? new List<long>(): xAdCustomer.LicenseImgFiles?.Select(p => p?.Length??0).ToList();
+                _FilesLength.Add(xAdCustomer?.StoreIconFile?.Length ?? 0);
                 _FilesLength.ForEach(p =>
                 {
                     if (p > 2 * 1024 * 1024)
@@ -306,8 +313,8 @@ namespace POYA.Areas.XAd.Controllers
                 {
                     return NotFound();
                 }
-            } 
-
+            }
+        
             if (ModelState.IsValid)
             {
                 try
@@ -317,6 +324,9 @@ namespace POYA.Areas.XAd.Controllers
                     {
                         return NotFound();
                     }
+                    _xAdCustomer.Name = xAdCustomer.Name;
+                    _xAdCustomer.Intro = xAdCustomer.Intro;
+                    _xAdCustomer.Address = xAdCustomer.Address;
 
                     if (xAdCustomer?.StoreIconFile != null)
                     {
@@ -332,31 +342,33 @@ namespace POYA.Areas.XAd.Controllers
                         }
                         var _MD5 =_JObject[RESULT_MD5_String].ToString();
                         _xAdCustomer.StoreIconMD5 = _MD5;
+                        _xAdCustomer.StoreIconContentType = xAdCustomer.StoreIconFile.ContentType;
                       
                     }
-                    if (xAdCustomer.WillBeDeletedLicenseImgIds.Count() > 0)
+                    if ((xAdCustomer.WillBeDeletedLicenseImgIds?.Count()??0) > 0)
                     {
                         _context.XAdCustomerLicenses
                             .RemoveRange(await _context.XAdCustomerLicenses.Where(p=>xAdCustomer.WillBeDeletedLicenseImgIds.Contains(p.Id)).ToListAsync());
                     }
-
-                    foreach(var f in xAdCustomer.LicenseImgFiles)
+                    if (!IsLicenseImgFilesNull)
                     {
-                        var _JObject = await SaveImgAndGetMD5sAsync(f);
-                        if (Convert.ToBoolean(_JObject[RESULT_IS_SUCCESSFUL_String]) == false)
+                        foreach (var f in xAdCustomer.LicenseImgFiles)
                         {
-                            var _REASON = _JObject[REASON_String].ToString();
-                            if (_REASON == REASON_REPEAT_String)
+                            var _JObject = await SaveImgAndGetMD5sAsync(f);
+                            if (Convert.ToBoolean(_JObject[RESULT_IS_SUCCESSFUL_String]) == false)
                             {
-                                ModelState.AddModelError(nameof(XAdCustomer.LicenseImgFiles), _localizer["The license image is repeated"]);
+                                var _REASON = _JObject[REASON_String].ToString();
+                                if (_REASON == REASON_REPEAT_String)
+                                {
+                                    ModelState.AddModelError(nameof(XAdCustomer.LicenseImgFiles), _localizer["The license image is repeated"]);
+                                }
+                                return View(xAdCustomer);
                             }
-                            return View(xAdCustomer);
+                            var _MD5 = _JObject[RESULT_MD5_String].ToString();
+                            await _context.XAdCustomerLicenses.AddAsync(new XAdCustomerLicense { ImgFileContentType = f.ContentType, ImgFileMD5 = _MD5, XAdCustomerUserId = UserId_ });
+
                         }
-                        var _MD5 = _JObject[RESULT_MD5_String].ToString();
-                        await _context.XAdCustomerLicenses.AddAsync(new XAdCustomerLicense {  ImgFileContentType=f.ContentType, ImgFileMD5=_MD5, XAdCustomerUserId=UserId_});
-
                     }
-
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
