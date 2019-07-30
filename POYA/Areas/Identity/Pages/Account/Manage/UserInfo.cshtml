@@ -1,5 +1,6 @@
 ﻿@page
 @using POYA.Models
+@using POYA.Unities.Helpers;
 @model UserInfoModel
 @{
     ViewData["Title"] = Localizer["Your information"];
@@ -160,7 +161,7 @@
                 processData: false,
                 dataType: "json",
                 headers: {
-                "L-XSRF-TOKEN": "@(CSRF.GetAndStoreTokens(HttpContext).RequestToken)"
+                "@(X_DOVEValues.CustomHeaderName)": "@(CSRF.GetAndStoreTokens(HttpContext).RequestToken)"
                 },
                 success: function (data) {
                     if (data["status"] == true) {

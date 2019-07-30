@@ -1,6 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using POYA.Unities.Helpers;
 @{
     var _MenuToolbar = ViewData["MenuToolbar"];
     var _ContentEditor = ViewData["ContentEditor"];
@@ -82,7 +83,7 @@
         Editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024;
         Editor.customConfig.uploadImgMaxLength = 8;
         Editor.customConfig.uploadImgHeaders = {
-            "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
+            "@(X_DOVEValues.CustomHeaderName)": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
         };
         Editor.customConfig.uploadFileName = 'EArticleImages';
         Editor.customConfig.zIndex = 1;

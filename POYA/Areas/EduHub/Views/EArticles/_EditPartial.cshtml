@@ -12,6 +12,7 @@
 *@
 
 @using POYA.Areas.EduHub.Models;
+@using POYA.Unities.Helpers;
 @model POYA.Areas.EduHub.Models.EArticle
 
 @{
@@ -171,7 +172,7 @@
             async: true,
             //  contentType: "multipart/form-data",
             headers: {
-                "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
+                "@(X_DOVEValues.CustomHeaderName)": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
             },
             /**
              * REFERENCE    https://www.jianshu.com/p/eb119affdc25
@@ -252,7 +253,7 @@
                 type: "POST",
                 data: { "id": id },
                 headers: {
-                    "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
+                    "@(X_DOVEValues.CustomHeaderName)": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
                 },
                 success: function () {
                     $(`#${FileRemoveEleId(id)}`).remove();
@@ -370,7 +371,7 @@
             data: { eArticleFileMD5s: eArticleFileMD5s },
 
             headers: {
-                "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
+                "@(X_DOVEValues.CustomHeaderName)": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
             },
             dataType: "json",
             success: function (Response) {

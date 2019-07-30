@@ -27,6 +27,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 namespace POYA.Unities.Helpers
 {
+    /// <summary>
+    /// Some mothods
+    /// </summary>
     public class X_DOVEHelper
     {
 
@@ -107,6 +110,9 @@ namespace POYA.Unities.Helpers
         }
     }
 
+    /// <summary>
+    /// Some values
+    /// </summary>
     public static class X_DOVEValues
     {
         /// <summary>
@@ -159,6 +165,8 @@ namespace POYA.Unities.Helpers
         /// "Administrator"
         /// </summary>
         public static string _administrator = "Administrator";
+
+        public static string CustomHeaderName = "L-XSRF-TOKEN";
 
         /// <summary>
         /// Get the full path of the dir file or directory is included

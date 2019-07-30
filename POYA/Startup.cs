@@ -55,7 +55,7 @@ namespace POYA
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()  
@@ -136,7 +136,7 @@ namespace POYA
                 options.MultipartBodyLengthLimit = X_DOVEValues.MaxMultipartBodyLengthLimit;
             });
 
-            services.AddAntiforgery(options => options.HeaderName = "L-XSRF-TOKEN");
+            services.AddAntiforgery(options => options.HeaderName =X_DOVEValues.CustomHeaderName);
 
         }
 

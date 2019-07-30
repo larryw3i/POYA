@@ -139,7 +139,7 @@
                 processData: false,
                 contentType: false,
                 headers: {
-                    "L-XSRF-TOKEN": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
+                    "@(X_DOVEValues.CustomHeaderName)": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
                 },
                 success: function () {
                     InitHomeComment =String( $("#UserEArticleHomeInfo_Comment").val());

@@ -180,7 +180,7 @@
                 },
                 dataType: "json",
                 headers: {
-                    "L-XSRF-TOKEN": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"
+                    "@(X_DOVEValues.CustomHeaderName)": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"
                 },
 
                 /**
@@ -221,7 +221,7 @@
                     contentType: false,
                     //  contentType: "multipart/form-data",
                     headers: {
-                        "L-XSRF-TOKEN": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"
+                        "@(X_DOVEValues.CustomHeaderName)": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"
                     },
                     /**
                      * REFERENCE    https://www.jianshu.com/p/eb119affdc25
