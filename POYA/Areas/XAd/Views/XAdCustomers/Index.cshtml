@@ -17,9 +17,11 @@
         <div class="text-center our-advertisers">@(Localizer["Our advertisers"])</div>
         <hr />
         <div class="col col-auto Store-Icon-Col text-center">
-            @foreach(var m in Model)
-            {
-                <img src='@Url.Action(nameof(XAdCustomersController.GetXAdCustomerFilesAsync),new { MD5=m.StoreIconMD5})' class="Store-Icon" id="@(m.Id)" title="@(m.Name)"/>
+            @{
+                foreach(var m in Model)
+                {
+                    <img src='@Url.Action(nameof(XAdCustomersController.GetXAdCustomerFilesAsync),new { MD5=m.StoreIconMD5})' class="Store-Icon" id="@(m.Id)" title="@(m.Name)"/>
+                }
             }
         </div>
     </div>
