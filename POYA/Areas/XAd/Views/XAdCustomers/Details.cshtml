@@ -13,6 +13,7 @@
 }
 
 <div>
+    <a class="btn btn-outline-info float-right" asp-action="Create" asp-controller="LAd">@(Localizer["Place an advertisement"])</a>
     <hr />
     <img src='@Url.Action(nameof(XAdCustomersController.GetXAdCustomerFilesAsync),new { MD5=Model.StoreIconMD5})' class="Store-Icon" title='@(Model.Name)'/>
     <dl class="row">
@@ -51,7 +52,9 @@
         <span class="User-License-Images-Text">@Localizer["Your license images"]</span>
         <div class="Store-License-Container">
             @foreach(var lm in ViewData[nameof(ApplicationDbContext.XAdCustomerLicenses)] as List<XAdCustomerLicense>){
-                <img src='@Url.Action(nameof(XAdCustomersController.GetXAdCustomerFilesAsync),new { MD5=lm.ImgFileMD5})' class="Store-License" title='@(Model.Name) @Localizer["license image"]'/>
+                <img src='@Url.Action(nameof(XAdCustomersController.GetXAdCustomerFilesAsync),new { MD5=lm.ImgFileMD5})' 
+                class="Store-License" 
+                title='@(Model.Name) @Localizer["license image"]'/>
             }
         </div>
     }
@@ -72,27 +75,24 @@
 }
 
 @section Styles{
-<style>
-    .User-License-Images-Text{
-        font-weight:800;
-    }
-    .Store-License-Container{
-        padding:20px;
-    }
-    .Store-Icon{
-        max-height: 50%;
-        max-width: 50%;
-    }
-    .Store-License{
-        max-height: 20%;
-        max-width: 20%;
-        margin-left: 10px;
-    }
-    .Store-Icon:hover,.Store-License:hover{
-        animation: StoreIconHoverAnimation 0.2s linear forwards;
-    }
-
- 
-
-</style>
+    <style>
+        .User-License-Images-Text{
+            font-weight:800;
+        }
+        .Store-License-Container{
+            padding:20px;
+        }
+        .Store-Icon{
+            max-height: 50%;
+            max-width: 50%;
+        }
+        .Store-License{
+            max-height: 20%;
+            max-width: 20%;
+            margin-left: 10px;
+        }
+        .Store-Icon:hover,.Store-License:hover{
+            animation: StoreIconHoverAnimation 0.2s linear forwards;
+        }
+    </style>
 }

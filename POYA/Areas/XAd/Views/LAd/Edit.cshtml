@@ -1,19 +1,11 @@
 @model POYA.Areas.XAd.Models.LAd
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"]=Localizer["Edit advertisement"];
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
-
-<h4>LAd</h4>
+<h4>@(ViewData["Title"])</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -48,8 +40,5 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a id="BackEle" class="btn btn-outline-info">&laquo;@(Localizer["Back"])</a>
 </div>
-
-</body>
-</html>
