@@ -348,9 +348,7 @@
     //
 
     function CheckMD5() {
-        // console.log("<<<<>>>");
-        if (ID8MD5Array.length < 1) SubmitForm(Editor);;
-        // console.log(">>>>>>>>>", JSON.stringify(ID8MD5Array));
+        if (ID8MD5Array.length < 1) SubmitForm(Editor);
         var eArticleFileMD5s = new Array();
 
         ID8MD5Array.forEach((value, index, array) => {
@@ -363,8 +361,6 @@
             });
         });
 
-        // console.log(">>>>>", eArticleFileMD5s);
-
         $.ajax({
             url: `@Url.Action("LCheckMD5v1")`,
             type: "POST",
@@ -375,21 +371,12 @@
             },
             dataType: "json",
             success: function (Response) {
-                //  console.log(Response);
-                //  console.log(ID8MD5Array);
                 Response.forEach((value, index, array) => {
 
                     if (value["IsUploaded"] == true) {
                         ID8MD5Array.forEach((v, i, a) => {
                             if (v["MD5"] == value["FileMD5"]) {
-                                //  RemoveFile(v["ID"])
-                                //  console.log($(`#${v["ID"]}`).length);
-                                //  console.log($(`#${v["ID"]}`).length);
-                                /// if ($(`#${v["ID"]}`).length > 0) {
-                                    $(`#${v["ID"]}`).remove();
-                                //  } else {
-                                //  $(`#${v["ID"]}`).remove();
-                                //  }
+                                $(`#${v["ID"]}`).remove();
                             }
                         });
                     }
@@ -403,12 +390,9 @@
 
     function FormSubmitClick() {
         CheckMD5();
-        // console.log(">>>")
         }
 
     $(document).ready(function () {
-
-        //  ReadyEditor(Editor);
 
         $("#video_list_div").hide();
         $("#attachment_list_div").hide();
