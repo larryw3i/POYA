@@ -127,4 +127,10 @@ namespace POYA.Areas.XAd.Models
         #endregion
     }
 
+    public class UserPraiseOr{
+        public Guid Id{get;set;}=Guid.NewGuid();
+        public string UserId{get;set;}
+        public bool IsPraise{get;set;}=true;
+    }
+
 }

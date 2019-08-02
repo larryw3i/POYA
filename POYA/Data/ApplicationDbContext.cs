@@ -30,7 +30,12 @@ namespace POYA.Data
         public DbSet<POYA.Areas.EduHub.Models.UserEArticleHomeInfo> UserEArticleHomeInfos { get; set; }
         public DbSet<POYA.Areas.XAd.Models.XAdCustomer> XAdCustomer { get; set; }
         public DbSet<POYA.Areas.XAd.Models.XAdCustomerLicense> XAdCustomerLicenses { get; set; }
-
+        public DbSet<POYA.Areas.XAd.Models.LAd> LAds{get;set;}
+        public DbSet<POYA.Areas.XAd.Models.LAdImage> LAdImages{get;set;}
+        public DbSet<POYA.Areas.XAd.Models.UserFeedback> UserFeedbacks{get;set;}
+        public DbSet<POYA.Areas.XAd.Models.UserFeedbackImage> UserFeedbackImages{get;set;}
+        public DbSet<POYA.Areas.XAd.Models.UserPraiseOr> UserPraiseOrs{get;set;}
+        
         #region 
 
         /*        
