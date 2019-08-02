@@ -61,7 +61,7 @@
                 @foreach (var i in _EArticleFiles_.Where(p => !p.IsEArticleVideo))
                 {
                     <br />
-                    <a asp-action="GetFile" asp-route-id="@(i.Id)" asp-controller="LUserFiles" asp-area="XUserFile" title="@Localizer["Get it"]" class="GetFile">@(i.FileName)</a>
+                    <a asp-action="GetFile" asp-route-id="@(i.Id)" asp-controller="LUserFiles" asp-area="XUserFile" title='@Localizer["Get it"]' class="GetFile">@(i.FileName)</a>
                 }
             }
         </dd>

@@ -9,7 +9,9 @@
     @foreach (var img in Model)
     {
         <span>
-            <img class="shared-img" id="@img.Id" data-toggle="tooltip" data-placement="auto" title="@Localizer["Click to get url"]" src="@Url.Action("GetFile","LUserFiles", new {img.Id})" />
+            <img class="shared-img" id="@img.Id" data-toggle="tooltip" data-placement="auto" 
+            title='@Localizer["Click to get url"]' 
+            src='@Url.Action("GetFile","LUserFiles", new {img.Id})' />
         </span>
     }
 </div>

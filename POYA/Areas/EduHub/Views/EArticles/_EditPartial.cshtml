@@ -30,7 +30,7 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group ">
                 <div class="row">
-                    <input asp-for="Title" class="form-control col offset-3 col-6" placeholder='@Localizer["Title"]' autocomplete="off" />
+                    <input asp-for="Title" class="form-control col offset-3 col-6" placeholder='@(Localizer["Title"])' autocomplete="off" />
 
                 </div>
                 <span asp-validation-for="Title" class="text-danger"></span>
@@ -275,7 +275,7 @@
     function LAttachmentsOnChange(id) {
         GetMD5(LAttachmentFileInputId(id), false);
         let _Value = $(`#LAttachments_${id}`).val();
-        let _Content = `<div class="SelectFileShowEle" title='@Localizer["Delete"]'  id="${FileRemoveEleId(id)}" ><span>${_Value}</span><span class='FileInputRemoveEle'  id="${FileRemoveSpanId(id)}" onclick="RemoveFile('${id}')"> x</span></div>`;
+        let _Content = `<div class="SelectFileShowEle" title='@(Localizer["Delete"])'  id="${FileRemoveEleId(id)}" ><span>${_Value}</span><span class='FileInputRemoveEle'  id="${FileRemoveSpanId(id)}" onclick="RemoveFile('${id}')"> x</span></div>`;
         $("#attachment_list_div").append(_Content);
     }
 

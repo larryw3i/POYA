@@ -1,75 +1,40 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
 @{
-    var Light = "Light";
-    var Dark = "Dark";
-    //  var Care = "Care";
-    var _black = "black";
-    var _white = "white";
-    var _C7EDCC = "#C7EDCC";
-    var _THEME = Context.Request.Cookies["THEME"] ?? Light;
-
-    //  var _Language = Context.Request.Cookies["CULTURE"] ?? "zh-CN";
+        var Light_String="Light";
+        var Dark_String="Dark";
+        var C7EDCC_String="_C7EDCC";
+        var White_String="white";
+        var Black_String="black";
+        var THEME_String=Context.Request.Cookies["THEME"]??Light_String;
+    
 }
-<style>
-   
-    .pagination>li>a{
-        background-color:@(_THEME==Dark?_black:_THEME==Light?_white:_C7EDCC);
-    }
-        .pagination>li>a:hover{
-            background-color:@(_THEME==Dark?_black:_C7EDCC);
-        }
 
-    #_body,footer,.dropdown *,select{
-        background-color:@(_THEME==Dark?_black:_THEME==Light?_white:_C7EDCC);
-        color:@(_THEME==Dark?_C7EDCC:_black)
-    }
-    .table{
-        color:@(_THEME==Dark?_white:_black);
-    }
-    input[class=form-control],textarea[class=form-control]{
-        background-color:@(_THEME==Light?_white:_C7EDCC);
-    }
-    .button{
-        color:@(_THEME==Dark?_C7EDCC:_black);
-    }
-    select,.card{
-        background-color:@(_THEME==Dark?_black:_THEME==Light?_white:_C7EDCC);
-        color:@(_THEME==Dark?_C7EDCC:_black)
-    }
+<script>
+    $(document).ready(function(){
+        $(`.pagination>li>a`)
+            .css(`background-color`,`@(THEME_String==Dark_String?Black_String:THEME_String==Light_String?White_String:C7EDCC_String)`);
+        $(`.pagination>li>a:hover`)
+            .css("background-color",`@(THEME_String==Dark_String?Black_String:C7EDCC_String)`);
+        $(`#_body,footer,.dropdown *,select`)
+            .css({
+                "background-color":`@(THEME_String==Dark_String?Black_String:THEME_String==Light_String?White_String:C7EDCC_String)`,
+                `color`:`@(THEME_String==Dark_String?C7EDCC_String:Black_String)`
+            });
+        $(`.table`)
+            .css("color",`@(THEME_String==Dark_String?White_String:Black_String)`);
+        $(`input[class=form-control],textarea[class=form-control]`)
+            .css(`background-color`,`@(THEME_String==Light_String?White_String:C7EDCC_String)`);
+        $(`.button`)
+            .css(`color`,`@(THEME_String==Dark_String?C7EDCC_String:Black_String)`);
+        $(`select,.card`)
+            .css({
+                `background-color`:`@(THEME_String==Dark_String?Black_String:THEME_String==Light_String?White_String:C7EDCC_String)`,
+                `color`:`@(THEME_String==Dark_String?C7EDCC_String:Black_String)`
+            });
+        $(`[name='UserAvatarImg']`)
+            .css(`background-color`,`@(THEME_String==Dark_String?Black_String:THEME_String==Light_String?White_String:C7EDCC_String)`);
+        $(`#_ContentEditor`)
+            .css(`color`,`@(THEME_String==Dark_String?C7EDCC_String:Black_String)`)
 
-    [name='UserAvatarImg']{
-        background-color:@(_THEME==Dark?_black:_THEME==Light?_white:_C7EDCC);
-    }
-    #_ContentEditor{
-        color:@(_THEME==Dark?_C7EDCC:_black);
-    }
-</style>
-
-@*
-     .NavAvatarEle{
-        background-color:@(_THEME==Dark?_black:_THEME==Light?_white:_C7EDCC);
-    }
-
-    case "Dark":
-        $("#_body,footer,.dropdown *,select").css({ "background-color": "black", "color": "#C7EDCC" });
-        $(".table").css("color", "#C7EDCC");
-        $("input[class=form-control]").css({ "background-color": "#C7EDCC" });
-        $("button").css({ "color": "#C7EDCC" });
-        $("select,.card").css({ "background-color": "black", "color": "#C7EDCC" });
-        break;
-    case "Light":
-        $("#_body,footer,.dropdown *,select,.card").css({ "background-color": "white", "color": "blue" });
-        $(".table").css("color", "black");
-        $("input[class=form-control]").css({ "background-color": "white" });
-        $("button").css({ "color": "black" });
-        $("select").css({ "background-color": "white" });
-        break;
-    default:
-        $("#_body,footer,.dropdown *,select").css({ "background-color": "#C7EDCC", "color": "blue" });
-        $(".table").css("color", "black");
-        $("button").css({ "color": "black" });
-        $("input[type!='submit'],.card").css({ "background-color": "#C7EDCC", "color": "black" });
-        break;
-*@
+    });
+</script>

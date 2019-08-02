@@ -14,7 +14,7 @@
 
 <form asp-action="Delete">
     <input type="hidden" asp-for="Id" />
-    <a asp-action="Index" asp-route-InDirId="@(Model.InDirId)" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
+    <a asp-action="Index" asp-route-InDirId="@(Model.InDirId)" class="btn btn-outline-info">&laquo; @(Localizer["Back"])</a>
     <input type="submit" value="Delete" class="btn btn-danger" />
 </form>
 
@@ -26,50 +26,3 @@
         }
     </style>
 }
-
-@*
-        Partial view for index
-    @model IEnumerable<POYA.Models.LUserFile>
-
-    @{
-        Layout = null;
-    }
-
-    <h5>@Localizer["Delete files"]</h5>
-
-    <h6>
-        @string.Format(@Localizer["Are you sure you want to delete {0} files"], Model.Count())?
-        <span>
-            <a class="btn btn-outline-info" onclick="_Service.DeleteFilesConfirmed()">@Localizer["Delete"]</a>
-        </span>
-    </h6>
-    <div>
-        <hr />
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.DOGenerating)
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td name='FileName'>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @(item.DOGenerating.LocalDateTime.ToShortDateString())
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-
-*@

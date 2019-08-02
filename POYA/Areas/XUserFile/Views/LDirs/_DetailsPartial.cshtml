@@ -5,13 +5,13 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @(Html.DisplayNameFor(model => model.Name))
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @(Html.DisplayFor(model => model.Name))
         </dd>
         <dt class="col-sm-2">
-            @Localizer["Date of making"]
+            @(Localizer["Date of making"])
         </dt>
         <dd class="col-sm-10">
             @(Model.DOCreate.LocalDateTime)
@@ -20,7 +20,7 @@
             @(Localizer["In directory"])
         </dt>
         <dd class="col-sm-10">
-            @(Html.DisplayFor(model => model.InDirName)) ( <span class="InFullPathSpan">@Model.InFullPath</span> )
+            @(Html.DisplayFor(model => model.InDirName)) ( <span class="InFullPathSpan">@(Model.InFullPath)</span> )
         </dd>
 
     </dl>

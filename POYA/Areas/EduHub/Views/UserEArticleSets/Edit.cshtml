@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h4>@Localizer["Edit"] @(Model.Name)</h4>
+<h4>@(Localizer["Edit"]) @(Model.Name)</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -30,7 +30,7 @@
                 <span asp-validation-for="Comment" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <a id="BackA" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
+                <a id="BackA" class="btn btn-outline-info">&laquo; @(Localizer["Back"])</a>
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

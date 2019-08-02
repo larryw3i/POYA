@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@Localizer["Edit for"]<span class="directorySpan">&#128448;(@Model.InFullPath)</span></h1>
+<h1>@(Localizer["Edit for"])<span class="directorySpan">&#128448;(@(Model.InFullPath))</span></h1>
 
 <hr />
 <div class="row">

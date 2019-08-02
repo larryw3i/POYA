@@ -24,8 +24,8 @@
 <div id="OperationEle">
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <a id="BackA" class="btn btn-outline-info">&laquo; @Localizer["Back"]</a>
-        <input type="submit" value="@Localizer["Delete"]" class="btn btn-danger" />
+        <a id="BackA" class="btn btn-outline-info">&laquo; @(Localizer["Back"])</a>
+        <input type="submit" value='@Localizer["Delete"]' class="btn btn-danger" />
     </form>
 </div>
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -55,7 +56,7 @@ namespace POYA
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()  
@@ -122,8 +123,6 @@ namespace POYA
             services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddSingleton<HtmlSanitizer>(new HtmlSanitizer());
-
-            //  services.AddSingleton<AppInitialization>(new AppInitialization(services));
 
             services.AddSingleton<X_DOVEHelper>(x_DOVEHelper);
 
