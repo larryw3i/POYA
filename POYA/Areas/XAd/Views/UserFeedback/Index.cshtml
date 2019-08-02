@@ -1,4 +1,4 @@
-@model IEnumerable<POYA.Areas.XAd.Models.LAd>
+@model IEnumerable<POYA.Areas.XAd.Models.UserFeedback>
 
 @{
     Layout = null;
@@ -19,16 +19,13 @@
     <thead>
         <tr>
             <th>
-                @(Html.DisplayNameFor(model => model.AdvertiserUserId))
+                @(Html.DisplayNameFor(model => model.UserId))
             </th>
             <th>
-                @(Html.DisplayNameFor(model => model.Title))
+                @(Html.DisplayNameFor(model => model.DOFeedback))
             </th>
             <th>
-                @(Html.DisplayNameFor(model => model.Content))
-            </th>
-            <th>
-                @(Html.DisplayNameFor(model => model.DOPublishing))
+                @(Html.DisplayNameFor(model => model.Comment))
             </th>
             <th></th>
         </tr>
@@ -37,16 +34,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @(Html.DisplayFor(modelItem => item.AdvertiserUserId))
+                @(Html.DisplayFor(modelItem => item.UserId))
             </td>
             <td>
-                @(Html.DisplayFor(modelItem => item.Title))
+                @(Html.DisplayFor(modelItem => item.DOFeedback))
             </td>
             <td>
-                @(Html.DisplayFor(modelItem => item.Content))
-            </td>
-            <td>
-                @(Html.DisplayFor(modelItem => item.DOPublishing))
+                @(Html.DisplayFor(modelItem => item.Comment))
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

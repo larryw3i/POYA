@@ -1,4 +1,4 @@
-@model POYA.Areas.XAd.Models.LAd
+@model POYA.Areas.XAd.Models.UserFeedback
 
 @{
     Layout = null;
@@ -15,32 +15,26 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>LAd</h4>
+    <h4>UserFeedback</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @(Html.DisplayNameFor(model => model.AdvertiserUserId))
+            @(Html.DisplayNameFor(model => model.UserId))
         </dt>
         <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.AdvertiserUserId))
+            @(Html.DisplayFor(model => model.UserId))
         </dd>
         <dt class = "col-sm-2">
-            @(Html.DisplayNameFor(model => model.Title))
+            @(Html.DisplayNameFor(model => model.DOFeedback))
         </dt>
         <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.Title))
+            @(Html.DisplayFor(model => model.DOFeedback))
         </dd>
         <dt class = "col-sm-2">
-            @(Html.DisplayNameFor(model => model.Content))
+            @(Html.DisplayNameFor(model => model.Comment))
         </dt>
         <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.Content))
-        </dd>
-        <dt class = "col-sm-2">
-            @(Html.DisplayNameFor(model => model.DOPublishing))
-        </dt>
-        <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.DOPublishing))
+            @(Html.DisplayFor(model => model.Comment))
         </dd>
     </dl>
     
