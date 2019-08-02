@@ -20,7 +20,12 @@
     var EArticleFiles = IsEdit ? ViewData["EArticleFiles"] as List<EArticleFile> : null;
     var FileRemoveEleString = "FileRemoveEle_";
     var IsVideoFileUploaded = IsEdit ? EArticleFiles.Any(p => p.IsEArticleVideo) : false;
-    var _ViewDataDictionary = new ViewDataDictionary(ViewData) { { "MenuToolbar", "MenuToolbar" }, { "ContentEditor", "_ContentEditor" } };
+    var _EditorPartialViewDataDictionary = new ViewDataDictionary(ViewData) { 
+        { "MenuToolbar", "MenuToolbar" }, 
+        { "ContentEditor", "_ContentEditor" }, 
+        { "UploadFileName","EArticleImages"},
+        { "UploadImgServer",Url.Action("UploadEArticleImage")}
+    };
 }
 
 <div class="row">
@@ -117,7 +122,7 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/wangEditor-3.1.1/release/wangEditor.min.js"></script>
 <script src="~/lib/js-spark-md5/spark-md5.min.js"></script>
-<partial name="_DefaultEditorPartial" view-data="_ViewDataDictionary" />
+<partial name="_DefaultEditorPartial" view-data="_EditorPartialViewDataDictionary" />
 <script>
 
     var ID8MD5Array = new Array();
@@ -206,9 +211,9 @@
     }
 
     //    DATA
-      var _CategoryId = "@Model.CategoryId";
-        var _GuidEmpty = "@(Guid.Empty)";
-        var _IsEdit =Boolean(`@IsEdit?"":"0"`);   //  @(IsEdit?"true":"false");
+    var _CategoryId = "@Model.CategoryId";
+    var _GuidEmpty = "@(Guid.Empty)";
+    var _IsEdit =Boolean(`@IsEdit?"":"0"`);   //  @(IsEdit?"true":"false");
     function HandleCategorySelect() {
 
         if (_CategoryId != _GuidEmpty) {
@@ -333,7 +338,6 @@
         loadNext();
     }
 
-    //
     /**
     * (Id ,MD5) ===> ID8MD5Array
     * @@param {string}Id -The id of file input element

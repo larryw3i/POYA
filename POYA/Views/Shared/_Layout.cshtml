@@ -10,7 +10,6 @@
 @inject IOptions<RequestLocalizationOptions> LocOptions
 
 @{
-    #region     READY
     var _THEME = Context.Request.Cookies["THEME"] ?? "Light";
    
     var ThemeSelectListItems = new List<SelectListItem>{
@@ -26,8 +25,8 @@
         .Select(c => new SelectListItem { Value = c.Name, Text =Localizer[ c.DisplayName] })
         .ToList();
 
-    #endregion
 }
+
 <html>
 
 <head>
@@ -46,10 +45,10 @@
               crossorigin="anonymous"
               integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
+    <partial name="_ThemeCssPartial"/>
     <link rel="stylesheet" href="~/css/site.css" />
-    <link href='~/img/chat_with_friends_ico.webp' rel="icon" type="image/webp">
     @(RenderSection("Styles", required: false))
-    <partial name="_CssPartial.cshtml" />
+    <link href='~/img/chat_with_friends_ico.webp' rel="icon" type="image/webp"/>
 </head>
 
 <body id="_body">
