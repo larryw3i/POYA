@@ -19,9 +19,11 @@
     <div class="col-12">
         <form asp-action='@(IsEdit?"Edit":"Create")' id="@RandomFormId" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @if (IsEdit)
-            {
-                <input asp-for="Id" hidden/>
+            @{
+                if (IsEdit)
+                {
+                    <input asp-for="Id" hidden/>
+                }
             }
 
             <div class="form-group col col-5">

@@ -140,62 +140,13 @@ namespace POYA.Controllers
             return Json(new { status = true });
         }
 
-
-        /// <summary>
-        /// PART FROM   https://www.cnblogs.com/wjshan0808/p/5909174.html
-        /// THANK       https://www.cnblogs.com/wjshan0808/
-        /// </summary>
-        /// <param name="ImageBytes">The MemoryStream of image</param> 
-        /// <returns></returns>
-        private byte[] MakeCircleImage(MemoryStream ImageMemoryStream)
-        {
-            var img = Image.FromStream(ImageMemoryStream);
-            var _min = Math.Min(img.Height, img.Width);
-            var b = new Bitmap(_min, _min);
-            using (var g = Graphics.FromImage(b))
-            {
-                g.DrawImage(image: img,
-                    width: img.Width,
-                    height: img.Height,
-                    x: (-(img.Width - _min) / 2),
-                    y: (-(img.Height - _min) / 2));
-                var r = _min / 2;
-                var c = new PointF(_min / 2.0F, _min / 2.0F);
-                for (int h = 0; h < _min; h++)
-                {
-                    for (var w = 0; w < _min; w++)
-                    {
-                        if ((int)Math.Pow(r, 2) < ((int)Math.Pow(w * 1.0 - c.X, 2) + (int)Math.Pow(h * 1.0 - c.Y, 2)))
-                        {
-                            b.SetPixel(w, h, Color.Transparent);
-                        }
-                    }
-                }
-                using (var p = new Pen(Color.Transparent))
-                    g.DrawEllipse(p, 0, 0, _min, _min);
-            }
-            var ms = new MemoryStream();
-
-            #region COMPRESS
-            /**
-             * We had to make some sacrifices in order to the load faster
-             * REFERENCE    https://docs.microsoft.com/en-us/dotnet/framework/winforms/advanced/how-to-set-jpeg-compression-level
-             * THANK        https://github.com/dotnet/docs/blob/master/docs/framework/winforms/advanced/how-to-set-jpeg-compression-level.md
-             */
-            var AvatarEncoderParameters = new EncoderParameters(1);
-            AvatarEncoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, 8L);
-            #endregion
-
-            b.Save(ms, ImageCodecInfo.GetImageDecoders().FirstOrDefault(p => p.FormatID == ImageFormat.Jpeg.Guid), AvatarEncoderParameters);
-            return ms.ToArray();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        [Authorize]
         public IActionResult KeepLogin()
         {
             return Ok();
@@ -215,7 +166,7 @@ namespace POYA.Controllers
 
         private void AppInitialization()
         {
-            if (Convert.ToBoolean(_configuration["IsInitialized"]) == false)
+            if (!Convert.ToBoolean(_configuration["IsInitialized"]))
             {
                 var LFilesPath = _hostingEnv.ContentRootPath + "/Data/LFiles";
                 var AvatarPath = $"{LFilesPath}/Avatars";
@@ -240,17 +191,19 @@ namespace POYA.Controllers
                     if (_userRoles.Count() > 0)
                     {
                         foreach (var r in _userRoles)
-                        {
-                            _context.Roles.AddAsync(new IdentityRole { Name = r.ToUpper(), NormalizedName = r.ToUpper() }).GetAwaiter().GetResult();
+                        {   
+                            _context.Roles.AddAsync(new IdentityRole { Name = r, NormalizedName = r }).GetAwaiter().GetResult();
                         }
                     }
 
                     _context.SaveChangesAsync().GetAwaiter().GetResult();
 
                     var _user = _context.Users.FirstOrDefaultAsync(p => p.Email == _configuration["Administration:AdminEmail"]).GetAwaiter().GetResult();
+
                     if (_user != null)
                     {
                         var _roleId = _context.Roles.FirstOrDefaultAsync(p => p.Name == X_DOVEValues._administrator).GetAwaiter().GetResult().Id;
+
                         if (_roleId != null && !_context.UserRoles.AnyAsync(p => p.UserId == _user.Id && p.RoleId == _roleId).GetAwaiter().GetResult())
                         {
                             _context.UserRoles.AddAsync(new IdentityUserRole<string> { RoleId = _roleId, UserId = _user.Id }).GetAwaiter().GetResult();
@@ -258,7 +211,9 @@ namespace POYA.Controllers
                     }
                     #region MODIFY appsettings.json
                     var _appsettings_jsonPath = _hostingEnv.ContentRootPath + "/appsettings.json";
+
                     _context.SaveChangesAsync().GetAwaiter().GetResult();
+
                     var jo = JObject.Parse(System.IO.File.ReadAllTextAsync(_appsettings_jsonPath).GetAwaiter().GetResult());
                     jo["IsInitialized"] = true;
                     System.IO.File.WriteAllTextAsync(_appsettings_jsonPath, Convert.ToString(jo)).GetAwaiter().GetResult();

@@ -164,7 +164,7 @@ namespace POYA.Unities.Helpers
         /// <summary>
         /// "Administrator"
         /// </summary>
-        public static string _administrator = "Administrator";
+        public static string _administrator = "ADMINISTRATOR";
 
         public static string CustomHeaderName = "L-XSRF-TOKEN";
 
