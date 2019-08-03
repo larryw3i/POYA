@@ -89,6 +89,9 @@
 
   <!--***********************************************-->
   
+  <data name="Type details" xml:space="preserve">
+    <value>Type details</value>
+  </data>
   <data name="Place an advertisement" xml:space="preserve">
     <value>Place an advertisement</value>
   </data>

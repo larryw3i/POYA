@@ -1,43 +1,80 @@
 @model POYA.Areas.XAd.Models.LAd
 
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Http.Features
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"]=Localizer["Place an advertisement"];
+
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var UICulture_Name=requestCulture.RequestCulture.UICulture.Name;
+    var Ckeditor_UICulture_Name=UICulture_Name=="zh-Hans"?"zh-cn":UICulture_Name.Split('-')[0];
 }
 
 <h4>@(ViewData["Title"])</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-8">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
             <div class="form-group">
-                <label asp-for="AdvertiserUserId" class="control-label"></label>
-                <input asp-for="AdvertiserUserId" class="form-control" />
-                <span asp-validation-for="AdvertiserUserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
+                <input asp-for="Title" class="form-control" placeholder='@(Localizer["Title"])'/>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
+                <!-- The toolbar will be rendered in this container. -->
+                <div id="toolbar-container"></div>
+
+                <!-- This container will become the editable. -->
+                <div id="editor">
+                    <p>@(Localizer["Type details"])</p>
+                </div>
+
+                <textarea asp-for="Content" hidden></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DOPublishing" class="control-label"></label>
-                <input asp-for="DOPublishing" class="form-control" />
-                <span asp-validation-for="DOPublishing" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <a id="BackEle" class="btn btn-outline-info">&laquo;@(Localizer["Back"])</a>
+                <input type="submit" value='@(Localizer["Create"])' class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a id="BackEle" class="btn btn-outline-info">&laquo;@(Localizer["Back"])</a>
-</div>
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/ckeditor5-build-decoupled-document-12.3.1/ckeditor5-build-decoupled-document/ckeditor.js"></script>
+    <script src='~/lib/ckeditor5-build-decoupled-document-12.3.1/ckeditor5-build-decoupled-document/translations/@(Ckeditor_UICulture_Name).js'></script>
+    <script>
+        DecoupledEditor
+            .create( document.querySelector( '#editor' ),{
+                language: `@Ckeditor_UICulture_Name`
+            } )
+            .then( editor => {
+                const toolbarContainer = document.querySelector( '#toolbar-container' );
+
+                toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+}
+
+@section Styles{
+    <style>
+        #editor{
+            min-height: 500px;
+        }
+        #Title{
+            text-align:center;
+        }
+    </style>
+}

@@ -89,6 +89,9 @@
 
   <!--***********************************************-->
 
+  <data name="Type details" xml:space="preserve">
+    <value>详细. . .</value>
+  </data>
   <data name="Place an advertisement" xml:space="preserve">
     <value>刊登广告</value>
   </data>
