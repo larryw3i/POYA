@@ -56,18 +56,19 @@ The contents of **appsettings.json** are:
 **dotnet build**  
 **dotnet run**
 
-#### <span id="2">2(succinctly)</span>
+#### <span id="2">2(succinctly)</span>   
+
 ```powershell    
-#ps1
+#sh/ps1
 cd yourdir
-git clone https://github.com/1arrywei/POYA.git
+git clone https://github.com/larryw3i/POYA.git
 cd POYA
 cd POYA
-rename appsettings.json.txt appsettings.json
+cp appsettings.json.txt appsettings.json
 #modify appsettings.json
 dotnet build
 dotnet run
-```
+```     
 
 #### . . .
 

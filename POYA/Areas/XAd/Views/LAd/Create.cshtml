@@ -13,8 +13,7 @@
 
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     var UICulture_Name=requestCulture.RequestCulture.UICulture.Name;
-    var Ckeditor_UICulture_Name=UICulture_Name=="zh-Hans"?"zh-cn":UICulture_Name.Split('-')[0];
-      var _EditorPartialViewDataDictionary = new ViewDataDictionary(ViewData) { 
+    var _EditorPartialViewDataDictionary = new ViewDataDictionary(ViewData) { 
         { "MenuToolbar", "_MenuToolbar" }, 
         { "ContentEditor", "_ContentEditor" }, 
         { "UploadFileName","LAdImage"},
@@ -39,7 +38,6 @@
                 <div id="_ContentEditor" class="text">
                 </div>
                 <input asp-for="Content" hidden/>
-                <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <a id="BackEle" class="btn btn-outline-info">&laquo;@(Localizer["Back"])</a>

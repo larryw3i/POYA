@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Ganss.XSS;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -17,6 +18,7 @@ using POYA.Unities.Helpers;
 namespace POYA.Areas.XAd.Controllers
 {
     [Area("XAd")]
+    [Authorize]
     public class LAdController : Controller
     {
         #region     DI

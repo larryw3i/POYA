@@ -56,17 +56,18 @@
 **dotnet run**
 
 #### <span id="2">2(直截了当)</span>
+
 ```powershell    
-#这是powershell命令
+#sh/ps1
 cd yourdir
-git clone https://github.com/1arrywei/POYA.git
+git clone https://github.com/larryw3i/POYA.git
 cd POYA
 cd POYA
-rename appsettings.json.txt appsettings.json
-#更改 appsettings.json
+cp appsettings.json.txt appsettings.json
+#modify appsettings.json
 dotnet build
 dotnet run
-```
+```    
   
 
 #### . . .  
