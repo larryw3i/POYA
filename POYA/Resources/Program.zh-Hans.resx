@@ -89,6 +89,10 @@
 
   <!--***********************************************-->
 
+
+  <data name="Paragraph" xml:space="preserve">
+    <value>段落</value>
+  </data>
   <data name="Type details" xml:space="preserve">
     <value>详细. . .</value>
   </data>

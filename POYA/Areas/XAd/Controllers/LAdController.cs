@@ -184,5 +184,11 @@ namespace POYA.Areas.XAd.Controllers
         {
             return _context.LAds.Any(e => e.Id == id);
         }
+
+        #region DEPOLLUTION
+        public IActionResult UploadLAdImage(){
+            return NoContent();
+        }
+        #endregion
     }
 }

@@ -79,3 +79,26 @@
     Editor.create();
 
 </script>
+@(Html.Raw(@"
+    <style>
+        #"+(@_ContentEditor)+@" {
+            height: 500px;
+            border: dotted;
+            border-radius: 10px;
+            overflow: hidden;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+
+        .w-e-text {
+            overflow-y: scroll;
+        }
+
+        .w-e-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+    </style>
+"))

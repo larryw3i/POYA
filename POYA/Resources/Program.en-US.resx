@@ -89,6 +89,9 @@
 
   <!--***********************************************-->
   
+  <data name="Paragraph" xml:space="preserve">
+    <value>Paragraph</value>
+  </data>
   <data name="Type details" xml:space="preserve">
     <value>Type details</value>
   </data>

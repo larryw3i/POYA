@@ -16,6 +16,7 @@ namespace POYA.Areas.XAd.Controllers
         /// <returns></returns>
         #endregion
         public static string XAdImgFilePath(IHostingEnvironment _hostingEnv) => _hostingEnv.ContentRootPath + $"/Areas/XAd/Data/XAdImgFiles";
+        
     }
 
 }
