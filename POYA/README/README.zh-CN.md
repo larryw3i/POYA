@@ -61,8 +61,7 @@
 #sh/ps1
 cd yourdir
 git clone https://github.com/larryw3i/POYA.git
-cd POYA
-cd POYA
+cd POYA/POYA
 cp appsettings.json.txt appsettings.json
 #modify appsettings.json
 dotnet build
