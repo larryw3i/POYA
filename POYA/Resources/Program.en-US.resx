@@ -88,7 +88,125 @@
   </resheader>
 
   <!--***********************************************-->
+
+
+  <data name="Link text" xml:space="preserve">
+    <value>Link text</value>
+  </data> 
+
+  <data name="Link" xml:space="preserve">
+    <value>Link</value>
+  </data> 
+
+  <data name="Insert code" xml:space="preserve">
+    <value>Insert code</value>
+  </data> 
+
+  <data name="Insert" xml:space="preserve">
+    <value>Insert</value>
+  </data> 
+
+  <data name="col" xml:space="preserve">
+    <value>col</value>
+  </data> 
+
+  <data name="line" xml:space="preserve">
+    <value>line</value>
+  </data> 
+
+  <data name="Initial" xml:space="preserve">
+    <value>Initial</value>
+  </data> 
+
+  <data name="large" xml:space="preserve">
+    <value>large</value>
+  </data> 
+
+  <data name="x-large" xml:space="preserve">
+    <value>x-large</value>
+  </data> 
+
+  <data name="xx-large" xml:space="preserve">
+    <value>xx-large</value>
+  </data> 
   
+  <data name="normal" xml:space="preserve">
+    <value>normal</value>
+  </data> 
+
+  <data name="small" xml:space="preserve">
+    <value>small</value>
+  </data> 
+
+  <data name="x-small" xml:space="preserve">
+    <value>x-small</value>
+  </data> 
+
+  <data name="Font size" xml:space="preserve">
+    <value>Font size</value>
+  </data>  
+
+  <data name="Font color" xml:space="preserve">
+    <value>Font color</value>
+  </data>  
+
+  <data name="Align" xml:space="preserve">
+    <value>Align</value>
+  </data>  
+
+  <data name="Image link" xml:space="preserve">
+    <value>Image link</value>
+  </data>  
+
+  <data name="Image url" xml:space="preserve">
+    <value>Image url</value>
+  </data>  
+
+  <data name="Upload image" xml:space="preserve">
+    <value>Upload image</value>
+  </data>  
+
+  <data name="Table" xml:space="preserve">
+    <value>Table</value>
+  </data>
+
+
+  <data name="background color" xml:space="preserve">
+    <value>background color</value>
+  </data>
+
+  <data name="unordered list" xml:space="preserve">
+    <value>unordered list</value>
+  </data>
+
+
+  <data name="ordered list" xml:space="preserve">
+    <value>ordered list</value>
+  </data>
+
+
+  <data name="List" xml:space="preserve">
+    <value>List</value>
+  </data>
+
+
+  <data name="Sina" xml:space="preserve">
+    <value>Sina</value>
+  </data>
+
+  <data name="Right" xml:space="preserve">
+    <value>Right</value>
+  </data>
+
+
+  <data name="Center" xml:space="preserve">
+    <value>Center</value>
+  </data>
+
+  <data name="Left" xml:space="preserve">
+    <value>Left</value>
+  </data>
+
   <data name="Paragraph" xml:space="preserve">
     <value>Paragraph</value>
   </data>

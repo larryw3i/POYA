@@ -90,6 +90,134 @@
   <!--***********************************************-->
 
 
+  <data name="Link text" xml:space="preserve">
+    <value>链接文字</value>
+  </data> 
+
+  <data name="Link" xml:space="preserve">
+    <value>链接</value>
+  </data> 
+
+  <data name="Insert code" xml:space="preserve">
+    <value>插入代码</value>
+  </data> 
+
+  <data name="Insert" xml:space="preserve">
+    <value>插入</value>
+  </data> 
+
+  <data name="col" xml:space="preserve">
+    <value>列</value>
+  </data> 
+
+  <data name="line" xml:space="preserve">
+    <value>行</value>
+  </data> 
+
+  <data name="Initial" xml:space="preserve">
+    <value>初始</value>
+  </data> 
+
+  <data name="large" xml:space="preserve">
+    <value>大</value>
+  </data> 
+
+  <data name="x-large" xml:space="preserve">
+    <value>中大</value>
+  </data> 
+
+  <data name="xx-large" xml:space="preserve">
+    <value>超大</value>
+  </data> 
+
+
+  <data name="normal" xml:space="preserve">
+    <value>正常</value>
+  </data> 
+
+  <data name="small" xml:space="preserve">
+    <value>小</value>
+  </data> 
+
+  <data name="x-small" xml:space="preserve">
+    <value>超小</value>
+  </data> 
+
+  <data name="Font size" xml:space="preserve">
+    <value>字体尺寸</value>
+  </data>  
+
+  <data name="Font color" xml:space="preserve">
+    <value>字体颜色</value>
+  </data>  
+
+  <data name="Align" xml:space="preserve">
+    <value>对齐</value>
+  </data>  
+
+  <data name="Image link" xml:space="preserve">
+    <value>照片链接</value>
+  </data>  
+
+  <data name="Image url" xml:space="preserve">
+    <value>照片链接</value>
+  </data>  
+
+
+  <data name="Upload image" xml:space="preserve">
+    <value>上传照片</value>
+  </data>  
+
+  <data name="Table" xml:space="preserve">
+    <value>表格</value>
+  </data>
+
+  <data name="background color" xml:space="preserve">
+    <value>背景颜色</value>
+  </data>
+
+  <data name="unordered list" xml:space="preserve">
+    <value>无序列表</value>
+  </data>
+
+
+  <data name="ordered list" xml:space="preserve">
+    <value>有序列表</value>
+  </data>
+
+
+  <data name="List" xml:space="preserve">
+    <value>列表</value>
+  </data>
+
+
+  <data name="Sina" xml:space="preserve">
+    <value>新浪</value>
+  </data>
+
+
+  <data name="Default" xml:space="preserve">
+    <value>默认</value>
+  </data>
+
+
+  <data name="Default" xml:space="preserve">
+    <value>默认</value>
+  </data>
+
+
+  <data name="Right" xml:space="preserve">
+    <value>右</value>
+  </data>
+
+  <data name="Center" xml:space="preserve">
+    <value>中</value>
+  </data>
+
+  <data name="Left" xml:space="preserve">
+    <value>左</value>
+  </data>
+
   <data name="Paragraph" xml:space="preserve">
     <value>段落</value>
   </data>
