@@ -83,19 +83,19 @@
     Editor.customConfig.uploadFileName = '@_UploadFileName';
     Editor.customConfig.uploadImgServer = '@_UploadImgServer';
     Editor.create();
+    
+    $('#@_ContentEditor').css({
+        "height": "500px",
+        "border": "dotted",
+        "border-radius": "10px",
+        "overflow": "hidden",
+        "word-wrap": "break-word",
+        "word-break": "break-all"
+    });
 
 </script>
 
 <style>
-    #@_ContentEditor {
-        height: 500px;
-        border: dotted;
-        border-radius: 10px;
-        overflow: hidden;
-        word-wrap: break-word;
-        word-break: break-all;
-    }
-
     .w-e-text {
         overflow-y: scroll;
     }

@@ -6,32 +6,35 @@
     var White_String="white";
     var Black_String="black";
     var THEME_String=Context.Request.Cookies["THEME"]??Light_String;
+    var _pwq_css=@"
+        <style>
+            .pagination>li>a{
+                background-color:"+(THEME_String==Dark_String?Black_String:THEME_String==Light_String?White_String:C7EDCC_String)+@";
+            }
+            .pagination>li>a:hover{
+                background-color:"+(THEME_String==Dark_String?Black_String:C7EDCC_String)+@";
+            }
+            #_body,footer,.dropdown *,select,.card{
+                background-color:"+(THEME_String==Dark_String?Black_String:THEME_String==Light_String?White_String:C7EDCC_String)+@";
+                color:"+(THEME_String==Dark_String?C7EDCC_String:Black_String)+@";
+            }
+            .table{
+                color:"+(THEME_String==Dark_String?White_String:Black_String)+@";
+            }
+            input[class=form-control],textarea[class=form-control]{
+                background-color:"+(THEME_String==Light_String?White_String:C7EDCC_String)+@";
+            }
+            .button{
+                color:"+(THEME_String==Dark_String?C7EDCC_String:Black_String)+@";
+            }
+            [name='UserAvatarImg']{
+                background-color:"+(THEME_String==Dark_String?Black_String:THEME_String==Light_String?White_String:C7EDCC_String)+@";
+            }
+            #_ContentEditor{
+                color:"+(THEME_String==Dark_String?C7EDCC_String:Black_String)+@";
+            }
+        </style>
+        ";
 }
 
-<style>
-    .pagination>li>a{
-        background-color:@(THEME_String==Dark_String?Black_String:THEME_String==Light_String?White_String:C7EDCC_String);
-    }
-    .pagination>li>a:hover{
-        background-color:@(THEME_String==Dark_String?Black_String:C7EDCC_String);
-    }
-    #_body,footer,.dropdown *,select,.card{
-        background-color:@(THEME_String==Dark_String?Black_String:THEME_String==Light_String?White_String:C7EDCC_String);
-        color:@(THEME_String==Dark_String?C7EDCC_String:Black_String);
-    }
-    .table{
-        color:@(THEME_String==Dark_String?White_String:Black_String);
-    }
-    input[class=form-control],textarea[class=form-control]{
-        background-color:@(THEME_String==Light_String?White_String:C7EDCC_String);
-    }
-    .button{
-        color:@(THEME_String==Dark_String?C7EDCC_String:Black_String);
-    }
-    [name='UserAvatarImg']{
-        background-color:@(THEME_String==Dark_String?Black_String:THEME_String==Light_String?White_String:C7EDCC_String);
-    }
-    #_ContentEditor{
-        color:@(THEME_String==Dark_String?C7EDCC_String:Black_String);
-    }
-</style>
+@(Html.Raw(_pwq_css))
