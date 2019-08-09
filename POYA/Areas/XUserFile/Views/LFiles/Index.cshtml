@@ -14,13 +14,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
+                @(Html.DisplayNameFor(model => model.UserId))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DOUpload)
+                @(Html.DisplayNameFor(model => model.DOUpload))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MD5)
+                @(Html.DisplayNameFor(model => model.MD5))
             </th>
             <th></th>
         </tr>
@@ -30,13 +30,13 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UserId)
+                    @(Html.DisplayFor(modelItem => item.UserId))
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DOUpload)
+                    @(Html.DisplayFor(modelItem => item.DOUpload))
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MD5)
+                    @(Html.DisplayFor(modelItem => item.MD5))
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
