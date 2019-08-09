@@ -42,8 +42,10 @@
         </span>
     </div>
 </div>
+
+
 <div class="row">
-    @foreach (var a in (ViewData["_EArticles"] as IPagedList<EArticle>))
+    @foreach (var a in ViewData["_EArticles"] as IPagedList<EArticle>)
     {
         var _EArticleFiles = EArticleFiles.FirstOrDefault(p => p.EArticleId == a.Id);
         <div class="col col-4 col-lg-2 col-md-3">
