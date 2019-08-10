@@ -1,5 +1,14 @@
 {
     "editor.wordWrap": "on",
     "editor.hover.delay": 0,
-    "razor.disabled": true
+    "editor.minimap.enabled": false,
+    "files.exclude": {
+        "**/*.cshtml__virtual.cs":true,
+        "**/*.cshtml__virtual.html":true,
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+    }
 }
