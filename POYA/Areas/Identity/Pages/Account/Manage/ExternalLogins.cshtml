@@ -13,7 +13,7 @@
             @foreach (var login in Model.CurrentLogins)
             {
                 <tr>
-                    <td>@login.ProviderDisplayName</td>
+                    <td>@(login.ProviderDisplayName)</td>
                     <td>
                         @if (Model.ShowRemoveButton)
                         {
@@ -44,7 +44,7 @@
             <p>
                 @foreach (var provider in Model.OtherLogins)
                 {
-                    <button id="link-login-button" type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                    <button id="link-login-button" type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@(provider.DisplayName)</button>
                 }
             </p>
         </div>

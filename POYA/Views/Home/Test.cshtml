@@ -14,18 +14,7 @@
 </div>
 
 @section Scripts{
-    <script src="~/lib/ckeditor5-build-decoupled-document-12.2.0/ckeditor5-build-decoupled-document/ckeditor.js"></script>
     <script>
-        DecoupledEditor
-            .create( document.querySelector( '#editor' ) )
-            .then( editor => {
-                const toolbarContainer = document.querySelector( '#toolbar-container' );
-
-                toolbarContainer.appendChild( editor.ui.view.toolbar.element );
-            } )
-            .catch( error => {
-                console.error( error );
-            } );
     </script>
 }
 
