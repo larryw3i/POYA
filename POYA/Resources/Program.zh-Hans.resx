@@ -92,6 +92,9 @@
   <data name="Insert code" xml:space="preserve">
 	<value>插入代码</value>
   </data>
+  <data name="Description" xml:space="preserve">
+	<value>描述</value>
+  </data>
   <data name="Insert" xml:space="preserve">
 	<value>插入</value>
   </data>

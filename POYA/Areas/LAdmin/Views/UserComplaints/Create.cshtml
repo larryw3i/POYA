@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Create</h1>
@@ -13,31 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContentId" class="control-label"></label>
-                <input asp-for="ContentId" class="form-control" />
-                <span asp-validation-for="ContentId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DOComplaint" class="control-label"></label>
-                <input asp-for="DOComplaint" class="form-control" />
-                <span asp-validation-for="DOComplaint" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReceptionistId" class="control-label"></label>
-                <input asp-for="ReceptionistId" class="form-control" />
-                <span asp-validation-for="ReceptionistId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AuditResultId" class="control-label"></label>
-                <input asp-for="AuditResultId" class="form-control" />
-                <span asp-validation-for="AuditResultId" class="text-danger"></span>
-            </div>
+            <input asp-for="ContentId" hidden/>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />

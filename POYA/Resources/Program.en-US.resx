@@ -92,6 +92,9 @@
   <data name="Insert code" xml:space="preserve">
 	<value>Insert code</value>
   </data>
+  <data name="Description" xml:space="preserve">
+	<value>Description</value>
+  </data>
   <data name="Insert" xml:space="preserve">
 	<value>Insert</value>
   </data>

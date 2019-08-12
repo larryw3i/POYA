@@ -1,7 +1,8 @@
 
 using System;
 
-namespace POYA.Areas.LAdmin.Models{
+namespace POYA.Areas.LAdmin.Models
+{
     // initiative
     public class LAudit{
         public Guid Id{get;set;}=Guid.NewGuid();

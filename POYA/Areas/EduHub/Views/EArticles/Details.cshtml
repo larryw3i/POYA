@@ -6,6 +6,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _EArticleFiles_ = ViewData["EArticleFiles"] as List<EArticleFile>;
     var Categories = ViewData["Categories"] as List<LEArticleCategory>;
+    var EArticleVideos=_EArticleFiles_.Where(p => p.IsEArticleVideo);
+    var IsAttachmentsExist=_EArticleFiles_.Where(p => !p.IsEArticleVideo).Count() > 0;
+    var Attachments=_EArticleFiles_.Where(p => !p.IsEArticleVideo);
 }
 
 <h4 class="col offset-1 col-8">
@@ -31,7 +34,7 @@
 <div>
     <hr />
     <dl class="row col col-12">
-        @foreach (var i in _EArticleFiles_.Where(p => p.IsEArticleVideo))
+        @foreach (var i in EArticleVideos)
         {
             <dd class="col offset-1 col-10">
                 <video style="width:100%" controls>
@@ -44,8 +47,9 @@
     <dl class="row" style="word-break:break-all;word-wrap:break-word">
         <dd class="col">
             @Html.Raw(Model.Content)
-            <div class="float-right" id="MailToEArticleUser">
-                <a href="mailto:@(Model.UserEmail)" title="@(Localizer["Mail to the author"])" >&#128236;</a>
+            <div class="float-right" id="UserOperationEle">
+                <a href="mailto:@(Model.UserEmail)" title='@(Localizer["Mail to the author"])' >&#128236;</a> | 
+                <a asp-action="Create" asp-area="LAdmin" asp-controller="UserComplaints" title='@(Localizer["Tip-off"])'><script>document.write('\u2696')</script></a>
             </div>
 
         </dd>
@@ -53,12 +57,12 @@
 
     <dl class="row">
         <dd class="col">
-            @if (_EArticleFiles_.Where(p => !p.IsEArticleVideo).Count() > 0)
+            @if (IsAttachmentsExist)
             {
                 <span>
                     @(_EArticleFiles_.Where(p => !p.IsEArticleVideo).Count() > 1 ? Localizer["The attachments of this article"] : Localizer["The attachment of this article"]) 
                 </span>
-                @foreach (var i in _EArticleFiles_.Where(p => !p.IsEArticleVideo))
+                @foreach (var i in Attachments)
                 {
                     <br />
                     <a asp-action="GetFile" asp-route-id="@(i.Id)" asp-controller="LUserFiles" asp-area="XUserFile" title='@Localizer["Get it"]' class="GetFile">@(i.FileName)</a>
@@ -90,12 +94,10 @@
             animation: EArticleFromAnimation 0.2s linear  forwards;
         }
         
-        #MailToEArticleUser {
+        #UserOperationEle {
             transform: scale(2);
-            
-            
         }
-        #MailToEArticleUser:hover{
+        #UserOperationEle:hover{
             animation: MailToEArticleUserAnimation 0.2s linear  forwards;
         }
 
