@@ -94,7 +94,7 @@
         var LicenseImgTag = (_LicenseImgFileInputId) => `<img id='${LicenseImgPrefix + _LicenseImgFileInputId}' class='XLicenseImg col col-auto' title='${ClickToDelete}'/>`;
         var WillBeDeletedLicenseImgIds=new Array(); 
         var EditLicenseImgFileIds= 
-                $.parseJSON(`@(Html.Raw(IsEdit?JsonConvert.SerializeObject(_XAdCustomerLicenses.Select(p=>new{Id=p.Id,SHA256=p.ImgFileSHA256}).ToArray()):"[]"))`);
+                $.parseJSON(`@(Html.Raw(IsEdit?JsonConvert.SerializeObject(_XAdCustomerLicenses.Select(p=>new{Id=p.Id,MD5=p.ImgFileMD5}).ToArray()):"[]"))`);
         var WillBeDeleteTitle=`@(Html.Raw( Localizer["It will be deleted when you save, cancel by clicking again"]))`;
         var WIllBeDeletedIdInput=(_value)=>`<input name='WillBeDeletedLicenseImgIds' class='WillBeDeletedLicenseImgIds' value='${_value}' form='${_RandomFormId}' hidden />`;
 
@@ -226,11 +226,11 @@
 
         function EditReady(){
             if (!_IsEdit) return;
-            $(`#_StoreIconFile_Img_`).attr(`src`,`${_EditLicenseImgUrlPrefix}?SHA256=@(Model?.StoreIconSHA256)`);
+            $(`#_StoreIconFile_Img_`).attr(`src`,`${_EditLicenseImgUrlPrefix}?MD5=@(Model?.StoreIconMD5)`);
             EditLicenseImgFileIds.forEach((value,index,array)=>{
                 $(`#LicenseImgFileEle`).append(LicenseImgTag(value["Id"]));
                 var _EditImgTag=$(`#${LicenseImgPrefix}${value["Id"]}`);
-                _EditImgTag.attr(`src`,`${_EditLicenseImgUrlPrefix}?SHA256=${value["SHA256"]}`);
+                _EditImgTag.attr(`src`,`${_EditLicenseImgUrlPrefix}?MD5=${value["MD5"]}`);
             });
         }
     </script>

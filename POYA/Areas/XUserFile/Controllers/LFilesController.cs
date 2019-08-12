@@ -92,7 +92,7 @@ namespace POYA.Areas.XUserFile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,DOUpload,SHA256")] LFile lFile)
+        public async Task<IActionResult> Create([Bind("Id,UserId,DOUpload,MD5")] LFile lFile)
         {
             if (ModelState.IsValid)
             {
@@ -130,7 +130,7 @@ namespace POYA.Areas.XUserFile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,UserId,DOUpload,SHA256")] LFile lFile)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,UserId,DOUpload,MD5")] LFile lFile)
         {
             if (id != lFile.Id)
             {

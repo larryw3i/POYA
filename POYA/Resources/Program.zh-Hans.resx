@@ -405,7 +405,7 @@
 	<value>出错了, 工程师正在赶来. . .</value>
   </data>
   <data name="Password" xml:space="preserve">
-	<value>Password</value>
+	<value>密码</value>
   </data>
   <data name="The new password and confirmation password do not match" xml:space="preserve">
 	<value>两次密码不匹配</value>
@@ -426,7 +426,7 @@
 	<value>用户名</value>
   </data>
   <data name="Remember me" xml:space="preserve">
-	<value>删除</value>
+	<value>记住我</value>
   </data>
   <data name="Authenticator code" xml:space="preserve">
 	<value>验证码</value>
@@ -768,34 +768,34 @@
 	<value>你分享的文件和文件夹</value>
   </data>
   <data name="Get directory or file shared from your friend" xml:space="preserve">
-	<value>储存</value>
+	<value>获取分享内容</value>
   </data>
   <data name="FoDId" xml:space="preserve">
-	<value>查看</value>
+	<value>ID</value>
   </data>
   <data name="Get {0} shared from your friend" xml:space="preserve">
-	<value>添加目录</value>
+	<value>获取到{0}</value>
   </data>
   <data name="(^_^) You are rebot maybe! take a rest please" xml:space="preserve">
-	<value>头像要小于1M哦</value>
+	<value>系统检测到你可能是机器人 所以让我们先休息一下</value>
   </data>
   <data name="This directory is empty" xml:space="preserve">
-	<value>哎呀! 出错了... 工程师正在赶来</value>
+	<value>文件夹为空</value>
   </data>
   <data name="Basic Profile" xml:space="preserve">
-	<value>头像上传成功</value>
+	<value>基础信息</value>
   </data>
   <data name="Your data. . ." xml:space="preserve">
-	<value>个人简介</value>
+	<value>你的数据</value>
   </data>
   <data name="View shared file or directory" xml:space="preserve">
-	<value>个人简介</value>
+	<value>查看分享的文件和目录</value>
   </data>
   <data name="Your info" xml:space="preserve">
-	<value>查看你分享的文件和目录</value>
+	<value>你的信息</value>
   </data>
   <data name="Your information" xml:space="preserve">
-	<value>你的数据</value>
+	<value>你的信息</value>
   </data>
   <data name="Your avatar upload successfully" xml:space="preserve">
 	<value>头像上传成功</value>

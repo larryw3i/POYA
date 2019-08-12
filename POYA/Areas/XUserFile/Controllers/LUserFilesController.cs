@@ -105,7 +105,7 @@ namespace POYA.Areas.XUserFile.Controllers
 
             _LFiles.ForEach(f =>
             {
-                if (!_FileNames.Contains(f.SHA256))
+                if (!_FileNames.Contains(f.MD5))
                 {
                     _context.LFile.Remove(f);
                 }
@@ -113,7 +113,7 @@ namespace POYA.Areas.XUserFile.Controllers
 
             _LUserFiles.ForEach(f =>
             {
-                if (!_FileNames.Contains(f.SHA256))
+                if (!_FileNames.Contains(f.MD5))
                 {
                     _context.LUserFile.Remove(f);
                 }
@@ -134,18 +134,18 @@ namespace POYA.Areas.XUserFile.Controllers
             #region INITIAL_SIZE
             var _UserFiles_ = await _context.LUserFile.Where(p => p.UserId == UserId_).ToListAsync();
             var UsedSpace = await GetUsedSpaceAsync(_UserFiles_);   //  0.0;
-            _UserFiles_ = _UserFiles_.Where(p => p.UserId == UserId_ && p.InDirId == InDirId && !string.IsNullOrWhiteSpace(p.SHA256))
+            _UserFiles_ = _UserFiles_.Where(p => p.UserId == UserId_ && p.InDirId == InDirId && !string.IsNullOrWhiteSpace(p.MD5))
                 .OrderBy(p => p.DOCreate).ToList();
             _UserFiles_.ForEach(p =>
             {
-                var _FileLength = new FileInfo(_xUserFileHelper.FileStoragePath(_hostingEnv) + p.SHA256).Length;
+                var _FileLength = new FileInfo(_xUserFileHelper.FileStoragePath(_hostingEnv) + p.MD5).Length;
                 //  UsedSpace += _FileLength / (1024 * 1024);    //  MByte
                 p.Size = _FileLength;
                 p.OptimizedSize = _xUserFileHelper.OptimizeSizeShow(_FileLength);
             });
             /*
             _UserFiles_.ForEach(p=> {
-                var _FileLength = new FileInfo(_xUserFileHelper.FileStoragePath(_hostingEnv) + p.SHA256).Length;
+                var _FileLength = new FileInfo(_xUserFileHelper.FileStoragePath(_hostingEnv) + p.MD5).Length;
                 UsedSpace += _FileLength/(1024*1024);    //  MByte
                 p.Size = _FileLength;
             });
@@ -223,7 +223,7 @@ namespace POYA.Areas.XUserFile.Controllers
         #endregion
         public async Task<IActionResult> Create([FromForm] LFilePost XFilePost)
         {
-            //  [Bind("Id,SHA256,UserId,SharedCode,DOGenerating,Name,InDirId")] LUserFile lUserFile)
+            //  [Bind("Id,MD5,UserId,SharedCode,DOGenerating,Name,InDirId")] LUserFile lUserFile)
 
             if (XFilePost.LFile.Length > 0)
             {
@@ -236,20 +236,20 @@ namespace POYA.Areas.XUserFile.Controllers
                 var MemoryStream_ = new MemoryStream();
                 await XFilePost.LFile.CopyToAsync(MemoryStream_);
                 var FileBytes = MemoryStream_.ToArray();
-                var SHA256_ = _xUserFileHelper.GetFileSHA256(FileBytes);
-                var FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + SHA256_;
+                var MD5_ = _xUserFileHelper.GetFileMD5(FileBytes);
+                var FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + MD5_;
                 //  System.IO.File.Create(FilePath);
                 await System.IO.File.WriteAllBytesAsync(FilePath, FileBytes);
                 await _context.LFile.AddAsync(new LFile
                 {
-                    SHA256 = SHA256_,
+                    MD5 = MD5_,
                     UserId = UserId_
                 });
 
                 await _context.LUserFile.AddAsync(new LUserFile
                 {
                     UserId = UserId_,
-                    SHA256 = SHA256_,
+                    MD5 = MD5_,
                     InDirId = XFilePost.InDirId,
                     Name = XFilePost.LFile.FileName,
                     //  ContentType = _LFilePost._LFile.ContentType ?? "text/plain"
@@ -332,7 +332,7 @@ namespace POYA.Areas.XUserFile.Controllers
                             new LUserFile
                             {
                                 InDirId = lUserFile.InDirId,
-                                SHA256 = _lUserFile.SHA256,
+                                MD5 = _lUserFile.MD5,
                                 Name = _lUserFile.Name,
                                 UserId = UserId_,
                                 Id = Guid.NewGuid()
@@ -446,7 +446,7 @@ namespace POYA.Areas.XUserFile.Controllers
             var UsedSpace = (long)0;
             _UserFiles_.ForEach(p =>
             {
-                var _FileLength = new FileInfo(_xUserFileHelper.FileStoragePath(_hostingEnv) + p.SHA256).Length;
+                var _FileLength = new FileInfo(_xUserFileHelper.FileStoragePath(_hostingEnv) + p.MD5).Length;
                 UsedSpace += _FileLength;   //  / (1024 * 1024);    //  MByte
 
             });
@@ -463,10 +463,10 @@ namespace POYA.Areas.XUserFile.Controllers
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var _userEArticleHomeInfo = await _context.UserEArticleHomeInfos.FirstOrDefaultAsync(p => p.UserId == UserId_);
-            var _SHA256= string.Empty;
+            var _MD5= string.Empty;
             if (userEArticleHomeInfo?.CoverFile != null)
             {
-                _SHA256 = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, userEArticleHomeInfo.CoverFile);
+                _MD5 = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, userEArticleHomeInfo.CoverFile);
             }
             if (_userEArticleHomeInfo == null)
             {
@@ -474,9 +474,9 @@ namespace POYA.Areas.XUserFile.Controllers
                 {
                     UserId = UserId_,
                     Comment = userEArticleHomeInfo.Comment,
-                    CoverFileSHA256 = _SHA256,
+                    CoverFileMD5 = _MD5,
                     Id = Guid.NewGuid(),
-                    CoverFileContentType = string.IsNullOrWhiteSpace(_SHA256) ?
+                    CoverFileContentType = string.IsNullOrWhiteSpace(_MD5) ?
                     "" : userEArticleHomeInfo.CoverFile.ContentType
                 });
             }
@@ -484,9 +484,9 @@ namespace POYA.Areas.XUserFile.Controllers
             {
                 _userEArticleHomeInfo.Comment = string.IsNullOrWhiteSpace(userEArticleHomeInfo.Comment) ?
                     _userEArticleHomeInfo.Comment : userEArticleHomeInfo.Comment;
-                _userEArticleHomeInfo.CoverFileSHA256 = string.IsNullOrWhiteSpace(_SHA256) ?
-                    _userEArticleHomeInfo.CoverFileSHA256 : _SHA256;
-                _userEArticleHomeInfo.CoverFileContentType = string.IsNullOrWhiteSpace(_SHA256) ?
+                _userEArticleHomeInfo.CoverFileMD5 = string.IsNullOrWhiteSpace(_MD5) ?
+                    _userEArticleHomeInfo.CoverFileMD5 : _MD5;
+                _userEArticleHomeInfo.CoverFileContentType = string.IsNullOrWhiteSpace(_MD5) ?
                     _userEArticleHomeInfo.CoverFileContentType : userEArticleHomeInfo.CoverFile.ContentType;
             }
             await _context.SaveChangesAsync();
@@ -495,47 +495,47 @@ namespace POYA.Areas.XUserFile.Controllers
 
         #region 
         /// <summary>
-        /// The basic method for checking SHA256
+        /// The basic method for checking MD5
         /// </summary>
         /// <returns></returns>
         #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult XCheckSHA256([FromForm]List<string> SHA256s)
+        public IActionResult XCheckMD5([FromForm]List<string> MD5s)
         {
             var CheckResult = new Dictionary<string, bool>();
-            var UploadFileSHA256s = System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(_hostingEnv))
+            var UploadFileMD5s = System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(_hostingEnv))
              .Select(p => System.IO.Path.GetFileNameWithoutExtension(p)).ToList();
 
-            foreach (var m in SHA256s)
+            foreach (var m in MD5s)
             {
-                if (UploadFileSHA256s.Contains(m))
+                if (UploadFileMD5s.Contains(m))
                 {
                     CheckResult.Add(m, true);
                 }
                 CheckResult.Add(m, false);
             }
 
-            return Json(CheckResult.Select(p => new { SHA256 = p.Key, IsUploaded = p.Value }).ToList());
+            return Json(CheckResult.Select(p => new { MD5 = p.Key, IsUploaded = p.Value }).ToList());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CheckSHA256(ContrastSHA256 LContrastSHA256)
+        public async Task<IActionResult> CheckMD5(ContrastMD5 LContrastMD5)
         {
-            //  Console.WriteLine(">>>>" + JsonConvert.SerializeObject(_ContrastSHA256));
-            //  System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(_ContrastSHA256));
+            //  Console.WriteLine(">>>>" + JsonConvert.SerializeObject(_ContrastMD5));
+            //  System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(_ContrastMD5));
             var ContrastResult = new List<string>();
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            foreach (var i in LContrastSHA256.File8SHA256s)
+            foreach (var i in LContrastMD5.File8MD5s)
             {
-                if (await _context.LFile.AnyAsync(p => p.SHA256 == i.SHA256))
+                if (await _context.LFile.AnyAsync(p => p.MD5 == i.MD5))
                 {
                     await _context.LUserFile.AddAsync(
                         new LUserFile
                         {
-                            InDirId = LContrastSHA256.InDirId,
-                            SHA256 = i.SHA256,
+                            InDirId = LContrastMD5.InDirId,
+                            MD5 = i.MD5,
                             Name = i.FileName,
                             UserId = UserId_,
                             //  ContentType =_mimeHelper.GetMime(i.FileName,_hostingEnv).Last()
@@ -572,7 +572,7 @@ namespace POYA.Areas.XUserFile.Controllers
             var _EArticleFile = await _context.EArticleFiles.FirstOrDefaultAsync(p => p.Id == id);
             if (_EArticleFile != null)
             {
-                var _FilePath_ = X_DOVEValues.FileStoragePath(_hostingEnv) + _EArticleFile.FileSHA256;
+                var _FilePath_ = X_DOVEValues.FileStoragePath(_hostingEnv) + _EArticleFile.FileMD5;
                 if (!System.IO.File.Exists(_FilePath_))
                 {
                     return NoContent();
@@ -587,13 +587,13 @@ namespace POYA.Areas.XUserFile.Controllers
             }
             #endregion
 
-            var _LUserFile = await _context.LUserFile.Select(p => new { p.SHA256, p.Id, p.Name, p.UserId })
+            var _LUserFile = await _context.LUserFile.Select(p => new { p.MD5, p.Id, p.Name, p.UserId })
                 .FirstOrDefaultAsync(p => (p.Id == id && p.UserId == _UserId));
             if (_LUserFile == null)
             {
                 return NotFound();
             }
-            var _FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + _LUserFile.SHA256;
+            var _FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + _LUserFile.MD5;
             if (!System.IO.File.Exists(_FilePath))
             {
                 return NotFound();
@@ -611,12 +611,12 @@ namespace POYA.Areas.XUserFile.Controllers
 
         /*
         /// <summary>
-        /// The new interface of Contrastting SHA256,  be aimed at more simple, more effectivity
+        /// The new interface of Contrastting MD5,  be aimed at more simple, more effectivity
         /// </summary>
         /// <returns></returns>
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> CheckSHA256()
+        public async Task<IActionResult> CheckMD5()
         {
             return NoContent();
         }

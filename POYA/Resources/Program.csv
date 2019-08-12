@@ -105,14 +105,14 @@ Forgot password confirmation,Forgot password confirmation,忘记密码确认
 Reset your password,Reset your password,重置密码
 Please check your email to reset your password,Please check your email to reset your password,"重置密码邮件以送出, 请查收"
 An error has occurred the engineer is on his way,An error has occurred the engineer is on his way,"出错了, 工程师正在赶来. . ."
-Password,Password,Password
+Password,Password,密码
 The new password and confirmation password do not match,The new password and confirmation password do not match,两次密码不匹配
 Confirm new password,Confirm new password,确认新密码
 Verification Code,Verification Code,验证码
 Email,Email,邮箱
 Phone number,Phone number,手机号码
 User name,User name,用户名
-Remember me,Remember me,删除
+Remember me,Remember me,记住我
 Authenticator code,Authenticator code,验证码
 Directory Name,Directory Name,目录名 
 Content type,Content type,Content type
@@ -226,16 +226,16 @@ directory,directory,文件夹
 Share your,Share your,分享你的
 DOShare,Date of sharing,分享时间
 The files or directories you share,The files and directories you share,你分享的文件和文件夹
-Get directory or file shared from your friend,Get directory or file shared from your friend,储存
-FoDId,FoDId,查看
-Get {0} shared from your friend,Get {0} shared from your friend,添加目录
-(^_^) You are rebot maybe! take a rest please,(^_^) You are rebot maybe! take a rest please,头像要小于1M哦
-This directory is empty,This directory is empty,哎呀! 出错了... 工程师正在赶来
-Basic Profile,Basic Profile,头像上传成功
-Your data. . .,Your data. . .,个人简介
-View shared file or directory,View shared file or directory,个人简介
-Your info,Your info,查看你分享的文件和目录
-Your information,Your information,你的数据
+Get directory or file shared from your friend,Get directory or file shared from your friend,获取分享内容
+FoDId,FoDId,ID
+Get {0} shared from your friend,Get {0} shared from your friend,获取到{0}
+(^_^) You are rebot maybe! take a rest please,(^_^) You are rebot maybe! take a rest please,系统检测到你可能是机器人 所以让我们先休息一下
+This directory is empty,This directory is empty,文件夹为空
+Basic Profile,Basic Profile,基础信息
+Your data. . .,Your data. . .,你的数据
+View shared file or directory,View shared file or directory,查看分享的文件和目录
+Your info,Your info,你的信息
+Your information,Your information,你的信息
 Your avatar upload successfully,Your avatar upload successfully,头像上传成功
 An error has occurred. . .  engineers are on their way,An error has occurred. . .  engineers are on their way,出错了工程师正在赶来
 Oops.... the size of avatar should be less than 1M,Oops.... the size of avatar should be less than 1M,头像应该小于1M

@@ -48,15 +48,14 @@
     </div>
 
     <div class="row">
-        @{
-            foreach (var a in (ViewData["EArticles"] as IPagedList<EArticle>))
+            @foreach (var a in ViewData["EArticles"] as IPagedList<EArticle>)
             {
                 var _EArticleFiles = EArticleFiles.FirstOrDefault(p => p.EArticleId == a.Id);
 
                 <div class="col col-4 col-lg-2 col-md-3">
                     
                     <div class="card" name="EArticleHomeCard" style="margin-top:6px;" onclick="GoToDetails('@a.Id')">
-                        if (EArticleFiles.FirstOrDefault(p => p.EArticleId == a.Id) == null)
+                        @if (_EArticleFiles == null)
                         {
                             <div class="card-img-top card-img-top-text" alt="@(a.Title)">
                                 <span style="font-size:80%;zoom:80%;">@(Html.Raw(a.Content))</span>
@@ -64,7 +63,7 @@
                         }
                         else
                         {
-                            <video src="@Url.Action("GetFile", "LUserFiles", new { id = EArticleFiles.FirstOrDefault(p=>p.EArticleId==a.Id).Id, area = "XUserFile" })" class="card-img-top" alt="@(a.Title)" preload="metadata"></video>
+                            <video src='@Url.Action("GetFile", "LUserFiles", new { id = _EArticleFiles.Id, area = "XUserFile" })' class="card-img-top" alt="@(a.Title)" preload="metadata"></video>
                         }
                         <div class="card-body">
                             <p class="card-text">
@@ -74,7 +73,6 @@
                     </div>
                 </div>
             }
-        }
     </div>
 
     <div class="float-right PageEle">

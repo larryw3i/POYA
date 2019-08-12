@@ -254,7 +254,7 @@ namespace POYA.Areas.XUserFile.Controllers
 
                         IncludedFiles.ForEach(f =>
                         {
-                            var _f = new LUserFile { Id = Guid.NewGuid(), SHA256 = f.SHA256, Name = f.Name, UserId = UserId_ };
+                            var _f = new LUserFile { Id = Guid.NewGuid(), MD5 = f.MD5, Name = f.Name, UserId = UserId_ };
                             NewUserFiles.Add(_f);
                             IDMap.Add(new ID8NewID { OriginalId = f.Id, NewId = _f.Id, OriginalInDirId = f.InDirId });
                         });

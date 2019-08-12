@@ -35,7 +35,7 @@ namespace POYA.Areas.XUserFile.Controllers
         #region 
 
         /// <summary>
-        /// Write the IFormFile bytes to "X_DOVEValues.FileStoragePath(_hostingEnv) + SHA256_" and return the SHA256 string
+        /// Write the IFormFile bytes to "X_DOVEValues.FileStoragePath(_hostingEnv) + MD5_" and return the MD5 string
         /// </summary>
         /// <param name="_hostingEnv"></param>
         /// <param name="formFile"></param>
@@ -46,60 +46,60 @@ namespace POYA.Areas.XUserFile.Controllers
             var MemoryStream_ = new MemoryStream();
             await formFile.CopyToAsync(MemoryStream_);
             var FileBytes = MemoryStream_.ToArray();
-            var SHA256_ = GetFileSHA256(FileBytes);
-            var UploadFileSHA256s = System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(_hostingEnv))
+            var MD5_ = GetFileMD5(FileBytes);
+            var UploadFileMD5s = System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(_hostingEnv))
              .Select(p => System.IO.Path.GetFileNameWithoutExtension(p)).ToList();
 
-            if (UploadFileSHA256s.Contains(SHA256_))
+            if (UploadFileMD5s.Contains(MD5_))
             {
-                return SHA256_;
+                return MD5_;
             }
 
-            var FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + SHA256_;
+            var FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + MD5_;
             //  System.IO.File.Create(FilePath);
             await System.IO.File.WriteAllBytesAsync(FilePath, FileBytes);
-            return SHA256_;
+            return MD5_;
 
         }
 
         #region 
         /// <summary>
-        /// determine the SHA256 in IEnumerableLSHA256 is match the SHA256 of uploaded files or not
+        /// determine the MD5 in IEnumerableLMD5 is match the MD5 of uploaded files or not
         /// </summary>
         /// <param name="env">The IHostingEnvironment for getting FileStoragePath</param>
-        /// <param name="lSHA256s">The IEnumerableLSHA256</param>
+        /// <param name="lMD5s">The IEnumerableLMD5</param>
         /// <returns></returns>
         #endregion
-        public List<LSHA256> LCheckSHA256(IHostingEnvironment env, List<LSHA256> lSHA256s)
+        public List<LMD5> LCheckMD5(IHostingEnvironment env, List<LMD5> lMD5s)
         {
 
-            var UploadFileSHA256s = System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(env))
+            var UploadFileMD5s = System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(env))
                 .Select(p => System.IO.Path.GetFileNameWithoutExtension(p)).ToList();
 
-            foreach (var m in lSHA256s)
-                if (UploadFileSHA256s.Contains(m.FileSHA256))
+            foreach (var m in lMD5s)
+                if (UploadFileMD5s.Contains(m.FileMD5))
                     m.IsUploaded = true;
 
-            return lSHA256s;
+            return lMD5s;
         }
 
         #region
         /// <summary>
-        /// Get the SHA256 of file byte array
+        /// Get the MD5 of file byte array
         /// </summary>
         /// <param name="FileBytes">
         /// File byte array
         /// </param>
         /// <returns></returns>
         #endregion
-        public string GetFileSHA256(byte[] FileBytes)
+        public string GetFileMD5(byte[] FileBytes)
         {
-            var SHA256_ = SHA256.Create();
-            var SHA256Bytes = SHA256_.ComputeHash(FileBytes);
+            var MD5_ = MD5.Create();
+            var MD5Bytes = MD5_.ComputeHash(FileBytes);
             var sb = new StringBuilder();
-            for (int i = 0; i < SHA256Bytes.Length; i++)
+            for (int i = 0; i < MD5Bytes.Length; i++)
             {
-                sb.Append(SHA256Bytes[i].ToString("x2"));
+                sb.Append(MD5Bytes[i].ToString("x2"));
             }
             return sb.ToString();
         }

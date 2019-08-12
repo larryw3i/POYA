@@ -20,7 +20,7 @@
                 @(Html.DisplayNameFor(model => model.DOUpload))
             </th>
             <th>
-                @(Html.DisplayNameFor(model => model.SHA256))
+                @(Html.DisplayNameFor(model => model.MD5))
             </th>
             <th></th>
         </tr>
@@ -36,7 +36,7 @@
                     @(Html.DisplayFor(modelItem => item.DOUpload))
                 </td>
                 <td>
-                    @(Html.DisplayFor(modelItem => item.SHA256))
+                    @(Html.DisplayFor(modelItem => item.MD5))
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

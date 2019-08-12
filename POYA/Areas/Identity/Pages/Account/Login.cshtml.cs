@@ -107,8 +107,10 @@ namespace POYA.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { userId = _user.Id, code },
                         protocol: Request.Scheme);
-                    await _emailSender.SendEmailAsync(Input.Email, _localizer["Confirm your email"],
-                        $"{_localizer["Please confirm your account by"]} <a href='" + HtmlEncoder.Default.Encode(callbackUrl) + $"'>{_localizer["clicking here"]}</a>");
+                    await _emailSender.SendEmailAsync(
+                        Input.Email, 
+                        _localizer["Confirm your email"],
+                        _localizer["Please confirm your account by"]+" <a href='" + HtmlEncoder.Default.Encode(callbackUrl) +"'>"+_localizer["clicking here"]+"</a>");
                     ModelState.AddModelError(string.Empty, _localizer["We have sent a confirmation email to you, you can login after confirming it"]);
                     return Page();
                 }

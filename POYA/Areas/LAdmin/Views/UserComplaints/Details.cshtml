@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "/home/larry/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Details</h1>
@@ -12,50 +12,50 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserId)
+            @(Html.DisplayNameFor(model => model.UserId))
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
+            @(Html.DisplayFor(model => model.UserId))
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ContentId)
+            @(Html.DisplayNameFor(model => model.ContentId))
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ContentId)
+            @(Html.DisplayFor(model => model.ContentId))
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DOComplaint)
+            @(Html.DisplayNameFor(model => model.DOComplaint))
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DOComplaint)
+            @(Html.DisplayFor(model => model.DOComplaint))
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReceptionistId)
+            @(Html.DisplayNameFor(model => model.ReceptionistId))
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReceptionistId)
+            @(Html.DisplayFor(model => model.ReceptionistId))
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AuditResultId)
+            @(Html.DisplayNameFor(model => model.AuditResultId))
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AuditResultId)
+            @(Html.DisplayFor(model => model.AuditResultId))
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @(Html.DisplayNameFor(model => model.Description))
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @(Html.DisplayFor(model => model.Description))
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IllegalityType)
+            @(Html.DisplayNameFor(model => model.IllegalityType))
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IllegalityType)
+            @(Html.DisplayFor(model => model.IllegalityType))
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success">Edit</a> |
+    <a id="BackEle" class="btn btn-outline-info">Back to List</a>
 </div>

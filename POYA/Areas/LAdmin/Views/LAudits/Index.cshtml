@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "/home/larry/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Index</h1>
@@ -14,16 +14,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ContentId)
+                @(Html.DisplayNameFor(model => model.ContentId))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DOAudit)
+                @(Html.DisplayNameFor(model => model.DOAudit))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InspectorId)
+                @(Html.DisplayNameFor(model => model.InspectorId))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AuditResultId)
+                @(Html.DisplayNameFor(model => model.AuditResultId))
             </th>
             <th></th>
         </tr>
@@ -32,16 +32,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ContentId)
+                @(Html.DisplayFor(modelItem => item.ContentId))
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DOAudit)
+                @(Html.DisplayFor(modelItem => item.DOAudit))
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.InspectorId)
+                @(Html.DisplayFor(modelItem => item.InspectorId))
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AuditResultId)
+                @(Html.DisplayFor(modelItem => item.AuditResultId))
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

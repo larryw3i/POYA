@@ -15,7 +15,7 @@
 <div>
     <a class="btn btn-outline-info float-right" asp-action="Create" asp-controller="LAd">@(Localizer["Place an advertisement"])</a>
     <hr />
-    <img src='@Url.Action(nameof(XAdCustomersController.GetXAdCustomerFilesAsync),new { SHA256=Model.StoreIconSHA256})' class="Store-Icon" title='@(Model.Name)'/>
+    <img src='@Url.Action(nameof(XAdCustomersController.GetXAdCustomerFilesAsync),new { MD5=Model.StoreIconMD5})' class="Store-Icon" title='@(Model.Name)'/>
     <dl class="row">
         <dt class = "col-sm-2">
             @(Html.DisplayNameFor(model => model.Name))
@@ -52,7 +52,7 @@
         <span class="User-License-Images-Text">@Localizer["Your license images"]</span>
         <div class="Store-License-Container">
             @foreach(var lm in ViewData[nameof(ApplicationDbContext.XAdCustomerLicenses)] as List<XAdCustomerLicense>){
-                <img src='@Url.Action(nameof(XAdCustomersController.GetXAdCustomerFilesAsync),new { SHA256=lm.ImgFileSHA256})' 
+                <img src='@Url.Action(nameof(XAdCustomersController.GetXAdCustomerFilesAsync),new { MD5=lm.ImgFileMD5})' 
                 class="Store-License" 
                 title='@(Model.Name) @Localizer["license image"]'/>
             }

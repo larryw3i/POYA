@@ -27,20 +27,18 @@ namespace POYA.Unities.Services
             var password = _configuration["EmailSender:password"];//     (string)jsonObject[nameof(EmailSender)]["password"];
             var port = Convert.ToInt32(_configuration["EmailSender:port"]);//    (short)jsonObject[nameof(EmailSender)]["port"];
             var enableSsl = Convert.ToBoolean(_configuration["EmailSender:enableSsl"]);
-            using (var smtpClient = new SmtpClient(host: host, port: port)
+            var smtpClient = new SmtpClient(host: host, port: port)
             {
                 EnableSsl = enableSsl,
                 Credentials = new System.Net.NetworkCredential(userName: userName, password: password),
-            })
+            };
+            var mailMessage = new MailMessage(subject: subject, body: htmlMessage, from: userName, to: email)
             {
-                var mailMessage = new MailMessage(subject: subject, body: htmlMessage, from: userName, to: email)
-                {
-                    IsBodyHtml = true,
-                    SubjectEncoding = Encoding.UTF8,
-                    BodyEncoding = Encoding.UTF8
-                };
-                return smtpClient.SendMailAsync(mailMessage);
-            }
+                IsBodyHtml = true,
+                SubjectEncoding = Encoding.UTF8,
+                BodyEncoding = Encoding.UTF8
+            };
+            return smtpClient.SendMailAsync(mailMessage);
             //throw new NotImplementedException();
         }
     }

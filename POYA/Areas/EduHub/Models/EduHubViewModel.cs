@@ -214,7 +214,7 @@ namespace POYA.Areas.EduHub.Models
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
         public Guid EArticleId { get; set; }
-        public string FileSHA256 { get; set; }
+        public string FileMD5 { get; set; }
         public string FileName { get; set; }
         public bool IsEArticleVideo { get; set; } = false;
         #region DEPOLLUTION
@@ -230,11 +230,11 @@ namespace POYA.Areas.EduHub.Models
         #endregion
     }
 
-    public class EArticleFileSHA256
+    public class EArticleFileMD5
     {
         public Guid EArticleId { get; set; }
         public string FileName { get; set; }
-        public string SHA256 { get; set; }
+        public string MD5 { get; set; }
         public bool IsEArticleVideo { get; set; } = false;
     }
 

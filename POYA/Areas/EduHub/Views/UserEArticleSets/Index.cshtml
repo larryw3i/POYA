@@ -55,7 +55,7 @@
     <script>
     /*====  VALUE       ====*/
     var InitHomeComment = "@(_UserEArticleHomeInfo.Comment)";
-    var ConverImgSHA256 = "";
+    var ConverImgMD5 = "";
 
     var AddEArticleSetId = "@X_DOVEValues.AddEArticleSetId";
     var DefaultEArticleSetId = "@X_DOVEValues.DefaultEArticleSetId";
@@ -198,13 +198,13 @@
     }
 
 
-    function ReadSHA256() {
+    function ReadMD5() {
         {
             var BlobSlice_ = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
                 ChunkSize = 20 * 1024 * 1024,
                 Chunks = Math.ceil(_File.size / ChunkSize),
                 CurrentChunk = 0,
-                Spark_ = new SparkSHA256.ArrayBuffer(),
+                Spark_ = new SparkMD5.ArrayBuffer(),
                 FileReader_ = new FileReader();
         }
 
@@ -214,7 +214,7 @@
             if (CurrentChunk < Chunks) {
                 loadNext();
             } else {
-                ConverImgSHA256 = String(Spark_.end());
+                ConverImgMD5 = String(Spark_.end());
                 UploadEArticleHomeInfo();
             }
         };
@@ -268,7 +268,7 @@
             });
 
             $("#UserEArticleHomeInfo_Conver_Input").on("change", function () {
-                //  ReadSHA256();
+                //  ReadMD5();
                 UploadEArticleHomeInfo();
             });
 
