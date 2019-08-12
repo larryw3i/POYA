@@ -86,16 +86,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-
-  <data name="cvbdfghfhggggg" xml:space="preserve">
-	<value>ggggg</value>
-  </data>
-  <data name="dddddddddddddddddddddd" xml:space="preserve">
-	<value>sssss</value>
-  </data>
-  <data name="Link text’”””" xml:space="preserve">
-	<value>链接文字</value>
-  </data>
   <data name="Link" xml:space="preserve">
 	<value>链接</value>
   </data>
@@ -250,100 +240,100 @@
 	<value>出错. . .</value>
   </data>
   <data name="Reset password confirmation" xml:space="preserve">
-	<value>忘记密码确认</value>
+	<value>重置密码确认</value>
   </data>
   <data name="Your password has been reset Please" xml:space="preserve">
-	<value>文件类型</value>
+	<value>n你的密码已经被重置, 请</value>
   </data>
   <data name="You have successfully logged out of the application" xml:space="preserve">
-	<value>上传于</value>
+	<value>退出成功</value>
   </data>
   <data name="log in with a recovery code" xml:space="preserve">
-	<value>大小</value>
+	<value>使用恢复码登录</value>
   </data>
   <data name="Log out" xml:space="preserve">
-	<value>分享它?</value>
+	<value>退出</value>
   </data>
   <data name="Your login is protected with an authenticator app. Enter your authenticator code below" xml:space="preserve">
-	<value>上传失败</value>
+	<value>Your login is protected with an authenticator app. Enter your authenticator code below</value>
   </data>
   <data name="Dont have access to your authenticator device? You can" xml:space="preserve">
-	<value>文件大小为0</value>
+	<value>Dont have access to your authenticator device? You can</value>
   </data>
   <data name="Two-factor authentication" xml:space="preserve">
-	<value>上传成功</value>
+	<value>Two-factor authentication</value>
   </data>
   <data name="Disk" xml:space="preserve">
-	<value>既然出错了~~ 工程师正在赶来</value>
+	<value>网盘</value>
   </data>
   <data name="WSUDisk" xml:space="preserve">
-	<value>重置密码</value>
+	<value>文山存储</value>
   </data>
   <data name="An error occurred while processing your request" xml:space="preserve">
-	<value>重置密码</value>
+	<value>处理请求的时候发生异常</value>
   </data>
   <data name="Select files" xml:space="preserve">
-	<value>重置</value>
+	<value>选择文件</value>
   </data>
   <data name="Upload" xml:space="preserve">
-	<value>访问失败</value>
+	<value>上传</value>
   </data>
   <data name="Details" xml:space="preserve">
-	<value>没有权限了</value>
+	<value>详细</value>
   </data>
   <data name="Upload files" xml:space="preserve">
-	<value>确认邮箱</value>
+	<value>上传文件</value>
   </data>
   <data name="Your directory" xml:space="preserve">
-	<value>邮箱确认成功 (^_^)</value>
+	<value>你的目录</value>
   </data>
   <data name="Save" xml:space="preserve">
-	<value>注册</value>
+	<value>保存</value>
   </data>
   <data name="Index" xml:space="preserve">
-	<value>关联你的</value>
+	<value>索引</value>
   </data>
   <data name="Privacy Policy" xml:space="preserve">
-	<value>账号</value>
+	<value>隐私条款</value>
   </data>
   <data name="Edit" xml:space="preserve">
-	<value>_</value>
+	<value>编辑</value>
   </data>
   <data name="Login" xml:space="preserve">
-	<value>快设置一个独立账号吧</value>
-  </data>
-  <data name="Home" xml:space="preserve">
-	<value>忘记密码了</value>
-  </data>
-  <data name="Are you sure you want to delete" xml:space="preserve">
-	<value>填写邮箱</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-	<value>提交</value>
-  </data>
-  <data name="Delete directory" xml:space="preserve">
-	<value>重置密码</value>
-  </data>
-  <data name="Create directory" xml:space="preserve">
-	<value>重置密码的链接已经发送到你的邮箱 快去看看吧</value>
-  </data>
-  <data name="Details of" xml:space="preserve">
-	<value>锁住</value>
-  </data>
-  <data name="You do not have access to this resource" xml:space="preserve">
-	<value>账号被锁住了 请稍后再试吧</value>
-  </data>
-  <data name="Access denied" xml:space="preserve">
 	<value>登录</value>
   </data>
+  <data name="Home" xml:space="preserve">
+	<value>主页</value>
+  </data>
+  <data name="Are you sure you want to delete" xml:space="preserve">
+	<value>确认删除 </value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+	<value>删除</value>
+  </data>
+  <data name="Delete directory" xml:space="preserve">
+	<value>删除目录</value>
+  </data>
+  <data name="Create directory" xml:space="preserve">
+	<value>创建目录</value>
+  </data>
+  <data name="Details of" xml:space="preserve">
+	<value>详细: </value>
+  </data>
+  <data name="You do not have access to this resource" xml:space="preserve">
+	<value>权限禁止</value>
+  </data>
+  <data name="Access denied" xml:space="preserve">
+	<value>访问禁止</value>
+  </data>
   <data name="Confirm email" xml:space="preserve">
-	<value>输入你的账号和密码</value>
+	<value>确认邮箱</value>
   </data>
   <data name="Register" xml:space="preserve">
-	<value>还没有账号?</value>
+	<value>注册</value>
   </data>
   <data name="Thank you for confirming your email" xml:space="preserve">
-	<value>双重保护</value>
+	<value>谢谢你确认邮箱</value>
   </data>
   <data name="account" xml:space="preserve">
 	<value>account</value>
@@ -352,37 +342,37 @@
 	<value>没有验证的设备? 你可以</value>
   </data>
   <data name="Please enter an email address for this site below and click the Register button to finish logging in" xml:space="preserve">
-	<value>使用恢复码登录</value>
+	<value>Please enter an email address for this site below and click the Register button to finish logging in</value>
   </data>
   <data name="Youve successfully authenticated with" xml:space="preserve">
 	<value>Youve successfully authenticated with</value>
   </data>
   <data name="Enter your email" xml:space="preserve">
-	<value>退出成功</value>
+	<value>输入邮箱</value>
   </data>
   <data name="Forgot your password" xml:space="preserve">
-	<value>重置密码</value>
+	<value>忘记密码</value>
   </data>
   <data name="Reset" xml:space="preserve">
-	<value>_</value>
+	<value>重置</value>
   </data>
   <data name="Submit" xml:space="preserve">
-	<value>登录</value>
+	<value>提交</value>
   </data>
   <data name="Locked out" xml:space="preserve">
-	<value>出错了~~</value>
+	<value>锁住</value>
   </data>
   <data name="This account has been locked out please try again later" xml:space="preserve">
-	<value>This account has been locked out please try again later</value>
+	<value>账号被锁住了, 请稍后重试</value>
   </data>
   <data name="Log in" xml:space="preserve">
-	<value>捐款</value>
+	<value>登录</value>
   </data>
   <data name="Delete file" xml:space="preserve">
-	<value>Delete file</value>
+	<value>删除文件</value>
   </data>
   <data name="Register as a new user" xml:space="preserve">
-	<value>主页</value>
+	<value>注册</value>
   </data>
   <data name="Larry" xml:space="preserve">
 	<value>Larry</value>
@@ -391,7 +381,7 @@
 	<value>隐私条款</value>
   </data>
   <data name="Create" xml:space="preserve">
-	<value>在这里你可以拥有</value>
+	<value>创建</value>
   </data>
   <data name="Back" xml:space="preserve">
 	<value>返回</value>
@@ -409,79 +399,79 @@
 	<value>重置密码</value>
   </data>
   <data name="Please check your email to reset your password" xml:space="preserve">
-	<value>文山存储</value>
+	<value>重置密码邮件以送出, 请查收</value>
   </data>
   <data name="An error has occurred the engineer is on his way" xml:space="preserve">
-	<value>主页</value>
+	<value>出错了, 工程师正在赶来. . .</value>
   </data>
   <data name="Password" xml:space="preserve">
 	<value>Password</value>
   </data>
   <data name="The new password and confirmation password do not match" xml:space="preserve">
-	<value>Larry</value>
+	<value>两次密码不匹配</value>
   </data>
   <data name="Confirm new password" xml:space="preserve">
-	<value>条款</value>
+	<value>确认新密码</value>
   </data>
   <data name="Verification Code" xml:space="preserve">
-	<value>创建</value>
+	<value>验证码</value>
   </data>
   <data name="Email" xml:space="preserve">
-	<value>新建文件夹</value>
+	<value>邮箱</value>
   </data>
   <data name="Phone number" xml:space="preserve">
-	<value>Phone number</value>
+	<value>手机号码</value>
   </data>
   <data name="User name" xml:space="preserve">
-	<value>User name</value>
+	<value>用户名</value>
   </data>
   <data name="Remember me" xml:space="preserve">
 	<value>删除</value>
   </data>
   <data name="Authenticator code" xml:space="preserve">
-	<value>删除文件夹</value>
+	<value>验证码</value>
   </data>
   <data name="Directory Name" xml:space="preserve">
-	<value>确定要删除 </value>
+	<value>目录名 </value>
   </data>
   <data name="Content type" xml:space="preserve">
-	<value>退出</value>
+	<value>Content type</value>
   </data>
   <data name="Confirm password" xml:space="preserve">
-	<value>登录</value>
+	<value>确认密码</value>
   </data>
   <data name="Recovery Code" xml:space="preserve">
-	<value>隐私条款</value>
+	<value>恢复码</value>
   </data>
   <data name="Remember this machine" xml:space="preserve">
-	<value>编辑</value>
+	<value>记住我</value>
   </data>
   <data name="Date of upload" xml:space="preserve">
-	<value>保存</value>
+	<value>上传时间</value>
   </data>
   <data name="Size" xml:space="preserve">
-	<value>查看</value>
+	<value>尺寸</value>
   </data>
   <data name="Is shared" xml:space="preserve">
-	<value>你的文件夹</value>
+	<value>被分享</value>
   </data>
   <data name="Date of create" xml:space="preserve">
-	<value>详细</value>
+	<value>创建时间</value>
   </data>
   <data name="File name" xml:space="preserve">
-	<value>上传文件</value>
+	<value>文件名</value>
   </data>
   <data name="its length is 0" xml:space="preserve">
-	<value>选择文件</value>
+	<value>长度为0</value>
   </data>
   <data name="Upload successfully" xml:space="preserve">
-	<value>Upload successfully</value>
+	<value>上传成功</value>
   </data>
   <data name="Reset password" xml:space="preserve">
-	<value>Reset password</value>
+	<value>重置密码</value>
   </data>
   <data name="Upload unsuccessfully" xml:space="preserve">
-	<value>Upload unsuccessfully</value>
+	<value>长传成功</value>
   </data>
   <data name="Root directory" xml:space="preserve">
 	<value>根目录</value>
@@ -556,7 +546,7 @@
 	<value>你的邮箱还没有注册 快注册吧</value>
   </data>
   <data name="Unable to load user with ID" xml:space="preserve">
-	<value>_</value>
+	<value>用户加载失败. . .</value>
   </data>
   <data name="Your password has been changed" xml:space="preserve">
 	<value>更改密码成功</value>
@@ -823,7 +813,7 @@
 	<value>查看</value>
   </data>
   <data name="Storage" xml:space="preserve">
-	<value>获取分享的文件/目录</value>
+	<value>存储</value>
   </data>
   <data name="New" xml:space="preserve">
 	<value>新建</value>

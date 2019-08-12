@@ -38,7 +38,6 @@ namespace POYA.Areas.XAd.Controllers
         private readonly ApplicationDbContext _context;
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<XAdCustomersController> _logger;
         private readonly HtmlSanitizer _htmlSanitizer;
         private readonly XUserFileHelper _xUserFileHelper;
       
@@ -94,6 +93,7 @@ namespace POYA.Areas.XAd.Controllers
 
         // GET: XAd/XAdCustomers
         #endregion
+        
         public async Task<IActionResult> Index()
         {
             var _XAdCustomer = await _context.XAdCustomer.OrderByDescending(p => p.DORegistering).Take(10).ToListAsync();

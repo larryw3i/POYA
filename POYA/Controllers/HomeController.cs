@@ -41,7 +41,6 @@ namespace POYA.Controllers
         private readonly ApplicationDbContext _context;
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<HomeController> _logger;
         private readonly IConfiguration _configuration;
         public HomeController(
             IConfiguration configuration,

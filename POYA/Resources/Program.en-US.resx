@@ -86,16 +86,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-
-  <data name="cvbdfghfhggggg" xml:space="preserve">
-	<value>gggggg</value>
-  </data>
-  <data name="dddddddddddddddddddddd" xml:space="preserve">
-	<value></value>
-  </data>
-  <data name="Link text’”””" xml:space="preserve">
-	<value>Link text</value>
-  </data>
   <data name="Link" xml:space="preserve">
 	<value>Link</value>
   </data>
@@ -253,7 +243,7 @@
 	<value>Reset password confirmation</value>
   </data>
   <data name="Your password has been reset Please" xml:space="preserve">
-	<value>Your password has been reset Please</value>
+	<value>Your password has been reset, Please</value>
   </data>
   <data name="You have successfully logged out of the application" xml:space="preserve">
 	<value>You have successfully logged out of the application</value>
@@ -307,7 +297,7 @@
 	<value>Privacy Policy</value>
   </data>
   <data name="Edit" xml:space="preserve">
-	<value></value>
+	<value>Edit</value>
   </data>
   <data name="Login" xml:space="preserve">
 	<value>Login</value>
@@ -364,7 +354,7 @@
 	<value>Forgot your password</value>
   </data>
   <data name="Reset" xml:space="preserve">
-	<value></value>
+	<value>Reset</value>
   </data>
   <data name="Submit" xml:space="preserve">
 	<value>Submit</value>
@@ -556,7 +546,7 @@
 	<value>Your e-mail is not registered in POYA yet register it Now</value>
   </data>
   <data name="Unable to load user with ID" xml:space="preserve">
-	<value></value>
+	<value>Unable to load user with ID</value>
   </data>
   <data name="Your password has been changed" xml:space="preserve">
 	<value>Your password has been changed</value>
