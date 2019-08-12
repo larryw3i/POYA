@@ -4,4 +4,4 @@
 /POYATEST/
 
 # Files
-POYA/.vscode/settings.json
+*.csv#

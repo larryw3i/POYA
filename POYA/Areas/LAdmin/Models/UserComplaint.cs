@@ -1,5 +1,6 @@
 
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace POYA.Areas.LAdmin.Models
 {
@@ -17,8 +18,10 @@ namespace POYA.Areas.LAdmin.Models
 
         public Guid AuditResultId{get;set;}
 
+        [Display(Name="Description")]
         public string Description{get;set;}
 
+        [Display(Name="IllegalityType")]
         public int IllegalityType{get;set;}
     }
 }

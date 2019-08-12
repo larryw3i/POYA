@@ -92,6 +92,9 @@
   <data name="Insert code" xml:space="preserve">
 	<value>插入代码</value>
   </data>
+  <data name="IllegalityType" xml:space="preserve">
+	<value>非法类型</value>
+  </data>
   <data name="Description" xml:space="preserve">
 	<value>描述</value>
   </data>
