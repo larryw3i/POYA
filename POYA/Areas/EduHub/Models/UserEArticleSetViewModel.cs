@@ -57,7 +57,7 @@ namespace POYA.Areas.EduHub.Models
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string UserId { get; set; }
-        public string CoverFileMD5 { get; set; }
+        public string CoverFileSHA256 { get; set; }
         public string Comment { get; set; }
 
         public string CoverFileContentType { get; set; } = "image/png";

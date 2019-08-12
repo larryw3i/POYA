@@ -11,7 +11,7 @@ namespace POYA.Areas.XUserFile.Models
 {
     public class LUserFile : FileDirCommon  //  ViewModel
     {
-        public string MD5 { get; set; } = string.Empty;
+        public string SHA256 { get; set; } = string.Empty;
 
         #region 
 
@@ -93,9 +93,9 @@ namespace POYA.Areas.XUserFile.Models
         public DateTimeOffset DOUpload { get; set; } = DateTimeOffset.Now;
 
         /// <summary>
-        /// The MD5 string, it equal the file name in specified directory
+        /// The SHA256 string, it equal the file name in specified directory
         /// </summary>
-        public string MD5 { get; set; }
+        public string SHA256 { get; set; }
     }
 
     #region DEPOLLUTION
@@ -184,17 +184,17 @@ namespace POYA.Areas.XUserFile.Models
         //public string Reference { get; set; }
     }
 
-    public class ContrastMD5
+    public class ContrastSHA256
     {
         public Guid InDirId { get; set; } = Guid.Empty;
-        public IEnumerable<File8MD5> File8MD5s { get; set; }
+        public IEnumerable<File8SHA256> File8SHA256s { get; set; }
     }
 
-    public class File8MD5
+    public class File8SHA256
     {
         public string Id { get; set; }
         public string FileName { get; set; }
-        public string MD5 { get; set; }
+        public string SHA256 { get; set; }
     }
 
     public class LFilePost
@@ -211,11 +211,11 @@ namespace POYA.Areas.XUserFile.Models
     }
 
     /// <summary>
-    /// For LCheckMD5
+    /// For LCheckSHA256
     /// </summary>
-    public class LMD5
+    public class LSHA256
     {
-        public string FileMD5 { get; set; }
+        public string FileSHA256 { get; set; }
         /// <summary>
         /// The default is <see langword="false"/>
         /// </summary>

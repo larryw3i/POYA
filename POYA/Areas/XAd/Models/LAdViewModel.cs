@@ -21,7 +21,7 @@ namespace POYA.Areas.XAd.Models
 
     public class LAdImage{
         public Guid Id{get;set;}=Guid.NewGuid();
-        public string MD5{get;set;}
+        public string SHA256{get;set;}
         public string ContentType{get;set;}
 
     }
@@ -40,7 +40,7 @@ namespace POYA.Areas.XAd.Models
     }
     public class UserFeedbackImage{
         public Guid Id{get;set;}=Guid.NewGuid();
-        public string MD5{get;set;}
+        public string SHA256{get;set;}
         public string ContentType{get;set;}
     }
 }

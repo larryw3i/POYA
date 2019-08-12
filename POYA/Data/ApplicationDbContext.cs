@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -9,6 +9,7 @@ using POYA.Areas.XUserFile.Models;
 using POYA.Areas.XLaw.Models;
 using POYA.Areas.Identity;
 using POYA.Areas.XAd.Models;
+using POYA.Areas.LAdmin.Models;
 namespace POYA.Data
 {
     public class ApplicationDbContext : IdentityDbContext
@@ -35,6 +36,8 @@ namespace POYA.Data
         public DbSet<POYA.Areas.XAd.Models.UserFeedback> UserFeedbacks{get;set;}
         public DbSet<POYA.Areas.XAd.Models.UserFeedbackImage> UserFeedbackImages{get;set;}
         public DbSet<POYA.Areas.XAd.Models.UserPraiseOr> UserPraiseOrs{get;set;}
+        public DbSet<POYA.Areas.LAdmin.Models.UserComplaint> UserComplaint { get; set; }
+        public DbSet<POYA.Areas.LAdmin.Models.LAudit> LAudit { get; set; }
         
         #region 
 

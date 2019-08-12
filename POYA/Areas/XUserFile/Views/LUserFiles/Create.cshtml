@@ -24,12 +24,12 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src="~/lib/js-spark-md5/spark-md5.min.js"></script>
+    <script src="~/lib/js-spark-SHA256/spark-SHA256.min.js"></script>
 
     <script>
     //========  VALUE       ========//
 
-        var MD5Array = new Array();
+        var SHA256Array = new Array();
 
         var MaxMultipartBodyLength =Number(`@(X_DOVEValues.MaxMultipartBodyLengthLimit)`);
         var InDirId = `@(ViewData["InDirId"])`;
@@ -64,7 +64,7 @@
         */
         var FileInfo = (Id = NewGuid()) => `
                         <div id='${Id}' name="FileDIV">
-                            <input id="${GetFileInputId(Id)}" LID="${Id}" name="FileInputEle" type="file" onchange="GetMD58AddToArray('${Id}')" hidden/>
+                            <input id="${GetFileInputId(Id)}" LID="${Id}" name="FileInputEle" type="file" onchange="GetSHA2568AddToArray('${Id}')" hidden/>
                             <span>
                                 <span id="${GetRemoveFileEleId(Id)}" name="RemoveFileEle" onclick="RemoveFileEleClick('${Id}')">&times</span>
                                 <span id="${GetUploadProgressId(Id)}" class="UploadProgress"></span>
@@ -74,8 +74,8 @@
 
         //========  UI      ========//
 
-        function MakeFileDivTitleToMD5(Id,MD5) {
-            $(`#${Id}`).attr("title",`MD5: ${MD5}`);
+        function MakeFileDivTitleToSHA256(Id,SHA256) {
+            $(`#${Id}`).attr("title",`SHA256: ${SHA256}`);
         }
 
         /**
@@ -94,7 +94,7 @@
 
         function RemoveFileEleClick(Id ) {
             $(`#${Id}`).remove();
-            RemoveItemInMD5Array(Id); //  !!
+            RemoveItemInSHA256Array(Id); //  !!
         }
 
         function ShowFileTooLarge8RemoveFileEle() {
@@ -102,7 +102,7 @@
             MakeAlert("warning", FileIsTooLarge);
         }
 
-        function ReadMD5Tip(Id) {
+        function ReadSHA256Tip(Id) {
             UpdateProgress(Id, `@(Localizer["Reading"]). . .`);
         }
 
@@ -121,7 +121,7 @@
 
         }
 
-        function ReadMD5FinishTip(Id) {
+        function ReadSHA256FinishTip(Id) {
             UpdateProgress(Id, "");
 
         }
@@ -160,22 +160,22 @@
 
 
     //========  SERVICE     ========//
-        function CheckMD58UploadFiles() {
-            if (MD5Array.length < 1) return;
+        function CheckSHA2568UploadFiles() {
+            if (SHA256Array.length < 1) return;
             if (document.getElementsByName("FileInputEle").length < 1) return;
-            var File8MD5s = new Array();
-            MD5Array.forEach(function (value, index, array) {
+            var File8SHA256s = new Array();
+            SHA256Array.forEach(function (value, index, array) {
                 var Id_ = value["Id"];
                 var FileName_ = document.getElementById(GetFileInputId(Id_)).files[0].name;
-                File8MD5s.push({ Id: String(Id_), FileName: String(FileName_), MD5: String(value["MD5"]) });
+                File8SHA256s.push({ Id: String(Id_), FileName: String(FileName_), SHA256: String(value["SHA256"]) });
             });
-            //  console.log(`File8MD5s >${JSON.stringify( File8MD5s)}`);
+            //  console.log(`File8SHA256s >${JSON.stringify( File8SHA256s)}`);
             $.ajax({
-                url: `@(Url.Action("CheckMD5"))`,
+                url: `@(Url.Action("CheckSHA256"))`,
                 type: "POST",
                 data: {
-                    LContrastMD5: {
-                        InDirId: InDirId, File8MD5s: File8MD5s
+                    LContrastSHA256: {
+                        InDirId: InDirId, File8SHA256s: File8SHA256s
                     }
                 },
                 dataType: "json",
@@ -190,7 +190,7 @@
                 success: function (IdArray) {
                     //  console.log("Contrast>>"+IdArray);
                     IdArray.forEach(function (value) {
-                        RemoveItemInMD5Array(value);
+                        RemoveItemInSHA256Array(value);
                         RemoveUploadedFileInput(value);
                         UpdateProgress(value, "&radic;");
                     });
@@ -249,7 +249,7 @@
                         if (Response["Status"] == true) {
                             //  console.log(`Response["Id"] > ${Response["Id"]}`);
                             UpdateProgress(Response["Id"], "&radic;");
-                            RemoveItemInMD5Array(Response["Id"]);
+                            RemoveItemInSHA256Array(Response["Id"]);
                             RemoveUploadedFileInput(Response["Id"]);
                         } else {
                             MakeAlert("warning", Response["Msg"]);
@@ -265,36 +265,36 @@
         //========  DATA        ========//
 
         /**
-         * Remove the item in MD5Array
+         * Remove the item in SHA256Array
          * @@param {String} Id The id of item(it is the id of Value.FileInfo())
          */
-        function RemoveItemInMD5Array(Id ) {
-            MD5Array.forEach(function (value, index, array) {
+        function RemoveItemInSHA256Array(Id ) {
+            SHA256Array.forEach(function (value, index, array) {
                 if (value["Id"] == Id) {
-                    MD5Array.splice(index, 1);
+                    SHA256Array.splice(index, 1);
                 }
             });
         }
 
         /**
-        * Get md5 of file and add it to array
+        * Get SHA256 of file and add it to array
         * REFERENCE    https://blog.csdn.net/liguoqingxjxcc/article/details/81664245
         * THRNK        https://blog.csdn.net/liguoqingxjxcc
         * @@param {String} Id The id of file
         */
-        function GetMD58AddToArray(Id) {
+        function GetSHA2568AddToArray(Id) {
             $(`#${Id}`).show();
             var File_ = document.getElementById(GetFileInputId(Id)).files[0];
             if (File_.size > MaxMultipartBodyLength) {   //  (FileLimit) * 1024 * 1024
                 ShowFileTooLarge8RemoveFileEle();
                 return;
             }
-            ReadMD5Tip(Id);
+            ReadSHA256Tip(Id);
             var BlobSlice_ = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
                 ChunkSize = 2 * 1024 * 1024,
                 Chunks = Math.ceil(File_.size / ChunkSize),
                 CurrentChunk = 0,
-                Spark_ = new SparkMD5.ArrayBuffer(),
+                Spark_ = new SparkSHA256.ArrayBuffer(),
                 FileReader_ = new FileReader();
             FileReader_.onload = function (e) {
                 Spark_.append(e.target.result);
@@ -302,10 +302,10 @@
                 if (CurrentChunk < Chunks) {
                     loadNext();
                 } else {
-                    var MD5 = String(Spark_.end());
+                    var SHA256 = String(Spark_.end());
                     var IsSelected = false;
-                    MD5Array.forEach(function (value, index, array) {
-                        if (value["MD5"] == MD5) {
+                    SHA256Array.forEach(function (value, index, array) {
+                        if (value["SHA256"] == SHA256) {
                             IsSelected = true;
                         }
                     });
@@ -314,12 +314,12 @@
                         MakeAlert("warning", FileIsSelected);
                         //  _UI
                     } else {
-                        MD5Array.push({ Id: Id, MD5: MD5 });
-                        ReadMD5FinishTip(Id);
+                        SHA256Array.push({ Id: Id, SHA256: SHA256 });
+                        ReadSHA256FinishTip(Id);
                         ShowLastFilePath(Id);
                         ShowOrHideLastRemoveFileEle(true);
-                        MakeFileDivTitleToMD5(Id, MD5);
-                        //  console.log(MD5);
+                        MakeFileDivTitleToSHA256(Id, SHA256);
+                        //  console.log(SHA256);
                     }
                 }
             };
@@ -342,7 +342,7 @@
 
             $("#UploadA").on("click", function () {
                 if ($("[name='FileInputEle']").length < 1) return;
-                CheckMD58UploadFiles();
+                CheckSHA2568UploadFiles();
                 event.preventDefault();
             });
         });

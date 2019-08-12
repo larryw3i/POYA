@@ -120,11 +120,11 @@
 </div>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/js-spark-md5/spark-md5.min.js"></script>
+<script src="~/lib/js-spark-SHA256/spark-SHA256.min.js"></script>
 <partial name="_DefaultEditorPartial" view-data="_EditorPartialViewDataDictionary" />
 <script>
 
-    var ID8MD5Array = new Array();
+    var ID8SHA256Array = new Array();
 
     var IsVideoFileSelected =Boolean(`@(IsVideoFileUploaded?"":"0")`); //   @(IsVideoFileUploaded?"true":"false");
     var LAttachmentFileInputId = (id) => `LAttachments_${id}`;
@@ -139,7 +139,7 @@
     /**
     *  public Guid EArticleId { get; set; }
     *  public string FileName { get; set;}
-    *  public string MD5 { get; set; }
+    *  public string SHA256 { get; set; }
     *  public bool IsEArticleVideo { get; set; } = false;
     * */
     function SubmitForm(Editor) {
@@ -277,26 +277,26 @@
     }
 
     function LAttachmentsOnChange(id) {
-        GetMD5(LAttachmentFileInputId(id), false);
+        GetSHA256(LAttachmentFileInputId(id), false);
         let _Value = $(`#LAttachments_${id}`).val();
         let _Content = `<div class="SelectFileShowEle" title='@(Localizer["Delete"])'  id="${FileRemoveEleId(id)}" ><span>${_Value}</span><span class='FileInputRemoveEle'  id="${FileRemoveSpanId(id)}" onclick="RemoveFile('${id}')"> x</span></div>`;
         $("#attachment_list_div").append(_Content);
     }
 
     function LVideosOnChange(id) {
-        GetMD5(LVideoFileInputId(id),true);
+        GetSHA256(LVideoFileInputId(id),true);
         let _Value = $(`#LVideos_${id}`).val();
         let _Content = `<div class="SelectFileShowEle"   title='@Localizer["Delete"]'  id="${FileRemoveEleId(id)}" ><span>${_Value}</span><span class='FileInputRemoveEle'   id="${FileRemoveSpanId(id)}" onclick="RemoveFile('${id}',true)"> x</span></div>`;
         $("#video_list_div").append(_Content);
         IsVideoFileSelected = true;
     }
     /**
-    * Get MD5 of file input and execute a function
+    * Get SHA256 of file input and execute a function
     * @@param {string} Id -The id of file input
-    * @@param {Function} ToDo - Execute a function(pass Id and md5) after finishing computing md5
+    * @@param {Function} ToDo - Execute a function(pass Id and SHA256) after finishing computing SHA256
     * @@param {boolean} IsEArticleVideo - Flag a file is video of article or not, the default is false
     */
-    function GetMD5(Id,  IsEArticleVideo = false) {
+    function GetSHA256(Id,  IsEArticleVideo = false) {
 
         var File_ = File_ = document.getElementById(Id).files[0];
         $("#SaveProgressEle").html(`@Localizer["Read file"] . . .`);
@@ -306,7 +306,7 @@
             ChunkSize = 20 * 1024 * 1024,
             Chunks = Math.ceil(File_.size / ChunkSize),
             CurrentChunk = 0,
-            Spark_ = new SparkMD5.ArrayBuffer(),
+            Spark_ = new SparkSHA256.ArrayBuffer(),
             FileReader_ = new FileReader();
         FileReader_.onload = function (e) {
             Spark_.append(e.target.result);
@@ -314,12 +314,12 @@
             if (CurrentChunk < Chunks) {
                 loadNext();
             } else {
-                let MD5 = String(Spark_.end());
+                let SHA256 = String(Spark_.end());
                 $("#SaveProgressEle").html(`@Localizer["Read file finish"]`);
 
-                // console.log(MD5);
-                if (!ID8MD5Array.some((value, index, array) => { value["ID"] == Id && value["MD5"] == MD5 })) {
-                    ID8MD5Array.push({ "ID": Id, "MD5": MD5, "IsEArticleVideo": IsEArticleVideo });
+                // console.log(SHA256);
+                if (!ID8SHA256Array.some((value, index, array) => { value["ID"] == Id && value["SHA256"] == SHA256 })) {
+                    ID8SHA256Array.push({ "ID": Id, "SHA256": SHA256, "IsEArticleVideo": IsEArticleVideo });
                 }
                 setTimeout(function () {
                     $("#SaveProgressEle").html("");
@@ -338,36 +338,36 @@
     }
 
     /**
-    * (Id ,MD5) ===> ID8MD5Array
+    * (Id ,SHA256) ===> ID8SHA256Array
     * @@param {string}Id -The id of file input element
-    * @@param {string}MD5 -The MD5 string
+    * @@param {string}SHA256 -The SHA256 string
     * @@param {boolean} IsEArticleVideo - Flag a file is video of article or not, the default is false
     */
-    function AddId8MD5(Id, MD5, IsEArticleVideo = false) {
-        if (!ID8MD5Array.some((value, index, array) => { value["ID"] == Id && value["MD5"] == MD5 })) {
-            ID8MD5Array.push({ ID: Id, MD5: MD5, IsEArticleVideo: IsEArticleVideo });
+    function AddId8SHA256(Id, SHA256, IsEArticleVideo = false) {
+        if (!ID8SHA256Array.some((value, index, array) => { value["ID"] == Id && value["SHA256"] == SHA256 })) {
+            ID8SHA256Array.push({ ID: Id, SHA256: SHA256, IsEArticleVideo: IsEArticleVideo });
         }
     }
     //
 
-    function CheckMD5() {
-        if (ID8MD5Array.length < 1) SubmitForm(Editor);
-        var eArticleFileMD5s = new Array();
+    function CheckSHA256() {
+        if (ID8SHA256Array.length < 1) SubmitForm(Editor);
+        var eArticleFileSHA256s = new Array();
 
-        ID8MD5Array.forEach((value, index, array) => {
-            eArticleFileMD5s.push({
+        ID8SHA256Array.forEach((value, index, array) => {
+            eArticleFileSHA256s.push({
                 FileInputId:"",
                 EArticleId: "@Model.Id",
                 FileName: $("#" + value["ID"]).val(),
-                MD5: value["MD5"],
+                SHA256: value["SHA256"],
                 IsEArticleVideo: value["IsEArticleVideo"]
             });
         });
 
         $.ajax({
-            url: `@Url.Action("LCheckMD5v1")`,
+            url: `@Url.Action("LCheckSHA256v1")`,
             type: "POST",
-            data: { eArticleFileMD5s: eArticleFileMD5s },
+            data: { eArticleFileSHA256s: eArticleFileSHA256s },
 
             headers: {
                 "@(X_DOVEValues.CustomHeaderName)": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
@@ -377,8 +377,8 @@
                 Response.forEach((value, index, array) => {
 
                     if (value["IsUploaded"] == true) {
-                        ID8MD5Array.forEach((v, i, a) => {
-                            if (v["MD5"] == value["FileMD5"]) {
+                        ID8SHA256Array.forEach((v, i, a) => {
+                            if (v["SHA256"] == value["FileSHA256"]) {
                                 $(`#${v["ID"]}`).remove();
                             }
                         });
@@ -392,7 +392,7 @@
 
 
     function FormSubmitClick() {
-        CheckMD5();
+        CheckSHA256();
         }
 
     $(document).ready(function () {

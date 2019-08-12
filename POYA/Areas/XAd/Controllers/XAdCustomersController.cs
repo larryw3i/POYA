@@ -80,10 +80,10 @@ namespace POYA.Areas.XAd.Controllers
             = "REASON";
         private readonly string REASON_REPEAT_String
             = "REPEAT";
-        private readonly string RESULT_MD5_String
-            = "MD5";
+        private readonly string RESULT_SHA256_String
+            = "SHA256";
         private readonly string REASON_LENGTH_LESS_THAN_0_String
-            = "MD5";
+            = "SHA256";
         
         #endregion
 
@@ -179,28 +179,28 @@ namespace POYA.Areas.XAd.Controllers
 
                 var _XAdCustomerLicenses = new List<XAdCustomerLicense>();
 
-                var _FileMD5s = System.IO.Directory.GetFiles(XAdCustomerHelper.XAdImgFilePath(_hostingEnv)).Select(p => System.IO.Path.GetFileNameWithoutExtension(p));
+                var _FileSHA256s = System.IO.Directory.GetFiles(XAdCustomerHelper.XAdImgFilePath(_hostingEnv)).Select(p => System.IO.Path.GetFileNameWithoutExtension(p));
 
                 foreach (var f in xAdCustomer.LicenseImgFiles)
                 {
                     var _memoryStream = new MemoryStream();
                     await f.CopyToAsync(_memoryStream);
                     var _bytes = _memoryStream.ToArray();
-                    var _md5 = new XUserFileHelper().GetFileMD5(_bytes);
+                    var _SHA256 = new XUserFileHelper().GetFileSHA256(_bytes);
 
-                    if (!_hostingEnv.IsDevelopment() && _FileMD5s.Contains(_md5))
+                    if (!_hostingEnv.IsDevelopment() && _FileSHA256s.Contains(_SHA256))
                     {
                         ModelState.AddModelError(nameof(XAdCustomer.LicenseImgFiles), _localizer["The license photo is repeated"]);
                         return View(xAdCustomer);
                     }
-                    if (!_FileMD5s.Contains(_md5))
+                    if (!_FileSHA256s.Contains(_SHA256))
                     {
-                        var _FileStream = new FileStream(XAdCustomerHelper.XAdImgFilePath(_hostingEnv) + $"/{_md5}", FileMode.Create);
+                        var _FileStream = new FileStream(XAdCustomerHelper.XAdImgFilePath(_hostingEnv) + $"/{_SHA256}", FileMode.Create);
                         await f.CopyToAsync(_FileStream);
                         _FileStream.Close();
 
                     }
-                    _XAdCustomerLicenses.Add(new XAdCustomerLicense { Id = Guid.NewGuid(), XAdCustomerUserId = UserId_, ImgFileMD5 = _md5, ImgFileContentType = f.ContentType });
+                    _XAdCustomerLicenses.Add(new XAdCustomerLicense { Id = Guid.NewGuid(), XAdCustomerUserId = UserId_, ImgFileSHA256 = _SHA256, ImgFileContentType = f.ContentType });
 
                 }
                 await _context.XAdCustomerLicenses.AddRangeAsync(_XAdCustomerLicenses);
@@ -211,24 +211,24 @@ namespace POYA.Areas.XAd.Controllers
                 var _memoryStream_ = new MemoryStream();
                 await xAdCustomer.StoreIconFile.CopyToAsync(_memoryStream_);
                 var _bytes_ = _memoryStream_.ToArray();
-                var _md5_ = new XUserFileHelper().GetFileMD5(_bytes_);
+                var _SHA256_ = new XUserFileHelper().GetFileSHA256(_bytes_);
 
-                if (!_hostingEnv.IsDevelopment() && _FileMD5s.Contains(_md5_))
+                if (!_hostingEnv.IsDevelopment() && _FileSHA256s.Contains(_SHA256_))
                 {
                     ModelState.AddModelError(nameof(XAdCustomer.LicenseImgFiles), _localizer["The store icon is repeated"]);
                     return View(xAdCustomer);
                 }
 
-                if (!_FileMD5s.Contains(_md5_))
+                if (!_FileSHA256s.Contains(_SHA256_))
                 {
                     var _FileStream_ = new FileStream(XAdCustomerHelper.XAdImgFilePath(_hostingEnv) +
-                        $"/{_md5_}",
+                        $"/{_SHA256_}",
                     FileMode.Create);
                     await xAdCustomer.StoreIconFile.CopyToAsync(_FileStream_);
                     _FileStream_.Close();
                 }
 
-                xAdCustomer.StoreIconMD5 = _md5_;
+                xAdCustomer.StoreIconSHA256 = _SHA256_;
                 xAdCustomer.StoreIconContentType = xAdCustomer.StoreIconFile.ContentType;
                 xAdCustomer.UserId = UserId_;
                 #endregion
@@ -330,7 +330,7 @@ namespace POYA.Areas.XAd.Controllers
 
                     if (xAdCustomer?.StoreIconFile != null)
                     {
-                        var _JObject = await SaveImgAndGetMD5sAsync(xAdCustomer.StoreIconFile);
+                        var _JObject = await SaveImgAndGetSHA256sAsync(xAdCustomer.StoreIconFile);
                         if (Convert.ToBoolean( _JObject[RESULT_IS_SUCCESSFUL_String])==false)
                         {
                             var _REASON = _JObject[REASON_String].ToString();
@@ -340,8 +340,8 @@ namespace POYA.Areas.XAd.Controllers
                             }
                             return View(xAdCustomer);
                         }
-                        var _MD5 =_JObject[RESULT_MD5_String].ToString();
-                        _xAdCustomer.StoreIconMD5 = _MD5;
+                        var _SHA256 =_JObject[RESULT_SHA256_String].ToString();
+                        _xAdCustomer.StoreIconSHA256 = _SHA256;
                         _xAdCustomer.StoreIconContentType = xAdCustomer.StoreIconFile.ContentType;
                       
                     }
@@ -354,7 +354,7 @@ namespace POYA.Areas.XAd.Controllers
                     {
                         foreach (var f in xAdCustomer.LicenseImgFiles)
                         {
-                            var _JObject = await SaveImgAndGetMD5sAsync(f);
+                            var _JObject = await SaveImgAndGetSHA256sAsync(f);
                             if (Convert.ToBoolean(_JObject[RESULT_IS_SUCCESSFUL_String]) == false)
                             {
                                 var _REASON = _JObject[REASON_String].ToString();
@@ -364,8 +364,8 @@ namespace POYA.Areas.XAd.Controllers
                                 }
                                 return View(xAdCustomer);
                             }
-                            var _MD5 = _JObject[RESULT_MD5_String].ToString();
-                            await _context.XAdCustomerLicenses.AddAsync(new XAdCustomerLicense { ImgFileContentType = f.ContentType, ImgFileMD5 = _MD5, XAdCustomerUserId = UserId_ });
+                            var _SHA256 = _JObject[RESULT_SHA256_String].ToString();
+                            await _context.XAdCustomerLicenses.AddAsync(new XAdCustomerLicense { ImgFileContentType = f.ContentType, ImgFileSHA256 = _SHA256, XAdCustomerUserId = UserId_ });
 
                         }
                     }
@@ -433,20 +433,20 @@ namespace POYA.Areas.XAd.Controllers
         [HttpGet]
         [AllowAnonymous]
         #endregion
-        public async Task<IActionResult> GetXAdCustomerFilesAsync(string MD5 = "")
+        public async Task<IActionResult> GetXAdCustomerFilesAsync(string SHA256 = "")
         {
-            if (string.IsNullOrWhiteSpace(MD5))
+            if (string.IsNullOrWhiteSpace(SHA256))
             {
                 return NotFound();
             }
 
-            var _XAdCustomer = await _context.XAdCustomer.FirstOrDefaultAsync(p => p.StoreIconMD5 == MD5);
+            var _XAdCustomer = await _context.XAdCustomer.FirstOrDefaultAsync(p => p.StoreIconSHA256 == SHA256);
             var _ContentType = _XAdCustomer?.StoreIconContentType ?? string.Empty;
             var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id;
             if (_XAdCustomer == null)
             {
                 if (string.IsNullOrWhiteSpace(UserId_)) { return NotFound(); }
-                var _XAdCustomerLicenses = await _context.XAdCustomerLicenses.FirstOrDefaultAsync(P => P.XAdCustomerUserId == UserId_ && P.ImgFileMD5 == MD5);
+                var _XAdCustomerLicenses = await _context.XAdCustomerLicenses.FirstOrDefaultAsync(P => P.XAdCustomerUserId == UserId_ && P.ImgFileSHA256 == SHA256);
                 if (_XAdCustomerLicenses == null)
                 {
                     return NotFound();
@@ -454,7 +454,7 @@ namespace POYA.Areas.XAd.Controllers
                 _ContentType = _XAdCustomerLicenses.ImgFileContentType;
             }
 
-            var _FilePath = XAdCustomerHelper.XAdImgFilePath(_hostingEnv) + $"/{MD5}";
+            var _FilePath = XAdCustomerHelper.XAdImgFilePath(_hostingEnv) + $"/{SHA256}";
 
             if (!System.IO.File.Exists(_FilePath))
             {
@@ -472,7 +472,7 @@ namespace POYA.Areas.XAd.Controllers
         #region 
 
         #endregion
-        public async Task<JObject> SaveImgAndGetMD5sAsync(IFormFile _FormFile)
+        public async Task<JObject> SaveImgAndGetSHA256sAsync(IFormFile _FormFile)
         {
             var _JObject = new JObject();
 
@@ -484,7 +484,7 @@ namespace POYA.Areas.XAd.Controllers
 
             }
 
-            var _FileMD5s = Directory.GetFiles(XAdCustomerHelper.XAdImgFilePath(_hostingEnv))
+            var _FileSHA256s = Directory.GetFiles(XAdCustomerHelper.XAdImgFilePath(_hostingEnv))
                      .Select(p => Path.GetFileNameWithoutExtension(p));
 
             if (_FormFile.Length > 0)
@@ -492,25 +492,25 @@ namespace POYA.Areas.XAd.Controllers
                 var _memoryStream_ = new MemoryStream();
                 await _FormFile.CopyToAsync(_memoryStream_);
                 var _bytes_ = _memoryStream_.ToArray();
-                var _md5_ = new XUserFileHelper().GetFileMD5(_bytes_);
+                var _SHA256_ = new XUserFileHelper().GetFileSHA256(_bytes_);
 
-                if (!_hostingEnv.IsDevelopment() && _FileMD5s.Contains(_md5_))
+                if (!_hostingEnv.IsDevelopment() && _FileSHA256s.Contains(_SHA256_))
                 {
                     _JObject[RESULT_IS_SUCCESSFUL_String] = false;
                     _JObject[REASON_String] = REASON_REPEAT_String;
                     return _JObject;
                 }
 
-                if (!_FileMD5s.Contains(_md5_))
+                if (!_FileSHA256s.Contains(_SHA256_))
                 {
                     var _FileStream_ = new FileStream(XAdCustomerHelper.XAdImgFilePath(_hostingEnv) +
-                        $"/{_md5_}",
+                        $"/{_SHA256_}",
                     FileMode.Create);
                     await _FormFile.CopyToAsync(_FileStream_);
                     _FileStream_.Close();
                 }
                 _JObject[RESULT_IS_SUCCESSFUL_String] = true;
-                _JObject[RESULT_MD5_String] = _md5_;
+                _JObject[RESULT_SHA256_String] = _SHA256_;
             }
             return _JObject;
 

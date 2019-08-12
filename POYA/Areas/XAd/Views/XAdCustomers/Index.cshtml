@@ -18,7 +18,7 @@
         <div class="col col-auto Store-Icon-Col text-center">
             @foreach(var m in Model)
             {
-                <img src='@Url.Action(nameof(XAdCustomersController.GetXAdCustomerFilesAsync),new { MD5=m.StoreIconMD5})' class="Store-Icon" id="@(m.Id)" title="@(m.Name)"/>
+                <img src='@Url.Action(nameof(XAdCustomersController.GetXAdCustomerFilesAsync),new { SHA256=m.StoreIconSHA256})' class="Store-Icon" id="@(m.Id)" title="@(m.Name)"/>
             }
         </div>
     </div>

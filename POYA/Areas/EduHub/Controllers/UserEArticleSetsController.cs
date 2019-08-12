@@ -268,10 +268,10 @@ namespace POYA.Areas.EduHub.Controllers
         {
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var _userEArticleHomeInfo = await _context.UserEArticleHomeInfos.FirstOrDefaultAsync(p => p.UserId == UserId_);
-            var _MD5 = string.Empty;
+            var _SHA256 = string.Empty;
             if (userEArticleHomeInfo?.CoverFile != null)
             {
-                _MD5 = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, userEArticleHomeInfo.CoverFile);
+                _SHA256 = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, userEArticleHomeInfo.CoverFile);
             }
             if (_userEArticleHomeInfo == null)
             {
@@ -279,9 +279,9 @@ namespace POYA.Areas.EduHub.Controllers
                 {
                     UserId = UserId_,
                     Comment = userEArticleHomeInfo.Comment,
-                    CoverFileMD5 = _MD5,
+                    CoverFileSHA256 = _SHA256,
                     Id = Guid.NewGuid(),
-                    CoverFileContentType = string.IsNullOrWhiteSpace(_MD5) ?
+                    CoverFileContentType = string.IsNullOrWhiteSpace(_SHA256) ?
                     "" : userEArticleHomeInfo.CoverFile.ContentType
                 };
                 await _context.UserEArticleHomeInfos.AddAsync(_userEArticleHomeInfo);
@@ -290,9 +290,9 @@ namespace POYA.Areas.EduHub.Controllers
             {
                 _userEArticleHomeInfo.Comment = string.IsNullOrWhiteSpace(userEArticleHomeInfo.Comment) ?
                     _userEArticleHomeInfo.Comment : userEArticleHomeInfo.Comment;
-                _userEArticleHomeInfo.CoverFileMD5 = string.IsNullOrWhiteSpace(_MD5) ?
-                    _userEArticleHomeInfo.CoverFileMD5 : _MD5;
-                _userEArticleHomeInfo.CoverFileContentType = string.IsNullOrWhiteSpace(_MD5) ?
+                _userEArticleHomeInfo.CoverFileSHA256 = string.IsNullOrWhiteSpace(_SHA256) ?
+                    _userEArticleHomeInfo.CoverFileSHA256 : _SHA256;
+                _userEArticleHomeInfo.CoverFileContentType = string.IsNullOrWhiteSpace(_SHA256) ?
                     _userEArticleHomeInfo.CoverFileContentType : userEArticleHomeInfo.CoverFile.ContentType;
             }
             await _context.SaveChangesAsync();
@@ -321,13 +321,13 @@ namespace POYA.Areas.EduHub.Controllers
             var _ContentType = "image/webp";    //  string.Empty;
             if (_userEArticleHomeInfo == null ||
                 !System.IO.File.Exists(X_DOVEValues.FileStoragePath(_hostingEnv)
-                + _userEArticleHomeInfo.CoverFileMD5))
+                + _userEArticleHomeInfo.CoverFileSHA256))
             {
                 _FileBytes = await System.IO.File.ReadAllBytesAsync(_hostingEnv.WebRootPath + "/img/earticle_home_default_img.webp");
             }
             else
             {
-                var _FilePath_ = X_DOVEValues.FileStoragePath(_hostingEnv) + _userEArticleHomeInfo.CoverFileMD5;
+                var _FilePath_ = X_DOVEValues.FileStoragePath(_hostingEnv) + _userEArticleHomeInfo.CoverFileSHA256;
                 _FileBytes = await System.IO.File.ReadAllBytesAsync(_FilePath_);
                 _ContentType = _userEArticleHomeInfo.CoverFileContentType;
             }

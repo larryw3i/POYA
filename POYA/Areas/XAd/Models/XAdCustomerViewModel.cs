@@ -14,7 +14,7 @@ namespace POYA.Areas.XAd.Models
 
         #region STORE_ICON
 
-        public string StoreIconMD5 { get; set; }
+        public string StoreIconSHA256 { get; set; }
 
         public string StoreIconContentType { get; set; }
         
@@ -100,7 +100,7 @@ namespace POYA.Areas.XAd.Models
 
         public string XAdCustomerUserId { get; set; }
 
-        public string ImgFileMD5 { get; set; }
+        public string ImgFileSHA256 { get; set; }
 
         public string ImgFileContentType { get; set; }
 

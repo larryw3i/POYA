@@ -589,15 +589,15 @@ namespace POYA.Areas.EduHub.Controllers
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         #endregion
-        public async Task<IActionResult> LCheckMD5v1(IEnumerable<EArticleFileMD5> eArticleFileMD5s)
+        public async Task<IActionResult> LCheckSHA256v1(IEnumerable<EArticleFileSHA256> eArticleFileSHA256s)
         {
-            var _lMD5s = eArticleFileMD5s.ToList().Select(p => new LMD5 { FileMD5 = p.MD5, IsUploaded = false }).ToList();
-            _lMD5s = _xUserFileHelper.LCheckMD5(_hostingEnv, _lMD5s);
+            var _lSHA256s = eArticleFileSHA256s.ToList().Select(p => new LSHA256 { FileSHA256 = p.SHA256, IsUploaded = false }).ToList();
+            _lSHA256s = _xUserFileHelper.LCheckSHA256(_hostingEnv, _lSHA256s);
             var _EArticleFiles_ = new List<EArticleFile>();
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             #region PERMISSION_CHECK
             var UserEArticles = await _context.EArticle.Where(p => p.UserId == UserId_).Select(p => new { p.Id, p.UserId }).ToListAsync();
-            foreach (var e in eArticleFileMD5s)
+            foreach (var e in eArticleFileSHA256s)
             {
                 if (UserEArticles.Any(q => q.Id == e.EArticleId && (q.UserId != UserId_)))
                 {
@@ -606,16 +606,16 @@ namespace POYA.Areas.EduHub.Controllers
             }
 
             #endregion
-            eArticleFileMD5s.ToList().ForEach(p =>
+            eArticleFileSHA256s.ToList().ForEach(p =>
             {
-                if (_lMD5s.Any(q => q.FileMD5 == p.MD5 && q.IsUploaded))
+                if (_lSHA256s.Any(q => q.FileSHA256 == p.SHA256 && q.IsUploaded))
                 {
-                    _EArticleFiles_.Add(new EArticleFile { EArticleId = p.EArticleId, FileMD5 = p.MD5, FileName = Path.GetFileName(p.FileName), IsEArticleVideo = p.IsEArticleVideo });
+                    _EArticleFiles_.Add(new EArticleFile { EArticleId = p.EArticleId, FileSHA256 = p.SHA256, FileName = Path.GetFileName(p.FileName), IsEArticleVideo = p.IsEArticleVideo });
                 }
             });
             await _context.EArticleFiles.AddRangeAsync(_EArticleFiles_);
             await _context.SaveChangesAsync();
-            return Ok(_lMD5s);
+            return Ok(_lSHA256s);
         }
 
         #region 
@@ -625,26 +625,26 @@ namespace POYA.Areas.EduHub.Controllers
         #endregion
         public async Task<IActionResult> UploadEArticleImage([FromForm]IEnumerable<IFormFile> EArticleImages)
         {
-            ///  MD5 should be checked first
+            ///  SHA256 should be checked first
             if (EArticleImages.Count() > 0)
             {
                 var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                 var _data = new List<string>();
-                var _MD5s = await System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(_hostingEnv)).Select(p => p.Split(new char[] { '\\', '/' }).LastOrDefault()).ToListAsync();
+                var _SHA256s = await System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(_hostingEnv)).Select(p => p.Split(new char[] { '\\', '/' }).LastOrDefault()).ToListAsync();
                 foreach (var img in EArticleImages)
                 {
                     var MemoryStream_ = new MemoryStream();
                     await img.CopyToAsync(MemoryStream_);
                     var FileBytes = MemoryStream_.ToArray();
-                    var MD5_ = _xUserFileHelper.GetFileMD5(FileBytes);
-                    var FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + MD5_;
+                    var SHA256_ = _xUserFileHelper.GetFileSHA256(FileBytes);
+                    var FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + SHA256_;
                     //  System.IO.File.Create(FilePath);
-                    if (!_MD5s.Contains(MD5_))
+                    if (!_SHA256s.Contains(SHA256_))
                     {
                         await System.IO.File.WriteAllBytesAsync(FilePath, FileBytes);
                         await _context.LFile.AddAsync(new LFile
                         {
-                            MD5 = MD5_,
+                            SHA256 = SHA256_,
                             UserId = UserId_
                         });
                     }
@@ -652,7 +652,7 @@ namespace POYA.Areas.EduHub.Controllers
                     var _LUserFile = new LUserFile
                     {
                         UserId = UserId_,
-                        MD5 = MD5_,
+                        SHA256 = SHA256_,
                         InDirId = X_DOVEValues.PublicDirId,
                         Name = img.FileName,
                         IsEArticleFile = true
@@ -689,7 +689,7 @@ namespace POYA.Areas.EduHub.Controllers
             {
                 return NoContent();
             }
-            var _FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + _LUserFile.MD5;
+            var _FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + _LUserFile.SHA256;
             if (!System.IO.File.Exists(_FilePath))
             {
                 return NoContent();
@@ -747,9 +747,9 @@ namespace POYA.Areas.EduHub.Controllers
                 foreach (var i in eArticle.LAttachments)
                 {
                     if (i?.Length < 1) continue;
-                    var MD5_ = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, i);
-                    _EArticleFiles.Add(new EArticleFile { EArticleId = eArticle.Id, FileName = System.IO.Path.GetFileName(i.FileName), FileMD5 = MD5_, IsEArticleVideo = false });
-                    _LFiles_.Add(new LFile { UserId = UserId_, MD5 = MD5_ });
+                    var SHA256_ = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, i);
+                    _EArticleFiles.Add(new EArticleFile { EArticleId = eArticle.Id, FileName = System.IO.Path.GetFileName(i.FileName), FileSHA256 = SHA256_, IsEArticleVideo = false });
+                    _LFiles_.Add(new LFile { UserId = UserId_, SHA256 = SHA256_ });
                 }
             }
             if (eArticle.LVideos?.Count() > 0)
@@ -757,9 +757,9 @@ namespace POYA.Areas.EduHub.Controllers
                 foreach (var i in eArticle.LVideos)
                 {
                     if (i?.Length < 1) continue;
-                    var MD5_ = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, i);
-                    _EArticleFiles.Add(new EArticleFile { EArticleId = eArticle.Id, FileName = System.IO.Path.GetFileName(i.FileName), FileMD5 = MD5_, IsEArticleVideo = true });
-                    _LFiles_.Add(new LFile { UserId = UserId_, MD5 = MD5_ });
+                    var SHA256_ = await _xUserFileHelper.LWriteBufferToFileAsync(_hostingEnv, i);
+                    _EArticleFiles.Add(new EArticleFile { EArticleId = eArticle.Id, FileName = System.IO.Path.GetFileName(i.FileName), FileSHA256 = SHA256_, IsEArticleVideo = true });
+                    _LFiles_.Add(new LFile { UserId = UserId_, SHA256 = SHA256_ });
                 }
             }
             await _context.EArticleFiles.AddRangeAsync(_EArticleFiles);

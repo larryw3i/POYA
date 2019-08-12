@@ -1,0 +1,65 @@
+@model POYA.Areas.LAdmin.Models.UserComplaint
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "/home/larry/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>UserComplaint</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContentId" class="control-label"></label>
+                <input asp-for="ContentId" class="form-control" />
+                <span asp-validation-for="ContentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DOComplaint" class="control-label"></label>
+                <input asp-for="DOComplaint" class="form-control" />
+                <span asp-validation-for="DOComplaint" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReceptionistId" class="control-label"></label>
+                <input asp-for="ReceptionistId" class="form-control" />
+                <span asp-validation-for="ReceptionistId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AuditResultId" class="control-label"></label>
+                <input asp-for="AuditResultId" class="form-control" />
+                <span asp-validation-for="AuditResultId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IllegalityType" class="control-label"></label>
+                <input asp-for="IllegalityType" class="form-control" />
+                <span asp-validation-for="IllegalityType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
