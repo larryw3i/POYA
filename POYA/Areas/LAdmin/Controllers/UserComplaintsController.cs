@@ -21,6 +21,8 @@ namespace POYA.Areas.LAdmin.Controllers
     [Authorize]
     public class UserComplaintsController : Controller
     {
+
+        #region DI
         private readonly IHostingEnvironment _hostingEnv;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -53,7 +55,11 @@ namespace POYA.Areas.LAdmin.Controllers
             _signInManager = signInManager;
             _lAdminHelper=new  LAdminHelper(_localizer);
         }
+
+        #endregion
+
         // GET: UserComplaints
+        [Authorize(Roles="ADMINISTRATOR")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.UserComplaint.ToListAsync());
@@ -96,7 +102,12 @@ namespace POYA.Areas.LAdmin.Controllers
         {
             if (ModelState.IsValid)
             {
+                var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
                 userComplaint.Id = Guid.NewGuid();
+                userComplaint.UserId=UserId_;
+                userComplaint.DOComplaint=DateTimeOffset.Now;
+
                 _context.Add(userComplaint);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -136,6 +147,8 @@ namespace POYA.Areas.LAdmin.Controllers
             {
                 try
                 {
+                    var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
                     _context.Update(userComplaint);
                     await _context.SaveChangesAsync();
                 }
@@ -163,6 +176,8 @@ namespace POYA.Areas.LAdmin.Controllers
                 return NotFound();
             }
 
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            
             var userComplaint = await _context.UserComplaint
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (userComplaint == null)

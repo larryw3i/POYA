@@ -15,7 +15,7 @@ namespace POYA.Areas.LAdmin.Controllers{
             _localizer=localizer;
         }
         public List<SelectListItem> GetIllegalityTypeSelectListItems() => new List<SelectListItem>{
-            new SelectListItem{Text=_localizer["Pornography | Vviolence"], Value="0",Selected=true},
+            new SelectListItem{Text=_localizer["Pornography | Violence"], Value="0",Selected=true},
             new SelectListItem{Text=_localizer["Politics | Religion"],Value="1"},
             new SelectListItem{Text=_localizer["Instigate"],Value="2"},
             new SelectListItem{Text=_localizer["Discrimination"],Value="3"},

@@ -63,7 +63,7 @@ namespace POYA.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
-            AppInitialization();
+            AppInitializationAsync().GetAwaiter().GetResult();
         }
 
         #endregion
@@ -164,7 +164,7 @@ namespace POYA.Controllers
             return LocalRedirect(returnUrl);
         }
 
-        private void AppInitialization()
+        private async Task AppInitializationAsync()
         {
             if (!Convert.ToBoolean(_configuration["IsInitialized"]))
             {
@@ -183,48 +183,33 @@ namespace POYA.Controllers
                 }
                 #region INITIAL_USER_ROLE
 
-                try
-                {
-                    var _userRoles = new string[] { X_DOVEValues._administrator };
-                    var _userRoles_ = _context.Roles.Select(p => p.Name).ToListAsync().GetAwaiter().GetResult();
-                    _userRoles = _userRoles.Where(p => !_userRoles_.Contains(p)).ToArray();
-                    if (_userRoles.Count() > 0)
-                    {
-                        foreach (var r in _userRoles)
-                        {   
-                            _context.Roles.AddAsync(new IdentityRole { Name = r, NormalizedName = r }).GetAwaiter().GetResult();
-                        }
+                var _userRoles = new string[] { X_DOVEValues._administrator };
+
+                foreach(var r in _userRoles){
+                    if(!await _roleManager.RoleExistsAsync(r)){
+                        await _roleManager.CreateAsync(new IdentityRole{ Name=r,NormalizedName=r});
                     }
-
-                    _context.SaveChangesAsync().GetAwaiter().GetResult();
-
-                    var _user = _context.Users.FirstOrDefaultAsync(p => p.Email == _configuration["Administration:AdminEmail"]).GetAwaiter().GetResult();
-
-                    if (_user != null)
-                    {
-                        var _roleId = _context.Roles.FirstOrDefaultAsync(p => p.Name == X_DOVEValues._administrator).GetAwaiter().GetResult().Id;
-
-                        if (_roleId != null && !_context.UserRoles.AnyAsync(p => p.UserId == _user.Id && p.RoleId == _roleId).GetAwaiter().GetResult())
-                        {
-                            _context.UserRoles.AddAsync(new IdentityUserRole<string> { RoleId = _roleId, UserId = _user.Id }).GetAwaiter().GetResult();
-                        }
-                    }
-                    #region MODIFY appsettings.json
-                    var _appsettings_jsonPath = _hostingEnv.ContentRootPath + "/appsettings.json";
-
-                    _context.SaveChangesAsync().GetAwaiter().GetResult();
-
-                    var jo = JObject.Parse(System.IO.File.ReadAllTextAsync(_appsettings_jsonPath).GetAwaiter().GetResult());
-                    jo["IsInitialized"] = true;
-                    System.IO.File.WriteAllTextAsync(_appsettings_jsonPath, Convert.ToString(jo)).GetAwaiter().GetResult();
-                    #endregion
                 }
-                catch (Exception e)
+
+
+                var _user = await _context.Users.FirstOrDefaultAsync(p => p.Email == _configuration["Administration:AdminEmail"]);
+
+                if (_user != null && !await _userManager.IsInRoleAsync(_user,X_DOVEValues._administrator))
                 {
-#if DEBUG
-                    Console.WriteLine($"XMSG ---> You should make a migration\n{e.Message}");
-#endif
+                    await _userManager.AddToRoleAsync(_user,X_DOVEValues._administrator);
                 }
+
+                #region MODIFY appsettings.json
+                var _appsettings_jsonPath = _hostingEnv.ContentRootPath + "/appsettings.json";
+
+                _context.SaveChangesAsync().GetAwaiter().GetResult();
+
+                var jo = JObject.Parse(await System.IO.File.ReadAllTextAsync(_appsettings_jsonPath));
+                jo["IsInitialized"] = true;
+                await System.IO.File.WriteAllTextAsync(_appsettings_jsonPath, Convert.ToString(jo));
+                
+                #endregion
+
                 #endregion
 
             }

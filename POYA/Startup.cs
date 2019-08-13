@@ -153,7 +153,9 @@ namespace POYA
             }
             else
             {
-                app.UseExceptionHandler(builder => builder.Run(async context => await x_DOVEHelper.ErrorEventAsync(Configuration, context)));
+                app.UseExceptionHandler(builder => builder.Run(
+                    async context => 
+                        await x_DOVEHelper.ErrorEventAsync(Configuration, context)));
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }

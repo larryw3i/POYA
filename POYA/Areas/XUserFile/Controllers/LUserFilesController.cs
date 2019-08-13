@@ -70,24 +70,8 @@ namespace POYA.Areas.XUserFile.Controllers
         }
         #endregion
 
-        #region //
-        /*
-      [ActionName("GetSharedImages")]
-      public async Task<IActionResult> Index()
-      {
-          var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-          var _Extensions = _mimeHelper.GetExtensions("image", _hostingEnv);
-          var _LUserFiles = await _context.LUserFile.Where(p=>p.UserId==UserId_ && p.IsLegal).ToListAsync();
-          _LUserFiles = _LUserFiles.Where(p => _Extensions.Contains(p.Name.Split('.').LastOrDefault())).ToList();
-          return View("GetSharedImages", _LUserFiles);
-      }
-      */
-        #endregion
 
-
-        #region
         // GET: LUserFiles
-        #endregion
         public async Task<IActionResult> Index(Guid? InDirId)
         {
 

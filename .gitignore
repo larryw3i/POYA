@@ -5,3 +5,4 @@
 
 # Files
 *.csv#
+/POYA/appsettings.json

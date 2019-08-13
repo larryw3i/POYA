@@ -27,7 +27,14 @@ namespace POYA.Areas.LAdmin.Models
         [Display(Name="IllegalityType")]
         public string IllegalityType{get;set;}
 
+        
+        #region NotMapped
+
         [NotMapped]
         public List<SelectListItem> IllegalityTypeSelectListItems{get;set;}
+
+        #endregion
+
+        
     }
 }
