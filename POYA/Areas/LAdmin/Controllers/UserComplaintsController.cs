@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Localization;
 using POYA.Areas.LAdmin.Models;
 using POYA.Data;
+using POYA.Unities.Helpers;
 
 namespace POYA.Areas.LAdmin.Controllers
 {
@@ -15,13 +21,38 @@ namespace POYA.Areas.LAdmin.Controllers
     [Authorize]
     public class UserComplaintsController : Controller
     {
+        private readonly IHostingEnvironment _hostingEnv;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
-
-        public UserComplaintsController(ApplicationDbContext context)
+        private readonly X_DOVEHelper _x_DOVEHelper;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IConfiguration _configuration;
+        private readonly IStringLocalizer<Program> _localizer;
+        private readonly LAdminHelper _lAdminHelper;
+        public UserComplaintsController(
+            IConfiguration configuration,
+            SignInManager<IdentityUser> signInManager,
+            X_DOVEHelper x_DOVEHelper,
+            RoleManager<IdentityRole> roleManager,
+            IEmailSender emailSender,
+            UserManager<IdentityUser> userManager,
+            ApplicationDbContext context,
+            IHostingEnvironment hostingEnv,
+            IStringLocalizer<Program> localizer)
         {
+            _configuration = configuration;
+            _hostingEnv = hostingEnv;
+            _localizer = localizer;
             _context = context;
+            _userManager = userManager;
+            _emailSender = emailSender;
+            _roleManager = roleManager;
+            _x_DOVEHelper = x_DOVEHelper;
+            _signInManager = signInManager;
+            _lAdminHelper=new  LAdminHelper(_localizer);
         }
-
         // GET: UserComplaints
         public async Task<IActionResult> Index()
         {
@@ -47,9 +78,13 @@ namespace POYA.Areas.LAdmin.Controllers
         }
 
         // GET: UserComplaints/Create
-        public IActionResult Create()
+        public IActionResult Create(Guid _ContentId)
         {
-            return View();
+            var _UserComplaint=new UserComplaint{
+                ContentId=_ContentId,
+                IllegalityTypeSelectListItems=_lAdminHelper.GetIllegalityTypeSelectListItems()
+            };
+            return View(_UserComplaint);
         }
 
         // POST: UserComplaints/Create
@@ -148,10 +183,11 @@ namespace POYA.Areas.LAdmin.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        
         private bool UserComplaintExists(Guid id)
         {
             return _context.UserComplaint.Any(e => e.Id == id);
         }
+
     }
 }

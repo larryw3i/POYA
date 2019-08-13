@@ -226,7 +226,6 @@ namespace POYA.Areas.EduHub.Controllers
                 ViewData[nameof(_search)] = _search;
             }
             ViewData["EArticles"] = _EArticlePagedList;
-            //  ViewData[nameof(IsIndividual)] = IsIndividual;
             ViewData["UserId"] = UserId_;
             TempData[nameof(_page)] = _page;
 

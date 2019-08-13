@@ -1,6 +1,9 @@
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace POYA.Areas.LAdmin.Models
 {
@@ -22,6 +25,9 @@ namespace POYA.Areas.LAdmin.Models
         public string Description{get;set;}
 
         [Display(Name="IllegalityType")]
-        public int IllegalityType{get;set;}
+        public string IllegalityType{get;set;}
+
+        [NotMapped]
+        public List<SelectListItem> IllegalityTypeSelectListItems{get;set;}
     }
 }

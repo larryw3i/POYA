@@ -20,6 +20,7 @@ namespace POYA.Unities.Services
         {
             _configuration = configuration;
         }
+        
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
             var userName = _configuration["EmailSender:userName"]; //(string)jsonObject[nameof(EmailSender)]["userName"];
