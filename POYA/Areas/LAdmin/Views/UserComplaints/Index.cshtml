@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = Localizer["Complaints"];
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    var IsChecking=Convert.ToBoolean(ViewData["IsChecking"] );
+    var UserId_=Convert.ToString(ViewData["UserId"]);
 }
 
 <h1>@(ViewData["Title"])</h1>
@@ -53,7 +56,7 @@
                     @(Html.DisplayFor(modelItem => item.IllegalityTypeString))
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id">@(IsChecking && (item.ComplainantId!=UserId_)? Localizer["Check"]:Localizer["Edit"])</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>

@@ -80,14 +80,21 @@ namespace POYA.Areas.Identity.Pages.Account
             }
             if (IsFromRegister && !IsEmailConfirmed)
             {
-                ModelState.AddModelError(nameof(Input.Email), _localizer["We have sent a confirmation email to you, you can login after confirming it (Didn't you get the email? check it in spam)"]);
+                ModelState.AddModelError(
+                    nameof(Input.Email), 
+                    _localizer["We have sent a confirmation email to you, you can login after confirming it (Didn't you get the email? check it in spam)"]);
             }
-            else if (IsFromRegister) ModelState.AddModelError(nameof(Input.Email), _localizer["Your email is already registered in POYA, log in Now"] + " (^_^)");
+            else if (IsFromRegister) 
+                ModelState.AddModelError(
+                    nameof(Input.Email), 
+                    _localizer["Your email is already registered in POYA, log in Now"] + " (^_^)");
+
             returnUrl = returnUrl ?? Url.Content("~/");
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             ReturnUrl = returnUrl;
+            ViewData[nameof(Input.Email)]=TempData[nameof(Input.Email)];
         }
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {

@@ -62,12 +62,22 @@ namespace POYA.Areas.LAdmin.Controllers
         public async Task<IActionResult> Index()
         {
             var _UserComplaint=await _context.UserComplaint.ToListAsync();
+            
+            var User_ =await _userManager.GetUserAsync(User);
+
+            var IsChecking=await _userManager.IsInRoleAsync(User_, X_DOVEValues._administrator);
+
             _UserComplaint.ForEach( p =>{
-                p.ComplainantName= _userManager.FindByIdAsync(p.ComplainantId).GetAwaiter().GetResult().UserName;
+                p.ComplainantName= _userManager.FindByIdAsync(p.ComplainantId).GetAwaiter().GetResult()?.UserName??_localizer["Logged off user"];
                 p.ReceptionistName= _userManager.FindByIdAsync(p.ReceptionistId).GetAwaiter().GetResult()?.UserName??_localizer["pending items"];
                 p.ContentTitle= _lAdminHelper.GetContentTitleAsync(p.ContentId).GetAwaiter().GetResult();
                 p.IllegalityTypeString=_lAdminHelper.GetIllegalityTypeSelectListItems().Where(i=>i.Value==p.IllegalityType).Select(o=>o.Text).FirstOrDefault();
             });
+
+
+            ViewData[nameof(IsChecking)]=IsChecking;
+            ViewData["UserId"]=User_.Id;
+
             return View(_UserComplaint);
         }
 
@@ -130,6 +140,10 @@ namespace POYA.Areas.LAdmin.Controllers
                 return NotFound();
             }
 
+            var User_ =await _userManager.GetUserAsync(User);
+
+            var IsChecking=await _userManager.IsInRoleAsync(User_, X_DOVEValues._administrator);
+
             var userComplaint = await _context.UserComplaint.FindAsync(id);
             if (userComplaint == null)
             {
@@ -141,6 +155,9 @@ namespace POYA.Areas.LAdmin.Controllers
             userComplaint.ContentTitle= _lAdminHelper.GetContentTitleAsync(userComplaint.ContentId).GetAwaiter().GetResult();
             userComplaint.IllegalityTypeSelectListItems=_lAdminHelper.GetIllegalityTypeSelectListItems();
 
+            ViewData[nameof(IsChecking)]=IsChecking;
+            ViewData["UserId"]=User_.Id;
+
             return View(userComplaint);
         }
 
@@ -149,7 +166,7 @@ namespace POYA.Areas.LAdmin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,UserId,ContentId,DOComplaint,ReceptionistId,AuditResultId,Description,IllegalityType")] UserComplaint userComplaint)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ContentId,Description,IllegalityType")] UserComplaint userComplaint)
         {
             if (id != userComplaint.Id)
             {

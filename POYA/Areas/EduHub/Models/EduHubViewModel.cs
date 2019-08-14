@@ -10,70 +10,38 @@ using System.Threading.Tasks;
 
 namespace POYA.Areas.EduHub.Models
 {
-    #region 
-
-    /*
-    public class EVideo //  ViewModel
-    {
-        [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public Guid UseFileId { get; set; }
-        public string UserId { get; set; }
-        //  public Guid ArticleId { get; set; }
-        public string Title { get; set; }
-        public DateTimeOffset DOPublish { get; set; }
-    }
-    */
-
-    #endregion
-
     public class EArticle
     {
         [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
-        #region USER
+        public Guid Id { get; set; } = Guid.NewGuid(); 
 
         public string UserId { get; set; }
 
-        #region 
         /// <summary>
         /// [NotMapped]
         /// </summary>
         [NotMapped]
-        #endregion
         public string UserName { get; set; }
-        #region 
+        
+
         /// <summary>
         /// [NotMapped]
         /// </summary>
         [NotMapped]
-        #endregion
         public string UserEmail { get; set; }
 
-        #endregion
-
-        #region EARTICLE_SET
-
-        #region 
+ 
         /// <summary>
         /// The EArticle set id
         /// </summary>
-        #endregion
         public Guid SetId { get; set; }     //  = LValue.DefaultEArticleSetId;
 
-        #region 
         /// <summary>
         /// [NotMapped]
         /// </summary>
         [NotMapped]
-        #endregion
         public string SetName { get; set; }
 
-        #endregion
-
-        #region CATEGORY
-
-        #region 
 
         /// <summary>
         /// CategoryId include the first and second category, it is  reference from GB/T 13745-2009,
@@ -81,61 +49,41 @@ namespace POYA.Areas.EduHub.Models
         /// category of earticle is just a label which author want to set, 
         /// <br/>please let us know if you have a better category 
         /// </summary>
-        #endregion
         public Guid CategoryId { get; set; }
 
-        #region 
         /// <summary>
         /// [NotMapped]
         /// </summary>
         [NotMapped]
-        #endregion
         public List<SelectListItem> FirstCategorySelectListItems { get; set; }
 
-        #region 
         /// <summary>
         /// [NotMapped]
         /// </summary>
         [NotMapped]
-        #endregion
         public List<SelectListItem> SecondCategorySelectListItems { get; set; }
 
         public string AdditionalCategory { get; set; }
-
-        #region 
-        [Range(0,3)]
-        #endregion
+ 
+        [Range(0,3)] 
         public int ComplexityRank { get; set; } = 0;
-
-        #region 
+ 
 
         /// <summary>
         /// [NotMapped]
         /// </summary>
-        [NotMapped]
-        #endregion
+        [NotMapped] 
         public List<SelectListItem> ComplexityRankSelectListItems { get; set; }
-
-        #endregion
-
-        #region 
-
-        [StringLength(maximumLength: 50, MinimumLength = 2)]
-        #endregion
+ 
+        [StringLength(maximumLength: 50, MinimumLength = 2)] 
         public string Title { get; set; }
-
-        #region 
-
-        [StringLength(maximumLength: 16384)]
-        #endregion
+ 
+        [StringLength(maximumLength: 16384)] 
         public string Content { get; set; }
-
-        #region 
-
+ 
         /// <summary>
-        /// Determine the article is legal or not by Content appraiser, the default value is <see langword="true"/>
-        /// </summary>
-        #endregion
+        /// Determine the article is legal or not by Content appraiser, the default value is true/>
+        /// </summary> 
         public bool IsLegal { get; set; } = true;
 
         public DateTimeOffset DOPublishing { get; set; } = DateTimeOffset.Now;
@@ -146,88 +94,66 @@ namespace POYA.Areas.EduHub.Models
 
         #region DEPOLLUTION
 
-        #region 
-
         /// <summary>
         /// [NotMapped]
         /// </summary>
         [NotMapped]
-        #endregion
         public long ReaderCount { get; set; } = 0;
 
-        #region 
         /// <summary>
         /// [NotMapped]
         /// </summary>
-
         [NotMapped]
-        #endregion
-
         public IEnumerable<IFormFile> LVideos { get; set; }
 
-        #region 
         /// <summary>
         /// [NotMapped]
         /// </summary>
         [NotMapped]
-        #endregion
         public IEnumerable<IFormFile> LAttachments { get; set; }
-        #endregion
 
-        #region DISCARD
-
-        #region 
 
         /// <summary>
         /// || DISCARD ||
         /// </summary>
-        #endregion
         public Guid ClassId { get; set; }
 
-        #region 
-
         /// <summary>
         /// || DISCARD ||
         /// </summary>
-        #endregion
         public Guid LGradeId { get; set; }
-
-        #region 
 
         /// <summary>
         /// || DISCARD ||
         /// "text/html" or "text/markdown", the default is "text/html"
         /// </summary>
-        #endregion
         public string ContentType { get; set; } //    = "text/html";
         #endregion
     }
 
     public class EArticleFile
     {
-        #region 
 
         /// <summary>
         /// The default is  Guid.NewGuid()
-        /// </summary>
-        #endregion
+        /// </summary> 
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
         public Guid EArticleId { get; set; }
         public string FileMD5 { get; set; }
         public string FileName { get; set; }
         public bool IsEArticleVideo { get; set; } = false;
+
         #region DEPOLLUTION
 
-        #region 
 
         /// <summary>
         /// [NotMapped]
         /// </summary>
-        #endregion
         [NotMapped]
         public string ContentType { get; set; }
         #endregion
+    
     }
 
     public class EArticleFileMD5

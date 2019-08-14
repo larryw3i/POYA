@@ -21,6 +21,7 @@ namespace POYA.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
+
         #region DI
         private readonly IHostingEnvironment _hostingEnv;
         private readonly IStringLocalizer<Program> _localizer;
@@ -40,11 +41,11 @@ namespace POYA.Areas.Identity.Pages.Account
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
             RoleManager<IdentityRole> roleManager,
-           IEmailSender emailSender,
-           UserManager<IdentityUser> userManager,
-           ApplicationDbContext context,
-           IHostingEnvironment hostingEnv,
-           IStringLocalizer<Program> localizer)
+            IEmailSender emailSender,
+            UserManager<IdentityUser> userManager,
+            ApplicationDbContext context,
+            IHostingEnvironment hostingEnv,
+            IStringLocalizer<Program> localizer)
         {
             _hostingEnv = hostingEnv;
             _localizer = localizer;
@@ -69,21 +70,27 @@ namespace POYA.Areas.Identity.Pages.Account
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
+
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
+
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match")]
             public string ConfirmPassword { get; set; }
         }
+
+
         public void OnGet(string returnUrl = null, bool IsFromLogin = false)
         {
             if (IsFromLogin) ModelState.AddModelError(nameof(Input.Email), _localizer["Your e-mail is not registered in POYA yet, register it Now"] + " (^_^)");
             ReturnUrl = returnUrl;
         }
+
+
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
@@ -98,34 +105,54 @@ namespace POYA.Areas.Identity.Pages.Account
 
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
 
-                var resultOfCreateUser = await _userManager.CreateAsync(user, Input.Password);
-                var _resultIsSucceeded = false;
+                var _CreateUserResult = await _userManager.CreateAsync(user, Input.Password);
 
-                if (Input.Email == _configuration["Administration:AdminEmail"])
+                var _IsResultSucceeded = _CreateUserResult.Succeeded;
+
+                if (_CreateUserResult.Succeeded && Input.Email == _configuration["Administration:AdminEmail"])
                 {
-                    _resultIsSucceeded = resultOfCreateUser.Succeeded && _userManager.AddToRoleAsync(user, X_DOVEValues._administrator).GetAwaiter().GetResult().Succeeded;
+                    var _AddToRoleResult=await _userManager.AddToRoleAsync(user, X_DOVEValues._administrator);
+                    _IsResultSucceeded = _CreateUserResult.Succeeded &&_AddToRoleResult.Succeeded;
+
+                    if(!_IsResultSucceeded){
+
+                        foreach (var error in _CreateUserResult.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+
+                        foreach (var error in _AddToRoleResult.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                        return Page();
+
+                    }
                 }
 
-                if (_resultIsSucceeded)
+                if (_IsResultSucceeded)
                 {
                     _logger.LogInformation("User created a new account with password");
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
                         values: new { userId = user.Id, code },
                         protocol: Request.Scheme);
-                    await _emailSender.SendEmailAsync(Input.Email, _localizer["Confirm your email"],
-                        $"{_localizer["Please confirm your account by"]} <a href='" + HtmlEncoder.Default.Encode(callbackUrl) + $"'>{_localizer["clicking here"]}</a>");
+                        
+                    await _emailSender.SendEmailAsync(
+                        Input.Email, 
+                        _localizer["Confirm your email"],
+                        _localizer["Please confirm your account by"]+"<a href='" + HtmlEncoder.Default.Encode(callbackUrl) + "'>"+_localizer["clicking here"]+"</a>");
+                    
                     //  await _signInManager.SignInAsync(user, isPersistent: false);
                     //  ModelState.AddModelError(nameof(Input.Email),_localizer["We have sent a confirmation email to you, you can login after confirming it"]);
+
                     TempData[nameof(Input.Email)] = Input.Email;
                     return RedirectToPage("Login", new { IsFromRegister = true, returnUrl, IsEmailConfirmed = false });
                 }
-                foreach (var error in resultOfCreateUser.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+
             }
             // If we got this far, something failed, redisplay form
             return Page();

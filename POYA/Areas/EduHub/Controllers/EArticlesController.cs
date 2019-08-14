@@ -261,6 +261,10 @@ namespace POYA.Areas.EduHub.Controllers
                 return NotFound();
             }
 
+            if(await _userManager.FindByIdAsync(eArticle.UserId)==null){
+                return NotFound();
+            }
+
             var _EArticleUser = _userManager.FindByIdAsync(eArticle.UserId)?.GetAwaiter().GetResult();
             //  ViewData["Click"] = await _context.EArticleClicks.Where(p => p.EArticleId == eArticle.Id).CountAsync();
             eArticle.ClickCount += 1;
@@ -289,8 +293,8 @@ namespace POYA.Areas.EduHub.Controllers
             #endregion
 
             eArticle.SetName =eArticle.SetId==X_DOVEValues.DefaultEArticleSetId?_localizer["default"]: _context.UserEArticleSet.FirstOrDefaultAsync(p => p.Id == eArticle.SetId).GetAwaiter().GetResult().Name;
-            eArticle.UserName = _EArticleUser.UserName;      //   _userManager.FindByIdAsync(eArticle.UserId).GetAwaiter().GetResult().UserName;
-            eArticle.UserEmail = _EArticleUser.Email;
+            eArticle.UserName = _EArticleUser?.UserName??_localizer["Logged off user"];      //   _userManager.FindByIdAsync(eArticle.UserId).GetAwaiter().GetResult().UserName;
+            eArticle.UserEmail = _EArticleUser?.Email??_localizer["Logged off user"];
 
             return View(eArticle);
         }
