@@ -53,16 +53,22 @@ namespace POYA.Areas.LAdmin.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
-            _lAdminHelper=new  LAdminHelper(_localizer);
+            _lAdminHelper=new  LAdminHelper(_localizer,_context);
         }
 
         #endregion
 
         // GET: UserComplaints
-        [Authorize(Roles="ADMINISTRATOR")]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.UserComplaint.ToListAsync());
+            var _UserComplaint=await _context.UserComplaint.ToListAsync();
+            _UserComplaint.ForEach( p =>{
+                p.ComplainantName= _userManager.FindByIdAsync(p.ComplainantId).GetAwaiter().GetResult().UserName;
+                p.ReceptionistName= _userManager.FindByIdAsync(p.ReceptionistId).GetAwaiter().GetResult()?.UserName??_localizer["pending items"];
+                p.ContentTitle= _lAdminHelper.GetContentTitleAsync(p.ContentId).GetAwaiter().GetResult();
+                p.IllegalityTypeString=_lAdminHelper.GetIllegalityTypeSelectListItems().Where(i=>i.Value==p.IllegalityType).Select(o=>o.Text).FirstOrDefault();
+            });
+            return View(_UserComplaint);
         }
 
         // GET: UserComplaints/Details/5
@@ -88,7 +94,8 @@ namespace POYA.Areas.LAdmin.Controllers
         {
             var _UserComplaint=new UserComplaint{
                 ContentId=_ContentId,
-                IllegalityTypeSelectListItems=_lAdminHelper.GetIllegalityTypeSelectListItems()
+                IllegalityTypeSelectListItems=_lAdminHelper.GetIllegalityTypeSelectListItems(),
+                ContentTitle=_lAdminHelper.GetContentTitleAsync(_ContentId).GetAwaiter().GetResult()
             };
             return View(_UserComplaint);
         }
@@ -98,14 +105,14 @@ namespace POYA.Areas.LAdmin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,ContentId,DOComplaint,ReceptionistId,AuditResultId,Description,IllegalityType")] UserComplaint userComplaint)
+        public async Task<IActionResult> Create([Bind("Id,ContentId,Description,IllegalityType")] UserComplaint userComplaint)
         {
             if (ModelState.IsValid)
             {
                 var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
                 userComplaint.Id = Guid.NewGuid();
-                userComplaint.UserId=UserId_;
+                userComplaint.ComplainantId=UserId_;
                 userComplaint.DOComplaint=DateTimeOffset.Now;
 
                 _context.Add(userComplaint);
@@ -128,6 +135,12 @@ namespace POYA.Areas.LAdmin.Controllers
             {
                 return NotFound();
             }
+
+            userComplaint.ComplainantName= _userManager.FindByIdAsync(userComplaint.ComplainantId).GetAwaiter().GetResult().UserName;
+            userComplaint.ReceptionistName= _userManager.FindByIdAsync(userComplaint.ReceptionistId).GetAwaiter().GetResult()?.UserName??_localizer["pending items"];
+            userComplaint.ContentTitle= _lAdminHelper.GetContentTitleAsync(userComplaint.ContentId).GetAwaiter().GetResult();
+            userComplaint.IllegalityTypeSelectListItems=_lAdminHelper.GetIllegalityTypeSelectListItems();
+
             return View(userComplaint);
         }
 
@@ -191,6 +204,7 @@ namespace POYA.Areas.LAdmin.Controllers
         // POST: UserComplaints/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles="ADMINISTRATOR")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var userComplaint = await _context.UserComplaint.FindAsync(id);

@@ -11,7 +11,10 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="ContentId" hidden/>
+            <input asp-for="ContentId" hidden/>  
+            <div class="form-group">
+                <input asp-for="ContentTitle" disabled class="form-control" />
+            </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <textarea asp-for="Description" class="form-control" rows="6" placeholder='@(Localizer["Description"]). . .' ></textarea>

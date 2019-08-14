@@ -12,6 +12,8 @@ namespace POYA.Areas.LAdmin.Models{
         
         public bool IsContentLegal{get;set;}=false;
 
-        public int IllegalityType{get;set;}
+        public string IllegalityType{get;set;}
+
+        public string AuditComment{get;set;}
     }
 }
