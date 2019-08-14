@@ -1,0 +1,43 @@
+@model POYA.Areas.LAdmin.Models.AuditResult
+
+@{
+    ViewData["Title"] = "Details";
+    //  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>AuditResult</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @(Html.DisplayNameFor(model => model.ContentId))
+        </dt>
+        <dd class = "col-sm-10">
+            @(Html.DisplayFor(model => model.ContentId))
+        </dd>
+        <dt class = "col-sm-2">
+            @(Html.DisplayNameFor(model => model.IsContentLegal))
+        </dt>
+        <dd class = "col-sm-10">
+            @(Html.DisplayFor(model => model.IsContentLegal))
+        </dd>
+        <dt class = "col-sm-2">
+            @(Html.DisplayNameFor(model => model.IllegalityType))
+        </dt>
+        <dd class = "col-sm-10">
+            @(Html.DisplayFor(model => model.IllegalityType))
+        </dd>
+        <dt class = "col-sm-2">
+            @(Html.DisplayNameFor(model => model.AuditComment))
+        </dt>
+        <dd class = "col-sm-10">
+            @(Html.DisplayFor(model => model.AuditComment))
+        </dd>
+    </dl>
+</div>
+<div>
+    <a id="BackEle" class="btn btn-outline-info">@(Localizer["Back"])</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success">@(Localizer[ "Edit"])</a>   
+</div>

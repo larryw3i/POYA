@@ -38,6 +38,7 @@ namespace POYA.Data
         public DbSet<POYA.Areas.XAd.Models.UserPraiseOr> UserPraiseOrs{get;set;}
         public DbSet<POYA.Areas.LAdmin.Models.UserComplaint> UserComplaint { get; set; }
         public DbSet<POYA.Areas.LAdmin.Models.LAudit> LAudit { get; set; }
+        public DbSet<POYA.Areas.LAdmin.Models.AuditResult> AuditResult { get; set; }
         
         #region 
 

@@ -1,13 +1,13 @@
-@model POYA.Areas.LAdmin.Models.LAudit
+@model POYA.Areas.LAdmin.Models.AuditResult
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //  Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Edit</h1>
 
-<h4>LAudit</h4>
+<h4>AuditResult</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,20 +19,20 @@
                 <input asp-for="ContentId" class="form-control" />
                 <span asp-validation-for="ContentId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="DOAudit" class="control-label"></label>
-                <input asp-for="DOAudit" class="form-control" />
-                <span asp-validation-for="DOAudit" class="text-danger"></span>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsContentLegal" /> @(Html.DisplayNameFor(model => model.IsContentLegal))
+                </label>
             </div>
             <div class="form-group">
-                <label asp-for="InspectorId" class="control-label"></label>
-                <input asp-for="InspectorId" class="form-control" />
-                <span asp-validation-for="InspectorId" class="text-danger"></span>
+                <label asp-for="IllegalityType" class="control-label"></label>
+                <input asp-for="IllegalityType" class="form-control" />
+                <span asp-validation-for="IllegalityType" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AuditResultId" class="control-label"></label>
-                <input asp-for="AuditResultId" class="form-control" />
-                <span asp-validation-for="AuditResultId" class="text-danger"></span>
+                <label asp-for="AuditComment" class="control-label"></label>
+                <input asp-for="AuditComment" class="form-control" />
+                <span asp-validation-for="AuditComment" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -42,7 +42,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-outline-info" id="BackEle">&laquo; @(Localizer["Back"])</a>
 </div>
 
 @section Scripts {
