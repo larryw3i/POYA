@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var IsChecking=Convert.ToBoolean( ViewData["IsChecking"]);
 }
 
 <h1>@(Localizer["Edit your"]) @(Localizer["Complainant"])</h1>
@@ -14,8 +15,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="ContentTitle" class="control-label"></label>
-                <input asp-for="ContentTitle" disabled class="form-control" />
+                <label asp-for="ContentTitle" class="control-label"></label><br/>
+                <a id="LAudits_Details_ContentId" asp-action="Details" asp-controller="LAudits" asp-route-ContentId='@(Model.ContentId)'>@(Model.ContentTitle)</a>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
@@ -37,4 +38,12 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+    </script>
+}
+
+
+@section Styles{
+    <style>
+    </style>
 }

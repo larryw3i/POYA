@@ -31,6 +31,8 @@ namespace POYA.Areas.LAdmin.Controllers
         // GET: LAudits/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
+
+
             if (id == null)
             {
                 return NotFound();

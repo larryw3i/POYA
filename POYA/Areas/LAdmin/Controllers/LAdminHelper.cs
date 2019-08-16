@@ -9,6 +9,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using POYA.Areas.EduHub.Models;
 
 namespace POYA.Areas.LAdmin.Controllers{
 
@@ -24,10 +25,15 @@ namespace POYA.Areas.LAdmin.Controllers{
             _localizer=localizer;
             _context=context;
         }
+        
 
         public async Task<string> GetContentTitleAsync(Guid Id) 
             => await _context.EArticle.Where(p => p.Id == Id).Select(p => p.Title).FirstOrDefaultAsync();
 
+        /// <summary>
+        /// Text="Others",Value="110"
+        /// </summary>
+        /// <returns></returns>
         public List<SelectListItem> GetIllegalityTypeSelectListItems() => new List<SelectListItem>{
             new SelectListItem{Text=_localizer["Pornography | Violence"], Value="0",Selected=true},
             new SelectListItem{Text=_localizer["Politics | Religion"],Value="1"},

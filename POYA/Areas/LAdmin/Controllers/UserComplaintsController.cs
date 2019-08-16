@@ -67,6 +67,7 @@ namespace POYA.Areas.LAdmin.Controllers
 
             var IsChecking=await _userManager.IsInRoleAsync(User_, X_DOVEValues._administrator);
 
+
             _UserComplaint.ForEach( p =>{
                 p.ComplainantName= _userManager.FindByIdAsync(p.ComplainantId).GetAwaiter().GetResult()?.UserName??_localizer["Logged off user"];
                 p.ReceptionistName= _userManager.FindByIdAsync(p.ReceptionistId).GetAwaiter().GetResult()?.UserName??_localizer["pending items"];
@@ -125,6 +126,11 @@ namespace POYA.Areas.LAdmin.Controllers
                 userComplaint.ComplainantId=UserId_;
                 userComplaint.DOComplaint=DateTimeOffset.Now;
 
+                if(!_lAdminHelper.GetIllegalityTypeSelectListItems()
+                    .Select(p=>p.Value)
+                    .Contains(userComplaint.IllegalityType))
+                    userComplaint.IllegalityType="110";
+
                 _context.Add(userComplaint);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -166,7 +172,7 @@ namespace POYA.Areas.LAdmin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ContentId,Description,IllegalityType")] UserComplaint userComplaint)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Description,IllegalityType")] UserComplaint userComplaint)
         {
             if (id != userComplaint.Id)
             {
@@ -179,7 +185,20 @@ namespace POYA.Areas.LAdmin.Controllers
                 {
                     var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
-                    _context.Update(userComplaint);
+                    var _UserComplaint=await _context.UserComplaint.FirstOrDefaultAsync(p=>p.Id==id && p.ComplainantId==UserId_);
+
+                    if(_UserComplaint==null){
+                        return NotFound();
+                    }
+
+                    _UserComplaint.Description=userComplaint.Description;
+                    _UserComplaint.DOModifying=DateTimeOffset.Now;
+
+                    if(_lAdminHelper.GetIllegalityTypeSelectListItems()
+                        .Select(p=>p.Value)
+                        .Contains(userComplaint.IllegalityType))
+                            _UserComplaint.IllegalityType=userComplaint.IllegalityType;
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

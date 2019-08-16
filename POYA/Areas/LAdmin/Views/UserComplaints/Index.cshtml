@@ -47,7 +47,7 @@
                     @(Html.DisplayFor(modelItem => item.DOComplaint.LocalDateTime))
                 </td>
                 <td>
-                    <a asp-action="Edit" title='@Localizer["Check"]' asp-route-Id="@(item.Id)">@(Html.DisplayFor(modelItem => item.ReceptionistName))</a>
+                    <a asp-action="Create" asp-controller="AuditResults" title='@Localizer["Check"]' asp-route-ComplainantId="@(item.Id)">@(Html.DisplayFor(modelItem => item.ReceptionistName))</a>
                 </td>
                 <td>
                     @(Html.DisplayFor(modelItem => item.Description))

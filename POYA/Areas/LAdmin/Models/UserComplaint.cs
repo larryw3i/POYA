@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace POYA.Areas.LAdmin.Models
 {
     // passive
-    public class UserComplaint{
+    public class UserComplaint: AuditCommon{
         public Guid Id{get;set;}=Guid.NewGuid();
 
         public string  ComplainantId{get;set;}
@@ -58,13 +58,6 @@ namespace POYA.Areas.LAdmin.Models
         [NotMapped]
         [Display(Name="Complainant")]
         public string ComplainantName{get;set;}
-
-        /// <summary>
-        /// NotMapped
-        /// </summary>
-        /// <value></value>
-        [NotMapped]
-        public List<SelectListItem> IllegalityTypeSelectListItems{get;set;}
 
         [NotMapped]
         [Display(Name="Title")]
