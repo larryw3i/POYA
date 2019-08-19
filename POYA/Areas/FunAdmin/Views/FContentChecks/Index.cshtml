@@ -1,0 +1,84 @@
+@model IEnumerable<POYA.Areas.FunAdmin.Models.FContentCheck>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ContentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppellantId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceptionistId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DOSubmitting)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DOHandling)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppellantContent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceptionistContent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsLegal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContentTitle)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppellantId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReceptionistId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DOSubmitting)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DOHandling)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppellantContent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReceptionistContent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsLegal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContentTitle)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

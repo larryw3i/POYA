@@ -98,7 +98,8 @@ namespace POYA.Areas.LAdmin.Controllers
                 ComplainantId= ComplainantId ?? Guid.Empty,
                 ContentId=_ContentId,
                 ContentTitle=await _context.EArticle.Where(p=>p.Id==_ContentId).Select(p=>p.Title).FirstOrDefaultAsync(),
-                IllegalityTypeSelectListItems = _lAdminHelper.GetIllegalityTypeSelectListItems()
+                IllegalityTypeSelectListItems = _lAdminHelper.GetIllegalityTypeSelectListItems(),
+                IsContentLegal=true
             };
 
             return View(_AuditResult);
@@ -109,7 +110,7 @@ namespace POYA.Areas.LAdmin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ContentId,IsContentLegal,IllegalityType,AuditComment")] AuditResult auditResult)
+        public async Task<IActionResult> Create([Bind("Id,ComplainantId,IsContentLegal,IllegalityType,AuditComment")] AuditResult auditResult)
         {
             if (ModelState.IsValid)
             {
@@ -119,6 +120,12 @@ namespace POYA.Areas.LAdmin.Controllers
                     .Select(p=>p.Id))
                     .ContainsAsync(auditResult.ComplainantId))
                         return NotFound();
+                        
+                auditResult.IllegalityType=auditResult.IsContentLegal?
+                    string.Empty:
+                    _lAdminHelper.GetIllegalityTypeSelectListItems().Select(p=>p.Value).Contains(auditResult.IllegalityType)?
+                    auditResult.IllegalityType:
+                    "110";
                         
                 auditResult.Id = Guid.NewGuid();
                 _context.Add(auditResult);

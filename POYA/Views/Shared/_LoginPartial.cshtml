@@ -1,7 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-
+@{
+    var _IsSignedIn=SignInManager.IsSignedIn(User);
+}
 
 <style>
     .NavAvatar {
@@ -21,7 +23,7 @@
 </style>
 
 <ul class="navbar-nav float-right" style="margin-right:20px">
-    @if (SignInManager.IsSignedIn(User))
+    @if (_IsSignedIn)
     {
         <li class="nav-item NavAvatarEle">
             <a class="nav-link " asp-area="Identity" asp-page="/Account/Manage/Index" title='@(User.Identity.Name)(@Localizer[$"Manage"])'>

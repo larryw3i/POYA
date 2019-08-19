@@ -10,6 +10,7 @@ using POYA.Areas.XLaw.Models;
 using POYA.Areas.Identity;
 using POYA.Areas.XAd.Models;
 using POYA.Areas.LAdmin.Models;
+using POYA.Areas.FunAdmin.Models;
 namespace POYA.Data
 {
     public class ApplicationDbContext : IdentityDbContext
@@ -39,6 +40,7 @@ namespace POYA.Data
         public DbSet<POYA.Areas.LAdmin.Models.UserComplaint> UserComplaint { get; set; }
         public DbSet<POYA.Areas.LAdmin.Models.LAudit> LAudit { get; set; }
         public DbSet<POYA.Areas.LAdmin.Models.AuditResult> AuditResult { get; set; }
+        public DbSet<POYA.Areas.FunAdmin.Models.FContentCheck> FContentCheck { get; set; }
         
         #region 
 

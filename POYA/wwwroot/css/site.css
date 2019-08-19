@@ -66,6 +66,18 @@ body {
     text-align: right
 }
 
+.dropdown *{
+    border-radius: 8px;
+}
+
+
+.dropdown-item:hover{
+    background-color: #ff00dc;
+}
+
+/* KEYFRAMES
+-------------------------------------------------- */
+
 
 @keyframes EArticleFromAnimation{
     100%{
