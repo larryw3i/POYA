@@ -1,77 +1,66 @@
 @model IEnumerable<POYA.Areas.FunAdmin.Models.FContentCheck>
+@using POYA.Areas.FunAdmin.Controllers;
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var _IsAdmin=Convert.ToBoolean(ViewData["IsAdmin"]);
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ContentId)
+                @(Html.DisplayNameFor(model => model.ContentId))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AppellantId)
+                @(Html.DisplayNameFor(model => model.AppellantId))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReceptionistId)
+                @(Html.DisplayNameFor(model => model.ReceptionistId))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DOSubmitting)
+                @(Html.DisplayNameFor(model => model.DOSubmitting))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DOHandling)
+                @(Html.DisplayNameFor(model => model.DOHandling))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AppellantContent)
+                @(Html.DisplayNameFor(model => model.AppellantComment))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReceptionistContent)
+                @(Html.DisplayNameFor(model => model.ReceptionistComment))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsLegal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContentTitle)
+                @(Html.DisplayNameFor(model => model.IsLegal))
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model) 
+    {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContentId)
+            <td class="ContentTitle" content_id='@(item.ContentId)'>
+            </td>
+            <td class="AppellantName" user_id='@(item.AppellantId)'>
+            </td>
+            <td class="ReceptionistName" user_id='@(item.ReceptionistId)'>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AppellantId)
+                @(item.DOSubmitting?.LocalDateTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ReceptionistId)
+                @(item.DOHandling?.LocalDateTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DOSubmitting)
+                @((item.AppellantComment?.Length>0)?item.AppellantComment:"N/A")
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DOHandling)
+                @((item.ReceptionistComment?.Length>0)?item.ReceptionistComment:"N/A")
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AppellantContent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReceptionistContent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsLegal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContentTitle)
+                @(Html.DisplayFor(modelItem => item.IsLegal))
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -79,6 +68,49 @@
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
+
+@section Scripts{
+    <script>
+        $(document).ready(()=>{
+            GetUserName();
+            GetContentTitle();
+           
+        });
+
+        function GetContentTitle(){
+            $(`.ContentTitle`).each((index,elem)=>{
+                var _ContentId=$(elem).attr(`content_id`);
+                $(elem).load(`@(Url.Action(nameof(FContentChecksController.GetContentTitle),"FContentChecks",new{area="FunAdmin"}))?ContentId=${_ContentId}`);
+            });
+        }
+
+        function GetUserName(){
+             $(`.AppellantName,.ReceptionistName`).each((index,elem)=>{
+                var _UserId=$(elem).attr(`user_id`);
+                if(_UserId==undefined||_UserId.length<1){
+                    $(elem).text($(elem).hasClass(`ReceptionistName`)?`@(Localizer["Wait"]) . . .`:"N/A");
+                    return;
+                }
+                $(elem).load(`@(Url.Action(nameof(FContentChecksController.GetUserName),"FContentChecks",new{area="FunAdmin"}))?UserId=${_UserId}`);
+            });
+        }
+    </script>
+}
+
+@section Styles{
+    <style>
+        .ContentTitle{
+            width: 10%;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+        .AppellantName,.ReceptionistName{
+            width: 8%;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+    </style>
+}

@@ -2,28 +2,78 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Localization;
 using POYA.Areas.FunAdmin.Models;
+using POYA.Areas.LAdmin.Controllers;
 using POYA.Data;
+using POYA.Unities.Helpers;
 
 namespace POYA.Areas.FunAdmin.Controllers
 {
+    [Authorize]
     [Area("FunAdmin")]
     public class FContentChecksController : Controller
     {
-        private readonly ApplicationDbContext _context;
 
-        public FContentChecksController(ApplicationDbContext context)
+        #region DI
+        private readonly IHostingEnvironment _hostingEnv;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _context;
+        private readonly X_DOVEHelper _x_DOVEHelper;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IConfiguration _configuration;
+        private readonly IStringLocalizer<Program> _localizer;
+        private readonly FunAdminHelper _funAdminHelper;
+        public FContentChecksController(
+            IConfiguration configuration,
+            SignInManager<IdentityUser> signInManager,
+            X_DOVEHelper x_DOVEHelper,
+            RoleManager<IdentityRole> roleManager,
+            IEmailSender emailSender,
+            UserManager<IdentityUser> userManager,
+            ApplicationDbContext context,
+            IHostingEnvironment hostingEnv,
+            IStringLocalizer<Program> localizer)
         {
+            _configuration = configuration;
+            _hostingEnv = hostingEnv;
+            _localizer = localizer;
             _context = context;
+            _userManager = userManager;
+            _emailSender = emailSender;
+            _roleManager = roleManager;
+            _x_DOVEHelper = x_DOVEHelper;
+            _signInManager = signInManager;
+            _funAdminHelper=new  FunAdminHelper(_localizer,_context);
         }
+
+        #endregion
+
 
         // GET: FunAdmin/FContentChecks
         public async Task<IActionResult> Index()
         {
-            return View(await _context.FContentCheck.ToListAsync());
+            var User_=await _userManager.GetUserAsync(User);
+            var UserId_=User_.Id;
+
+            var _IsAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
+
+            ViewData["IsAdmin"]=_IsAdmin;
+            var _FContentCheck=await _context.FContentCheck
+                .Where(p=>_IsAdmin?true:p.AppellantId==UserId_)
+                .ToListAsync();
+
+            return View(_FContentCheck);
         }
 
         // GET: FunAdmin/FContentChecks/Details/5
@@ -45,9 +95,20 @@ namespace POYA.Areas.FunAdmin.Controllers
         }
 
         // GET: FunAdmin/FContentChecks/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(Guid _ContentId)
         {
-            return View();
+            
+            var User_=await _userManager.GetUserAsync(User);
+
+            var _FContentCheck = new FContentCheck
+            {
+                ContentId = _ContentId,
+                IllegalityTypeSelectListItems = _funAdminHelper.GetIllegalityTypeSelectListItems(),
+            };
+
+            ViewData["IsAdmin"] = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
+
+            return View(_FContentCheck);
         }
 
         // POST: FunAdmin/FContentChecks/Create
@@ -55,11 +116,35 @@ namespace POYA.Areas.FunAdmin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ContentId,AppellantId,ReceptionistId,DOSubmitting,DOHandling,AppellantContent,ReceptionistContent,IsLegal,ContentTitle")] FContentCheck fContentCheck)
+        public async Task<IActionResult> Create([Bind("Id,ContentId,AppellantComment,ReceptionistComment,IsLegal,IllegalityType")] FContentCheck fContentCheck)
         {
             if (ModelState.IsValid)
             {
+                var User_=await _userManager.GetUserAsync(User);
+
+                var _IsAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
+                
                 fContentCheck.Id = Guid.NewGuid();
+
+                if(_IsAdmin)
+                {   
+                    fContentCheck.DOHandling=DateTimeOffset.Now;
+                    fContentCheck.ReceptionistId=User_.Id;
+                }
+                else
+                {
+                    fContentCheck.DOSubmitting=DateTimeOffset.Now;
+                    fContentCheck.AppellantId=User_.Id;
+                    fContentCheck.IsLegal=true;
+                }
+
+                if(
+                    !_funAdminHelper.GetIllegalityTypeSelectListItems().Select(p=>p.Value).Contains(fContentCheck.IllegalityType)
+                )
+                {
+                    fContentCheck.IllegalityType="110";
+                }
+
                 _context.Add(fContentCheck);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -88,7 +173,7 @@ namespace POYA.Areas.FunAdmin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ContentId,AppellantId,ReceptionistId,DOSubmitting,DOHandling,AppellantContent,ReceptionistContent,IsLegal,ContentTitle")] FContentCheck fContentCheck)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ContentId,AppellantId,ReceptionistId,AppellantComment,ReceptionistComment,IsLegal,IllegalityType")] FContentCheck fContentCheck)
         {
             if (id != fContentCheck.Id)
             {
@@ -151,5 +236,32 @@ namespace POYA.Areas.FunAdmin.Controllers
         {
             return _context.FContentCheck.Any(e => e.Id == id);
         }
+
+        #region DEPOLLUTION
+
+        
+        public async Task<IActionResult> GetContent(Guid ContentId)
+        {
+            var _EArticle=await _context.EArticle.FirstOrDefaultAsync(p=>p.Id==ContentId);
+            if(_EArticle!=null)
+                return Content(_EArticle.Content);
+
+            return NoContent();
+        }
+
+        
+        public async Task<IActionResult> GetContentTitle(Guid ContentId)
+        {
+            var _EArticle=await _context.EArticle.FirstOrDefaultAsync(p=>p.Id==ContentId);
+            if(_EArticle!=null)
+                return Content(_EArticle.Title);
+                
+            return NoContent();
+        }
+
+        public IActionResult GetUserName(string UserId) => Content(_userManager.FindByIdAsync(UserId).GetAwaiter().GetResult()?.UserName);
+
+        #endregion
+
     }
 }

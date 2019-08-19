@@ -40,24 +40,19 @@
                 <span asp-validation-for="DOHandling" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AppellantContent" class="control-label"></label>
-                <input asp-for="AppellantContent" class="form-control" />
-                <span asp-validation-for="AppellantContent" class="text-danger"></span>
+                <label asp-for="AppellantComment" class="control-label"></label>
+                <input asp-for="AppellantComment" class="form-control" />
+                <span asp-validation-for="AppellantComment" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ReceptionistContent" class="control-label"></label>
-                <input asp-for="ReceptionistContent" class="form-control" />
-                <span asp-validation-for="ReceptionistContent" class="text-danger"></span>
+                <label asp-for="ReceptionistComment" class="control-label"></label>
+                <input asp-for="ReceptionistComment" class="form-control" />
+                <span asp-validation-for="ReceptionistComment" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsLegal" /> @Html.DisplayNameFor(model => model.IsLegal)
+                    <input class="form-check-input" asp-for="IsLegal" /> @(Html.DisplayNameFor(model => model.IsLegal))
                 </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContentTitle" class="control-label"></label>
-                <input asp-for="ContentTitle" class="form-control" />
-                <span asp-validation-for="ContentTitle" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

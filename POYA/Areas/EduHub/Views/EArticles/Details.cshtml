@@ -49,7 +49,9 @@
             @Html.Raw(Model.Content)
             <div class="float-right" id="UserOperationEle">
                 <a href="mailto:@(Model.UserEmail)" title='@(Localizer["Mail to the author"])' >&#128236;</a> | 
-                <a asp-action="Create" asp-area="LAdmin" asp-controller="UserComplaints" asp-route-_ContentId="@(Model.Id)" title='@(Localizer["Tip-off"])'><script>document.write('\u2696')</script></a>
+                <a asp-action="Create" asp-area="FunAdmin" asp-controller="FContentChecks" asp-route-_ContentId="@(Model.Id)" title='@(Localizer["Tip-off"])'>
+                    <script>document.write('\u2696')</script>
+                </a>
             </div>
 
         </dd>
