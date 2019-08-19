@@ -1,70 +1,130 @@
 @model POYA.Areas.FunAdmin.Models.FContentCheck
 
 @{
-    ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var IsAdmin=Convert.ToBoolean(ViewData["IsAdmin"]);
+    var IsReportSubmittedByUser = (Model.AppellantId?.Length??0)>0;
+    ViewData["Title"] =IsAdmin?Localizer["Check a report"]: Localizer[ "Edit your report"];
 }
 
-<h1>Edit</h1>
+<h1>@(ViewData["Title"])</h1>
 
-<h4>FContentCheck</h4>
 <hr />
 <div class="row">
+    <div class="col-md-7 offset-md-1 LContentEle">
+        <div id="LContentTitle"></div>
+        <div id="LContent"></div>
+    </div>
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="ContentId" class="control-label"></label>
-                <input asp-for="ContentId" class="form-control" />
-                <span asp-validation-for="ContentId" class="text-danger"></span>
+            @if(IsReportSubmittedByUser)
+            {
+                <div class="form-group">
+                    <label  class="control-label">@(IsAdmin?Localizer["comment"]:Localizer["Comment"])</label>
+                    <textarea asp-for="AppellantComment" class="form-control" ></textarea>
+                    <span asp-validation-for="AppellantComment" class="text-danger"></span>
+                </div>
+
+            }
+
+            @if(IsAdmin)
+            {
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsLegal" />  @(Localizer["Is content legal"])
+                    </label>
+                </div>
+            }
+
+            <div class="form-group" style='display: @(Model.IsLegal?"none":"block")'>
+                <label asp-for="IllegalityType" class="control-label"></label>
+                <select asp-for="IllegalityType"  asp-items="@(Model.IllegalityTypeSelectListItems)" asp- class="form-control" ></select>
             </div>
+            
+            @if (IsAdmin)
+            {
+                <div class="form-group">
+                    <label asp-for="ReceptionistComment" class="control-label"></label>
+                    <textarea asp-for="ReceptionistComment" class="form-control" ></textarea>
+                    <span asp-validation-for="ReceptionistComment" class="text-danger"></span>
+                </div>
+            }
+            
             <div class="form-group">
-                <label asp-for="AppellantId" class="control-label"></label>
-                <input asp-for="AppellantId" class="form-control" />
-                <span asp-validation-for="AppellantId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReceptionistId" class="control-label"></label>
-                <input asp-for="ReceptionistId" class="form-control" />
-                <span asp-validation-for="ReceptionistId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DOSubmitting" class="control-label"></label>
-                <input asp-for="DOSubmitting" class="form-control" />
-                <span asp-validation-for="DOSubmitting" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DOHandling" class="control-label"></label>
-                <input asp-for="DOHandling" class="form-control" />
-                <span asp-validation-for="DOHandling" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AppellantComment" class="control-label"></label>
-                <input asp-for="AppellantComment" class="form-control" />
-                <span asp-validation-for="AppellantComment" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReceptionistComment" class="control-label"></label>
-                <input asp-for="ReceptionistComment" class="form-control" />
-                <span asp-validation-for="ReceptionistComment" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsLegal" /> @(Html.DisplayNameFor(model => model.IsLegal))
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <a class="btn btn-outline-info" id="BackEle">&laquo; @(Localizer["Back"])</a>
+                <input type="submit" value='@(Localizer["Save"])' class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(()=>{
+            IllegalityType_Change();
+            AddIllegalityTypeToAppellantComment();
+            InitialAppellantCommentReadonly();
+
+            $(`#IsLegal`).change(()=>{IsLegal_Change();});
+            $(`#IllegalityType`).change(()=>{IllegalityType_Change();});
+            $(`#LContent`).load(`@(Url.Action("GetContent","FContentChecks",new{ContentId=Model.ContentId,area="FunAdmin"}))`);
+            $(`#LContentTitle`).load(`@(Url.Action("GetContentTitle","FContentChecks",new{ContentId=Model.ContentId,area="FunAdmin"}))`);
+        });
+
+        function IsLegal_Change(){
+            if($(`#IsLegal`).is(':checked')){
+                $(`#IllegalityType`).parent().hide();
+            }else{
+                $(`#IllegalityType`).parent().show();
+            }
+        }
+        
+        function InitialAppellantCommentReadonly(){
+            if(Boolean(`@(IsAdmin?"1":"")`)){
+                $(`#AppellantComment`).attr("readonly","readonly");
+            }
+        }
+
+        function AddIllegalityTypeToAppellantComment(){
+            if($(`#IllegalityType`).val()!=`110`){
+                $(`#AppellantComment`).prepend($(`#IllegalityType`).find("option:selected").text()+' >> ');
+            }
+        }
+
+        function IllegalityType_Change(){ 
+            if($(`#IllegalityType`).val()==`110`){
+                $(`#@(IsAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments like:"]) (@(Localizer["reason"])) >  (@(Localizer["description"])) . . .');
+            }else{
+                $(`#@(IsAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
+            }
+        }
+    </script>
+}
+
+@section Styles{
+    <style>
+
+        .LContentEle{
+            word-wrap: break-word;
+        }
+
+        #LContent,#LContentTitle{
+            width: 100%;
+            cursor:default;
+        }
+
+        #LContentTitle{
+            font-size: 150%;
+            color:blue;
+            text-align:center;
+        }
+
+        .form-check-label{
+            cursor: pointer;
+        }
+    </style>
 }

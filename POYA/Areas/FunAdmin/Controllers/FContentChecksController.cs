@@ -161,10 +161,20 @@ namespace POYA.Areas.FunAdmin.Controllers
             }
 
             var fContentCheck = await _context.FContentCheck.FindAsync(id);
+
             if (fContentCheck == null)
             {
                 return NotFound();
             }
+
+            var User_=await _userManager.GetUserAsync(User);
+
+            var _IsAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
+            
+            ViewData["IsAdmin"]=_IsAdmin;
+
+            fContentCheck.IllegalityTypeSelectListItems=_funAdminHelper.GetIllegalityTypeSelectListItems();
+
             return View(fContentCheck);
         }
 
@@ -173,7 +183,7 @@ namespace POYA.Areas.FunAdmin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ContentId,AppellantId,ReceptionistId,AppellantComment,ReceptionistComment,IsLegal,IllegalityType")] FContentCheck fContentCheck)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,AppellantId,ReceptionistId,AppellantComment,ReceptionistComment,IsLegal,IllegalityType")] FContentCheck fContentCheck)
         {
             if (id != fContentCheck.Id)
             {
@@ -184,7 +194,54 @@ namespace POYA.Areas.FunAdmin.Controllers
             {
                 try
                 {
-                    _context.Update(fContentCheck);
+                    var User_=await _userManager.GetUserAsync(User);
+
+                    var _IsAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
+
+
+                    var _FContentCheck=await _context.FContentCheck.FirstOrDefaultAsync(
+                        p=>
+                            p.Id==id 
+                            && _IsAdmin?true:
+                            (p.AppellantId==User_.Id)
+                    );
+
+                    if(_FContentCheck==null)
+                    {
+                        return NotFound();
+                    }
+
+                    var IsReportSubmittedByUser=(_FContentCheck.AppellantId?.Length??0)>1;
+
+
+                    if(_IsAdmin)
+                    {
+                        _FContentCheck.ReceptionistComment=fContentCheck.ReceptionistComment;
+                        
+                        if(IsReportSubmittedByUser)
+                        {
+                            _FContentCheck.AppellantComment=
+                                _FContentCheck.IllegalityType==fContentCheck.IllegalityType && _FContentCheck.IllegalityType=="110"?
+                                _FContentCheck.AppellantComment: 
+                                (_FContentCheck.IllegalityType+"-->"+_FContentCheck.AppellantComment);
+                        }
+
+                        _FContentCheck.DOHandling=DateTimeOffset.Now;
+                        _FContentCheck.ReceptionistId=User_.Id;
+                        _FContentCheck.IsLegal=fContentCheck.IsLegal;
+                    }
+                    else
+                    {
+                        _FContentCheck.AppellantComment=fContentCheck.AppellantComment;
+                        _FContentCheck.DOSubmitting=DateTimeOffset.Now;
+                    }
+
+                    _FContentCheck.IllegalityType=
+                        (_IsAdmin && fContentCheck.IsLegal)?string.Empty:
+                        _funAdminHelper.GetIllegalityTypeSelectListItems().Select(p=>p.Value).Contains(fContentCheck.IllegalityType)?
+                        fContentCheck.IllegalityType:"110";
+
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

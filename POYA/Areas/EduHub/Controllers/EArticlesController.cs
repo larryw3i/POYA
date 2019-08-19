@@ -118,6 +118,7 @@ namespace POYA.Areas.EduHub.Controllers
                 .Where(p => p.IsEArticleVideo && _EArticles.Select(s => s.Id)
                 .Contains(p.EArticleId)).ToListAsync();
             InitFileExtension(_EArticleFiles);
+
             #endregion
 
 
@@ -165,6 +166,7 @@ namespace POYA.Areas.EduHub.Controllers
             var CancelSearchKeyCmd = "E58AE815-0CE2-469A-BD46-3C68B99547D9";
 
             #region CONTRAST_SORTBY
+            
             if (SortBy == null)
             {
                 var _SortBy = (int)(TempData[nameof(SortBy)] ?? 1);

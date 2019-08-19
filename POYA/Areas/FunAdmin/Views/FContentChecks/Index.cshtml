@@ -63,8 +63,11 @@
                 @(Html.DisplayFor(modelItem => item.IsLegal))
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                @if((item.ReceptionistId?.Length??0)<1 || _IsAdmin)
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>   
+                }
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>     
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
