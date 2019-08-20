@@ -5,6 +5,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _IsAdmin=Convert.ToBoolean(ViewData["IsAdmin"]);
+    var UserId=Convert.ToString(ViewData["UserId"]);
 }
 
 <table class="table">
@@ -40,6 +41,12 @@
     <tbody>
     @foreach (var item in Model) 
     {
+        
+        var _IsChecked=!string.IsNullOrEmpty(item.ReceptionistId);
+        var _IsSubmittedByAdmin=string.IsNullOrEmpty(item.AppellantId) && item.ReceptionistId==UserId;
+        
+
+        
         <tr>
             <td class="ContentTitle" content_id='@(item.ContentId)'>
             </td>
@@ -63,12 +70,16 @@
                 @(Html.DisplayFor(modelItem => item.IsLegal))
             </td>
             <td>
-                @if((item.ReceptionistId?.Length??0)<1 || _IsAdmin)
+                @if(!_IsChecked || _IsAdmin)
                 {
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>   
                 }
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a>     
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @if((!_IsChecked && item.AppellantId==UserId) || 
+                    _IsSubmittedByAdmin )
+                {
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                }
             </td>
         </tr>
     }

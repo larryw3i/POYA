@@ -68,10 +68,13 @@ namespace POYA.Areas.FunAdmin.Controllers
 
             var _IsAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
 
-            ViewData["IsAdmin"]=_IsAdmin;
             var _FContentCheck=await _context.FContentCheck
                 .Where(p=>_IsAdmin?true:p.AppellantId==UserId_)
                 .ToListAsync();
+
+            ViewData["IsAdmin"]=_IsAdmin;
+            
+            ViewData["UserId"]=UserId_;
 
             return View(_FContentCheck);
         }
@@ -84,12 +87,25 @@ namespace POYA.Areas.FunAdmin.Controllers
                 return NotFound();
             }
 
+            
+            var User_=await _userManager.GetUserAsync(User);
+
+            var _IsAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
+
             var fContentCheck = await _context.FContentCheck
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (fContentCheck == null)
             {
                 return NotFound();
             }
+
+            if( fContentCheck.AppellantId!=User_.Id && !_IsAdmin)
+            {
+                return NotFound();
+            }
+
+            ViewData["IsAdmin"]=_IsAdmin;
 
             return View(fContentCheck);
         }
@@ -224,14 +240,22 @@ namespace POYA.Areas.FunAdmin.Controllers
                         {
                             _FContentCheck.AppellantComment=
                                 (_FContentCheck.IllegalityType==fContentCheck.IllegalityType && _FContentCheck.IllegalityType=="110")?
+
                                 _FContentCheck.AppellantComment:
-                                (_FContentCheck.IllegalityType+"-->"
-                                    +(_FContentCheck.AppellantComment.Contains("-->")?
-                                        _FContentCheck.AppellantComment.Substring(
-                                            _FContentCheck.AppellantComment.LastIndexOf("-->")+3
-                                        ):
-                                        _FContentCheck.AppellantComment   
-                                    )
+
+                                (_funAdminHelper.GetIllegalityTypeSelectListItems()
+                                    .Where(p=>p.Value==_FContentCheck.IllegalityType)
+                                    .Select(p=>p.Text)
+                                    .FirstOrDefault()+"-->"
+
+                                        +(_FContentCheck.AppellantComment.Contains("-->")?
+
+                                            _FContentCheck.AppellantComment.Substring(
+                                                _FContentCheck.AppellantComment.LastIndexOf("-->")+3
+                                            ):
+
+                                            _FContentCheck.AppellantComment   
+                                        )
                                 );
                         }
 
