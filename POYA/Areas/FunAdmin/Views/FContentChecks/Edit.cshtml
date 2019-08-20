@@ -81,6 +81,7 @@
             }else{
                 $(`#IllegalityType`).parent().show();
             }
+            $(`#@(IsAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
         }
         
         function InitialAppellantCommentReadonly(){

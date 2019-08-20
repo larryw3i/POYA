@@ -213,17 +213,26 @@ namespace POYA.Areas.FunAdmin.Controllers
 
                     var IsReportSubmittedByUser=(_FContentCheck.AppellantId?.Length??0)>1;
 
+                    var IsChecked=(_FContentCheck.ReceptionistId?.Length??0)<0;
+
 
                     if(_IsAdmin)
                     {
                         _FContentCheck.ReceptionistComment=fContentCheck.ReceptionistComment;
                         
-                        if(IsReportSubmittedByUser)
+                        if(IsReportSubmittedByUser && IsChecked)
                         {
                             _FContentCheck.AppellantComment=
-                                _FContentCheck.IllegalityType==fContentCheck.IllegalityType && _FContentCheck.IllegalityType=="110"?
-                                _FContentCheck.AppellantComment: 
-                                (_FContentCheck.IllegalityType+"-->"+_FContentCheck.AppellantComment);
+                                (_FContentCheck.IllegalityType==fContentCheck.IllegalityType && _FContentCheck.IllegalityType=="110")?
+                                _FContentCheck.AppellantComment:
+                                (_FContentCheck.IllegalityType+"-->"
+                                    +(_FContentCheck.AppellantComment.Contains("-->")?
+                                        _FContentCheck.AppellantComment.Substring(
+                                            _FContentCheck.AppellantComment.LastIndexOf("-->")+3
+                                        ):
+                                        _FContentCheck.AppellantComment   
+                                    )
+                                );
                         }
 
                         _FContentCheck.DOHandling=DateTimeOffset.Now;
@@ -267,13 +276,24 @@ namespace POYA.Areas.FunAdmin.Controllers
             {
                 return NotFound();
             }
+            
+            var User_=await _userManager.GetUserAsync(User);
+
+            var _IsAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
 
             var fContentCheck = await _context.FContentCheck
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id && m.AppellantId==User_.Id);
+
             if (fContentCheck == null)
             {
                 return NotFound();
             }
+
+            var IsReportSubmittedByUser=(fContentCheck.AppellantId?.Length??0)>1;
+
+            var IsChecked=(fContentCheck.ReceptionistId?.Length??0)<0;
+
+            ViewData["IsAdmin"]=_IsAdmin;
 
             return View(fContentCheck);
         }
@@ -283,7 +303,10 @@ namespace POYA.Areas.FunAdmin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var fContentCheck = await _context.FContentCheck.FindAsync(id);
+            
+            var User_=await _userManager.GetUserAsync(User);
+            
+            var fContentCheck = await _context.FContentCheck.FirstOrDefaultAsync(p=>p.AppellantId==User_.Id);
             _context.FContentCheck.Remove(fContentCheck);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
