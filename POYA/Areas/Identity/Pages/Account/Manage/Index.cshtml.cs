@@ -18,7 +18,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
-        #region
+        #region DI
         private readonly IHostingEnvironment _hostingEnv;
         private readonly IStringLocalizer<Program> _localizer;
         private readonly UserManager<IdentityUser> _userManager;
@@ -47,7 +47,8 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
         #endregion
-        // public string Username { get; set; }
+        
+        
         public bool IsEmailConfirmed { get; set; }
         [TempData]
         public string StatusMessage { get; set; }

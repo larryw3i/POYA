@@ -294,6 +294,7 @@ namespace POYA.Areas.FunAdmin.Controllers
         }
 
         // GET: FunAdmin/FContentChecks/Delete/5
+        [Authorize(Roles="ADMINISTRATOR")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -330,6 +331,7 @@ namespace POYA.Areas.FunAdmin.Controllers
         // POST: FunAdmin/FContentChecks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles="ADMINISTRATOR")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             

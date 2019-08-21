@@ -16,7 +16,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
 {
     public class ChangePasswordModel : PageModel
     {
-        #region
+        #region     DI
         private readonly IHostingEnvironment _hostingEnv;
         private readonly IStringLocalizer<Program> _localizer;
         private readonly UserManager<IdentityUser> _userManager;
@@ -48,6 +48,8 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
             _logger = logger;
         }
         #endregion
+        
+        
         [BindProperty]
         public InputModel Input { get; set; }
         [TempData]
