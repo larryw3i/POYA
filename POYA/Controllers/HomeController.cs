@@ -22,6 +22,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using POYA.Areas.FunFiles.Controllers;
 using POYA.Areas.XAd.Controllers;
 using POYA.Data;
 using POYA.Models;
@@ -172,8 +173,17 @@ namespace POYA.Controllers
                 var AvatarPath = $"{LFilesPath}/Avatars";
                 var XUserFilePath = $"{LFilesPath}/XUserFile";
                 var EArticleFilesPath = $"{_hostingEnv.ContentRootPath}/Areas/EduHub/Data/EArticleFiles";
+                var FunFilesRootPath=new FunFilesHelper().FunFilesRootPath(_hostingEnv);
+                var AdminEmail=_configuration["Administration:AdminEmail"];
 
-                var InitialPaths = new string[] { AvatarPath, XUserFilePath, XAdCustomerHelper.XAdImgFilePath(_hostingEnv), EArticleFilesPath };
+                var InitialPaths = new string[] 
+                    { 
+                        AvatarPath, 
+                        XUserFilePath, 
+                        XAdCustomerHelper.XAdImgFilePath(_hostingEnv), 
+                        EArticleFilesPath,FunFilesRootPath 
+                    };
+
                 foreach (var p in InitialPaths)
                 {
                     if (!Directory.Exists(p))
@@ -181,6 +191,7 @@ namespace POYA.Controllers
                         Directory.CreateDirectory(p);
                     }
                 }
+
                 #region INITIAL_USER_ROLE
 
                 var _userRoles = new string[] { X_DOVEValues._administrator };
@@ -192,12 +203,14 @@ namespace POYA.Controllers
                 }
 
 
-                var _user = await _context.Users.FirstOrDefaultAsync(p => p.Email == _configuration["Administration:AdminEmail"]);
+                var _user = await _context.Users.FirstOrDefaultAsync(p => p.Email == AdminEmail);
 
                 if (_user != null && !await _userManager.IsInRoleAsync(_user,X_DOVEValues._administrator))
                 {
                     await _userManager.AddToRoleAsync(_user,X_DOVEValues._administrator);
                 }
+
+                #endregion
 
                 #region MODIFY appsettings.json
                 var _appsettings_jsonPath = _hostingEnv.ContentRootPath + "/appsettings.json";
@@ -206,10 +219,9 @@ namespace POYA.Controllers
 
                 var jo = JObject.Parse(await System.IO.File.ReadAllTextAsync(_appsettings_jsonPath));
                 jo["IsInitialized"] = true;
+
                 await System.IO.File.WriteAllTextAsync(_appsettings_jsonPath, Convert.ToString(jo));
                 
-                #endregion
-
                 #endregion
 
             }

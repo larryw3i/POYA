@@ -42,8 +42,7 @@ namespace POYA.Areas.FunAdmin.Models
         
         [NotMapped]
         public List<SelectListItem> IllegalityTypeSelectListItems{get;set;}
-
-
+        
         #endregion
     }
 }

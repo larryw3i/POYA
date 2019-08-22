@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using POYA.Areas.FunAdmin.Models;
-using POYA.Areas.LAdmin.Controllers;
 using POYA.Data;
 using POYA.Unities.Helpers;
 

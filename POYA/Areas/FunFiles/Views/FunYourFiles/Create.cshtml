@@ -1,0 +1,54 @@
+@model POYA.Areas.FunFiles.Models.FunYourFile
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>FunYourFile</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FileByteId" class="control-label"></label>
+                <input asp-for="FileByteId" class="form-control" />
+                <span asp-validation-for="FileByteId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParentDirId" class="control-label"></label>
+                <input asp-for="ParentDirId" class="form-control" />
+                <span asp-validation-for="ParentDirId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DOUploading" class="control-label"></label>
+                <input asp-for="DOUploading" class="form-control" />
+                <span asp-validation-for="DOUploading" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
