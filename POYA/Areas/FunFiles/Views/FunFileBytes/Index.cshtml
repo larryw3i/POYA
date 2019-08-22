@@ -14,28 +14,28 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FileSHA256)
+                @(Html.DisplayNameFor(model => model.FileSHA256))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstUploaderId)
+                @(Html.DisplayNameFor(model => model.FirstUploaderId))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DOUploading)
+                @(Html.DisplayNameFor(model => model.DOUploading))
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FileSHA256)
+                @(Html.DisplayFor(modelItem => item.FileSHA256))
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FirstUploaderId)
+                @(Html.DisplayFor(modelItem => item.FirstUploaderId))
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DOUploading)
+                @(Html.DisplayFor(modelItem => item.DOUploading))
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -43,6 +43,6 @@
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
