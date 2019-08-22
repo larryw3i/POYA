@@ -16,13 +16,11 @@ using POYA.Areas.EduHub.Models;
 using POYA.Areas.XUserFile.Controllers;
 using POYA.Data;
 using POYA.Unities.Helpers;
+
 namespace POYA.Areas.EduHub.Controllers
 {
-    #region 
-
     [Authorize]
     [Area("EduHub")]
-    #endregion
     public class UserEArticleSetsController : Controller
     {
         #region     DI
@@ -330,7 +328,7 @@ namespace POYA.Areas.EduHub.Controllers
             }
 
             var _userEArticleHomeInfo = await _context.UserEArticleHomeInfos.FirstOrDefaultAsync(p => p.Id == id);
-            
+
             var _FileBytes = new byte[0];
             var _ContentType = "image/webp";  
             

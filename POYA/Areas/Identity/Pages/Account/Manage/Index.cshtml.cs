@@ -48,7 +48,6 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
         }
         #endregion
         
-        
         public bool IsEmailConfirmed { get; set; }
         [TempData]
         public string StatusMessage { get; set; }

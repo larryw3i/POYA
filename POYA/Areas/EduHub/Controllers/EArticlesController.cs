@@ -33,6 +33,7 @@ namespace POYA.Areas.EduHub.Controllers
     [Authorize]
     public class EArticlesController : Controller
     {
+
         #region     DI
         private readonly IHostingEnvironment _hostingEnv;
         private readonly IStringLocalizer<Program> _localizer;
@@ -44,12 +45,10 @@ namespace POYA.Areas.EduHub.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<EArticlesController> _logger;
         private readonly HtmlSanitizer _htmlSanitizer;
-        //  private readonly MimeHelper _mimeHelper;
         private readonly XUserFileHelper _xUserFileHelper;
-        //  private readonly string _eArticleCategoryFilePath;
         private readonly Regex _unicode2StringRegex;
+        private readonly EduHubHelper _eduHubHelper;
         public EArticlesController(
-            //  MimeHelper mimeHelper,
             HtmlSanitizer htmlSanitizer,
             ILogger<EArticlesController> logger,
             SignInManager<IdentityUser> signInManager,
@@ -70,13 +69,11 @@ namespace POYA.Areas.EduHub.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
-            //  _mimeHelper = mimeHelper;
             _xUserFileHelper = new XUserFileHelper();
-            //  _eArticleCategoryFilePath = _hostingEnv.ContentRootPath + $"/Data/LAppDoc/earticle_category.csv";
+            _eduHubHelper=new EduHubHelper();
             _unicode2StringRegex = new Regex(@"\\u([0-9A-F]{4})", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         }
         #endregion
-
 
         /// <summary>
         /// Index for UserEArticleSets
@@ -86,19 +83,29 @@ namespace POYA.Areas.EduHub.Controllers
         public async Task<IActionResult> XIndex(Guid? SetId, int? _page, string UserId = "")
         {
             var TempSetId = Guid.Parse(TempData[nameof(SetId)]?.ToString() ?? Guid.Empty.ToString());
+
             var _User = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult();
+
             var UserId_ = string.IsNullOrWhiteSpace(UserId) ? _User.Id : UserId; //   ?? string.Empty;
 
-            if (string.IsNullOrWhiteSpace(UserId_)) return RedirectToPage(pageName: "/Account/Login",routeValues:new { area= "Identity" });
+            if (string.IsNullOrWhiteSpace(UserId_)) 
+                return RedirectToPage(pageName: "/Account/Login",routeValues:new { area= "Identity" });
 
             if (SetId != X_DOVEValues.DefaultEArticleSetId && !await _context.UserEArticleSet.AnyAsync(p => p.Id == SetId))
             {
                 return NotFound();
             }
 
-            SetId = (SetId == null || SetId == Guid.Empty) ?(TempSetId == null ? X_DOVEValues.DefaultEArticleSetId : TempSetId): SetId;
+            SetId = (SetId == null || SetId == Guid.Empty) ?
+                (
+                    TempSetId == null ? 
+                        X_DOVEValues.DefaultEArticleSetId : 
+                        TempSetId
+                )
+                : SetId;
 
             #region READY_EARTICLES
+
             var _EArticles = await _context.EArticle.Where(p =>
                      (SetId == X_DOVEValues.DefaultEArticleSetId ?
                         (p.SetId == Guid.Empty || 
@@ -144,6 +151,7 @@ namespace POYA.Areas.EduHub.Controllers
 
 
             #region VIEWDATA
+
             ViewData[nameof(_EArticles)] = _EArticles.OrderByDescending(p => p.DOPublishing).ToPagedList(_page ?? 1,
                 Convert.ToInt32(Request.Cookies["PageSize"] ?? "8"));
 
@@ -151,6 +159,7 @@ namespace POYA.Areas.EduHub.Controllers
             TempData[nameof(SetId)] = SetId;
             ViewData[nameof(UserEArticleSet)] = _UserEArticleSet;
             ViewData["CurrentUserId"] = _User?.Id ?? string.Empty;
+
             #endregion
 
             return View();
@@ -163,7 +172,6 @@ namespace POYA.Areas.EduHub.Controllers
         {
 
             var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id ?? string.Empty;
-            var CancelSearchKeyCmd = "E58AE815-0CE2-469A-BD46-3C68B99547D9";
 
             #region CONTRAST_SORTBY
             
@@ -175,11 +183,19 @@ namespace POYA.Areas.EduHub.Controllers
             }
             #endregion
 
-            var _EArticle = _context.EArticle.OrderBy(p => p.DOPublishing);
+            var _EArticle = _context.EArticle
+                .Where(
+                    p=>(
+                        !_context.FContentCheck.Where(m=>!m.IsLegal).Select(f=>f.ContentId ).Contains(p.Id)
+                    )
+                )
+                .OrderBy(p => p.DOPublishing);
 
             #region SEARCH_KEYWORD
-            if (!string.IsNullOrWhiteSpace(_search) || _search == CancelSearchKeyCmd) _page = 1;
-            if (_search==CancelSearchKeyCmd)
+            
+            if (!string.IsNullOrWhiteSpace(_search) || _search == _eduHubHelper.CancelSearchKeyCmd) _page = 1;
+
+            if (_search==_eduHubHelper.CancelSearchKeyCmd)
             {
                 TempData[nameof(_search)] = null;
             }
@@ -195,6 +211,7 @@ namespace POYA.Areas.EduHub.Controllers
                     _EArticle = _EArticle.Where(p => p.Title.Contains(_search) || p.Content.Contains(_search)).OrderBy(p => p.DOPublishing);
                 }
             }
+
             #endregion
 
             var _EArticleUserReadRecords = await _context.EArticleUserReadRecords.ToListAsync();
@@ -223,10 +240,12 @@ namespace POYA.Areas.EduHub.Controllers
             InitFileExtension(_EArticleFiles);
 
             #region VIEWDATA_AND_TEMPDATA
-            if (_search!=CancelSearchKeyCmd && !string.IsNullOrWhiteSpace(_search)) {
+            if (_search!=_eduHubHelper.CancelSearchKeyCmd && !string.IsNullOrWhiteSpace(_search)) 
+            {
                 TempData[nameof(_search)] = _search;
                 ViewData[nameof(_search)] = _search;
             }
+
             ViewData["EArticles"] = _EArticlePagedList;
             ViewData["UserId"] = UserId_;
             TempData[nameof(_page)] = _page;
@@ -242,11 +261,9 @@ namespace POYA.Areas.EduHub.Controllers
         }
 
 
-        #region 
 
         // GET: EduHub/EArticles/Details/5
         [AllowAnonymous]
-        #endregion
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -257,6 +274,11 @@ namespace POYA.Areas.EduHub.Controllers
             var _CurrentUser = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult();
             var UserId_ = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id ?? string.Empty;
             var eArticle = await _context.EArticle
+                .Where(
+                    p=>(
+                        !_context.FContentCheck.Where(m=>!m.IsLegal).Select(f=>f.ContentId ).Contains(p.Id)
+                    )
+                )
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (eArticle == null)
@@ -413,14 +435,12 @@ namespace POYA.Areas.EduHub.Controllers
             return await EArticleEditViewAsync (eArticle);
         }
 
-        #region 
         // POST: EduHub/EArticles/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        #endregion
         public async Task<IActionResult> Edit(Guid id,
             [Bind("Id,Title,Content,LVideos,LAttachments,CategoryId,AdditionalCategory,ComplexityRank")] EArticle eArticle)
         {
