@@ -26,7 +26,7 @@ namespace POYA.Areas.XUserFile.Controllers
         /// <param name="_byte">The byte</param>
         /// <returns>Return the optimed string</returns>
         #endregion
-        public string OptimizeSizeShow(long _byte) =>
+        public string OptimizeFileSizeShow(long _byte) =>
             _byte < 1024 ? $"{_byte}b" :
             _byte < Math.Pow(1024, 2) ? $"{(_byte / 1024).ToString("0.0")}K" :
             _byte < Math.Pow(1024, 3) ? $"{(_byte / Math.Pow(1024, 2)).ToString("0.0")}M" :

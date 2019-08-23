@@ -106,19 +106,18 @@
     <partial name="_ValidationScriptsPartial" />
 
     <script>
-        //========      VALUE   ========//
+        
         var IsAvatarUploaded = false;
         var _allowedAvatarFileExtensions = ["jpg", "jpeg","gif"];
         var _isExtensionNeedChecking=false;
 
 
-        //========      DATA    ========//
         function _UserAvatarFormClick() {
             if (IsAvatarUploaded) return;
             $('#_UserAvatarInput').click();
         }
         
-        //========    SERVICE   ========//
+        
         function UpdateUserAvatar() {
             $("[name='User_Avatar_Img']").attr("src", "/Home/GetAvatar?random=" + Math.floor(Math.random() * 100 + 1));
             $("[name='UserAvatarImg']").attr("src", "/Home/GetAvatar?random=" + Math.floor(Math.random() * 100 + 1));
@@ -182,7 +181,7 @@
             $("#_UserAvatarInput").val(null);
         }
 
-        //========      UI      ========//
+
         $(document).ready(function () {
             $("input").attr("autocomplete", "off");
             $("#_UserAvatarForm img:first").on("click", function () {

@@ -13,26 +13,6 @@ var _Language_String=`_Language`;
 var AspNetCore_Culture_String=`.AspNetCore.Culture`;
 
 
-$(document).ready(function () {
-
-    $("td,td *,th,th *").css({ "word-wrap": "break-word", "break-word": "break-word" });
-
-    $('#_Language  option[value=' + GetCulture() + ']').attr("selected", true);
-
-    $("[name='UserAvatarImg']").attr("src", "/Home/GetAvatar?random=" + Math.floor(Math.random() * 100 + 1));
-
-    $("#_Language").on("change", ()=>{ChangeLanguage();});
-
-    $("#Theme").on("change", ()=>{ ChangeTheme(true); });
-
-    $("#BackA,#BackEle").on("click", ()=>{ history.go(-1);});
-
-    $("#_pageSize").keypress(()=>{ _pageSizeKeyPress(); });
-    
-    PageSize_Input();
-    
-    KeepLogin();
-});
 
 function PageSize_Input(){
     $("#_pageSize").on("input", function () {
@@ -43,7 +23,7 @@ function PageSize_Input(){
 
 }
 
-function    GetCulture() {
+function GetCulture() {
     var _CULTURE = window.CULTURE;
     if (_CULTURE === undefined) {
         _CULTURE = Cookies.get(this.CULTURE);
@@ -74,7 +54,7 @@ function   GetThemeInSelectTag() {
 }
 
 
-function    ChangeTheme(IsGetValueFromSelectTag = false) {
+function ChangeTheme(IsGetValueFromSelectTag = false) {
     var _theme_ = IsGetValueFromSelectTag ? GetThemeInSelectTag() : GetTheme();
     if (IsGetValueFromSelectTag) {
         Cookies.set(THEME_String, _theme_, { expires: 365 });
@@ -103,7 +83,7 @@ function KeepLogin() {
 }
 
 
-function _pageSizeKeyPress() {
+function PageSizeKeyPress() {
     var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
     if (Number(keyCode) === 13) {
         var _val = Number($(`#_pageSize`).val().replace(/[^0-9]/ig, ""));
@@ -148,9 +128,32 @@ function SetQueryString(uri = window.location.href, key, value) {
  * @param {number} byte -The byte
  * @returns {string} -Return the optimized string
  */
-var OptimizeSizeShow = (byte) => {
+function OptimizeFileSizeShow (byte) {
     return byte < 1024 ? `${byte}b`
         : byte < Math.pow(1024, 2) ? `${(byte / 1024).toFixed(1)}k`
             : byte < Math.pow(1024, 3) ? `${(byte / Math.pow(1024, 2)).toFixed(1)}M`
                 : `${(byte / Math.pow(1024, 3)).toFixed(1)}G`;
 };
+
+
+$(document).ready(function () {
+
+    $("[name='UserAvatarImg']").attr("src", "/Home/GetAvatar?random=" +NewGuid());
+
+    $("td,td *,th,th *").css({ "word-wrap": "break-word", "break-word": "break-word" });
+
+    $(`#_Language  option[value='${GetCulture()}']`).attr("selected", true);
+
+    $("#_Language").on("change", ()=>{ChangeLanguage();});
+
+    $("#Theme").on("change", ()=>{ ChangeTheme(true); });
+
+    $("#BackA,#BackEle").on("click", ()=>{ history.go(-1);});
+
+    $("#_pageSize").keypress(()=>{ PageSizeKeyPress(); });
+    
+    PageSize_Input();
+    
+    KeepLogin();
+    
+});

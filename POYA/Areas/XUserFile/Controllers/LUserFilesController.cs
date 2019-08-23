@@ -125,7 +125,7 @@ namespace POYA.Areas.XUserFile.Controllers
                 var _FileLength = new FileInfo(_xUserFileHelper.FileStoragePath(_hostingEnv) + p.MD5).Length;
                 //  UsedSpace += _FileLength / (1024 * 1024);    //  MByte
                 p.Size = _FileLength;
-                p.OptimizedSize = _xUserFileHelper.OptimizeSizeShow(_FileLength);
+                p.OptimizedSize = _xUserFileHelper.OptimizeFileSizeShow(_FileLength);
             });
             /*
             _UserFiles_.ForEach(p=> {
@@ -158,7 +158,7 @@ namespace POYA.Areas.XUserFile.Controllers
             ViewData[nameof(_InDirName)] = _InDirName;
             ViewData[nameof(InDirId)] = InDirId;
             ViewData["UsedSpace"] = UsedSpace;
-            ViewData["OptimizedUsedSpace"] = _xUserFileHelper.OptimizeSizeShow(UsedSpace);
+            ViewData["OptimizedUsedSpace"] = _xUserFileHelper.OptimizeFileSizeShow(UsedSpace);
             #endregion
 
             return View(_UserFiles_);

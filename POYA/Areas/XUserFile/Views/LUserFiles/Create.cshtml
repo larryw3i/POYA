@@ -38,7 +38,7 @@
 
         var FileIsTooLarge =
             `<strong>@Localizer["Oops"]. . .</strong>@Localizer["File is limit to less than"]
-            ${OptimizeSizeShow( `@(X_DOVEValues.MaxMultipartBodyLengthLimit/1_000_000)`)}`;
+            ${OptimizeFileSizeShow( `@(X_DOVEValues.MaxMultipartBodyLengthLimit/1_000_000)`)}`;
 
         var GetRemoveFileEleId = (Id) => `RemoveFileEle_${Id}`;
         var GetFileNameId = (Id) => `FileName_${Id}`;

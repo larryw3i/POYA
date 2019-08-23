@@ -26,7 +26,7 @@
     @if (_IsSignedIn)
     {
         <li class="nav-item NavAvatarEle">
-            <a class="nav-link " asp-area="Identity" asp-page="/Account/Manage/Index" title='@(User.Identity.Name)(@Localizer[$"Manage"])'>
+            <a class="nav-link " asp-area="Identity" asp-page="/Account/Manage/Index" title='@(User.Identity.Name)(@Localizer["Manage"])'>
                 <img name="UserAvatarImg" class="rounded-circle NavAvatar" />
             </a>
         </li>
