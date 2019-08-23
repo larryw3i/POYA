@@ -1,0 +1,257 @@
+@model POYA.Areas.FunFiles.Models.FunUploadFile
+@using POYA.Unities.Helpers
+
+@{
+    ViewData["Title"]=Localizer["Upload files"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var ParentDirId=ViewData["ParentDirId"];
+    
+}
+
+<h1>@(ViewData["Title"])</h1>
+
+<div class="row">
+    <div class="col col-12" id="FunUploadFileAlert"></div>
+</div>
+
+<div class="row">
+    <div class="col col-8">
+        <button type="button" class="btn btn-outline-info btn-lg btn-block" id="SelectFiles">@(Localizer["Select files"])</button>
+    </div>
+    <div class="col col-4">
+        <button type="button" class="btn btn-outline-success  btn-lg btn-block" id="UploadFiles">@(Localizer["Upload"])</button>
+    </div>
+</div>
+<div class="row">
+    <div id="SelectedFiles" >    
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/lib/js-sha256/build/sha256.min.js"></script>
+
+    <script>
+
+        var ParentDirId=`@(ParentDirId)`;
+
+        var FileSHA256sArray=new Array();
+        
+
+        var FileInput_String=(Id)=>`<input class='FunFileInput' id='${Id}' type='file' hidden/>`;
+
+        var ShowSelectedFile_String=(Id,name)=>`<div class='ShowSelectedFile' file_input_id='${Id}' title='@(Localizer["Click to delete"])'>${name}</div>`;
+
+        $(document).ready(()=>{
+
+            $(document).on(`click`,`#SelectFiles`,()=>{  SelectFiles_Click();  });
+
+            $(document).on(`click`,`.ShowSelectedFile`,(e)=>{ ShowSelectedFile_Click( $(e.target).attr(`file_input_id`) ); })
+
+            $(document).on(`change`,`#SelectedFiles>input`,(e)=>{  Input_Change(  $(e.target).attr('id')  );  })
+
+            $(document).on(`click`,`#UploadFiles`,()=>{UploadFiles_Click();});
+        });
+
+
+        function UploadFunFiles(){
+            
+            let FunUploadFileFormData = new FormData();
+            
+
+            FunUploadFileFormData.append(`@(nameof(Model.ParentDirId))`,ParentDirId);
+
+            $(`.FunFileInput`).each((index,elem)=>{
+                FunUploadFileFormData.append(
+                    `@(nameof(Model.FunFiles))`,
+                    document.getElementById($(elem).attr(`id`)).files[0]
+                );
+            });
+
+            $.ajax({ 
+                url:`@(Url.Action("FunUploadFiles"))`,
+                data:{"funUploadFile":FunUploadFileFormData},
+                headers: {
+                    "@(X_DOVEValues.CustomHeaderName)": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"
+                },
+                processData: false,
+                contentType: false,
+                xhr: ()=> {
+                    var xhr = $.ajaxSettings.xhr();
+                    if (xhr.upload) {
+                        xhr.upload.addEventListener("progress", function (e) {
+                            var loaded = e.loaded;
+                            var tot = e.total;
+                            var per = Math.floor(100 * loaded / tot);
+                             $(`#FunUploadFileAlert`).append(`
+                                <div class="alert alert-info" role="alert">
+                                    [${per}%]\t@(Localizer["Upload"]) . . .
+                                </div>
+                            `);
+                        }, false);
+                        return xhr;
+                    }
+                },
+               
+            });
+        }
+
+
+        function CompareSHA256(){
+            $.ajax({
+                method:"POST",
+                url:`@(Url.Action("CompareSHA256"))`,
+                data:{sHA256Compare:{"ParentDirId":ParentDirId,"FileSHA256s":FileSHA256sArray}},  
+                headers: {
+                    "@(X_DOVEValues.CustomHeaderName)": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"
+                },
+                dataType:"json",
+                success:(data)=>{
+
+                    if(data.length==0){
+                        UploadFunFiles();
+                    }
+                    
+                    $.each(data,(index,value)=>{
+                        let _UploadedFileId=value;
+
+                        $(`[file_input_id='${_UploadedFileId}']`).text(
+                            $(`#${_UploadedFileId}`).val()+` [\u26a1 OK]`
+                        );
+
+                        $(`#${_UploadedFileId}`).remove();
+
+                        if(index==data.length-1){
+                            UploadFunFiles();
+                        }
+
+                    });
+                },
+                error:()=>{
+                    $(`#FunUploadFileAlert`).append(`
+                        <div class="alert alert-danger" role="alert">
+                            @(Localizer["an error has occurred"]), @(Localizer["the engineer is on his way"])
+                        </div>
+                    `);
+
+                    setTimeout(()=>{
+                        $(`#FunUploadFileAlert`).html("");
+                    },2500);
+                }
+            });
+        }
+
+        function UploadFiles_Click(){
+
+            if(
+                $(`.FunFileInput`).length<1 || 
+                (
+                    $(`.FunFileInput`).length==1 &&
+                    $(`.FunFileInput:last`).val().length<1
+                )
+            ){
+                $(`#FunUploadFileAlert`).append(`
+                    <div class="alert alert-info" role="alert">
+                        @(Localizer["No files selected"]) !
+                    </div>
+                `);
+
+                setTimeout(()=>{
+                    $(`#FunUploadFileAlert`).html("");
+                },2500);
+
+                return;
+            }
+            
+            $(`#SelectFiles`).addClass(`disabled`);
+
+            let _LastIndex=$(`.FunFileInput`).length-1;
+
+            $(`.FunFileInput`).each((index,elem)=>{
+                
+                if($(elem).val().length<1){
+                    return true;
+                }
+                
+                let _id=$(elem).attr(`id`);
+                let _FileName=$(elem).val();
+                let _FileReader = new FileReader();
+
+                $(`[file_input_id='${_id}']`).html(_FileName+` [@(Localizer["Read"]) . . .]`);
+                
+                _FileReader.readAsArrayBuffer(
+                    document.getElementById( _id ).files[0]
+                );
+                _FileReader.onload = ()=>{
+                    
+                    let _SHA256 = sha256(_FileReader.result).toString();
+
+                    FileSHA256sArray.push(
+                        {
+                            "Id":_id,
+                            "SHA256":_SHA256,
+                            "Name":_FileName
+                        }
+                    );
+
+                    $(`[file_input_id='${_id}']`).html(_FileName+` [@(Localizer["Read finish"])]`);
+                    
+                    if(index==_LastIndex){
+                        CompareSHA256();
+                    }
+                };
+
+            });
+        }
+
+        function SelectFiles_Click(){
+
+            let LastFileInput=$(`#SelectedFiles>input:last`);
+
+            if(LastFileInput.length<1||LastFileInput.val().length>0){
+
+                let _id=String(NewGuid()).replace(/-/g,"_");
+
+                $(`#SelectedFiles`).append(FileInput_String(_id));
+
+                $(`#`+_id).click();
+
+            }else{
+
+                LastFileInput.click();
+
+            }
+        }
+
+        function Input_Change(Id){
+
+            $(`#`+Id).after(
+                ShowSelectedFile_String( Id, $(`#`+Id).val()  )
+            );
+
+        }
+
+        function ShowSelectedFile_Click(Id){
+
+            $(`[file_input_id='${Id}'], #${Id}`).remove();
+
+        }
+        
+    </script>
+}
+
+@section Styles
+{
+    <style>
+        .ShowSelectedFile{
+            font-size: 150%;
+            color: blue;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+        .ShowSelectedFile:hover{
+            color: red;
+            transform: scale(1.05);
+        }
+    </style>
+}

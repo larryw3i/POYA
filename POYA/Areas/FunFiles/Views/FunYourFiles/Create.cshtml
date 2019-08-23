@@ -1,13 +1,12 @@
 @model POYA.Areas.FunFiles.Models.FunYourFile
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = Localizer["Upload files"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>@(ViewData["Title"])</h1>
 
-<h4>FunYourFile</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">

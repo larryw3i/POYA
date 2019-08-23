@@ -1,15 +1,28 @@
 @model IEnumerable<POYA.Areas.FunFiles.Models.FunDir>
+@using POYA.Areas.FunFiles.Controllers;
 
 @{
-    ViewData["Title"] =Localizer[ "Folder"];
+    ViewData["Title"] =Localizer[ "Folder"]+" & "+Localizer["Files"];
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    var ParentDirId=Guid.Parse(ViewData["ParentDirId"].ToString());
 }
 
 <h1>@(ViewData["Title"])</h1>
 
 <p>
-    <a asp-action="Create">@(Localizer["New"])</a>
+    <a class="btn btn-outline-info" asp-action="Create" asp-route-ParentDirId='@(ParentDirId)'>@(Localizer["New directory"])</a>
+    <a class="btn btn-outline-info" asp-action="FunUploadFiles" asp-controller='FunYourFiles' asp-route-ParentDirId='@(ParentDirId)'>
+        @(Localizer["Upload files"])
+    </a>
+
+    <nav aria-label="breadcrumb" class="PathBreadcrumb">
+        <ol class="breadcrumb">
+        </ol>
+    </nav>
 </p>
+
+
 <table class="table">
     <thead>
         <tr>
@@ -27,7 +40,9 @@
         {
             <tr>
                 <td>
-                    @(Html.DisplayFor(modelItem => item.Name))
+                    <a asp-action="Index" asp-route-ParentDirId='@(item.Id)'>
+                        @(Html.DisplayFor(modelItem => item.Name))
+                    </a>
                 </td>
                 <td>
                     @(Html.DisplayFor(modelItem => item.DOCreating))
@@ -41,3 +56,19 @@
         }
     </tbody>
 </table>
+
+
+@section Scripts
+{
+    <script>
+        $(document).ready(()=>{
+            $(`.PathBreadcrumb>ol`).load(`@(Url.Action(nameof(POYA.Areas.FunFiles.Controllers.FunDirsController.GetPathBreadcrumb),new{ParentDirId}))`);
+        });
+    </script>
+}
+
+@section Styles
+{
+    <style>
+    </style>
+}

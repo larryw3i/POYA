@@ -1,0 +1,16 @@
+@model IEnumerable<POYA.Areas.FunFiles.Models.FunDir>
+@using POYA.Areas.FunFiles.Controllers;
+
+@{
+
+}
+
+<li class="breadcrumb-item">
+    <a href='@(Url.Action("Index",new{ParentDirId=new FunFilesHelper().RootDirId}))'>@(Localizer["root"])</a>
+</li>
+@foreach (var item in Model)
+{
+    <li class="breadcrumb-item">
+        <a href='@(Url.Action("Index",new{ParentDirId=item.Id}))'>@(item.Name)</a>
+    </li>
+}
