@@ -65,9 +65,10 @@
     @(RenderSection("Styles", required: false))
     
     <link href='~/img/chat_with_friends_ico.webp' rel="icon" type="image/webp"/>
+    
 </head>
 
-<body id="_body">
+<body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container">
@@ -147,12 +148,14 @@
             </div>
         </nav>
     </header>
+
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3 xbody" style="margin-top:20px">
             @(RenderBody())
         </main>
     </div>
+
     <footer class="border-top footer text-muted text-wrap">
         <div class="container" >
             &copy; 2019 - @(Localizer["WSUDisk"]) 
