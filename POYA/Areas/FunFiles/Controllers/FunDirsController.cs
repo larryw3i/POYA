@@ -212,6 +212,16 @@ namespace POYA.Areas.FunFiles.Controllers
 
         #region DEPOLLUTION
 
+        public async Task<IActionResult> IndexFunYourFiles(Guid? ParentDirId)
+        {
+            var _ParentDirId=ParentDirId??_funFilesHelper.RootDirId;
+            var User_=await _userManager.GetUserAsync(User);
+            return View(await _context.FunYourFile
+                .Where(p=>p.ParentDirId==_ParentDirId && p.UserId==User_.Id)
+                .ToListAsync()
+            );
+        }
+
         public async Task<IActionResult> GetPathBreadcrumb(Guid? ParentDirId)
         {
             var _ParentDirId=ParentDirId??_funFilesHelper.RootDirId;

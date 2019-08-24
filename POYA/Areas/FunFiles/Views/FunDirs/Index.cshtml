@@ -18,6 +18,9 @@
 
     <nav aria-label="breadcrumb" class="PathBreadcrumb">
         <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                / <a href='@(Url.Action("Index",new{ParentDirId=new FunFilesHelper().RootDirId}))'>@(Localizer["root"])</a>
+            </li>
         </ol>
     </nav>
 </p>
@@ -35,17 +38,17 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="FileAndDir">
         @foreach (var item in Model) 
         {
             <tr>
-                <td>
+                <td class="ItemName">
                     <a asp-action="Index" asp-route-ParentDirId='@(item.Id)'>
                         @(Html.DisplayFor(modelItem => item.Name))
                     </a>
                 </td>
                 <td>
-                    @(Html.DisplayFor(modelItem => item.DOCreating))
+                    @(item.DOCreating.LocalDateTime)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -57,12 +60,12 @@
     </tbody>
 </table>
 
-
 @section Scripts
 {
     <script>
         $(document).ready(()=>{
-            $(`.PathBreadcrumb>ol`).load(`@(Url.Action(nameof(POYA.Areas.FunFiles.Controllers.FunDirsController.GetPathBreadcrumb),new{ParentDirId}))`);
+            $.get(`@(Url.Action("GetPathBreadcrumb",new{ParentDirId}))`,(data)=>{$(`.PathBreadcrumb>ol`).append(data)});
+            $.get(`@(Url.Action("IndexFunYourFiles",new{ParentDirId}))`,(data)=>{$(`#FileAndDir`).append(data)});
         });
     </script>
 }
@@ -70,5 +73,10 @@
 @section Styles
 {
     <style>
+        .ItemName{
+            width: 20%;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
     </style>
 }

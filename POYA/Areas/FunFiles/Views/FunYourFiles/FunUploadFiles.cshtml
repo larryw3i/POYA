@@ -27,6 +27,9 @@
     </div>
 </div>
 
+
+<a class="btn btn-outline-info" id="BackEle">&laquo; @(Localizer["Back"])</a>
+
 @section Scripts
 {
     <script src="~/lib/js-sha256/build/sha256.min.js"></script>
@@ -307,6 +310,11 @@
         .ShowSelectedFile:hover{
             color: red;
             transform: scale(1.02);
+        }
+        
+        #BackEle{
+            position: fixed;
+            bottom: 8%;
         }
     </style>
 }
