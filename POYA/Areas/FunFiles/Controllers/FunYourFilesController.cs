@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -200,7 +201,9 @@ namespace POYA.Areas.FunFiles.Controllers
         public async Task<IActionResult> CompareSHA256(SHA256Compare sHA256Compare)
         {
             var _FunFileByteFileSHA256s=await _context.FunFileByte.Select(p=>p.FileSHA256).ToListAsync();
+
             var UserId_= _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            
             var _FunYourFiles=new List<FunYourFile>();
 
             sHA256Compare.FileSHA256s
@@ -235,7 +238,7 @@ namespace POYA.Areas.FunFiles.Controllers
                 await _context.FunYourFile.AddRangeAsync(_FunYourFiles);
                 await _context.SaveChangesAsync();   
             }
-            
+
             return Json( 
                 sHA256Compare.FileSHA256s.Where(
                     p=>
@@ -256,14 +259,71 @@ namespace POYA.Areas.FunFiles.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult FunUploadFiles(FunUploadFile funUploadFile)
+        [RequestSizeLimit(1024*1024*1024)]
+        public async Task<IActionResult> FunUploadFiles([FromForm]FunUploadFile funUploadFile)
         {
-            var ParentDirId=Guid.Parse(TempData["ParentDirId"].ToString());
-            return RedirectToAction(
-                nameof(POYA.Areas.FunFiles.Controllers.FunYourFilesController.Index),
-                "FunYourFiles",
-                new{ParentDirId}
-            );
+            Console.WriteLine(">>>>>>>"+JsonConvert.SerializeObject(funUploadFile));
+
+            if(funUploadFile.FunFiles.Count()<1)return NoContent();
+
+            var _InvalidPathChars=System.IO.Path.GetInvalidPathChars();
+
+            if(
+                funUploadFile.FunFiles
+                    .Select(p=>p.FileName)
+                    .Any(p=>
+                        _InvalidPathChars
+                        .Any(i=>p.Contains(i)))
+            )
+            {
+                return NoContent();
+            }
+
+            var UserId_= _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
+            var _FunFileBytes=new List<FunFileByte>();
+            var _FunYourFiles=new List<FunYourFile>();
+
+            funUploadFile.FunFiles.ForEach(p=>{
+
+                var _FileBytes=_funFilesHelper.GetFormFileBytes(p);
+
+                var _SHA256=SHA256.Create().ComputeHash(_FileBytes);
+
+                System.IO.File.WriteAllBytesAsync(_funFilesHelper.FunFilesRootPath(_hostingEnv)+"/"+BitConverter.ToString(_SHA256).Replace("-",""),_FileBytes)
+                    .GetAwaiter()
+                    .GetResult();
+
+                var _FunFileByte=new FunFileByte{
+                    DOUploading=DateTimeOffset.Now,
+                    FileSHA256=_SHA256,
+                    FirstUploaderId=UserId_,
+                    Id=Guid.NewGuid()
+                };
+
+                _FunFileBytes.Add(_FunFileByte);
+
+                _FunYourFiles.Add(
+
+                    new FunYourFile{
+
+                        DOUploading=DateTimeOffset.Now,
+                        Id=Guid.NewGuid(),
+                        FileByteId=_FunFileByte.Id,
+                        Name=System.IO.Path.GetFileName( p.FileName),
+                        ParentDirId=funUploadFile.ParentDirId,
+                        UserId=UserId_
+
+                    }
+                );
+            });
+
+            await _context.FunFileByte.AddRangeAsync(_FunFileBytes);
+            await _context.FunYourFile.AddRangeAsync(_FunYourFiles);
+            await _context.SaveChangesAsync();
+            
+
+            return Ok();
         }
 
         #endregion

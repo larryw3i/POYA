@@ -36,6 +36,8 @@
         var ParentDirId=`@(ParentDirId)`;
 
         var FileSHA256sArray=new Array();
+
+        var FileSizeArray=new Array();
         
 
         var FileInput_String=(Id)=>`<input class='FunFileInput' id='${Id}' type='file' hidden/>`;
@@ -51,48 +53,100 @@
             $(document).on(`change`,`#SelectedFiles>input`,(e)=>{  Input_Change(  $(e.target).attr('id')  );  })
 
             $(document).on(`click`,`#UploadFiles`,()=>{UploadFiles_Click();});
+
+            $(document).on(`click`,`#FunUploadFileAlert>.alert`,(e)=>{$(e.target).remove();});
         });
 
 
         function UploadFunFiles(){
+
+            if($(`.FunFileInput`).length<1){
+                $(`#SelectFiles,#UploadFiles`).removeClass("disabled");
+                return;
+            }
             
             let FunUploadFileFormData = new FormData();
             
 
-            FunUploadFileFormData.append(`@(nameof(Model.ParentDirId))`,ParentDirId);
-
             $(`.FunFileInput`).each((index,elem)=>{
+                let _id=$(elem).attr(`id`);
+                let _file=document.getElementById( _id ).files[0];
+                
+                FileSizeArray.push({"Id":_id,"Size":_file.size});
+
                 FunUploadFileFormData.append(
                     `@(nameof(Model.FunFiles))`,
-                    document.getElementById($(elem).attr(`id`)).files[0]
+                    _file
                 );
             });
 
+            FunUploadFileFormData.append(`@(nameof(Model.ParentDirId))`,ParentDirId);
+
+
             $.ajax({ 
                 url:`@(Url.Action("FunUploadFiles"))`,
-                data:{"funUploadFile":FunUploadFileFormData},
+                data:FunUploadFileFormData,
                 headers: {
                     "@(X_DOVEValues.CustomHeaderName)": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"
                 },
+                method:"POST",
                 processData: false,
                 contentType: false,
                 xhr: ()=> {
                     var xhr = $.ajaxSettings.xhr();
                     if (xhr.upload) {
-                        xhr.upload.addEventListener("progress", function (e) {
-                            var loaded = e.loaded;
-                            var tot = e.total;
-                            var per = Math.floor(100 * loaded / tot);
-                             $(`#FunUploadFileAlert`).append(`
+                        
+                        xhr.upload.addEventListener("progress",  (e)=> {
+                            
+                            var per = Math.floor(100 * (e.loaded /  e.total));
+                            
+                            $(`#FunUploadFileAlert`).html(`
                                 <div class="alert alert-info" role="alert">
-                                    [${per}%]\t@(Localizer["Upload"]) . . .
+                                    [${per}%]\t ${per==100?'@(Localizer["processing"]) . . .':'@(Localizer["Upload"]) . . .'}
                                 </div>
                             `);
+
                         }, false);
+
                         return xhr;
                     }
                 },
-               
+                success:()=>{
+
+                    $(`.FunFileInput`).each((index,elem)=>{
+                        $(`[file_input_id='${$(elem).attr('id')}']`).text(
+                            `${$(elem).val()} [Uploaded]`
+                        );
+                    });
+
+                    $(`.FunFileInput`).remove();
+
+                    $(`#FunUploadFileAlert`).html(``);
+
+                    $(`#FunUploadFileAlert`).append(`
+                        <div class="alert alert-success" role="alert">
+                            @(Localizer["All files is uploaded successfully"]) !
+                        </div>
+                    `);
+
+                    $(`#SelectFiles,#UploadFiles`).removeClass("disabled");
+
+                    setTimeout(()=>{
+                        $(`#FunUploadFileAlert`).append(``);
+                    },3500);
+
+                },
+                error:()=>{
+                    $(`#FunUploadFileAlert`).append(`
+                        <div class="alert alert-danger" role="alert">
+                            @(Localizer["an error has occurred"]), @(Localizer["the engineer is on his way"])
+                        </div>
+                    `);
+
+                    setTimeout(()=>{
+                        $(`#FunUploadFileAlert`).html(``);
+                    },2500);
+                }
             });
         }
 
@@ -110,13 +164,14 @@
 
                     if(data.length==0){
                         UploadFunFiles();
+                        return;
                     }
                     
                     $.each(data,(index,value)=>{
                         let _UploadedFileId=value;
 
                         $(`[file_input_id='${_UploadedFileId}']`).text(
-                            $(`#${_UploadedFileId}`).val()+` [\u26a1 OK]`
+                            $(`#${_UploadedFileId}`).val()+` [\u26a1 @(Localizer["Uploaded"])]`
                         );
 
                         $(`#${_UploadedFileId}`).remove();
@@ -163,7 +218,7 @@
                 return;
             }
             
-            $(`#SelectFiles`).addClass(`disabled`);
+            $(`#SelectFiles,#UploadFiles`).addClass("disabled");
 
             let _LastIndex=$(`.FunFileInput`).length-1;
 
@@ -251,7 +306,7 @@
         }
         .ShowSelectedFile:hover{
             color: red;
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
     </style>
 }

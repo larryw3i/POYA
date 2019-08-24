@@ -39,8 +39,6 @@ namespace POYA.Areas.XUserFile.Controllers
         private readonly ApplicationDbContext _context;
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<Program> _logger;
-        private readonly IAntiforgery _antiforgery;
         //  private readonly MimeHelper _mimeHelper;
         private readonly XUserFileHelper _xUserFileHelper;
         public LUserFilesController(

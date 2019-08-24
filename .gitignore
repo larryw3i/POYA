@@ -2,6 +2,7 @@
 # Directories 
 /.vs/
 /POYATEST/
+/POYA/Areas/FunFiles/Data/
 
 # Files
 *.csv#

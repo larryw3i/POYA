@@ -39,13 +39,10 @@ namespace POYA
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            //  X_DOVEValues.IsInitialized= Convert.ToBoolean(Configuration[nameof(X_DOVEValues.IsInitialized)]);
         }
 
-        #region 
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        #endregion
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -68,6 +65,7 @@ namespace POYA
                 options =>
                 {
                     options.SignIn.RequireConfirmedEmail = true;
+
                     // Password settings
                     options.Password.RequireDigit = true;
                     options.Password.RequireLowercase = true;
@@ -75,6 +73,7 @@ namespace POYA
                     options.Password.RequireUppercase = true;
                     options.Password.RequiredLength = 8;
                     options.Password.RequiredUniqueChars = 1;
+
                     // Lockout settings
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                     options.Lockout.MaxFailedAccessAttempts = 5;
@@ -96,11 +95,15 @@ namespace POYA
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddMvc()
-                .AddJsonOptions(options => { options.SerializerSettings.ContractResolver = new DefaultContractResolver(); })
+                .AddJsonOptions(
+                    options => { 
+                        options.SerializerSettings.ContractResolver = new DefaultContractResolver(); 
+                })
                 .AddDataAnnotationsLocalization(options =>
                 {
-                    options.DataAnnotationLocalizerProvider = (type, factory) =>
-                        factory.Create(typeof(Program));
+                    options.DataAnnotationLocalizerProvider = 
+                        (type, factory) =>
+                            factory.Create(typeof(Program));
                 })
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddSessionStateTempDataProvider()
@@ -108,15 +111,15 @@ namespace POYA
 
 
             services.Configure<RequestLocalizationOptions>(opts =>{
-               var supportedCultures = new List<CultureInfo>
-               {
-                        new CultureInfo("en-US"),
-                        new CultureInfo("zh-Hans")
-               };
-               opts.SupportedCultures = supportedCultures;
-               opts.SupportedUICultures = supportedCultures;
-               opts.RequestCultureProviders = new List<IRequestCultureProvider>{
-                       new X_DOVERequestCultureProvider()
+                var supportedCultures = new List<CultureInfo>
+                {
+                            new CultureInfo("en-US"),
+                            new CultureInfo("zh-Hans")
+                };
+                opts.SupportedCultures = supportedCultures;
+                opts.SupportedUICultures = supportedCultures;
+                opts.RequestCultureProviders =  new List<IRequestCultureProvider>{
+                    new X_DOVERequestCultureProvider()
                 };
            });
 
@@ -133,17 +136,18 @@ namespace POYA
             services.Configure<FormOptions>(options =>
             {
                 options.MultipartBodyLengthLimit = X_DOVEValues.MaxMultipartBodyLengthLimit;
+                options.BufferBodyLengthLimit=X_DOVEValues.MaxMultipartBodyLengthLimit;
             });
 
-            services.AddAntiforgery(options => options.HeaderName =X_DOVEValues.CustomHeaderName);
+            services.AddAntiforgery(options => 
+                options.HeaderName =X_DOVEValues.CustomHeaderName
+            );
 
         }
 
-        #region 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         //  , IServiceProvider serviceProvider
-        #endregion
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) 
         {
             if (env.IsDevelopment())

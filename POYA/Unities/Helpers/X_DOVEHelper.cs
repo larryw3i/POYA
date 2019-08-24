@@ -61,12 +61,16 @@ namespace POYA.Unities.Helpers
             var MarkLineReg = new Regex("(:line\\s?\\d+)");
             var _stackTrace = error.StackTrace;
             var MarkLineMatchs = MarkLineReg.Matches(_stackTrace);
+
             foreach (var i in MarkLineMatchs)
             {
-                _stackTrace = _stackTrace.Replace(oldValue: i.ToString(), newValue: $"<span style='color:red'><strong>{i}</strong></span>");
+                _stackTrace = _stackTrace.Replace(
+                    oldValue: i.ToString(), 
+                    newValue: $"<span style='color:red'><strong>{i}</strong></span>"
+                );
             }
             await new EmailSender(configuration).SendEmailAsync(
-                email: configuration["ErrorLogHandle:ReceiveLogEmailAddress"],//   (string)jsonObject[nameof(X_DOVEHelper)]["email"],
+                email: configuration["ErrorLogHandle:ReceiveLogEmailAddress"],
                 subject: "X_DOVE_ERROR",
                 htmlMessage:
             #region     HTMLMESSAGE
@@ -159,7 +163,7 @@ namespace POYA.Unities.Helpers
         /// <summary>
         /// The max multipart body length limit 
         /// </summary>
-        public static long MaxMultipartBodyLengthLimit = 200_000_000;
+        public static long MaxMultipartBodyLengthLimit = 1024*1024*1024;  // in byte
 
         /// <summary>
         /// "Administrator"

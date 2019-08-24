@@ -1,7 +1,9 @@
 
 using System;
+using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.StaticFiles;
 
 namespace POYA.Areas.FunFiles.Controllers
@@ -9,6 +11,17 @@ namespace POYA.Areas.FunFiles.Controllers
     public class FunFilesHelper{
         public string FunFilesRootPath(IHostingEnvironment hostingEnv) => hostingEnv.ContentRootPath + "/Areas/FunFiles/Data";
         public Guid RootDirId=Guid.Parse("a0869b67-9268-479f-a20f-4e3872afe6b9");
+
+        public byte[] GetFormFileBytes(IFormFile formFile){
+
+            var MemoryStream_ = new MemoryStream();
+            
+            formFile.CopyToAsync(MemoryStream_)
+                .GetAwaiter()
+                .GetResult();
+
+            return MemoryStream_.ToArray();
+        }
 
         /// <summary>
         /// REFERENCE   https://stackoverflow.com/questions/321370/how-can-i-convert-a-hex-string-to-a-byte-array
