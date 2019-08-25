@@ -41,7 +41,7 @@
     <tbody id="FileAndDir">
         @foreach (var item in Model) 
         {
-            <tr>
+            <tr item_id="@(item.Id)" class="FileAndDirTr">
                 <td class="ItemName">
                     <a asp-action="Index" asp-route-ParentDirId='@(item.Id)'>
                         @(Html.DisplayFor(modelItem => item.Name))
@@ -50,10 +50,8 @@
                 <td>
                     @(item.DOCreating.LocalDateTime)
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <td class="OperationEle">
+                    
                 </td>
             </tr>
         }
@@ -65,8 +63,82 @@
     <script>
         $(document).ready(()=>{
             $.get(`@(Url.Action("GetPathBreadcrumb",new{ParentDirId}))`,(data)=>{$(`.PathBreadcrumb>ol`).append(data)});
-            $.get(`@(Url.Action("IndexFunYourFiles",new{ParentDirId}))`,(data)=>{$(`#FileAndDir`).append(data)});
+            $.get(`@(Url.Action("IndexFunYourFiles",new{ParentDirId}))`,(data)=>{  $(`#FileAndDir`).append(data);   AddEleToOperationEle();  SetCollapseOffset();});
+            $(document).on(`click`,`.FileAndDirTr`,(e)=>{ FileAndDir_Tr_Click(e);   });
+            $(document).on(`blur`,`.OperationEle`,(e)=>{  $(e.target).click();  });
+            $(window).resize(()=>{Window_Resize();});
         });
+
+        function SetCollapseOffset(){
+            
+            $(`.FileAndDirTr`).each((index,elem)=>{
+                    
+                let item_id= $(elem).attr(`item_id`);
+                console.log(item_id);
+
+                let collapse_item=$(`#collapse${item_id}`);
+                
+                let collapse_trigger=$(`#collapse_trigger_${item_id}`);
+                
+                let collapse_trigger_top=Number(collapse_trigger.offset().top);
+                let collapse_trigger_height=Number(collapse_trigger.height());
+                let collapse_item_height=Number(collapse_item.height());
+                let window_height=Number($(window).height());
+
+                let collapse_trigger_left=Number(collapse_trigger.offset().left);
+                let collapse_trigger_width=Number(collapse_trigger.width());
+                let collapse_item_width=Number(collapse_item.width());
+                let window_width=Number($(window).width());
+
+                let _top=(collapse_trigger_top+collapse_item_height)>window_height?
+                        (collapse_trigger_top-collapse_item_height):(collapse_trigger_top+collapse_trigger_height);
+
+                let _left=(collapse_trigger_left+collapse_item_width)>window_width?
+                        (collapse_trigger_left-collapse_item_width):(collapse_trigger_left+collapse_trigger_width);
+                        
+                collapse_item.offset({ top:_top,  left:_left  });
+            });
+        }
+
+        function Window_Resize(){
+            SetCollapseOffset();
+
+        }
+
+        /**
+         * @@param {Event}e
+         */
+        function FileAndDir_Tr_Click(e){
+
+            var item_id= $(e.target).parent('tr').attr(`item_id`);
+            console.log(item_id);
+            $(`.FileAndDirCollapse`).collapse(`hide`);
+
+            $(`#collapse${item_id}`).collapse('toggle');
+        }
+
+        function AddEleToOperationEle(){
+            
+            $(`.OperationEle`).each((index,elem)=>{
+                var _item_id=$(elem).parent().attr(`item_id`);
+                $(elem).append(`
+                    <a data-toggle="collapse" href="#collapse${_item_id}" id="collapse_trigger_${_item_id}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        ...
+                    </a>
+                    <div class="collapse FileAndDirCollapse" id="collapse${_item_id}">
+                        <div class="card card-body">
+                            <a  item_id="${_item_id}" class='SubOperationEle Copy'>@(Localizer["Copy"])</a>  
+                            <a  item_id="${_item_id}" class='SubOperationEle Rename'>@(Localizer["Rename"])</a>  
+                            <a  item_id="${_item_id}" class='SubOperationEle Move'>@(Localizer["Move"])</a>   
+                            <a  item_id="${_item_id}" class='SubOperationEle Details'>@(Localizer["Details"])</a>   
+                            <a  item_id="${_item_id}" class='SubOperationEle Delete'>@(Localizer["Delete"])</a> 
+                        </div>
+                    </div>
+                `);
+            });
+            
+        }
+
     </script>
 }
 
@@ -78,5 +150,24 @@
             word-wrap: break-word;
             word-break: break-all;
         }
+
+        .FileAndDirCollapse{
+            width: auto;
+            position:absolute;
+        }
+
+        .FileAndDirCollapse a{
+            margin: 4px;
+            font-size: 20px;
+            border-radius: 4px;
+            text-align: center;
+            width: 100%;
+            cursor: pointer;
+        }
+        .FileAndDirCollapse a:hover{
+            background-color:rgba(221,35,206,0.4);
+            transform: scale(1.05);
+        }
+
     </style>
 }

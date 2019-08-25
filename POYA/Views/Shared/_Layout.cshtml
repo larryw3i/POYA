@@ -137,12 +137,14 @@
                                 }
                             </div>
                         </li>
+
                         <li class="nav-item">
                             <div class="nav-link ">
                                 <select id="Theme" name="Theme" asp-items="ThemeSelectListItems" style="border:none">
                                 </select>
                             </div>
                         </li>
+
                     </ul>
                 </div>
             </div>
@@ -158,15 +160,25 @@
 
     <footer class="border-top footer text-muted text-wrap">
         <div class="container" >
+
             &copy; 2019 - @(Localizer["WSUDisk"]) 
-            - <select id="_Language" name="_Language"  asp-for='@(requestCulture.RequestCulture.UICulture.Name)' asp-items="cultureItems" style="border:none">
+
+            - <select 
+                id="_Language" 
+                name="_Language"  
+                asp-for='@(requestCulture.RequestCulture.UICulture.Name)' 
+                asp-items="cultureItems" 
+                style="border:none">
             </select> 
+
             - <a asp-area="" asp-controller="Home" asp-action="Privacy">
                 @(Localizer["Privacy"])
             </a> 
+
             - <a href="#">
                 @(Localizer["More"])
             </a>
+
         </div>
     </footer>
 

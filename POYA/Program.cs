@@ -12,11 +12,10 @@ namespace POYA
 {
     public class Program
     {
-        #region 
+        
         /**
          * DOT1     FINISH ONE THING WELL BEFORE YOU DO ANOTHER
          */
-        #endregion
 
         public static void Main(string[] args)
         {

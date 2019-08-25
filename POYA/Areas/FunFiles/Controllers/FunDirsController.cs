@@ -109,6 +109,18 @@ namespace POYA.Areas.FunFiles.Controllers
         {
             if (ModelState.IsValid)
             {
+                var _FunDirNameLength=funDir?.Name?.Length??0;
+
+                if(_FunDirNameLength<1||_FunDirNameLength>100){
+
+                    ModelState.AddModelError(
+                        nameof(funDir.Name),
+                        _localizer["The length of directory name must be less than 100 and more than 1"]);
+                        
+                    return View();
+
+                }
+
                 var User_=await _userManager.GetUserAsync(User);
 
                 funDir.Id = Guid.NewGuid();
