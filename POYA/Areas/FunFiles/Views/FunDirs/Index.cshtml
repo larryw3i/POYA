@@ -63,58 +63,46 @@
     <script>
         $(document).ready(()=>{
             $.get(`@(Url.Action("GetPathBreadcrumb",new{ParentDirId}))`,(data)=>{$(`.PathBreadcrumb>ol`).append(data)});
-            $.get(`@(Url.Action("IndexFunYourFiles",new{ParentDirId}))`,(data)=>{  $(`#FileAndDir`).append(data);   AddEleToOperationEle();  SetCollapseOffset();});
+            $.get(`@(Url.Action("IndexFunYourFiles",new{ParentDirId}))`,(data)=>{  $(`#FileAndDir`).append(data);   AddEleToOperationEle();  });
             $(document).on(`click`,`.FileAndDirTr`,(e)=>{ FileAndDir_Tr_Click(e);   });
             $(document).on(`blur`,`.OperationEle`,(e)=>{  $(e.target).click();  });
-            $(window).resize(()=>{Window_Resize();});
         });
 
-        function SetCollapseOffset(){
-            
-            $(`.FileAndDirTr`).each((index,elem)=>{
-                    
-                let item_id= $(elem).attr(`item_id`);
-                console.log(item_id);
-
-                let collapse_item=$(`#collapse${item_id}`);
-                
-                let collapse_trigger=$(`#collapse_trigger_${item_id}`);
-                
-                let collapse_trigger_top=Number(collapse_trigger.offset().top);
-                let collapse_trigger_height=Number(collapse_trigger.height());
-                let collapse_item_height=Number(collapse_item.height());
-                let window_height=Number($(window).height());
-
-                let collapse_trigger_left=Number(collapse_trigger.offset().left);
-                let collapse_trigger_width=Number(collapse_trigger.width());
-                let collapse_item_width=Number(collapse_item.width());
-                let window_width=Number($(window).width());
-
-                let _top=(collapse_trigger_top+collapse_item_height)>window_height?
-                        (collapse_trigger_top-collapse_item_height):(collapse_trigger_top+collapse_trigger_height);
-
-                let _left=(collapse_trigger_left+collapse_item_width)>window_width?
-                        (collapse_trigger_left-collapse_item_width):(collapse_trigger_left+collapse_trigger_width);
-                        
-                collapse_item.offset({ top:_top,  left:_left  });
-            });
-        }
-
-        function Window_Resize(){
-            SetCollapseOffset();
-
-        }
 
         /**
          * @@param {Event}e
          */
         function FileAndDir_Tr_Click(e){
 
-            var item_id= $(e.target).parent('tr').attr(`item_id`);
-            console.log(item_id);
-            $(`.FileAndDirCollapse`).collapse(`hide`);
+            var item_id= $(e.target).parents('tr').attr(`item_id`);
 
-            $(`#collapse${item_id}`).collapse('toggle');
+            $(`.FileAndDirCollapse`).collapse(`hide`);
+            
+
+            let collapse_item=$(`#collapse${item_id}`);
+            
+            let collapse_trigger=$(`#collapse_trigger_${item_id}`);
+            
+            let collapse_trigger_top=Number(collapse_trigger.offset().top);
+            let collapse_trigger_height=Number(collapse_trigger.height());
+            let collapse_item_height=Number(collapse_item.height());
+            let window_height=Number($(window).height());
+
+            let collapse_trigger_left=Number(collapse_trigger.offset().left);
+            let collapse_trigger_width=Number(collapse_trigger.width());
+            let collapse_item_width=Number(collapse_item.width());
+            let window_width=Number($(window).width());
+
+            let _top=(collapse_trigger_top+collapse_item_height)>window_height?
+                    (collapse_trigger_top-collapse_item_height):(collapse_trigger_top+collapse_trigger_height);
+
+            let _left=(collapse_trigger_left+collapse_item_width)>window_width?
+                    (collapse_trigger_left-collapse_item_width):(collapse_trigger_left+collapse_trigger_width);
+                    
+            collapse_item.collapse('toggle');
+
+            collapse_item.offset({ top:_top,  left:_left  });
+
         }
 
         function AddEleToOperationEle(){
@@ -158,7 +146,7 @@
 
         .FileAndDirCollapse a{
             margin: 4px;
-            font-size: 20px;
+            font-size: 18px;
             border-radius: 4px;
             text-align: center;
             width: 100%;
