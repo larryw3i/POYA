@@ -63,10 +63,40 @@
     <script>
         $(document).ready(()=>{
             $.get(`@(Url.Action("GetPathBreadcrumb",new{ParentDirId}))`,(data)=>{$(`.PathBreadcrumb>ol`).append(data)});
+
             $.get(`@(Url.Action("IndexFunYourFiles",new{ParentDirId}))`,(data)=>{  $(`#FileAndDir`).append(data);   AddEleToOperationEle();  });
+
             $(document).on(`click`,`.FileAndDirTr`,(e)=>{ FileAndDir_Tr_Click(e);   });
-            $(document).on(`blur`,`.OperationEle`,(e)=>{  $(e.target).click();  });
+
+            $(document).on(`contextmenu`,`.FileAndDirTr`,(e)=>{ FileAndDir_Tr_Click(e); return false;  });
+
+            $(document).on(`click`,`.SubOperationEle`,(e)=>{FileAndDirOperation(e);});
+
         });
+
+        function CopyAndMove(IsCopy=true){
+
+        }
+
+        /**
+         * @@param {Event}e
+         */
+        function FileAndDirOperation(e){
+            let _target=$(e.target);
+            let item_id=_target.attr(`item_id`);
+            
+            if(_target.hasClass(`Copy`)){
+
+            }else if(_target.has(`Move`)){
+
+            }else if(_target.hasClass(`Details`)){
+
+            }else if(_target.hasClass(`Delete`)){
+
+            }else{
+                //  rename
+            }
+        }
 
 
         /**
@@ -76,32 +106,46 @@
 
             var item_id= $(e.target).parents('tr').attr(`item_id`);
 
-            $(`.FileAndDirCollapse`).collapse(`hide`);
+
             
+            let OperationCard=$(`#card_${item_id}`);
 
-            let collapse_item=$(`#collapse${item_id}`);
-            
-            let collapse_trigger=$(`#collapse_trigger_${item_id}`);
-            
-            let collapse_trigger_top=Number(collapse_trigger.offset().top);
-            let collapse_trigger_height=Number(collapse_trigger.height());
-            let collapse_item_height=Number(collapse_item.height());
-            let window_height=Number($(window).height());
+            if(OperationCard.is(":visible")){
 
-            let collapse_trigger_left=Number(collapse_trigger.offset().left);
-            let collapse_trigger_width=Number(collapse_trigger.width());
-            let collapse_item_width=Number(collapse_item.width());
-            let window_width=Number($(window).width());
+                OperationCard.hide();
 
-            let _top=(collapse_trigger_top+collapse_item_height)>window_height?
-                    (collapse_trigger_top-collapse_item_height):(collapse_trigger_top+collapse_trigger_height);
+            }else{
 
-            let _left=(collapse_trigger_left+collapse_item_width)>window_width?
-                    (collapse_trigger_left-collapse_item_width):(collapse_trigger_left+collapse_trigger_width);
+                $(`.item_operation_card`).hide();
                     
-            collapse_item.collapse('toggle');
+                OperationCard.show();
 
-            collapse_item.offset({ top:_top,  left:_left  });
+                let ItemOperationSpan=$(`#item_operation_span_${item_id}`);
+                
+                let ItemOperationSpan_top=Number(ItemOperationSpan.offset().top);
+                let ItemOperationSpan_height=Number(ItemOperationSpan.height());
+
+                let OperationCard_height=Number(OperationCard.height());
+
+                let window_height=Number($(window).height());
+
+                let ItemOperationSpan_left=Number(ItemOperationSpan.offset().left);
+                let ItemOperationSpan_width=Number(ItemOperationSpan.width());
+
+                let OperationCard_width=Number(OperationCard.width());
+
+                let window_width=Number($(window).width());
+
+                let _top=(ItemOperationSpan_top+OperationCard_height)>window_height?
+                        (ItemOperationSpan_top-OperationCard_height):(ItemOperationSpan_top+ItemOperationSpan_height);
+
+                let _left=(ItemOperationSpan_left+OperationCard_width)>window_width?
+                        (ItemOperationSpan_left-OperationCard_width):(ItemOperationSpan_left+ItemOperationSpan_width);
+                    
+                OperationCard.offset({ top:_top,  left:_left  });
+
+            }
+            
 
         }
 
@@ -110,17 +154,15 @@
             $(`.OperationEle`).each((index,elem)=>{
                 var _item_id=$(elem).parent().attr(`item_id`);
                 $(elem).append(`
-                    <a data-toggle="collapse" href="#collapse${_item_id}" id="collapse_trigger_${_item_id}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <span id="item_operation_span_${_item_id}" >
                         ...
-                    </a>
-                    <div class="collapse FileAndDirCollapse" id="collapse${_item_id}">
-                        <div class="card card-body">
-                            <a  item_id="${_item_id}" class='SubOperationEle Copy'>@(Localizer["Copy"])</a>  
-                            <a  item_id="${_item_id}" class='SubOperationEle Rename'>@(Localizer["Rename"])</a>  
-                            <a  item_id="${_item_id}" class='SubOperationEle Move'>@(Localizer["Move"])</a>   
-                            <a  item_id="${_item_id}" class='SubOperationEle Details'>@(Localizer["Details"])</a>   
-                            <a  item_id="${_item_id}" class='SubOperationEle Delete'>@(Localizer["Delete"])</a> 
-                        </div>
+                    </span>
+                    <div class="card card-body item_operation_card"  id="card_${_item_id}">
+                        <div  item_id="${_item_id}" class='SubOperationEle Copy'>@(Localizer["Copy"])</div>  
+                        <div  item_id="${_item_id}" class='SubOperationEle Rename'>@(Localizer["Rename"])</div> 
+                        <div  item_id="${_item_id}" class='SubOperationEle Move'>@(Localizer["Move"])</div>   
+                        <div  item_id="${_item_id}" class='SubOperationEle Details'>@(Localizer["Details"])</div>   
+                        <div  item_id="${_item_id}" class='SubOperationEle Delete'>@(Localizer["Delete"])</div> 
                     </div>
                 `);
             });
@@ -139,23 +181,25 @@
             word-break: break-all;
         }
 
-        .FileAndDirCollapse{
-            width: auto;
-            position:absolute;
+        .item_operation_card{
+            display: none;
+            position: absolute;
+            text-align: center;
+            color: blue;
+            font-size: 18px;
         }
 
-        .FileAndDirCollapse a{
-            margin: 4px;
-            font-size: 18px;
-            border-radius: 4px;
-            text-align: center;
-            width: 100%;
+        .item_operation_card div{
+            border-radius: 6px;
+            padding: 2px;
             cursor: pointer;
+            margin: 5px;
         }
-        .FileAndDirCollapse a:hover{
-            background-color:rgba(221,35,206,0.4);
-            transform: scale(1.05);
+        .item_operation_card div:hover{
+            background-color: rgba(238,73,151,0.5);
+            transform: scale(1.08);
         }
+        
 
     </style>
 }

@@ -8,7 +8,7 @@
 @foreach (var item in Model) 
 {
     <tr  item_id="@(item.Id)"  class="FileAndDirTr">
-        <td>
+        <td class="ItemName">
             <a asp-action="Details" asp-route-Id='@(item.Id)' asp-controller="FunYourFiles">
                 @(Html.DisplayFor(modelItem => item.Name))
                 <span style="color: red;font-size: 70%">@(Localizer["file"])</span>
