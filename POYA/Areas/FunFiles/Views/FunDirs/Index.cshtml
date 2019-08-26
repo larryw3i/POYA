@@ -119,39 +119,45 @@
 
             $.contextMenu({
                 selector: '#FileAndDir tr.file',
-                callback: function(key, options) {
-                    var m = "clicked: " + key;
-                    window.console && console.log(m) || alert(m); 
-                },
                 items: {
-                    "edit": {name: "Edit"},
-                    "cut": {name: "Cut"},
+                    'Download': {
+                        name: '@(Localizer["Download"])',
+                        callback: (itemKey, opt, e)=> { 
+                            window.location.href=`@(Url.Action("DownloadFunFile","FunYourFiles"))/`
+                                +opt.$trigger.attr('item_id'); 
+                        }    
+                    },
+                    "Rename": {
+                        name: '@(Localizer["Rename"])',
+                        callback:(itemKey, opt, e)=>{
+                            window.location.href=`@(Url.Action("Edit","FunYourFiles"))/`
+                                +opt.$trigger.attr('item_id');
+                        },
+                    },
                     "copy": {name: "Copy"},
-                    "delete": {name: "Delete", icon: "delete"},
+                    "delete": {name: "Delete",  },
                     "sep1": "---------",
-                    "quit": {name: "Quit", icon: function(){
-                        return 'context-menu-icon context-menu-icon-quit';
-                    }}
+                    "quit": {name: "Quit",  }
                 }
             });  
             
             $.contextMenu({
                 selector: '#FileAndDir tr.dir',
-                callback: function(key, options) {
-                    var m = "clicked: " + key;
-                    window.console && console.log(m) || alert(m); 
-                },
                 items: {
-                    "edit": {name: "Edit", icon: "edit"},
-                    "cut": {name: "Cut", icon: "cut"},
-                    copy: {name: "Copy", icon: "copy"},
-                    "paste": {name: "Paste", icon: "paste"},
-                    "delete": {name: "Delete", icon: "delete"},
+                    "Rename": {
+                        name: '@(Localizer["Rename"])',
+                        callback:(itemKey, opt, e)=>{
+                            window.location.href=`@(Url.Action("Edit","FunDirs"))/`
+                                +opt.$trigger.attr('item_id');
+                        },
+                    },
+                    "cut": {name: "Cut",  },
+                    "copy": {name: "Copy",  },
+                    "paste": {name: "Paste",  },
+                    "delete": {name: "Delete",  },
                     "sep1": "---------",
-                    "quit": {name: "Quit", icon: function(){
-                        return 'context-menu-icon context-menu-icon-quit';
-                    }}
-                }
+                    "quit": {name: "Quit", }
+                },
             });
           
         }

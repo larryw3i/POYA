@@ -14,40 +14,18 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="FileByteId" class="control-label"></label>
-                <input asp-for="FileByteId" class="form-control" />
-                <span asp-validation-for="FileByteId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ParentDirId" class="control-label"></label>
-                <input asp-for="ParentDirId" class="form-control" />
-                <span asp-validation-for="ParentDirId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            <input asp-for="ParentDirId" type="hidden"/>
+            <div class="form-group"  title='@(Localizer["Modify extension prudently"]) !'>
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DOUploading" class="control-label"></label>
-                <input asp-for="DOUploading" class="form-control" />
-                <span asp-validation-for="DOUploading" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <a class="btn btn-outline-info" id="BackEle">&laquo; @(Localizer["Back"])</a>   
+                <input type="submit" value='@(Localizer["Save"])' class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

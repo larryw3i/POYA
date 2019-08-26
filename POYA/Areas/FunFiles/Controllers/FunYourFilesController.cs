@@ -117,20 +117,27 @@ namespace POYA.Areas.FunFiles.Controllers
                 return NotFound();
             }
 
-            var funYourFile = await _context.FunYourFile.FindAsync(id);
-            if (funYourFile == null)
+            var UserId_= _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var _FunYourFile=await _context.FunYourFile.FirstOrDefaultAsync(p=>p.UserId==UserId_ && p.Id==id);
+
+            if (_FunYourFile == null)
             {
                 return NotFound();
             }
-            return View(funYourFile);
+            return View(_FunYourFile);
         }
 
         // POST: FunFiles/FunYourFiles/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Rename only
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,FileByteId,ParentDirId,UserId,Name,DOUploading")] FunYourFile funYourFile)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,ParentDirId")] FunYourFile funYourFile)
         {
             if (id != funYourFile.Id)
             {
@@ -141,7 +148,16 @@ namespace POYA.Areas.FunFiles.Controllers
             {
                 try
                 {
-                    _context.Update(funYourFile);
+                    var UserId_= _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+                    var _FunYourFile=await _context.FunYourFile.FirstOrDefaultAsync(p=>p.UserId==UserId_ && p.Id==id);
+
+                    if(_FunYourFile==null)
+                    {
+                        return NotFound();
+                    }
+                    
+                    _FunYourFile.Name=funYourFile.Name;
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -155,7 +171,7 @@ namespace POYA.Areas.FunFiles.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),"FunDirs",new{funYourFile.ParentDirId});
             }
             return View(funYourFile);
         }

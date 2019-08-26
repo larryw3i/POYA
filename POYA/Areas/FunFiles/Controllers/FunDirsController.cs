@@ -68,7 +68,7 @@ namespace POYA.Areas.FunFiles.Controllers
                 .ToListAsync();
             
             var _FunYourFiles=await _context.FunYourFile
-                .Where(p=>p.UserId==User_.Id && p.ParentDirId==ParentDirId)
+                .Where(p=>p.UserId==User_.Id && p.ParentDirId==_ParentDirId)
                 .ToListAsync();
 
             _FunYourFiles.ForEach(
@@ -77,11 +77,16 @@ namespace POYA.Areas.FunFiles.Controllers
                         _funFilesHelper.OptimizeFileSize(
                             new System.IO.FileInfo(
                                     _funFilesHelper.FunFilesRootPath(_hostingEnv)+'/'+
-                                        _context.FunFileByte.Where(f=>f.Id==o.FileByteId).Select(p=>p.FileSHA256HexString).FirstOrDefaultAsync().GetAwaiter().GetResult()
-                            ).Length
+                                        _context.FunFileByte.Where(f=>f.Id==o.FileByteId).Select(p=>p.FileSHA256HexString)
+                                            .FirstOrDefaultAsync()
+                                            .GetAwaiter()
+                                            .GetResult()
+                            )
+                            .Length
                         );
                 }
             );
+
             ViewData[nameof(FunYourFile)+"s"]= _FunYourFiles;
 
             ViewData[nameof(ParentDirId)]=_ParentDirId;
