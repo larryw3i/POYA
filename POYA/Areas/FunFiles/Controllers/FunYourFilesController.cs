@@ -200,7 +200,7 @@ namespace POYA.Areas.FunFiles.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CompareSHA256(SHA256Compare sHA256Compare)
         {
-            var _FunFileByteFileSHA256s=await _context.FunFileByte.Select(p=>p.FileSHA256).ToListAsync();
+            var _FunFileByteFileSHA256s=await _context.FunFileByte.Select(p=>p.FileSHA256HexString).ToListAsync();
 
             var UserId_= _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             
@@ -210,7 +210,7 @@ namespace POYA.Areas.FunFiles.Controllers
                 .Select(
                     p=>new{
                         p.Name,
-                        SHA256=_funFilesHelper.ConvertSHA256StringToBytes(p.SHA256)})
+                        SHA256=p.SHA256HexString})
                 .Where(
                     p=>_FunFileByteFileSHA256s.Contains(p.SHA256))
                 .ToList()
@@ -225,7 +225,7 @@ namespace POYA.Areas.FunFiles.Controllers
                                 ParentDirId=sHA256Compare.ParentDirId,
 
                                 FileByteId=_context.FunFileByte
-                                    .Where(o=>o.FileSHA256==p.SHA256)
+                                    .Where(o=>o.FileSHA256HexString==p.SHA256)
                                     .Select(m=>m.Id)
                                     .FirstOrDefaultAsync()
                                     .GetAwaiter()
@@ -242,9 +242,7 @@ namespace POYA.Areas.FunFiles.Controllers
             return Json( 
                 sHA256Compare.FileSHA256s.Where(
                     p=>
-                        _FunFileByteFileSHA256s.Contains(
-                            _funFilesHelper.ConvertSHA256StringToBytes(p.SHA256)
-                        )
+                        _FunFileByteFileSHA256s.Contains(p.SHA256HexString)
                 ).Select(p=>p.Id).ToArray()
             );
         }
@@ -262,7 +260,7 @@ namespace POYA.Areas.FunFiles.Controllers
         [RequestSizeLimit(1024*1024*1024)]
         public async Task<IActionResult> FunUploadFiles([FromForm]FunUploadFile funUploadFile)
         {
-            Console.WriteLine(">>>>>>>"+JsonConvert.SerializeObject(funUploadFile));
+            
 
             if(funUploadFile.FunFiles.Count()<1)return NoContent();
 
@@ -289,14 +287,16 @@ namespace POYA.Areas.FunFiles.Controllers
                 var _FileBytes=_funFilesHelper.GetFormFileBytes(p);
 
                 var _SHA256=SHA256.Create().ComputeHash(_FileBytes);
+                var _SHA256HexString=_funFilesHelper.SHA256BytesToHexString(_SHA256);
 
-                System.IO.File.WriteAllBytesAsync(_funFilesHelper.FunFilesRootPath(_hostingEnv)+"/"+BitConverter.ToString(_SHA256).Replace("-",""),_FileBytes)
+                System.IO.File.WriteAllBytesAsync(
+                        _funFilesHelper.FunFilesRootPath(_hostingEnv)+"/"+_SHA256HexString,_FileBytes)
                     .GetAwaiter()
                     .GetResult();
 
                 var _FunFileByte=new FunFileByte{
                     DOUploading=DateTimeOffset.Now,
-                    FileSHA256=_SHA256,
+                    FileSHA256HexString=_SHA256HexString,
                     FirstUploaderId=UserId_,
                     Id=Guid.NewGuid()
                 };

@@ -4,8 +4,32 @@
 @{
     ViewData["Title"] =Localizer[ "Folder"]+" & "+Localizer["Files"];
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var FunYourFiles=ViewData[nameof(FunYourFile)+"s"] as List<FunYourFile>;
+        
+    var FunYourFilesUnionFunDirs=Model
+        .Select(
+            p=>new{
+                DOXXX=p.DOCreating, 
+                Name=p.Name, 
+                Id=p.Id, 
+                Size=string.Empty,
+                IsFile=false})
+        .Union(
+            FunYourFiles.Select(
+                p=>new{
+                    DOXXX=p.DOUploading, 
+                    Name=p.Name, 
+                    Id=p.Id, 
+                    Size=p.FileSize,
+                    IsFile=true,
+                }
+            )
+        );
     
     var ParentDirId=Guid.Parse(ViewData["ParentDirId"].ToString());
+
+    var FunDIrPath=ViewData["FunDIrPath"] as List<FunDir>;
 }
 
 <h1>@(ViewData["Title"])</h1>
@@ -17,10 +41,13 @@
     </a>
 
     <nav aria-label="breadcrumb" class="PathBreadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                / <a href='@(Url.Action("Index",new{ParentDirId=new FunFilesHelper().RootDirId}))'>@(Localizer["root"])</a>
-            </li>
+        <ol class="breadcrumb">/ &nbsp;
+            @foreach (var item in FunDIrPath)
+            {
+                <li class="breadcrumb-item">
+                    <a href='@(Url.Action("Index",new{ParentDirId=item.Id}))'>@(item.Name)</a>
+                </li> 
+            }
         </ol>
     </nav>
 </p>
@@ -33,25 +60,44 @@
                 @(Html.DisplayNameFor(model => model.Name))
             </th>
             <th>
+                @(Localizer["Size"])
+            </th>
+            <th>
                 @(Html.DisplayNameFor(model => model.DOCreating))
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody id="FileAndDir">
-        @foreach (var item in Model) 
+        @foreach (var item in FunYourFilesUnionFunDirs) 
         {
             <tr item_id="@(item.Id)" class="FileAndDirTr">
                 <td class="ItemName">
                     <a asp-action="Index" asp-route-ParentDirId='@(item.Id)'>
                         @(Html.DisplayFor(modelItem => item.Name))
+                        @if(item.IsFile)
+                        {
+                            <span style="color: red;font-size: 70%">@(Localizer["file"])</span>
+                        }
                     </a>
                 </td>
                 <td>
-                    @(item.DOCreating.LocalDateTime)
+                    @(item.Size)
+                </td>
+                <td>
+                    @(item.DOXXX.LocalDateTime)
                 </td>
                 <td class="OperationEle">
-                    
+                    <button id="item_operation_button_@(item.Id)"  item_id='@(item.Id)' class='item_operation_button '>
+                        ...
+                    </button>
+                    <div class="card card-body item_operation_card"  id="card_@(item.Id)">
+                        <div  item_id='@(item.Id)' class='SubOperationEle Copy'>@(Localizer["Copy"])</div>  
+                        <div  item_id='@(item.Id)' class='SubOperationEle Rename'>@(Localizer["Rename"])</div> 
+                        <div  item_id='@(item.Id)' class='SubOperationEle Move'>@(Localizer["Move"])</div>   
+                        <div  item_id='@(item.Id)' class='SubOperationEle Details'>@(Localizer["Details"])</div>   
+                        <div  item_id='@(item.Id)' class='SubOperationEle Delete'>@(Localizer["Delete"])</div> 
+                    </div>
                 </td>
             </tr>
         }
@@ -61,53 +107,52 @@
 @section Scripts
 {
     <script>
+
         $(document).ready(()=>{
-            $.get(`@(Url.Action("GetPathBreadcrumb",new{ParentDirId}))`,(data)=>{$(`.PathBreadcrumb>ol`).append(data)});
 
-            $.get(`@(Url.Action("IndexFunYourFiles",new{ParentDirId}))`,(data)=>{  $(`#FileAndDir`).append(data);   AddEleToOperationEle();  });
 
-            $(document).on(`click`,`.FileAndDirTr`,(e)=>{ FileAndDir_Tr_Click(e);   });
+            $(document).on(`click`,`.item_operation_button`,(e)=>{ ItemOperationButtonClick(e);   });
 
-            $(document).on(`contextmenu`,`.FileAndDirTr`,(e)=>{ FileAndDir_Tr_Click(e); return false;  });
-
-            $(document).on(`click`,`.SubOperationEle`,(e)=>{FileAndDirOperation(e);});
+            $(document).on(`blur`,`.item_operation_button`,()=>{$(`.item_operation_card`).hide();});
+            
 
         });
 
-        function CopyAndMove(IsCopy=true){
-
-        }
 
         /**
          * @@param {Event}e
          */
-        function FileAndDirOperation(e){
-            let _target=$(e.target);
-            let item_id=_target.attr(`item_id`);
+        function ShowOperationCard(e){
             
-            if(_target.hasClass(`Copy`)){
+            var item_id= $(e.target).parents('tr').attr(`item_id`);
 
-            }else if(_target.has(`Move`)){
+            let OperationCard=$(`#card_${item_id}`);
 
-            }else if(_target.hasClass(`Details`)){
+            if(OperationCard.is(":visible")){
 
-            }else if(_target.hasClass(`Delete`)){
+                OperationCard.hide();
 
             }else{
-                //  rename
+
+                $(`.item_operation_card`).hide();
+
+                OperationCard.show();
+                
+                OperationCard.offset({ top:e.pageY,  left:e.pageX  });
+                    
             }
         }
 
 
+
+
         /**
          * @@param {Event}e
          */
-        function FileAndDir_Tr_Click(e){
+        function ItemOperationButtonClick(e){
 
-            var item_id= $(e.target).parents('tr').attr(`item_id`);
+            var item_id= $(e.target).attr(`item_id`);
 
-
-            
             let OperationCard=$(`#card_${item_id}`);
 
             if(OperationCard.is(":visible")){
@@ -120,53 +165,28 @@
                     
                 OperationCard.show();
 
-                let ItemOperationSpan=$(`#item_operation_span_${item_id}`);
-                
-                let ItemOperationSpan_top=Number(ItemOperationSpan.offset().top);
-                let ItemOperationSpan_height=Number(ItemOperationSpan.height());
+                let ItemOperationButton=$(`#item_operation_button_${item_id}`),
+                    ItemOperationButton_top=Number(ItemOperationButton.offset().top),
+                    ItemOperationButton_height=Number(ItemOperationButton.height()),
+                    OperationCard_height=Number(OperationCard.height()),
+                    window_height=Number($(window).height()),
 
-                let OperationCard_height=Number(OperationCard.height());
-
-                let window_height=Number($(window).height());
-
-                let ItemOperationSpan_left=Number(ItemOperationSpan.offset().left);
-                let ItemOperationSpan_width=Number(ItemOperationSpan.width());
-
-                let OperationCard_width=Number(OperationCard.width());
-
-                let window_width=Number($(window).width());
-
-                let _top=(ItemOperationSpan_top+OperationCard_height)>window_height?
-                        (ItemOperationSpan_top-OperationCard_height):(ItemOperationSpan_top+ItemOperationSpan_height);
-
-                let _left=(ItemOperationSpan_left+OperationCard_width)>window_width?
-                        (ItemOperationSpan_left-OperationCard_width):(ItemOperationSpan_left+ItemOperationSpan_width);
+                    ItemOperationButton_left=Number(ItemOperationButton.offset().left),
+                    ItemOperationButton_width=Number(ItemOperationButton.width())*2,
+                    OperationCard_width=Number(OperationCard.width()),
+                    window_width=Number($(window).width()),
                     
+                    _top=(ItemOperationButton_top+ItemOperationButton_height +OperationCard_height)>window_height?
+                        (ItemOperationButton_top-OperationCard_height):(ItemOperationButton_top+ItemOperationButton_height),
+
+                    _left=(ItemOperationButton_left+ItemOperationButton_width+OperationCard_width)>window_width?
+                        (ItemOperationButton_left-OperationCard_width-ItemOperationButton_width):(ItemOperationButton_left+ItemOperationButton_width*1.5);
+
+                
+                
                 OperationCard.offset({ top:_top,  left:_left  });
 
             }
-            
-
-        }
-
-        function AddEleToOperationEle(){
-            
-            $(`.OperationEle`).each((index,elem)=>{
-                var _item_id=$(elem).parent().attr(`item_id`);
-                $(elem).append(`
-                    <span id="item_operation_span_${_item_id}" >
-                        ...
-                    </span>
-                    <div class="card card-body item_operation_card"  id="card_${_item_id}">
-                        <div  item_id="${_item_id}" class='SubOperationEle Copy'>@(Localizer["Copy"])</div>  
-                        <div  item_id="${_item_id}" class='SubOperationEle Rename'>@(Localizer["Rename"])</div> 
-                        <div  item_id="${_item_id}" class='SubOperationEle Move'>@(Localizer["Move"])</div>   
-                        <div  item_id="${_item_id}" class='SubOperationEle Details'>@(Localizer["Details"])</div>   
-                        <div  item_id="${_item_id}" class='SubOperationEle Delete'>@(Localizer["Delete"])</div> 
-                    </div>
-                `);
-            });
-            
         }
 
     </script>
@@ -175,6 +195,11 @@
 @section Styles
 {
     <style>
+
+        .item_operation_button{
+            cursor: pointer;
+            transform: scale(1.5);
+        }
         .ItemName{
             width: 20%;
             word-wrap: break-word;
@@ -186,18 +211,27 @@
             position: absolute;
             text-align: center;
             color: blue;
+            border-color: chocolate;
             font-size: 18px;
+            z-index: 99;
+            width: auto;
+            height: auto;
+            border-radius: 8px;
         }
 
         .item_operation_card div{
             border-radius: 6px;
-            padding: 2px;
             cursor: pointer;
-            margin: 5px;
+            padding: 4px;
         }
         .item_operation_card div:hover{
             background-color: rgba(238,73,151,0.5);
             transform: scale(1.08);
+        }
+
+        .item_operation_button,.item_operation_button:hover{
+            border: none;
+            background-color: transparent;
         }
         
 

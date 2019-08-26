@@ -1,6 +1,7 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using POYA.Areas.FunFiles.Controllers;
 
 namespace POYA.Areas.FunFiles.Models
@@ -23,6 +24,13 @@ namespace POYA.Areas.FunFiles.Models
         public string Name{get;set;}
 
         public DateTimeOffset DOUploading{get;set;}=DateTimeOffset.Now;
+
+        #region  NotMapped
+        
+        [NotMapped]
+        public string FileSize=string.Empty;
+
+        #endregion
 
     }
 }

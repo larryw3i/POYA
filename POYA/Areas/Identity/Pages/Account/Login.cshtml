@@ -4,20 +4,19 @@
     ViewData["Title"] = Localizer["Log in"];
 }
 <h1>@(ViewData["Title"])</h1>
+<hr/>
 <div class="row">
-    <div class="col-md-4">
+    <div class="offset-sm-2 col-sm-8  offset-md-2 col-md-8 offset-lg-4 col-lg-4">
         <section>
             <form id="account" method="post">
                 <h4>@(Localizer["Use a local account to log in"])</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Input.Email"></label>
                     <input asp-for="Input.Email" value='@(TempData["Email"])' class="form-control" placeholder='@Localizer["Type your email here"]' />
                     <span asp-validation-for="Input.Email" data-interval="5000" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Input.Password"></label>
                     <input asp-for="Input.Password" class="form-control" placeholder='@Localizer["Type your password here"]' />
                     <span asp-validation-for="Input.Password" data-interval="5000" class="text-danger"></span>
                 </div>
@@ -46,4 +45,18 @@
 </div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+}
+
+@section Styles
+{
+    <style>
+        #account{
+            text-align: center;
+        }
+        input[class='form-control']{
+            text-align:center;
+            transform: scale(1.05);
+            margin:8px;
+        }
+    </style>
 }

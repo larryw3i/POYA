@@ -138,7 +138,6 @@ function OptimizeFileSizeShow (byte) {
 
 $(document).ready(function () {
 
-    $("[name='UserAvatarImg']").attr("src", "/Home/GetAvatar?random=" +NewGuid());
 
     $("td,td *,th,th *").css({ "word-wrap": "break-word", "break-word": "break-word" });
 

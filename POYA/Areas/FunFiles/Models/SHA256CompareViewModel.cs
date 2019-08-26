@@ -15,6 +15,6 @@ namespace POYA.Areas.FunFiles.Models
     {
         public string Id{get;set;}
         public string Name{get;set;}
-        public string SHA256{get;set;}
+        public string SHA256HexString{get;set;}
     }
 }

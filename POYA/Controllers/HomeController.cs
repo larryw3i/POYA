@@ -29,6 +29,8 @@ using POYA.Models;
 using POYA.Unities.Attributes;
 using POYA.Unities.Helpers;
 
+using POYA.Areas.FunFiles.Controllers;
+
 namespace POYA.Controllers
 {
     public class HomeController : Controller
@@ -167,6 +169,8 @@ namespace POYA.Controllers
 
         private async Task AppInitializationAsync()
         {
+            
+
             if (!Convert.ToBoolean(_configuration["IsInitialized"]))
             {
                 var LFilesPath = _hostingEnv.ContentRootPath + "/Data/LFiles";
@@ -224,6 +228,8 @@ namespace POYA.Controllers
                 
                 #endregion
 
+                #region SOME MIGRATION
+                #endregion
             }
         }
 

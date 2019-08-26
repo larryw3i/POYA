@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <th>
-                @(Html.DisplayNameFor(model => model.FileSHA256))
+                @(Html.DisplayNameFor(model => model.FileSHA256HexString))
             </th>
             <th>
                 @(Html.DisplayNameFor(model => model.FirstUploaderId))
@@ -29,7 +29,7 @@
     @foreach (var item in Model) {
         <tr>
             <td>
-                @(Html.DisplayFor(modelItem => item.FileSHA256))
+                @(Html.DisplayFor(modelItem => item.FileSHA256HexString))
             </td>
             <td>
                 @(Html.DisplayFor(modelItem => item.FirstUploaderId))

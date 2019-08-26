@@ -17,8 +17,8 @@ using POYA.Unities.Helpers;
 
 namespace POYA.Areas.FunFiles.Controllers
 {
-    [Area("FunFiles")]    
     [Authorize]
+    [Area("FunFiles")]    
     public class FunDirsController : Controller
     {
        
@@ -66,8 +66,27 @@ namespace POYA.Areas.FunFiles.Controllers
             var _FunDir=await _context.FunDir
                 .Where(p=>p.UserId==User_.Id && p.ParentDirId==_ParentDirId)
                 .ToListAsync();
+            
+            var _FunYourFiles=await _context.FunYourFile
+                .Where(p=>p.UserId==User_.Id && p.ParentDirId==ParentDirId)
+                .ToListAsync();
+
+            _FunYourFiles.ForEach(
+                o=>{
+                    o.FileSize=
+                        _funFilesHelper.OptimizeFileSize(
+                            new System.IO.FileInfo(
+                                    _funFilesHelper.FunFilesRootPath(_hostingEnv)+'/'+
+                                        _context.FunFileByte.Where(f=>f.Id==o.FileByteId).Select(p=>p.FileSHA256HexString).FirstOrDefaultAsync().GetAwaiter().GetResult()
+                            ).Length
+                        );
+                }
+            );
+            ViewData[nameof(FunYourFile)+"s"]= _FunYourFiles;
 
             ViewData[nameof(ParentDirId)]=_ParentDirId;
+
+            ViewData["FunDIrPath"]=await GetFunDIrPathAsync(ParentDirId);
 
             return View(_FunDir);
         }
@@ -80,12 +99,16 @@ namespace POYA.Areas.FunFiles.Controllers
                 return NotFound();
             }
 
+            var User_=await _userManager.GetUserAsync(User);
+            
             var funDir = await _context.FunDir
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id && m.UserId==User_.Id);
+
             if (funDir == null)
             {
                 return NotFound();
             }
+            
 
             return View(funDir);
         }
@@ -224,6 +247,28 @@ namespace POYA.Areas.FunFiles.Controllers
 
         #region DEPOLLUTION
 
+        /// <summary>
+        /// GET: FunFiles/FunDirs/iDetails/5, list dir and file in Details Action
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> iDetails(Guid? id)
+        {
+            id=id??_funFilesHelper.RootDirId;
+
+            var User_=await _userManager.GetUserAsync(User);
+            
+            var funDir = await _context.FunDir
+                .FirstOrDefaultAsync(m => m.Id == id && m.UserId==User_.Id);
+                
+            if (funDir == null)
+            {
+                return NotFound();
+            }
+            
+            return View(funDir);
+        }
+
         public async Task<IActionResult> IndexFunYourFiles(Guid? ParentDirId)
         {
             var _ParentDirId=ParentDirId??_funFilesHelper.RootDirId;
@@ -234,11 +279,31 @@ namespace POYA.Areas.FunFiles.Controllers
             );
         }
 
-        public async Task<IActionResult> GetPathBreadcrumb(Guid? ParentDirId)
+        public async Task<IActionResult> IndexFunYourFilesJson(Guid? ParentDirId)
+        {
+            var _ParentDirId=ParentDirId??_funFilesHelper.RootDirId;
+            var User_=await _userManager.GetUserAsync(User);
+            return Json(await _context.FunYourFile
+                .Where(p=>p.ParentDirId==_ParentDirId && p.UserId==User_.Id)
+                .ToListAsync()
+            );
+        }
+
+        public async Task<List<FunDir>> GetFunDIrPathAsync(Guid? ParentDirId)
         {
             var _ParentDirId=ParentDirId??_funFilesHelper.RootDirId;
 
-            var _FunDirs=new List<FunDir>();
+            var User_=await _userManager.GetUserAsync(User);
+
+            var _FunDirs=new List<FunDir>(){
+                new FunDir{
+                    DOCreating=DateTimeOffset.MinValue, 
+                    Id=_funFilesHelper.RootDirId, 
+                    Name="Root", 
+                    ParentDirId=_funFilesHelper.RootDirId, 
+                    UserId=User_.Id
+                }
+            };
             
             while(_ParentDirId!=_funFilesHelper.RootDirId){
                 var _FunDir=await _context.FunDir.FirstOrDefaultAsync(p=>p.Id==_ParentDirId);
@@ -249,7 +314,7 @@ namespace POYA.Areas.FunFiles.Controllers
                 _ParentDirId=_FunDir.ParentDirId;
             }
 
-            return View("PathBreadcrumb",_FunDirs.OrderBy(p=>p.DOCreating));
+            return _FunDirs.OrderBy(p=>p.DOCreating).ToList();
         }
 
         #endregion
