@@ -60,7 +60,10 @@
     </environment>
 
     <partial name="_ThemeCssPartial"/>
+
     <link rel="stylesheet" href="~/css/site.css" />
+    
+    <link rel="stylesheet" href="~/lib/jQuery-contextMenu-2.8.0/dist/jquery.contextMenu.min.css" />
 
     @(RenderSection("Styles", required: false))
     
@@ -208,6 +211,10 @@
     <script src="~/lib/js-cookie/js.cookie.min.js"></script>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script src="~/lib/jQuery-contextMenu-2.8.0/dist/jquery.contextMenu.min.js"></script>
+
+    <script src="~/lib/jQuery-contextMenu-2.8.0/dist/jquery.ui.position.min.js"></script>
     
     @(RenderSection("Scripts", required: false))
 </body>

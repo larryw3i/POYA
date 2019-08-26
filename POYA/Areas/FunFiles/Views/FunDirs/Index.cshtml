@@ -71,7 +71,7 @@
     <tbody id="FileAndDir">
         @foreach (var item in FunYourFilesUnionFunDirs) 
         {
-            <tr item_id="@(item.Id)" class="FileAndDirTr">
+            <tr item_id="@(item.Id)" class='FileAndDirTr @(item.IsFile?"file":"dir")'>
                 <td class="ItemName">
                     <a asp-action="Index" asp-route-ParentDirId='@(item.Id)'>
                         @(Html.DisplayFor(modelItem => item.Name))
@@ -91,24 +91,9 @@
                     @(item.DOXXX.LocalDateTime)
                 </td>
                 <td class="OperationEle">
-                    <button id="item_operation_button_@(item.Id)"  item_id='@(item.Id)' class='item_operation_button '>
+                    <button id="item_operation_button_@(item.Id)"  item_id='@(item.Id)' class='item_operation_button'>
                         ...
                     </button>
-                    <div class="card card-body item_operation_card"  id="card_@(item.Id)">
-                        @if(item.IsFile)
-                        {
-                            <div  item_id='@(item.Id)' class='SubOperationEle'>
-                                <a asp-action="DownloadFunFile" asp-controller="FunYourFiles" asp-route-Id="@(item.Id)">
-                                    @(Localizer["Download"])
-                                </a>
-                            </div>  
-                        }
-                        <div  item_id='@(item.Id)' class='SubOperationEle Copy'>@(Localizer["Copy"])</div>  
-                        <div  item_id='@(item.Id)' class='SubOperationEle Rename'>@(Localizer["Rename"])</div> 
-                        <div  item_id='@(item.Id)' class='SubOperationEle Move'>@(Localizer["Move"])</div>   
-                        <div  item_id='@(item.Id)' class='SubOperationEle Details'>@(Localizer["Details"])</div>   
-                        <div  item_id='@(item.Id)' class='SubOperationEle Delete'>@(Localizer["Delete"])</div> 
-                    </div>
                 </td>
             </tr>
         }
@@ -118,8 +103,6 @@
 @section Scripts
 {
 
-    <script src="~/lib/jQuery-contextMenu-2.8.0/dist/jquery.contextMenu.min.js"></script>
-    <script src="~/lib/jQuery-contextMenu-2.8.0/dist/jquery.ui.position.min.js"></script>
     <script>
 
         $(document).ready(()=>{  
@@ -129,8 +112,31 @@
         });
 
         function ItemOperationButton_ContextMenu(){  
+
+            $(document).on(`click`,`.item_operation_button`,(e)=>{ 
+                $(e.target).contextMenu({x:e.pageX,y:e.pageY}); 
+            });
+
             $.contextMenu({
-                selector: '.item_operation_button',
+                selector: '#FileAndDir tr.file',
+                callback: function(key, options) {
+                    var m = "clicked: " + key;
+                    window.console && console.log(m) || alert(m); 
+                },
+                items: {
+                    "edit": {name: "Edit"},
+                    "cut": {name: "Cut"},
+                    "copy": {name: "Copy"},
+                    "delete": {name: "Delete", icon: "delete"},
+                    "sep1": "---------",
+                    "quit": {name: "Quit", icon: function(){
+                        return 'context-menu-icon context-menu-icon-quit';
+                    }}
+                }
+            });  
+            
+            $.contextMenu({
+                selector: '#FileAndDir tr.dir',
                 callback: function(key, options) {
                     var m = "clicked: " + key;
                     window.console && console.log(m) || alert(m); 
@@ -138,7 +144,7 @@
                 items: {
                     "edit": {name: "Edit", icon: "edit"},
                     "cut": {name: "Cut", icon: "cut"},
-                copy: {name: "Copy", icon: "copy"},
+                    copy: {name: "Copy", icon: "copy"},
                     "paste": {name: "Paste", icon: "paste"},
                     "delete": {name: "Delete", icon: "delete"},
                     "sep1": "---------",
@@ -151,83 +157,12 @@
         }
 
 
-        /**
-         * @@param {Event}e
-         */
-        function ShowOperationCard(e){
-            
-            var item_id= $(e.target).parents('tr').attr(`item_id`);
-
-            let OperationCard=$(`#card_${item_id}`);
-
-            if(OperationCard.is(":visible")){
-
-                OperationCard.hide();
-
-            }else{
-
-                $(`.item_operation_card`).hide();
-
-                OperationCard.show();
-                
-                OperationCard.offset({ top:e.pageY,  left:e.pageX  });
-                    
-            }
-        }
-
-
-
-
-        /**
-         * @@param {Event}e
-         */
-        function ItemOperationButtonClick(e){
-
-            var item_id= $(e.target).attr(`item_id`);
-
-            let OperationCard=$(`#card_${item_id}`);
-
-            if(OperationCard.is(":visible")){
-
-                OperationCard.hide();
-
-            }else{
-
-                $(`.item_operation_card`).hide();
-                    
-                OperationCard.show();
-
-                let ItemOperationButton=$(`#item_operation_button_${item_id}`),
-                    ItemOperationButton_top=Number(ItemOperationButton.offset().top),
-                    ItemOperationButton_height=Number(ItemOperationButton.height()),
-                    OperationCard_height=Number(OperationCard.height()),
-                    window_height=Number($(window).height()),
-
-                    ItemOperationButton_left=Number(ItemOperationButton.offset().left),
-                    ItemOperationButton_width=Number(ItemOperationButton.width())*2,
-                    OperationCard_width=Number(OperationCard.width()),
-                    window_width=Number($(window).width()),
-                    
-                    _top=(ItemOperationButton_top+ItemOperationButton_height +OperationCard_height)>window_height?
-                        (ItemOperationButton_top-OperationCard_height):(ItemOperationButton_top+ItemOperationButton_height),
-
-                    _left=(ItemOperationButton_left+ItemOperationButton_width+OperationCard_width)>window_width?
-                        (ItemOperationButton_left-OperationCard_width-ItemOperationButton_width):(ItemOperationButton_left+ItemOperationButton_width*1.5);
-
-                
-                
-                OperationCard.offset({ top:_top,  left:_left  });
-
-            }
-        }
-
     </script>
 }
 
 @section Styles
 {
 
-    <link rel="stylesheet" href="~/lib/jQuery-contextMenu-2.8.0/dist/jquery.contextMenu.min.css" />
     <style>
 
         .fun_file_download{
