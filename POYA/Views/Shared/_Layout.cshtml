@@ -59,7 +59,7 @@
               integrity="MD5-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
 
-    <partial name="_ThemeCssPartial"/>
+    <partial name="_LayoutCssPartial"/>
 
     <link rel="stylesheet" href="~/css/site.css" />
     
@@ -217,5 +217,7 @@
     <script src="~/lib/jQuery-contextMenu-2.8.0/dist/jquery.ui.position.min.js"></script>
     
     @(RenderSection("Scripts", required: false))
+
+    <partial name="_LayoutJsPartial"/>
 </body>
 </html>

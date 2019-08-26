@@ -121,14 +121,14 @@
                 selector: '#FileAndDir tr.file',
                 items: {
                     'Download': {
-                        name: '@(Localizer["Download"])',
+                        name: '@(Html.Raw( Localizer["Download"]))',
                         callback: (itemKey, opt, e)=> { 
                             window.location.href=`@(Url.Action("DownloadFunFile","FunYourFiles"))/`
                                 +opt.$trigger.attr('item_id'); 
                         }    
                     },
                     "Rename": {
-                        name: '@(Localizer["Rename"])',
+                        name: '@(Html.Raw(Localizer["Rename"]))',
                         callback:(itemKey, opt, e)=>{
                             window.location.href=`@(Url.Action("Edit","FunYourFiles"))/`
                                 +opt.$trigger.attr('item_id');
@@ -145,7 +145,7 @@
                 selector: '#FileAndDir tr.dir',
                 items: {
                     "Rename": {
-                        name: '@(Localizer["Rename"])',
+                        name: '@(Html.Raw(Localizer["Rename"]))',
                         callback:(itemKey, opt, e)=>{
                             window.location.href=`@(Url.Action("Edit","FunDirs"))/`
                                 +opt.$trigger.attr('item_id');
