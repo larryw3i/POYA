@@ -326,6 +326,26 @@ namespace POYA.Areas.FunFiles.Controllers
             return Ok();
         }
 
+        [ActionName("DownloadFunFile")]
+        public async Task<IActionResult> DownloadFunFileAsync(Guid? id)
+        {
+            if(id==null)
+            {
+                return NotFound();
+            }
+            var User_= _userManager.GetUserAsync(User).GetAwaiter().GetResult();
+
+            var _FunYourFile=await _context.FunYourFile.Where(p=>p.Id==id && p.UserId==User_.Id).Select(p=>new{p.FileByteId,p.Name}).FirstOrDefaultAsync();
+
+            var _FunFileByte=await _context.FunFileByte.Where(p=>p.Id==_FunYourFile.FileByteId).Select(p=>new{p.FileSHA256HexString}).FirstOrDefaultAsync();
+            
+            var _FileBytes=await System.IO.File.ReadAllBytesAsync(
+                _funFilesHelper.FunFilesRootPath(_hostingEnv)+"/"+_FunFileByte.FileSHA256HexString
+            );
+
+            return File(_FileBytes,_funFilesHelper.GetContentType(_FunYourFile.Name),_FunYourFile.Name,true);
+        }
+
         #endregion
     }
 }

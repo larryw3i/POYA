@@ -75,11 +75,14 @@
                 <td class="ItemName">
                     <a asp-action="Index" asp-route-ParentDirId='@(item.Id)'>
                         @(Html.DisplayFor(modelItem => item.Name))
-                        @if(item.IsFile)
-                        {
-                            <span style="color: red;font-size: 70%">@(Localizer["file"])</span>
-                        }
-                    </a>
+                      
+                    </a>  
+                    @if(item.IsFile)
+                    {
+                        <a asp-action="DownloadFunFile" asp-controller="FunYourFiles" asp-route-Id="@(item.Id)" class="fun_file_download">
+                            <script>document.write('\u2b07');</script>
+                        </a>
+                    }
                 </td>
                 <td>
                     @(item.Size)
@@ -92,6 +95,14 @@
                         ...
                     </button>
                     <div class="card card-body item_operation_card"  id="card_@(item.Id)">
+                        @if(item.IsFile)
+                        {
+                            <div  item_id='@(item.Id)' class='SubOperationEle'>
+                                <a asp-action="DownloadFunFile" asp-controller="FunYourFiles" asp-route-Id="@(item.Id)">
+                                    @(Localizer["Download"])
+                                </a>
+                            </div>  
+                        }
                         <div  item_id='@(item.Id)' class='SubOperationEle Copy'>@(Localizer["Copy"])</div>  
                         <div  item_id='@(item.Id)' class='SubOperationEle Rename'>@(Localizer["Rename"])</div> 
                         <div  item_id='@(item.Id)' class='SubOperationEle Move'>@(Localizer["Move"])</div>   
@@ -106,17 +117,38 @@
 
 @section Scripts
 {
+
+    <script src="~/lib/jQuery-contextMenu-2.8.0/dist/jquery.contextMenu.min.js"></script>
+    <script src="~/lib/jQuery-contextMenu-2.8.0/dist/jquery.ui.position.min.js"></script>
     <script>
 
-        $(document).ready(()=>{
-
-
-            $(document).on(`click`,`.item_operation_button`,(e)=>{ ItemOperationButtonClick(e);   });
-
-            $(document).on(`blur`,`.item_operation_button`,()=>{$(`.item_operation_card`).hide();});
-            
+        $(document).ready(()=>{  
+          
+            ItemOperationButton_ContextMenu();
 
         });
+
+        function ItemOperationButton_ContextMenu(){  
+            $.contextMenu({
+                selector: '.item_operation_button',
+                callback: function(key, options) {
+                    var m = "clicked: " + key;
+                    window.console && console.log(m) || alert(m); 
+                },
+                items: {
+                    "edit": {name: "Edit", icon: "edit"},
+                    "cut": {name: "Cut", icon: "cut"},
+                copy: {name: "Copy", icon: "copy"},
+                    "paste": {name: "Paste", icon: "paste"},
+                    "delete": {name: "Delete", icon: "delete"},
+                    "sep1": "---------",
+                    "quit": {name: "Quit", icon: function(){
+                        return 'context-menu-icon context-menu-icon-quit';
+                    }}
+                }
+            });
+          
+        }
 
 
         /**
@@ -194,7 +226,15 @@
 
 @section Styles
 {
+
+    <link rel="stylesheet" href="~/lib/jQuery-contextMenu-2.8.0/dist/jquery.contextMenu.min.css" />
     <style>
+
+        .fun_file_download{
+            color: red;
+            text-decoration: underline;
+            text-decoration-color: red;
+        }
 
         .item_operation_button{
             cursor: pointer;

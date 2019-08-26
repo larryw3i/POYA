@@ -29,7 +29,6 @@ using POYA.Models;
 using POYA.Unities.Attributes;
 using POYA.Unities.Helpers;
 
-using POYA.Areas.FunFiles.Controllers;
 
 namespace POYA.Controllers
 {
