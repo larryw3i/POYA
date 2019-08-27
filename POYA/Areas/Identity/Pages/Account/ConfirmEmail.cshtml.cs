@@ -26,7 +26,6 @@ namespace POYA.Areas.Identity.Pages.Account
         private readonly ApplicationDbContext _context;
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly IConfiguration _configuration;
         public ConfirmEmailModel(
             IConfiguration configuration,
             SignInManager<IdentityUser> signInManager,

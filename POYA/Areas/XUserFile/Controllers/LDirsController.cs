@@ -23,7 +23,7 @@ namespace POYA.Areas.XUserFile.Controllers
     public class LDirsController : Controller
     {
 
-        #region
+        #region DI
         private readonly IHostingEnvironment _hostingEnv;
         private readonly IStringLocalizer<Program> _localizer;
         private readonly UserManager<IdentityUser> _userManager;
@@ -32,10 +32,8 @@ namespace POYA.Areas.XUserFile.Controllers
         private readonly ApplicationDbContext _context;
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<LDirsController> _logger;
         private readonly XUserFileHelper _xUserFileHelper = new XUserFileHelper();
         public LDirsController(
-            ILogger<LDirsController> logger,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
             RoleManager<IdentityRole> roleManager,

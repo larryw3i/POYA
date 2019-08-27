@@ -32,9 +32,7 @@ namespace POYA.Areas.XUserFile.Controllers
         private readonly ApplicationDbContext _context;
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<LFilesController> _logger;
         public LFilesController(
-            ILogger<LFilesController> logger,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
             RoleManager<IdentityRole> roleManager,

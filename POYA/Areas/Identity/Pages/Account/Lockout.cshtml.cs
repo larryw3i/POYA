@@ -24,7 +24,6 @@ namespace POYA.Areas.Identity.Pages.Account
         private readonly ApplicationDbContext _context;
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<ExternalLoginModel> _logger;
         public LockoutModel(
             ILogger<ExternalLoginModel> logger,
             SignInManager<IdentityUser> signInManager,
@@ -44,7 +43,6 @@ namespace POYA.Areas.Identity.Pages.Account
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
-            _logger = logger;
         }
         public void OnGet()
         {

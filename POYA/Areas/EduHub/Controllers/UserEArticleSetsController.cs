@@ -32,14 +32,12 @@ namespace POYA.Areas.EduHub.Controllers
         private readonly ApplicationDbContext _context;
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<UserEArticleSetsController> _logger;
         private readonly HtmlSanitizer _htmlSanitizer;
         private readonly XUserFileHelper _xUserFileHelper;
         //  private readonly MimeHelper _mimeHelper;
         public UserEArticleSetsController(
             //  MimeHelper mimeHelper,
             HtmlSanitizer htmlSanitizer,
-            ILogger<UserEArticleSetsController> logger,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
             RoleManager<IdentityRole> roleManager,
