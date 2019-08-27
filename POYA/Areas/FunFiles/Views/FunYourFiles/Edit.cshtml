@@ -17,7 +17,7 @@
             <input asp-for="ParentDirId" type="hidden"/>
             <div class="form-group"  title='@(Localizer["Modify extension prudently"]) !'>
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control"  autocomplete="off"/>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -1,15 +1,54 @@
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.EntityFrameworkCore;
+using POYA.Areas.FunFiles.Models;
+using POYA.Data;
 
 namespace POYA.Areas.FunFiles.Controllers
 {
     public class FunFilesHelper
     {
+
+        /// <summary>
+        /// _FunDirs.OrderBy(p=>p.DOCreating).ToList()
+        /// </summary>
+        /// <param name="ParentDirId"></param>
+        /// <param name="_UserId"></param>
+        /// <param name="_context"></param>
+        /// <returns></returns>
+        public async Task<List<FunDir>> GetFunDirPathAsync(Guid? ParentDirId,string _UserId,ApplicationDbContext _context)
+        {
+            var _ParentDirId=ParentDirId??RootDirId;
+
+            var _FunDirs=new List<FunDir>(){
+                new FunDir{
+                    DOCreating=DateTimeOffset.MinValue, 
+                    Id=RootDirId, 
+                    Name="root", 
+                    ParentDirId=RootDirId, 
+                    UserId=_UserId
+                }
+            };
+            
+            while(_ParentDirId!=RootDirId){
+                var _FunDir=await _context.FunDir.FirstOrDefaultAsync(p=>p.Id==_ParentDirId);
+                if(_FunDir==null){
+                    break;
+                }
+                _FunDirs.Add(_FunDir);
+                _ParentDirId=_FunDir.ParentDirId;
+            }
+
+            return _FunDirs.OrderBy(p=>p.DOCreating).ToList();
+        }
+
 
         public string SHA256BytesToHexString(byte[] SHA256)=> BitConverter.ToString(SHA256).Replace("-","");
 
@@ -30,6 +69,7 @@ namespace POYA.Areas.FunFiles.Controllers
         /// <param name="hostingEnv"></param>
         /// <returns></returns>
         public string FunFilesRootPath(IHostingEnvironment hostingEnv) => hostingEnv.ContentRootPath + "/Areas/FunFiles/Data";
+
         public Guid RootDirId=Guid.Parse("a0869b67-9268-479f-a20f-4e3872afe6b9");
 
         public byte[] GetFormFileBytes(IFormFile formFile){

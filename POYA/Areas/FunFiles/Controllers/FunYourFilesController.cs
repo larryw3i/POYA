@@ -76,12 +76,21 @@ namespace POYA.Areas.FunFiles.Controllers
                 return NotFound();
             }
 
+            var UserId_= _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
             var funYourFile = await _context.FunYourFile
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id && m.UserId==UserId_);
+
             if (funYourFile == null)
             {
                 return NotFound();
             }
+
+            funYourFile.FilePath=
+                _funFilesHelper.GetFunDirPathAsync(funYourFile.ParentDirId,UserId_,_context)
+                    .GetAwaiter()
+                    .GetResult()
+                    .ToList();
 
             return View(funYourFile);
         }

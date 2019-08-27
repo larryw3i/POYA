@@ -91,7 +91,7 @@ namespace POYA.Areas.FunFiles.Controllers
 
             ViewData[nameof(ParentDirId)]=_ParentDirId;
 
-            ViewData["FunDIrPath"]=await GetFunDIrPathAsync(ParentDirId);
+            ViewData["FunDirPath"]=await _funFilesHelper.GetFunDirPathAsync(ParentDirId,User_.Id,_context);
 
             return View(_FunDir);
         }
@@ -186,7 +186,7 @@ namespace POYA.Areas.FunFiles.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ParentDirId,Name,UserId,DOCreating")] FunDir funDir)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ParentDirId,Name")] FunDir funDir)
         {
             if (id != funDir.Id)
             {
@@ -197,7 +197,12 @@ namespace POYA.Areas.FunFiles.Controllers
             {
                 try
                 {
-                    _context.Update(funDir);
+                    var UserId_= _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
+                    var _FunDir=await _context.FunDir.Where(p=>p.Id==funDir.Id && p.UserId==UserId_).FirstOrDefaultAsync();
+                    
+                    _FunDir.Name=funDir.Name;
+                    
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -211,7 +216,7 @@ namespace POYA.Areas.FunFiles.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),new{funDir.ParentDirId});
             }
             return View(funDir);
         }
@@ -292,34 +297,6 @@ namespace POYA.Areas.FunFiles.Controllers
                 .Where(p=>p.ParentDirId==_ParentDirId && p.UserId==User_.Id)
                 .ToListAsync()
             );
-        }
-
-        public async Task<List<FunDir>> GetFunDIrPathAsync(Guid? ParentDirId)
-        {
-            var _ParentDirId=ParentDirId??_funFilesHelper.RootDirId;
-
-            var User_=await _userManager.GetUserAsync(User);
-
-            var _FunDirs=new List<FunDir>(){
-                new FunDir{
-                    DOCreating=DateTimeOffset.MinValue, 
-                    Id=_funFilesHelper.RootDirId, 
-                    Name="Root", 
-                    ParentDirId=_funFilesHelper.RootDirId, 
-                    UserId=User_.Id
-                }
-            };
-            
-            while(_ParentDirId!=_funFilesHelper.RootDirId){
-                var _FunDir=await _context.FunDir.FirstOrDefaultAsync(p=>p.Id==_ParentDirId);
-                if(_FunDir==null){
-                    break;
-                }
-                _FunDirs.Add(_FunDir);
-                _ParentDirId=_FunDir.ParentDirId;
-            }
-
-            return _FunDirs.OrderBy(p=>p.DOCreating).ToList();
         }
 
         #endregion

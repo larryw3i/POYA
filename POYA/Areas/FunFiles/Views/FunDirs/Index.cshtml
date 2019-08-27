@@ -29,7 +29,7 @@
     
     var ParentDirId=Guid.Parse(ViewData["ParentDirId"].ToString());
 
-    var FunDIrPath=ViewData["FunDIrPath"] as List<FunDir>;
+    var FunDirPath=ViewData["FunDirPath"] as List<FunDir>;
 }
 
 <h1>@(ViewData["Title"])</h1>
@@ -41,64 +41,79 @@
     </a>
 
     <nav aria-label="breadcrumb" class="PathBreadcrumb">
-        <ol class="breadcrumb">/ &nbsp;
-            @foreach (var item in FunDIrPath)
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+            </li> 
+            @foreach (var item in FunDirPath)
             {
                 <li class="breadcrumb-item">
                     <a href='@(Url.Action("Index",new{ParentDirId=item.Id}))'>@(item.Name)</a>
                 </li> 
-            }
+            } 
+            <li class="breadcrumb-item">
+            </li> 
         </ol>
     </nav>
 </p>
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @(Html.DisplayNameFor(model => model.Name))
-            </th>
-            <th>
-                @(Localizer["Size"])
-            </th>
-            <th>
-                @(Html.DisplayNameFor(model => model.DOCreating))
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody id="FileAndDir">
-        @foreach (var item in FunYourFilesUnionFunDirs) 
-        {
-            <tr item_id="@(item.Id)" class='FileAndDirTr @(item.IsFile?"file":"dir")'>
-                <td class="ItemName">
-                    <a asp-action="Index" asp-route-ParentDirId='@(item.Id)'>
-                        @(Html.DisplayFor(modelItem => item.Name))
-                      
-                    </a>  
-                    @if(item.IsFile)
-                    {
-                        <a asp-action="DownloadFunFile" asp-controller="FunYourFiles" asp-route-Id="@(item.Id)" class="fun_file_download">
-                            <script>document.write('\u2b07');</script>
-                        </a>
-                    }
-                </td>
-                <td>
-                    @(item.Size)
-                </td>
-                <td>
-                    @(item.DOXXX.LocalDateTime)
-                </td>
-                <td class="OperationEle">
-                    <button id="item_operation_button_@(item.Id)"  item_id='@(item.Id)' class='item_operation_button'>
-                        ...
-                    </button>
-                </td>
+@if(FunYourFilesUnionFunDirs.Count()>0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @(Html.DisplayNameFor(model => model.Name))
+                </th>
+                <th>@(Localizer["Size"])</th>
+                <th>
+                    @(Html.DisplayNameFor(model => model.DOCreating))
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody id="FileAndDir">
+            @foreach (var item in FunYourFilesUnionFunDirs) 
+            {
+                <tr item_id="@(item.Id)" class='FileAndDirTr @(item.IsFile?"file":"dir")'>
+                    <td class="ItemName">
+                        @if(item.IsFile)
+                        {
+                            <a asp-action="Details" asp-controller="FunYourFiles" asp-route-Id='@(item.Id)'>
+                                @(Html.DisplayFor(modelItem => item.Name))
+                            </a>  
+                            <a asp-action="DownloadFunFile" asp-controller="FunYourFiles" asp-route-Id="@(item.Id)" class="fun_file_download">
+                                <script>document.write('\u2b07');</script>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-action="Index" asp-route-ParentDirId='@(item.Id)'>
+                                @(Html.DisplayFor(modelItem => item.Name))
+                            </a>  
+                        }
+                    </td>
+                    <td>@(item.Size)</td>
+                    <td>
+                        @(item.DOXXX.LocalDateTime)
+                    </td>
+                    <td class="OperationEle">
+                        <button id="item_operation_button_@(item.Id)"  item_id='@(item.Id)' class='item_operation_button'>
+                            ...
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="DirectoryIsEmptyTip">
+        @(Localizer["Directory is empty"])
+        <span><script>document.write('[T_T]');</script>></span>
+    </div>
+}
 
 @section Scripts
 {
@@ -171,6 +186,13 @@
 
     <style>
 
+        .DirectoryIsEmptyTip{
+            width:100%;
+            text-align:center;
+            color:blue;
+            font-size:200%;
+        }
+
         .fun_file_download{
             color: red;
             text-decoration: underline;
@@ -181,36 +203,14 @@
             cursor: pointer;
             transform: scale(1.5);
         }
+
         .ItemName{
-            width: 20%;
             word-wrap: break-word;
             word-break: break-all;
         }
 
-        .item_operation_card{
-            display: none;
-            position: absolute;
-            text-align: center;
-            color: blue;
-            border-color: chocolate;
-            font-size: 18px;
-            z-index: 99;
-            width: auto;
-            height: auto;
-            border-radius: 8px;
-        }
 
-        .item_operation_card div{
-            border-radius: 6px;
-            cursor: pointer;
-            padding: 4px;
-        }
-        .item_operation_card div:hover{
-            background-color: rgba(238,73,151,0.5);
-            transform: scale(1.08);
-        }
-
-        .item_operation_button,.item_operation_button:hover{
+        .item_operation_button{
             border: none;
             background-color: transparent;
         }

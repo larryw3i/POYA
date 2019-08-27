@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using POYA.Areas.FunFiles.Controllers;
@@ -28,7 +29,10 @@ namespace POYA.Areas.FunFiles.Models
         #region  NotMapped
         
         [NotMapped]
-        public string FileSize=string.Empty;
+        public string FileSize{get;set;}=string.Empty;
+
+        [NotMapped]
+        public List<FunDir> FilePath{get;set;}
 
         #endregion
 

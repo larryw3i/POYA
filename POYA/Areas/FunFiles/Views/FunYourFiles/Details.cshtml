@@ -1,49 +1,89 @@
 @model POYA.Areas.FunFiles.Models.FunYourFile
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] =Localizer[ "Details"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>
+    @(ViewData["Title"]) 
+    &raquo;
+    <span class="FileName">
+        @(Model.Name)
+    </span>
+</h1>
 
 <div>
-    <h4>FunYourFile</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @(Html.DisplayNameFor(model => model.FileByteId))
+            @(Html.DisplayNameFor(model => model.FilePath))
         </dt>
         <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.FileByteId))
-        </dd>
-        <dt class = "col-sm-2">
-            @(Html.DisplayNameFor(model => model.ParentDirId))
-        </dt>
-        <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.ParentDirId))
-        </dd>
-        <dt class = "col-sm-2">
-            @(Html.DisplayNameFor(model => model.UserId))
-        </dt>
-        <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.UserId))
+            @foreach (var item in Model.FilePath)
+            {
+                <span class="PathSep">/</span>
+                <a asp-action="Index" asp-controller="FunDirs" asp-route-ParentDirId="@(item.Id)"  class="PathName">
+                    @(item.Name)
+                </a>
+            }
+            <span class="PathSep">/</span>
+            <a asp-action="DownloadFunFile" asp-controller="FunYourFiles" asp-route-Id="@(Model.Id)" class="fun_file_download">
+                @(Model.Name)  <script>document.write('\u2b07');</script>
+            </a>
         </dd>
         <dt class = "col-sm-2">
             @(Html.DisplayNameFor(model => model.Name))
         </dt>
         <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.Name))
+            <a asp-action="DownloadFunFile" asp-controller="FunYourFiles" asp-route-Id="@(Model.Id)" class="fun_file_download">
+                @(Html.DisplayFor(model => model.Name))
+            </a>
         </dd>
         <dt class = "col-sm-2">
             @(Html.DisplayNameFor(model => model.DOUploading))
         </dt>
         <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.DOUploading))
+            @(Model.DOUploading.LocalDateTime)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a id="BackEle" class="btn btn-outline-info">&laquo; @(Localizer["Back"])</a>
 </div>
+
+
+@section Scripts
+{
+    <script>
+        $(document).ready(()=>{
+            $(document).on(`click`,`.PathName`,()=>{window});
+        });
+    </script>
+}
+
+@section Styles
+{
+    <style>
+        .PathName{
+            color: blueviolet;
+        }
+        .PathName:hover{
+            color: blue;
+        }
+        .PathSep{
+            color: blue;
+            font-size: 125%;
+        }
+        .FileName{
+            cursor: default;
+            font-size: 80%;
+            border: solid;
+            border-color: crimson;
+            border-radius: 9px;
+        }
+        .FileName:hover{
+            background-color: crimson;
+        }
+    </style>
+}
