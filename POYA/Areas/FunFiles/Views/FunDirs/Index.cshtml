@@ -111,7 +111,9 @@ else
 {
     <div class="DirectoryIsEmptyTip">
         @(Localizer["Directory is empty"])
-        <span><script>document.write('[T_T]');</script>></span>
+        <span>
+            <script>document.write('[T_T]');</script>
+        </span>
     </div>
 }
 
@@ -124,7 +126,14 @@ else
           
             ItemOperationButton_ContextMenu();
 
+
         });
+
+
+
+        function DownloadFunFile(id){
+            window.location.href=`@(Url.Action("DownloadFunFile","FunYourFiles"))/`+id; 
+        }
 
         function ItemOperationButton_ContextMenu(){  
 
@@ -137,19 +146,16 @@ else
                 items: {
                     'Download': {
                         name: '@(Html.Raw( Localizer["Download"]))',
-                        callback: (itemKey, opt, e)=> { 
-                            window.location.href=`@(Url.Action("DownloadFunFile","FunYourFiles"))/`
-                                +opt.$trigger.attr('item_id'); 
-                        }    
+                        callback: (itemKey, opt, e)=> {  DownloadFunFile( opt.$trigger.attr('item_id') );  }    
                     },
                     "Rename": {
                         name: '@(Html.Raw(Localizer["Rename"]))',
-                        callback:(itemKey, opt, e)=>{
-                            window.location.href=`@(Url.Action("Edit","FunYourFiles"))/`
-                                +opt.$trigger.attr('item_id');
-                        },
+                        callback:(itemKey, opt, e)=>{  window.location.href=`@(Url.Action("Edit","FunYourFiles"))/`  +opt.$trigger.attr('item_id');  },
                     },
-                    "copy": {name: "Copy"},
+                    "Move": {
+                        name: `@(Localizer["Move to"])`,
+                        items:{},
+                    },
                     "delete": {name: "Delete",  },
                     "sep1": "---------",
                     "quit": {name: "Quit",  }
@@ -166,7 +172,14 @@ else
                                 +opt.$trigger.attr('item_id');
                         },
                     },
-                    "cut": {name: "Cut",  },
+                    "Move": {
+                        name: `@(Localizer["Move to"])`, 
+                        items:{},
+                        callback:(itemKey, opt, e)=>{
+                            window.location.href=`@(Url.Action("Edit","FunDirs"))/`
+                                +opt.$trigger.attr('item_id');
+                        }, 
+                    },
                     "copy": {name: "Copy",  },
                     "paste": {name: "Paste",  },
                     "delete": {name: "Delete",  },

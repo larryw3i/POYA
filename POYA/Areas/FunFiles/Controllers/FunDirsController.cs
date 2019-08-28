@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
+using Newtonsoft.Json;
 using POYA.Areas.FunFiles.Models;
 using POYA.Data;
 using POYA.Unities.Helpers;
@@ -86,6 +87,7 @@ namespace POYA.Areas.FunFiles.Controllers
                         );
                 }
             );
+
 
             ViewData[nameof(FunYourFile)+"s"]= _FunYourFiles;
 
@@ -256,6 +258,7 @@ namespace POYA.Areas.FunFiles.Controllers
         }
 
         #region DEPOLLUTION
+
 
         /// <summary>
         /// GET: FunFiles/FunDirs/iDetails/5, list dir and file in Details Action
