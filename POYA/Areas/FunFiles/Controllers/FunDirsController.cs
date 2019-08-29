@@ -188,12 +188,14 @@ namespace POYA.Areas.FunFiles.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ParentDirId,Name")] FunDir funDir)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name")] FunDir funDir)
         {
             if (id != funDir.Id)
             {
                 return NotFound();
             }
+
+            var ParentDirId=Guid.Empty;
 
             if (ModelState.IsValid)
             {
@@ -203,9 +205,14 @@ namespace POYA.Areas.FunFiles.Controllers
 
                     var _FunDir=await _context.FunDir.Where(p=>p.Id==funDir.Id && p.UserId==UserId_).FirstOrDefaultAsync();
                     
-                    _FunDir.Name=funDir.Name;
+                    if(_FunDir!=null)
+                    {
+                        _FunDir.Name=funDir.Name;
+                    } 
                     
                     await _context.SaveChangesAsync();
+
+                    ParentDirId=_FunDir.ParentDirId;
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -218,7 +225,7 @@ namespace POYA.Areas.FunFiles.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index),new{funDir.ParentDirId});
+                return RedirectToAction(nameof(Index),new{ParentDirId});
             }
             return View(funDir);
         }
