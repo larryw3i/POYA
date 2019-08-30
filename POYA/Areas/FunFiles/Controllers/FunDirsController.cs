@@ -266,6 +266,48 @@ namespace POYA.Areas.FunFiles.Controllers
 
         #region DEPOLLUTION
 
+        [ActionName("MoveDirAndFile")]
+        public async Task<IActionResult> MoveDirAndFileAsync(Guid ParentDirId, Guid Id)
+        {
+            var User_=await _userManager.GetUserAsync(User);
+            var _FunDir=await _context.FunDir.Where(p=>p.Id==Id && p.UserId==User_.Id).FirstOrDefaultAsync();
+            if(_FunDir!=null)
+            {
+                _FunDir.ParentDirId=ParentDirId; 
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index),new{ ParentDirId });
+            }
+            else
+            {
+                var _FunYourFile=await _context.FunYourFile.Where(p=>p.Id==Id && p.UserId==User_.Id).FirstOrDefaultAsync();
+                if(_FunYourFile!=null)
+                {
+                    _FunYourFile.ParentDirId=ParentDirId; 
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index),new{ ParentDirId });
+                }
+            }
+
+            return NotFound();
+        }
+
+        
+        // GET: FunFiles/FunDirs
+        public async Task<IActionResult> DirIndex(Guid? ParentDirId)
+        {
+            var User_=await _userManager.GetUserAsync(User);
+            var _ParentDirId=ParentDirId??_funFilesHelper.RootDirId;
+            var _FunDir=await _context.FunDir
+                .Where(p=>p.UserId==User_.Id && p.ParentDirId==_ParentDirId)
+                .ToListAsync();
+
+            ViewData[nameof(ParentDirId)]=_ParentDirId;
+
+            ViewData["FunDirPath"]=await _funFilesHelper.GetFunDirPathAsync(ParentDirId,User_.Id,_context);
+
+            return View(_FunDir);
+        }
+
 
         /// <summary>
         /// GET: FunFiles/FunDirs/iDetails/5, list dir and file in Details Action

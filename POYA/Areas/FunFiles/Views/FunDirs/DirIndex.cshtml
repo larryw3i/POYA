@@ -1,0 +1,43 @@
+@model IEnumerable<POYA.Areas.FunFiles.Models.FunDir>
+@using POYA.Areas.FunFiles.Controllers;
+
+@{
+
+    var ParentDirId=Guid.Parse(ViewData["ParentDirId"].ToString());
+
+    var FunDirPath=ViewData["FunDirPath"] as List<FunDir>;
+}
+
+<div class="Times_FunFilesPopupClose ">&times;</div>
+<h4>@(Localizer["Select a directory"])</h4>
+<hr/>
+<p>
+    <nav aria-label="breadcrumb" >
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+            </li> 
+            @foreach (var item in FunDirPath)
+            {
+                <li class="breadcrumb-item">
+                    <span class="GetDirIndex" item_id="@(item.Id)" >@(item.Name)</span>
+                </li> 
+            } 
+            <li class="breadcrumb-item">
+            </li> 
+        </ol>
+    </nav>
+</p>
+
+<table class="table">
+    <tbody>
+        @foreach (var item in Model) 
+        {
+            <tr item_id="@(item.Id)">
+                <td >
+                    <span class="GetDirIndex"  item_id="@(item.Id)" >@(item.Name)</span> 
+                    <span class="MoveTo"  item_id="@(item.Id)" >@(Localizer["Move to"])</span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

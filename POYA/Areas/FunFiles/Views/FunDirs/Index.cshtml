@@ -118,9 +118,10 @@ else
         </span>
     </div>
 }
+<div class="row">
+    <div class="FunFilesPopup " class="col offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-4 col-lg-4">
 
-<div class="FunFilesPopup " >
-
+    </div>
 </div>
 
 
@@ -129,15 +130,46 @@ else
 
     <script>
 
+        var CurrentMovingId=``;
+
         $(document).ready(()=>{  
           
             ItemOperationButton_ContextMenu();
 
-            $(document).on(`click`,`#FunFilesPopupClose`,(e)=>{  $(`.FunFilesPopup`).hide(); $(`.FunFilesPopup`).html(``);  });
+            $(document).on(`click`,`#FunFilesPopupClose`,(e)=>{  FunFilesPopupBlur(e);  });
 
-            $(document).on(`click`,`.FunFilesPopupClose`,(e)=>{  FunFilesPopupBlur(e);  });
+            $(document).on(`click`,`.GetDirIndex`,(e)=>{ GetDirIndexClick(e); });
+
+            $(document).on(`click`,`.Times_FunFilesPopupClose`,(e)=>{  FunFilesPopupBlur(e); });
+
+            $(document).on(`click`,`.MoveTo`,(e)=>{ MoveToClick(e); });
+            
 
         });
+
+        /**
+         *@@param {Event} e
+         */ 
+        function MoveToClick(e)
+        {
+            var item_id=$(e.target).attr("item_id");
+            window.location.href=`@(Url.Action("MoveDirAndFile"))?ParentDirId=${item_id}&id=`+CurrentMovingId;
+        }
+
+        /**
+         *@@param {Event}e
+         */
+        function  GetDirIndexClick(e) 
+        {
+            $(`.FunFilesPopup`).load(`@(Url.Action("DirIndex"))?ParentDirId=`+$(e.target).attr(`item_id`));
+        }
+
+        function MoveContxtMenuClick(itemKey, opt, e)
+        {
+            $(`.FunFilesPopup`).load(`@(Url.Action("DirIndex",new{ ParentDirId = ParentDirId}))`);
+            $(`.FunFilesPopup`).show(); 
+            CurrentMovingId=opt.$trigger.attr('item_id');
+        }
 
 
         function FunFilesPopupBlur(e){
@@ -145,17 +177,17 @@ else
             $(`.FunFilesPopup`).html(``); 
         }
 
-        function DirRenameContextMenu(itemKey, opt, e){
+        function DirRenameContextMenuClick(itemKey, opt, e){
             $(`.FunFilesPopup`).load(`@(Url.Action("Edit","FunDirs"))/`  +opt.$trigger.attr('item_id')); 
             $(`.FunFilesPopup`).show(); 
         } 
         
-        function FileRenameContextMenu(itemKey, opt, e){
+        function FileRenameContextMenuClick(itemKey, opt, e){
             $(`.FunFilesPopup`).load(`@(Url.Action("Edit","FunYourFiles"))/`  +opt.$trigger.attr('item_id'));  
             $(`.FunFilesPopup`).show();
         }
 
-        function DownloadFunFile(id){
+        function DownloadFunFileClick(id){
             window.location.href=`@(Url.Action("DownloadFunFile","FunYourFiles"))/`+id; 
         }
 
@@ -170,11 +202,15 @@ else
                 items: {
                     'Download': {
                         name: '@(Html.Raw( Localizer["Download"]))',
-                        callback: (itemKey, opt, e)=> {  DownloadFunFile( opt.$trigger.attr('item_id') );  }    
+                        callback: (itemKey, opt, e)=> {  DownloadFunFileClick( opt.$trigger.attr('item_id') );  }    
                     },
                     "Rename": {
                         name: '@(Html.Raw(Localizer["Rename"]))',
-                        callback:(itemKey, opt, e)=>{ FileRenameContextMenu(itemKey, opt, e);   },
+                        callback:(itemKey, opt, e)=>{ FileRenameContextMenuClick(itemKey, opt, e);   },
+                    },
+                    "Move": {
+                        name: `@(Localizer["Move to"])`, 
+                        callback:(itemKey, opt, e)=>{ MoveContxtMenuClick(itemKey, opt, e); }, 
                     },
                 }
             });  
@@ -184,15 +220,11 @@ else
                 items: {
                     "Rename": {
                         name: '@(Html.Raw(Localizer["Rename"]))',
-                        callback:(itemKey, opt, e)=>{ DirRenameContextMenu(itemKey, opt, e);  },
+                        callback:(itemKey, opt, e)=>{ DirRenameContextMenuClick(itemKey, opt, e);  },
                     },
                     "Move": {
                         name: `@(Localizer["Move to"])`, 
-                        items:{},
-                        callback:(itemKey, opt, e)=>{
-                            window.location.href=`@(Url.Action("Edit","FunDirs"))/`
-                                +opt.$trigger.attr('item_id');
-                        }, 
+                        callback:(itemKey, opt, e)=>{ MoveContxtMenuClick(itemKey, opt, e); }, 
                     },
                 },
             });
@@ -207,6 +239,31 @@ else
 {
 
     <style>
+        .Times_FunFilesPopupClose:hover{
+            color: red;
+        }
+
+        .Times_FunFilesPopupClose{
+            font-size: 300%;
+            position: absolute;
+            right: 5px;
+        }
+
+        .MoveTo{
+            color: red;
+        }
+
+        .GetDirIndex{
+            color: blue;
+        }
+        .MoveTo,.GetDirIndex{
+            cursor: pointer;
+            padding: 1px;
+            border-radius: 2px;
+        }
+        .MoveTo:hover,.GetDirIndex:hover{
+            box-shadow: 1px 1px 2px palevioletred;
+        }
 
         .FunFilesPopup{
             display: none;
@@ -217,7 +274,7 @@ else
             left: 0;
             margin: auto;
             background-color: white;
-            width: max-content;
+            width: 80%;
             height:min-content;
             border-radius: 8px;
             border-color: red;
