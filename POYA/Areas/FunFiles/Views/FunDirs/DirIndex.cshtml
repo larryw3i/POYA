@@ -20,6 +20,7 @@
             {
                 <li class="breadcrumb-item">
                     <span class="GetDirIndex" item_id="@(item.Id)" >@(item.Name)</span>
+                    <span class="MoveTo"  item_id="@(item.Id)" > @(Html.Raw("\ud83d\udccc")) </span>
                 </li> 
             } 
             <li class="breadcrumb-item">
@@ -35,7 +36,7 @@
             <tr item_id="@(item.Id)">
                 <td >
                     <span class="GetDirIndex"  item_id="@(item.Id)" >@(item.Name)</span> 
-                    <span class="MoveTo"  item_id="@(item.Id)" >@(Localizer["Move to"])</span>
+                    <span class="MoveTo"  item_id="@(item.Id)" > @(Html.Raw("\ud83d\udccc")) </span>
                 </td>
             </tr>
         }
