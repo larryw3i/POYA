@@ -119,7 +119,7 @@ else
     </div>
 }
 
-<div class="FunFilesPopup " tabindex="100">
+<div class="FunFilesPopup " >
 
 </div>
 
@@ -135,27 +135,24 @@ else
 
             $(document).on(`click`,`#FunFilesPopupClose`,(e)=>{  $(`.FunFilesPopup`).hide(); $(`.FunFilesPopup`).html(``);  });
 
-            $(document).on(`blur`,`.FunFilesPopup`,(e)=>{ FunFilesPopupBlur(e);  });
-            
+            $(document).on(`click`,`.FunFilesPopupClose`,(e)=>{  FunFilesPopupBlur(e);  });
+
         });
 
+
         function FunFilesPopupBlur(e){
-            if($(`.FunFilesPopup *`).is(":focus")){
-                $(`.FunFilesPopup`).hide(); 
-                $(`.FunFilesPopup`).html(``); 
-            }
+            $(`.FunFilesPopup`).hide(); 
+            $(`.FunFilesPopup`).html(``); 
         }
 
         function DirRenameContextMenu(itemKey, opt, e){
             $(`.FunFilesPopup`).load(`@(Url.Action("Edit","FunDirs"))/`  +opt.$trigger.attr('item_id')); 
             $(`.FunFilesPopup`).show(); 
-            $(`.FunFilesPopup`).focus();
         } 
         
         function FileRenameContextMenu(itemKey, opt, e){
             $(`.FunFilesPopup`).load(`@(Url.Action("Edit","FunYourFiles"))/`  +opt.$trigger.attr('item_id'));  
             $(`.FunFilesPopup`).show();
-            $(`.FunFilesPopup`).focus();
         }
 
         function DownloadFunFile(id){
@@ -225,6 +222,8 @@ else
             border-radius: 8px;
             border-color: red;
             border: solid;
+            border-color: violet;
+            box-shadow: 2px 2px 20px violet;
             text-align:center;
             padding:10px;
         }
