@@ -266,8 +266,147 @@ namespace POYA.Areas.FunFiles.Controllers
 
         #region DEPOLLUTION
 
-        [ActionName("MoveDirAndFile")]
-        public async Task<IActionResult> MoveDirAndFileAsync(Guid ParentDirId, Guid Id)
+
+        [ActionName("CopyDirOrFile")]
+        public async Task<IActionResult> CopyDirOrFileAsync(Guid ParentDirId, Guid Id)
+        {
+            var User_=await _userManager.GetUserAsync(User);
+
+            if(
+                ParentDirId!=_funFilesHelper.RootDirId && 
+                !await _context.FunDir.Where(p=>p.UserId==User_.Id).AnyAsync(p=>p.Id==ParentDirId)
+            )   
+            {
+                return NotFound();
+            }
+
+            var _FunDirs=await _context.FunDir.Where(p=> p.UserId==User_.Id).ToListAsync();
+
+            var _FunYourFiles=await _context.FunYourFile.Where(p=>p.Id==Id && p.UserId==User_.Id).ToListAsync();
+
+            var TargetDir=_FunDirs.Where(p=>p.Id==Id).FirstOrDefault();
+
+            var TargetFunYourFile=_FunYourFiles.Where(p=>p.Id==Id).FirstOrDefault();
+
+
+            var IdAndParentIds= _FunDirs
+                .Select(
+                    p=>
+                    new IdAndParentId
+                    {
+                        Id=p.Id,
+                        ParentId=p.ParentDirId
+                    }
+                )
+                .Union(
+                    _FunYourFiles
+                    .Select(
+                        p=>new IdAndParentId
+                        {
+                            Id=p.Id,
+                            ParentId=p.ParentDirId
+                        }
+                    )
+                )
+                .ToList();
+
+            // Directory
+            if(TargetDir!=null)
+            {
+                var _NewFunYourFiles=new List<FunYourFile>();
+                var _NewFunDirs=new List<FunDir>();
+                var _FunNewIds=new List<FunNewId>(){new FunNewId{Id=TargetDir.Id,NewId=Guid.NewGuid()}};
+                _FunDirs.ForEach(
+                    p=>
+                    {
+                        if(_funFilesHelper.IsIdInParentDirId(TargetDir.Id, p.Id, IdAndParentIds))
+                        {
+                            _FunNewIds.Add(new FunNewId{Id=p.Id,NewId=Guid.NewGuid()});
+                        }
+                    }
+                );
+
+                _FunNewIds.ForEach(
+                    p=>
+                    {
+
+                        // is file
+                        if(_FunYourFiles.Any(f=>f.Id==p.Id))
+                        {
+                            var _FunYourFile_=_FunYourFiles.Where(p=>p.Id==p.Id).FirstOrDefault();
+                            _NewFunYourFiles.Add( 
+                                new FunYourFile{
+                                    DOUploading=_FunYourFile_.DOUploading,
+                                    FileByteId=_FunYourFile_.FileByteId,
+                                    Id=p.NewId,
+                                    Name=_FunYourFile_.Name,
+                                    ParentDirId=
+                                        _FunNewIds
+                                            .Where(
+                                                p=>
+                                                    Id== IdAndParentIds
+                                                        .Where(i=>i.Id==p.Id)
+                                                            .Select(p=>p.ParentId).FirstOrDefault()
+                                            ).Select(p=>p.NewId).FirstOrDefault(),
+                                    UserId=User_.Id
+                                }
+                            );
+                        }
+                        else
+                        {
+                            var _FunDir_=_FunDirs.Where(p=>p.Id==p.Id).FirstOrDefault();
+                            _NewFunDirs.Add( 
+                                new FunDir{
+                                    DOCreating=_FunDir_.DOCreating,
+                                    Id=p.NewId,
+                                    Name=_FunDir_.Name,
+                                    ParentDirId=
+                                        _FunNewIds
+                                            .Where(
+                                                p=>
+                                                    Id== IdAndParentIds
+                                                        .Where(i=>i.Id==p.Id)
+                                                            .Select(p=>p.ParentId).FirstOrDefault()
+                                            ).Select(p=>p.NewId)?.FirstOrDefault()??ParentDirId,
+                                    UserId=User_.Id
+                                }
+                            );
+
+                        }
+                    }
+                );
+
+                if(_NewFunDirs.Count()>0) await _context.FunDir.AddRangeAsync(_NewFunDirs);
+                if(_NewFunYourFiles.Count()>0) await _context.FunYourFile.AddRangeAsync(_NewFunYourFiles);
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index),new{ ParentDirId });
+            }
+            // File
+            else  if(TargetFunYourFile!=null)
+            {
+                await _context.FunYourFile.AddAsync(
+                    new FunYourFile
+                    {
+                        Id=Guid.NewGuid(),
+                        ParentDirId=ParentDirId,
+                        FileByteId=TargetFunYourFile.FileByteId,
+                        DOUploading=DateTimeOffset.Now,
+                        Name=TargetFunYourFile.Name,
+                        UserId=User_.Id,
+                        
+                    }
+                );
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index),new{ ParentDirId });
+            }
+
+            return NotFound();
+        }
+
+        [ActionName("MoveDirOrFile")]
+        public async Task<IActionResult> MoveDirOrFileAsync(Guid ParentDirId, Guid Id)
         {
             var User_=await _userManager.GetUserAsync(User);
             var _FunDir=await _context.FunDir.Where(p=>p.Id==Id && p.UserId==User_.Id).FirstOrDefaultAsync();

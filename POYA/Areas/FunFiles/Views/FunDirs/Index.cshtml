@@ -131,6 +131,7 @@ else
     <script>
 
         var CurrentMovingId=``;
+        var IsCopy=true;
 
         $(document).ready(()=>{  
           
@@ -142,7 +143,7 @@ else
 
             $(document).on(`click`,`.Times_FunFilesPopupClose`,(e)=>{  FunFilesPopupBlur(e); });
 
-            $(document).on(`click`,`.MoveTo`,(e)=>{ MoveToClick(e); });
+            $(document).on(`click`,`.CopyOrMoveTo`,(e)=>{ CopyOrMoveToClick(e); });
             
 
         });
@@ -150,10 +151,28 @@ else
         /**
          *@@param {Event} e
          */ 
-        function MoveToClick(e)
+        function CopyOrMoveToClick(e)
         {
             var item_id=$(e.target).attr("item_id");
-            window.location.href=`@(Url.Action("MoveDirAndFile"))?ParentDirId=${item_id}&id=`+CurrentMovingId;
+            if(IsCopy)
+            {
+                window.location.href=`@(Url.Action("CopyDirOrFile"))?ParentDirId=${item_id}&id=`+CurrentMovingId;
+            }
+            else
+            {
+                window.location.href=`@(Url.Action("MoveDirOrFile"))?ParentDirId=${item_id}&id=`+CurrentMovingId;
+            }
+        }
+
+        function CopyContxtMenuClick(itemKey, opt, e)
+        {
+            IsCopy=true;
+            CurrentMovingId=opt.$trigger.attr('item_id');
+            $(`.FunFilesPopup`).load(
+                `@(Url.Action("DirIndex",new{ ParentDirId = ParentDirId}))`,
+                ()=>{ $(`.CopyOrMoveTo`).html(IsCopy? `@(Html.Raw("\ud83d\udd03"))`:`@(Html.Raw("\ud83d\udccc"))`); }
+            );
+            $(`.FunFilesPopup`).show(); 
         }
 
         /**
@@ -161,14 +180,22 @@ else
          */
         function  GetDirIndexClick(e) 
         {
-            $(`.FunFilesPopup`).load(`@(Url.Action("DirIndex"))?ParentDirId=`+$(e.target).attr(`item_id`));
+            $(`.FunFilesPopup`).load(
+                `@(Url.Action("DirIndex"))?ParentDirId=`+$(e.target).attr(`item_id`),
+                ()=>{ $(`.CopyOrMoveTo`).html(IsCopy? `@(Html.Raw("\ud83d\udd03"))`:`@(Html.Raw("\ud83d\udccc"))`);  }
+            );
         }
 
         function MoveContxtMenuClick(itemKey, opt, e)
         {
-            $(`.FunFilesPopup`).load(`@(Url.Action("DirIndex",new{ ParentDirId = ParentDirId}))`);
-            $(`.FunFilesPopup`).show(); 
+            IsCopy=false;
             CurrentMovingId=opt.$trigger.attr('item_id');
+            $(`.FunFilesPopup`).load(
+                `@(Url.Action("DirIndex",new{ ParentDirId = ParentDirId}))`,
+                ()=>{ $(`.CopyOrMoveTo`).html(IsCopy? `@(Html.Raw("\ud83d\udd03"))`:`@(Html.Raw("\ud83d\udccc"))`); }
+            );
+
+            $(`.FunFilesPopup`).show(); 
         }
 
 
@@ -212,6 +239,10 @@ else
                         name: `@(Localizer["Move to"])`, 
                         callback:(itemKey, opt, e)=>{ MoveContxtMenuClick(itemKey, opt, e); }, 
                     },
+                    "Copy": {
+                        name: `@(Localizer["Copy to"])`, 
+                        callback:(itemKey, opt, e)=>{ CopyContxtMenuClick(itemKey, opt, e); }, 
+                    },
                 }
             });  
             
@@ -225,6 +256,10 @@ else
                     "Move": {
                         name: `@(Localizer["Move to"])`, 
                         callback:(itemKey, opt, e)=>{ MoveContxtMenuClick(itemKey, opt, e); }, 
+                    },
+                    "Copy": {
+                        name: `@(Localizer["Copy to"])`, 
+                        callback:(itemKey, opt, e)=>{ CopyContxtMenuClick(itemKey, opt, e); }, 
                     },
                 },
             });

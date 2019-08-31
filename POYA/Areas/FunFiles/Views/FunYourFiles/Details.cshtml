@@ -17,10 +17,10 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @(Html.DisplayNameFor(model => model.FilePath))
+            @(Html.DisplayNameFor(model => model.FilePathFunDirs))
         </dt>
         <dd class = "col-sm-10">
-            @foreach (var item in Model.FilePath)
+            @foreach (var item in Model.FilePathFunDirs)
             {
                 <span class="PathSep">/</span>
                 <a asp-action="Index" asp-controller="FunDirs" asp-route-ParentDirId="@(item.Id)"  class="PathName">

@@ -16,6 +16,19 @@ namespace POYA.Areas.FunFiles.Controllers
     public class FunFilesHelper
     {
 
+        
+        public bool IsIdInParentDirId(Guid ParentDirId, Guid Id, List<IdAndParentId> IdAndParentIds)
+        {   
+            var _ParentDirId=IdAndParentIds.Where(p=>p.Id==Id).Select(p=>p.ParentId).FirstOrDefault();
+            var _IsIdInParentDirId=_ParentDirId==ParentDirId;
+            while(!_IsIdInParentDirId && _ParentDirId!=ParentDirId && _ParentDirId!=RootDirId)
+            {
+                _ParentDirId=IdAndParentIds.Where(p=>p.Id==_ParentDirId).Select(p=>p.ParentId)?.FirstOrDefault()??RootDirId;
+                _IsIdInParentDirId= _ParentDirId==ParentDirId;
+            }
+            return _IsIdInParentDirId;
+        }
+
         /// <summary>
         /// _FunDirs.OrderBy(p=>p.DOCreating).ToList()
         /// </summary>

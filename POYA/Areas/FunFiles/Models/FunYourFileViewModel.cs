@@ -28,11 +28,19 @@ namespace POYA.Areas.FunFiles.Models
 
         #region  NotMapped
         
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
         [NotMapped]
         public string FileSize{get;set;}=string.Empty;
 
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
         [NotMapped]
-        public List<FunDir> FilePath{get;set;}
+        public List<FunDir> FilePathFunDirs{get;set;}
 
         #endregion
 

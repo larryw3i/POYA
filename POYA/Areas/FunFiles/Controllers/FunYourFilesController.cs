@@ -86,7 +86,7 @@ namespace POYA.Areas.FunFiles.Controllers
                 return NotFound();
             }
 
-            funYourFile.FilePath=
+            funYourFile.FilePathFunDirs=
                 _funFilesHelper.GetFunDirPathAsync(funYourFile.ParentDirId,UserId_,_context)
                     .GetAwaiter()
                     .GetResult()
