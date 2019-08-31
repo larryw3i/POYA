@@ -333,7 +333,7 @@ namespace POYA.Areas.FunFiles.Controllers
                         // is file
                         if(_FunYourFiles.Any(f=>f.Id==p.Id))
                         {
-                            var _FunYourFile_=_FunYourFiles.Where(p=>p.Id==p.Id).FirstOrDefault();
+                            var _FunYourFile_=_FunYourFiles.Where(f=>f.Id==p.Id).FirstOrDefault();
                             _NewFunYourFiles.Add( 
                                 new FunYourFile{
                                     DOUploading=_FunYourFile_.DOUploading,
@@ -343,18 +343,18 @@ namespace POYA.Areas.FunFiles.Controllers
                                     ParentDirId=
                                         _FunNewIds
                                             .Where(
-                                                p=>
+                                                n=>
                                                     Id== IdAndParentIds
-                                                        .Where(i=>i.Id==p.Id)
-                                                            .Select(p=>p.ParentId).FirstOrDefault()
-                                            ).Select(p=>p.NewId).FirstOrDefault(),
+                                                        .Where(i=>i.Id==n.Id)
+                                                            .Select(i=>i.ParentId).FirstOrDefault()
+                                            ).Select(o=>o.NewId).FirstOrDefault(),
                                     UserId=User_.Id
                                 }
                             );
                         }
                         else
                         {
-                            var _FunDir_=_FunDirs.Where(p=>p.Id==p.Id).FirstOrDefault();
+                            var _FunDir_=_FunDirs.Where(f=>f.Id==p.Id).FirstOrDefault();
                             _NewFunDirs.Add( 
                                 new FunDir{
                                     DOCreating=_FunDir_.DOCreating,
@@ -363,11 +363,11 @@ namespace POYA.Areas.FunFiles.Controllers
                                     ParentDirId=
                                         _FunNewIds
                                             .Where(
-                                                p=>
+                                                n=>
                                                     Id== IdAndParentIds
-                                                        .Where(i=>i.Id==p.Id)
-                                                            .Select(p=>p.ParentId).FirstOrDefault()
-                                            ).Select(p=>p.NewId)?.FirstOrDefault()??ParentDirId,
+                                                        .Where(i=>i.Id==n.Id)
+                                                            .Select(i=>i.ParentId).FirstOrDefault()
+                                            ).Select(u=>u.NewId)?.FirstOrDefault()??ParentDirId,
                                     UserId=User_.Id
                                 }
                             );
