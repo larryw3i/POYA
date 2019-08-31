@@ -37,7 +37,7 @@
 
 
 <p>
-    <a class="btn btn-outline-info" asp-action="Create" asp-route-ParentDirId='@(ParentDirId)'>@(Localizer["New directory"])</a>
+    <a class="btn btn-outline-info" id="FunDirsCreate" >@(Localizer["New directory"])</a>
     <a class="btn btn-outline-info" asp-action="FunUploadFiles" asp-controller='FunYourFiles' asp-route-ParentDirId='@(ParentDirId)'>
         @(Localizer["Upload files"])
     </a>
@@ -118,6 +118,7 @@ else
         </span>
     </div>
 }
+
 <div class="row">
     <div class="FunFilesPopup " class="col offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-4 col-lg-4">
 
@@ -144,9 +145,20 @@ else
             $(document).on(`click`,`.Times_FunFilesPopupClose`,(e)=>{  FunFilesPopupBlur(e); });
 
             $(document).on(`click`,`.CopyOrMoveTo`,(e)=>{ CopyOrMoveToClick(e); });
+
+            $(document).on(`click`,`#FunDirsCreate`,(e)=>{ FunDirsCreateClick(e)});
             
 
         });
+
+        /**
+         * @@param {Event} e
+         */
+        function FunDirsCreateClick(e)
+        {
+            $(`.FunFilesPopup`).load(`@(Url.Action("Create","FunDirs", new{ ParentDirId }))`); 
+            $(`.FunFilesPopup`).show(); 
+        }
 
         /**
          *@@param {Event} e

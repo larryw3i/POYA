@@ -1,12 +1,15 @@
 @model POYA.Areas.FunFiles.Models.FunDir
 
 @{
-    ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    
 }
 
+<div class="Times_FunFilesPopupClose ">&times;</div>
+
+<h4>@(Localizer["Create a directory"])</h4>
+<hr/>
 <div class="row">
-    <div class="col-md-4">
+    <div class="offset-2 col-8">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="ParentDirId" type="hidden"/>
@@ -16,23 +19,9 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <a id="BackEle" class="btn btn-outline-info">&laquo; @(Localizer["Back"])</a>
+                <a id="FunFilesPopupClose" class="btn btn-outline-info">&laquo; @(Localizer["Close"])</a>
                 <input class="btn btn-outline-primary" type="submit" value='@(Localizer["Create"])'/>
             </div>
         </form>
     </div>
 </div>
-
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-
-@section Styles{
-    <style>
-        #BackEle{
-            position: fixed;
-            bottom: 8%;
-        }
-    </style>
-}

@@ -313,7 +313,7 @@ namespace POYA.Areas.FunFiles.Controllers
 
             // Directory
             if(TargetFunDir!=null)
-            {
+            { 
                 var _NewFunYourFiles=new List<FunYourFile>();
                 
                 var _NewFunDirs=new List<FunDir>();
@@ -326,34 +326,26 @@ namespace POYA.Areas.FunFiles.Controllers
                         }
                     };
 
-                _FunDirs.ForEach(
-                    p=>
-                    {
-                        if(_funFilesHelper.IsIdInParentDirId(TargetFunDir.Id, p.Id, IdAndParentIds))
+                _FunDirs.Select(p=>p.Id)
+                    .Union(
+                        _FunYourFiles.Select(p=>p.Id))
+                    .ToList()
+                    .ForEach(
+                        p=>
                         {
-                            _FunNewIds.Add(
-                                new FunNewId
-                                {
-                                    Id=p.Id,
-                                    NewId=Guid.NewGuid()
-                                }
-                            );
+                            if(_funFilesHelper.IsIdInParentDirId(TargetFunDir.Id, p, IdAndParentIds))
+                            {
+                                _FunNewIds.Add(
+                                    new FunNewId
+                                    {
+                                        Id=p,
+                                        NewId=Guid.NewGuid()
+                                    }
+                                );
+                            }
                         }
-                    }
                 );
 
-                _FunYourFiles.ForEach(
-                    p=>
-                    {
-                        _FunNewIds.Add(
-                            new FunNewId
-                            {
-                                Id=p.Id,
-                                NewId=Guid.NewGuid(),
-                            }
-                        );
-                    }
-                );
 
                 _FunNewIds.ForEach(
                     p=>
@@ -402,6 +394,7 @@ namespace POYA.Areas.FunFiles.Controllers
                 );
 
                 if(_NewFunDirs.Count()>0) await _context.FunDir.AddRangeAsync(_NewFunDirs);
+                
                 if(_NewFunYourFiles.Count()>0) await _context.FunYourFile.AddRangeAsync(_NewFunYourFiles);
 
                 await _context.SaveChangesAsync();
