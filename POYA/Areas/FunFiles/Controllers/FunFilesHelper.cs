@@ -19,13 +19,20 @@ namespace POYA.Areas.FunFiles.Controllers
         
         public bool IsIdInParentDirId(Guid ParentDirId, Guid Id, List<IdAndParentId> IdAndParentIds)
         {   
-            var _ParentDirId=IdAndParentIds.Where(p=>p.Id==Id).Select(p=>p.ParentId).FirstOrDefault();
+            var _ParentDirId=IdAndParentIds
+                .Where(p=>p.Id==Id)
+                .Select(p=>p.ParentId)
+                .FirstOrDefault();
+
             var _IsIdInParentDirId=_ParentDirId==ParentDirId;
-            while(!_IsIdInParentDirId && _ParentDirId!=ParentDirId && _ParentDirId!=RootDirId)
+            
+            while(!_IsIdInParentDirId && _ParentDirId!=RootDirId)
             {
-                _ParentDirId=IdAndParentIds.Where(p=>p.Id==_ParentDirId).Select(p=>p.ParentId)?.FirstOrDefault()??RootDirId;
+                _ParentDirId=IdAndParentIds.Where(p=>p.Id==_ParentDirId).Select(p=>p.ParentId).FirstOrDefault();
+                _ParentDirId=_ParentDirId==Guid.Empty?RootDirId:_ParentDirId;
                 _IsIdInParentDirId= _ParentDirId==ParentDirId;
             }
+            
             return _IsIdInParentDirId;
         }
 
@@ -83,6 +90,10 @@ namespace POYA.Areas.FunFiles.Controllers
         /// <returns></returns>
         public string FunFilesRootPath(IHostingEnvironment hostingEnv) => hostingEnv.ContentRootPath + "/Areas/FunFiles/Data";
 
+        /// <summary>
+        /// a0869b67-9268-479f-a20f-4e3872afe6b9
+        /// </summary>
+        /// <returns></returns>
         public Guid RootDirId=Guid.Parse("a0869b67-9268-479f-a20f-4e3872afe6b9");
 
         public byte[] GetFormFileBytes(IFormFile formFile){

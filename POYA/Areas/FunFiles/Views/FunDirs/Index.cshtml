@@ -156,11 +156,11 @@ else
             var item_id=$(e.target).attr("item_id");
             if(IsCopy)
             {
-                window.location.href=`@(Url.Action("CopyDirOrFile"))?ParentDirId=${item_id}&id=`+CurrentMovingId;
+                window.location.href=`@(Url.Action("CopyDirOrFile"))?ParentDirId=${item_id}&Id=`+CurrentMovingId;
             }
             else
             {
-                window.location.href=`@(Url.Action("MoveDirOrFile"))?ParentDirId=${item_id}&id=`+CurrentMovingId;
+                window.location.href=`@(Url.Action("MoveDirOrFile"))?ParentDirId=${item_id}&Id=`+CurrentMovingId;
             }
         }
 
@@ -191,7 +191,7 @@ else
             IsCopy=false;
             CurrentMovingId=opt.$trigger.attr('item_id');
             $(`.FunFilesPopup`).load(
-                `@(Url.Action("DirIndex",new{ ParentDirId = ParentDirId}))`,
+                `@(Url.Action("DirIndex",new{ ParentDirId = ParentDirId}))&CurrentMovingDirId=${CurrentMovingId}`,
                 ()=>{ $(`.CopyOrMoveTo`).html(IsCopy? `@(Html.Raw("\ud83d\udd03"))`:`@(Html.Raw("\ud83d\udccc"))`); }
             );
 

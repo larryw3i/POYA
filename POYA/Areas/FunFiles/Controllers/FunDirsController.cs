@@ -282,9 +282,9 @@ namespace POYA.Areas.FunFiles.Controllers
 
             var _FunDirs=await _context.FunDir.Where(p=> p.UserId==User_.Id).ToListAsync();
 
-            var _FunYourFiles=await _context.FunYourFile.Where(p=>p.Id==Id && p.UserId==User_.Id).ToListAsync();
+            var _FunYourFiles=await _context.FunYourFile.Where(p=> p.UserId==User_.Id).ToListAsync();
 
-            var TargetDir=_FunDirs.Where(p=>p.Id==Id).FirstOrDefault();
+            var TargetFunDir=_FunDirs.Where(p=>p.Id==Id).FirstOrDefault();
 
             var TargetFunYourFile=_FunYourFiles.Where(p=>p.Id==Id).FirstOrDefault();
 
@@ -310,25 +310,63 @@ namespace POYA.Areas.FunFiles.Controllers
                 )
                 .ToList();
 
+
             // Directory
-            if(TargetDir!=null)
+            if(TargetFunDir!=null)
             {
                 var _NewFunYourFiles=new List<FunYourFile>();
+                
                 var _NewFunDirs=new List<FunDir>();
-                var _FunNewIds=new List<FunNewId>(){new FunNewId{Id=TargetDir.Id,NewId=Guid.NewGuid()}};
+
+                var _FunNewIds=new List<FunNewId>()
+                    {
+                        new FunNewId{
+                            Id=TargetFunDir.Id,
+                            NewId=Guid.NewGuid()
+                        }
+                    };
+
                 _FunDirs.ForEach(
                     p=>
                     {
-                        if(_funFilesHelper.IsIdInParentDirId(TargetDir.Id, p.Id, IdAndParentIds))
+                        if(_funFilesHelper.IsIdInParentDirId(TargetFunDir.Id, p.Id, IdAndParentIds))
                         {
-                            _FunNewIds.Add(new FunNewId{Id=p.Id,NewId=Guid.NewGuid()});
+                            _FunNewIds.Add(
+                                new FunNewId
+                                {
+                                    Id=p.Id,
+                                    NewId=Guid.NewGuid()
+                                }
+                            );
                         }
+                    }
+                );
+
+                _FunYourFiles.ForEach(
+                    p=>
+                    {
+                        _FunNewIds.Add(
+                            new FunNewId
+                            {
+                                Id=p.Id,
+                                NewId=Guid.NewGuid(),
+                            }
+                        );
                     }
                 );
 
                 _FunNewIds.ForEach(
                     p=>
                     {
+                        var _ParentDirId_=_FunNewIds
+                            .Where(
+                                n=>
+                                    n.Id== IdAndParentIds
+                                        .Where(i=>i.Id==p.Id)
+                                            .Select(i=>i.ParentId).FirstOrDefault()
+                            ).Select(o=>o.NewId).FirstOrDefault();
+
+                        _ParentDirId_=_ParentDirId_==Guid.Empty?ParentDirId:_ParentDirId_;
 
                         // is file
                         if(_FunYourFiles.Any(f=>f.Id==p.Id))
@@ -336,38 +374,25 @@ namespace POYA.Areas.FunFiles.Controllers
                             var _FunYourFile_=_FunYourFiles.Where(f=>f.Id==p.Id).FirstOrDefault();
                             _NewFunYourFiles.Add( 
                                 new FunYourFile{
-                                    DOUploading=_FunYourFile_.DOUploading,
+                                    DOUploading=DateTimeOffset.Now,
                                     FileByteId=_FunYourFile_.FileByteId,
                                     Id=p.NewId,
                                     Name=_FunYourFile_.Name,
-                                    ParentDirId=
-                                        _FunNewIds
-                                            .Where(
-                                                n=>
-                                                    Id== IdAndParentIds
-                                                        .Where(i=>i.Id==n.Id)
-                                                            .Select(i=>i.ParentId).FirstOrDefault()
-                                            ).Select(o=>o.NewId).FirstOrDefault(),
+                                    ParentDirId=_ParentDirId_,
                                     UserId=User_.Id
                                 }
                             );
                         }
+                        // is directory
                         else
                         {
-                            var _FunDir_=_FunDirs.Where(f=>f.Id==p.Id).FirstOrDefault();
+                            var _FunDir_=_FunDirs.Where(d=>d.Id==p.Id).FirstOrDefault();
                             _NewFunDirs.Add( 
                                 new FunDir{
-                                    DOCreating=_FunDir_.DOCreating,
+                                    DOCreating=DateTimeOffset.Now,
                                     Id=p.NewId,
                                     Name=_FunDir_.Name,
-                                    ParentDirId=
-                                        _FunNewIds
-                                            .Where(
-                                                n=>
-                                                    Id== IdAndParentIds
-                                                        .Where(i=>i.Id==n.Id)
-                                                            .Select(i=>i.ParentId).FirstOrDefault()
-                                            ).Select(u=>u.NewId)?.FirstOrDefault()??ParentDirId,
+                                    ParentDirId=_ParentDirId_,
                                     UserId=User_.Id
                                 }
                             );
@@ -380,6 +405,7 @@ namespace POYA.Areas.FunFiles.Controllers
                 if(_NewFunYourFiles.Count()>0) await _context.FunYourFile.AddRangeAsync(_NewFunYourFiles);
 
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index),new{ ParentDirId });
             }
             // File
@@ -432,19 +458,24 @@ namespace POYA.Areas.FunFiles.Controllers
 
         
         // GET: FunFiles/FunDirs
-        public async Task<IActionResult> DirIndex(Guid? ParentDirId)
+        public async Task<IActionResult> DirIndex(Guid? ParentDirId,Guid? CurrentMovingDirId)
         {
             var User_=await _userManager.GetUserAsync(User);
             var _ParentDirId=ParentDirId??_funFilesHelper.RootDirId;
-            var _FunDir=await _context.FunDir
+            var _FunDirs=await _context.FunDir
                 .Where(p=>p.UserId==User_.Id && p.ParentDirId==_ParentDirId)
                 .ToListAsync();
+
+                if(CurrentMovingDirId!=null)
+                {
+                    _FunDirs.Remove(_FunDirs.FirstOrDefault(p=>p.Id==CurrentMovingDirId));
+                }
 
             ViewData[nameof(ParentDirId)]=_ParentDirId;
 
             ViewData["FunDirPath"]=await _funFilesHelper.GetFunDirPathAsync(ParentDirId,User_.Id,_context);
 
-            return View(_FunDir);
+            return View(_FunDirs);
         }
 
 
