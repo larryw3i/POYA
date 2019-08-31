@@ -265,8 +265,9 @@ namespace POYA.Areas.FunFiles.Controllers
         }
 
         #region DEPOLLUTION
+        
 
-
+        [HttpGet]
         [ActionName("CopyDirOrFile")]
         public async Task<IActionResult> CopyDirOrFileAsync(Guid ParentDirId, Guid Id)
         {
@@ -292,20 +293,21 @@ namespace POYA.Areas.FunFiles.Controllers
             var IdAndParentIds= _FunDirs
                 .Select(
                     p=>
-                    new IdAndParentId
-                    {
-                        Id=p.Id,
-                        ParentId=p.ParentDirId
-                    }
-                )
-                .Union(
-                    _FunYourFiles
-                    .Select(
-                        p=>new IdAndParentId
+                        new IdAndParentId
                         {
                             Id=p.Id,
                             ParentId=p.ParentDirId
                         }
+                )
+                .Union(
+                    _FunYourFiles
+                    .Select(
+                        p=>
+                            new IdAndParentId
+                            {
+                                Id=p.Id,
+                                ParentId=p.ParentDirId
+                            }
                     )
                 )
                 .ToList();
@@ -328,22 +330,23 @@ namespace POYA.Areas.FunFiles.Controllers
 
                 _FunDirs.Select(p=>p.Id)
                     .Union(
-                        _FunYourFiles.Select(p=>p.Id))
+                        _FunYourFiles
+                            .Select(p=>p.Id))
                     .ToList()
                     .ForEach(
                         p=>
-                        {
-                            if(_funFilesHelper.IsIdInParentDirId(TargetFunDir.Id, p, IdAndParentIds))
                             {
-                                _FunNewIds.Add(
-                                    new FunNewId
-                                    {
-                                        Id=p,
-                                        NewId=Guid.NewGuid()
-                                    }
-                                );
+                                if(_funFilesHelper.IsIdInParentDirId(TargetFunDir.Id, p, IdAndParentIds))
+                                {
+                                    _FunNewIds.Add(
+                                        new FunNewId
+                                        {
+                                            Id=p,
+                                            NewId=Guid.NewGuid()
+                                        }
+                                    );
+                                }
                             }
-                        }
                 );
 
 
@@ -418,12 +421,14 @@ namespace POYA.Areas.FunFiles.Controllers
                 );
 
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index),new{ ParentDirId });
             }
 
             return NotFound();
         }
 
+        [HttpGet]
         [ActionName("MoveDirOrFile")]
         public async Task<IActionResult> MoveDirOrFileAsync(Guid ParentDirId, Guid Id)
         {
@@ -449,8 +454,7 @@ namespace POYA.Areas.FunFiles.Controllers
             return NotFound();
         }
 
-        
-        // GET: FunFiles/FunDirs
+    
         public async Task<IActionResult> DirIndex(Guid? ParentDirId,Guid? CurrentMovingDirId)
         {
             var User_=await _userManager.GetUserAsync(User);

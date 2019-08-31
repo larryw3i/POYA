@@ -34,8 +34,6 @@
 
 <h1>@(ViewData["Title"])</h1>
 
-
-
 <p>
     <a class="btn btn-outline-info" id="FunDirsCreate" >@(Localizer["New directory"])</a>
     <a class="btn btn-outline-info" asp-action="FunUploadFiles" asp-controller='FunYourFiles' asp-route-ParentDirId='@(ParentDirId)'>
@@ -148,8 +146,15 @@ else
 
             $(document).on(`click`,`#FunDirsCreate`,(e)=>{ FunDirsCreateClick(e)});
             
-
         });
+
+
+        function DeleteContxtMenuClick(itemKey, opt, e, IsFile=false)
+        {
+            var item_id=opt.$trigger.attr('item_id');
+            $(`.FunFilesPopup`).load(IsFile?`@(Url.Action("Delete","FunYourFiles"))/${item_id}`: `@(Url.Action("Delete","FunDirs"))/${item_id}`); 
+            $(`.FunFilesPopup`).show(); 
+        }
 
         /**
          * @@param {Event} e
@@ -255,6 +260,10 @@ else
                         name: `@(Localizer["Copy to"])`, 
                         callback:(itemKey, opt, e)=>{ CopyContxtMenuClick(itemKey, opt, e); }, 
                     },
+                    "Delete": {
+                        name: `@(Localizer["Delete"])`, 
+                        callback:(itemKey, opt, e)=>{ DeleteContxtMenuClick(itemKey, opt, e,true); }, 
+                    },
                 }
             });  
             
@@ -273,11 +282,14 @@ else
                         name: `@(Localizer["Copy to"])`, 
                         callback:(itemKey, opt, e)=>{ CopyContxtMenuClick(itemKey, opt, e); }, 
                     },
+                    "Delete": {
+                        name: `@(Localizer["Delete"])`, 
+                        callback:(itemKey, opt, e)=>{ DeleteContxtMenuClick(itemKey, opt, e,false); }, 
+                    },
                 },
             });
           
         }
-
 
     </script>
 }
@@ -286,6 +298,14 @@ else
 {
 
     <style>
+        .CopyOrMoveTo{
+            cursor: pointer;
+            margin-left: 8px;
+        }
+        .CopyOrMoveTo:hover{
+            zoom: 1.2;
+        }
+
         .Times_FunFilesPopupClose:hover{
             color: red;
         }
@@ -342,6 +362,8 @@ else
 
         .fun_file_download{
             color: red;
+            zoom: 1.2;
+            margin-left: 8px;
             text-decoration: underline;
             text-decoration-color: red;
         }

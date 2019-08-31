@@ -19,7 +19,7 @@
             @foreach (var item in FunDirPath)
             {
                 <li class="breadcrumb-item">
-                    <span class="GetDirIndex" item_id="@(item.Id)" >@(item.Name)</span>
+                    <span class="GetDirIndex" item_id="@(item.Id)" >@(item.Name)</span>      
                     <span class="CopyOrMoveTo"  item_id="@(item.Id)" > </span>
                 </li> 
             } 
@@ -35,7 +35,7 @@
         {
             <tr item_id="@(item.Id)">
                 <td >
-                    <span class="GetDirIndex"  item_id="@(item.Id)" >@(item.Name)</span> 
+                    <span class="GetDirIndex"  item_id="@(item.Id)" >@(item.Name)</span>     
                     <span class="CopyOrMoveTo"  item_id="@(item.Id)" >  </span>
                 </td>
             </tr>
