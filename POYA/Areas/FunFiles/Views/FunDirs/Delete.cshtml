@@ -8,7 +8,7 @@
 <h3>@(Localizer["Are you sure you want to delete"]) @(Model.Name)?</h3>
 <div>
     <hr />
-    <dl class="row">
+    <dl class="col offset-sm-2 col-sm-8 offset-md-4 col-md-4">
         <dt class = "col-auto">
             @(Html.DisplayNameFor(model => model.Name))
         </dt>
@@ -25,7 +25,6 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <a id="FunFilesPopupClose" class="btn btn-outline-info">&laquo; @(Localizer["Close"])</a>    
         <input type="submit" value="Delete" class="btn btn-danger" /> 
     </form>
 </div>
