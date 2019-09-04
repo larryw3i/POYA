@@ -193,8 +193,11 @@ namespace POYA.Areas.FunFiles.Controllers
                 return NotFound();
             }
 
-            var funYourFile = await _context.FunYourFile
-                .FirstOrDefaultAsync(m => m.Id == id);
+            
+            var UserId_= _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
+            var funYourFile = await _context.FunYourFile.Where(m => m.Id == id && m.UserId==UserId_).FirstOrDefaultAsync();
+
             if (funYourFile == null)
             {
                 return NotFound();
@@ -208,7 +211,11 @@ namespace POYA.Areas.FunFiles.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var funYourFile = await _context.FunYourFile.FindAsync(id);
+            
+            var UserId_= _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            
+            var funYourFile = await _context.FunYourFile.Where(m => m.Id == id && m.UserId==UserId_).FirstOrDefaultAsync();
+
             _context.FunYourFile.Remove(funYourFile);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

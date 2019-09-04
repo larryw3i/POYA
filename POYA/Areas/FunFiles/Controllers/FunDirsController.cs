@@ -237,13 +237,17 @@ namespace POYA.Areas.FunFiles.Controllers
             {
                 return NotFound();
             }
+            
+            var UserId_= _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
             var funDir = await _context.FunDir
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Where(m => m.Id == id && m.UserId==UserId_).FirstOrDefaultAsync();
+
             if (funDir == null)
             {
                 return NotFound();
             }
+            
 
             return View(funDir);
         }
@@ -253,7 +257,10 @@ namespace POYA.Areas.FunFiles.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var funDir = await _context.FunDir.FindAsync(id);
+            var UserId_= _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            
+            var funDir = await _context.FunDir.Where(m=>m.Id==id && m.UserId==UserId_).FirstOrDefaultAsync();
+
             _context.FunDir.Remove(funDir);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
