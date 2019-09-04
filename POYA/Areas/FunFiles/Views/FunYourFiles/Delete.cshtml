@@ -12,35 +12,17 @@
 <div>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @(Html.DisplayNameFor(model => model.FileByteId))
-        </dt>
-        <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.FileByteId))
-        </dd>
-        <dt class = "col-sm-2">
-            @(Html.DisplayNameFor(model => model.ParentDirId))
-        </dt>
-        <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.ParentDirId))
-        </dd>
-        <dt class = "col-sm-2">
-            @(Html.DisplayNameFor(model => model.UserId))
-        </dt>
-        <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.UserId))
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-auto">
             @(Html.DisplayNameFor(model => model.Name))
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-auto">
             @(Html.DisplayFor(model => model.Name))
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-auto">
             @(Html.DisplayNameFor(model => model.DOUploading))
         </dt>
-        <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.DOUploading))
+        <dd class = "col-auto">
+            @(Model.DOUploading.LocalDateTime)
         </dd>
     </dl>
     

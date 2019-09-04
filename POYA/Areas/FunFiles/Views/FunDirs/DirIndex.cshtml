@@ -16,13 +16,13 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
             </li> 
-            @foreach (var item in FunDirPath)
-            {
-                <li class="breadcrumb-item">
-                    <span class="GetDirIndex" item_id="@(item.Id)" >@(item.Name)</span>      
-                    <span class="CopyOrMoveTo"  item_id="@(item.Id)" > </span>
-                </li> 
-            } 
+                @foreach (var item in FunDirPath)
+                {
+                    <li class="breadcrumb-item">
+                        <span class="GetDirIndex" item_id="@(item.Id)" >@(item.Name)</span>      
+                        <span class="CopyOrMoveTo"  item_id="@(item.Id)" > </span>
+                    </li> 
+                } 
             <li class="breadcrumb-item">
             </li> 
         </ol>
