@@ -248,7 +248,6 @@ namespace POYA.Areas.FunFiles.Controllers
                 return NotFound();
             }
             
-
             return View(funDir);
         }
 
@@ -258,10 +257,48 @@ namespace POYA.Areas.FunFiles.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var UserId_= _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            
-            var funDir = await _context.FunDir.Where(m=>m.Id==id && m.UserId==UserId_).FirstOrDefaultAsync();
 
-            _context.FunDir.Remove(funDir);
+            var _FunYourFiles=await _context.FunYourFile.Where(p=>p.UserId==UserId_).ToListAsync();
+
+            var _FunDirs=await _context.FunDir.Where(p=>p.UserId==UserId_).ToListAsync();
+
+            var _WillBeRemovedFunYourFiles=new List<FunYourFile>();
+            
+            var _WillBeRemovedFunDirs=new List<FunDir>()
+                {
+                    _FunDirs.Where(m=>m.Id==id ).FirstOrDefault()
+                };
+
+            var _IdAndParentIds=_FunDirs.Select(
+                    p=>
+                        new IdAndParentId
+                        {
+                            Id=p.Id,
+                            ParentId=p.ParentDirId
+                        })
+                .Union(  
+                    _FunYourFiles.Select(
+                        p=>
+                        new IdAndParentId
+                        {
+                            Id =p.Id ,
+                            ParentId=p.ParentDirId
+                        })).ToList();
+
+            _FunDirs.ForEach(p=>{
+                if(_funFilesHelper.IsIdInParentDirId(id,p.Id,_IdAndParentIds))
+                    _WillBeRemovedFunDirs.Add(p);
+            });  
+            
+            _FunYourFiles.ForEach(p=>{
+                if(_funFilesHelper.IsIdInParentDirId(id,p.Id,_IdAndParentIds))
+                    _WillBeRemovedFunYourFiles.Add(p);
+            });
+            
+            _context.FunYourFile.RemoveRange(_WillBeRemovedFunYourFiles);
+
+            _context.FunDir.RemoveRange(_WillBeRemovedFunDirs);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
