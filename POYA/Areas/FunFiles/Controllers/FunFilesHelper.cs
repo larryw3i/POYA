@@ -16,7 +16,6 @@ namespace POYA.Areas.FunFiles.Controllers
     public class FunFilesHelper
     {
 
-        
         public bool IsIdInParentDirId(Guid ParentDirId, Guid Id, List<IdAndParentId> IdAndParentIds)
         {   
             var _ParentDirId=IdAndParentIds
@@ -43,7 +42,7 @@ namespace POYA.Areas.FunFiles.Controllers
         /// <param name="_UserId"></param>
         /// <param name="_context"></param>
         /// <returns></returns>
-        public async Task<List<FunDir>> GetFunDirPathAsync(Guid? ParentDirId,string _UserId,ApplicationDbContext _context)
+        public async Task<List<FunDir>> GetPathFunDir(Guid? ParentDirId,string _UserId, List<FunDir> FunDirs)
         {
             var _ParentDirId=ParentDirId??RootDirId;
 
@@ -58,7 +57,7 @@ namespace POYA.Areas.FunFiles.Controllers
             };
             
             while(_ParentDirId!=RootDirId){
-                var _FunDir=await _context.FunDir.FirstOrDefaultAsync(p=>p.Id==_ParentDirId);
+                var _FunDir=_FunDirs.FirstOrDefault(p=>p.Id==_ParentDirId);
                 if(_FunDir==null){
                     break;
                 }

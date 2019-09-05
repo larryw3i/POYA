@@ -12,7 +12,7 @@ using POYA.Data;
 namespace POYA.Areas.FunFiles.Controllers
 {
     [Area("FunFiles")]
-    [Authorize]
+    [Authorize(Roles="843feb44-71d3-4e8c-bb79-b3f898aa3172")]
     public class FunFileBytesController : Controller
     {
         private readonly ApplicationDbContext _context;

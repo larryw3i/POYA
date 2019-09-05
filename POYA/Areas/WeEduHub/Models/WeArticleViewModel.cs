@@ -18,7 +18,17 @@ namespace POYA.Areas.iEduHub.Models
     public class WeArticleSet
     {
         public Guid Id{get;set;}
+        public string UserId{get;set;}
         public string Name{get;set;}
-        
+        public string  Description{get;set;}
+        public DateTimeOffset DOCreating{get;set;}=DateTimeOffset.Now;
+    }
+
+    public class WeArticleFile
+    {
+        public Guid Id{get;set;}
+        public string UserId{get;set;}
+        public string SHA256HexString{get;set;}
+        public string Name{get;set;}
     }
 }

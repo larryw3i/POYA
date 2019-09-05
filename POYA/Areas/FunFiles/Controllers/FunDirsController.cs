@@ -88,12 +88,14 @@ namespace POYA.Areas.FunFiles.Controllers
                 }
             );
 
+            var _FunDirs= await _context.FunDir.Where(p=>p.UserId==User_.Id).ToListAsync();
+
 
             ViewData[nameof(FunYourFile)+"s"]= _FunYourFiles;
 
             ViewData[nameof(ParentDirId)]=_ParentDirId;
 
-            ViewData["FunDirPath"]=await _funFilesHelper.GetFunDirPathAsync(ParentDirId,User_.Id,_context);
+            ViewData["FunDirPath"]=await _funFilesHelper.GetPathFunDir(ParentDirId,User_.Id, _FunDirs);
 
             return View(_FunDir);
         }
@@ -514,52 +516,9 @@ namespace POYA.Areas.FunFiles.Controllers
 
             ViewData[nameof(ParentDirId)]=_ParentDirId;
 
-            ViewData["FunDirPath"]=await _funFilesHelper.GetFunDirPathAsync(ParentDirId,User_.Id,_context);
+            ViewData["FunDirPath"]=await _funFilesHelper.GetPathFunDir(ParentDirId,User_.Id,await _context.FunDir.Where(p=>p.UserId==User_.Id).ToListAsync());
 
             return View(_FunDirs);
-        }
-
-
-        /// <summary>
-        /// GET: FunFiles/FunDirs/iDetails/5, list dir and file in Details Action
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> iDetails(Guid? id)
-        {
-            id=id??_funFilesHelper.RootDirId;
-
-            var User_=await _userManager.GetUserAsync(User);
-            
-            var funDir = await _context.FunDir
-                .FirstOrDefaultAsync(m => m.Id == id && m.UserId==User_.Id);
-                
-            if (funDir == null)
-            {
-                return NotFound();
-            }
-            
-            return View(funDir);
-        }
-
-        public async Task<IActionResult> IndexFunYourFiles(Guid? ParentDirId)
-        {
-            var _ParentDirId=ParentDirId??_funFilesHelper.RootDirId;
-            var User_=await _userManager.GetUserAsync(User);
-            return View(await _context.FunYourFile
-                .Where(p=>p.ParentDirId==_ParentDirId && p.UserId==User_.Id)
-                .ToListAsync()
-            );
-        }
-
-        public async Task<IActionResult> IndexFunYourFilesJson(Guid? ParentDirId)
-        {
-            var _ParentDirId=ParentDirId??_funFilesHelper.RootDirId;
-            var User_=await _userManager.GetUserAsync(User);
-            return Json(await _context.FunYourFile
-                .Where(p=>p.ParentDirId==_ParentDirId && p.UserId==User_.Id)
-                .ToListAsync()
-            );
         }
 
         #endregion
