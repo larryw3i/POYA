@@ -195,26 +195,6 @@ namespace POYA.Controllers
                     }
                 }
 
-                #region INITIAL_USER_ROLE
-
-                var _userRoles = new string[] { X_DOVEValues._administrator };
-
-                foreach(var r in _userRoles){
-                    if(!await _roleManager.RoleExistsAsync(r)){
-                        await _roleManager.CreateAsync(new IdentityRole{ Name=r,NormalizedName=r});
-                    }
-                }
-
-
-                var _user = await _context.Users.FirstOrDefaultAsync(p => p.Email == AdminEmail);
-
-                if (_user != null && !await _userManager.IsInRoleAsync(_user,X_DOVEValues._administrator))
-                {
-                    await _userManager.AddToRoleAsync(_user,X_DOVEValues._administrator);
-                }
-
-                #endregion
-
                 #region MODIFY appsettings.json
                 var _appsettings_jsonPath = _hostingEnv.ContentRootPath + "/appsettings.json";
 

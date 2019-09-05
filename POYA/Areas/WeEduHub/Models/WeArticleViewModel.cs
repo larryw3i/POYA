@@ -2,7 +2,7 @@
 
 using System;
 
-namespace POYA.Areas.iEduHub.Models
+namespace POYA.Areas.WeEduHub.Models
 {
     public class WeArticle    //  ViewModel
     {

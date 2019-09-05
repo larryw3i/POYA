@@ -2,23 +2,61 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ganss.XSS;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using POYA.Areas.iEduHub.Models;
+using Microsoft.Extensions.Localization;
+using POYA.Areas.FunFiles.Controllers;
+using POYA.Areas.WeEduHub.Models;
 using POYA.Data;
+using POYA.Unities.Helpers;
 
 namespace POYA.Areas.WeEduHub.Controllers
 {
+    [Authorize]
     [Area("WeEduHub")]
     public class WeArticleFileController : Controller
     {
+          #region     DI
+        private readonly IHostingEnvironment _hostingEnv;
+        private readonly IStringLocalizer<Program> _localizer;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
-
-        public WeArticleFileController(ApplicationDbContext context)
+        private readonly X_DOVEHelper _x_DOVEHelper;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly HtmlSanitizer _htmlSanitizer;
+        private readonly FunFilesHelper _funFilesHelper;
+        public WeArticleFileController(
+            FunFilesHelper funFilesHelper,
+            HtmlSanitizer htmlSanitizer,
+            SignInManager<IdentityUser> signInManager,
+            X_DOVEHelper x_DOVEHelper,
+            RoleManager<IdentityRole> roleManager,
+           IEmailSender emailSender,
+           UserManager<IdentityUser> userManager,
+           ApplicationDbContext context,
+           IHostingEnvironment hostingEnv,
+           IStringLocalizer<Program> localizer)
         {
+            _htmlSanitizer = htmlSanitizer;
+            _hostingEnv = hostingEnv;
+            _localizer = localizer;
             _context = context;
+            _userManager = userManager;
+            _emailSender = emailSender;
+            _roleManager = roleManager;
+            _x_DOVEHelper = x_DOVEHelper;
+            _signInManager = signInManager;
+            _funFilesHelper=funFilesHelper;
         }
+        #endregion
 
         // GET: WeEduHub/WeArticleFile
         public async Task<IActionResult> Index()

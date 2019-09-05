@@ -1,4 +1,4 @@
-@model POYA.Areas.iEduHub.Models.WeArticleSet
+@model POYA.Areas.WeEduHub.Models.WeArticleSet
 
 @{
     ViewData["Title"] = "Create";
@@ -13,28 +13,20 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
+            <input asp-for="UserId" type="hidden"/>
+            <input asp-for="DOCreating" type="hidden"/>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control" autocomplete="off"/>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control" autocomplete="off" rows="5"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DOCreating" class="control-label"></label>
-                <input asp-for="DOCreating" class="form-control" />
-                <span asp-validation-for="DOCreating" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value='@(Localizer["Create"])' class="btn btn-primary" />
             </div>
         </form>
     </div>

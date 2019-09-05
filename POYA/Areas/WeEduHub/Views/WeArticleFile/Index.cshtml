@@ -1,4 +1,4 @@
-@model IEnumerable<POYA.Areas.iEduHub.Models.WeArticleFile>
+@model IEnumerable<POYA.Areas.WeEduHub.Models.WeArticleFile>
 
 @{
     ViewData["Title"] = "Index";
@@ -10,6 +10,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -29,7 +30,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model) 
+{
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.UserId)
