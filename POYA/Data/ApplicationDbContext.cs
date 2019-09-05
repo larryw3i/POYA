@@ -10,6 +10,7 @@ using POYA.Areas.Identity;
 using POYA.Areas.XAd.Models;
 using POYA.Areas.FunAdmin.Models;
 using POYA.Areas.FunFiles.Models;
+using POYA.Areas.iEduHub.Models;
 namespace POYA.Data
 {
     public class ApplicationDbContext : IdentityDbContext
@@ -39,6 +40,9 @@ namespace POYA.Data
         public DbSet<POYA.Areas.FunFiles.Models.FunFileByte> FunFileByte { get; set; }
         public DbSet<POYA.Areas.FunFiles.Models.FunYourFile> FunYourFile { get; set; }
         public DbSet<POYA.Areas.EduHub.Models.EduHubFile> EduHubFiles{get;set;}
+        public DbSet<POYA.Areas.iEduHub.Models.WeArticle> WeArticle { get; set; }
+        public DbSet<POYA.Areas.iEduHub.Models.WeArticleSet> WeArticleSet { get; set; }
+        public DbSet<POYA.Areas.iEduHub.Models.WeArticleFile> WeArticleFile { get; set; }
         
     }
 }

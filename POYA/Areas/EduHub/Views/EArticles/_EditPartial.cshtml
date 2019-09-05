@@ -36,7 +36,6 @@
             <div class="form-group ">
                 <div class="row">
                     <input asp-for="Title" class="form-control col offset-3 col-6" placeholder='@(Localizer["Title"])' autocomplete="off" />
-
                 </div>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
@@ -78,11 +77,11 @@
                         <div class="col" id="video_list_div">
                             @if (IsEdit)
                             {
-                                foreach (var v in EArticleFiles.Where(p => p.IsEArticleVideo))
+                                foreach ( var v in EArticleFiles.Where(p => p.IsEArticleVideo) )
                                 {
                                     var _id = v.Id.ToString();
 
-                                    <div class="SelectFileShowEle row" id="@(FileRemoveEleString+_id)">
+                                    <div class="SelectFileShowEle row" id="@(FileRemoveEleString+_id)" >
                                         <span>@(v.FileName)</span>
                                         <span class='FileInputRemoveEle' id="LVideos_@_id" onclick="RemoveFile('@_id',true,true)">  &#128500; </span>
                                     </div>
