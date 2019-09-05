@@ -70,17 +70,17 @@ namespace POYA.Areas.XUserFile.Controllers
         /// <param name="lMD5s">The IEnumerableLMD5</param>
         /// <returns></returns>
         #endregion
-        public List<LMD5> LCheckMD5(IHostingEnvironment env, List<LMD5> lMD5s)
+        public List<LSHA256> LCheckMD5(IHostingEnvironment env, List<LSHA256> lSHA256s)
         {
 
-            var UploadFileMD5s = System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(env))
+            var UploadFileSHA256s = System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(env))
                 .Select(p => System.IO.Path.GetFileNameWithoutExtension(p)).ToList();
 
-            foreach (var m in lMD5s)
-                if (UploadFileMD5s.Contains(m.FileMD5))
+            foreach (var m in lSHA256s)
+                if (UploadFileSHA256s.Contains(m.FileSHA256))
                     m.IsUploaded = true;
 
-            return lMD5s;
+            return lSHA256s;
         }
 
         #region

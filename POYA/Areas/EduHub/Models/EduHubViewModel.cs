@@ -140,27 +140,27 @@ namespace POYA.Areas.EduHub.Models
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
         public Guid EArticleId { get; set; }
-        public string FileMD5 { get; set; }
+        public string FileSHA256 { get; set; }
         public string FileName { get; set; }
         public bool IsEArticleVideo { get; set; } = false;
 
-        #region DEPOLLUTION
-
+        #region NOTMAPPED
 
         /// <summary>
         /// [NotMapped]
         /// </summary>
         [NotMapped]
         public string ContentType { get; set; }
+
         #endregion
     
     }
 
-    public class EArticleFileMD5
+    public class EArticleFileSHA256
     {
         public Guid EArticleId { get; set; }
         public string FileName { get; set; }
-        public string MD5 { get; set; }
+        public string SHA256 { get; set; }
         public bool IsEArticleVideo { get; set; } = false;
     }
 
@@ -172,49 +172,6 @@ namespace POYA.Areas.EduHub.Models
         public string Code { get; set; }
         public string Name { get; set; }
     }
-
-    #region ARTICLE_CLASS
-    /*
-     * Id,Code,Name
-
-     * 
-    public class LField
-    {
-        public Guid Id { get; set; } = Guid.NewGuid();
-        [StringLength(maximumLength:20)]
-        public string Name { get; set; }
-    }
-    public class LAdvancedClass
-    {
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public Guid LFieldId { get; set; }
-        [StringLength(maximumLength: 20)]
-        public string Name { get; set; }
-    }
-    public class LSecondaryClass
-    {
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public Guid LAdvancedClassId { get; set; }
-        [StringLength(maximumLength: 20)]
-        public string Name { get; set; }
-    }
-    public class LGrade
-    {
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public Guid LSecondaryClassId { get; set; }
-        [StringLength(maximumLength: 20)]
-        public string Name { get; set; }
-    }
-    public class LGradeComment
-    {
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public Guid LGradeId { get; set; }
-        [StringLength(maximumLength: 50)]
-        public string Comment { get; set; }
-
-    }
-    */
-    #endregion
 
 
     #endregion

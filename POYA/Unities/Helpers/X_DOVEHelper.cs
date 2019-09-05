@@ -135,11 +135,11 @@ namespace POYA.Unities.Helpers
 
 
         /// <summary>
-        /// env.ContentRootPath+$"/Data/LFiles/EduHub/"
+        ///  env.ContentRootPath + $"/Areas/EduHub/Data/EArticleFiles/"
         /// </summary>
         /// <param name="env">The HostingEnvironment</param>
-        /// <returns>env.ContentRootPath+$"/Data/LFiles/EduHub/"</returns>
-        public static string EduHubFileStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/EduHub/";
+        /// <returns>  env.ContentRootPath + $"/Areas/EduHub/Data/EArticleFiles/" </returns>
+        public static string EduHubFileStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Areas/EduHub/Data/EArticleFiles/";
 
         /// <summary>
         /// env.ContentRootPath + $"/Data/LFiles/XUserFile/"

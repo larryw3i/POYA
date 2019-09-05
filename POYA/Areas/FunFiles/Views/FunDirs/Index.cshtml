@@ -118,7 +118,10 @@ else
 }
 
 <div class="row">
-    <div class="FunFilesPopup " class="col offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-4 col-lg-4">
+    <div class="col offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-4 col-lg-4">
+        <div  class="FunFilesPopup">
+
+        </div>
 
     </div>
 </div>
@@ -140,7 +143,7 @@ else
 
             $(document).on(`click`,`.GetDirIndex`,(e)=>{ GetDirIndexClick(e); });
 
-            $(document).on(`click`,`.Times_FunFilesPopupClose`,(e)=>{  FunFilesPopupBlur(e); });
+            $(document).on(`click`,`.times-funfiles-popup-close `,(e)=>{  FunFilesPopupBlur(e); });
 
             $(document).on(`click`,`.CopyOrMoveTo`,(e)=>{ CopyOrMoveToClick(e); });
 
@@ -312,13 +315,13 @@ else
             zoom: 1.2;
         }
 
-        .Times_FunFilesPopupClose{
+        .times-funfiles-popup-close{
             font-size: 300%;
             position: absolute;
             right: 5px;
         }
 
-        .Times_FunFilesPopupClose:hover{
+        .times-funfiles-popup-close:hover{
             color: red;
             transform: scale(1.1);
         }
@@ -349,7 +352,7 @@ else
             left: 0;
             margin: auto;
             background-color: white;
-            width: 80%;
+            width: max-content;
             height:min-content;
             border-radius: 8px;
             border-color: red;

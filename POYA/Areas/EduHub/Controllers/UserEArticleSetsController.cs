@@ -60,16 +60,6 @@ namespace POYA.Areas.EduHub.Controllers
             _xUserFileHelper = new XUserFileHelper();
         }
 
-        #region 
-        /*
-       private readonly ApplicationDbContext _context;
-       public UserEArticleSetsController(ApplicationDbContext context)
-       {
-           _context = context;
-       }
-       */
-        #endregion
-
         #endregion
 
         // GET: EduHub/UserEArticleSets

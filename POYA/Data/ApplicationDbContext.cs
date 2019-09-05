@@ -38,6 +38,7 @@ namespace POYA.Data
         public DbSet<POYA.Areas.FunFiles.Models.FunDir> FunDir { get; set; }
         public DbSet<POYA.Areas.FunFiles.Models.FunFileByte> FunFileByte { get; set; }
         public DbSet<POYA.Areas.FunFiles.Models.FunYourFile> FunYourFile { get; set; }
+        public DbSet<POYA.Areas.EduHub.Models.EduHubFile> EduHubFiles{get;set;}
         
     }
 }

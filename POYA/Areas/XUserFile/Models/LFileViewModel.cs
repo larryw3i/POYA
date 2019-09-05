@@ -211,11 +211,11 @@ namespace POYA.Areas.XUserFile.Models
     }
 
     /// <summary>
-    /// For LCheckMD5
+    /// For LCheckSHA256
     /// </summary>
-    public class LMD5
+    public class LSHA256
     {
-        public string FileMD5 { get; set; }
+        public string FileSHA256 { get; set; }
         /// <summary>
         /// The default is <see langword="false"/>
         /// </summary>

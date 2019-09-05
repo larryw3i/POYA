@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CsvHelper;
@@ -19,6 +20,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using POYA.Areas.EduHub.Models;
+using POYA.Areas.FunFiles.Controllers;
 using POYA.Areas.XUserFile.Controllers;
 using POYA.Areas.XUserFile.Models;
 using POYA.Data;
@@ -44,10 +46,11 @@ namespace POYA.Areas.EduHub.Controllers
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly HtmlSanitizer _htmlSanitizer;
-        private readonly XUserFileHelper _xUserFileHelper;
+        private readonly FunFilesHelper _funFilesHelper;
         private readonly Regex _unicode2StringRegex;
         private readonly EduHubHelper _eduHubHelper;
         public EArticlesController(
+            FunFilesHelper funFilesHelper,
             HtmlSanitizer htmlSanitizer,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
@@ -67,8 +70,8 @@ namespace POYA.Areas.EduHub.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
-            _xUserFileHelper = new XUserFileHelper();
             _eduHubHelper=new EduHubHelper();
+            _funFilesHelper=funFilesHelper;
             _unicode2StringRegex = new Regex(@"\\u([0-9A-F]{4})", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         }
         #endregion
@@ -309,12 +312,11 @@ namespace POYA.Areas.EduHub.Controllers
             }
             await _context.SaveChangesAsync();
 
-            #region EARTICLE_FILES
+
             var _EArticleFiles = await _context.EArticleFiles.Where(p => p.EArticleId == id).ToListAsync();
             InitFileExtension(_EArticleFiles);
             ViewData["EArticleFiles"] = _EArticleFiles;
-            #endregion
-
+            
 
             #region CATEGORY
             var Categories = GetCategories(); 
@@ -402,11 +404,6 @@ namespace POYA.Areas.EduHub.Controllers
 
                 await _context.AddAsync(eArticle);
 
-                #region     SAVE_FILES
-
-                await SaveArticleFilesAsync(eArticle);
-
-                #endregion
 
                 await _context.SaveChangesAsync();
                 return Ok();  
@@ -464,7 +461,7 @@ namespace POYA.Areas.EduHub.Controllers
                     _EArticle.AdditionalCategory = eArticle.AdditionalCategory;
                     #endregion
 
-                    await SaveArticleFilesAsync(eArticle);
+                    //  await SaveArticleFilesAsync(eArticle);
 
                     await _context.SaveChangesAsync();
                     return Ok();  
@@ -611,10 +608,10 @@ namespace POYA.Areas.EduHub.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> LCheckMD5v1(IEnumerable<EArticleFileMD5> eArticleFileMD5s)
+        public async Task<IActionResult> LCheckSHA256v1(IEnumerable<EArticleFileSHA256> eArticleFileSHA256s)
         {
-            var _lMD5s = eArticleFileMD5s.ToList().Select(p => new LMD5 { FileMD5 = p.MD5, IsUploaded = false }).ToList();
-            _lMD5s = _xUserFileHelper.LCheckMD5(_hostingEnv, _lMD5s);
+            var _lSHA256s = eArticleFileSHA256s.ToList().Select(p => new LSHA256 { FileSHA256 = p.SHA256, IsUploaded = false }).ToList();
+            _lSHA256s = _eduHubHelper.LCheckSHA256(_hostingEnv, _lSHA256s);
             var _EArticleFiles_ = new List<EArticleFile>();
             var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
@@ -623,7 +620,7 @@ namespace POYA.Areas.EduHub.Controllers
             .Select(p => new { p.Id, p.UserId })
             .ToListAsync();
 
-            foreach (var e in eArticleFileMD5s)
+            foreach (var e in eArticleFileSHA256s)
             {
                 if (UserEArticles.Any(q => q.Id == e.EArticleId && (q.UserId != UserId_)))
                 {
@@ -632,15 +629,15 @@ namespace POYA.Areas.EduHub.Controllers
             }
 
             #endregion
-            eArticleFileMD5s.ToList().ForEach(p =>
+            eArticleFileSHA256s.ToList().ForEach(p =>
             {
-                if (_lMD5s.Any(q => q.FileMD5 == p.MD5 && q.IsUploaded))
+                if (_lSHA256s.Any(q => q.FileSHA256 == p.SHA256 && q.IsUploaded))
                 {
                     _EArticleFiles_.Add(
                         new EArticleFile 
                         { 
                             EArticleId = p.EArticleId,
-                            FileMD5 = p.MD5, 
+                            FileSHA256 = p.SHA256, 
                             FileName = Path.GetFileName(p.FileName), 
                             IsEArticleVideo = p.IsEArticleVideo 
                         }
@@ -650,7 +647,7 @@ namespace POYA.Areas.EduHub.Controllers
 
             await _context.EArticleFiles.AddRangeAsync(_EArticleFiles_);
             await _context.SaveChangesAsync();
-            return Ok(_lMD5s);
+            return Ok(_lSHA256s);
         }
 
 
@@ -663,8 +660,8 @@ namespace POYA.Areas.EduHub.Controllers
                 var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                 var _data = new List<string>();
 
-                var _MD5s = await System.IO.Directory.GetFiles(
-                    X_DOVEValues.FileStoragePath(_hostingEnv))
+                var _SHA256s = await System.IO.Directory.GetFiles(
+                    X_DOVEValues.EduHubFileStoragePath(_hostingEnv))
                     .Select(p => p.Split(new char[] { '\\', '/' })
                     .LastOrDefault())
                     .ToListAsync();
@@ -674,15 +671,15 @@ namespace POYA.Areas.EduHub.Controllers
                     var MemoryStream_ = new MemoryStream();
                     await img.CopyToAsync(MemoryStream_);
                     var FileBytes = MemoryStream_.ToArray();
-                    var MD5_ = _xUserFileHelper.GetFileMD5(FileBytes);
-                    var FilePath = X_DOVEValues.FileStoragePath(_hostingEnv) + MD5_;
+                    var SHA256_ =_funFilesHelper.SHA256BytesToHexString(SHA256.Create().ComputeHash(FileBytes));
+                    var FilePath = X_DOVEValues.EduHubFileStoragePath(_hostingEnv) + SHA256_;
                     //  System.IO.File.Create(FilePath);
-                    if (!_MD5s.Contains(MD5_))
+                    if (!_SHA256s.Contains(SHA256_))
                     {
                         await System.IO.File.WriteAllBytesAsync(FilePath, FileBytes);
-                        await _context.LFile.AddAsync(new LFile
+                        await _context.EduHubFiles.AddAsync(new EduHubFile
                         {
-                            MD5 = MD5_,
+                            SHA256 =SHA256_,
                             UserId = UserId_
                         });
                     }
@@ -690,7 +687,7 @@ namespace POYA.Areas.EduHub.Controllers
                     var _LUserFile = new LUserFile
                     {
                         UserId = UserId_,
-                        MD5 = MD5_,
+                        MD5 = SHA256_,
                         InDirId = X_DOVEValues.PublicDirId,
                         Name = img.FileName,
                         IsEArticleFile = true
@@ -770,6 +767,7 @@ namespace POYA.Areas.EduHub.Controllers
             return _VideoSharedCodeSelectListItems;
         }
 
+        /*
         private async Task SaveArticleFilesAsync(EArticle eArticle)
         {
             if (eArticle.LAttachments?.Count() < 1 || eArticle.LVideos?.Count() < 1) return;
@@ -817,7 +815,7 @@ namespace POYA.Areas.EduHub.Controllers
             await _context.LFile.AddRangeAsync(_LFiles_);
             return;
         }
-
+        */
         private List<LEArticleCategory> GetCategories()
         {
             var _eArticleCategoryFilePath = _hostingEnv.WebRootPath + $"/app_data/earticle_category.csv";

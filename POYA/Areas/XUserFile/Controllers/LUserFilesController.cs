@@ -554,7 +554,7 @@ namespace POYA.Areas.XUserFile.Controllers
             var _EArticleFile = await _context.EArticleFiles.FirstOrDefaultAsync(p => p.Id == id);
             if (_EArticleFile != null)
             {
-                var _FilePath_ = X_DOVEValues.FileStoragePath(_hostingEnv) + _EArticleFile.FileMD5;
+                var _FilePath_ = X_DOVEValues.FileStoragePath(_hostingEnv) + _EArticleFile.FileSHA256;
                 if (!System.IO.File.Exists(_FilePath_))
                 {
                     return NoContent();
