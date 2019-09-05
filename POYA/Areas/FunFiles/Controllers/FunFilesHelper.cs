@@ -42,30 +42,32 @@ namespace POYA.Areas.FunFiles.Controllers
         /// <param name="_UserId"></param>
         /// <param name="_context"></param>
         /// <returns></returns>
-        public async Task<List<FunDir>> GetPathFunDir(Guid? ParentDirId,string _UserId, List<FunDir> FunDirs)
+        public List<FunDir> GetPathFunDir(Guid? ParentDirId, string _UserId, List<FunDir> FunDirs)
         {
-            var _ParentDirId=ParentDirId??RootDirId;
+            var _ParentDirId = ParentDirId ?? RootDirId;
 
-            var _FunDirs=new List<FunDir>(){
+            var _FunDirs = new List<FunDir>(){
                 new FunDir{
-                    DOCreating=DateTimeOffset.MinValue, 
-                    Id=RootDirId, 
-                    Name="root", 
-                    ParentDirId=RootDirId, 
+                    DOCreating=DateTimeOffset.MinValue,
+                    Id=RootDirId,
+                    Name="root",
+                    ParentDirId=RootDirId,
                     UserId=_UserId
                 }
             };
-            
-            while(_ParentDirId!=RootDirId){
-                var _FunDir=_FunDirs.FirstOrDefault(p=>p.Id==_ParentDirId);
-                if(_FunDir==null){
+
+            while (_ParentDirId != RootDirId)
+            {
+                var _FunDir = FunDirs.FirstOrDefault(p => p.Id == _ParentDirId);
+                if (_FunDir == null)
+                {
                     break;
                 }
                 _FunDirs.Add(_FunDir);
-                _ParentDirId=_FunDir.ParentDirId;
+                _ParentDirId = _FunDir.ParentDirId;
             }
 
-            return _FunDirs.OrderBy(p=>p.DOCreating).ToList();
+            return _FunDirs.OrderBy(p => p.DOCreating).ToList();
         }
 
 

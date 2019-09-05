@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Hosting;
+using POYA.Areas.FunFiles.Controllers;
 using POYA.Areas.XUserFile.Models;
 using POYA.Unities.Helpers;
 
@@ -13,7 +14,6 @@ namespace POYA.Areas.EduHub.Controllers
     {
         public string CancelSearchKeyCmd = "E58AE815-0CE2-469A-BD46-3C68B99547D9";
 
-        #region
         /// <summary>
         /// Get the MD5 of file byte array
         /// </summary>
@@ -21,18 +21,11 @@ namespace POYA.Areas.EduHub.Controllers
         /// File byte array
         /// </param>
         /// <returns></returns>
-        #endregion
         public string GetFileSHA256(byte[] FileBytes)
         {
-            var SHA256_ = SHA256.Create();
-            var MD5Bytes = SHA256_.ComputeHash(FileBytes);
+            var SHA256Bytes = SHA256.Create().ComputeHash(FileBytes);
             
-            var sb = new StringBuilder();
-            for (int i = 0; i < MD5Bytes.Length; i++)
-            {
-                sb.Append(MD5Bytes[i].ToString("x2"));
-            }
-            return sb.ToString();
+            return new FunFilesHelper().SHA256BytesToHexString(SHA256Bytes);
         }
          
          

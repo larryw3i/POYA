@@ -95,7 +95,7 @@ namespace POYA.Areas.FunFiles.Controllers
 
             ViewData[nameof(ParentDirId)]=_ParentDirId;
 
-            ViewData["FunDirPath"]=await _funFilesHelper.GetPathFunDir(ParentDirId,User_.Id, _FunDirs);
+            ViewData["FunDirPath"]=_funFilesHelper.GetPathFunDir(ParentDirId,User_.Id, _FunDirs);
 
             return View(_FunDir);
         }
@@ -516,7 +516,7 @@ namespace POYA.Areas.FunFiles.Controllers
 
             ViewData[nameof(ParentDirId)]=_ParentDirId;
 
-            ViewData["FunDirPath"]=await _funFilesHelper.GetPathFunDir(ParentDirId,User_.Id,await _context.FunDir.Where(p=>p.UserId==User_.Id).ToListAsync());
+            ViewData["FunDirPath"]=_funFilesHelper.GetPathFunDir(ParentDirId,User_.Id,await _context.FunDir.Where(p=>p.UserId==User_.Id).ToListAsync());
 
             return View(_FunDirs);
         }

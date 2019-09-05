@@ -81,7 +81,11 @@
                                 foreach (var v in EArticleFiles.Where(p => p.IsEArticleVideo))
                                 {
                                     var _id = v.Id.ToString();
-                                    <div class="SelectFileShowEle row" id="@(FileRemoveEleString+_id)"><span>@(v.FileName)</span><span class='FileInputRemoveEle' id="LVideos_@_id" onclick="RemoveFile('@_id',true,true)">  &#128500;</span></div>
+
+                                    <div class="SelectFileShowEle row" id="@(FileRemoveEleString+_id)">
+                                        <span>@(v.FileName)</span>
+                                        <span class='FileInputRemoveEle' id="LVideos_@_id" onclick="RemoveFile('@_id',true,true)">  &#128500; </span>
+                                    </div>
                                 }
                             }
                         </div>
@@ -126,22 +130,110 @@
 
     var IDAndSHA256Array = new Array();
 
-    var IsVideoFileSelected =Boolean(`@(IsVideoFileUploaded?"":"0")`); //   @(IsVideoFileUploaded?"true":"false");
+    var IsVideoFileSelected =Boolean(`@(IsVideoFileUploaded?"":"0")`); 
+
     var LAttachmentFileInputId = (id) => `LAttachments_${id}`;
+
     var LVideoFileInputId = (id) => `LVideos_${id}`;
+
     var LAttachmentFileInput = (id) => `<input type='file' hidden name='LAttachments' id='${this.LAttachmentFileInputId(id)}' onchange='LAttachmentsOnChange("${id}")'/>`;
 
     var LVideoFileInput = (id) => `<input type='file'  hidden name='LVideos' id='${this.LVideoFileInputId(id)}' accept='video/*'  onchange='LVideosOnChange("${id}")'/>`;
-    //  var FileRemoveId = (id) => `FileRemove_${id}`;
+    
     var FileRemoveEleId = (id) => `@FileRemoveEleString${id}`;
+
     var FileRemoveSpanId = (id) => `FileRemoveSpan_${id}`;
 
+    $(document).ready(function () {
+
+        $("#video_list_div").hide();
+        
+        $("#attachment_list_div").hide();
+
+        HandleCategorySelect();
+
+        $(document).on("change","#FirstCategorySelect", ()=>{ HandleCategorySelect();  });
+
+        $(document).on("click","#_ContentEditor", ()=> {  $(".w-e-text").focus();  });
+
+        $(document).on("mouseover","#attachment_div", ()=> {  $("#attachment_list_div").show();  });
+
+        $(document).on("mouseout","#attachment_div", ()=> { $("#attachment_list_div").hide();  });
+
+        $(document).on("mouseover","#video_div", ()=> {   $("#video_list_div").show();  });
+
+        $(document).on("mouseout","#video_div", ()=> {  $("#video_list_div").hide();  });
+
+        $(document).on("click","#EArticles_Form_Submit_A", ()=> { EArticles_Form_Submit_AClick(); });
+
+        $(document).on("blur","#_ContentEditor *", ()=> {  _ContentEditorBlur(); });
+
+        $(document).on("click","#VideoSelectEle",  ()=> { VideoSelectEleClick(); });
+
+        $(document).on("click","#AttachmentSelectBtn",  ()=> { AttachmentSelectBtnClick() });
+
+    });
+
+    function AttachmentSelectBtnClick()
+    {
+
+        var _LastAttachmentInputVal = $("#attachment_row_div input:last").val();
+
+        if (_LastAttachmentInputVal == undefined || _LastAttachmentInputVal.length > 0) {
+            let _LAttachmentFileInput = LAttachmentFileInput(_Data_.NewGuid());
+            $(_LAttachmentFileInput).attr("form", "EArticles_Form");
+            $("#attachment_row_div").append(_LAttachmentFileInput);
+        }
+        $("#attachment_row_div input:last").click();
+
+        event.preventDefault();
+
+    }
+
+    function VideoSelectEleClick()
+    {
+        if (IsVideoFileSelected) return;
+        var _LastVideoInputVal = $("#video_row_div input:last").val();
+        if (_LastVideoInputVal == undefined || _LastVideoInputVal.length > 0) {
+
+            let _LVideoFileInput = LVideoFileInput(_Data_.NewGuid());
+            
+            $(_LVideoFileInput).attr("form", "EArticles_Form");
+
+            $("#video_row_div").append(_LVideoFileInput);
+
+        }
+        $("#video_row_div input:last").click();
+
+        event.preventDefault();
+
+    }
+
+    function _ContentEditorBlur()
+    { 
+        if (Editor.txt.html().length < 20) {
+            $("#ContentValidation").html(`@(Localizer["The content of the article should be more than 20 characters"])!`);
+        } else {
+            $("#ContentValidation").html("");
+        }
+
+    }
+
+    function EArticles_Form_Submit_AClick()
+    {
+        if ($("#Title").val().length < 2) return;
+        if (Editor.txt.html().length < 10) return;
+        CheckSHA256();
+        event.preventDefault();
+
+    }
+
     /**
-    *  public Guid EArticleId { get; set; }
-    *  public string FileName { get; set;}
-    *  public string SHA256 { get; set; }
-    *  public bool IsEArticleVideo { get; set; } = false;
-    * */
+     *  public Guid EArticleId { get; set; }
+     *  public string FileName { get; set;}
+     *  public string SHA256 { get; set; }
+     *  public bool IsEArticleVideo { get; set; } = false;
+     * */
     function SubmitForm(Editor) {
         let _EArticles_Form_Data_ = new FormData();
         _EArticles_Form_Data_.append("@(nameof(Model.Title))", $("#@nameof(Model.Title)").val());
@@ -150,34 +242,30 @@
         _EArticles_Form_Data_.append("@(nameof(Model.CategoryId))", $("#CategoryId option:selected").val().toString().split('_')[0]);
         _EArticles_Form_Data_.append("@(nameof(Model.ComplexityRank))", $("#ComplexityRank option:selected").val());
         _EArticles_Form_Data_.append("@(nameof(Model.AdditionalCategory))", $("#AdditionalCategory").val());
+
         $("input[name='LAttachments']").each(function (index, elem) {
-            // console.log($(elem).val());
+
             if ($(elem).val() == "") return true;
             let _id = this.id;
-            // console.log(_id);
+            
             let _File = document.getElementById(_id).files[0];
             _EArticles_Form_Data_.append("LAttachments", _File, _File.name);
         });
         $("input[name='LVideos']").each(function (index, elem) {
-            // console.log($(elem).val());
+            
             if ($(elem).val() == "") return true;
             let _id = this.id;
-            // console.log(_id);
             let _File = document.getElementById(_id).files[0];
             _EArticles_Form_Data_.append("LVideos", _File, _File.name);
         });
         $.ajax({
-            //
             url: `@(Url.Action(IsEdit?"Edit":"Create"))`,
             type: "POST",
             data: _EArticles_Form_Data_,
             processData: false,
             contentType: false,
             async: true,
-            //  contentType: "multipart/form-data",
-            headers: {
-                "@(X_DOVEValues.CustomHeaderName)": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
-            },
+            headers: {  "@(X_DOVEValues.CustomHeaderName)": "@(csrf.GetAndStoreTokens(Context).RequestToken)"  },
             /**
              * REFERENCE    https://www.jianshu.com/p/eb119affdc25
              * THANK        https://www.jianshu.com/u/9ca9c65ce397
@@ -186,10 +274,13 @@
                 var xhr = $.ajaxSettings.xhr();
                 if (xhr.upload) {
                     xhr.upload.addEventListener("progress", function (e) {
+                        
                         var loaded = e.loaded;
+
                         var tot = e.total;
-                        //  // console.log(">>"+Id_);
+                        
                         var per = Math.floor(100 * loaded / tot);
+                        
                         $("#SaveProgressEle").html(per + "%");
                     }, false);
                     return xhr;
@@ -199,20 +290,15 @@
              * Retuen the id
              * @@param {number} Id The id
              */
-            success: function () {
-                history.go(-1);
-                //  window.location.href = "@Url.Action("Index")";
-            }
-            //
+            success: ()=> { history.go(-1); }
         });
 
 
     }
 
-    //    DATA
     var _CategoryId = "@Model.CategoryId";
     var _GuidEmpty = "@(Guid.Empty)";
-    var _IsEdit =Boolean(`@IsEdit?"":"0"`);   //  @(IsEdit?"true":"false");
+    var _IsEdit =Boolean(`@IsEdit?"":"0"`);  
     function HandleCategorySelect() {
 
         if (_CategoryId != _GuidEmpty) {
@@ -245,21 +331,19 @@
     }
 
     /**
-    *
-    * @@param {string} id -The id
-    * @@param {boolean} IsVideoFileInput -Flag a file input is video input for article
-    * @@param {boolean} IsUploadedFile -Flag a file input is uploaded(from Edit)
-    */
+     *
+     * @@param {string} id -The id
+     * @@param {boolean} IsVideoFileInput -Flag a file input is video input for article
+     * @@param {boolean} IsUploadedFile -Flag a file input is uploaded(from Edit)
+     */
     function RemoveFile(id, IsVideoFileInput = false, IsUploadedFile = false) {
         if (IsUploadedFile) {
             $.ajax({
                 url: `@Url.Action("RemoveArticleFile")`,
                 type: "POST",
                 data: { "id": id },
-                headers: {
-                    "@(X_DOVEValues.CustomHeaderName)": "@(csrf.GetAndStoreTokens(Context).RequestToken)"
-                },
-                success: function () {
+                headers: {  "@(X_DOVEValues.CustomHeaderName)": "@(csrf.GetAndStoreTokens(Context).RequestToken)"  },
+                success:  ()=> {
                     $(`#${FileRemoveEleId(id)}`).remove();
                     IsVideoFileSelected = false;
                 }
@@ -290,12 +374,13 @@
         $("#video_list_div").append(_Content);
         IsVideoFileSelected = true;
     }
+    
     /**
-    * Get SHA256 of file input and execute a function
-    * @@param {string} Id -The id of file input
-    * @@param {Function} ToDo - Execute a function(pass Id and SHA256) after finishing computing SHA256
-    * @@param {boolean} IsEArticleVideo - Flag a file is video of article or not, the default is false
-    */
+     * Get SHA256 of file input and execute a function
+     * @@param {string} Id -The id of file input
+     * @@param {Function} ToDo - Execute a function(pass Id and SHA256) after finishing computing SHA256
+     * @@param {boolean} IsEArticleVideo - Flag a file is video of article or not, the default is false
+     */
     function GetSHA256(Id,  IsEArticleVideo = false) {
 
         var File_ = File_ = document.getElementById(Id).files[0];
@@ -318,7 +403,9 @@
                 IDAndSHA256Array.push({ "ID": Id, "SHA256": _SHA256, "IsEArticleVideo": IsEArticleVideo });
             }
             setTimeout(function () {
+
                 $("#SaveProgressEle").html("");
+
             },2000);
             
 
@@ -371,89 +458,8 @@
     }
 
 
-    function FormSubmitClick() {
-        CheckSHA256();
-        }
-
-    $(document).ready(function () {
-
-        $("#video_list_div").hide();
-        $("#attachment_list_div").hide();
-        HandleCategorySelect();
-
-        $("#FirstCategorySelect").on("change", function () {
-            HandleCategorySelect();
-
-        });
-
-        $("#EArticles_Form_Submit_A").on("click", function () {
-            if ($("#Title").val().length < 2) return;
-            if (Editor.txt.html().length < 10) return;
-            FormSubmitClick();
-            event.preventDefault();
-        });
-
-        $("#_ContentEditor").on("click", function () {
-            $(".w-e-text").focus();
-        });
-
-        $("#VideoSelectEle").on("click", function () {
-
-            if (IsVideoFileSelected) return;
-            var _LastVideoInputVal = $("#video_row_div input:last").val();
-            if (_LastVideoInputVal == undefined || _LastVideoInputVal.length > 0) {
-
-                let _LVideoFileInput = LVideoFileInput(_Data_.NewGuid());
-                $(_LVideoFileInput).attr("form", "EArticles_Form");
-                $("#video_row_div").append(_LVideoFileInput);
-
-            }
-            $("#video_row_div input:last").click();
-
-            event.preventDefault();
-        });
-        $("#AttachmentSelectBtn").on("click", function () {
-
-            var _LastAttachmentInputVal = $("#attachment_row_div input:last").val();
-            if (_LastAttachmentInputVal == undefined || _LastAttachmentInputVal.length > 0) {
-                let _LAttachmentFileInput = LAttachmentFileInput(_Data_.NewGuid());
-                $(_LAttachmentFileInput).attr("form", "EArticles_Form");
-                $("#attachment_row_div").append(_LAttachmentFileInput);
-            }
-            $("#attachment_row_div input:last").click();
-
-            event.preventDefault();
-        });
-
-        $("#attachment_div").mouseover(function () {
-            $("#attachment_list_div").show();
-        });
-
-
-        $("#attachment_div").mouseout(function () {
-
-            $("#attachment_list_div").hide();
-        });
-
-        $("#video_div").mouseover(function () {
-
-            $("#video_list_div").show();
-        });
-
-        $("#video_div").mouseout(function () {
-
-            $("#video_list_div").hide();
-        });
-        $("#_ContentEditor *").blur(function () {
-            if (Editor.txt.html().length < 20) {
-                $("#ContentValidation").html(`@(Localizer["The content of the article should be more than 20 characters"])!`);
-            } else {
-                $("#ContentValidation").html("");
-            }
-        });
-
-    });
 </script>
+
 <style>
 
     #Title {

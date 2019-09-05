@@ -13,6 +13,9 @@ namespace POYA.Areas.iEduHub.Models
         public string Content{get;set;}
         public DateTimeOffset  DOPublishing{get;set;}=DateTimeOffset.Now;
         public DateTimeOffset? DOModifying{get;set;}
+
+        #region  NOTMAPPED
+        #endregion
     }
     
     public class WeArticleSet
@@ -22,6 +25,8 @@ namespace POYA.Areas.iEduHub.Models
         public string Name{get;set;}
         public string  Description{get;set;}
         public DateTimeOffset DOCreating{get;set;}=DateTimeOffset.Now;
+        #region  NOTMAPPED
+        #endregion
     }
 
     public class WeArticleFile
@@ -29,6 +34,14 @@ namespace POYA.Areas.iEduHub.Models
         public Guid Id{get;set;}
         public string UserId{get;set;}
         public string SHA256HexString{get;set;}
+
+        /// <summary>
+        /// With extension
+        /// </summary>
+        /// <value></value>
         public string Name{get;set;}
+        public DateTimeOffset DOUploading{get;set;}=DateTimeOffset.Now;
+        #region  NOTMAPPED
+        #endregion
     }
 }
