@@ -22,6 +22,7 @@ namespace POYA.Areas.WeEduHub.Models
     {
         public Guid Id{get;set;}
         public string UserId{get;set;}
+        public Guid CoverFileId{get;set;}
         public string Name{get;set;}
         public string  Description{get;set;}
         public DateTimeOffset DOCreating{get;set;}=DateTimeOffset.Now;

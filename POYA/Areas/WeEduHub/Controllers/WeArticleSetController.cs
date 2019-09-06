@@ -33,9 +33,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly HtmlSanitizer _htmlSanitizer;
-        private readonly FunFilesHelper _funFilesHelper;
         public WeArticleSetController(
-            FunFilesHelper funFilesHelper,
             HtmlSanitizer htmlSanitizer,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
@@ -55,7 +53,6 @@ namespace POYA.Areas.WeEduHub.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
-            _funFilesHelper=funFilesHelper;
         }
         #endregion
 
@@ -94,12 +91,16 @@ namespace POYA.Areas.WeEduHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,Name,Description,DOCreating")] WeArticleSet weArticleSet)
+        public async Task<IActionResult> Create([Bind("Name,Description")] WeArticleSet weArticleSet)
         {
             if (ModelState.IsValid)
             {
+                var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
                 weArticleSet.Id = Guid.NewGuid();
                 weArticleSet.DOCreating=DateTimeOffset.Now;
+                weArticleSet.UserId=_UserId;
+
                 _context.Add(weArticleSet);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

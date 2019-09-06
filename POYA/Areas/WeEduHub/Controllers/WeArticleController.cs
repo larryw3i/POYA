@@ -32,9 +32,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly HtmlSanitizer _htmlSanitizer;
-        private readonly FunFilesHelper _funFilesHelper;
         public WeArticleController(
-            FunFilesHelper funFilesHelper,
             HtmlSanitizer htmlSanitizer,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
@@ -54,7 +52,6 @@ namespace POYA.Areas.WeEduHub.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
-            _funFilesHelper=funFilesHelper;
         }
         #endregion
         // GET: WeEduHub/WeArticle
