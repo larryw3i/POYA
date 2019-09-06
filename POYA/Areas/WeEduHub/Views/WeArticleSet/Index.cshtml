@@ -7,23 +7,57 @@
 
 <h1>@(ViewData["Title"])</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-outline-info float-right">@(Localizer["Add"])</a>
-</p>
-
 <div class="row">
+    <div class="col col-12">
+        <a asp-action="Create" class="btn btn-outline-info float-right add-wearticleset">@(Localizer["Add"]) &raquo;</a>
+    </div>
+</div>
+
+<div class="row wearticleset-row">
     @foreach (var item in Model)
     {
-        <div class="col">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
+        <div class="col col-auto wearticleset-col" item-id="@(item.Id)">
+            <div class="card" style="max-width: 18rem;"  item-id="@(item.Id)">
+                <div class="card-body"  item-id="@(item.Id)">
                     <h5 class="card-title">@(item.Name)</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
+                    <hr/>
+                    <p class="card-text">@(item.Description)</p>
+                    <a asp-action="Details" asp-route-Id="@(item.Id)" class="card-link">@(Localizer["Details"])</a>
+                    <a asp-action="Edit" asp-route-Id="@(item.Id)" class="card-link">@(Localizer["Edit"])</a>
                 </div>
             </div>
         </div>
     }
 </div>
+
+@section Scripts
+{
+    <script>
+
+        $(document).ready(()=>{
+            $(document).on(`click`,`.wearticleset-col *`,(e)=>{ WearticlesetColClick(e); });
+        });
+        
+        /**
+         * @@param {Event}e
+         */
+        function WearticlesetColClick(e)
+        {
+            window.location.href=`@(Url.Action("Index","WeArticle"))?SetId=`+$(e.target).parents().attr(`item-id`);
+        }
+
+    </script>
+}
+
+@section Styles
+{
+    <style>
+        .wearticleset-row>.col{
+            margin-top: 10px;
+        }
+        .card-body:hover{
+            background-color: rgba(225,0,230,0.2);
+            border-radius: 3px;
+        }
+    </style>
+}

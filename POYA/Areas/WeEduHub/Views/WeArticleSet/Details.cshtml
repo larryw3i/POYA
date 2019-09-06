@@ -1,43 +1,44 @@
 @model POYA.Areas.WeEduHub.Models.WeArticleSet
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Localizer["Details"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>@(ViewData["Title"])</h1>
 
 <div>
-    <h4>WeArticleSet</h4>
+    <h4>@(Localizer["Video and article set"])</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserId)
+            @(Html.DisplayNameFor(model => model.UserId))
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
+            @(Html.DisplayFor(model => model.UserId))
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @(Html.DisplayNameFor(model => model.Name))
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @(Html.DisplayFor(model => model.Name))
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @(Html.DisplayNameFor(model => model.Description))
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @(Html.DisplayFor(model => model.Description))
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DOCreating)
+            @(Html.DisplayNameFor(model => model.DOCreating))
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DOCreating)
+            @(Html.DisplayFor(model => model.DOCreating))
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-outline-info">&laquo; @(Localizer["Back"])</a>    
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-info">@(Localizer["Edit"])</a> 
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">@(Localizer["Delete"])</a> 
 </div>

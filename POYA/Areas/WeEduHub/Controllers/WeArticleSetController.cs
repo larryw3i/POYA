@@ -129,7 +129,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,UserId,Name,Description,DOCreating")] WeArticleSet weArticleSet)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Description")] WeArticleSet weArticleSet)
         {
             if (id != weArticleSet.Id)
             {
@@ -140,7 +140,12 @@ namespace POYA.Areas.WeEduHub.Controllers
             {
                 try
                 {
-                    _context.Update(weArticleSet);
+                    var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+                    var _WeArticleSet=await _context.WeArticleSet.Where(p=>p.Id==id).FirstOrDefaultAsync();
+                    
+                    _WeArticleSet.Name=weArticleSet.Name;
+                    _WeArticleSet.Description=weArticleSet.Description;
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

@@ -26,6 +26,7 @@ namespace POYA.Areas.WeEduHub.Models
         public string Name{get;set;}
         public string  Description{get;set;}
         public DateTimeOffset DOCreating{get;set;}=DateTimeOffset.Now;
+        
         #region  NOTMAPPED
         #endregion
     }
@@ -34,6 +35,7 @@ namespace POYA.Areas.WeEduHub.Models
     {
         public Guid Id{get;set;}
         public string UserId{get;set;}
+        public Guid? WeArticleId{get;set;}
         public string SHA256HexString{get;set;}
 
         /// <summary>
@@ -42,6 +44,7 @@ namespace POYA.Areas.WeEduHub.Models
         /// <value></value>
         public string Name{get;set;}
         public DateTimeOffset DOUploading{get;set;}=DateTimeOffset.Now;
+
         #region  NOTMAPPED
         #endregion
     }
