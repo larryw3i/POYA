@@ -3,6 +3,7 @@
 /.vs/
 /POYATEST/
 /POYA/Areas/FunFiles/Data/
+/POYA/Areas/WeEduHub/Data/
 
 # Files
 *.csv#

@@ -18,7 +18,7 @@ using POYA.Unities.Helpers;
 
 namespace POYA.Areas.WeEduHub.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="50471031-573e-4f55-93e3-b396aeb377a9")]
     [Area("WeEduHub")]
     public class WeArticleFileController : Controller
     {

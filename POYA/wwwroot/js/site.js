@@ -148,7 +148,7 @@ $(document).ready(function () {
 
     $("#Theme").on("change", ()=>{ ChangeTheme(true); });
 
-    $("#BackA,#BackEle").on("click", ()=>{ history.go(-1);});
+    $("#BackA,#BackEle,#go_back").on("click", ()=>{ history.go(-1);});
 
     $("#_pageSize").keypress(()=>{ PageSizeKeyPress(); });
     

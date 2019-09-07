@@ -64,8 +64,13 @@ namespace POYA.Areas.WeEduHub.Controllers
         // GET: WeEduHub/WeArticle
         public async Task<IActionResult> Index(Guid? SetId)
         {
+            if(SetId==null)
+            {
+                return NotFound();
+            }
+            
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var _WeArticle=await _context.WeArticle.Where(p=>p.UserId==_UserId).ToListAsync();
+            var _WeArticle=await _context.WeArticle.Where(p=>p.UserId==_UserId && p.SetId==SetId).ToListAsync();
             
             ViewData[nameof(SetId)]=SetId;
             
@@ -79,13 +84,15 @@ namespace POYA.Areas.WeEduHub.Controllers
             {
                 return NotFound();
             }
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
-            var weArticle = await _context.WeArticle
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var weArticle = await _context.WeArticle.Where(p=>p.UserId==_UserId && p.Id==id).FirstOrDefaultAsync();
             if (weArticle == null)
             {
                 return NotFound();
             }
+
+            weArticle.Content=await System.IO.File.ReadAllTextAsync(  _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+weArticle.WeArticleFileId  );
 
             return View(weArticle);
         }
@@ -142,7 +149,7 @@ namespace POYA.Areas.WeEduHub.Controllers
                 );
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),new{SetId=weArticle.SetId});
             }
             return View(weArticle);
         }
@@ -160,6 +167,9 @@ namespace POYA.Areas.WeEduHub.Controllers
             {
                 return NotFound();
             }
+
+            weArticle.Content=await System.IO.File.ReadAllTextAsync( _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+weArticle.WeArticleFileId  );
+
             return View(weArticle);
         }
 
@@ -168,7 +178,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,UserId,SetId,Title,Content,DOPublishing,DOModifying")] WeArticle weArticle)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,SetId,WeArticleFormFile")] WeArticle weArticle)
         {
             if (id != weArticle.Id)
             {
@@ -179,7 +189,30 @@ namespace POYA.Areas.WeEduHub.Controllers
             {
                 try
                 {
-                    _context.Update(weArticle);
+                    var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+                    
+                    var _WeArticle=await _context.WeArticle.Where(p=>p.Id==weArticle.Id && p.UserId==_UserId).FirstOrDefaultAsync();
+                    _WeArticle.Title=weArticle.Title;
+
+                    if(weArticle.WeArticleFormFile!=null)
+                    {
+                        var _WeArticleFile=new WeArticleFile{
+                            DOUploading=DateTimeOffset.Now,
+                            Id=Guid.NewGuid(),
+                            Name=System.IO.Path.GetFileName(weArticle.WeArticleFormFile.FileName),
+                            UserId=_UserId
+                        };
+
+                        await System.IO.File.WriteAllBytesAsync(
+                            _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_WeArticleFile.Id,
+                            _funFilesHelper.GetFormFileBytes(weArticle.WeArticleFormFile)
+                        );
+
+                        await _context.AddAsync(_WeArticleFile);
+
+                        _WeArticle.WeArticleFileId=_WeArticleFile.Id;
+                    }
+                    
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -193,7 +226,7 @@ namespace POYA.Areas.WeEduHub.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),new{weArticle.SetId});
             }
             return View(weArticle);
         }
@@ -205,13 +238,15 @@ namespace POYA.Areas.WeEduHub.Controllers
             {
                 return NotFound();
             }
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
-            var weArticle = await _context.WeArticle
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var weArticle = await _context.WeArticle.Where(p=>p.UserId==_UserId && p.Id==id).FirstOrDefaultAsync();
             if (weArticle == null)
             {
                 return NotFound();
             }
+
+            weArticle.Content=await System.IO.File.ReadAllTextAsync(  _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+weArticle.WeArticleFileId  );
 
             return View(weArticle);
         }

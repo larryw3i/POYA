@@ -5,45 +5,41 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<div class="row">
+    <div class="col col-12">
+        <div class="wearticle_title">@(Model.Title)</div>
+        <hr/>
+        <div class="wearticle_content"></div>
+    </div>
+</div>
+
+
 
 <div>
-    <h4>WeArticle</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @(Html.DisplayNameFor(model => model.UserId))
-        </dt>
-        <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.UserId))
-        </dd>
-        <dt class = "col-sm-2">
-            @(Html.DisplayNameFor(model => model.SetId))
-        </dt>
-        <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.SetId))
-        </dd>
-        <dt class = "col-sm-2">
-            @(Html.DisplayNameFor(model => model.Title))
-        </dt>
-        <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.Title))
-        </dd>
-        <dt class = "col-sm-2">
-            @(Html.DisplayNameFor(model => model.DOPublishing))
-        </dt>
-        <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.DOPublishing))
-        </dd>
-        <dt class = "col-sm-2">
-            @(Html.DisplayNameFor(model => model.DOModifying))
-        </dt>
-        <dd class = "col-sm-10">
-            @(Html.DisplayFor(model => model.DOModifying))
-        </dd>
-    </dl>
+    <a id="go_back" class="btn btn-info">&laquo; @(Localizer["Back"])</a>   
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(()=>{
+            $(`.wearticle_content`).append(`@(Html.Raw(Model.Content))`);
+        });
+    </script>
+}
+
+@section Styles
+{
+    <style>
+        .wearticle_title,.wearticle_content{
+            text-align: center;
+        }
+        .wearticle_content{
+            margin-bottom: 20%;
+        }
+        #go_back{
+            position: fixed;
+            bottom: 8%;
+        }
+    </style>
+}

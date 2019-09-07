@@ -20,12 +20,19 @@ namespace POYA.Areas.WeEduHub.Models
         public DateTimeOffset? DOModifying{get;set;}
 
         #region  NOTMAPPED
+
         /// <summary>
         /// NotMapped
         /// </summary>
         /// <value></value>
         [NotMapped]
         public IFormFile WeArticleFormFile{get;set;}
+
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        [NotMapped]
+        public string Content{get;set;}
         #endregion
     }
     

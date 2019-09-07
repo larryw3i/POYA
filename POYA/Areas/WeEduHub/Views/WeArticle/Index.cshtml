@@ -10,49 +10,48 @@
 <div class="row">
     <div class="col col-12">
         <a asp-action="Create" asp-route-SetId='@(ViewData["SetId"])' class="btn btn-outline-info float-right">@(Localizer["Add"]) &raquo;</a>
+        <a id="go_back" class="btn btn-info">&laquo; @(Localizer["Back"])</a> 
     </div>
 </div>
 
+
+
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @(Html.DisplayNameFor(model => model.UserId))
-            </th>
-            <th>
-                @(Html.DisplayNameFor(model => model.Title))
-            </th>
-            <th>
-                @(Html.DisplayNameFor(model => model.DOPublishing))
-            </th>
-            <th>
-                @(Html.DisplayNameFor(model => model.DOModifying))
-            </th>
-            <th></th>
-        </tr>
-    </thead>
     <tbody>
-@foreach (var item in Model) 
-{
-        <tr>
-            <td>
-                @(Html.DisplayFor(modelItem => item.UserId))
-            </td>
-            <td>
-                @(Html.DisplayFor(modelItem => item.Title))
-            </td>
-            <td>
-                @(Html.DisplayFor(modelItem => item.DOPublishing))
-            </td>
-            <td>
-                @(Html.DisplayFor(modelItem => item.DOModifying))
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>   
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a>   
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model) 
+        {
+            <tr>
+                <td>
+                    <a class="wearticle_details" asp-action="Details" asp-route-id="@item.Id">@(item.Title)</a>  
+                    <a class="wearticle_edit"  asp-action="Edit" asp-route-id="@item.Id"><script>document.write(`\u2712\ufe0f`);</script></a>    
+                    <a class="wearticle_delete"  asp-action="Delete" asp-route-id="@item.Id"><script>document.write(`\u274c`);</script></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+@section Scripts
+{
+    <script>
+
+    </script>
+}
+
+@section Styles
+{
+    <style>
+        .wearticle_details{
+            font-size: 190%;
+            text-decoration: none;
+        }
+        #go_back{
+            position: fixed;
+            bottom: 8%;
+        }
+        td{
+            border: none;
+        }
+    </style>
+}
