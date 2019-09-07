@@ -1,6 +1,9 @@
 
 
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
 
 namespace POYA.Areas.WeEduHub.Models
 {
@@ -9,12 +12,20 @@ namespace POYA.Areas.WeEduHub.Models
         public Guid Id{get;set;}
         public string UserId{get;set;}
         public Guid SetId{get;set;}
+        
+        [StringLength(maximumLength:120,MinimumLength=2)]
         public string Title{get;set;}
-        public string Content{get;set;}
+        public Guid WeArticleFileId{get;set;}
         public DateTimeOffset  DOPublishing{get;set;}=DateTimeOffset.Now;
         public DateTimeOffset? DOModifying{get;set;}
 
         #region  NOTMAPPED
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
+        [NotMapped]
+        public IFormFile WeArticleFormFile{get;set;}
         #endregion
     }
     
@@ -35,8 +46,6 @@ namespace POYA.Areas.WeEduHub.Models
     {
         public Guid Id{get;set;}
         public string UserId{get;set;}
-        public Guid? WeArticleId{get;set;}
-        public string SHA256HexString{get;set;}
 
         /// <summary>
         /// With extension

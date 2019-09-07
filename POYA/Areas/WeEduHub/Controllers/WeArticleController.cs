@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using Newtonsoft.Json;
 using POYA.Areas.FunFiles.Controllers;
 using POYA.Areas.WeEduHub.Models;
 using POYA.Data;
@@ -32,6 +33,8 @@ namespace POYA.Areas.WeEduHub.Controllers
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly HtmlSanitizer _htmlSanitizer;
+        private readonly WeEduHubHelper _weEduHubHelper;
+        private readonly FunFilesHelper _funFilesHelper;
         public WeArticleController(
             HtmlSanitizer htmlSanitizer,
             SignInManager<IdentityUser> signInManager,
@@ -52,6 +55,9 @@ namespace POYA.Areas.WeEduHub.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
+            _weEduHubHelper=new WeEduHubHelper();
+            _funFilesHelper=new FunFilesHelper();
+            WeArticleControllerInitial();
         }
         #endregion
 
@@ -85,16 +91,13 @@ namespace POYA.Areas.WeEduHub.Controllers
         }
 
         // GET: WeEduHub/WeArticle/Create
-        [ActionName("Create")]
-        public async Task<IActionResult> CreateAsync(Guid? SetId)
+        public IActionResult Create(Guid? SetId)
         {
-            if(SetId==null)  return NotFound(); 
+            if (SetId == null) return NotFound();
 
-            var _WeArticleSet=await _context.WeArticleSet.Where(p=>p.Id==SetId).FirstOrDefaultAsync();
+            var _WeArticle = new WeArticle { SetId = SetId ?? Guid.Empty, };
 
-            if(_WeArticleSet==null) return NotFound();
-
-            return View(_WeArticleSet);
+            return View(_WeArticle);
         }
 
         // POST: WeEduHub/WeArticle/Create
@@ -102,12 +105,42 @@ namespace POYA.Areas.WeEduHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,SetId,Title,Content,DOPublishing,DOModifying")] WeArticle weArticle)
+        public async Task<IActionResult> Create([Bind("SetId,Title,WeArticleFormFile")] WeArticle weArticle)
         {
             if (ModelState.IsValid)
             {
+                var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
+                if(
+                    !await _context.WeArticleSet.AnyAsync(p=>p.UserId==_UserId && p.Id==weArticle.SetId) ||
+                    weArticle.WeArticleFormFile==null 
+                )
+                {
+                    return NotFound();
+                }
+
                 weArticle.Id = Guid.NewGuid();
-                _context.Add(weArticle);
+                weArticle.UserId=_UserId;
+
+                var _WeArticleFile=new WeArticleFile{
+                        DOUploading=DateTimeOffset.Now,
+                        Id=Guid.NewGuid(),
+                        Name=System.IO.Path.GetFileName(weArticle.WeArticleFormFile.FileName),
+                        UserId=_UserId
+                    };
+
+                weArticle.WeArticleFileId=_WeArticleFile.Id;
+
+                weArticle.DOPublishing=DateTimeOffset.Now;
+
+                await _context.AddAsync(weArticle);
+                await _context.AddAsync( _WeArticleFile );
+
+                await System.IO.File.WriteAllBytesAsync(
+                    _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_WeArticleFile.Id,
+                    _funFilesHelper.GetFormFileBytes(weArticle.WeArticleFormFile)
+                );
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -198,5 +231,14 @@ namespace POYA.Areas.WeEduHub.Controllers
         {
             return _context.WeArticle.Any(e => e.Id == id);
         }
+
+        #region  DEPOLLUTION
+        private void WeArticleControllerInitial()
+        {
+            if(!System.IO.Directory.Exists( _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv))) 
+                System.IO.Directory.CreateDirectory(_weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv) );
+            
+        }
+        #endregion
     }
 }
