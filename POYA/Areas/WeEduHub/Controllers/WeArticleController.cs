@@ -54,10 +54,16 @@ namespace POYA.Areas.WeEduHub.Controllers
             _signInManager = signInManager;
         }
         #endregion
+
         // GET: WeEduHub/WeArticle
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Guid? SetId)
         {
-            return View(await _context.WeArticle.ToListAsync());
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var _WeArticle=await _context.WeArticle.Where(p=>p.UserId==_UserId).ToListAsync();
+            
+            ViewData[nameof(SetId)]=SetId;
+            
+            return View(_WeArticle);
         }
 
         // GET: WeEduHub/WeArticle/Details/5
@@ -79,9 +85,16 @@ namespace POYA.Areas.WeEduHub.Controllers
         }
 
         // GET: WeEduHub/WeArticle/Create
-        public IActionResult Create()
+        [ActionName("Create")]
+        public async Task<IActionResult> CreateAsync(Guid? SetId)
         {
-            return View();
+            if(SetId==null)  return NotFound(); 
+
+            var _WeArticleSet=await _context.WeArticleSet.Where(p=>p.Id==SetId).FirstOrDefaultAsync();
+
+            if(_WeArticleSet==null) return NotFound();
+
+            return View(_WeArticleSet);
         }
 
         // POST: WeEduHub/WeArticle/Create

@@ -1,20 +1,19 @@
 @model POYA.Areas.WeEduHub.Models.WeArticleSet
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = Localizer["Create"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>@(ViewData["Title"])</h1>
 
-<h4>WeArticleSet</h4>
+<h4>@(Localizer["Video and article set"])</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="UserId" type="hidden"/>
-            <input asp-for="DOCreating" type="hidden"/>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" autocomplete="off"/>

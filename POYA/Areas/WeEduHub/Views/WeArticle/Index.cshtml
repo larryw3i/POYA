@@ -5,31 +5,31 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h4>@(Localizer["Your articles and videos"])</h4>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="row">
+    <div class="col col-12">
+        <a asp-action="Create" asp-route-SetId='@(ViewData["SetId"])' class="btn btn-outline-info float-right">@(Localizer["Add"]) &raquo;</a>
+    </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
+                @(Html.DisplayNameFor(model => model.UserId))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SetId)
+                @(Html.DisplayNameFor(model => model.Title))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @(Html.DisplayNameFor(model => model.Content))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Content)
+                @(Html.DisplayNameFor(model => model.DOPublishing))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DOPublishing)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DOModifying)
+                @(Html.DisplayNameFor(model => model.DOModifying))
             </th>
             <th></th>
         </tr>
@@ -39,22 +39,19 @@
 {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.UserId)
+                @(Html.DisplayFor(modelItem => item.UserId))
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SetId)
+                @(Html.DisplayFor(modelItem => item.Title))
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @(Html.DisplayFor(modelItem => item.Content))
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Content)
+                @(Html.DisplayFor(modelItem => item.DOPublishing))
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DOPublishing)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DOModifying)
+                @(Html.DisplayFor(modelItem => item.DOModifying))
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

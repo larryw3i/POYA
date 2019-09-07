@@ -35,16 +35,15 @@
     <script>
 
         $(document).ready(()=>{
+            
             $(document).on(`click`,`.wearticleset-col *`,(e)=>{ WearticlesetColClick(e); });
+
         });
         
         /**
          * @@param {Event}e
          */
-        function WearticlesetColClick(e)
-        {
-            window.location.href=`@(Url.Action("Index","WeArticle"))?SetId=`+$(e.target).parents().attr(`item-id`);
-        }
+        function WearticlesetColClick(e) { window.location.href=`@(Url.Action("Index","WeArticle"))?SetId=`+$(e.target).parents().attr(`item-id`); }
 
     </script>
 }
@@ -52,12 +51,19 @@
 @section Styles
 {
     <style>
+
         .wearticleset-row>.col{
             margin-top: 10px;
         }
+        
+        .card-body{
+            cursor: pointer;
+        }
+
         .card-body:hover{
             background-color: rgba(225,0,230,0.2);
             border-radius: 3px;
         }
+
     </style>
 }

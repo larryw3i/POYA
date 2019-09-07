@@ -1,15 +1,17 @@
 @model POYA.Areas.WeEduHub.Models.WeArticleSet
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = Localizer["Delete"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Delete</h1>
+<h1>@(ViewData["Title"])</h1>
+
+<h4>@(Localizer["Video and article set"])</h4>
 
 <h3>@(Localizer["Are you sure you want to delete"]) @(Model.Name) ?</h3>
+
 <div>
-    <h4>@(Localizer["Video and article set"])</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
