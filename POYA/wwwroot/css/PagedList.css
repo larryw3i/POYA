@@ -165,7 +165,8 @@
         background-color: #ffffff;
     }
 
-/*
-    FROM    https://github.com/troygoode/PagedList/blob/master/src/PagedList.Mvc4.Example/Content/PagedList.css
-    
-    */
+/**
+ * FROM     https://github.com/troygoode/PagedList/blob/master/src/PagedList.Mvc4.Example/Content/PagedList.css
+ * LICENSE  https://github.com/twbs/bootstrap/blob/master/LICENSE
+ *          https://github.com/troygoode/PagedList/blob/master/LICENSE.txt
+ */

@@ -1,8 +1,12 @@
 @model IEnumerable<POYA.Areas.WeEduHub.Models.WeArticleSet>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 @{
     ViewData["Title"] = Localizer["Video and article set"];
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var _UserId=ViewData["UserId"];
 }
 
 <h1>@(ViewData["Title"])</h1>

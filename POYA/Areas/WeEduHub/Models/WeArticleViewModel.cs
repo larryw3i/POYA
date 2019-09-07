@@ -19,6 +19,12 @@ namespace POYA.Areas.WeEduHub.Models
         public DateTimeOffset  DOPublishing{get;set;}=DateTimeOffset.Now;
         public DateTimeOffset? DOModifying{get;set;}
 
+        public Guid ClassId{get;set;}
+
+        public string CustomClass{get;set;}
+
+        public int  Complex{get;set;}=1;
+
         #region  NOTMAPPED
 
         /// <summary>

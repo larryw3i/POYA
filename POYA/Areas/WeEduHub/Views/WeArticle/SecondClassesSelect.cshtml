@@ -1,0 +1,10 @@
+@model IEnumerable<WeArticleFirstClass>
+
+@{
+
+}
+
+@foreach (var item in Model)
+{   
+    <option value ="@(item.Id))">@(Localizer[item.Name])</option>
+}

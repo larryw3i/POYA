@@ -16,6 +16,7 @@ using POYA.Areas.FunFiles.Controllers;
 using POYA.Areas.WeEduHub.Models;
 using POYA.Data;
 using POYA.Unities.Helpers;
+using X.PagedList;
 
 namespace POYA.Areas.WeEduHub.Controllers
 {
@@ -35,6 +36,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         private readonly HtmlSanitizer _htmlSanitizer;
         private readonly WeEduHubHelper _weEduHubHelper;
         private readonly FunFilesHelper _funFilesHelper;
+        private readonly WeEduHubArticleClassHelper _weEduHubArticleClassHelper;
         public WeArticleController(
             HtmlSanitizer htmlSanitizer,
             SignInManager<IdentityUser> signInManager,
@@ -55,6 +57,7 @@ namespace POYA.Areas.WeEduHub.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
+            _weEduHubArticleClassHelper=new WeEduHubArticleClassHelper(_hostingEnv );
             _weEduHubHelper=new WeEduHubHelper();
             _funFilesHelper=new FunFilesHelper();
             WeArticleControllerInitial();
@@ -62,19 +65,21 @@ namespace POYA.Areas.WeEduHub.Controllers
         #endregion
 
         // GET: WeEduHub/WeArticle
-        public async Task<IActionResult> Index(Guid? SetId)
-        {
-            if(SetId==null)
-            {
-                return NotFound();
-            }
-            
+        public async Task<IActionResult> Index(
+            Guid? SetId,
+            int? APage
+        )
+        {   
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            var _WeArticle=await _context.WeArticle.Where(p=>p.UserId==_UserId && p.SetId==SetId).ToListAsync();
+            var _WeArticles=await _context.WeArticle.ToListAsync();
             
             ViewData[nameof(SetId)]=SetId;
+
+            ViewData["UserId"]=_UserId;
+
+            ViewData["WeArticles"]=_WeArticles.ToPagedList(APage??1, 10);
             
-            return View(_WeArticle);
+            return View();
         }
 
         // GET: WeEduHub/WeArticle/Details/5
@@ -268,6 +273,18 @@ namespace POYA.Areas.WeEduHub.Controllers
         }
 
         #region  DEPOLLUTION
+
+        public IActionResult GetSecondClassesByFirstClassCode(string FirstClassCode)
+        {
+            var _SecondClasses=_weEduHubArticleClassHelper.GetSecondClassesByFirstClassCode(FirstClassCode);
+            return View("FirstClassesSelect",_SecondClasses);
+        }
+        public IActionResult GetAllFirstClasses()
+        {
+            var _WeArticleFirstClasses=_weEduHubArticleClassHelper.GetAllFirstClasses();
+
+            return View("FirstClassesSelect",_WeArticleFirstClasses);
+        }
         private void WeArticleControllerInitial()
         {
             if(!System.IO.Directory.Exists( _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv))) 
