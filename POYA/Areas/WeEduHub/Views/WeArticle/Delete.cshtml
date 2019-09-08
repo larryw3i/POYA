@@ -18,21 +18,16 @@
 
     <a id="go_back" class="btn btn-info">&laquo; @(Localizer["Back"])</a>   
 </div>
+<hr/>
 
-<div class="row">
-    <div class="col col-12">
-        <hr/>
-        <div class="wearticle_content"></div>
-    </div>
+<div class="wearticle_content">
+    <object data='@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleFileId,area="WeEduHub"}))' type="application/pdf" width="100%" height="100%"></object>  
 </div>
-
-
 
 @section Scripts
 {
     <script>
         $(document).ready(()=>{
-            $(`.wearticle_content`).append(`@(Html.Raw(Model.Content))`);
         });
     </script>
 }

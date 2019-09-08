@@ -1,8 +1,13 @@
 @model POYA.Areas.WeEduHub.Models.WeArticle
 
 @{
-    ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var IsEdit=Convert.ToBoolean(ViewData["IsEdit"]??false);
+    
+    ViewData["Title"] =IsEdit?Localizer["Edir"]:Localizer[ "Create"];
+
+    var FirstClassId=IsEdit?ViewData["FirstClassId"].ToString():string.Empty;
 }
 
 
@@ -11,7 +16,7 @@
 <hr />
 <div class="row">
     <div class="offset-sm-1 col-sm-10 offset-2 col-8 ">
-        <form asp-action="Create" enctype="multipart/form-data">
+        <form asp-action='@(IsEdit?"Edit":"Create")' enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="SetId" type="hidden"/>            
             <input type="file" asp-for="WeArticleFormFile" hidden accept=".pdf"/>
@@ -33,10 +38,15 @@
     </div>
 </div>
 
+<div class="selected_file_content">
+    @if(IsEdit)
+    {
+        <object data='@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleFileId,area="WeEduHub"}))' type="application/pdf" width="100%" height="100%"></object>  
+    }
+</div>
+
 <div class="col offset-sm-1 col-sm-10 offset-2 col-8" >
-    <div id="selected_file_content" >
-    </div>  
-    <div id="wearticle_class" class="row">
+    <div id="wearticle_class_and_" class="row">
         <div class="col col-auto">
             <select id="first_class_select"  class="form-control" >
             </select>
@@ -46,7 +56,7 @@
             </select> 
         </div>
         <div class="col col-auto">
-            <input  id="custom_class_input" class="form-control" placeholder='@(Localizer["Custom classification"])'/>
+            <input  id="custom_class_input" class="form-control" value="@(Model.CustomClass)" placeholder='@(Localizer["Custom classification"])'/>
         </div>
         <div class="col col-auto">
             <select  id="complex_select" asp-items="@(Model.ComplexSelectListItems)" class="form-control"></select>
@@ -71,6 +81,8 @@
             $(document).on(`input propertychange`,`#custom_class_input`,(e)=>{ CustomClassInputPropertyChange(e); })
 
             $(document).on(`change`,`#complex_select`,(e)=>{ ComplexSelectChange(e);  });
+            
+            if(Boolean(`@(IsEdit?" ":"")`)) $(`#complex_select`).find(`option[value='@(Model.Complex)']`).attr("selected",true);
 
             InitialWeArticleFirstClasses();
 
@@ -90,8 +102,22 @@
         function InitialWeArticleFirstClasses()
         {
             $.get(`@(Url.Action("GetAllFirstClasses"))`,(data)=>{ 
-                $(`#first_class_select`).html(data) 
-                $(`#second_class_select`).load(`@(Url.Action("GetSecondClassesByFirstClassCode"))?FirstClassCode=`+$(`#first_class_select option:first`).attr(`itemcode`));
+                $(`#first_class_select`).html(data);
+                
+                if(Boolean(`@(IsEdit?" ":"")`))
+                {
+                    $(`#first_class_select`).find(`option[value='@(FirstClassId)']`).attr("selected",true);
+                    $.get(
+                        `@(Url.Action("GetSecondClassesByFirstClassCode"))?FirstClassCode=`+$(`#first_class_select option[value='@(FirstClassId)']`).attr(`itemcode`),
+                        (data)=>{
+                            $(`#second_class_select`).html(data);
+                            $(`#second_class_select`).find(`option[value='@(Model.ClassId)']`).attr("selected",true);
+                        }
+                    );
+                }
+                else{
+                    $(`#second_class_select`).load(`@(Url.Action("GetSecondClassesByFirstClassCode"))?FirstClassCode=`+$(`#first_class_select option:first`).attr(`itemcode`));
+                }
             });
         }
 
@@ -108,7 +134,7 @@
             
             _reader.onload = function(){   
                 $(`#selected_file_content`).html( `
-                    <object data="${this.result}" type="application/pdf" width="100%" height="100%">                    
+                    <object data="${this.result}" type="application/pdf" width="100%" height="100%"></object>                 
                 `);    
             }
             
@@ -139,8 +165,14 @@
             overflow-y: auto;
             zoom: 0.8;
         }
-        #wearticle_class{
+        #wearticle_class_and_{
             margin-bottom: 60px;
+            margin-top: 10px;
+            border: solid;
+            border-color: rgba(89, 99, 200, 0.4);
+            border-radius: 10px;
+            text-align: center;
+            padding:10px;
         }
         #Title{
             text-align: center;    

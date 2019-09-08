@@ -21,6 +21,10 @@ namespace POYA.Areas.WeEduHub.Models
         public DateTimeOffset  DOPublishing{get;set;}=DateTimeOffset.Now;
         public DateTimeOffset? DOModifying{get;set;}
 
+        /// <summary>
+        /// Id of second class
+        /// </summary>
+        /// <value></value>
         public Guid ClassId{get;set;}
 
         public string CustomClass{get;set;}
@@ -28,6 +32,21 @@ namespace POYA.Areas.WeEduHub.Models
         public int  Complex{get;set;}=1;
 
         #region  NOTMAPPED
+
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
+        [NotMapped]
+        public string FirstClassName{get;set;}
+        
+
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
+        [NotMapped]
+        public string SecondClassName{get;set;}
 
         [NotMapped]
 
@@ -51,11 +70,6 @@ namespace POYA.Areas.WeEduHub.Models
         [NotMapped]
         public IFormFile WeArticleFormFile{get;set;}
 
-        /// <summary>
-        /// NotMapped
-        /// </summary>
-        [NotMapped]
-        public string Content{get;set;}
         #endregion
     }
     

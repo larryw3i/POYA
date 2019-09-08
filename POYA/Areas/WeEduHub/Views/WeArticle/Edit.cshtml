@@ -44,7 +44,6 @@
 
             $(document).on(`change`,`#WeArticleFormFile`,(e)=>{  WeArticleFormFileChange(e); })
 
-            $(`#selected_file_content`).append(`@(Html.Raw(Model.Content))`);
         });
 
         function WeArticleFormFileChange(e)

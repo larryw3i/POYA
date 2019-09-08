@@ -65,12 +65,13 @@ namespace POYA.Areas.WeEduHub.Controllers
         #endregion
 
         // GET: WeEduHub/WeArticle
+        [AllowAnonymous]
         public async Task<IActionResult> Index(
             Guid? SetId,
             int? APage
         )
         {   
-            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult()?.Id;
             var _WeArticles=await _context.WeArticle.ToListAsync();
             
             ViewData[nameof(SetId)]=SetId;
@@ -83,21 +84,24 @@ namespace POYA.Areas.WeEduHub.Controllers
         }
 
         // GET: WeEduHub/WeArticle/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult()?.Id;
 
-            var weArticle = await _context.WeArticle.Where(p=>p.UserId==_UserId && p.Id==id).FirstOrDefaultAsync();
+            var weArticle = await _context.WeArticle.Where(p=> p.Id==id).FirstOrDefaultAsync();
+
             if (weArticle == null)
             {
                 return NotFound();
             }
+            ViewData["UserId"]=_UserId;
 
-            weArticle.Content=await System.IO.File.ReadAllTextAsync(  _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+weArticle.WeArticleFileId  );
+            _weEduHubArticleClassHelper.InitialWeArticleClassName(ref weArticle,weArticle.ClassId);
 
             return View(weArticle);
         }
@@ -167,15 +171,21 @@ namespace POYA.Areas.WeEduHub.Controllers
                 return NotFound();
             }
 
-            var weArticle = await _context.WeArticle.FindAsync(id);
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
+            var weArticle = await _context.WeArticle.Where(p=>p.UserId==_UserId && p.Id==id).FirstOrDefaultAsync();
+
             if (weArticle == null)
             {
                 return NotFound();
             }
 
-            weArticle.Content=await System.IO.File.ReadAllTextAsync( _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+weArticle.WeArticleFileId  );
+            ViewData["FirstClassId"]=_weEduHubArticleClassHelper.GetFirstClassIdBySecondClassId(weArticle.ClassId);
 
-            return View(weArticle);
+            ViewData["IsEdit"]=true;
+
+
+            return View("Create",weArticle);
         }
 
         // POST: WeEduHub/WeArticle/Edit/5
@@ -183,7 +193,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,SetId,WeArticleFormFile")] WeArticle weArticle)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,SetId,Title,WeArticleFormFile,ClassId,CustomClass,Complex")] WeArticle weArticle)
         {
             if (id != weArticle.Id)
             {
@@ -197,26 +207,28 @@ namespace POYA.Areas.WeEduHub.Controllers
                     var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                     
                     var _WeArticle=await _context.WeArticle.Where(p=>p.Id==weArticle.Id && p.UserId==_UserId).FirstOrDefaultAsync();
+
+                    if(weArticle.WeArticleFormFile==null) return NoContent();
+                    
+                    var _WeArticleFile=new WeArticleFile{
+                        DOUploading=DateTimeOffset.Now,
+                        Id=Guid.NewGuid(),
+                        Name=System.IO.Path.GetFileName(weArticle.WeArticleFormFile.FileName),
+                        UserId=_UserId
+                    };
+
+                    await System.IO.File.WriteAllBytesAsync(
+                        _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_WeArticleFile.Id,
+                        _funFilesHelper.GetFormFileBytes(weArticle.WeArticleFormFile)
+                    );
+
+                    await _context.AddAsync(_WeArticleFile);
+
+                    _WeArticle.WeArticleFileId=_WeArticleFile.Id;
                     _WeArticle.Title=weArticle.Title;
-
-                    if(weArticle.WeArticleFormFile!=null)
-                    {
-                        var _WeArticleFile=new WeArticleFile{
-                            DOUploading=DateTimeOffset.Now,
-                            Id=Guid.NewGuid(),
-                            Name=System.IO.Path.GetFileName(weArticle.WeArticleFormFile.FileName),
-                            UserId=_UserId
-                        };
-
-                        await System.IO.File.WriteAllBytesAsync(
-                            _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_WeArticleFile.Id,
-                            _funFilesHelper.GetFormFileBytes(weArticle.WeArticleFormFile)
-                        );
-
-                        await _context.AddAsync(_WeArticleFile);
-
-                        _WeArticle.WeArticleFileId=_WeArticleFile.Id;
-                    }
+                    _WeArticle.Complex=weArticle.Complex;
+                    _WeArticle.ClassId=weArticle.ClassId;
+                    _WeArticle.CustomClass=weArticle.CustomClass;
                     
                     await _context.SaveChangesAsync();
                 }
@@ -251,7 +263,6 @@ namespace POYA.Areas.WeEduHub.Controllers
                 return NotFound();
             }
 
-            weArticle.Content=await System.IO.File.ReadAllTextAsync(  _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+weArticle.WeArticleFileId  );
 
             return View(weArticle);
         }
@@ -273,6 +284,23 @@ namespace POYA.Areas.WeEduHub.Controllers
         }
 
         #region  DEPOLLUTION
+        
+        [ActionName("GetWeArticleFile")]
+        public async Task<IActionResult> GetWeArticleFileAsync(Guid? Id)
+        {
+            if(Id==null)
+            {
+                return NotFound();
+            }
+
+            var _WeArticleFile=await _context.WeArticleFile.Where(p=>p.Id==Id).FirstOrDefaultAsync();
+            if(_WeArticleFile==null)
+            {
+                return NotFound();
+            }
+            var _WeArticleFileBytes=await System.IO.File.ReadAllBytesAsync(_weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_WeArticleFile.Id);
+            return File(_WeArticleFileBytes,_funFilesHelper.GetContentType(_WeArticleFile.Name),true);
+        }
 
         public IActionResult GetSecondClassesByFirstClassCode(string FirstClassCode)
         {
