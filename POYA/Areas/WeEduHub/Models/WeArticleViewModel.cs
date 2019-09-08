@@ -1,9 +1,11 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace POYA.Areas.WeEduHub.Models
 {
@@ -26,6 +28,21 @@ namespace POYA.Areas.WeEduHub.Models
         public int  Complex{get;set;}=1;
 
         #region  NOTMAPPED
+
+        [NotMapped]
+
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
+        public List<SelectListItem> ComplexSelectListItems {get;set;}= new List<SelectListItem>
+            {
+                new SelectListItem { Value = "0", Text = new string("\u269D") },
+                new SelectListItem { Value = "1", Text = new string('\u269D',2) },
+                new SelectListItem { Value = "2", Text = new string('\u269D',3)  },
+                new SelectListItem { Value = "3", Text = new string('\u269D',4) }
+            };
+
 
         /// <summary>
         /// NotMapped

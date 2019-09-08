@@ -117,7 +117,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SetId,Title,WeArticleFormFile")] WeArticle weArticle)
+        public async Task<IActionResult> Create([Bind("SetId,Title,WeArticleFormFile,ClassId,CustomClass,Complex")] WeArticle weArticle)
         {
             if (ModelState.IsValid)
             {

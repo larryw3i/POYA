@@ -4,14 +4,21 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var SetId=ViewData["SetId"]?.ToString()??string.Empty;
-    var _UserId=ViewData["UserId"].ToString();
+    var _UserId=ViewData["UserId"]?.ToString()??string.Empty;
 }
 
 <h4>@(Localizer["Article"])</h4>
 
 <div class="row">
     <div class="col col-12">
-        <a asp-action="Index" asp-controller="WeArticleSet" class="btn btn-outline-info float-right">@(Localizer["My"]) &raquo;</a>
+        @if(SetId==string.Empty)
+        {
+            <a asp-action="Index" asp-controller="WeArticleSet" class="btn btn-outline-info float-right">@(Localizer["My"]) &raquo;</a>
+        }
+        else
+        {
+            <a asp-action="Create" asp-controller="WeArticle" asp-route-SetId="@(SetId)" class="btn btn-outline-info float-right">@(Localizer["Add"]) &raquo;</a>
+        }
         <a id="go_back" class="btn btn-info">&laquo; @(Localizer["Back"])</a> 
     </div>
 </div>
