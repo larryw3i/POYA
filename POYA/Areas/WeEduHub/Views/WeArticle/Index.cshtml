@@ -13,7 +13,7 @@
     <div class="col col-12">
         @if(SetId==string.Empty)
         {
-            <a asp-action="Index" asp-controller="WeArticleSet" class="btn btn-outline-info float-right">@(Localizer["My"]) &raquo;</a>
+            <a asp-action="Index" asp-controller="WeArticleSet" class="btn btn-outline-info float-right">@(Localizer["My sets"]) &raquo;</a>
         }
         else
         {
@@ -29,7 +29,13 @@
         {
             <tr>
                 <td>
-                    <a class="wearticle_details" asp-action="Details" asp-route-id="@item.Id">@(item.Title)</a>  
+                    <a class="wearticle_details" asp-action="Details" asp-route-id="@item.Id">@(item.Title)</a> 
+                    @if((DateTimeOffset.Now-item.DOPublishing).Days<1)
+                    {
+                        <sup>
+                            <span class="badge badge-success">New</span>
+                        </sup>
+                    }
                     @if(item.UserId==_UserId)
                     {
                         <a class="wearticle_edit"  asp-action="Edit" asp-route-id="@item.Id"><script>document.write(`\u2712\ufe0f`);</script></a>    
@@ -56,6 +62,9 @@
 @section Styles
 {
     <style>
+        td{
+            border: 0px solid transparent !important;
+        }
         .paged_list{
             text-align:center;
         }

@@ -72,7 +72,12 @@ namespace POYA.Areas.WeEduHub.Controllers
         )
         {   
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult()?.Id;
-            var _WeArticles=await _context.WeArticle.ToListAsync();
+            var _WeArticles=await _context.WeArticle
+                .Where(
+                    p=>
+                        SetId==null?true:p.SetId==SetId
+                )
+                .ToListAsync();
             
             ViewData[nameof(SetId)]=SetId;
 
@@ -111,7 +116,11 @@ namespace POYA.Areas.WeEduHub.Controllers
         {
             if (SetId == null) return NotFound();
 
-            var _WeArticle = new WeArticle { SetId = SetId ?? Guid.Empty, };
+            var _WeArticle = new WeArticle 
+                { 
+                    SetId = SetId ?? Guid.Empty, 
+                    ClassId=_weEduHubArticleClassHelper.GetAllSecondClasses().Select(p=>p.Id).FirstOrDefault()
+                };
 
             return View(_WeArticle);
         }
@@ -208,23 +217,26 @@ namespace POYA.Areas.WeEduHub.Controllers
                     
                     var _WeArticle=await _context.WeArticle.Where(p=>p.Id==weArticle.Id && p.UserId==_UserId).FirstOrDefaultAsync();
 
-                    if(weArticle.WeArticleFormFile==null) return NoContent();
+                    if(weArticle.WeArticleFormFile!=null) 
+                    {
+                        var _WeArticleFile=new WeArticleFile{
+                            DOUploading=DateTimeOffset.Now,
+                            Id=Guid.NewGuid(),
+                            Name=System.IO.Path.GetFileName(weArticle.WeArticleFormFile.FileName),
+                            UserId=_UserId
+                        };
+
+                        await System.IO.File.WriteAllBytesAsync(
+                            _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_WeArticleFile.Id,
+                            _funFilesHelper.GetFormFileBytes(weArticle.WeArticleFormFile)
+                        );
+
+                        await _context.AddAsync(_WeArticleFile);
+                        
+                        _WeArticle.WeArticleFileId=_WeArticleFile.Id;
+                    }
                     
-                    var _WeArticleFile=new WeArticleFile{
-                        DOUploading=DateTimeOffset.Now,
-                        Id=Guid.NewGuid(),
-                        Name=System.IO.Path.GetFileName(weArticle.WeArticleFormFile.FileName),
-                        UserId=_UserId
-                    };
 
-                    await System.IO.File.WriteAllBytesAsync(
-                        _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_WeArticleFile.Id,
-                        _funFilesHelper.GetFormFileBytes(weArticle.WeArticleFormFile)
-                    );
-
-                    await _context.AddAsync(_WeArticleFile);
-
-                    _WeArticle.WeArticleFileId=_WeArticleFile.Id;
                     _WeArticle.Title=weArticle.Title;
                     _WeArticle.Complex=weArticle.Complex;
                     _WeArticle.ClassId=weArticle.ClassId;
@@ -243,7 +255,7 @@ namespace POYA.Areas.WeEduHub.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index),new{weArticle.SetId});
+                return RedirectToAction(nameof(Index), new{SetId=weArticle.SetId});
             }
             return View(weArticle);
         }
@@ -285,6 +297,7 @@ namespace POYA.Areas.WeEduHub.Controllers
 
         #region  DEPOLLUTION
         
+        [AllowAnonymous]
         [ActionName("GetWeArticleFile")]
         public async Task<IActionResult> GetWeArticleFileAsync(Guid? Id)
         {
@@ -294,15 +307,15 @@ namespace POYA.Areas.WeEduHub.Controllers
             }
 
             var _WeArticleFile=await _context.WeArticleFile.Where(p=>p.Id==Id).FirstOrDefaultAsync();
+
             if(_WeArticleFile==null)
             {
                 return NotFound();
             }
 
-            var _FileName= await _context.WeArticle.Where(p=>p.WeArticleFileId==Id).Select(p=>p.Title).FirstOrDefaultAsync();
-
             var _WeArticleFileBytes=await System.IO.File.ReadAllBytesAsync(_weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_WeArticleFile.Id);
-            return File(_WeArticleFileBytes,_FileName,_funFilesHelper.GetContentType(_WeArticleFile.Name),true);
+
+            return File(_WeArticleFileBytes,_funFilesHelper.GetContentType(_WeArticleFile.Name),true);
         }
 
         public IActionResult GetSecondClassesByFirstClassCode(string FirstClassCode)
