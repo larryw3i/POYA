@@ -298,8 +298,11 @@ namespace POYA.Areas.WeEduHub.Controllers
             {
                 return NotFound();
             }
+
+            var _FileName= await _context.WeArticle.Where(p=>p.WeArticleFileId==Id).Select(p=>p.Title).FirstOrDefaultAsync();
+
             var _WeArticleFileBytes=await System.IO.File.ReadAllBytesAsync(_weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_WeArticleFile.Id);
-            return File(_WeArticleFileBytes,_funFilesHelper.GetContentType(_WeArticleFile.Name),true);
+            return File(_WeArticleFileBytes,_FileName,_funFilesHelper.GetContentType(_WeArticleFile.Name),true);
         }
 
         public IActionResult GetSecondClassesByFirstClassCode(string FirstClassCode)
