@@ -77,7 +77,7 @@ function KeepLogin() {
             url: "/Home/KeepLogin",
             type: "GET"
         });
-        console.log("&#128139;");
+        console.log(`\ud83d\udc8b`);
     }, 5 * 60 * 1000);
 
 }

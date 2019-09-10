@@ -17,7 +17,7 @@ namespace POYA.Areas.WeEduHub.Models
         
         [StringLength(maximumLength:120,MinimumLength=2)]
         public string Title{get;set;}
-        public Guid WeArticleFileId{get;set;}
+        public Guid WeArticleContentFileId{get;set;}
         public DateTimeOffset  DOPublishing{get;set;}=DateTimeOffset.Now;
         public DateTimeOffset? DOModifying{get;set;}
 
@@ -33,6 +33,13 @@ namespace POYA.Areas.WeEduHub.Models
 
         #region  NOTMAPPED
 
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
+        [NotMapped]
+        public List<IFormFile> WeArticleVideoFiles{get;set;}
+        
         /// <summary>
         /// NotMapped
         /// </summary>
@@ -73,32 +80,5 @@ namespace POYA.Areas.WeEduHub.Models
         #endregion
     }
     
-    public class WeArticleSet
-    {
-        public Guid Id{get;set;}
-        public string UserId{get;set;}
-        public Guid CoverFileId{get;set;}
-        public string Name{get;set;}
-        public string  Description{get;set;}
-        public DateTimeOffset DOCreating{get;set;}=DateTimeOffset.Now;
-        
-        #region  NOTMAPPED
-        #endregion
-    }
 
-    public class WeArticleFile
-    {
-        public Guid Id{get;set;}
-        public string UserId{get;set;}
-
-        /// <summary>
-        /// With extension
-        /// </summary>
-        /// <value></value>
-        public string Name{get;set;}
-        public DateTimeOffset DOUploading{get;set;}=DateTimeOffset.Now;
-
-        #region  NOTMAPPED
-        #endregion
-    }
 }

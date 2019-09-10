@@ -154,7 +154,7 @@ namespace POYA.Areas.WeEduHub.Controllers
                         UserId=_UserId
                     };
 
-                weArticle.WeArticleFileId=_WeArticleFile.Id;
+                weArticle.WeArticleContentFileId=_WeArticleFile.Id;
 
                 weArticle.DOPublishing=DateTimeOffset.Now;
 
@@ -233,7 +233,7 @@ namespace POYA.Areas.WeEduHub.Controllers
 
                         await _context.AddAsync(_WeArticleFile);
                         
-                        _WeArticle.WeArticleFileId=_WeArticleFile.Id;
+                        _WeArticle.WeArticleContentFileId=_WeArticleFile.Id;
                     }
                     
 
@@ -296,7 +296,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         }
 
         #region  DEPOLLUTION
-        
+
         [AllowAnonymous]
         [ActionName("GetWeArticleFile")]
         public async Task<IActionResult> GetWeArticleFileAsync(Guid? Id)
@@ -323,12 +323,14 @@ namespace POYA.Areas.WeEduHub.Controllers
             var _SecondClasses=_weEduHubArticleClassHelper.GetSecondClassesByFirstClassCode(FirstClassCode);
             return View("FirstClassesSelect",_SecondClasses);
         }
+
         public IActionResult GetAllFirstClasses()
         {
             var _WeArticleFirstClasses=_weEduHubArticleClassHelper.GetAllFirstClasses();
 
             return View("FirstClassesSelect",_WeArticleFirstClasses);
         }
+
         private void WeArticleControllerInitial()
         {
             if(!System.IO.Directory.Exists( _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv))) 

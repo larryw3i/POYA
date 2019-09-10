@@ -30,7 +30,7 @@
             </div>
             <div class="form-group operation-form-group">
                 <a id="go_back" class="btn btn-info">&laquo; @(Localizer["Back"])</a>   
-                <a class="btn btn-info" id="select-file">@(Localizer["Select file"])</a>   
+                <a class="btn btn-info" id="select_file">@(Localizer["Select file"])</a>   
                 <input type="submit" value='@(Localizer["Upgrade"])' class="btn btn-primary" />  
             </div>
         </form> 
@@ -39,35 +39,41 @@
 </div>
 
 <div class="selected_file_content_parent">
-    <object id="selected_file_content" data='@(IsEdit?Url.Action("GetWeArticleFile",new{Id=Model.WeArticleFileId,area="WeEduHub"}):"")' type="application/pdf" width="100%" height="100%"></object>  
+    <object id="selected_file_content" data='@(IsEdit?Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}):"")' type="application/pdf" width="100%" height="100%"></object>  
 </div>
 
-<div class="col offset-sm-1 col-sm-10 offset-2 col-8" >
-    <div id="wearticle_class_and_" class="row">
-        <div class="col col-auto">
-            <select id="first_class_select"  class="form-control" >
-            </select>
-        </div>
-        <div class="col col-auto">
-            <select id="second_class_select"  class="form-control" > 
-            </select> 
-        </div>
-        <div class="col col-auto">
-            <input  id="custom_class_input" class="form-control" value="@(Model.CustomClass)" placeholder='@(Localizer["Custom classification"])'/>
-        </div>
-        <div class="col col-auto">
-            <select  id="complex_select" asp-items="@(Model.ComplexSelectListItems)" class="form-control"></select>
+<div class="row">
+    <div class="col offset-sm-1 col-sm-10 offset-2 col-8" >
+        <div id="wearticle_class_and_" class="row">
+            <div class="col col-auto">
+                <select id="first_class_select"  class="form-control" >
+                    <button class="btn btn-info" id="select_video">@(Localizer["Select videos"])</button>
+                </select>
+            </div>
+            <div class="col col-auto">
+                <select id="second_class_select"  class="form-control" > 
+                </select> 
+            </div>
+            <div class="col col-auto">
+                <input  id="custom_class_input" class="form-control" value="@(Model.CustomClass)" placeholder='@(Localizer["Custom classification"])'/>
+            </div>
+            <div class="col col-auto">
+                <select  id="complex_select" asp-items="@(Model.ComplexSelectListItems)" class="form-control"></select>
+            </div>
         </div>
     </div>
 </div>
 
-
 @section Scripts 
 {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
     <script>
         $(document).ready(()=>{
-            $(document).on(`click`,`#select-file`,()=>{ SelectFileClick(); });
+
+            $(document).on(`click`,`#select_video`,()=>{ SelectVideo(); });
+
+            $(document).on(`click`,`#select_file`,()=>{ SelectFileClick(); });
 
             $(document).on(`change`,`#WeArticleFormFile`,(e)=>{  WeArticleFormFileChange(e); })
             
@@ -85,6 +91,10 @@
 
         });
 
+        function SelectVideo()
+        {
+        }
+
         function ComplexSelectChange(e) {   $(`#Complex`).val( $(`#complex_select`).val() );     }
 
         function CustomClassInputPropertyChange(e) {  $(`#CustomClass`).val($(`#custom_class_input`).val());    }
@@ -96,26 +106,34 @@
             $(`#second_class_select`).load(`@(Url.Action("GetSecondClassesByFirstClassCode"))?FirstClassCode=`+$(e.target).find("option:selected").attr(`itemcode`));
         }
 
+        function AfterFillFirstClassSelect(){
+            if(Boolean(`@(IsEdit?" ":"")`))
+            {
+                $(`#first_class_select`).find(`option[value='@(FirstClassId)']`).attr("selected",true);
+                $.get(
+                    `@(Url.Action("GetSecondClassesByFirstClassCode"))?FirstClassCode=`+$(`#first_class_select option[value='@(FirstClassId)']`).attr(`itemcode`),
+                    (data)=>{
+                        $(`#second_class_select`).html(data);
+                        $(`#second_class_select`).find(`option[value='@(Model.ClassId)']`).attr("selected",true);
+                    }
+                );
+            }
+            else
+            {
+                $(`#second_class_select`).load(`@(Url.Action("GetSecondClassesByFirstClassCode"))?FirstClassCode=`+$(`#first_class_select option:first`).attr(`itemcode`));
+            }
+        }
+
         function InitialWeArticleFirstClasses()
         {
-            $.get(`@(Url.Action("GetAllFirstClasses"))`,(data)=>{ 
-                $(`#first_class_select`).html(data);
-                
-                if(Boolean(`@(IsEdit?" ":"")`))
-                {
-                    $(`#first_class_select`).find(`option[value='@(FirstClassId)']`).attr("selected",true);
-                    $.get(
-                        `@(Url.Action("GetSecondClassesByFirstClassCode"))?FirstClassCode=`+$(`#first_class_select option[value='@(FirstClassId)']`).attr(`itemcode`),
-                        (data)=>{
-                            $(`#second_class_select`).html(data);
-                            $(`#second_class_select`).find(`option[value='@(Model.ClassId)']`).attr("selected",true);
-                        }
-                    );
+            $.get(
+                `@(Url.Action("GetAllFirstClasses"))`,
+                (data)=>{ 
+                    $(`#first_class_select`).html(data);
+
+                    AfterFillFirstClassSelect();
                 }
-                else{
-                    $(`#second_class_select`).load(`@(Url.Action("GetSecondClassesByFirstClassCode"))?FirstClassCode=`+$(`#first_class_select option:first`).attr(`itemcode`));
-                }
-            });
+            );
         }
 
         function WeArticleFormFileChange(e)
