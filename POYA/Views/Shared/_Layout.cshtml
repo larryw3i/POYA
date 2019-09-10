@@ -47,6 +47,7 @@
         @(ViewData["Title"]) - @(Localizer["X-DOVE"])
     </title>
 
+    
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     </environment>
@@ -59,16 +60,20 @@
               integrity="MD5-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
 
-    <partial name="_LayoutCssPartial"/>
-    
     <link rel="stylesheet" href="~/css/PagedList.css" />
+
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <link rel="stylesheet" href="~/css/POYA.css" />
+
+    <link rel="stylesheet" href="~/css/ikeyframes.css" />
     
     <link rel="stylesheet" href="~/lib/jQuery-contextMenu-2.8.0/dist/jquery.contextMenu.min.css" />
 
     @(RenderSection("Styles", required: false))
 
-    <link rel="stylesheet" href="~/css/site.css" />
-    
+    <partial name="_LayoutCssPartial"/>
+
     <link href='~/img/chat_with_friends_ico.webp' rel="icon" type="image/webp"/>
     
 </head>
@@ -145,7 +150,7 @@
 
                         <li class="nav-item">
                             <div class="nav-link ">
-                                <select id="Theme" name="Theme" asp-items="ThemeSelectListItems" style="border:none">
+                                <select id="Theme" name="Theme" asp-items="ThemeSelectListItems" style="border:none;">
                                 </select>
                             </div>
                         </li>

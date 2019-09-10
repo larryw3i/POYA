@@ -1,0 +1,22 @@
+
+/* Custom css
+-------------------------------------------------- */
+
+
+.directorySpan {
+    font-size: 50%;
+}
+
+.col-sm-2 {
+    text-align: right
+}
+
+.dropdown *{
+    border-radius: 8px;
+}
+
+
+.dropdown-item:hover{
+    background-color: #ff00dc;
+}
+
