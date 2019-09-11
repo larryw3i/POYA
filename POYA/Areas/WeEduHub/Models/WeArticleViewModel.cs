@@ -27,9 +27,14 @@ namespace POYA.Areas.WeEduHub.Models
         /// <value></value>
         public Guid ClassId{get;set;}
 
+        [StringLength(maximumLength:100,MinimumLength=2)]
         public string CustomClass{get;set;}
 
+        [Range(1,4)]
         public int  Complex{get;set;}=1;
+
+        [StringLength(maximumLength:100,MinimumLength=0)]
+        public string Comment{get;set;}
 
         #region  NOTMAPPED
 

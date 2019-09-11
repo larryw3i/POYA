@@ -135,7 +135,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SetId,Title,WeArticleFormFile,ClassId,CustomClass,Complex")] WeArticle weArticle)
+        public async Task<IActionResult> Create([Bind("SetId,Title,WeArticleFormFile,ClassId,CustomClass,Complex,Comment")] WeArticle weArticle)
         {
             if (ModelState.IsValid)
             {
@@ -211,7 +211,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,SetId,Title,WeArticleFormFile,ClassId,CustomClass,Complex")] WeArticle weArticle)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,SetId,Title,WeArticleFormFile,ClassId,CustomClass,Complex,Comment")] WeArticle weArticle)
         {
             if (id != weArticle.Id)
             {
@@ -250,6 +250,7 @@ namespace POYA.Areas.WeEduHub.Controllers
                     _WeArticle.Complex=weArticle.Complex;
                     _WeArticle.ClassId=weArticle.ClassId;
                     _WeArticle.CustomClass=weArticle.CustomClass;
+                    _WeArticle.Comment=weArticle.Comment;
                     
                     await _context.SaveChangesAsync();
                 }

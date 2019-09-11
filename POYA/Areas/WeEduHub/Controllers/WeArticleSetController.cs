@@ -59,7 +59,13 @@ namespace POYA.Areas.WeEduHub.Controllers
         // GET: WeEduHub/WeArticleSet
         public async Task<IActionResult> Index()
         {
-            return View(await _context.WeArticleSet.ToListAsync());
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult()?.Id??string.Empty;
+            var _WeArticleSet=await _context.WeArticleSet
+                .Where(
+                    p=>
+                        _UserId==string.Empty?true:p.UserId==_UserId)
+                .ToListAsync();
+            return View(_WeArticleSet);
         }
 
         // GET: WeEduHub/WeArticleSet/Details/5
