@@ -108,6 +108,11 @@ namespace POYA.Areas.WeEduHub.Controllers
 
             _weEduHubArticleClassHelper.InitialWeArticleClassName(ref weArticle,weArticle.ClassId);
 
+            
+            ViewData["WeArticleFileContentType"]=_funFilesHelper.GetContentType(
+                await _context.WeArticleFile.Where(p=>p.Id==weArticle.WeArticleContentFileId).Select(p=>p.Name).FirstOrDefaultAsync()
+            );
+
             return View(weArticle);
         }
 
@@ -188,6 +193,10 @@ namespace POYA.Areas.WeEduHub.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["WeArticleFileContentType"]=_funFilesHelper.GetContentType(
+                await _context.WeArticleFile.Where(p=>p.Id==weArticle.WeArticleContentFileId).Select(p=>p.Name).FirstOrDefaultAsync()
+            );
 
             ViewData["FirstClassId"]=_weEduHubArticleClassHelper.GetFirstClassIdBySecondClassId(weArticle.ClassId);
 

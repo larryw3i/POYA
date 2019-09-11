@@ -29,6 +29,14 @@ namespace POYA.Areas.WeEduHub.Models
         public DateTimeOffset DOUploading{get;set;}=DateTimeOffset.Now;
 
         #region  NOTMAPPED
+
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
+        [NotMapped]
+        public string ContentType{get;set;}="application/octet-stream";
+        
         #endregion
     }
 }

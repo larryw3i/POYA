@@ -4,6 +4,7 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var UserId=ViewData["UserId"]?.ToString()??string.Empty;
+    var _WeArticleFileContentType=ViewData["WeArticleFileContentType"]?.ToString()??string.Empty;
 }
 
 <div class="row">
@@ -17,7 +18,23 @@
 </div>
 
 <div class="wearticle_content">
-    <object title="@(Model.Title)" data='@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}))' type="application/pdf" width="100%" height="100%"></object>  
+    @if(_WeArticleFileContentType.EndsWith("/pdf"))
+    {
+        <object 
+            id="selected_file_content" 
+            data='@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}))' 
+            type='@_WeArticleFileContentType'>
+        </object>  
+    }
+    else if(_WeArticleFileContentType.StartsWith("video/"))
+    {
+        <video 
+            id="selected_file_content" 
+            src='@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}))' 
+            type='@_WeArticleFileContentType' 
+            controls >
+        </video> 
+    }
 </div>
 
 
@@ -44,6 +61,11 @@
     <style>
         .wearticle_content object{
             border-radius: 5px;
+            width: 100%;
+            height: 100%;
+        }
+        .wearticle_content video{
+            width: 90%;
         }
         .wearticle_class_and_{
             font-size: 80%;

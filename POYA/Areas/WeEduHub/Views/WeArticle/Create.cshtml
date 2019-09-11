@@ -8,6 +8,8 @@
     ViewData["Title"] =IsEdit?Localizer["Edit"]:Localizer[ "Create"];
 
     var FirstClassId=IsEdit?ViewData["FirstClassId"].ToString():string.Empty;
+
+    var _WeArticleFileContentType=ViewData["WeArticleFileContentType"]?.ToString()??string.Empty;
 }
 
 
@@ -19,7 +21,7 @@
         <form asp-action='@(IsEdit?"Edit":"Create")' enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="SetId" type="hidden"/>            
-            <input type="file" asp-for="WeArticleFormFile" hidden accept=".pdf"/>
+            <input type="file" asp-for="WeArticleFormFile" hidden accept=".pdf,video/*"/>
             <input asp-for="ClassId" type="hidden"/>
             <input asp-for="CustomClass" type="hidden"/>
             <input asp-for="Complex" type="hidden"/>
@@ -39,7 +41,6 @@
 </div>
 
 <div class="selected_file_content_parent">
-    <object id="selected_file_content" data='@(IsEdit?Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}):"")' type="application/pdf" width="100%" height="100%"></object>  
 </div>
 
 <div class="row">
@@ -69,6 +70,22 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
+        var _WeArticleFileContentType=`@_WeArticleFileContentType`;
+        var _selected_file_content_object_string=(data,type)=>`
+            <object 
+                id="selected_file_content" 
+                data='${data}' 
+                type='${type}'>
+            </object>  
+            `;
+        var _selected_file_content_video_string=(src,type)=>`
+            <video 
+                id="selected_file_content" 
+                src='${src}' 
+                type='${type}' 
+                controls >
+            </video>  
+            `;
         $(document).ready(()=>{
 
             $(document).on(`click`,`#select_video`,()=>{ SelectVideo(); });
@@ -85,11 +102,24 @@
 
             $(document).on(`change`,`#complex_select`,(e)=>{ ComplexSelectChange(e);  });
             
-            if(Boolean(`@(IsEdit?" ":"")`)) $(`#complex_select`).find(`option[value='@(Model.Complex)']`).attr("selected",true);
+            if(_WeArticleFileContentType.length>0) $(`#complex_select`).find(`option[value='@(Model.Complex)']`).attr("selected",true);
 
             InitialWeArticleFirstClasses();
 
+            InitialWeArticleContent();
+
         });
+
+        function InitialWeArticleContent()
+        {
+            if(_WeArticleFileContentType.length>0)
+            {
+                AddSelectedFileContentParentHtml(
+                    _WeArticleFileContentType,
+                    `@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}))`
+                );
+            }
+        }
 
         function SelectVideo()
         {
@@ -107,7 +137,7 @@
         }
 
         function AfterFillFirstClassSelect(){
-            if(Boolean(`@(IsEdit?" ":"")`))
+            if(_WeArticleFileContentType.length>0)
             {
                 $(`#first_class_select`).find(`option[value='@(FirstClassId)']`).attr("selected",true);
                 $.get(
@@ -139,18 +169,43 @@
         function WeArticleFormFileChange(e)
         {
             var _file=document.getElementById(`WeArticleFormFile`).files[0];
-            
-
-            if(!String(_file.name).endsWith(`.pdf`)) return;
         
             var _reader = new FileReader();
 
             _reader.readAsDataURL(_file);
             
-            _reader.onload = function(){   
-                $(`#selected_file_content`).attr("data",this.result);
+            _reader.onload = function()
+            {
+                
+                AddSelectedFileContentParentHtml(
+                    _file.type,
+                    this.result
+                );
+     
             }
             
+        }
+
+        function AddSelectedFileContentParentHtml(FileType, SrcOrData)
+        {
+            if(FileType.endsWith("/pdf"))
+            {
+                $(`.selected_file_content_parent`).html(
+                    _selected_file_content_object_string(
+                        SrcOrData,
+                        FileType
+                    )
+                );
+            }
+            else if(FileType.startsWith("video/"))
+            {
+                $(`.selected_file_content_parent`).html(
+                    _selected_file_content_video_string(
+                        SrcOrData,
+                        FileType
+                    )
+                );
+            }
         }
 
         function SelectFileClick()  {  $(`#WeArticleFormFile`).click();   }
@@ -162,6 +217,10 @@
 @section Styles
 {
     <style>
+        #selected_file_content{
+            width: 100%;
+            height: 100%;
+        }
         #GoToTop{
             display: none;
         }
