@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using POYA.Areas.FunAdmin.Models;
+using POYA.Areas.FunFiles.Controllers;
+using POYA.Areas.WeEduHub.Controllers;
 using POYA.Data;
 using POYA.Unities.Helpers;
 
@@ -33,6 +35,9 @@ namespace POYA.Areas.FunAdmin.Controllers
         private readonly IConfiguration _configuration;
         private readonly IStringLocalizer<Program> _localizer;
         private readonly FunAdminHelper _funAdminHelper;
+        private readonly WeEduHubHelper _weEduHubHelper;
+        private readonly FunFilesHelper _funFilesHelper;
+        private readonly WeEduHubArticleClassHelper _weEduHubArticleClassHelper;
         public FContentChecksController(
             IConfiguration configuration,
             SignInManager<IdentityUser> signInManager,
@@ -54,6 +59,9 @@ namespace POYA.Areas.FunAdmin.Controllers
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
             _funAdminHelper=new  FunAdminHelper(_localizer,_context);
+            _weEduHubHelper=new WeEduHubHelper();
+            _weEduHubArticleClassHelper=new WeEduHubArticleClassHelper(_hostingEnv);
+            _funFilesHelper=new FunFilesHelper();
         }
 
         #endregion
@@ -365,18 +373,40 @@ namespace POYA.Areas.FunAdmin.Controllers
         public async Task<IActionResult> GetContent(Guid ContentId)
         {
             var _EArticle=await _context.EArticle.FirstOrDefaultAsync(p=>p.Id==ContentId);
+            var _WeArticle=await _context.WeArticle.Where(p=>p.Id==ContentId).FirstOrDefaultAsync();
+            var _User = _userManager.GetUserAsync(User).GetAwaiter().GetResult();
             if(_EArticle!=null)
+            {
                 return Content(_EArticle.Content);
+            }
+            else if(_WeArticle!=null)
+            {
+                ViewData["AuthorUserId"]=_User?.Id??string.Empty;;
+                ViewData["AuthorUserEmail"]=_User?.Email??string.Empty;
 
+                _weEduHubArticleClassHelper.InitialWeArticleClassName(ref _WeArticle,_WeArticle.ClassId);
+
+                ViewData["WeArticleFileContentType"]=_funFilesHelper.GetContentType(
+                    await _context.WeArticleFile.Where(p=>p.Id==_WeArticle.WeArticleContentFileId).Select(p=>p.Name).FirstOrDefaultAsync()
+                );
+                return View("WeArticleDetails",_WeArticle);
+            }
             return NoContent();
         }
-
         
         public async Task<IActionResult> GetContentTitle(Guid ContentId)
         {
             var _EArticle=await _context.EArticle.FirstOrDefaultAsync(p=>p.Id==ContentId);
+            var _WeArticle=await _context.WeArticle.Where(p=>p.Id==ContentId).FirstOrDefaultAsync();
+            var _User = _userManager.GetUserAsync(User).GetAwaiter().GetResult();
             if(_EArticle!=null)
+            {
                 return Content(_EArticle.Title);
+            }
+            else if(_WeArticle!=null)
+            {
+                return Content(_WeArticle.Title);
+            }
                 
             return NoContent();
         }

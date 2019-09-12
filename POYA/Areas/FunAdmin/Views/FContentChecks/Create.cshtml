@@ -10,7 +10,7 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-7 offset-md-1 LContentEle">
+    <div class="offset-md-1 col-md-7 LContentEle">
         <div id="LContentTitle"></div>
         <div id="LContent"></div>
     </div>
@@ -31,7 +31,8 @@
                     <textarea asp-for="ReceptionistComment" class="form-control" ></textarea>
                     <span asp-validation-for="ReceptionistComment" class="text-danger"></span>
                 </div>
-            }else
+            }
+            else
             {
                 <div class="form-group">
                     <label class="control-label">Comment</label>
@@ -56,20 +57,20 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
         $(document).ready(()=>{
-            IllegalityTypeChangedListener();
+             $(`#IllegalityType`).change(()=>{ IllegalityTypeChange() });
             $(`#@(_IsAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
             $(`#LContent`).load(`@(Url.Action("GetContent","FContentChecks",new{ContentId=Model.ContentId,area="FunAdmin"}))`);
             $(`#LContentTitle`).load(`@(Url.Action("GetContentTitle","FContentChecks",new{ContentId=Model.ContentId,area="FunAdmin"}))`);
         });
 
-        function IllegalityTypeChangedListener(){
-            $(`#IllegalityType`).change(()=>{
-                if($(`#IllegalityType`).val()==`110`){
-                    $(`#@(_IsAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments like:"]) (@(Localizer["reason"])) >  (@(Localizer["description"])) . . .');
-                }else{
-                    $(`#@(_IsAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
-                }
-            });
+        function IllegalityTypeChange(){
+            if($(`#IllegalityType`).val()==`110`){
+                $(`#@(_IsAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments like:"]) (@(Localizer["reason"])) >  (@(Localizer["description"])) . . .');
+            }
+            else
+            {
+                $(`#@(_IsAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
+            }
         }
     </script>
 }
