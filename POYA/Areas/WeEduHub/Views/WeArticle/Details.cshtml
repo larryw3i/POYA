@@ -3,7 +3,8 @@
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var UserId=ViewData["UserId"]?.ToString()??string.Empty;
+    var AuthorUserId=ViewData["AuthorUserId"]?.ToString()??string.Empty;
+    var AuthorUserEmail=ViewData["AuthorUserEmail"]?.ToString()??string.Empty;
     var _WeArticleFileContentType=ViewData["WeArticleFileContentType"]?.ToString()??string.Empty;
 }
 
@@ -13,9 +14,18 @@
         <span class="wearticle_class_and_">
             @(Localizer[ Model.FirstClassName]) > @(Localizer[Model.SecondClassName]) > @(Model.CustomClass) | @(new string('\u269D',Model.Complex))
         </span>
-        <hr/>
+
+        <div class="float-right content_check_and_">
+            <a href="mailto:@(AuthorUserEmail)" title='@(Localizer["Mail to the author"])' >@(Html.Raw("\ud83d\udcec"))</a> | 
+            <a asp-action="Create" asp-area="FunAdmin" asp-controller="FContentChecks" asp-route-_ContentId="@(Model.Id)" title='@(Localizer["Tip-off"])'>
+                @(Html.Raw("\u2696"))
+            </a>
+        </div>
+
     </div>
 </div>
+
+<hr/>
 
 <div class="wearticle_content">
     @if(_WeArticleFileContentType.EndsWith("/pdf"))
@@ -42,7 +52,7 @@
 
 <div class="wearticle_details__">
     <a id="go_back" class="btn btn-info">&laquo; @(Localizer["Back"])</a>   
-    @if(UserId==Model.UserId)
+    @if(AuthorUserId==Model.AuthorUserId)
     {
         <a class="wearticle_edit btn btn-info" asp-action="Edit" asp-route-id="@Model.Id">@(Localizer["Edit"])</a>    
         <a class="wearticle_delete btn btn-info" asp-action="Delete" asp-route-id="@Model.Id">@(Localizer["Delete"])</a>
@@ -61,6 +71,16 @@
 @section Styles
 {
     <style>
+        .content_check_and_{
+            transform: scale(1.6);
+        }
+        .content_check_and_:hover{
+            transform: scale(1.8);
+        }
+        .content_check_and_ :hover{
+            text-decoration: none;
+        }
+
         .wearticle_content object{
             border-radius: 5px;
             width: 100%;
@@ -73,11 +93,14 @@
         .wearticle_class_and_{
             font-size: 80%;
         }
-        .wearticle_title,.wearticle_content{
+        .wearticle_content{
             text-align: center;
         }
         .wearticle_title{
             font-size: 160%;
+            width: 80%;
+            word-wrap: break-word;
+            word-break: break-all;
         }
         .wearticle_content{
             margin-bottom: 20%;

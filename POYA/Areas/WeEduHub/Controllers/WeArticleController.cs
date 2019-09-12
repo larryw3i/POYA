@@ -77,6 +77,7 @@ namespace POYA.Areas.WeEduHub.Controllers
                     p=>
                         SetId==null?true:p.SetId==SetId
                 )
+                .OrderByDescending(p=>p.DOPublishing)
                 .ToListAsync();
             
             ViewData[nameof(SetId)]=SetId;
@@ -96,7 +97,7 @@ namespace POYA.Areas.WeEduHub.Controllers
             {
                 return NotFound();
             }
-            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult()?.Id;
+            var _User = _userManager.GetUserAsync(User).GetAwaiter().GetResult();
 
             var weArticle = await _context.WeArticle.Where(p=> p.Id==id).FirstOrDefaultAsync();
 
@@ -104,11 +105,12 @@ namespace POYA.Areas.WeEduHub.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"]=_UserId;
+
+            ViewData["AuthorUserId"]=_User?.Id??string.Empty;;
+            ViewData["AuthorUserEmail"]=_User?.Email??string.Empty;
 
             _weEduHubArticleClassHelper.InitialWeArticleClassName(ref weArticle,weArticle.ClassId);
 
-            
             ViewData["WeArticleFileContentType"]=_funFilesHelper.GetContentType(
                 await _context.WeArticleFile.Where(p=>p.Id==weArticle.WeArticleContentFileId).Select(p=>p.Name).FirstOrDefaultAsync()
             );
@@ -150,7 +152,7 @@ namespace POYA.Areas.WeEduHub.Controllers
                 }
 
                 weArticle.Id = Guid.NewGuid();
-                weArticle.UserId=_UserId;
+                weArticle.AuthorUserId=_UserId;
 
                 var _WeArticleFile=new WeArticleFile{
                         DOUploading=DateTimeOffset.Now,
@@ -163,8 +165,8 @@ namespace POYA.Areas.WeEduHub.Controllers
 
                 weArticle.DOPublishing=DateTimeOffset.Now;
 
-                await _context.AddAsync(weArticle);
-                await _context.AddAsync( _WeArticleFile );
+                await _context.WeArticle.AddAsync(weArticle);
+                await _context.WeArticleFile.AddAsync( _WeArticleFile );
 
                 await System.IO.File.WriteAllBytesAsync(
                     _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_WeArticleFile.Id,
@@ -187,7 +189,7 @@ namespace POYA.Areas.WeEduHub.Controllers
 
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
-            var weArticle = await _context.WeArticle.Where(p=>p.UserId==_UserId && p.Id==id).FirstOrDefaultAsync();
+            var weArticle = await _context.WeArticle.Where(p=>p.AuthorUserId==_UserId && p.Id==id).FirstOrDefaultAsync();
 
             if (weArticle == null)
             {
@@ -224,7 +226,7 @@ namespace POYA.Areas.WeEduHub.Controllers
                 {
                     var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
                     
-                    var _WeArticle=await _context.WeArticle.Where(p=>p.Id==weArticle.Id && p.UserId==_UserId).FirstOrDefaultAsync();
+                    var _WeArticle=await _context.WeArticle.Where(p=>p.Id==weArticle.Id && p.AuthorUserId==_UserId).FirstOrDefaultAsync();
 
                     if(weArticle.WeArticleFormFile!=null) 
                     {
@@ -240,7 +242,7 @@ namespace POYA.Areas.WeEduHub.Controllers
                             _funFilesHelper.GetFormFileBytes(weArticle.WeArticleFormFile)
                         );
 
-                        await _context.AddAsync(_WeArticleFile);
+                        await _context.WeArticleFile.AddAsync(_WeArticleFile);
                         
                         _WeArticle.WeArticleContentFileId=_WeArticleFile.Id;
                     }
@@ -279,12 +281,15 @@ namespace POYA.Areas.WeEduHub.Controllers
             }
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
-            var weArticle = await _context.WeArticle.Where(p=>p.UserId==_UserId && p.Id==id).FirstOrDefaultAsync();
+            var weArticle = await _context.WeArticle.Where(p=>p.AuthorUserId==_UserId && p.Id==id).FirstOrDefaultAsync();
             if (weArticle == null)
             {
                 return NotFound();
             }
 
+            ViewData["WeArticleFileContentType"]=_funFilesHelper.GetContentType(
+                await _context.WeArticleFile.Where(p=>p.Id==weArticle.WeArticleContentFileId).Select(p=>p.Name).FirstOrDefaultAsync()
+            );
 
             return View(weArticle);
         }

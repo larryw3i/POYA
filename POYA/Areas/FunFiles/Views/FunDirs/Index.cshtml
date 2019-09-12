@@ -83,7 +83,7 @@
                                 @(Html.DisplayFor(modelItem => item.Name))
                             </a>  
                             <a asp-action="DownloadFunFile" asp-controller="FunYourFiles" asp-route-Id="@(item.Id)" class="fun_file_download">
-                                <script>document.write('\u2b07');</script>
+                                @(Html.Raw("\u2b07"))
                             </a>
                         }
                         else

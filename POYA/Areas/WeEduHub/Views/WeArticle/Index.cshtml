@@ -23,29 +23,33 @@
     </div>
 </div>
 
-<table class="table">
-    <tbody>
-        @foreach (var item in ViewData["WeArticles"] as IPagedList<WeArticle>) 
-        {
-            <tr>
-                <td>
-                    <a class="wearticle_details" asp-action="Details" asp-route-id="@item.Id">@(item.Title)</a> 
-                    @if((DateTimeOffset.Now-item.DOPublishing).Days<1)
-                    {
-                        <sup>
-                            <span class="badge badge-success">New</span>
-                        </sup>
-                    }
-                    @if(item.UserId==_UserId)
-                    {
-                        <a class="wearticle_edit"  asp-action="Edit" asp-route-id="@item.Id"><script>document.write(`\u2712\ufe0f`);</script></a>    
-                        <a class="wearticle_delete"  asp-action="Delete" asp-route-id="@item.Id"><script>document.write(`\u274c`);</script></a>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="row">
+    <div class="col col-10">
+        <table class="table wearticles_table">
+            <tbody>
+                @foreach (var item in ViewData["WeArticles"] as IPagedList<WeArticle>) 
+                {
+                    <tr>
+                        <td>
+                            <a class="wearticle_details" asp-action="Details" asp-route-id="@item.Id">@(item.Title)</a> 
+                            @if((DateTimeOffset.Now-item.DOPublishing).Days<1)
+                            {
+                                <sup>
+                                    <span class="badge badge-success">@(Localizer["Newest"])</span>
+                                </sup>
+                            }
+                            @if(item.AuthorUserId==_UserId)
+                            {
+                                <a class="wearticle_edit"  asp-action="Edit" asp-route-id="@item.Id">@(Html.Raw("\u2712\ufe0f"))</a>    
+                                <a class="wearticle_delete"  asp-action="Delete" asp-route-id="@item.Id">@(Html.Raw("\u274c"))</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <div class="paged_list">
     @(Html.PagedListPager((IPagedList)ViewData["WeArticles"], Apage => Url.Action("Index", new { Apage = Apage,SetId=SetId }),PagedListRenderOptions.ClassicPlusFirstAndLast))
@@ -71,6 +75,8 @@
         .wearticle_details{
             font-size: 190%;
             text-decoration: none;
+            word-break: break-all;
+            word-wrap: break-word;
         }
         .wearticle_details:hover{
             text-decoration: none;
@@ -79,6 +85,7 @@
         #go_back{
             position: fixed;
             bottom: 8%;
+            z-index: 99;
         }
         table *{
             border-color: transparent;

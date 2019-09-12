@@ -12,7 +12,7 @@ namespace POYA.Areas.WeEduHub.Models
     public class WeArticle    //  ViewModel
     {
         public Guid Id{get;set;}
-        public string UserId{get;set;}
+        public string AuthorUserId{get;set;}
         public Guid SetId{get;set;}
         
         [StringLength(maximumLength:120,MinimumLength=2)]
