@@ -14,7 +14,7 @@
 <hr />
 <div class="row">
     <div class="col-md-7 offset-md-1 LContentEle">
-        <div id="LContentTitle"></div>
+        <a id="LContentTitle"></a>
         <div id="LContent"></div>
     </div>
     <div class="col-md-4">
@@ -26,7 +26,7 @@
             {
                 <div class="form-group">
                     <label  class="control-label">@(IsAdmin?Localizer["comment"]:Localizer["Comment"])</label>
-                    <textarea asp-for="AppellantComment" class="form-control" ></textarea>
+                    <textarea asp-for="AppellantComment" class="form-control" rows="5"></textarea>
                     <span asp-validation-for="AppellantComment" class="text-danger"></span>
                 </div>
 
@@ -50,7 +50,7 @@
             {
                 <div class="form-group">
                     <label asp-for="ReceptionistComment" class="control-label"></label>
-                    <textarea asp-for="ReceptionistComment" class="form-control" ></textarea>
+                    <textarea asp-for="ReceptionistComment" class="form-control" rows="5"></textarea>
                     <span asp-validation-for="ReceptionistComment" class="text-danger"></span>
                 </div>
             }
@@ -75,8 +75,9 @@
 
             $(`#IsLegal`).change(()=>{IsLegal_Change();});
             $(`#IllegalityType`).change(()=>{IllegalityType_Change();});
-            $(`#LContent`).load(`@(Url.Action("GetContent","FContentChecks",new{ContentId=Model.ContentId,area="FunAdmin"}))`);
-            $(`#LContentTitle`).load(`@(Url.Action("GetContentTitle","FContentChecks",new{ContentId=Model.ContentId,area="FunAdmin"}))`);
+
+            $.get(`@(Url.Action("GetContent","FContentChecks",new{ContentId=Model.ContentId,area="FunAdmin"}))`,(data)=>{ $(`#LContent`).html(data); });
+            $.get(`@(Url.Action("GetContentTitle","FContentChecks",new{ContentId=Model.ContentId,area="FunAdmin"}))`,(data)=>{ $(`#LContentTitle`).text(data); });
         });
 
         function IsLegal_Change(){

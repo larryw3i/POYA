@@ -132,7 +132,6 @@ namespace POYA.Areas.FunAdmin.Controllers
             ViewData["IsAdmin"] = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
             ViewData["IsReportSubmittedByUser"]= (_FContentCheck.AppellantId?.Length??0)>0;
 
-
             return View(_FContentCheck);
         }
 
@@ -201,7 +200,7 @@ namespace POYA.Areas.FunAdmin.Controllers
 
             fContentCheck.IllegalityTypeSelectListItems=_funAdminHelper.GetIllegalityTypeSelectListItems();
 
-            return View(fContentCheck);
+            return View("Create",fContentCheck);
         }
 
         // POST: FunAdmin/FContentChecks/Edit/5
@@ -372,6 +371,18 @@ namespace POYA.Areas.FunAdmin.Controllers
 
         #region DEPOLLUTION
 
+        [ActionName("RedirectionByContentId")]
+        public async Task<IActionResult> RedirectionByContentIdAsync(Guid Id)
+        {
+            if(
+                await _context.WeArticle.AnyAsync(p=>p.Id==Id)
+            )
+            {
+                return RedirectToAction("Details","WeArticle",new{area="WeEduHub",Id});
+            }
+            return NotFound();
+        }
+
         
         public async Task<IActionResult> GetContent(Guid ContentId)
         {
@@ -402,7 +413,7 @@ namespace POYA.Areas.FunAdmin.Controllers
             var _EArticle=await _context.EArticle.FirstOrDefaultAsync(p=>p.Id==ContentId);
             var _WeArticle=await _context.WeArticle.Where(p=>p.Id==ContentId).FirstOrDefaultAsync();
             var _User = _userManager.GetUserAsync(User).GetAwaiter().GetResult();
-            if(_EArticle!=null)
+            if(_EArticle != null)
             {
                 return Content(_EArticle.Title);
             }

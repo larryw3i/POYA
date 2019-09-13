@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using POYA.Data;
 
@@ -16,7 +19,6 @@ namespace POYA.Areas.FunAdmin.Controllers
             _localizer=localizer;
             _context=context;
         }
-        
 
 
         /// <summary>
