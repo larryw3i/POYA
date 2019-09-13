@@ -2,8 +2,10 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
     var IsAdmin=Convert.ToBoolean(ViewData["IsAdmin"]);
-    var IsReportSubmittedByUser = (Model.AppellantId?.Length??0)>0;
+    var IsReportSubmittedByUser = Convert.ToBoolean(ViewData["IsReportSubmittedByUser"]);
+
     ViewData["Title"] =IsAdmin?Localizer["Check a report"]: Localizer[ "Edit your report"];
 }
 

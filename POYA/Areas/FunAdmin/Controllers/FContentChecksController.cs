@@ -130,6 +130,8 @@ namespace POYA.Areas.FunAdmin.Controllers
             };
 
             ViewData["IsAdmin"] = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
+            ViewData["IsReportSubmittedByUser"]= (_FContentCheck.AppellantId?.Length??0)>0;
+
 
             return View(_FContentCheck);
         }
@@ -195,6 +197,7 @@ namespace POYA.Areas.FunAdmin.Controllers
             var _IsAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
             
             ViewData["IsAdmin"]=_IsAdmin;
+            ViewData["IsReportSubmittedByUser"]= (fContentCheck.AppellantId?.Length??0)>0;
 
             fContentCheck.IllegalityTypeSelectListItems=_funAdminHelper.GetIllegalityTypeSelectListItems();
 
