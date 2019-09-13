@@ -122,15 +122,17 @@ namespace POYA.Areas.FunAdmin.Controllers
         {
             
             var User_=await _userManager.GetUserAsync(User);
+            var _IsCurrentUserRoleInAdmin=await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
 
             var _FContentCheck = new FContentCheck
             {
                 ContentId = _ContentId,
                 IllegalityTypeSelectListItems = _funAdminHelper.GetIllegalityTypeSelectListItems(),
+                IsLegal=false,
             };
 
-            ViewData["IsAdmin"] = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
-            ViewData["IsReportSubmittedByUser"]= (_FContentCheck.AppellantId?.Length??0)>0;
+            ViewData["IsCurrentUserRoleInAdmin"] = _IsCurrentUserRoleInAdmin;
+            ViewData["IsReportSubmittedByUser"]= !_IsCurrentUserRoleInAdmin;
 
             return View(_FContentCheck);
         }
@@ -146,11 +148,11 @@ namespace POYA.Areas.FunAdmin.Controllers
             {
                 var User_=await _userManager.GetUserAsync(User);
 
-                var _IsAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
+                var _IsCurrentUserRoleInAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
                 
                 fContentCheck.Id = Guid.NewGuid();
 
-                if(_IsAdmin)
+                if(_IsCurrentUserRoleInAdmin)
                 {   
                     fContentCheck.DOHandling=DateTimeOffset.Now;
                     fContentCheck.ReceptionistId=User_.Id;
@@ -193,9 +195,9 @@ namespace POYA.Areas.FunAdmin.Controllers
 
             var User_=await _userManager.GetUserAsync(User);
 
-            var _IsAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
+            var _IsCurrentUserRoleInAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
             
-            ViewData["IsAdmin"]=_IsAdmin;
+            ViewData["IsCurrentUserRoleInAdmin"]=_IsCurrentUserRoleInAdmin;
             ViewData["IsReportSubmittedByUser"]= (fContentCheck.AppellantId?.Length??0)>0;
 
             fContentCheck.IllegalityTypeSelectListItems=_funAdminHelper.GetIllegalityTypeSelectListItems();
@@ -221,13 +223,13 @@ namespace POYA.Areas.FunAdmin.Controllers
                 {
                     var User_=await _userManager.GetUserAsync(User);
 
-                    var _IsAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
+                    var _IsCurrentUserRoleInAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
 
 
                     var _FContentCheck=await _context.FContentCheck.FirstOrDefaultAsync(
                         p=>
                             p.Id==id 
-                            && _IsAdmin?true:
+                            && _IsCurrentUserRoleInAdmin?true:
                             (p.AppellantId==User_.Id)
                     );
 
@@ -241,7 +243,7 @@ namespace POYA.Areas.FunAdmin.Controllers
                     var IsChecked=string.IsNullOrEmpty(_FContentCheck.ReceptionistId);
 
 
-                    if(_IsAdmin)
+                    if(_IsCurrentUserRoleInAdmin)
                     {
                         _FContentCheck.ReceptionistComment=fContentCheck.ReceptionistComment;
                         
@@ -279,7 +281,7 @@ namespace POYA.Areas.FunAdmin.Controllers
                     }
 
                     _FContentCheck.IllegalityType=
-                        (_IsAdmin && fContentCheck.IsLegal)?string.Empty:
+                        (_IsCurrentUserRoleInAdmin && fContentCheck.IsLegal)?string.Empty:
                         _funAdminHelper.GetIllegalityTypeSelectListItems().Select(p=>p.Value).Contains(fContentCheck.IllegalityType)?
                         fContentCheck.IllegalityType:"110";
 
@@ -313,7 +315,7 @@ namespace POYA.Areas.FunAdmin.Controllers
             
             var User_=await _userManager.GetUserAsync(User);
 
-            var _IsAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
+            var _IsCurrentUserRoleInAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
 
             var fContentCheck = await _context.FContentCheck.FirstOrDefaultAsync(p=>p.Id==id );
 
@@ -323,7 +325,7 @@ namespace POYA.Areas.FunAdmin.Controllers
             }
             if(User_.Id!=fContentCheck.AppellantId && 
                 ( fContentCheck.ReceptionistId!=User_.Id && 
-                    _IsAdmin))
+                    _IsCurrentUserRoleInAdmin))
             {
                 return NotFound();
             }
@@ -332,7 +334,7 @@ namespace POYA.Areas.FunAdmin.Controllers
 
             var IsChecked=!string.IsNullOrEmpty(fContentCheck.ReceptionistId);
 
-            ViewData["IsAdmin"]=_IsAdmin;
+            ViewData["IsCurrentUserRoleInAdmin"]=_IsCurrentUserRoleInAdmin;
 
             return View(fContentCheck);
         }
@@ -346,7 +348,7 @@ namespace POYA.Areas.FunAdmin.Controllers
             
             var User_=await _userManager.GetUserAsync(User);
             
-            var _IsAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
+            var _IsCurrentUserRoleInAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
 
             var fContentCheck = await _context.FContentCheck.FirstOrDefaultAsync(
                 p=>
@@ -354,7 +356,7 @@ namespace POYA.Areas.FunAdmin.Controllers
                     (
                         string.IsNullOrEmpty(p.AppellantId) && 
                         p.ReceptionistId==User_.Id && 
-                        _IsAdmin
+                        _IsCurrentUserRoleInAdmin
                     )
             );
             _context.FContentCheck.Remove(fContentCheck);

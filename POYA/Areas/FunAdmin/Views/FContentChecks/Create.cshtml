@@ -3,21 +3,21 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     
-    var IsAdmin=Convert.ToBoolean(ViewData["IsAdmin"]);
+    var _IsCurrentUserRoleInAdmin=Convert.ToBoolean(ViewData["IsCurrentUserRoleInAdmin"]);
     var IsReportSubmittedByUser = Convert.ToBoolean(ViewData["IsReportSubmittedByUser"]);
 
-    ViewData["Title"] =IsAdmin?Localizer["Check a report"]: Localizer[ "Edit your report"];
+    ViewData["Title"] =_IsCurrentUserRoleInAdmin?Localizer["Check a report"]: Localizer[ "Edit your report"];
 }
 
 <h1>@(ViewData["Title"])</h1>
 
 <hr />
 <div class="row">
-    <div class="col-md-7 offset-md-1 LContentEle">
+    <div class="col-sm-12 offset-md-1 col-md-6 LContentEle">
         <a id="LContentTitle"></a>
         <div id="LContent"></div>
     </div>
-    <div class="col-md-4">
+    <div class="col-sm-12 col-md-5">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -25,14 +25,14 @@
             @if(IsReportSubmittedByUser)
             {
                 <div class="form-group">
-                    <label  class="control-label">@(IsAdmin?Localizer["comment"]:Localizer["Comment"])</label>
+                    <label  class="control-label">@(_IsCurrentUserRoleInAdmin?Localizer["comment"]:Localizer["Comment"])</label>
                     <textarea asp-for="AppellantComment" class="form-control" rows="5"></textarea>
                     <span asp-validation-for="AppellantComment" class="text-danger"></span>
                 </div>
 
             }
 
-            @if(IsAdmin)
+            @if(_IsCurrentUserRoleInAdmin)
             {
                 <div class="form-group form-check">
                     <label class="form-check-label">
@@ -41,12 +41,12 @@
                 </div>
             }
 
-            <div class="form-group" style='display: @((Model.IsLegal && IsAdmin)?"none":"block")'>
+            <div class="form-group" id="illegality_type_parent">
                 <label asp-for="IllegalityType" class="control-label"></label>
                 <select asp-for="IllegalityType"  asp-items="@(Model.IllegalityTypeSelectListItems)" asp- class="form-control" ></select>
             </div>
             
-            @if (IsAdmin)
+            @if (_IsCurrentUserRoleInAdmin)
             {
                 <div class="form-group">
                     <label asp-for="ReceptionistComment" class="control-label"></label>
@@ -67,11 +67,13 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
-        var _IsAdmin=Boolean(`@(IsAdmin?"1":"")`);
+        var _IsCurrentUserRoleInAdmin=Boolean(`@(_IsCurrentUserRoleInAdmin?" ":"")`);
+
         $(document).ready(()=>{
             IllegalityType_Change();
             AddIllegalityTypeToAppellantComment();
             InitialAppellantCommentReadonly();
+            $(`#illegality_type_parent`).css({"display":`@((Model.IsLegal && _IsCurrentUserRoleInAdmin)?"none":"block")`});
 
             $(`#IsLegal`).change(()=>{IsLegal_Change();});
             $(`#IllegalityType`).change(()=>{IllegalityType_Change();});
@@ -86,26 +88,26 @@
             }else{
                 $(`#IllegalityType`).parent().show();
             }
-            $(`#@(IsAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
+            $(`#@(_IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
         }
         
         function InitialAppellantCommentReadonly(){
-            if(_IsAdmin){
+            if(_IsCurrentUserRoleInAdmin){
                 $(`#AppellantComment`).attr("readonly","readonly");
             }
         }
 
         function AddIllegalityTypeToAppellantComment(){
-            if($(`#IllegalityType`).val()!=`110` && _IsAdmin){
+            if($(`#IllegalityType`).val()!=`110` && _IsCurrentUserRoleInAdmin){
                 $(`#AppellantComment`).prepend($(`#IllegalityType`).find("option:selected").text()+' >> ');
             }
         }
 
         function IllegalityType_Change(){ 
             if($(`#IllegalityType`).val()==`110`){
-                $(`#@(IsAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments like:"]) (@(Localizer["reason"])) >  (@(Localizer["description"])) . . .');
+                $(`#@(_IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments like:"]) (@(Localizer["reason"])) >  (@(Localizer["description"])) . . .');
             }else{
-                $(`#@(IsAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
+                $(`#@(_IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
             }
         }
     </script>
