@@ -18,7 +18,7 @@ namespace POYA.Areas.FunAdmin.Models
         public string AppellantId{get;set;}
         
         [Display(Name="Receptionist")]
-        public string ReceptionistId{get;set;}
+        public string ReceptionistId{get;set;}=string.Empty;
 
         [Display(Name="Submitting date")]
         public DateTimeOffset? DOSubmitting{get;set;}

@@ -20,6 +20,16 @@ namespace POYA.Areas.FunAdmin.Controllers
             _context=context;
         }
 
+        public bool IsContentIllegal(Guid Id)
+        {
+            return 
+                _context.FContentCheck.AnyAsync(
+                    p=>p.ReceptionistId!=string.Empty && p.ContentId==Id && !p.IsLegal
+                )
+                .GetAwaiter()
+                .GetResult();
+        }
+
 
         /// <summary>
         /// Text="Others",Value="110"

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
+using POYA.Areas.FunAdmin.Controllers;
 using POYA.Areas.FunFiles.Controllers;
 using POYA.Areas.WeEduHub.Models;
 using POYA.Data;
@@ -37,6 +38,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         private readonly WeEduHubHelper _weEduHubHelper;
         private readonly FunFilesHelper _funFilesHelper;
         private readonly WeEduHubArticleClassHelper _weEduHubArticleClassHelper;
+        private readonly FunAdminHelper _funAdminHelper;
         public WeArticleController(
             HtmlSanitizer htmlSanitizer,
             SignInManager<IdentityUser> signInManager,
@@ -60,6 +62,7 @@ namespace POYA.Areas.WeEduHub.Controllers
             _weEduHubArticleClassHelper=new WeEduHubArticleClassHelper(_hostingEnv );
             _weEduHubHelper=new WeEduHubHelper();
             _funFilesHelper=new FunFilesHelper();
+            _funAdminHelper=new FunAdminHelper(_localizer,_context);
             WeArticleControllerInitial();
         }
         #endregion
@@ -72,15 +75,16 @@ namespace POYA.Areas.WeEduHub.Controllers
         )
         {   
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult()?.Id;
-            var _IllegalIds=await _context.FContentCheck.Where(p=>!p.IsLegal).Select(p=>p.Id).ToListAsync();
+            
             var _WeArticles=await _context.WeArticle
                 .Where(
                     p=>
-                        SetId==null?true:p.SetId==SetId && 
-                        !_IllegalIds.Contains(p.Id)
+                        SetId==null?true:p.SetId==SetId 
                 )
                 .OrderByDescending(p=>p.DOPublishing)
                 .ToListAsync();
+            
+            _WeArticles.RemoveAll(p=>_funAdminHelper.IsContentIllegal(p.Id));
             
             ViewData[nameof(SetId)]=SetId;
 

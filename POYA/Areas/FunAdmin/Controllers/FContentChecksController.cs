@@ -203,6 +203,8 @@ namespace POYA.Areas.FunAdmin.Controllers
 
             fContentCheck.IllegalityTypeSelectListItems=_funAdminHelper.GetIllegalityTypeSelectListItems();
 
+            ViewData["IsEdit"]=true;
+
             return View("Create",fContentCheck);
         }
 
@@ -373,6 +375,7 @@ namespace POYA.Areas.FunAdmin.Controllers
         }
 
         #region DEPOLLUTION
+
 
         [ActionName("RedirectionByContentId")]
         public async Task<IActionResult> RedirectionByContentIdAsync(Guid Id)
