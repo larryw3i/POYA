@@ -133,6 +133,7 @@ namespace POYA.Areas.FunAdmin.Controllers
 
             ViewData["IsCurrentUserRoleInAdmin"] = _IsCurrentUserRoleInAdmin;
             ViewData["IsReportSubmittedByUser"]= !_IsCurrentUserRoleInAdmin;
+            ViewData["IsEdit"]=false;
 
             return View(_FContentCheck);
         }
@@ -405,6 +406,7 @@ namespace POYA.Areas.FunAdmin.Controllers
                 ViewData["WeArticleFileContentType"]=_funFilesHelper.GetContentType(
                     await _context.WeArticleFile.Where(p=>p.Id==_WeArticle.WeArticleContentFileId).Select(p=>p.Name).FirstOrDefaultAsync()
                 );
+                
                 return View("WeArticleDetails",_WeArticle);
             }
             return NoContent();

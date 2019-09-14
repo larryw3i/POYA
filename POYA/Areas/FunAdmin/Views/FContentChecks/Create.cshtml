@@ -6,7 +6,11 @@
     var _IsCurrentUserRoleInAdmin=Convert.ToBoolean(ViewData["IsCurrentUserRoleInAdmin"]);
     var IsReportSubmittedByUser = Convert.ToBoolean(ViewData["IsReportSubmittedByUser"]);
 
-    ViewData["Title"] =_IsCurrentUserRoleInAdmin?Localizer["Check a report"]: Localizer[ "Edit your report"];
+    var _IsEdit=Convert.ToBoolean(ViewData["IsEdit"]??false);
+
+    var _IsAdminChecking=_IsCurrentUserRoleInAdmin && IsReportSubmittedByUser;
+
+    ViewData["Title"] =_IsEdit? Localizer["Edit report"]: Localizer["Make a report"];
 }
 
 <h1>@(ViewData["Title"])</h1>
@@ -18,9 +22,10 @@
         <div id="LContent"></div>
     </div>
     <div class="col-sm-12 col-md-5">
-        <form asp-action="Edit">
+        <form asp-action='@(_IsEdit?"Edit":"Create")'>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ContentId"/>
             
             @if(IsReportSubmittedByUser)
             {
@@ -34,7 +39,7 @@
 
             @if(_IsCurrentUserRoleInAdmin)
             {
-                <div class="form-group form-check">
+                <div class="form-group form-check is_legal_form_group">
                     <label class="form-check-label">
                         <input class="form-check-input" asp-for="IsLegal" />  @(Localizer["Is content legal"])
                     </label>
@@ -115,6 +120,13 @@
 
 @section Styles{
     <style>
+
+        .is_legal_form_group{
+            -webkit-user-select:none;
+            -moz-user-select:none;
+            -ms-user-select:none;
+            user-select:none;
+        }
 
         .LContentEle{
             word-wrap: break-word;

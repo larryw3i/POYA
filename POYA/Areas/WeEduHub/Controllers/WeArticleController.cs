@@ -72,10 +72,12 @@ namespace POYA.Areas.WeEduHub.Controllers
         )
         {   
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult()?.Id;
+            var _IllegalIds=await _context.FContentCheck.Where(p=>!p.IsLegal).Select(p=>p.Id).ToListAsync();
             var _WeArticles=await _context.WeArticle
                 .Where(
                     p=>
-                        SetId==null?true:p.SetId==SetId
+                        SetId==null?true:p.SetId==SetId && 
+                        !_IllegalIds.Contains(p.Id)
                 )
                 .OrderByDescending(p=>p.DOPublishing)
                 .ToListAsync();
