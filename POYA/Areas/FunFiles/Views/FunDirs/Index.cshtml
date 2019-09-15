@@ -133,7 +133,7 @@ else
     <script>
 
         var CurrentMovingId=``;
-        var IsCopy=true;
+        var IsCopying=true;
 
         $(document).ready(()=>{  
           
@@ -143,7 +143,7 @@ else
 
             $(document).on(`click`,`.GetDirIndex`,(e)=>{ GetDirIndexClick(e); });
 
-            $(document).on(`click`,`.times-funfiles-popup-close `,(e)=>{  FunFilesPopupBlur(e); });
+            $(document).on(`click`,`.times_funfiles_popup_close`,(e)=>{  FunFilesPopupBlur(e); });
 
             $(document).on(`click`,`.CopyOrMoveTo`,(e)=>{ CopyOrMoveToClick(e); });
 
@@ -161,22 +161,22 @@ else
 
         function CopyingContxtMenuClick(itemKey, opt, e)
         {
-            IsCopy=true;
+            IsCopying=true;
             CurrentMovingId=opt.$trigger.attr('item_id');
             $(`.FunFilesPopup`).load(
                 `@(Url.Action("DirIndex",new{ ParentDirId = ParentDirId}))`,
-                ()=>{ ChangeCopyOrMoveToHtmlAndAttr(IsCopy); }
+                ()=>{ ChangeCopyOrMoveToHtmlAndAttr(IsCopying); }
             );
             $(`.FunFilesPopup`).show(); 
         }
         
         function MovingContxtMenuClick(itemKey, opt, e)
         {
-            IsCopy=false;
+            IsCopying=false;
             CurrentMovingId=opt.$trigger.attr('item_id');
             $(`.FunFilesPopup`).load(
                 `@(Url.Action("DirIndex",new{ ParentDirId = ParentDirId}))&CurrentMovingDirId=${CurrentMovingId}`,
-                ()=>{ChangeCopyOrMoveToHtmlAndAttr(IsCopy); }
+                ()=>{ChangeCopyOrMoveToHtmlAndAttr(IsCopying); }
             );
 
             $(`.FunFilesPopup`).show(); 
@@ -211,7 +211,7 @@ else
         function CopyOrMoveToClick(e)
         {
             var item_id=$(e.target).attr("item_id");
-            if(IsCopy)
+            if(IsCopying)
             {
                 window.location.href=`@(Url.Action("CopyDirOrFile"))?ParentDirId=${item_id}&Id=`+CurrentMovingId;
             }
@@ -229,14 +229,14 @@ else
         {
             $(`.FunFilesPopup`).load(
                 `@(Url.Action("DirIndex"))?ParentDirId=`+$(e.target).attr(`item_id`),
-                ()=>{ ChangeCopyOrMoveToHtmlAndAttr(IsCopy);  }
+                ()=>{ ChangeCopyOrMoveToHtmlAndAttr(IsCopying);  }
             );
         }
 
-        function ChangeCopyOrMoveToHtmlAndAttr(IsCopy)
+        function ChangeCopyOrMoveToHtmlAndAttr(IsCopying)
         {
-             $(`.CopyOrMoveTo`).html(IsCopy? `@(Html.Raw("\ud83d\udd03"))`:`@(Html.Raw("\ud83d\udccc"))`); 
-             $(`.CopyOrMoveTo`).attr("title",IsCopy?`@(Localizer["Copy"])`:`@(Localizer["Move"])`);
+             $(`.CopyOrMoveTo`).html(IsCopying? `@(Html.Raw("\ud83d\udd03"))`:`@(Html.Raw("\ud83d\udccc"))`); 
+             $(`.CopyOrMoveTo`).attr("title",IsCopying?`@(Localizer["Copy"])`:`@(Localizer["Move"])`);
         }
 
 
@@ -324,14 +324,14 @@ else
             margin-left: 8px;
         }
     
-        .times-funfiles-popup-close{
+        .times_funfiles_popup_close{
             font-size: 300%;
             position: absolute;
             right: 5px;
             top: 15px;
         }
 
-        .times-funfiles-popup-close:hover{
+        .times_funfiles_popup_close:hover{
             color: red;
             transform: scale(1.1);
         }
