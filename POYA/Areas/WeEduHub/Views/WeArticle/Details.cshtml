@@ -46,7 +46,7 @@
         </video> 
     }
     <hr/>
-    <div>@(Model.Comment)</div>
+    <div class="wearticle_comment">@(Model.Comment)</div>
 </div>
 
 
@@ -71,6 +71,9 @@
 @section Styles
 {
     <style>
+        .wearticle_comment{
+            text-align: left;
+        }
         .content_check_and_{
             transform: scale(1.6);
         }

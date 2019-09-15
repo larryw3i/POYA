@@ -6,7 +6,7 @@
 }
 
 <h1>
-    @(ViewData["Title"]) 
+    @(Localizer["Details"]) 
     &raquo;
     <span class="FileName">
         @(Model.Name)
@@ -74,13 +74,14 @@
         .PathSep{
             color: blue;
             font-size: 125%;
+            margin-left: 9px;
         }
         .FileName{
             cursor: default;
             font-size: 80%;
             border: solid;
             border-color: crimson;
-            border-radius: 9px;
+            border-radius: 6px;
         }
         .FileName:hover{
             background-color: crimson;
