@@ -1,4 +1,14 @@
 Name,en-US,zh-Hans
+Move,Move,移动
+Copy to,Copy to,复制到
+Move to,Move to,移动到
+Message,Notification,通知
+POYA Message,POYA Notification,通知
+Complex extent,Complex extent,复杂程度
+Optional,Optional,可选
+Custom classification,Custom classification,自定义分类
+Your articles and videos,Your articles and videos,文章或视频
+Description,Description,描述
 Link,Link,链接
 Insert code,Insert code,插入代码
 IllegalityType,Illegality type,非法类型
@@ -256,7 +266,7 @@ Marital status,Marital status,婚姻状况
 Graduated from,Graduated from,毕业自
 Occupation,Occupation,工作
 Your storage,Your storage,你的存储
-EduHub,EduHub,EduHub
+EduHub,EduHub,教资
 Developers,Developers,开发者
 Select file,Select file,选择文件
 Root,Root,根目录
@@ -1091,3 +1101,14 @@ English (United States),English(United States),English(United States)
 Chinese (Simplified),中文(简体),中文(简体)
 It will be deleted when you save cancel by clicking again,It will be deleted when you save cancel by clicking again,保存的时候它会被删除 再次点击可以取消
 hid his information,hid his information,隐藏了ta的信息
+Articles and videos,Articles and videos,文章和视频
+iStorage,iStorage,存储
+Folder,Folder,文件夹
+Files,Files,文件
+New directory,New directory,新目录
+Create a directory,Create a directory,新目录
+Uploaded,Uploaded,已上传
+Processing,Processing,处理
+All files is uploaded successfully,All files is uploaded successfully,文件上传成功
+My sets,My sets,我的
+Video and article set,Video and article set,标签

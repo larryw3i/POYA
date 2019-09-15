@@ -1,7 +1,7 @@
 @model POYA.Areas.WeEduHub.Models.WeArticle
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] =Localizer[ "Delete"];
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _WeArticleFileContentType=ViewData["WeArticleFileContentType"]?.ToString()??string.Empty;
 }
@@ -14,7 +14,7 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <a id="go_back" class="btn btn-info">&laquo; @(Localizer["Back"])</a>   
-        <input type="submit" value="Delete" class="btn btn-danger" />   
+        <input type="submit" value='@(Localizer["Delete"])' class="btn btn-danger" />   
     </form>
 
     <a id="go_back" class="btn btn-info">&laquo; @(Localizer["Back"])</a>   

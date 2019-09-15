@@ -13,6 +13,7 @@ namespace POYA.Areas.FunFiles.Models
         
 
         [StringLength(maximumLength:100,MinimumLength=1)]
+        [Display(Name="Name")]
         public string Name{get;set;}
 
         public string UserId{get;set;}

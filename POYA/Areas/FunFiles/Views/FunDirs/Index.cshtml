@@ -236,7 +236,7 @@ else
         function ChangeCopyOrMoveToHtmlAndAttr(IsCopying)
         {
              $(`.CopyOrMoveTo`).html(IsCopying? `@(Html.Raw("\ud83d\udd03"))`:`@(Html.Raw("\ud83d\udccc"))`); 
-             $(`.CopyOrMoveTo`).attr("title",IsCopying?`@(Localizer["Copy"])`:`@(Localizer["Move"])`);
+             $(`.CopyOrMoveTo`).attr("title",IsCopying?`@(Html.Raw(Localizer["Copy"]))`:`@(Html.Raw(Localizer["Move"]))`);
         }
 
 
@@ -268,15 +268,15 @@ else
                         callback:(itemKey, opt, e)=>{ RenamingContextMenuClick(itemKey, opt, e,true);   },
                     },
                     "Move": {
-                        name: `@(Localizer["Move to"])`, 
+                        name: `@(Html.Raw(Localizer["Move to"]))`, 
                         callback:(itemKey, opt, e)=>{ MovingContxtMenuClick(itemKey, opt, e); }, 
                     },
                     "Copy": {
-                        name: `@(Localizer["Copy to"])`, 
+                        name: `@(Html.Raw(Localizer["Copy to"]))`, 
                         callback:(itemKey, opt, e)=>{ CopyingContxtMenuClick(itemKey, opt, e); }, 
                     },
                     "Delete": {
-                        name: `@(Localizer["Delete"])`, 
+                        name: `@(Html.Raw(Localizer["Delete"]))`, 
                         callback:(itemKey, opt, e)=>{ DeletingContxtMenuClick(itemKey, opt, e,true); }, 
                     },
                 }
@@ -290,15 +290,15 @@ else
                         callback:(itemKey, opt, e)=>{ RenamingContextMenuClick(itemKey, opt, e,false);  },
                     },
                     "Move": {
-                        name: `@(Localizer["Move to"])`, 
+                        name: `@(Html.Raw(Localizer["Move to"]))`, 
                         callback:(itemKey, opt, e)=>{ MovingContxtMenuClick(itemKey, opt, e); }, 
                     },
                     "Copy": {
-                        name: `@(Localizer["Copy to"])`, 
+                        name: `@(Html.Raw(Localizer["Copy to"]))`, 
                         callback:(itemKey, opt, e)=>{ CopyingContxtMenuClick(itemKey, opt, e); }, 
                     },
                     "Delete": {
-                        name: `@(Localizer["Delete"])`, 
+                        name: `@(Html.Raw(Localizer["Delete"]))`, 
                         callback:(itemKey, opt, e)=>{ DeletingContxtMenuClick(itemKey, opt, e,false); }, 
                     },
                 },

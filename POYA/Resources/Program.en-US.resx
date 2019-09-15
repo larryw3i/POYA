@@ -86,6 +86,36 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Move" xml:space="preserve">
+	<value>Move</value>
+  </data>
+  <data name="Copy to" xml:space="preserve">
+	<value>Copy to</value>
+  </data>
+  <data name="Move to" xml:space="preserve">
+	<value>Move to</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+	<value>Notification</value>
+  </data>
+  <data name="POYA Message" xml:space="preserve">
+	<value>POYA Notification</value>
+  </data>
+  <data name="Complex extent" xml:space="preserve">
+	<value>Complex extent</value>
+  </data>
+  <data name="Optional" xml:space="preserve">
+	<value>Optional</value>
+  </data>
+  <data name="Custom classification" xml:space="preserve">
+	<value>Custom classification</value>
+  </data>
+  <data name="Your articles and videos" xml:space="preserve">
+	<value>Your articles and videos</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+	<value>Description</value>
+  </data>
   <data name="Link" xml:space="preserve">
 	<value>Link</value>
   </data>
@@ -94,9 +124,6 @@
   </data>
   <data name="IllegalityType" xml:space="preserve">
 	<value>Illegality type</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-	<value>Description</value>
   </data>
   <data name="Insert" xml:space="preserve">
 	<value>Insert</value>
@@ -3361,5 +3388,38 @@
   </data>
   <data name="hid his information" xml:space="preserve">
 	<value>hid his information</value>
+  </data>
+  <data name="Articles and videos" xml:space="preserve">
+	<value>Articles and videos</value>
+  </data>
+  <data name="iStorage" xml:space="preserve">
+	<value>iStorage</value>
+  </data>
+  <data name="Folder" xml:space="preserve">
+	<value>Folder</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+	<value>Files</value>
+  </data>
+  <data name="New directory" xml:space="preserve">
+	<value>New directory</value>
+  </data>
+  <data name="Create a directory" xml:space="preserve">
+	<value>Create a directory</value>
+  </data>
+  <data name="Uploaded" xml:space="preserve">
+	<value>Uploaded</value>
+  </data>
+  <data name="Processing" xml:space="preserve">
+	<value>Processing</value>
+  </data>
+  <data name="All files is uploaded successfully" xml:space="preserve">
+	<value>All files is uploaded successfully</value>
+  </data>
+  <data name="My sets" xml:space="preserve">
+	<value>My sets</value>
+  </data>
+  <data name="Video and article set" xml:space="preserve">
+	<value>Video and article set</value>
   </data>
 </root>

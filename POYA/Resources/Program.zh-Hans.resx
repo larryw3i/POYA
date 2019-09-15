@@ -86,6 +86,36 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Move" xml:space="preserve">
+	<value>移动</value>
+  </data>
+  <data name="Copy to" xml:space="preserve">
+	<value>复制到</value>
+  </data>
+  <data name="Move to" xml:space="preserve">
+	<value>移动到</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+	<value>通知</value>
+  </data>
+  <data name="POYA Message" xml:space="preserve">
+	<value>通知</value>
+  </data>
+  <data name="Complex extent" xml:space="preserve">
+	<value>复杂程度</value>
+  </data>
+  <data name="Optional" xml:space="preserve">
+	<value>可选</value>
+  </data>
+  <data name="Custom classification" xml:space="preserve">
+	<value>自定义分类</value>
+  </data>
+  <data name="Your articles and videos" xml:space="preserve">
+	<value>文章或视频</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+	<value>描述</value>
+  </data>
   <data name="Link" xml:space="preserve">
 	<value>链接</value>
   </data>
@@ -94,9 +124,6 @@
   </data>
   <data name="IllegalityType" xml:space="preserve">
 	<value>非法类型</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-	<value>描述</value>
   </data>
   <data name="Insert" xml:space="preserve">
 	<value>插入</value>
@@ -858,7 +885,7 @@
 	<value>你的存储</value>
   </data>
   <data name="EduHub" xml:space="preserve">
-	<value>EduHub</value>
+	<value>教资</value>
   </data>
   <data name="Developers" xml:space="preserve">
 	<value>开发者</value>
@@ -3361,5 +3388,38 @@
   </data>
   <data name="hid his information" xml:space="preserve">
 	<value>隐藏了ta的信息</value>
+  </data>
+  <data name="Articles and videos" xml:space="preserve">
+	<value>文章和视频</value>
+  </data>
+  <data name="iStorage" xml:space="preserve">
+	<value>存储</value>
+  </data>
+  <data name="Folder" xml:space="preserve">
+	<value>文件夹</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+	<value>文件</value>
+  </data>
+  <data name="New directory" xml:space="preserve">
+	<value>新目录</value>
+  </data>
+  <data name="Create a directory" xml:space="preserve">
+	<value>新目录</value>
+  </data>
+  <data name="Uploaded" xml:space="preserve">
+	<value>已上传</value>
+  </data>
+  <data name="Processing" xml:space="preserve">
+	<value>处理</value>
+  </data>
+  <data name="All files is uploaded successfully" xml:space="preserve">
+	<value>文件上传成功</value>
+  </data>
+  <data name="My sets" xml:space="preserve">
+	<value>我的</value>
+  </data>
+  <data name="Video and article set" xml:space="preserve">
+	<value>标签</value>
   </data>
 </root>

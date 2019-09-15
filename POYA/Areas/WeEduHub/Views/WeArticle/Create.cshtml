@@ -13,7 +13,7 @@
 }
 
 
-<h4 >@(Localizer["Your articles and videos"])</h4>
+<h4 >@(IsEdit? Localizer["Edit"]:Localizer["Write"]) @(Localizer["Your articles and videos"])</h4>
 
 <hr />
 <div class="row">
@@ -34,7 +34,7 @@
             <div class="form-group operation-form-group">
                 <a id="go_back" class="btn btn-info">&laquo; @(Localizer["Back"])</a>   
                 <a class="btn btn-info" id="select_file">@(Localizer["Select file"])</a>   
-                <input type="submit" value='@(Localizer["Upgrade"])' class="btn btn-primary" />  
+                <input type="submit" value='@(Localizer["Upload"])' class="btn btn-primary" />  
             </div>
         </form> 
 
@@ -60,7 +60,7 @@
                 <input  id="custom_class_input" class="form-control" value="@(Model.CustomClass)" placeholder='@(Localizer["Custom classification"])'/>
             </div>
             <div class="col col-auto">
-                <select  id="complex_select" asp-items="@(Model.ComplexSelectListItems)" class="form-control"></select>
+                <select  id="complex_select" asp-items="@(Model.ComplexSelectListItems)" class="form-control" title='@(Localizer["Complex extent"])'></select>
             </div>
         </div>
     </div>
