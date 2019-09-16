@@ -7,7 +7,11 @@
         "**/.hg": true,
         "**/CVS": true,
         "**/.DS_Store": true,
-        "**/obj":true,
-        "**/bin":true,
+        "**/obj": true,
+        "**/bin": true,
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
     }
 }
