@@ -82,7 +82,7 @@ namespace POYA.Areas.Identity.Pages.Account
             {
                 ModelState.AddModelError(
                     nameof(Input.Email), 
-                    _localizer["We have sent a confirmation email to you, you can login after confirming it (Didn't you get the email? check it in spam)"]);
+                    _localizer["We have sent a confirmation email to you, you can login after confirming it (Didn`t you get the email? check it in spam)"]);
             }
             else if (IsFromRegister) 
                 ModelState.AddModelError(

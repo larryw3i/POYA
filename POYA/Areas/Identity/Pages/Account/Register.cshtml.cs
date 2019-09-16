@@ -111,6 +111,12 @@ namespace POYA.Areas.Identity.Pages.Account
 
                 if (_CreateUserResult.Succeeded && Input.Email == _configuration["Administration:AdminEmail"])
                 {
+
+                    if(!await _roleManager.RoleExistsAsync(X_DOVEValues._administrator))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole{ Name=X_DOVEValues._administrator, NormalizedName=X_DOVEValues._administrator });
+                    }
+
                     var _AddToRoleResult=await _userManager.AddToRoleAsync(user, X_DOVEValues._administrator);
                     
                     _IsResultSucceeded = _CreateUserResult.Succeeded &&_AddToRoleResult.Succeeded;
