@@ -36,9 +36,6 @@
         .Select(c => new SelectListItem { Value = c.Name, Text =Localizer[ c.DisplayName] })
         .ToList();
 
-    var _SupportedUICultures = LocOptions.Value.SupportedUICultures
-        .Select(c => new { Name= c.Name, DisplayName = Localizer[ c.DisplayName] })
-        .ToList();
 
 }
 

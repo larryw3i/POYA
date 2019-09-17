@@ -14,7 +14,18 @@ using POYA.Data;
 namespace POYA.Areas.FunFiles.Controllers
 {
     public class FunFilesHelper
-    {
+    {   
+        /// <summary>
+        /// Files in directory is iIncluded
+        /// </summary>
+        /// <returns></returns>
+        public void GenerateCopiesOfFunDirs(
+            ref List<FunDir> NewFunDirs, 
+            ref List<FunYourFile> NewFunYourFiles
+        )
+        {
+
+        }
 
         public bool IsIdInParentDirId(Guid ParentDirId, Guid Id, List<IdAndParentId> IdAndParentIds)
         {   
