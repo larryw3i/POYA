@@ -118,7 +118,7 @@
 
                     $(`.FunFileInput`).each((index,elem)=>{
                         $(`[file_input_id='${$(elem).attr('id')}']`).text(
-                            `${$(elem).val()} [Uploaded]`
+                            `${$(elem).val()} [@(Html.Raw(Localizer["Uploaded"]))]`
                         );
                     });
 

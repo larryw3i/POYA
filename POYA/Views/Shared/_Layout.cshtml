@@ -25,7 +25,7 @@
     var ThemeSelectListItems = new List<SelectListItem>{
             new SelectListItem { Value = "Light", Text =Localizer[ "Light" ]},
             new SelectListItem { Value = "Dark", Text =Localizer[ "Dark" ]},
-            new SelectListItem{ Value="Care",Text=Localizer[ "Care"]}
+            new SelectListItem { Value = "Care", Text =Localizer[ "Care"]}
         };
 
     ThemeSelectListItems.ForEach(p => { if (p.Value == _THEME) p.Selected = true; });
@@ -34,6 +34,10 @@
 
     var cultureItems = LocOptions.Value.SupportedUICultures
         .Select(c => new SelectListItem { Value = c.Name, Text =Localizer[ c.DisplayName] })
+        .ToList();
+
+    var _SupportedUICultures = LocOptions.Value.SupportedUICultures
+        .Select(c => new { Name= c.Name, DisplayName = Localizer[ c.DisplayName] })
         .ToList();
 
 }
@@ -60,13 +64,13 @@
               integrity="MD5-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
 
-    <link rel="stylesheet" href="~/css/PagedList.css" />
+    <link rel="stylesheet" href="~/css/PagedList.css"  asp-append-version="true"/>
 
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
 
-    <link rel="stylesheet" href="~/css/POYA.css" />
+    <link rel="stylesheet" href="~/css/POYA.css"  asp-append-version="true"/>
 
-    <link rel="stylesheet" href="~/css/ikeyframes.css" />
+    <link rel="stylesheet" href="~/css/ikeyframes.css"  asp-append-version="true"/>
     
     <link rel="stylesheet" href="~/lib/jQuery-contextMenu-2.8.0/dist/jquery.contextMenu.min.css" />
 
@@ -148,10 +152,21 @@
                             </div>
                         </li>
 
-                        <li class="nav-item">
-                            <div class="nav-link ">
-                                <select id="Theme" name="Theme" asp-items="ThemeSelectListItems" style="border:none;">
-                                </select>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @(Localizer[_THEME])
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item poya-theme" theme='Light'>
+                                    @(Localizer["Light"])
+                                </a>
+                                <a class="dropdown-item poya-theme" theme='Dark'>
+                                    @(Localizer["Dark"])
+                                </a>
+                                <a class="dropdown-item poya-theme" theme='Care'>
+                                    @(Localizer["Care"])
+                                </a>
                             </div>
                         </li>
 
@@ -172,23 +187,19 @@
         <div class="container" >
 
             &copy; 2019 - @(Localizer["WSUDisk"]) 
+            
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                @(Localizer["Privacy"])
+            </a> 
 
-            - <select 
+            <select 
                 id="_Language" 
                 name="_Language"  
                 asp-for='@(requestCulture.RequestCulture.UICulture.Name)' 
                 asp-items="cultureItems" 
-                style="border:none">
+                class="form-control float-right">
             </select> 
-
-            - <a asp-area="" asp-controller="Home" asp-action="Privacy">
-                @(Localizer["Privacy"])
-            </a> 
-
-            - <a href="#">
-                @(Localizer["More"])
-            </a>
-
+            
         </div>
     </footer>
 

@@ -39,9 +39,10 @@
             controls >
         </video> 
     }
-    <hr/>
-    <div>@(Model.Comment)</div>
 </div>
+
+<hr/>
+<div>@(Model.Comment)</div>
 
 @section Scripts
 {
@@ -60,6 +61,17 @@
         .wearticle_content{
             margin-bottom: 20%;
         }
+        
+        .wearticle_content object{
+            border-radius: 5px;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+        }
+        .wearticle_content video{
+            width: 90%;
+        }
+        
         #go_back{
             position: fixed;
             bottom: 8%;

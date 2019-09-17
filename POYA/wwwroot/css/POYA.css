@@ -11,12 +11,15 @@
     text-align: right
 }
 
-.dropdown *{
+.poya-nav-dropdown *{
     border-radius: 8px;
 }
 
 
-.dropdown-item:hover{
+.poya-nav-dropdown-item:hover{
     background-color: #ff00dc;
 }
 
+#_Language{
+    width: min-content;
+}

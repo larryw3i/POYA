@@ -136,6 +136,16 @@ function OptimizeFileSizeShow (byte) {
 };
 
 
+function ThemeDropdownItemClick()
+{
+    $(document).on(`click`,`.poya-theme`,(e)=>{ 
+        var _poya_theme=$(e.target).attr(`theme`);
+        Cookies.set(`THEME`,_poya_theme, { expires: 365 });
+        location.reload()
+     });
+}
+
+
 
 $(document).ready(function () {
 
@@ -144,13 +154,15 @@ $(document).ready(function () {
 
     $(`#_Language  option[value='${GetCulture()}']`).attr("selected", true);
 
-    $("#_Language").on("change", ()=>{ChangeLanguage();});
+    $(document).on("change", "#_Language",()=>{ChangeLanguage();});
 
-    $("#Theme").on("change", ()=>{ ChangeTheme(true); });
+    $(document).on("change","#Theme", ()=>{ ChangeTheme(true); });
 
-    $("#BackA,#BackEle,#go_back").on("click", ()=>{ history.go(-1);});
+    $(document).on("click", "#BackA,#BackEle,#go_back",()=>{ history.go(-1);});
 
-    $("#_pageSize").keypress(()=>{ PageSizeKeyPress(); });
+    $(document).on(`keypress`,`#_pageSize`, ()=>{ PageSizeKeyPress();   })
+
+    ThemeDropdownItemClick();
     
     PageSize_Input();
     
