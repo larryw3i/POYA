@@ -1,10 +1,20 @@
 @model IEnumerable<POYA.Areas.WeEduHub.Models.WeArticle>
+@using POYA.Areas.WeEduHub.Controllers
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var SetId=ViewData["SetId"]?.ToString()??string.Empty;
     var _UserId=ViewData["UserId"]?.ToString()??string.Empty;
+    var _WeEduHubHelper=new WeEduHubHelper();
+
+    var WEARTICLE_SORT_BY=ViewData[_WeEduHubHelper.WEARTICLE_SORT_BY_String]?.ToString();
+    
+    var IS_WEARTICLE_ORDER_BY_ASC=Convert.ToBoolean(ViewData[_WeEduHubHelper.IS_WEARTICLE_ORDER_BY_ASC_String]??false);
+    
+    WEARTICLE_SORT_BY= WEARTICLE_SORT_BY==_WeEduHubHelper.SortByDate?Localizer["Date"]:
+            WEARTICLE_SORT_BY==_WeEduHubHelper.SortByTitle?Localizer["Title"]:
+            Localizer["Modifying"];
 }
 
 <h4>@(Localizer["Articles and videos"])</h4>
@@ -14,6 +24,16 @@
         @if(SetId==string.Empty)
         {
             <a asp-action="Index" asp-controller="WeArticleSet" class="btn btn-outline-info float-right">@(Localizer["My sets"]) &raquo;</a>
+            <div class="btn-group  float-right">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @(WEARTICLE_SORT_BY) @(Html.Raw(IS_WEARTICLE_ORDER_BY_ASC?"\u2b06\ufe0f":"\u2b07\ufe0f"))
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item sort-by" sort_by="@(_WeEduHubHelper.SortByDate)">@(Localizer["Date"])</a>
+                    <a class="dropdown-item sort-by" sort_by="@(_WeEduHubHelper.SortByTitle)">@(Localizer["Title"])</a>
+                    <a class="dropdown-item sort-by" sort_by="@(_WeEduHubHelper.SortByModifying)">@(Localizer["Modifying"])</a>
+                </div>
+            </div>
         }
         else
         {
@@ -62,7 +82,25 @@
 @section Scripts
 {
     <script>
-
+        $(document).ready(()=>{
+            $(document).on(`click`,`.sort-by`,(e)=>{ SortByClick(e) })
+        });
+        
+        /**
+         * @@param {Event}e
+         */
+        function SortByClick(e)
+        {
+            var _SortBy_=$(e.target).attr(`sort_by`);
+            var IS_WEARTICLE_ORDER_BY_ASC=Boolean(`@(IS_WEARTICLE_ORDER_BY_ASC?" ":"")`);
+            if(Cookies.set("@(_WeEduHubHelper.WEARTICLE_SORT_BY_String)")==_SortBy_)
+            {
+                Cookies.set("@(_WeEduHubHelper.IS_WEARTICLE_ORDER_BY_ASC_String)",!IS_WEARTICLE_ORDER_BY_ASC);
+            }
+            
+            Cookies.set("@(_WeEduHubHelper.WEARTICLE_SORT_BY_String)",_SortBy_);
+            window.location.reload();
+        }
     </script>
 }
 

@@ -75,25 +75,27 @@ namespace POYA.Areas.WeEduHub.Controllers
             Guid? SetId,
             int? APage
         )
-        {   
+        {
             var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult()?.Id;
-            
-            var _WeArticles=await _context.WeArticle
+
+            var _IllegalIds = await _context.FContentCheck.Where(p => p.ReceptionistId != string.Empty && !p.IsLegal).Select(p => p.ContentId).ToListAsync();
+
+            var _WeArticles = _context.WeArticle
                 .Where(
-                    p=>
-                        SetId==null?true:p.SetId==SetId 
-                )
-                .OrderByDescending(p=>p.DOPublishing)
-                .ToListAsync();
+                    p =>
+                        (SetId == null ? true : p.SetId == SetId) &&
+                        !_IllegalIds.Contains(p.Id)
+                );
             
-            _WeArticles.RemoveAll(p=>_funAdminHelper.IsContentIllegal(p.Id));
-            
-            ViewData[nameof(SetId)]=SetId;
+            _WeArticles=(SetId == null ||SetId==Guid.Empty)? SortWeArticles( _WeArticles):(_WeArticles.OrderBy(p => p.DOPublishing));
 
-            ViewData["UserId"]=_UserId;
 
-            ViewData["WeArticles"]=_WeArticles.ToPagedList(APage??1, 10);
-            
+            ViewData[nameof(SetId)] = SetId;
+
+            ViewData["UserId"] = _UserId;
+
+            ViewData["WeArticles"] = _WeArticles.ToPagedList(APage ?? 1, 10);
+
             return View();
         }
 
@@ -348,6 +350,53 @@ namespace POYA.Areas.WeEduHub.Controllers
         }
 
         #region  DEPOLLUTION
+
+        
+        private IQueryable<WeArticle> SortWeArticles(IQueryable<WeArticle> _WeArticles)
+        {
+            var WEARTICLE_SORT_BY = Request.Cookies[_weEduHubHelper.WEARTICLE_SORT_BY_String] ?? _weEduHubHelper.SortByDate;
+            
+            var IS_WEARTICLE_ORDER_BY_ASC = Request.Cookies[_weEduHubHelper.IS_WEARTICLE_ORDER_BY_ASC_String]?.ToString() == "true";
+            
+            if (WEARTICLE_SORT_BY == _weEduHubHelper.SortByTitle)
+            {
+                if (IS_WEARTICLE_ORDER_BY_ASC)
+                {
+                    _WeArticles=_WeArticles.OrderBy(p => p.Title);
+                }
+                else
+                {
+                    _WeArticles=_WeArticles.OrderByDescending(p => p.Title);
+                }
+            }
+            else if (WEARTICLE_SORT_BY == _weEduHubHelper.SortByModifying)
+            {
+                if (IS_WEARTICLE_ORDER_BY_ASC)
+                {
+                    _WeArticles=_WeArticles.OrderBy(p => p.DOModifying);
+                }
+                else
+                {
+                    _WeArticles=_WeArticles.OrderByDescending(p => p.DOModifying);
+                }
+            }
+            else
+            {
+                if (IS_WEARTICLE_ORDER_BY_ASC)
+                {
+                   _WeArticles= _WeArticles.OrderBy(p => p.DOPublishing);
+                }
+                else
+                {
+                    _WeArticles=_WeArticles.OrderByDescending(p => p.DOPublishing);
+                }
+            }
+
+            ViewData[_weEduHubHelper.WEARTICLE_SORT_BY_String] = WEARTICLE_SORT_BY;
+            ViewData[_weEduHubHelper.IS_WEARTICLE_ORDER_BY_ASC_String]=IS_WEARTICLE_ORDER_BY_ASC;
+            return _WeArticles;
+        }
+
 
         [AllowAnonymous]
         [ActionName("GetWeArticleFile")]

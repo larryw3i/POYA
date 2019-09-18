@@ -29,7 +29,7 @@
             </a>
         </li>
         <li class="nav-item" style="margin-left:55px">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl='@(Url.Action("Index", "Home", new { area = "" }))'>
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl='@(Context.Request.Path)'>
                 <button type="submit" class="nav-link btn btn-link" title='@(Localizer["Logout"])'>
                     <img src='~/img/logout.webp' style="width:18px;height:20px;position:absolute" />
                 </button>
@@ -39,10 +39,10 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link " asp-area="Identity" asp-page="/Account/Register">@(Localizer["Register"])</a>
+            <a class="nav-link " asp-area="Identity" asp-page="/Account/Register"  asp-route-returnUrl='@(Context.Request.Path)'>@(Localizer["Register"])</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link " asp-area="Identity" asp-page="/Account/Login">@(Localizer["Login"])</a>
+            <a class="nav-link " asp-area="Identity" asp-page="/Account/Login"  asp-route-returnUrl='@(Context.Request.Path)'>@(Localizer["Login"])</a>
         </li>
     }
 </ul>
