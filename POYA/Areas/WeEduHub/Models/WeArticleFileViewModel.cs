@@ -15,16 +15,11 @@ namespace POYA.Areas.WeEduHub.Models
         public string UserId{get;set;}
 
         /// <summary>
-        /// For video file
-        /// </summary>
-        /// <value></value>
-        public Guid? WeArticleId{get;set;}
-
-        /// <summary>
         /// With extension
         /// </summary>
         /// <value></value>
         public string Name{get;set;}
+        public string SHA256HexString{get;set;}
 
         public DateTimeOffset DOUploading{get;set;}=DateTimeOffset.Now;
 

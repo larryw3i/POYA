@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Ganss.XSS;
 using Microsoft.AspNetCore.Authorization;
@@ -156,6 +158,20 @@ namespace POYA.Areas.WeEduHub.Controllers
                 {
                     return NotFound();
                 }
+                
+                var _FormFileBytes=_funFilesHelper.GetFormFileBytes(weArticle.WeArticleFormFile);
+                var _FormFileSHA256HexString=_funFilesHelper.SHA256BytesToHexString( 
+                        SHA256.Create().ComputeHash(_FormFileBytes)
+                    );
+                    
+                var WeEduHubFilesDirectoryInfo= new DirectoryInfo(_weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv));
+                
+                if(WeEduHubFilesDirectoryInfo.GetFiles().ToList().Any(p=>p.Name==_FormFileSHA256HexString))
+                {
+                    Console.WriteLine(_FormFileSHA256HexString);
+                    return NotFound();
+                }
+                
 
                 weArticle.Id = Guid.NewGuid();
                 weArticle.AuthorUserId=_UserId;
@@ -164,7 +180,8 @@ namespace POYA.Areas.WeEduHub.Controllers
                         DOUploading=DateTimeOffset.Now,
                         Id=Guid.NewGuid(),
                         Name=System.IO.Path.GetFileName(weArticle.WeArticleFormFile.FileName),
-                        UserId=_UserId
+                        UserId=_UserId,
+                        SHA256HexString=_FormFileSHA256HexString
                     };
 
                 weArticle.WeArticleContentFileId=_WeArticleFile.Id;
@@ -175,8 +192,8 @@ namespace POYA.Areas.WeEduHub.Controllers
                 await _context.WeArticleFile.AddAsync( _WeArticleFile );
 
                 await System.IO.File.WriteAllBytesAsync(
-                    _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_WeArticleFile.Id,
-                    _funFilesHelper.GetFormFileBytes(weArticle.WeArticleFormFile)
+                    _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_FormFileSHA256HexString,
+                    _FormFileBytes
                 );
 
                 await _context.SaveChangesAsync();
@@ -236,16 +253,30 @@ namespace POYA.Areas.WeEduHub.Controllers
 
                     if(weArticle.WeArticleFormFile!=null) 
                     {
+                        
+                        var _FormFileBytes=_funFilesHelper.GetFormFileBytes(weArticle.WeArticleFormFile);
+                        var _FormFileSHA256HexString=_funFilesHelper.SHA256BytesToHexString( SHA256.Create().ComputeHash(_FormFileBytes));
+                        var _WeEduHubFilesDirectoryInfo= new DirectoryInfo(_weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv));
+                        
+                        if(
+                            _WeEduHubFilesDirectoryInfo.GetFiles().ToList().Any(p=>p.Name==_FormFileSHA256HexString) && 
+                            !await _context.WeArticleFile.AnyAsync(p=>p.SHA256HexString==_FormFileSHA256HexString && p.UserId==_UserId)
+                        )
+                        {
+                            return NotFound();
+                        }
+
                         var _WeArticleFile=new WeArticleFile{
                             DOUploading=DateTimeOffset.Now,
                             Id=Guid.NewGuid(),
                             Name=System.IO.Path.GetFileName(weArticle.WeArticleFormFile.FileName),
-                            UserId=_UserId
+                            UserId=_UserId,
+                            SHA256HexString=_FormFileSHA256HexString
                         };
 
                         await System.IO.File.WriteAllBytesAsync(
-                            _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_WeArticleFile.Id,
-                            _funFilesHelper.GetFormFileBytes(weArticle.WeArticleFormFile)
+                            _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_FormFileSHA256HexString,
+                            _FormFileBytes
                         );
 
                         await _context.WeArticleFile.AddAsync(_WeArticleFile);
@@ -334,7 +365,7 @@ namespace POYA.Areas.WeEduHub.Controllers
                 return NotFound();
             }
 
-            var _WeArticleFileBytes=await System.IO.File.ReadAllBytesAsync(_weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_WeArticleFile.Id);
+            var _WeArticleFileBytes=await System.IO.File.ReadAllBytesAsync(_weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_WeArticleFile.SHA256HexString);
 
             return File(_WeArticleFileBytes,_funFilesHelper.GetContentType(_WeArticleFile.Name),true);
         }
