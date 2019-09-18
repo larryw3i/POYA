@@ -336,33 +336,10 @@ namespace POYA.Areas.FunFiles.Controllers
             var TargetFunYourFile=_FunYourFiles.Where(p=>p.Id==Id).FirstOrDefault();
 
 
-            var IdAndParentIds= _FunDirs
-                .Select(
-                    p=>
-                        new IdAndParentId
-                        {
-                            Id=p.Id,
-                            ParentId=p.ParentDirId
-                        }
-                )
-                .Union(
-                    _FunYourFiles
-                    .Select(
-                        p=>
-                            new IdAndParentId
-                            {
-                                Id=p.Id,
-                                ParentId=p.ParentDirId
-                            }
-                    )
-                )
-                .ToList();
-
-
             // Directory
             if(TargetFunDir!=null)
             {
-                if(await CopyDir(ParentDirId, User_, _FunDirs, _FunYourFiles, TargetFunDir, IdAndParentIds))
+                if(await CopyDir(ParentDirId, User_, _FunDirs, _FunYourFiles, TargetFunDir))
                     return RedirectToAction(nameof(Index), new { ParentDirId });
             }
             // File
@@ -394,8 +371,7 @@ namespace POYA.Areas.FunFiles.Controllers
             IdentityUser User_, 
             List<FunDir> _FunDirs, 
             List<FunYourFile> _FunYourFiles, 
-            FunDir TargetFunDir, 
-            List<IdAndParentId> IdAndParentIds
+            FunDir TargetFunDir
         )
         {
             var _NewFunYourFiles = new List<FunYourFile>();
@@ -409,6 +385,30 @@ namespace POYA.Areas.FunFiles.Controllers
                         NewId=Guid.NewGuid()
                     }
                 };
+
+            
+            var IdAndParentIds= _FunDirs
+                .Select(
+                    p=>
+                        new IdAndParentId
+                        {
+                            Id=p.Id,
+                            ParentId=p.ParentDirId
+                        }
+                )
+                .Union(
+                    _FunYourFiles
+                    .Select(
+                        p=>
+                            new IdAndParentId
+                            {
+                                Id=p.Id,
+                                ParentId=p.ParentDirId
+                            }
+                    )
+                )
+                .ToList();
+                
 
             _FunDirs.Select(p => p.Id)
                 .Union(
