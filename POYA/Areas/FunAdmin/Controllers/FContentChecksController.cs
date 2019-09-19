@@ -252,25 +252,7 @@ namespace POYA.Areas.FunAdmin.Controllers
                         
                         if(IsReportSubmittedByUser && IsChecked)
                         {
-                            _FContentCheck.AppellantComment=
-                                (_FContentCheck.IllegalityType==fContentCheck.IllegalityType && _FContentCheck.IllegalityType=="110")?
-
-                                _FContentCheck.AppellantComment:
-
-                                (_funAdminHelper.GetIllegalityTypeSelectListItems()
-                                    .Where(p=>p.Value==_FContentCheck.IllegalityType)
-                                    .Select(p=>p.Text)
-                                    .FirstOrDefault()+"-->"
-
-                                        +(_FContentCheck.AppellantComment.Contains("-->")?
-
-                                            _FContentCheck.AppellantComment.Substring(
-                                                _FContentCheck.AppellantComment.LastIndexOf("-->")+3
-                                            ):
-
-                                            _FContentCheck.AppellantComment   
-                                        )
-                                );
+                            _FContentCheck.AppellantComment=AppellantCommentForSubsequentCheck(fContentCheck,_FContentCheck);
                         }
 
                         _FContentCheck.DOHandling=DateTimeOffset.Now;
@@ -306,6 +288,7 @@ namespace POYA.Areas.FunAdmin.Controllers
             }
             return View(fContentCheck);
         }
+
 
         // GET: FunAdmin/FContentChecks/Delete/5
         [Authorize(Roles="ADMINISTRATOR")]
@@ -375,6 +358,28 @@ namespace POYA.Areas.FunAdmin.Controllers
         }
 
         #region DEPOLLUTION
+
+        private string AppellantCommentForSubsequentCheck(FContentCheck fContentCheck, FContentCheck _FContentCheck)
+        {
+            return (_FContentCheck.IllegalityType == fContentCheck.IllegalityType && _FContentCheck.IllegalityType == "110") ?
+
+                _FContentCheck.AppellantComment :
+
+                (_funAdminHelper.GetIllegalityTypeSelectListItems()
+                    .Where(p => p.Value == _FContentCheck.IllegalityType)
+                    .Select(p => p.Text)
+                    .FirstOrDefault() + "-->"
+
+                        + (_FContentCheck.AppellantComment.Contains("-->") ?
+
+                            _FContentCheck.AppellantComment.Substring(
+                                _FContentCheck.AppellantComment.LastIndexOf("-->") + 3
+                            ) :
+
+                            _FContentCheck.AppellantComment
+                        )
+                );
+        }
 
 
         [ActionName("RedirectionByContentId")]

@@ -93,7 +93,7 @@
             }else{
                 $(`#IllegalityType`).parent().show();
             }
-            $(`#@(_IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
+            $(`#@(_IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Html.Raw(Localizer["Type some comments"])). . .');
         }
         
         function InitialAppellantCommentReadonly(){
@@ -110,9 +110,9 @@
 
         function IllegalityType_Change(){ 
             if($(`#IllegalityType`).val()==`110`){
-                $(`#@(_IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments like:"]) (@(Localizer["reason"])) >  (@(Localizer["description"])) . . .');
+                $(`#@(_IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Html.Raw(Localizer["Type some comments like"])): (@(Html.Raw(Localizer["reason"]))) >  (@(Html.Raw(Localizer["description"]))) . . .');
             }else{
-                $(`#@(_IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
+                $(`#@(_IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Html.Raw(Localizer["Type some comments"])). . .');
             }
         }
     </script>

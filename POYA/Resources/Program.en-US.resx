@@ -86,6 +86,84 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Ministration" xml:space="preserve">
+	<value>Ministration</value>
+  </data>
+  <data name="description" xml:space="preserve">
+	<value>description</value>
+  </data>
+  <data name="reason" xml:space="preserve">
+	<value>reason</value>
+  </data>
+  <data name="Type some comments like" xml:space="preserve">
+	<value>Type some comments like</value>
+  </data>
+  <data name="Type some comments" xml:space="preserve">
+	<value>Type some comments</value>
+  </data>
+  <data name="Others" xml:space="preserve">
+	<value>Others</value>
+  </data>
+  <data name="Violate morality" xml:space="preserve">
+	<value>Violate morality</value>
+  </data>
+  <data name="Bloody" xml:space="preserve">
+	<value>Bloody</value>
+  </data>
+  <data name="Horror" xml:space="preserve">
+	<value>Horror</value>
+  </data>
+  <data name="Discrimination" xml:space="preserve">
+	<value>Discrimination</value>
+  </data>
+  <data name="Instigate" xml:space="preserve">
+	<value>Instigate</value>
+  </data>
+  <data name="Religion" xml:space="preserve">
+	<value>Religion</value>
+  </data>
+  <data name="Politics" xml:space="preserve">
+	<value>Politics</value>
+  </data>
+  <data name="Violence" xml:space="preserve">
+	<value>Violence</value>
+  </data>
+  <data name="Pornography" xml:space="preserve">
+	<value>Pornography</value>
+  </data>
+  <data name="Make a report" xml:space="preserve">
+	<value>Make a report</value>
+  </data>
+  <data name="Edit report" xml:space="preserve">
+	<value>Edit report</value>
+  </data>
+  <data name="Is content legal" xml:space="preserve">
+	<value>Is content legal</value>
+  </data>
+  <data name="Illegality type" xml:space="preserve">
+	<value>Illegality type</value>
+  </data>
+  <data name="Legal" xml:space="preserve">
+	<value>Legal</value>
+  </data>
+  <data name="Receptionist comment" xml:space="preserve">
+	<value>Receptionist comment</value>
+  </data>
+  <data name="Appellant comment" xml:space="preserve">
+	<value>Appellant comment</value>
+  </data>
+  <data name="Handling date" xml:space="preserve">
+	<value>Handling date</value>
+  </data>
+  <data name="Submitting date" xml:space="preserve">
+	<value>Submitting date</value>
+  </data>
+  <data name="Receptionist" xml:space="preserve">
+	<value>Receptionist</value>
+  </data>
+  <data name="Appellant" xml:space="preserve">
+	<value>Appellant</value>
+  </data>
   <data name="Creating date" xml:space="preserve">
 	<value>Creating date</value>
   </data>
@@ -133,9 +211,6 @@
   </data>
   <data name="Your articles and videos" xml:space="preserve">
 	<value>Your articles and videos</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-	<value>Description</value>
   </data>
   <data name="Link" xml:space="preserve">
 	<value>Link</value>

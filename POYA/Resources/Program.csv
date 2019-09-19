@@ -1,4 +1,30 @@
 Name,en-US,zh-Hans
+Ministration,Ministration,审查
+description,description,详细描述
+reason,reason,原因
+Type some comments like,Type some comments like,备注
+Type some comments,Type some comments,备注
+Others,Others,其它
+Violate morality,Violate morality,违反伦理道德
+Bloody,Bloody,血腥
+Horror,Horror,恐怖
+Discrimination,Discrimination,歧视
+Instigate,Instigate,煽动
+Religion,Religion,宗教
+Politics,Politics,政治
+Violence,Violence,暴力
+Pornography,Pornography,色情
+Make a report,Make a report,举报
+Edit report,Edit report,编辑举报
+Is content legal,Is content legal,内容合法
+Illegality type,Illegality type,非法类型
+Legal,Legal,合法
+Receptionist comment,Receptionist comment,处理备注
+Appellant comment,Appellant comment,举报备注
+Handling date,Handling date,处理时间
+Submitting date,Submitting date,提交时间
+Receptionist,Receptionist,处理者
+Appellant,Appellant,举报者
 Creating date,Creating date,新建于
 Uploading date,Uploading date,上传于
 Directory is empty,Directory is empty,空空如也

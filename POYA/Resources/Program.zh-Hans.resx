@@ -86,6 +86,84 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Ministration" xml:space="preserve">
+	<value>审查</value>
+  </data>
+  <data name="description" xml:space="preserve">
+	<value>详细描述</value>
+  </data>
+  <data name="reason" xml:space="preserve">
+	<value>原因</value>
+  </data>
+  <data name="Type some comments like" xml:space="preserve">
+	<value>备注</value>
+  </data>
+  <data name="Type some comments" xml:space="preserve">
+	<value>备注</value>
+  </data>
+  <data name="Others" xml:space="preserve">
+	<value>其它</value>
+  </data>
+  <data name="Violate morality" xml:space="preserve">
+	<value>违反伦理道德</value>
+  </data>
+  <data name="Bloody" xml:space="preserve">
+	<value>血腥</value>
+  </data>
+  <data name="Horror" xml:space="preserve">
+	<value>恐怖</value>
+  </data>
+  <data name="Discrimination" xml:space="preserve">
+	<value>歧视</value>
+  </data>
+  <data name="Instigate" xml:space="preserve">
+	<value>煽动</value>
+  </data>
+  <data name="Religion" xml:space="preserve">
+	<value>宗教</value>
+  </data>
+  <data name="Politics" xml:space="preserve">
+	<value>政治</value>
+  </data>
+  <data name="Violence" xml:space="preserve">
+	<value>暴力</value>
+  </data>
+  <data name="Pornography" xml:space="preserve">
+	<value>色情</value>
+  </data>
+  <data name="Make a report" xml:space="preserve">
+	<value>举报</value>
+  </data>
+  <data name="Edit report" xml:space="preserve">
+	<value>编辑举报</value>
+  </data>
+  <data name="Is content legal" xml:space="preserve">
+	<value>内容合法</value>
+  </data>
+  <data name="Illegality type" xml:space="preserve">
+	<value>非法类型</value>
+  </data>
+  <data name="Legal" xml:space="preserve">
+	<value>合法</value>
+  </data>
+  <data name="Receptionist comment" xml:space="preserve">
+	<value>处理备注</value>
+  </data>
+  <data name="Appellant comment" xml:space="preserve">
+	<value>举报备注</value>
+  </data>
+  <data name="Handling date" xml:space="preserve">
+	<value>处理时间</value>
+  </data>
+  <data name="Submitting date" xml:space="preserve">
+	<value>提交时间</value>
+  </data>
+  <data name="Receptionist" xml:space="preserve">
+	<value>处理者</value>
+  </data>
+  <data name="Appellant" xml:space="preserve">
+	<value>举报者</value>
+  </data>
   <data name="Creating date" xml:space="preserve">
 	<value>新建于</value>
   </data>
@@ -133,9 +211,6 @@
   </data>
   <data name="Your articles and videos" xml:space="preserve">
 	<value>文章或视频</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-	<value>描述</value>
   </data>
   <data name="Link" xml:space="preserve">
 	<value>链接</value>

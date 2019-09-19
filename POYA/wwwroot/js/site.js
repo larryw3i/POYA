@@ -75,9 +75,11 @@ function KeepLogin() {
     setInterval(function () {
         $.ajax({
             url: "/Home/KeepLogin",
-            type: "GET"
+            type: "GET",
+            success:()=>{ console.log(`\ud83d\udcaf`);  },
+            error:()=>{ console.log(`\u274c`);  }
         });
-        console.log(`\ud83d\udc8b`);
+        
     }, 5 * 60 * 1000);
 
 }
