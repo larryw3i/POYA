@@ -22,8 +22,10 @@ namespace POYA.Areas.FunFiles.Models
         /// </summary>
         /// <value></value>
         [StringLength(maximumLength:100,MinimumLength=1)]
+        [Display(Name="Name")]
         public string Name{get;set;}
 
+        [Display(Name="Uploading date")]
         public DateTimeOffset DOUploading{get;set;}=DateTimeOffset.Now;
 
         #region  NotMapped

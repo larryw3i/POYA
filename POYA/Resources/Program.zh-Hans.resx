@@ -86,6 +86,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Creating date" xml:space="preserve">
+	<value>新建于</value>
+  </data>
+  <data name="Uploading date" xml:space="preserve">
+	<value>上传于</value>
+  </data>
+  <data name="Directory is empty" xml:space="preserve">
+	<value>空空如也</value>
+  </data>
   <data name="Your e-mail is not registered in POYA yet, register it Now" xml:space="preserve">
 	<value>你的邮箱还没有注册 快注册吧</value>
   </data>

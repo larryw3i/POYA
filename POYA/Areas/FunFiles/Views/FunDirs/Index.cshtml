@@ -97,10 +97,23 @@
                     <td>
                         @(item.DOXXX.LocalDateTime)
                     </td>
-                    <td class="OperationEle">
-                        <button id="item_operation_button_@(item.Id)"  item_id='@(item.Id)' class='item_operation_button'>
-                            ...
-                        </button>
+                    <td class="OperationEle" item_id='@(item.Id)' is_file='@(item.IsFile?"true":"false")'>
+                        <div class="btn-group dropleft">
+                            <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                ...
+                            </button>
+                            <div class="dropdown-menu">
+                                @if(item.IsFile)
+                                {
+                                    <a class="dropdown-item download" >@(Localizer["Download"])</a>
+                                    <div class="dropdown-divider"></div>
+                                }
+                                <a class="dropdown-item rename" >@(Localizer["Rename"])</a>
+                                <a class="dropdown-item copy_to" >@(Localizer["Copy to"])</a>
+                                <a class="dropdown-item move_to" >@(Localizer["Move to"])</a>
+                                <a class="dropdown-item delete" >@(Localizer["Delete"])</a>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             }
@@ -134,66 +147,78 @@ else
 
         var CurrentMovingId=``;
         var IsCopying=true;
+        var get_item_id=(e)=>$(e.target).parents(`.OperationEle`).attr(`item_id`);
 
         $(document).ready(()=>{  
           
-            ItemOperationButton_ContextMenu();
+            $(document).on(`click`,`.download`, (e)=>{  DownloadFunFileClick(e);  });
+            $(document).on(`click`,`.rename`,   (e)=>{  RenamingClick(e);  });
+            $(document).on(`click`,`.copy_to`,  (e)=>{  CopyingClick(e);  });
+            $(document).on(`click`,`.move_to`,  (e)=>{  MovingClick(e);  });
+            $(document).on(`click`,`.delete`,   (e)=>{  DeletingClick(e);  });
 
-            $(document).on(`click`,`#FunFilesPopupClose`,(e)=>{  FunFilesPopupBlur(e);  });
+            $(document).on(`click`,`#FunFilesPopupClose`,   (e)=>{  FunFilesPopupBlur(e);  });
 
-            $(document).on(`click`,`.GetDirIndex`,(e)=>{ GetDirIndexClick(e); });
+            $(document).on(`click`,`.GetDirIndex`,          (e)=>{ GetDirIndexClick(e); });
 
-            $(document).on(`click`,`.times_funfiles_popup_close`,(e)=>{  FunFilesPopupBlur(e); });
+            $(document).on(`click`,`.times_funfiles_popup_close`,   (e)=>{  FunFilesPopupBlur(e); });
 
-            $(document).on(`click`,`.CopyOrMoveTo`,(e)=>{ CopyOrMoveToClick(e); });
+            $(document).on(`click`,`.CopyOrMoveTo`,     (e)=>{ CopyOrMoveToClick(e); });
 
-            $(document).on(`click`,`#FunDirsCreate`,(e)=>{ FunDirsCreateClick(e)});
+            $(document).on(`click`,`#FunDirsCreate`,    (e)=>{ FunDirsCreateClick(e)});
             
         });
 
 
-        function DeletingContxtMenuClick(itemKey, opt, e, IsFile=false)
+        function DownloadFunFileClick(e){
+            window.location.href=`@(Url.Action("DownloadFunFile","FunYourFiles"))/`+get_item_id(e); 
+        }
+
+
+
+        function DeletingClick(e)
         {
-            var item_id=opt.$trigger.attr('item_id');
-            $(`.FunFilesPopup`).load(IsFile?`@(Url.Action("Delete","FunYourFiles"))/${item_id}`: `@(Url.Action("Delete","FunDirs"))/${item_id}`); 
+            var item_id=get_item_id(e);
+            $(`.FunFilesPopup`).load(
+                $(e.target).parents(`.OperationEle`).attr(`is_file`)==`true`?`@(Url.Action("Delete","FunYourFiles"))/${item_id}`: `@(Url.Action("Delete","FunDirs"))/${item_id}`); 
             $(`.FunFilesPopup`).show(); 
         }
 
-        function CopyingContxtMenuClick(itemKey, opt, e)
+        function CopyingClick( e)
         {
             IsCopying=true;
-            CurrentMovingId=opt.$trigger.attr('item_id');
+            CurrentMovingId=get_item_id(e);
             $(`.FunFilesPopup`).load(
                 `@(Url.Action("DirIndex",new{ ParentDirId = ParentDirId}))`,
-                ()=>{ ChangeCopyOrMoveToHtmlAndAttr(IsCopying); }
+                ()=>{ ChangeCopyOrMoveToHtmlAndAttr(); }
             );
             $(`.FunFilesPopup`).show(); 
         }
         
-        function MovingContxtMenuClick(itemKey, opt, e)
+        function MovingClick(e)
         {
             IsCopying=false;
-            CurrentMovingId=opt.$trigger.attr('item_id');
+            CurrentMovingId=get_item_id(e);
             $(`.FunFilesPopup`).load(
                 `@(Url.Action("DirIndex",new{ ParentDirId = ParentDirId}))&CurrentMovingDirId=${CurrentMovingId}`,
-                ()=>{ChangeCopyOrMoveToHtmlAndAttr(IsCopying); }
+                ()=>{ChangeCopyOrMoveToHtmlAndAttr(); }
             );
 
             $(`.FunFilesPopup`).show(); 
         }
 
-        function RenamingContextMenuClick(itemKey, opt, e,IsFile){
-            if(IsFile)
+        function RenamingClick(e){
+            var _item_id=get_item_id(e);
+            if($(e.target).parents(`.OperationEle`).attr(`is_file`)==`true`)
             {
-                $(`.FunFilesPopup`).load(`@(Url.Action("Edit","FunYourFiles"))/`  +opt.$trigger.attr('item_id'));  
+                $(`.FunFilesPopup`).load(`@(Url.Action("Edit","FunYourFiles"))/`  +_item_id);  
             }
             else
             {
-                $(`.FunFilesPopup`).load(`@(Url.Action("Edit","FunDirs"))/`  +opt.$trigger.attr('item_id')); 
+                $(`.FunFilesPopup`).load(`@(Url.Action("Edit","FunDirs"))/`  +_item_id); 
             }
             $(`.FunFilesPopup`).show(); 
         } 
-        
 
 
         /**
@@ -229,11 +254,11 @@ else
         {
             $(`.FunFilesPopup`).load(
                 `@(Url.Action("DirIndex"))?ParentDirId=`+$(e.target).attr(`item_id`),
-                ()=>{ ChangeCopyOrMoveToHtmlAndAttr(IsCopying);  }
+                ()=>{ ChangeCopyOrMoveToHtmlAndAttr();  }
             );
         }
 
-        function ChangeCopyOrMoveToHtmlAndAttr(IsCopying)
+        function ChangeCopyOrMoveToHtmlAndAttr()
         {
              $(`.CopyOrMoveTo`).html(IsCopying? `@(Html.Raw("\ud83d\udd03"))`:`@(Html.Raw("\ud83d\udccc"))`); 
              $(`.CopyOrMoveTo`).attr("title",IsCopying?`@(Html.Raw(Localizer["Copy"]))`:`@(Html.Raw(Localizer["Move"]))`);
@@ -244,66 +269,6 @@ else
         function FunFilesPopupBlur(e){
             $(`.FunFilesPopup`).hide(); 
             $(`.FunFilesPopup`).html(``); 
-        }
-
-        function DownloadFunFileClick(id){
-            window.location.href=`@(Url.Action("DownloadFunFile","FunYourFiles"))/`+id; 
-        }
-
-        function ItemOperationButton_ContextMenu(){  
-
-            $(document).on(`click`,`.item_operation_button`,(e)=>{ 
-                $(e.target).contextMenu({x:e.pageX,y:e.pageY}); 
-            });
-
-            $.contextMenu({
-                selector: '#FileAndDir tr.file',
-                items: {
-                    'Download': {
-                        name: '@(Html.Raw( Localizer["Download"]))',
-                        callback: (itemKey, opt, e)=> {  DownloadFunFileClick( opt.$trigger.attr('item_id') );  }    
-                    },
-                    "Rename": {
-                        name: '@(Html.Raw(Localizer["Rename"]))',
-                        callback:(itemKey, opt, e)=>{ RenamingContextMenuClick(itemKey, opt, e,true);   },
-                    },
-                    "Move": {
-                        name: `@(Html.Raw(Localizer["Move to"]))`, 
-                        callback:(itemKey, opt, e)=>{ MovingContxtMenuClick(itemKey, opt, e); }, 
-                    },
-                    "Copy": {
-                        name: `@(Html.Raw(Localizer["Copy to"]))`, 
-                        callback:(itemKey, opt, e)=>{ CopyingContxtMenuClick(itemKey, opt, e); }, 
-                    },
-                    "Delete": {
-                        name: `@(Html.Raw(Localizer["Delete"]))`, 
-                        callback:(itemKey, opt, e)=>{ DeletingContxtMenuClick(itemKey, opt, e,true); }, 
-                    },
-                }
-            });  
-            
-            $.contextMenu({
-                selector: '#FileAndDir tr.dir',
-                items: {
-                    "Rename": {
-                        name: '@(Html.Raw(Localizer["Rename"]))',
-                        callback:(itemKey, opt, e)=>{ RenamingContextMenuClick(itemKey, opt, e,false);  },
-                    },
-                    "Move": {
-                        name: `@(Html.Raw(Localizer["Move to"]))`, 
-                        callback:(itemKey, opt, e)=>{ MovingContxtMenuClick(itemKey, opt, e); }, 
-                    },
-                    "Copy": {
-                        name: `@(Html.Raw(Localizer["Copy to"]))`, 
-                        callback:(itemKey, opt, e)=>{ CopyingContxtMenuClick(itemKey, opt, e); }, 
-                    },
-                    "Delete": {
-                        name: `@(Html.Raw(Localizer["Delete"]))`, 
-                        callback:(itemKey, opt, e)=>{ DeletingContxtMenuClick(itemKey, opt, e,false); }, 
-                    },
-                },
-            });
-          
         }
 
     </script>
@@ -329,6 +294,7 @@ else
             position: absolute;
             right: 5px;
             top: 19px;
+            color: violet;
         }
 
         .times_funfiles_popup_close:hover{

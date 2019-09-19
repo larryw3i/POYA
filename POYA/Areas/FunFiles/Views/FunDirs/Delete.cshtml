@@ -8,17 +8,17 @@
 <h3>@(Localizer["Are you sure you want to delete"]) @(Model.Name)?</h3>
 <div>
     <hr />
-    <dl class="col offset-sm-2 col-sm-8 offset-md-4 col-md-4">
-        <dt class = "col-auto">
+    <dl class="">
+        <dt class = "">
             @(Html.DisplayNameFor(model => model.Name))
         </dt>
-        <dd class = "col-auto">
+        <dd class = "">
             @(Html.DisplayFor(model => model.Name))
         </dd>
-        <dt class = "col-auto">
+        <dt class = "">
             @(Html.DisplayNameFor(model => model.DOCreating))
         </dt>
-        <dd class = "col-auto">
+        <dd class = "">
             @(Model.DOCreating.LocalDateTime)
         </dd>
     </dl>
@@ -28,3 +28,4 @@
         <input type="submit" value="Delete" class="btn btn-danger" /> 
     </form>
 </div>
+

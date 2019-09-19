@@ -18,6 +18,7 @@ namespace POYA.Areas.FunFiles.Models
 
         public string UserId{get;set;}
 
+        [Display(Name="Creating date")]
         public DateTimeOffset DOCreating{get;set;}=DateTimeOffset.Now;
     }
 }
