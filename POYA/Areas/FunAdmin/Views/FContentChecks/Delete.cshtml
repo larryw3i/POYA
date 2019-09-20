@@ -8,7 +8,7 @@
 
 <h1>@(ViewData["Title"])</h1>
 
-<h3>@(Localizer["Are you sure you want to delete this"]) ?</h3>
+<h3>@(Localizer["Are you sure you want to delete"]) @(Localizer["this report"])?</h3>
 <div class="col col-12">
     <hr />
     <div class="row">
@@ -74,7 +74,7 @@
     <form asp-action="Delete" id="OperationEle">
         <input type="hidden" asp-for="Id" />
         <a class="btn btn-outline-info" id="BackEle">&laquo; @(Localizer["Back"])</a>  
-        <input type="submit" value="Delete" class="btn btn-danger" />  
+        <input type="submit" value='@(Localizer["Delete"])' class="btn btn-danger" />  
     </form>
 </div>
 

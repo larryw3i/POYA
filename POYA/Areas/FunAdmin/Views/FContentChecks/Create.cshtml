@@ -10,7 +10,9 @@
 
     var _IsAdminChecking=_IsCurrentUserRoleInAdmin && IsReportSubmittedByUser;
 
-    ViewData["Title"] =_IsEdit? Localizer["Edit report"]: Localizer["Make a report"];
+    ViewData["Title"] = _IsCurrentUserRoleInAdmin? Localizer["Check a report"]:
+                        _IsEdit? Localizer["Edit report"]: 
+                        Localizer["Make a report"];
 }
 
 <h1>@(ViewData["Title"])</h1>
@@ -30,7 +32,7 @@
             @if(IsReportSubmittedByUser)
             {
                 <div class="form-group">
-                    <label  class="control-label">@(_IsCurrentUserRoleInAdmin?Localizer["comment"]:Localizer["Comment"])</label>
+                    <label  class="control-label">@(IsReportSubmittedByUser?Localizer["Appellant comment"]:Localizer["Comment"])</label>
                     <textarea asp-for="AppellantComment" class="form-control" rows="5"></textarea>
                     <span asp-validation-for="AppellantComment" class="text-danger"></span>
                 </div>
@@ -75,15 +77,19 @@
         var _IsCurrentUserRoleInAdmin=Boolean(`@(_IsCurrentUserRoleInAdmin?" ":"")`);
 
         $(document).ready(()=>{
+
             IllegalityType_Change();
             AddIllegalityTypeToAppellantComment();
             InitialAppellantCommentReadonly();
+
             $(`#illegality_type_parent`).css({"display":`@((Model.IsLegal && _IsCurrentUserRoleInAdmin)?"none":"block")`});
 
             $(`#IsLegal`).change(()=>{IsLegal_Change();});
+
             $(`#IllegalityType`).change(()=>{IllegalityType_Change();});
 
             $.get(`@(Url.Action("GetContent","FContentChecks",new{ContentId=Model.ContentId,area="FunAdmin"}))`,(data)=>{ $(`#LContent`).html(data); });
+
             $.get(`@(Url.Action("GetContentTitle","FContentChecks",new{ContentId=Model.ContentId,area="FunAdmin"}))`,(data)=>{ $(`#LContentTitle`).text(data); });
         });
 

@@ -3,10 +3,10 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     
-    var IsAdmin=Convert.ToBoolean(ViewData["IsAdmin"]);
+    var IsCurrentUserRoleInAdmin = Convert.ToBoolean(ViewData["IsCurrentUserRoleInAdmin"]);
     var IsReportSubmittedByUser = Convert.ToBoolean(ViewData["IsReportSubmittedByUser"]);
 
-    ViewData["Title"] =IsAdmin?Localizer["Check a report"]: Localizer[ "Edit your report"];
+    ViewData["Title"] =IsCurrentUserRoleInAdmin?Localizer["Check a report"]: Localizer[ "Edit your report"];
 }
 
 <h1>@(ViewData["Title"])</h1>
@@ -25,14 +25,14 @@
             @if(IsReportSubmittedByUser)
             {
                 <div class="form-group">
-                    <label  class="control-label">@(IsAdmin?Localizer["comment"]:Localizer["Comment"])</label>
+                    <label  class="control-label">@(IsCurrentUserRoleInAdmin?Localizer["comment"]:Localizer["Comment"])</label>
                     <textarea asp-for="AppellantComment" class="form-control" ></textarea>
                     <span asp-validation-for="AppellantComment" class="text-danger"></span>
                 </div>
 
             }
 
-            @if(IsAdmin)
+            @if(IsCurrentUserRoleInAdmin)
             {
                 <div class="form-group form-check">
                     <label class="form-check-label">
@@ -41,12 +41,12 @@
                 </div>
             }
 
-            <div class="form-group" style='display: @((Model.IsLegal && IsAdmin)?"none":"block")'>
+            <div class="form-group" style='display: @((Model.IsLegal && IsCurrentUserRoleInAdmin)?"none":"block")'>
                 <label asp-for="IllegalityType" class="control-label"></label>
                 <select asp-for="IllegalityType"  asp-items="@(Model.IllegalityTypeSelectListItems)" asp- class="form-control" ></select>
             </div>
             
-            @if (IsAdmin)
+            @if (IsCurrentUserRoleInAdmin)
             {
                 <div class="form-group">
                     <label asp-for="ReceptionistComment" class="control-label"></label>
@@ -67,7 +67,7 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
-        var _IsAdmin=Boolean(`@(IsAdmin?"1":"")`);
+        var IsCurrentUserRoleInAdmin=Boolean(`@(IsCurrentUserRoleInAdmin?"1":"")`);
         $(document).ready(()=>{
             IllegalityType_Change();
             AddIllegalityTypeToAppellantComment();
@@ -85,26 +85,26 @@
             }else{
                 $(`#IllegalityType`).parent().show();
             }
-            $(`#@(IsAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
+            $(`#@(IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
         }
         
         function InitialAppellantCommentReadonly(){
-            if(_IsAdmin){
+            if(IsCurrentUserRoleInAdmin){
                 $(`#AppellantComment`).attr("readonly","readonly");
             }
         }
 
         function AddIllegalityTypeToAppellantComment(){
-            if($(`#IllegalityType`).val()!=`110` && _IsAdmin){
+            if($(`#IllegalityType`).val()!=`110` && IsCurrentUserRoleInAdmin){
                 $(`#AppellantComment`).prepend($(`#IllegalityType`).find("option:selected").text()+' >> ');
             }
         }
 
         function IllegalityType_Change(){ 
             if($(`#IllegalityType`).val()==`110`){
-                $(`#@(IsAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments like:"]) (@(Localizer["reason"])) >  (@(Localizer["description"])) . . .');
+                $(`#@(IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments like:"]) (@(Localizer["reason"])) >  (@(Localizer["description"])) . . .');
             }else{
-                $(`#@(IsAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
+                $(`#@(IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
             }
         }
     </script>

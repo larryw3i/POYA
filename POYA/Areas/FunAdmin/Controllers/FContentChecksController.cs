@@ -199,6 +199,7 @@ namespace POYA.Areas.FunAdmin.Controllers
             var _IsCurrentUserRoleInAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
             
             ViewData["IsCurrentUserRoleInAdmin"]=_IsCurrentUserRoleInAdmin;
+            
             ViewData["IsReportSubmittedByUser"]= (fContentCheck.AppellantId?.Length??0)>0;
 
             fContentCheck.IllegalityTypeSelectListItems=_funAdminHelper.GetIllegalityTypeSelectListItems();

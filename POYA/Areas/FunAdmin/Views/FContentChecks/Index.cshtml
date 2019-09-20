@@ -76,18 +76,20 @@
                     @(Localizer["Unchecked"])
                 }
             </td>
-            <td>
+            <td class="fcontent_check_operation">
                 @if(!_IsChecked || _IsAdmin)
                 {
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>   
+                    <a asp-action="Edit" asp-route-id="@item.Id">@(Html.Raw("\u2696\ufe0f"))</a>   
                 }
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a>     
-                @if((!_IsChecked && item.AppellantId==UserId) || 
-                    _IsSubmittedByAdmin )
+                <a asp-action="Details" asp-route-id="@item.Id">@(Html.Raw("\ud83d\udd0d"))</a>     
+                @if(
+                    (!_IsChecked && item.AppellantId==UserId) || 
+                    _IsSubmittedByAdmin 
+                )
                 {
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">@(Html.Raw("\ud83d\uddd1\ufe0f"))</a>
                 }
-            </td>
+            </td>  
         </tr>
     }
     </tbody>
@@ -123,6 +125,9 @@
 
 @section Styles{
     <style>
+        .fcontent_check_operation a{
+            font-size:150%;
+        }
         .ContentTitle{
             width: 10%;
             word-wrap: break-word;

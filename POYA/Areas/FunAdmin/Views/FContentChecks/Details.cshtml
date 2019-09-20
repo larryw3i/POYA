@@ -80,10 +80,10 @@
 @section Scripts{
     <script>
         $(document).ready(()=>{
-            $(`#LContentTitle`).load(`@(Url.Action("GetContentTitle",new{Model.ContentId}))`);
-            $(`#LContent`).load(`@(Url.Action("GetContent",new{Model.ContentId}))`);
             GetUserName();
             InitialIsLegalEleCss();
+            $(`#LContentTitle`).load(`@(Url.Action("GetContentTitle",new{Model.ContentId}))`);
+            $(`#LContent`).load(`@(Url.Action("GetContent",new{Model.ContentId}))`);
         });
 
         function InitialIsLegalEleCss(){

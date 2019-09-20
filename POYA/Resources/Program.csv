@@ -1,4 +1,7 @@
 Name,en-US,zh-Hans
+Check a report,Check a report,审核举报内容
+this report,this report,这个举报
+"Deleting this data will permanently remove your account, and this cannot be recovered","Deleting this data will permanently remove your account, and this cannot be recovered",数据会被永久删除并且不可恢复
 legal,legal,合法
 illegal,illegal,不合法
 Unchecked,Unchecked,未检查
@@ -22,7 +25,6 @@ Make a report,Make a report,举报
 Edit report,Edit report,编辑举报
 Is content legal,Is content legal,内容合法
 Illegality type,Illegality type,非法类型
-Legal,Legal,合法
 Receptionist comment,Receptionist comment,处理备注
 Appellant comment,Appellant comment,举报备注
 Handling date,Handling date,处理时间
