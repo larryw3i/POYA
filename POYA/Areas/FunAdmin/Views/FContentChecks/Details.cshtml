@@ -11,8 +11,8 @@
     <hr />
     <div class="row">
         <div class="col col-md-7" id="LContentEle">
-            <div id="LContentTitle"></div>
-            <div id="LContent"></div>
+            <div class="col col-12" id="LContentTitle"></div>
+            <div class="col col-12" id="LContent"></div>
         </div>
         <div class="col col-md-4 offset-md-1">
             <dl>
@@ -67,14 +67,14 @@
                 }
             </dl>
         </div>
+        <div>
+            <a class="btn btn-outline-info" id="BackEle">&laquo; @(Localizer["Back"])</a>  
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success">@(IsAdmin? Localizer["Check"]:Localizer["Edit"])</a>
+        </div>
+
     </div>
     
 </div>
-<div>
-    <a class="btn btn-outline-info" id="BackEle">&laquo; @(Localizer["Back"])</a>  
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success">@(IsAdmin? Localizer["Check"]:Localizer["Edit"])</a>
-</div>
-
 
 
 @section Scripts{
@@ -105,6 +105,11 @@
 
 @section Styles{
     <style>
+
+        #LContent{
+            width: max-content;
+            height: 160%;
+        }
         #OperationEle{
             position: fixed;
             bottom: 8%;

@@ -67,7 +67,14 @@
                 @((item.ReceptionistComment?.Length>0)?item.ReceptionistComment:"N/A")
             </td>
             <td>
-                @(Html.DisplayFor(modelItem => item.IsLegal))
+                @if(_IsChecked)
+                {
+                    @(item.IsLegal?Localizer["legal"]:Localizer["illegal"])
+                }
+                else
+                {
+                    @(Localizer["Unchecked"])
+                }
             </td>
             <td>
                 @if(!_IsChecked || _IsAdmin)
@@ -105,7 +112,7 @@
              $(`.AppellantName,.ReceptionistName`).each((index,elem)=>{
                 var _UserId=$(elem).attr(`user_id`);
                 if(_UserId==undefined||_UserId.length<1){
-                    $(elem).text($(elem).hasClass(`ReceptionistName`)?`@(Localizer["Wait"]) . . .`:"N/A");
+                    $(elem).text($(elem).hasClass(`ReceptionistName`)?`@(Html.Raw(Localizer["Wait"])) . . .`:"N/A");
                     return;
                 }
                 $(elem).load(`@(Url.Action(nameof(FContentChecksController.GetUserName),"FContentChecks",new{area="FunAdmin"}))?UserId=${_UserId}`);

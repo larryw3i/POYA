@@ -1,4 +1,8 @@
 Name,en-US,zh-Hans
+legal,legal,合法
+illegal,illegal,不合法
+Unchecked,Unchecked,未检查
+Wait,Wait,稍等
 Ministration,Ministration,审查
 description,description,详细描述
 reason,reason,原因
@@ -41,7 +45,6 @@ Complex extent,Complex extent,复杂程度
 Optional,Optional,可选
 Custom classification,Custom classification,自定义分类
 Your articles and videos,Your articles and videos,文章或视频
-Description,Description,描述
 Link,Link,链接
 Insert code,Insert code,插入代码
 IllegalityType,Illegality type,非法类型
