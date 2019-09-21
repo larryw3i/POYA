@@ -159,7 +159,7 @@ else
 
             $(document).on(`click`,`#FunFilesPopupClose`,   (e)=>{  FunFilesPopupBlur(e);  });
 
-            $(document).on(`click`,`.GetDirIndex`,          (e)=>{ GetDirIndexClick(e); });
+            $(document).on(`click`,`.GetDirIndex`,  (e)=>{ GetDirIndexClick(e); });
 
             $(document).on(`click`,`.times_funfiles_popup_close`,   (e)=>{  FunFilesPopupBlur(e); });
 
@@ -167,8 +167,8 @@ else
 
             $(document).on(`click`,`#FunDirsCreate`,    (e)=>{ FunDirsCreateClick(e)});
 
-            $(document).on(`submit`,`#FunDir_Edit_Form`,    (e)=>{return FunDir_Edit_FormOnSubmit(e);});
-            $(document).on(`submit`,`#FunYourFile_Edit_Form`,    (e)=>{return FunYourFile_Edit_FormOnSubmit(e);});
+            $(document).on(`submit`,`#FunDir_Edit_Form`,        (e)=>{return FunDir_Edit_FormOnSubmit(e);});
+            $(document).on(`submit`,`#FunYourFile_Edit_Form`,   (e)=>{return FunYourFile_Edit_FormOnSubmit(e);});
             
         });
 
