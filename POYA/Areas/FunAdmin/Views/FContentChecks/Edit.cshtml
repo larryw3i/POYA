@@ -41,7 +41,7 @@
                 </div>
             }
 
-            <div class="form-group" style='display: @((Model.IsLegal && IsCurrentUserRoleInAdmin)?"none":"block")'>
+            <div class="form-group IllegalityType-form-group" >
                 <label asp-for="IllegalityType" class="control-label"></label>
                 <select asp-for="IllegalityType"  asp-items="@(Model.IllegalityTypeSelectListItems)" asp- class="form-control" ></select>
             </div>
@@ -77,6 +77,7 @@
             $(`#IllegalityType`).change(()=>{IllegalityType_Change();});
             $(`#LContent`).load(`@(Url.Action("GetContent","FContentChecks",new{ContentId=Model.ContentId,area="FunAdmin"}))`);
             $(`#LContentTitle`).load(`@(Url.Action("GetContentTitle","FContentChecks",new{ContentId=Model.ContentId,area="FunAdmin"}))`);
+
         });
 
         function IsLegal_Change(){
@@ -111,6 +112,13 @@
 }
 
 @section Styles{
+    @(Html.Raw(@"
+        <style>
+            .IllegalityType-form-group{
+                display:"+((Model.IsLegal && IsCurrentUserRoleInAdmin)?"none":"block")+@"
+            }
+        </style>
+    "));
     <style>
 
         .LContentEle{

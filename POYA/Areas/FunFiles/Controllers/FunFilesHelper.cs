@@ -124,8 +124,7 @@ namespace POYA.Areas.FunFiles.Controllers
         public string GetContentType(string FileNameWithExtension)
         {
             var provider = new FileExtensionContentTypeProvider();
-            string contentType;
-            if(!provider.TryGetContentType(FileNameWithExtension, out contentType))
+            if (!provider.TryGetContentType(FileNameWithExtension, out string contentType))
             {
                 contentType = "application/octet-stream";
             }

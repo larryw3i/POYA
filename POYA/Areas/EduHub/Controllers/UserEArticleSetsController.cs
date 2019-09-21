@@ -120,7 +120,6 @@ namespace POYA.Areas.EduHub.Controllers
         // GET: EduHub/UserEArticleSets/Create
         public IActionResult Create()
         {
-            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             return View();
         }
 
