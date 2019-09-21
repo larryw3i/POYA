@@ -12,7 +12,9 @@
     <div class="col col-12">
         <div class="wearticle_title">@(Model.Title)</div>
         <span class="wearticle_class_and_">
-            @(Localizer[ Model.FirstClassName]) > @(Localizer[Model.SecondClassName]) > @(Model.CustomClass) | @(new string('\u269D',Model.Complex))
+            @(Localizer[ Model.FirstClassName]) > @(Localizer[Model.SecondClassName]) > @(Model.CustomClass) 
+            | @(new string('\u269D',Model.Complex))
+            | <a asp-action="Index" asp-controller="WeArticle" asp-area="WeEduHub" asp-route-SetId="@(Model.SetId)">@(Model.SetName)</a>
         </span>
 
         <div class="float-right content_check_and_">

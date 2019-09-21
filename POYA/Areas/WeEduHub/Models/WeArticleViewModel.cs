@@ -43,6 +43,13 @@ namespace POYA.Areas.WeEduHub.Models
         /// </summary>
         /// <value></value>
         [NotMapped]
+        public string SetName{get;set;}
+
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
+        [NotMapped]
         public List<IFormFile> WeArticleVideoFiles{get;set;}
         
         /// <summary>

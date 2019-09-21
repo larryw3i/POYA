@@ -65,6 +65,10 @@
             </td>
             <td>
                 @((item.AppellantComment?.Length>0)?item.AppellantComment:"N/A")
+                @if(item.AppellantComment?.Length>0 && ((DateTimeOffset.Now - item.DOSubmitting).Value.Days<2) && ((item.ReceptionistComment?.Length??0)<1))
+                {
+                    <span class="badge badge-primary">@(Localizer["Newest"])</span>
+                }
             </td>
             <td>
                 @((item.ReceptionistComment?.Length>0)?item.ReceptionistComment:"N/A")

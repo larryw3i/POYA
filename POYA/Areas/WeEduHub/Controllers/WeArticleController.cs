@@ -46,11 +46,11 @@ namespace POYA.Areas.WeEduHub.Controllers
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
             RoleManager<IdentityRole> roleManager,
-           IEmailSender emailSender,
-           UserManager<IdentityUser> userManager,
-           ApplicationDbContext context,
-           IHostingEnvironment hostingEnv,
-           IStringLocalizer<Program> localizer)
+            IEmailSender emailSender,
+            UserManager<IdentityUser> userManager,
+            ApplicationDbContext context,
+            IHostingEnvironment hostingEnv,
+            IStringLocalizer<Program> localizer)
         {
             _htmlSanitizer = htmlSanitizer;
             _hostingEnv = hostingEnv;
@@ -92,6 +92,10 @@ namespace POYA.Areas.WeEduHub.Controllers
 
             ViewData[nameof(SetId)] = SetId;
 
+            ViewData["SetName"]=(SetId==null ||SetId==Guid.Empty)?string.Empty:await _context.WeArticleSet.Where(p=>p.Id==SetId).Select(p=>p.Name).FirstOrDefaultAsync();
+
+            ViewData["SetBelongToCurrentUser"]=string.IsNullOrEmpty(_UserId)?false:await _context.WeArticleSet.AnyAsync(p=>p.Id==SetId && p.UserId==_UserId);
+
             ViewData["UserId"] = _UserId;
 
             ViewData["WeArticles"] = _WeArticles.ToPagedList(APage ?? 1, 10);
@@ -124,6 +128,8 @@ namespace POYA.Areas.WeEduHub.Controllers
             ViewData["WeArticleFileContentType"]=_funFilesHelper.GetContentType(
                 await _context.WeArticleFile.Where(p=>p.Id==weArticle.WeArticleContentFileId).Select(p=>p.Name).FirstOrDefaultAsync()
             );
+
+            weArticle.SetName=await _context.WeArticleSet.Where(p=>p.Id==weArticle.SetId).Select(p=>p.Name).FirstOrDefaultAsync();
 
             return View(weArticle);
         }

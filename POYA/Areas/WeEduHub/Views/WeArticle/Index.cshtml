@@ -4,8 +4,15 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
     var SetId=ViewData["SetId"]?.ToString()??string.Empty;
+
+    var SetName=ViewData["SetName"]?.ToString()??string.Empty;
+    
     var _UserId=ViewData["UserId"]?.ToString()??string.Empty;
+
+    var SetBelongToCurrentUser=Convert.ToBoolean(ViewData["SetBelongToCurrentUser"]);
+
     var _WeEduHubHelper=new WeEduHubHelper();
 
     var WEARTICLE_SORT_BY=ViewData[_WeEduHubHelper.WEARTICLE_SORT_BY_String]?.ToString();
@@ -16,8 +23,15 @@
             WEARTICLE_SORT_BY==_WeEduHubHelper.SortByTitle?Localizer["Title"]:
             Localizer["Modifying"];
 }
-
-<h4>@(Localizer["Articles and videos"])</h4>
+@if((SetId?.Length??0)>1)
+{
+    <span class="set-name">@SetName</span> 
+    <span class="articles-and-videos">@(Localizer["Articles and videos"])</span>
+}
+else
+{
+    <h4>@(Localizer["Articles and videos"])</h4>
+}
 
 <div class="row">
     <div class="col col-12">
@@ -35,10 +49,12 @@
                 </div>
             </div>
         }
-        else
+
+        @if(SetBelongToCurrentUser)
         {
             <a asp-action="Create" asp-controller="WeArticle" asp-route-SetId="@(SetId)" class="btn btn-outline-info float-right">@(Localizer["Add"]) &raquo;</a>
         }
+        
         @if(SetId!=string.Empty)
         {
             <a id="go_back" class="btn btn-info">&laquo; @(Localizer["Back"])</a> 
@@ -107,6 +123,12 @@
 @section Styles
 {
     <style>
+        .set-name{
+            font-size: 320%
+        }
+        .articles-and-videos{
+            font-size: 80%;
+        }
         td{
             border: 0px solid transparent !important;
         }

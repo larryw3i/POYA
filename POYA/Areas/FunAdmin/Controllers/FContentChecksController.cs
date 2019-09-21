@@ -215,7 +215,8 @@ namespace POYA.Areas.FunAdmin.Controllers
             fContentCheck.IllegalityTypeSelectListItems=_funAdminHelper.GetIllegalityTypeSelectListItems();
             fContentCheck.AppellantComment=
                 (fContentCheck.IllegalityType=="110" && _IsCurrentUserRoleInAdmin)?
-                    (fContentCheck.IllegalityTypeSelectListItems.Where(p=>p.Value==fContentCheck.IllegalityType).Select(p=>p.Text).FirstOrDefault()+" >> "+fContentCheck.AppellantComment):
+                    (fContentCheck.IllegalityTypeSelectListItems.Where(p=>p.Value==fContentCheck.IllegalityType).Select(p=>p.Text).FirstOrDefault()+" >> "
+                        +fContentCheck.AppellantComment):
                     fContentCheck.AppellantComment;
 
             ViewData["IsEdit"]=true;
@@ -259,7 +260,7 @@ namespace POYA.Areas.FunAdmin.Controllers
                         return NotFound();
                     }
 
-                    var IsReportSubmittedByUser=string.IsNullOrEmpty(_FContentCheck.AppellantId);
+                    var IsReportSubmittedByUser=!string.IsNullOrEmpty(_FContentCheck.AppellantId);
 
                     var IsChecked=!string.IsNullOrEmpty(_FContentCheck.ReceptionistId);
 
@@ -268,7 +269,7 @@ namespace POYA.Areas.FunAdmin.Controllers
                     {
                         _FContentCheck.ReceptionistComment=fContentCheck.ReceptionistComment;
                         
-                        if(IsReportSubmittedByUser && IsChecked)
+                        if(IsReportSubmittedByUser && IsChecked )
                         {
                             _FContentCheck.AppellantComment=AppellantCommentForSubsequentCheck(fContentCheck,_FContentCheck);
                         }
