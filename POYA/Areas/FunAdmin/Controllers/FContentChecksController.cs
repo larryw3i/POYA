@@ -73,10 +73,10 @@ namespace POYA.Areas.FunAdmin.Controllers
             var User_=await _userManager.GetUserAsync(User);
             var UserId_=User_.Id;
 
-            var _IsAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
+            var IsCurrentUserRoleInAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
 
             var _FContentCheck=await _context.FContentCheck
-                .Where(p=>_IsAdmin?true:p.AppellantId==UserId_)
+                .Where(p=>IsCurrentUserRoleInAdmin?true:p.AppellantId==UserId_)
                 .ToListAsync();
 
             _FContentCheck.ForEach(p=>{
@@ -85,7 +85,7 @@ namespace POYA.Areas.FunAdmin.Controllers
                 p.ContentTitle=GetContentTitleString(p.ContentId).GetAwaiter().GetResult();
             });
 
-            ViewData["IsAdmin"]=_IsAdmin;
+            ViewData["IsCurrentUserRoleInAdmin"]=IsCurrentUserRoleInAdmin;
             
             ViewData["UserId"]=UserId_;
 
@@ -103,7 +103,7 @@ namespace POYA.Areas.FunAdmin.Controllers
             
             var User_=await _userManager.GetUserAsync(User);
 
-            var _IsAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
+            var _IsCurrentUserRoleInAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
 
             var fContentCheck = await _context.FContentCheck
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -112,13 +112,17 @@ namespace POYA.Areas.FunAdmin.Controllers
             {
                 return NotFound();
             }
+            
+            var IsChecked=!string.IsNullOrEmpty(fContentCheck.ReceptionistId);
 
-            if( fContentCheck.AppellantId!=User_.Id && !_IsAdmin)
+            if( fContentCheck.AppellantId!=User_.Id && !_IsCurrentUserRoleInAdmin)
             {
                 return NotFound();
             }
 
-            ViewData["IsAdmin"]=_IsAdmin;
+            ViewData["IsCurrentUserRoleInAdmin"]=_IsCurrentUserRoleInAdmin;
+            ViewData[nameof(IsChecked)]=IsChecked;
+            ViewData["UserId"]=User_.Id;
 
             return View(fContentCheck);
         }
@@ -243,8 +247,11 @@ namespace POYA.Areas.FunAdmin.Controllers
                     var _FContentCheck=await _context.FContentCheck.FirstOrDefaultAsync(
                         p=>
                             p.Id==id 
-                            && _IsCurrentUserRoleInAdmin?true:
-                            (p.AppellantId==User_.Id)
+                            && 
+                            (
+                                _IsCurrentUserRoleInAdmin? true:
+                                (p.AppellantId==User_.Id)
+                            )
                     );
 
                     if(_FContentCheck==null)
@@ -254,7 +261,7 @@ namespace POYA.Areas.FunAdmin.Controllers
 
                     var IsReportSubmittedByUser=string.IsNullOrEmpty(_FContentCheck.AppellantId);
 
-                    var IsChecked=string.IsNullOrEmpty(_FContentCheck.ReceptionistId);
+                    var IsChecked=!string.IsNullOrEmpty(_FContentCheck.ReceptionistId);
 
 
                     if(_IsCurrentUserRoleInAdmin)
@@ -302,7 +309,6 @@ namespace POYA.Areas.FunAdmin.Controllers
 
 
         // GET: FunAdmin/FContentChecks/Delete/5
-        [Authorize(Roles="ADMINISTRATOR")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -346,16 +352,23 @@ namespace POYA.Areas.FunAdmin.Controllers
             var User_=await _userManager.GetUserAsync(User);
             
             var _IsCurrentUserRoleInAdmin = await _userManager.IsInRoleAsync(User_,X_DOVEValues._administrator);
+            
 
             var fContentCheck = await _context.FContentCheck.FirstOrDefaultAsync(
                 p=>
-                    p.AppellantId==User_.Id || 
+                    (
+                        p.AppellantId==User_.Id && 
+                        string.IsNullOrEmpty(p.ReceptionistId)
+                    ) 
+                    || 
                     (
                         string.IsNullOrEmpty(p.AppellantId) && 
                         p.ReceptionistId==User_.Id && 
                         _IsCurrentUserRoleInAdmin
                     )
             );
+            
+
             _context.FContentCheck.Remove(fContentCheck);
 
             await _context.SaveChangesAsync();

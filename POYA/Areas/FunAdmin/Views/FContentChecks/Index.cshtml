@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var _IsAdmin=Convert.ToBoolean(ViewData["IsAdmin"]);
+    var IsCurrentUserRoleInAdmin=Convert.ToBoolean(ViewData["IsCurrentUserRoleInAdmin"]);
     var UserId=Convert.ToString(ViewData["UserId"]);
 }
 
@@ -80,10 +80,15 @@
                 }
             </td>
             <td class="fcontent_check_operation">
-                @if(!_IsChecked || _IsAdmin)
+                @if(IsCurrentUserRoleInAdmin)
                 {
                     <a asp-action="Edit" asp-route-id="@item.Id">@(Html.Raw("\u2696\ufe0f"))</a>   
                 }
+                else if(!_IsChecked && !IsCurrentUserRoleInAdmin)
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">@(Html.Raw("\u2712\ufe0f"))</a>   
+                }
+
                 <a asp-action="Details" asp-route-id="@item.Id">@(Html.Raw("\ud83d\udd0d"))</a>     
                 @if(
                     (!_IsChecked && item.AppellantId==UserId) || 
