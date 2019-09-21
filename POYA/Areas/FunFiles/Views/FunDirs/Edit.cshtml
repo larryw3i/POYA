@@ -11,17 +11,17 @@
 <hr />
 <div class="row">
     <div class="offset-1 col-10">
-        <form asp-action="Edit" asp-controller="FunDirs">
+        <form asp-action="Edit" asp-controller="FunDirs" id="FunDir_Edit_Form" item_id="@(Model.Id)">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <input asp-for="ParentDirId" type="hidden" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" autocomplete="off" style='text-align:center'/>
+                <input asp-for="Name" class="form-control FunDir_Edit_Name" autocomplete="off" style='text-align:center'/>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value='@(Localizer["Save"])' class="btn btn-outline-primary" />
+                <input type="submit" value='@(Localizer["Save"])'  id="FunDir_Edit_Submit"  class="btn btn-outline-primary" />
             </div>
         </form>
     </div>

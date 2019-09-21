@@ -86,6 +86,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Rename for" xml:space="preserve">
+	<value>重命名 : </value>
+  </data>
+  <data name="The name of file is repeated" xml:space="preserve">
+	<value>文件命名重复了</value>
+  </data>
+  <data name="The name of directory is repeated" xml:space="preserve">
+	<value>文件夹命名重复了</value>
+  </data>
   <data name="Check a report" xml:space="preserve">
 	<value>审核举报内容</value>
   </data>

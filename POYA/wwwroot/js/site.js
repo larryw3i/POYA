@@ -147,6 +147,20 @@ function ThemeDropdownItemClick()
      });
 }
 
+/**
+ * 
+ * @param {String} _type 
+ * @param {String} content 
+ * @param {Number} timeout in millisecond
+ */
+function MakeLayoutAlert(_type,content,timeout)
+{
+    $(`.xbody`).prepend(`<div class="alert alert-${_type} poya-layout-alert" role="alert">${content}</div>`);
+    setTimeout(()=>{
+        $(`.poya-layout-alert`).remove();
+    },timeout);
+}
+
 
 
 $(document).ready(function () {

@@ -1,4 +1,7 @@
 Name,en-US,zh-Hans
+Rename for,Rename for,重命名 : 
+The name of file is repeated,The name of file is repeated,文件命名重复了
+The name of directory is repeated,The name of directory is repeated,文件夹命名重复了
 Check a report,Check a report,审核举报内容
 this report,this report,这个举报
 "Deleting this data will permanently remove your account, and this cannot be recovered","Deleting this data will permanently remove your account, and this cannot be recovered",数据会被永久删除并且不可恢复

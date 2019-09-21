@@ -11,13 +11,13 @@
 <hr />
 <div class="row">
     <div class="offset-1 col-10">
-        <form asp-action="Edit" asp-controller="FunYourFiles">
+        <form asp-action="Edit" asp-controller="FunYourFiles" id="FunYourFile_Edit_Form" item_id="@(Model.Id)">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <input asp-for="ParentDirId" type="hidden"/>
             <div class="form-group"  title='@(Localizer["Modify extension prudently"]) !'>
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control"  autocomplete="off" style='text-align:center'/>
+                <input asp-for="Name" class="form-control FunYourFile_Edit_Name"  autocomplete="off" style='text-align:center'/>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -75,7 +75,7 @@
         <tbody id="FileAndDir">
             @foreach (var item in FunYourFilesUnionFunDirs) 
             {
-                <tr item_id="@(item.Id)" class='FileAndDirTr @(item.IsFile?"file":"dir")'>
+                <tr item_id="@(item.Id)" item_name="@(item.Name)" class='FileAndDirTr @(item.IsFile?"file":"dir")'>
                     <td class="ItemName">
                         @if(item.IsFile)
                         {
@@ -166,8 +166,35 @@ else
             $(document).on(`click`,`.CopyOrMoveTo`,     (e)=>{ CopyOrMoveToClick(e); });
 
             $(document).on(`click`,`#FunDirsCreate`,    (e)=>{ FunDirsCreateClick(e)});
+
+            $(document).on(`submit`,`#FunDir_Edit_Form`,    (e)=>{return FunDir_Edit_FormOnSubmit(e);});
+            $(document).on(`submit`,`#FunYourFile_Edit_Form`,    (e)=>{return FunYourFile_Edit_FormOnSubmit(e);});
             
         });
+
+        function FunDir_Edit_FormOnSubmit(e)
+        {
+
+            if(
+                $(`.dir[item_id!='${$(e.target).attr(`item_id`)}'][item_name='${$(`.FunDir_Edit_Name`).val()}']`).length>0
+            )
+            {
+                MakeLayoutAlert(`danger`,`@(Localizer["The name of directory is repeated"])`, 3000);
+                return false;
+            }
+        }
+
+        function FunYourFile_Edit_FormOnSubmit(e)
+        {
+
+            if(
+                $(`.file[item_id!='${$(e.target).attr(`item_id`)}'][item_name='${$(`.FunYourFile_Edit_Name`).val()}']`).length>0
+            )
+            {
+                MakeLayoutAlert(`danger`,`@(Localizer["The name of file is repeated"])`, 3000);
+                return false;
+            }
+        }
 
 
         function DownloadFunFileClick(e){
@@ -210,7 +237,7 @@ else
         function RenamingClick(e){
             var _item_id=get_item_id(e);
             if($(e.target).parents(`.OperationEle`).attr(`is_file`)==`true`)
-            {
+            {   
                 $(`.FunFilesPopup`).load(`@(Url.Action("Edit","FunYourFiles"))/`  +_item_id);  
             }
             else
