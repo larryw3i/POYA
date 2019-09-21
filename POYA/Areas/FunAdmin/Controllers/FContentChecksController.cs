@@ -79,6 +79,12 @@ namespace POYA.Areas.FunAdmin.Controllers
                 .Where(p=>_IsAdmin?true:p.AppellantId==UserId_)
                 .ToListAsync();
 
+            _FContentCheck.ForEach(p=>{
+                p.AppellantName=_userManager.FindByIdAsync(p.AppellantId)?.GetAwaiter().GetResult()?.UserName??"N/A";
+                p.ReceptionistName=_userManager.FindByIdAsync(p.ReceptionistId)?.GetAwaiter().GetResult()?.UserName??(_localizer["Wait"]+"...");
+                p.ContentTitle=GetContentTitleString(p.ContentId).GetAwaiter().GetResult();
+            });
+
             ViewData["IsAdmin"]=_IsAdmin;
             
             ViewData["UserId"]=UserId_;
@@ -203,6 +209,10 @@ namespace POYA.Areas.FunAdmin.Controllers
             ViewData["IsReportSubmittedByUser"]= (fContentCheck.AppellantId?.Length??0)>0;
 
             fContentCheck.IllegalityTypeSelectListItems=_funAdminHelper.GetIllegalityTypeSelectListItems();
+            fContentCheck.AppellantComment=
+                (fContentCheck.IllegalityType=="110" && _IsCurrentUserRoleInAdmin)?
+                    (fContentCheck.IllegalityTypeSelectListItems.Where(p=>p.Value==fContentCheck.IllegalityType).Select(p=>p.Text).FirstOrDefault()+" >> "+fContentCheck.AppellantComment):
+                    fContentCheck.AppellantComment;
 
             ViewData["IsEdit"]=true;
 
@@ -360,6 +370,7 @@ namespace POYA.Areas.FunAdmin.Controllers
 
         #region DEPOLLUTION
 
+
         private string AppellantCommentForSubsequentCheck(FContentCheck fContentCheck, FContentCheck _FContentCheck)
         {
             return (_FContentCheck.IllegalityType == fContentCheck.IllegalityType && _FContentCheck.IllegalityType == "110") ?
@@ -384,13 +395,13 @@ namespace POYA.Areas.FunAdmin.Controllers
 
 
         [ActionName("RedirectionByContentId")]
-        public async Task<IActionResult> RedirectionByContentIdAsync(Guid Id)
+        public async Task<IActionResult> RedirectionByContentIdAsync(Guid ContentId)
         {
             if(
-                await _context.WeArticle.AnyAsync(p=>p.Id==Id)
+                await _context.WeArticle.AnyAsync(p=>p.Id==ContentId)
             )
             {
-                return RedirectToAction("Details","WeArticle",new{area="WeEduHub",Id});
+                return RedirectToAction("Details","WeArticle",new{area="WeEduHub",Id=ContentId});
             }
             return NotFound();
         }
@@ -421,6 +432,22 @@ namespace POYA.Areas.FunAdmin.Controllers
             return NoContent();
         }
         
+        public async Task<string> GetContentTitleString(Guid ContentId)
+        {
+            var _EArticle=await _context.EArticle.FirstOrDefaultAsync(p=>p.Id==ContentId);
+            var _WeArticle=await _context.WeArticle.Where(p=>p.Id==ContentId).FirstOrDefaultAsync();
+            var _User = _userManager.GetUserAsync(User).GetAwaiter().GetResult();
+            if(_EArticle != null)
+            {
+                return _EArticle.Title;
+            }
+            else if(_WeArticle!=null)
+            {
+                return _WeArticle.Title;
+            }
+                
+            return string.Empty;
+        }
         public async Task<IActionResult> GetContentTitle(Guid ContentId)
         {
             var _EArticle=await _context.EArticle.FirstOrDefaultAsync(p=>p.Id==ContentId);

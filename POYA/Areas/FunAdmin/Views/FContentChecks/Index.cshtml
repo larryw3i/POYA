@@ -48,11 +48,14 @@
 
         
         <tr>
-            <td class="ContentTitle" content_id='@(item.ContentId)'>
+            <td >
+                @(item.ContentTitle)
             </td>
-            <td class="AppellantName" user_id='@(item.AppellantId)'>
+            <td>
+                @(item.AppellantName)
             </td>
-            <td class="ReceptionistName" user_id='@(item.ReceptionistId)'>
+            <td>
+                @(item.ReceptionistName)
             </td>
             <td>
                 @(item.DOSubmitting?.LocalDateTime)
@@ -98,7 +101,6 @@
 @section Scripts{
     <script>
         $(document).ready(()=>{
-            GetUserName();
             GetContentTitle();
            
         });
@@ -110,16 +112,6 @@
             });
         }
 
-        function GetUserName(){
-             $(`.AppellantName,.ReceptionistName`).each((index,elem)=>{
-                var _UserId=$(elem).attr(`user_id`);
-                if(_UserId==undefined||_UserId.length<1){
-                    $(elem).text($(elem).hasClass(`ReceptionistName`)?`@(Html.Raw(Localizer["Wait"])) . . .`:"N/A");
-                    return;
-                }
-                $(elem).load(`@(Url.Action(nameof(FContentChecksController.GetUserName),"FContentChecks",new{area="FunAdmin"}))?UserId=${_UserId}`);
-            });
-        }
     </script>
 }
 

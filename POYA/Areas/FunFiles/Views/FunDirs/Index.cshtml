@@ -67,7 +67,7 @@
                 </th>
                 <th>@(Localizer["Size"])</th>
                 <th>
-                    @(Html.DisplayNameFor(model => model.DOCreating))
+                    @(Localizer["Date"])
                 </th>
                 <th></th>
             </tr>
@@ -167,8 +167,9 @@ else
 
             $(document).on(`click`,`#FunDirsCreate`,    (e)=>{ FunDirsCreateClick(e)});
 
-            $(document).on(`submit`,`#FunDir_Edit_Form`,        (e)=>{return FunDir_Edit_FormOnSubmit(e);});
-            $(document).on(`submit`,`#FunYourFile_Edit_Form`,   (e)=>{return FunYourFile_Edit_FormOnSubmit(e);});
+            $(document).on(`submit`,`#FunDir_Edit_Form`,        (e)=>{ return FunDir_Edit_FormOnSubmit(e);});
+
+            $(document).on(`submit`,`#FunYourFile_Edit_Form`,   (e)=>{ return FunYourFile_Edit_FormOnSubmit(e);});
             
         });
 

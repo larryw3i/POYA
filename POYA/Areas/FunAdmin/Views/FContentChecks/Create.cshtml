@@ -19,11 +19,11 @@
 
 <hr />
 <div class="row">
-    <div class="col-sm-12 offset-md-1 col-md-6 LContentEle">
-        <a id="LContentTitle"></a>
+    <div class="col col-sm-10 offset-md-1 col-md-6 LContentEle">
+        <a asp-action="RedirectionByContentId" asp-route-ContentId="@(Model.ContentId)" id="LContentTitle"></a>
         <div id="LContent"></div>
     </div>
-    <div class="col-sm-12 col-md-5">
+    <div class="col col-sm-10 col-md-5">
         <form asp-action='@(_IsEdit?"Edit":"Create")'>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -33,7 +33,14 @@
             {
                 <div class="form-group">
                     <label  class="control-label">@(IsReportSubmittedByUser?Localizer["Appellant comment"]:Localizer["Comment"])</label>
-                    <textarea asp-for="AppellantComment" class="form-control" rows="5"></textarea>
+                    @if(_IsCurrentUserRoleInAdmin)
+                    {
+                        <textarea asp-for="AppellantComment" class="form-control" rows="5" readonly></textarea>
+                    }
+                    else
+                    {
+                        <textarea asp-for="AppellantComment" class="form-control" rows="5" ></textarea>
+                    }
                     <span asp-validation-for="AppellantComment" class="text-danger"></span>
                 </div>
 
@@ -48,10 +55,21 @@
                 </div>
             }
 
-            <div class="form-group" id="illegality_type_parent">
-                <label asp-for="IllegalityType" class="control-label"></label>
-                <select asp-for="IllegalityType"  asp-items="@(Model.IllegalityTypeSelectListItems)" asp- class="form-control" ></select>
-            </div>
+            @if(Model.IsLegal && _IsCurrentUserRoleInAdmin)
+            {
+
+                <div class="form-group" id="illegality_type_parent" style="display: none;">
+                    <label asp-for="IllegalityType" class="control-label"></label>
+                    <select asp-for="IllegalityType"  asp-items="@(Model.IllegalityTypeSelectListItems)" class="form-control" ></select>
+                </div>
+            }
+            else
+            {
+                <div class="form-group" id="illegality_type_parent">
+                    <label asp-for="IllegalityType" class="control-label"></label>
+                    <select asp-for="IllegalityType"  asp-items="@(Model.IllegalityTypeSelectListItems)" class="form-control" ></select>
+                </div>
+            }
             
             @if (_IsCurrentUserRoleInAdmin)
             {
@@ -79,10 +97,7 @@
         $(document).ready(()=>{
 
             IllegalityType_Change();
-            AddIllegalityTypeToAppellantComment();
-            InitialAppellantCommentReadonly();
-
-            $(`#illegality_type_parent`).css({"display":`@((Model.IsLegal && _IsCurrentUserRoleInAdmin)?"none":"block")`});
+            
 
             $(`#IsLegal`).change(()=>{IsLegal_Change();});
 
@@ -102,18 +117,6 @@
             $(`#@(_IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Html.Raw(Localizer["Type some comments"])). . .');
         }
         
-        function InitialAppellantCommentReadonly(){
-            if(_IsCurrentUserRoleInAdmin){
-                $(`#AppellantComment`).attr("readonly","readonly");
-            }
-        }
-
-        function AddIllegalityTypeToAppellantComment(){
-            if($(`#IllegalityType`).val()!=`110` && _IsCurrentUserRoleInAdmin){
-                $(`#AppellantComment`).prepend($(`#IllegalityType`).find("option:selected").text()+' >> ');
-            }
-        }
-
         function IllegalityType_Change(){ 
             if($(`#IllegalityType`).val()==`110`){
                 $(`#@(_IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Html.Raw(Localizer["Type some comments like"])): (@(Html.Raw(Localizer["reason"]))) >  (@(Html.Raw(Localizer["description"]))) . . .');
@@ -138,6 +141,9 @@
             word-wrap: break-word;
         }
 
+        #LContent{
+            height: 90%;
+        }
         #LContent,#LContentTitle{
             width: 100%;
             cursor:default;

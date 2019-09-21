@@ -6,7 +6,7 @@
     var IsAdmin=Convert.ToBoolean(ViewData["IsAdmin"]);
 }
 
-<h1>Details</h1>
+<h1>@(Localizer["Details"])</h1>
 <div class="col col-12">
     <hr />
     <div class="row">
@@ -65,11 +65,12 @@
                     <dd class = "col-sm-auto">
                     </dd>
                 }
+                
+                <div>
+                    <a class="btn btn-outline-info" id="BackEle">&laquo; @(Localizer["Back"])</a>  
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success">@(IsAdmin? Localizer["Check"]:Localizer["Edit"])</a>
+                </div>
             </dl>
-        </div>
-        <div>
-            <a class="btn btn-outline-info" id="BackEle">&laquo; @(Localizer["Back"])</a>  
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success">@(IsAdmin? Localizer["Check"]:Localizer["Edit"])</a>
         </div>
 
     </div>
@@ -108,7 +109,7 @@
 
         #LContent{
             width: max-content;
-            height: 160%;
+            height: 100%;
         }
         #OperationEle{
             position: fixed;

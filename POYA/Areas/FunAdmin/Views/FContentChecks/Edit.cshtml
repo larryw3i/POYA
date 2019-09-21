@@ -13,11 +13,7 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-7 offset-md-1 LContentEle">
-        <div id="LContentTitle"></div>
-        <div id="LContent"></div>
-    </div>
-    <div class="col-md-4">
+    <div class=" col col-sm-10 col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -60,6 +56,11 @@
                 <input type="submit" value='@(Localizer["Save"])' class="btn btn-primary" />
             </div>
         </form>
+    </div>
+    
+    <div class="col col-sm -10 col-md-7 offset-md-1 LContentEle">
+        <div id="LContentTitle"></div>
+        <div id="LContent"></div>
     </div>
 </div>
 
@@ -120,9 +121,13 @@
         </style>
     "));
     <style>
+        #LContent{
+            width: min-content;
+        }
 
         .LContentEle{
             word-wrap: break-word;
+            width: max-content;
         }
 
         #LContent,#LContentTitle{

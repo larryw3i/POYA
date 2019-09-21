@@ -32,13 +32,25 @@ namespace POYA.Areas.FunAdmin.Models
         [Display(Name="Receptionist comment")]
         public string ReceptionistComment{get;set;}
 
-        [Display(Name="Legal")]
+        [Display(Name="legal")]
         public bool IsLegal{get;set;}=true;
         
         [Display(Name="Illegality type")]
         public string IllegalityType{get;set;}
 
         #region NotMapped
+
+        [NotMapped]
+        [Display(Name="Appellant")]
+        public string AppellantName{get;set;}
+
+        [NotMapped]
+        [Display(Name="Appellant")]
+        public string ContentTitle{get;set;}
+
+        [NotMapped]        
+        [Display(Name="Receptionist")]
+        public string ReceptionistName{get;set;}=string.Empty;
         
         [NotMapped]
         public List<SelectListItem> IllegalityTypeSelectListItems{get;set;}

@@ -86,6 +86,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="legal" xml:space="preserve">
+	<value>合法</value>
+  </data>
+  <data name="Legal" xml:space="preserve">
+	<value>合法</value>
+  </data>
   <data name="Rename for" xml:space="preserve">
 	<value>重命名 : </value>
   </data>
@@ -103,9 +109,6 @@
   </data>
   <data name="Deleting this data will permanently remove your account, and this cannot be recovered" xml:space="preserve">
 	<value>数据会被永久删除并且不可恢复</value>
-  </data>
-  <data name="legal" xml:space="preserve">
-	<value>合法</value>
   </data>
   <data name="illegal" xml:space="preserve">
 	<value>不合法</value>
