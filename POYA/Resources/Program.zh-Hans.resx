@@ -86,6 +86,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="The content file is duplicate in POYA" xml:space="preserve">
+	<value>这个内容文件重复了, 我们不允许上传已经上传过的内容文件哦 !</value>
+  </data>
+  <data name="The title is empty" xml:space="preserve">
+	<value>还没有标题哦!</value>
+  </data>
+  <data name="The field {0} must be a string with a minimum length of {2} and a maximum length of {1}" xml:space="preserve">
+	<value>{0} 的字数要在 {2} ~ {1}之间哦</value>
+  </data>
+  <data name="The content file of article is empty" xml:space="preserve">
+	<value>文章的内容文件是空的哦!</value>
+  </data>
   <data name="Your reports" xml:space="preserve">
 	<value>举报的内容</value>
   </data>

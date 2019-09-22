@@ -12,13 +12,20 @@ namespace POYA.Areas.WeEduHub.Models
     public class WeArticle    //  ViewModel
     {
         public Guid Id{get;set;}
+        
         public string AuthorUserId{get;set;}
+
         public Guid SetId{get;set;}
         
-        [StringLength(maximumLength:120,MinimumLength=2)]
+        [Display(Name="Title")]
+        [StringLength(maximumLength:120,MinimumLength=2,
+        ErrorMessage="The field {0} must be a string with a minimum length of {2} and a maximum length of {1}")]
         public string Title{get;set;}
+        
         public Guid WeArticleContentFileId{get;set;}
+        
         public DateTimeOffset  DOPublishing{get;set;}=DateTimeOffset.Now;
+        
         public DateTimeOffset? DOModifying{get;set;}
 
         /// <summary>

@@ -30,11 +30,6 @@
 
     ThemeSelectListItems.ForEach(p => { if (p.Value == _THEME) p.Selected = true; });
 
-    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-
-    var cultureItems = LocOptions.Value.SupportedUICultures
-        .Select(c => new SelectListItem { Value = c.Name, Text =Localizer[ c.DisplayName] })
-        .ToList();
 
 
 }
@@ -150,11 +145,11 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="ThemeDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 @(Localizer[_THEME])
                             </a>
 
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu" aria-labelledby="ThemeDropdown">
                                 <a class="dropdown-item poya-theme" theme='Light'>
                                     @(Localizer["Light"])
                                 </a>
@@ -188,14 +183,8 @@
             <a asp-area="" asp-controller="Home" asp-action="Privacy">
                 @(Localizer["Privacy"])
             </a> 
-
-            <select 
-                id="_Language" 
-                name="_Language"  
-                asp-for='@(requestCulture.RequestCulture.UICulture.Name)' 
-                asp-items="cultureItems" 
-                class="form-control float-right">
-            </select> 
+            
+            <partial name="_LayoutLanguagePartial"/>
             
         </div>
     </footer>

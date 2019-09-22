@@ -14,7 +14,7 @@
             .pagination>li>a:hover{
                 background-color:"+(THEME_String==Dark_String?Black_String:C7EDCC_String)+@";
             }
-            body,footer,.dropdown *,select,.card{
+            body,footer,.dropdown *,select,.card,select *{
                 background-color:"+(THEME_String==Dark_String?Black_String:THEME_String==Light_String?White_String:C7EDCC_String)+@";
                 color:"+(THEME_String==Dark_String?C7EDCC_String:Black_String)+@";
             }
@@ -41,7 +41,3 @@
 }
 
 @(Html.Raw(_pwq_css))
-
-<style>
-    
-</style>

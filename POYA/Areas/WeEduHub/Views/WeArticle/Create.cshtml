@@ -18,7 +18,7 @@
 <hr />
 <div class="row">
     <div class="offset-sm-1 col-sm-10 offset-2 col-8 ">
-        <form asp-action='@(IsEdit?"Edit":"Create")' enctype="multipart/form-data">
+        <form asp-action='@(IsEdit?"Edit":"Create")' enctype="multipart/form-data" id="wearticle_create_and_edit_form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="SetId" type="hidden"/>            
             <input type="file" asp-for="WeArticleFormFile" hidden accept=".pdf,video/*"/>
@@ -34,9 +34,9 @@
             <div class="form-group operation-form-group">
                 <a id="go_back" class="btn btn-info">&laquo; @(Localizer["Back"])</a>   
                 <a class="btn btn-info" id="select_file">@(Localizer["Select file"])</a>   
-                <input type="submit" value='@(Localizer["Upload"])' class="btn btn-primary" />  
+                <a class="btn btn-primary" id="wearticle_create_and_edit_form_submit">@(Localizer["Upload"])</a>
             </div>
-        </form> 
+        </form>
 
     </div>
 </div>
@@ -78,23 +78,17 @@
 {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
+    <script src="~/lib/js-sha256/build/sha256.min.js"></script>
+
     <script>
+
+        
         var _WeArticleFileContentType=`@_WeArticleFileContentType`;
-        var _selected_file_content_object_string=(data,type)=>`
-            <object 
-                id="selected_file_content" 
-                data='${data}' 
-                type='${type}'>
-            </object>  
-            `;
-        var _selected_file_content_video_string=(src,type)=>`
-            <video 
-                id="selected_file_content" 
-                src='${src}' 
-                type='${type}' 
-                controls >
-            </video>  
-            `;
+        var IsEdit=Boolean(`@(IsEdit?" ":"")`)
+        var _selected_file_content_object_string=(data,type)=>` <object  id="selected_file_content" data='${data}'  type='${type}'></object>`;
+        var _selected_file_content_video_string=(src,type)=>`   <video   id="selected_file_content" src='${src}'    type='${type}'  controls></video>`;
+
+        
         $(document).ready(()=>{
 
             $(document).on(`click`,`#select_video`,()=>{ SelectVideo(); });
@@ -112,6 +106,8 @@
             $(document).on(`input propertychange`,`#comment_textarea`,(e)=>{ CommentTextareaInputPropertyChange(e); })
 
             $(document).on(`change`,`#complex_select`,(e)=>{ ComplexSelectChange(e);  });
+
+            $(document).on(`click`,`#wearticle_create_and_edit_form_submit`,  (e)=>{  WearticleCreateAndEditFormSubmitOnClick(e) })
             
             if(_WeArticleFileContentType.length>0) $(`#complex_select`).find(`option[value='@(Model.Complex)']`).attr("selected",true);
 
@@ -122,6 +118,62 @@
             InitialWeArticleContent();
 
         });
+
+        
+        function WearticleCreateAndEditFormSubmitOnClick(e)
+        {   
+            e.preventDefault();
+
+            if( $(`#Title`).val().length<1 )
+            {
+                MakeLayoutAlert(
+                    "danger",
+                    `@(Html.Raw(Localizer["The title is empty"]))`,
+                    3500
+                );
+                return;
+            }
+
+            if( (!IsEdit) && ($(`#WeArticleFormFile`).val().length<1) )
+            {
+                MakeLayoutAlert(
+                    "danger",
+                    `@(Html.Raw(Localizer["The content file of article is empty"]))`,
+                    3500
+                );
+                return;
+            }
+
+
+            var _FileReader = new FileReader();
+            
+            _FileReader.readAsArrayBuffer(  document.getElementById( `WeArticleFormFile` ).files[0] );
+
+            _FileReader.onload = ()=>{
+                
+                var _SHA256 = sha256(_FileReader.result).toString();
+
+                $.get(
+                    `@(Url.Action("IsFileDuplicate"))?FileSHA256HexString=`+_SHA256,
+                    (result)=>{
+                        if(result=="True")
+                        {
+                            MakeLayoutAlert(
+                                "danger",
+                                `@(Html.Raw(Localizer["The content file is duplicate in POYA"]))`,
+                                4500
+                            );
+                            return;
+                        }
+                        else
+                        {
+                            $(`#wearticle_create_and_edit_form`).submit();
+                        }
+                    }
+                );
+
+            };
+        }
 
         function CommentTextareaInputPropertyChange(e)
         {

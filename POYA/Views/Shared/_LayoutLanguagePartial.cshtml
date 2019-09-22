@@ -1,0 +1,33 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Http.Features
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+@using POYA.Unities.Helpers;
+@using POYA.Areas.FunFiles.Controllers;
+
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+    var Light_String="Light";
+    var Dark_String="Dark";
+    var THEME_String=Context.Request.Cookies["THEME"]??Light_String;
+
+
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text =Localizer[ c.DisplayName] })
+        .ToList();
+}
+
+<select 
+    id="_Language" 
+    name="_Language"  
+    asp-for='@(requestCulture.RequestCulture.UICulture.Name)' 
+    asp-items="cultureItems" 
+    class='form-control float-right @(THEME_String==Dark_String?"bg-transparent text-white":" ")'>
+</select> 

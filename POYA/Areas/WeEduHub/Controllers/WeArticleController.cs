@@ -357,6 +357,19 @@ namespace POYA.Areas.WeEduHub.Controllers
 
         #region  DEPOLLUTION
 
+        /// <summary>
+        /// Prevent file duplication
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult IsFileDuplicate(string FileSHA256HexString)
+        {   
+            FileSHA256HexString=FileSHA256HexString.ToLower();
+            var _DirectoryInfo=new DirectoryInfo(_weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv));
+
+            var _FileNames=_DirectoryInfo.GetFiles().Select(p=>p.Name.ToLower()).ToList();
+            return Content(_FileNames.Any(p=>p==FileSHA256HexString).ToString());
+        }
+
         
         private IQueryable<WeArticle> SortWeArticles(IQueryable<WeArticle> _WeArticles)
         {

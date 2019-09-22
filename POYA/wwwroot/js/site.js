@@ -153,7 +153,7 @@ function ThemeDropdownItemClick()
  * @param {String} content 
  * @param {Number} timeout in millisecond
  */
-function MakeLayoutAlert(_type,content,timeout)
+function MakeLayoutAlert(_type="info",content,timeout=2500)
 {
     $(`.xbody`).prepend(`<div class="alert alert-${_type} poya-layout-alert" role="alert">${content}</div>`);
     setTimeout(()=>{
