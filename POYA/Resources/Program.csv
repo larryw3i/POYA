@@ -1,4 +1,5 @@
 Name,en-US,zh-Hans
+Description,Description,描述
 The content file is duplicate in POYA,The content file is duplicate in POYA,"这个内容文件重复了, 我们不允许上传已经上传过的内容文件哦 !"
 The title is empty,The title is empty,还没有标题哦!
 The field {0} must be a string with a minimum length of {2} and a maximum length of {1},The field {0} must be a string with a minimum length of {2} and a maximum length of {1},{0} 的字数要在 {2} ~ {1}之间哦

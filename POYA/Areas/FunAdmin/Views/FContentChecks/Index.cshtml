@@ -58,7 +58,14 @@
                 @(item.ReceptionistName)
             </td>
             <td>
-                @(item.DOSubmitting?.LocalDateTime)
+                @if(item.DOSubmitting==null)
+                {
+                    @("N/A")
+                }
+                else
+                {
+                    @(item.DOSubmitting?.LocalDateTime)
+                }
             </td>
             <td>
                 @(item.DOHandling?.LocalDateTime)
@@ -73,15 +80,8 @@
             <td>
                 @((item.ReceptionistComment?.Length>0)?item.ReceptionistComment:"N/A")
             </td>
-            <td>
-                @if(_IsChecked)
-                {
-                    @(item.IsLegal?Localizer["legal"]:Localizer["illegal"])
-                }
-                else
-                {
-                    @(Localizer["Unchecked"])
-                }
+            <td class="IsLegal_or_">
+                @(Html.Raw((!_IsChecked)? "\u2753": item.IsLegal?"\u2714\ufe0f":"\u274c"))
             </td>
             <td class="fcontent_check_operation">
                 @if(IsCurrentUserRoleInAdmin)
@@ -126,6 +126,9 @@
 
 @section Styles{
     <style>
+        .IsLegal_or_{
+            font-size: 130%;
+        }
         .fcontent_check_operation a{
             font-size:150%;
         }

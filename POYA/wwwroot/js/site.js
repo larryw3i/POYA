@@ -155,7 +155,8 @@ function ThemeDropdownItemClick()
  */
 function MakeLayoutAlert(_type="info",content,timeout=2500)
 {
-    $(`.xbody`).prepend(`<div class="alert alert-${_type} poya-layout-alert" role="alert">${content}</div>`);
+    $(`.xbody`).prepend(`<div tabindex="999" class="alert alert-${_type} poya-layout-alert" role="alert">${content}</div>`);
+    $(`.poya-layout-alert:last`).focus();
     setTimeout(()=>{
         $(`.poya-layout-alert`).remove();
     },timeout);

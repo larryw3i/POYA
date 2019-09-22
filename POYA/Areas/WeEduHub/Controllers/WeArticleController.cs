@@ -153,6 +153,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequestSizeLimit(1024*1024*1024)]
         public async Task<IActionResult> Create([Bind("SetId,Title,WeArticleFormFile,ClassId,CustomClass,Complex,Comment")] WeArticle weArticle)
         {
             if (ModelState.IsValid)
