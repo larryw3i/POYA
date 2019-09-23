@@ -41,6 +41,8 @@
         var FileSHA256sArray=new Array();
 
         var FileSizeArray=new Array();
+
+        var _IsUploading=false;
         
 
         var FileInput_String=(Id)=>`<input class='FunFileInput' id='${Id}' type='file' hidden/>`;
@@ -64,10 +66,10 @@
         function UploadFunFiles(){
 
             if($(`.FunFileInput`).length<1){
-                $(`#SelectFiles,#UploadFiles`).removeClass("disabled");
+                $(`#SelectFiles,#UploadFiles`).removeAttr(`disabled`);
                 return;
-            }
-            
+            } 
+
             let FunUploadFileFormData = new FormData();
             
 
@@ -124,19 +126,21 @@
 
                     $(`.FunFileInput`).remove();
 
-                    $(`#FunUploadFileAlert`).html(``);
-
-                    $(`#FunUploadFileAlert`).append(`
-                        <div class="alert alert-success" role="alert">
+                    MakeLayoutAlert(
+                        `info`,
+                        `<div class="alert alert-success" role="alert">
                             @(Localizer["All files is uploaded successfully"]) !
-                        </div>
-                    `);
+                        </div>`,
+                        3500
+                        );
 
-                    $(`#SelectFiles,#UploadFiles`).removeClass("disabled");
+                    $(`#SelectFiles,#UploadFiles`).removeAttr(`disabled`);
 
                     setTimeout(()=>{
                         $(`#FunUploadFileAlert`).append(``);
                     },3500);
+
+                    _IsUploading=false;
 
                 },
                 error:()=>{
@@ -202,12 +206,14 @@
         function UploadFiles_Click(){
 
             if(
-                $(`.FunFileInput`).length<1 || 
+                $(`.FunFileInput`).length<1 
+                || 
                 (
                     $(`.FunFileInput`).length==1 &&
                     $(`.FunFileInput:last`).val().length<1
                 )
-            ){
+            )
+            {
                 $(`#FunUploadFileAlert`).append(`
                     <div class="alert alert-info" role="alert">
                         @(Localizer["No files selected"]) !
@@ -221,7 +227,9 @@
                 return;
             }
             
-            $(`#SelectFiles,#UploadFiles`).addClass("disabled");
+            $(`#SelectFiles,#UploadFiles`).attr(`disabled`,`disabled`);
+
+            _IsUploading=true;
 
             let _LastIndex=$(`.FunFileInput`).length-1;
 
@@ -289,8 +297,16 @@
 
         }
 
-        function ShowSelectedFile_Click(Id){
-
+        function ShowSelectedFile_Click(Id)
+        {
+            if(_IsUploading)
+            {
+                MakeLayoutAlert(
+                    `danger`,
+                    `@(Localizer["The files are being uploaded"])`,
+                    3500);
+                return;
+            }
             $(`[file_input_id='${Id}'], #${Id}`).remove();
 
         }
