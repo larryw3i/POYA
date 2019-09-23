@@ -42,6 +42,7 @@ namespace POYA.Areas.FunFiles.Models
         /// </summary>
         /// <value></value>
         [NotMapped]
+        [Display(Name="Path")]
         public List<FunDir> FilePathFunDirs{get;set;}
 
         #endregion

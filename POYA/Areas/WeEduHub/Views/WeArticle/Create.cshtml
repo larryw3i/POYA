@@ -1,4 +1,6 @@
 @model POYA.Areas.WeEduHub.Models.WeArticle
+@using POYA.Unities.Helpers
+
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -49,7 +51,6 @@
         <div id="wearticle_class_and_" class="row">
             <div class="col col-auto">
                 <select id="first_class_select"  class="form-control" >
-                    <button class="btn btn-info" id="select_video">@(Localizer["Select videos"])</button>
                 </select>
             </div>
             <div class="col col-auto">
@@ -144,6 +145,36 @@
                 return;
             }
 
+            if(IsEdit && ($(`#WeArticleFormFile`).val().length<1))
+            {
+                
+                $.ajax({
+                    url:`@(Url.Action(IsEdit?"Edit":"Create"))`,
+                    method:`POST`,
+                    processData: false,
+                    contentType: false,
+                    data:new FormData(document.getElementById(`wearticle_create_and_edit_form`)),
+                    headers: {  "@(X_DOVEValues.CustomHeaderName)": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"  },
+                    xhr: ()=> {
+                        var xhr = $.ajaxSettings.xhr();
+                        if (xhr.upload) {
+                            
+                            xhr.upload.addEventListener("progress",  (e)=> {
+                                
+                                var per = Math.floor(100 * (e.loaded /  e.total));
+                                
+                                MakeLayoutProgress(per);
+
+                            }, false);
+
+                            return xhr;
+                        }
+                    },
+                    success:(_url)=>{  window.location.replace(_url);   }
+                });
+                return;
+            }
+
 
             var _FileReader = new FileReader();
             
@@ -167,7 +198,30 @@
                         }
                         else
                         {
-                            $(`#wearticle_create_and_edit_form`).submit();
+                            $.ajax({
+                                url:`@(Url.Action(IsEdit?"Edit":"Create"))`,
+                                method:`POST`,
+                                processData: false,
+                                contentType: false,
+                                data:new FormData(document.getElementById(`wearticle_create_and_edit_form`)),
+                                headers: {  "@(X_DOVEValues.CustomHeaderName)": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"  },
+                                xhr: ()=> {
+                                    var xhr = $.ajaxSettings.xhr();
+                                    if (xhr.upload) {
+                                        
+                                        xhr.upload.addEventListener("progress",  (e)=> {
+                                            
+                                            var per = Math.floor(100 * (e.loaded /  e.total));
+                                            
+                                            MakeLayoutProgress(per);
+
+                                        }, false);
+
+                                        return xhr;
+                                    }
+                                },
+                                success:(_url)=>{  window.location.replace(_url);   }
+                            });
                         }
                     }
                 );
@@ -184,15 +238,11 @@
         {
             if(_WeArticleFileContentType.length>0)
             {
-                AddSelectedFileContentParentHtml(
+                AddSelectedFileContentEleParentHtml(
                     _WeArticleFileContentType,
                     `@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}))`
                 );
             }
-        }
-
-        function SelectVideo()
-        {
         }
 
         function ComplexSelectChange(e) {   $(`#Complex`).val( $(`#complex_select`).val() );     }
@@ -247,7 +297,7 @@
             _reader.onload = function()
             {
                 
-                AddSelectedFileContentParentHtml(
+                AddSelectedFileContentEleParentHtml(
                     _file.type,
                     this.result
                 );
@@ -256,7 +306,7 @@
             
         }
 
-        function AddSelectedFileContentParentHtml(FileType, SrcOrData)
+        function AddSelectedFileContentEleParentHtml(FileType, SrcOrData)
         {
             if(FileType.endsWith("/pdf"))
             {

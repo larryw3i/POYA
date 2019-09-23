@@ -26,8 +26,9 @@
         </dd>
     </dl>
     
-    <form asp-action="Delete">
+    <form asp-action="Delete" id="FunYourFile_Delete_Form">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> 
+        <input value="true" name="IsReturnStatusCodeOnly" hidden/>
+        <a id="FunYourFile_Delete" class="btn btn-danger" >@(Localizer["Delete"])</a>
     </form>
 </div>

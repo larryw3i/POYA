@@ -208,7 +208,7 @@ namespace POYA.Areas.FunFiles.Controllers
         // POST: FunFiles/FunYourFiles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id,bool? IsReturnStatusCodeOnly=true)
         {
             
             var UserId_= _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
@@ -217,7 +217,11 @@ namespace POYA.Areas.FunFiles.Controllers
 
             _context.FunYourFile.Remove(funYourFile);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index),"FunDirs");
+            if(IsReturnStatusCodeOnly==false)
+            {
+                return RedirectToAction(nameof(Index),"FunDirs");
+            }
+            return Content(id.ToString());
         }
 
         private bool FunYourFileExists(Guid id)

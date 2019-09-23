@@ -154,7 +154,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [RequestSizeLimit(1024*1024*1024)]
-        public async Task<IActionResult> Create([Bind("SetId,Title,WeArticleFormFile,ClassId,CustomClass,Complex,Comment")] WeArticle weArticle)
+        public async Task<IActionResult> Create([Bind("SetId,Title,WeArticleFormFile,ClassId,CustomClass,Complex,Comment")]WeArticle weArticle)
         {
             if (ModelState.IsValid)
             {
@@ -206,7 +206,7 @@ namespace POYA.Areas.WeEduHub.Controllers
                 );
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index),new{SetId=weArticle.SetId});
+                return Content(Url.Action(nameof(Index),new{weArticle.SetId})); //  RedirectToAction(nameof(Index),new{weArticle.SetId});
             }
             return View(weArticle);
         }
@@ -245,6 +245,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequestSizeLimit(1024*1024*1024)]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,SetId,Title,WeArticleFormFile,ClassId,CustomClass,Complex,Comment")] WeArticle weArticle)
         {
             if (id != weArticle.Id)
@@ -313,7 +314,8 @@ namespace POYA.Areas.WeEduHub.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index), new{SetId=weArticle.SetId});
+                
+                return Content(Url.Action(nameof(Index),new{weArticle.SetId})); //  RedirectToAction(nameof(Index), new{weArticle.SetId});
             }
             return View(weArticle);
         }

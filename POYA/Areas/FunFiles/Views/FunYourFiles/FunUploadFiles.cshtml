@@ -212,7 +212,16 @@
 
                 return;
             }
-            
+
+            if(_IsUploading)
+            {
+                MakeLayoutAlert(
+                    `@(Localizer["The files are being uploaded"])`,
+                    3500,
+                    `danger`
+                );
+                return;
+            }
 
             _IsUploading=true;
 

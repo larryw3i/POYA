@@ -185,6 +185,7 @@ function MakeLayoutProgress(value,_type="info")
     {
         $(`.poya-layout-progress-bar`).css(`width`,`${value}%`);
         $(`.poya-layout-progress-bar`).attr(`aria-valuenow`,value);
+        $(`.poya-layout-progress-bar`).text(`${value}%`);
     }
     
     if(value==100)

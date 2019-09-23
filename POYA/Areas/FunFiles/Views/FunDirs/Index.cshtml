@@ -1,5 +1,6 @@
 @model IEnumerable<POYA.Areas.FunFiles.Models.FunDir>
-@using POYA.Areas.FunFiles.Controllers;
+@using POYA.Areas.FunFiles.Controllers
+@using POYA.Unities.Helpers
 
 @{
     ViewData["Title"] =Localizer[ "Folder"]+" & "+Localizer["Files"];
@@ -97,7 +98,7 @@
                     <td>
                         @(item.DOXXX.LocalDateTime)
                     </td>
-                    <td class="OperationEle" item_id='@(item.Id)' is_file='@(item.IsFile?"true":"false")'>
+                    <td class='OperationEle @(item.IsFile?"file":"dir")' item_id='@(item.Id)' >
                         <div class="btn-group dropleft">
                             <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 ...
@@ -170,8 +171,23 @@ else
             $(document).on(`submit`,`#FunDir_Edit_Form`,        (e)=>{ return FunDir_Edit_FormOnSubmit(e);});
 
             $(document).on(`submit`,`#FunYourFile_Edit_Form`,   (e)=>{ return FunYourFile_Edit_FormOnSubmit(e);});
+
+            $(document).on(`click`,`#FunYourFile_Delete`,   (e)=>{ FunYourFile_DeleteClick(e); });
             
         });
+
+        // To prevent blink
+        function FunYourFile_DeleteClick(e)
+        {
+            e.preventDefault();
+            $.ajax({
+                url:`@Url.Action("Delete","FunYourFiles")`,
+                method:`POST`,
+                data:$(`#FunYourFile_Delete_Form`).serialize(),
+                headers: { "@(X_DOVEValues.CustomHeaderName)": "@(CSRF.GetAndStoreTokens(Context).RequestToken)" },
+                success:(_id)=>{ $(`tr[item_id='${_id}']`).remove(); $(`.times_funfiles_popup_close`).click(); }
+            });
+        }
 
         function FunDir_Edit_FormOnSubmit(e)
         {
@@ -208,8 +224,9 @@ else
         {
             var item_id=get_item_id(e);
             $(`.FunFilesPopup`).load(
-                $(e.target).parents(`.OperationEle`).attr(`is_file`)==`true`?`@(Url.Action("Delete","FunYourFiles"))/${item_id}`: `@(Url.Action("Delete","FunDirs"))/${item_id}`); 
-            $(`.FunFilesPopup`).show(); 
+                $(e.target).parents(`.OperationEle`).hasClass(`file`)?`@(Url.Action("Delete","FunYourFiles"))/${item_id}`: `@(Url.Action("Delete","FunDirs"))/${item_id}`,
+                ()=>{ $(`.FunFilesPopup`).show();  }); 
+            
         }
 
         function CopyingClick( e)
@@ -218,9 +235,9 @@ else
             CurrentMovingId=get_item_id(e);
             $(`.FunFilesPopup`).load(
                 `@(Url.Action("DirIndex",new{ ParentDirId = ParentDirId}))`,
-                ()=>{ ChangeCopyOrMoveToHtmlAndAttr(); }
+                ()=>{ ChangeCopyOrMoveToHtmlAndAttr(); $(`.FunFilesPopup`).show(); }
             );
-            $(`.FunFilesPopup`).show(); 
+             
         }
         
         function MovingClick(e)
@@ -229,23 +246,20 @@ else
             CurrentMovingId=get_item_id(e);
             $(`.FunFilesPopup`).load(
                 `@(Url.Action("DirIndex",new{ ParentDirId = ParentDirId}))&CurrentMovingDirId=${CurrentMovingId}`,
-                ()=>{ChangeCopyOrMoveToHtmlAndAttr(); }
+                ()=>{ChangeCopyOrMoveToHtmlAndAttr(); $(`.FunFilesPopup`).show();  }
             );
-
-            $(`.FunFilesPopup`).show(); 
         }
 
         function RenamingClick(e){
             var _item_id=get_item_id(e);
-            if($(e.target).parents(`.OperationEle`).attr(`is_file`)==`true`)
-            {   
-                $(`.FunFilesPopup`).load(`@(Url.Action("Edit","FunYourFiles"))/`  +_item_id);  
-            }
-            else
-            {
-                $(`.FunFilesPopup`).load(`@(Url.Action("Edit","FunDirs"))/`  +_item_id); 
-            }
-            $(`.FunFilesPopup`).show(); 
+            
+            $(`.FunFilesPopup`).load(
+                $(e.target).parents(`.OperationEle`).hasClass(`file`)?
+                (`@(Url.Action("Edit","FunYourFiles"))/`  +_item_id):
+                (`@(Url.Action("Edit","FunDirs"))/`  +_item_id),
+                ()=>{ $(`.FunFilesPopup`).show(); }
+            );  
+            
         } 
 
 
@@ -254,8 +268,10 @@ else
          */
         function FunDirsCreateClick(e)
         {
-            $(`.FunFilesPopup`).load(`@(Url.Action("Create","FunDirs", new{ ParentDirId }))`); 
-            $(`.FunFilesPopup`).show(); 
+            $(`.FunFilesPopup`).load(
+                `@(Url.Action("Create","FunDirs", new{ ParentDirId }))`,
+                ()=>{ $(`.FunFilesPopup`).show(); }); 
+             
         }
 
         /**
@@ -323,6 +339,7 @@ else
             right: 5px;
             top: 19px;
             color: violet;
+            cursor: pointer;
         }
 
         .times_funfiles_popup_close:hover{
