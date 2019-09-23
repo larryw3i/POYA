@@ -180,7 +180,7 @@ else
                 $(`.dir[item_id!='${$(e.target).attr(`item_id`)}'][item_name='${$(`.FunDir_Edit_Name`).val()}']`).length>0
             )
             {
-                MakeLayoutAlert(`danger`,`@(Localizer["The name of directory is repeated"])`, 3000);
+                MakeLayoutAlert(`@(Localizer["The name of directory is repeated"])`, 3000,`danger`);
                 return false;
             }
         }
@@ -192,7 +192,7 @@ else
                 $(`.file[item_id!='${$(e.target).attr(`item_id`)}'][item_name='${$(`.FunYourFile_Edit_Name`).val()}']`).length>0
             )
             {
-                MakeLayoutAlert(`danger`,`@(Localizer["The name of file is repeated"])`, 3000);
+                MakeLayoutAlert(`@(Localizer["The name of file is repeated"])`, 3000,`danger`);
                 return false;
             }
         }

@@ -127,9 +127,9 @@
             if( $(`#Title`).val().length<1 )
             {
                 MakeLayoutAlert(
-                    "danger",
                     `@(Html.Raw(Localizer["The title is empty"]))`,
-                    3500
+                    3500,
+                    "danger"
                 );
                 return;
             }
@@ -137,9 +137,9 @@
             if( (!IsEdit) && ($(`#WeArticleFormFile`).val().length<1) )
             {
                 MakeLayoutAlert(
-                    "danger",
                     `@(Html.Raw(Localizer["The content file of article is empty"]))`,
-                    3500
+                    3500,
+                    "danger"
                 );
                 return;
             }
@@ -159,9 +159,9 @@
                         if(result=="True")
                         {
                             MakeLayoutAlert(
-                                "danger",
                                 `@(Html.Raw(Localizer["The content file is duplicate in POYA"]))`,
-                                4500
+                                4500,
+                                "danger"
                             );
                             return;
                         }

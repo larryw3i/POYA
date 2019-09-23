@@ -53,7 +53,7 @@
 
             $(document).on(`click`,`#SelectFiles`,()=>{  SelectFiles_Click();  });
 
-            $(document).on(`click`,`.ShowSelectedFile`,(e)=>{ ShowSelectedFile_Click( $(e.target).attr(`file_input_id`) ); })
+            $(document).on(`click`,`.ShowSelectedFile`,(e)=>{ ShowSelectedFile_Click( e ); })
 
             $(document).on(`change`,`#SelectedFiles>input`,(e)=>{  Input_Change(  $(e.target).attr('id')  );  })
 
@@ -67,6 +67,9 @@
 
             if($(`.FunFileInput`).length<1){
                 $(`#SelectFiles,#UploadFiles`).removeAttr(`disabled`);
+
+                _IsUploading=false;
+                
                 return;
             } 
 
@@ -105,6 +108,8 @@
                             
                             var per = Math.floor(100 * (e.loaded /  e.total));
                             
+                            MakeLayoutProgress(per);
+                            
                             $(`#FunUploadFileAlert`).html(`
                                 <div class="alert alert-info" role="alert">
                                     [${per}%]\t ${per==100?'@(Localizer["Processing"]) . . .':'@(Localizer["Upload"]) . . .'}
@@ -127,32 +132,25 @@
                     $(`.FunFileInput`).remove();
 
                     MakeLayoutAlert(
-                        `info`,
                         `<div class="alert alert-success" role="alert">
                             @(Localizer["All files is uploaded successfully"]) !
                         </div>`,
-                        3500
+                        3500,
+                        `info`
                         );
-
-                    $(`#SelectFiles,#UploadFiles`).removeAttr(`disabled`);
-
-                    setTimeout(()=>{
-                        $(`#FunUploadFileAlert`).append(``);
-                    },3500);
 
                     _IsUploading=false;
 
                 },
                 error:()=>{
-                    $(`#FunUploadFileAlert`).append(`
-                        <div class="alert alert-danger" role="alert">
-                            @(Localizer["an error has occurred"]), @(Localizer["the engineer is on his way"])
-                        </div>
-                    `);
 
-                    setTimeout(()=>{
-                        $(`#FunUploadFileAlert`).html(``);
-                    },2500);
+                    MakeLayoutAlert(
+                        `<div class="alert alert-danger" role="alert">
+                            @(Localizer["an error has occurred"]), @(Localizer["the engineer is on his way"])
+                        </div>`,
+                        3500,
+                        `info`
+                    );
                 }
             });
         }
@@ -175,6 +173,7 @@
                     }
                     
                     $.each(data,(index,value)=>{
+
                         let _UploadedFileId=value;
 
                         $(`[file_input_id='${_UploadedFileId}']`).text(
@@ -214,20 +213,18 @@
                 )
             )
             {
-                $(`#FunUploadFileAlert`).append(`
-                    <div class="alert alert-info" role="alert">
+                
+                MakeLayoutAlert(
+                    `<div class="alert alert-info" role="alert">
                         @(Localizer["No files selected"]) !
-                    </div>
-                `);
-
-                setTimeout(()=>{
-                    $(`#FunUploadFileAlert`).html("");
-                },2500);
+                    </div>`,
+                    3500,
+                    `info`
+                );
 
                 return;
             }
             
-            $(`#SelectFiles,#UploadFiles`).attr(`disabled`,`disabled`);
 
             _IsUploading=true;
 
@@ -270,7 +267,17 @@
             });
         }
 
-        function SelectFiles_Click(){
+        function SelectFiles_Click()
+        {
+            if(_IsUploading)
+            {
+                MakeLayoutAlert(
+                    `@(Localizer["The files are being uploaded"])`,
+                    3500,
+                    `danger`
+                );
+                return;
+            }
 
             let LastFileInput=$(`#SelectedFiles>input:last`);
 
@@ -297,17 +304,20 @@
 
         }
 
-        function ShowSelectedFile_Click(Id)
+        function ShowSelectedFile_Click(e)
         {
             if(_IsUploading)
             {
                 MakeLayoutAlert(
-                    `danger`,
                     `@(Localizer["The files are being uploaded"])`,
-                    3500);
+                    3500,
+                    `danger`
+                );
                 return;
             }
-            $(`[file_input_id='${Id}'], #${Id}`).remove();
+
+            var _Id=$(e.target).attr(`file_input_id`);
+            $(`[file_input_id='${_Id}'], #${_Id}`).remove();
 
         }
         

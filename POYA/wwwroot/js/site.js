@@ -153,13 +153,46 @@ function ThemeDropdownItemClick()
  * @param {String} content 
  * @param {Number} timeout in millisecond
  */
-function MakeLayoutAlert(_type="info",content,timeout=2500)
+function MakeLayoutAlert(content,timeout=2500,_type="info")
 {
     $(`.xbody`).prepend(`<div tabindex="999" class="alert alert-${_type} poya-layout-alert" role="alert">${content}</div>`);
     $(`.poya-layout-alert:last`).focus();
     setTimeout(()=>{
         $(`.poya-layout-alert`).remove();
     },timeout);
+}
+
+
+/**
+ * 
+ * @param {String} _type 
+ * @param {Number} value 1~100
+ * @param {Number} timeout in millisecond
+ */
+function MakeLayoutProgress(value,_type="info")
+{
+    if($(`.poya-layout-progress`).length<1)
+    {
+        $(`.xbody`).prepend(`
+            <div class="progress"> 
+                <div class="progress-bar bg-${_type}  poya-layout-progress" role="progressbar" tabindex="998" style="width: ${value}%" aria-valuenow="${value}" aria-valuemin="0" aria-valuemax="100">
+                </div>
+            </div>
+        `);
+        $(`.poya-layout-progress:first`).focus();
+    }
+    else
+    {
+        $(`.poya-layout-progress`).css(`width`,`${value}%`);
+        $(`.poya-layout-progress`).attr(`aria-valuenow`,value);
+    }
+    if(value==100)
+    {
+        setTimeout(()=>{
+            $(`.poya-layout-progress`).remove();
+        },1200);
+    }
+    
 }
 
 
