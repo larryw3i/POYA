@@ -167,15 +167,15 @@ function MakeLayoutAlert(content,timeout=2500,_type="info")
  * 
  * @param {String} _type 
  * @param {Number} value 1~100
- * @param {Number} timeout in millisecond
  */
 function MakeLayoutProgress(value,_type="info")
 {
     if($(`.poya-layout-progress`).length<1)
     {
         $(`.xbody`).prepend(`
-            <div class="progress"> 
-                <div class="progress-bar bg-${_type}  poya-layout-progress" role="progressbar" tabindex="998" style="width: ${value}%" aria-valuenow="${value}" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress poya-layout-progress" > 
+                <div class="progress-bar bg-${_type}  poya-layout-progress-bar" role="progressbar" tabindex="998" style="width: ${value}%" aria-valuenow="${value}" aria-valuemin="0" aria-valuemax="100">
+                    ${value}%
                 </div>
             </div>
         `);
@@ -183,14 +183,15 @@ function MakeLayoutProgress(value,_type="info")
     }
     else
     {
-        $(`.poya-layout-progress`).css(`width`,`${value}%`);
-        $(`.poya-layout-progress`).attr(`aria-valuenow`,value);
+        $(`.poya-layout-progress-bar`).css(`width`,`${value}%`);
+        $(`.poya-layout-progress-bar`).attr(`aria-valuenow`,value);
     }
+    
     if(value==100)
     {
         setTimeout(()=>{
             $(`.poya-layout-progress`).remove();
-        },1200);
+        },3500);
     }
     
 }

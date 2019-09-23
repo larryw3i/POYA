@@ -217,7 +217,7 @@ namespace POYA.Areas.FunFiles.Controllers
 
             _context.FunYourFile.Remove(funYourFile);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index),"FunDirs");
         }
 
         private bool FunYourFileExists(Guid id)

@@ -109,12 +109,6 @@
                             var per = Math.floor(100 * (e.loaded /  e.total));
                             
                             MakeLayoutProgress(per);
-                            
-                            $(`#FunUploadFileAlert`).html(`
-                                <div class="alert alert-info" role="alert">
-                                    [${per}%]\t ${per==100?'@(Localizer["Processing"]) . . .':'@(Localizer["Upload"]) . . .'}
-                                </div>
-                            `);
 
                         }, false);
 
@@ -132,9 +126,7 @@
                     $(`.FunFileInput`).remove();
 
                     MakeLayoutAlert(
-                        `<div class="alert alert-success" role="alert">
-                            @(Localizer["All files is uploaded successfully"]) !
-                        </div>`,
+                        `@(Localizer["All files is uploaded successfully"]) !`,
                         3500,
                         `info`
                         );
@@ -145,9 +137,7 @@
                 error:()=>{
 
                     MakeLayoutAlert(
-                        `<div class="alert alert-danger" role="alert">
-                            @(Localizer["an error has occurred"]), @(Localizer["the engineer is on his way"])
-                        </div>`,
+                        `@(Localizer["an error has occurred"]), @(Localizer["the engineer is on his way"])`,
                         3500,
                         `info`
                     );
@@ -215,9 +205,7 @@
             {
                 
                 MakeLayoutAlert(
-                    `<div class="alert alert-info" role="alert">
-                        @(Localizer["No files selected"]) !
-                    </div>`,
+                    ` @(Localizer["No files selected"]) !`,
                     3500,
                     `info`
                 );
