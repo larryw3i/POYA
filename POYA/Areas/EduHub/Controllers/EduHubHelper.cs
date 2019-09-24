@@ -27,15 +27,15 @@ namespace POYA.Areas.EduHub.Controllers
             
             return new FunFilesHelper().SHA256BytesToHexString(SHA256Bytes);
         }
-         
-         
+
+
         /// <summary>
         /// determine the MD5 in IEnumerableLMD5 is match the MD5 of uploaded files or not
         /// </summary>
-        /// <param name="env">The IHostingEnvironment for getting FileStoragePath</param>
+        /// <param name="env">The IWebHostEnvironment for getting FileStoragePath</param>
         /// <param name="lMD5s">The IEnumerableLMD5</param>
         /// <returns></returns>
-        public List<LSHA256> LCheckSHA256(IHostingEnvironment env, List<LSHA256> lSHA256s)
+        public List<LSHA256> LCheckSHA256(IWebHostEnvironment env, List<LSHA256> lSHA256s)
         {
 
             var UploadFileSHA256s = System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(env))

@@ -24,7 +24,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         /// </summary>
         /// <param name="_hostingEnv"></param>
         /// <returns></returns>
-        public  string  WeEduHubFilesDirectoryPath(IHostingEnvironment _hostingEnv)=>_hostingEnv.ContentRootPath+"/Areas/WeEduHub/Data/WeEduHubFiles";
+        public  string  WeEduHubFilesDirectoryPath(IWebHostEnvironment _hostingEnv)=>_hostingEnv.ContentRootPath+"/Areas/WeEduHub/Data/WeEduHubFiles";
 
     }
 

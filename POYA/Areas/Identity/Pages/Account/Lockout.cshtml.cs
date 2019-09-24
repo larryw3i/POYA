@@ -16,7 +16,7 @@ namespace POYA.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LockoutModel : PageModel
     {
-        private readonly IHostingEnvironment _hostingEnv;
+        private readonly IWebHostEnvironment _hostingEnv;
         private readonly IStringLocalizer<Program> _localizer;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -32,7 +32,7 @@ namespace POYA.Areas.Identity.Pages.Account
            IEmailSender emailSender,
            UserManager<IdentityUser> userManager,
            ApplicationDbContext context,
-           IHostingEnvironment hostingEnv,
+           IWebHostEnvironment hostingEnv,
            IStringLocalizer<Program> localizer)
         {
             _hostingEnv = hostingEnv;

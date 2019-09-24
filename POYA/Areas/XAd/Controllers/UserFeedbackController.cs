@@ -21,7 +21,7 @@ namespace POYA.Areas.XAd.Controllers
     {
         
         #region     DI
-        private readonly IHostingEnvironment _hostingEnv;
+        private readonly IWebHostEnvironment _hostingEnv;
         private readonly IStringLocalizer<Program> _localizer;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -39,7 +39,7 @@ namespace POYA.Areas.XAd.Controllers
             IEmailSender emailSender,
             UserManager<IdentityUser> userManager,
             ApplicationDbContext context,
-            IHostingEnvironment hostingEnv,
+            IWebHostEnvironment hostingEnv,
             IStringLocalizer<Program> localizer)
         {
             _htmlSanitizer = htmlSanitizer;

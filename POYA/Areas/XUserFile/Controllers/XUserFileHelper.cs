@@ -41,7 +41,7 @@ namespace POYA.Areas.XUserFile.Controllers
         /// <param name="formFile"></param>
         /// <returns></returns>
         #endregion
-        public async Task<string> LWriteBufferToFileAsync(IHostingEnvironment _hostingEnv, IFormFile formFile)
+        public async Task<string> LWriteBufferToFileAsync(IWebHostEnvironment _hostingEnv, IFormFile formFile)
         {
             var MemoryStream_ = new MemoryStream();
             await formFile.CopyToAsync(MemoryStream_);
@@ -66,11 +66,11 @@ namespace POYA.Areas.XUserFile.Controllers
         /// <summary>
         /// determine the MD5 in IEnumerableLMD5 is match the MD5 of uploaded files or not
         /// </summary>
-        /// <param name="env">The IHostingEnvironment for getting FileStoragePath</param>
+        /// <param name="env">The IWebHostEnvironment for getting FileStoragePath</param>
         /// <param name="lMD5s">The IEnumerableLMD5</param>
         /// <returns></returns>
         #endregion
-        public List<LSHA256> LCheckMD5(IHostingEnvironment env, List<LSHA256> lSHA256s)
+        public List<LSHA256> LCheckMD5(IWebHostEnvironment env, List<LSHA256> lSHA256s)
         {
 
             var UploadFileSHA256s = System.IO.Directory.GetFiles(X_DOVEValues.FileStoragePath(env))
@@ -163,7 +163,7 @@ namespace POYA.Areas.XUserFile.Controllers
         /// <param name="env">The HostingEnvironment</param>
         /// <returns></returns>
         #endregion
-        public string FileStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/XUserFile/";
+        public string FileStoragePath(IWebHostEnvironment env) => env.ContentRootPath + $"/Data/LFiles/XUserFile/";
 
         #region
 

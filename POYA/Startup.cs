@@ -17,16 +17,15 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using POYA.Unities.Helpers;
 using POYA.Unities.Services;
 using Microsoft.AspNetCore.Diagnostics;
 using Ganss.XSS;
-using Microsoft.AspNetCore.Identity.UI;
 using Newtonsoft.Json.Serialization;
 using System.IO;
 using POYA.Areas.XAd.Controllers;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace POYA
 {
@@ -45,6 +44,9 @@ namespace POYA
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddControllersWithViews();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -57,7 +59,6 @@ namespace POYA
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()  
-                .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -94,6 +95,7 @@ namespace POYA
             });
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
+            /*
             services.AddMvc()
                 .AddJsonOptions(
                     options => { 
@@ -108,6 +110,18 @@ namespace POYA
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddSessionStateTempDataProvider()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                */
+
+            services.AddControllers()
+                .AddNewtonsoftJson()
+                .AddDataAnnotationsLocalization(options =>
+                {
+                    options.DataAnnotationLocalizerProvider =
+                        (type, factory) =>
+                            factory.Create(typeof(Program));
+                })
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddSessionStateTempDataProvider();
 
 
             services.Configure<RequestLocalizationOptions>(opts =>{
@@ -122,6 +136,7 @@ namespace POYA
                     new X_DOVERequestCultureProvider()
                 };
            });
+
 
             services.AddSingleton<IEmailSender, EmailSender>();
 
@@ -148,7 +163,7 @@ namespace POYA
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         //  , IServiceProvider serviceProvider
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) 
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) 
         {
             if (env.IsDevelopment())
             {
@@ -176,16 +191,17 @@ namespace POYA
 
             app.UseSession();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "areas",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-                    );
-                routes.MapRoute(
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
 
       
         }

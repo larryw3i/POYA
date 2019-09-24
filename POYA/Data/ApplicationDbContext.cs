@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using POYA.Models;
 using POYA.Areas.EduHub.Models;
@@ -11,9 +10,12 @@ using POYA.Areas.XAd.Models;
 using POYA.Areas.FunAdmin.Models;
 using POYA.Areas.FunFiles.Models;
 using POYA.Areas.WeEduHub.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 namespace POYA.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -43,6 +45,6 @@ namespace POYA.Data
         public DbSet<POYA.Areas.WeEduHub.Models.WeArticle> WeArticle { get; set; }
         public DbSet<POYA.Areas.WeEduHub.Models.WeArticleSet> WeArticleSet { get; set; }
         public DbSet<POYA.Areas.WeEduHub.Models.WeArticleFile> WeArticleFile { get; set; }
-        
+
     }
 }

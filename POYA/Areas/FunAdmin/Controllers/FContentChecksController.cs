@@ -25,7 +25,7 @@ namespace POYA.Areas.FunAdmin.Controllers
     {
 
         #region DI
-        private readonly IHostingEnvironment _hostingEnv;
+        private readonly IWebHostEnvironment _hostingEnv;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IEmailSender _emailSender;
@@ -46,7 +46,7 @@ namespace POYA.Areas.FunAdmin.Controllers
             IEmailSender emailSender,
             UserManager<IdentityUser> userManager,
             ApplicationDbContext context,
-            IHostingEnvironment hostingEnv,
+            IWebHostEnvironment hostingEnv,
             IStringLocalizer<Program> localizer)
         {
             _configuration = configuration;

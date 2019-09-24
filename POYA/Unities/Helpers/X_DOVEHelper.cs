@@ -131,7 +131,7 @@ namespace POYA.Unities.Helpers
         /// The HostingEnvironment
         /// </param>
         /// <returns></returns>
-        public static string AvatarStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/Avatars/";
+        public static string AvatarStoragePath(IWebHostEnvironment env) => env.ContentRootPath + $"/Data/LFiles/Avatars/";
 
 
         /// <summary>
@@ -139,14 +139,14 @@ namespace POYA.Unities.Helpers
         /// </summary>
         /// <param name="env">The HostingEnvironment</param>
         /// <returns>  env.ContentRootPath + $"/Areas/EduHub/Data/EArticleFiles/" </returns>
-        public static string EduHubFileStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Areas/EduHub/Data/EArticleFiles/";
+        public static string EduHubFileStoragePath(IWebHostEnvironment env) => env.ContentRootPath + $"/Areas/EduHub/Data/EArticleFiles/";
 
         /// <summary>
         /// env.ContentRootPath + $"/Data/LFiles/XUserFile/"
         /// </summary>
         /// <param name="env">The HostingEnvironment</param>
         /// <returns></returns>
-        public static string FileStoragePath(IHostingEnvironment env) => env.ContentRootPath + $"/Data/LFiles/XUserFile/";
+        public static string FileStoragePath(IWebHostEnvironment env) => env.ContentRootPath + $"/Data/LFiles/XUserFile/";
 
         /// <summary>
         /// The default earticle set id
