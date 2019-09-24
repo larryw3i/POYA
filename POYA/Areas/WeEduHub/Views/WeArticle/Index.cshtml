@@ -91,7 +91,7 @@ else
 </div>
 
 <div class="paged_list">
-    @(Html.PagedListPager((IPagedList)ViewData["WeArticles"], Apage => Url.Action("Index", new { Apage = Apage,SetId=SetId }),PagedListRenderOptions.ClassicPlusFirstAndLast))
+    @(Html.PagedListPager((IPagedList)ViewData["WeArticles"], Apage => Url.Action("Index", new { Apage = Apage,SetId=SetId }),PagedListRenderOptionsBase.ClassicPlusFirstAndLast))
 </div>
 
 

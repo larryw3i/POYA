@@ -173,6 +173,8 @@ namespace POYA
 
             app.UseRequestLocalization();
 
+            app.UseRouting();
+
             app.UseSession();
 
             app.UseEndpoints(endpoints =>
