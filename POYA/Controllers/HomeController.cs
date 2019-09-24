@@ -23,7 +23,6 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using POYA.Areas.FunFiles.Controllers;
-using POYA.Areas.XAd.Controllers;
 using POYA.Data;
 using POYA.Models;
 using POYA.Unities.Attributes;
@@ -183,7 +182,6 @@ namespace POYA.Controllers
                     { 
                         AvatarPath, 
                         XUserFilePath, 
-                        XAdCustomerHelper.XAdImgFilePath(_hostingEnv), 
                         EArticleFilesPath,FunFilesRootPath 
                     };
 

@@ -11,7 +11,6 @@ using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Nukepayload2.Csv;
-using POYA.Areas.XUserFile.Models;
 using POYA.Data;
 using POYA.Models;
 using POYA.Unities.Services;
@@ -172,26 +171,6 @@ namespace POYA.Unities.Helpers
 
         public static string CustomHeaderName = "L-XSRF-TOKEN";
 
-        /// <summary>
-        /// Get the full path of the dir file or directory is included
-        /// </summary>
-        /// <param name="id">The id of file or directory</param>
-        /// <param name="context">The context</param>
-        /// <param name="InDirId">The id of directory contain file or directory</param>
-        /// <returns></returns>
-        public static string GetParentsPathOfFileOrDir(ApplicationDbContext context, Guid InDirId)
-        {
-            var FullPath = string.Empty;
-            for (var i = 0; i < 30 && InDirId != Guid.Empty; i++)
-            {
-                var InDir = context.LDir.Where(p => p.Id == InDirId).Select(p => new { p.InDirId, p.Name }).FirstOrDefaultAsync()
-                    .GetAwaiter().GetResult();
-                if (InDir?.InDirId == null) break;
-                FullPath = $"{InDir.Name}/{FullPath}";
-                InDirId = InDir.InDirId;
-            }
-            return $"root/{FullPath}";
-        }
 
 
     }

@@ -423,14 +423,9 @@ namespace POYA.Areas.FunAdmin.Controllers
         
         public async Task<IActionResult> GetContent(Guid ContentId)
         {
-            var _EArticle=await _context.EArticle.FirstOrDefaultAsync(p=>p.Id==ContentId);
             var _WeArticle=await _context.WeArticle.Where(p=>p.Id==ContentId).FirstOrDefaultAsync();
             var _User = _userManager.GetUserAsync(User).GetAwaiter().GetResult();
-            if(_EArticle!=null)
-            {
-                return Content(_EArticle.Content);
-            }
-            else if(_WeArticle!=null)
+            if(_WeArticle!=null)
             {
                 ViewData["AuthorUserId"]=_User?.Id??string.Empty;;
                 ViewData["AuthorUserEmail"]=_User?.Email??string.Empty;
@@ -448,14 +443,9 @@ namespace POYA.Areas.FunAdmin.Controllers
         
         public async Task<string> GetContentTitleString(Guid ContentId)
         {
-            var _EArticle=await _context.EArticle.FirstOrDefaultAsync(p=>p.Id==ContentId);
             var _WeArticle=await _context.WeArticle.Where(p=>p.Id==ContentId).FirstOrDefaultAsync();
             var _User = _userManager.GetUserAsync(User).GetAwaiter().GetResult();
-            if(_EArticle != null)
-            {
-                return _EArticle.Title;
-            }
-            else if(_WeArticle!=null)
+            if(_WeArticle!=null)
             {
                 return _WeArticle.Title;
             }
@@ -464,14 +454,10 @@ namespace POYA.Areas.FunAdmin.Controllers
         }
         public async Task<IActionResult> GetContentTitle(Guid ContentId)
         {
-            var _EArticle=await _context.EArticle.FirstOrDefaultAsync(p=>p.Id==ContentId);
             var _WeArticle=await _context.WeArticle.Where(p=>p.Id==ContentId).FirstOrDefaultAsync();
             var _User = _userManager.GetUserAsync(User).GetAwaiter().GetResult();
-            if(_EArticle != null)
-            {
-                return Content(_EArticle.Title);
-            }
-            else if(_WeArticle!=null)
+            
+            if(_WeArticle!=null)
             {
                 return Content(_WeArticle.Title);
             }

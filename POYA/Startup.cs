@@ -23,9 +23,9 @@ using Microsoft.AspNetCore.Diagnostics;
 using Ganss.XSS;
 using Newtonsoft.Json.Serialization;
 using System.IO;
-using POYA.Areas.XAd.Controllers;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Hosting;
 
 namespace POYA
 {
@@ -95,22 +95,6 @@ namespace POYA
             });
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-            /*
-            services.AddMvc()
-                .AddJsonOptions(
-                    options => { 
-                        options.SerializerSettings.ContractResolver = new DefaultContractResolver(); 
-                })
-                .AddDataAnnotationsLocalization(options =>
-                {
-                    options.DataAnnotationLocalizerProvider = 
-                        (type, factory) =>
-                            factory.Create(typeof(Program));
-                })
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                .AddSessionStateTempDataProvider()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-                */
 
             services.AddControllers()
                 .AddNewtonsoftJson()
