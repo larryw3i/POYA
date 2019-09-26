@@ -4,7 +4,6 @@
     <UserSecretsId>aspnet-POYA-0E28E843-176D-49F3-9739-6D5E6F1BC3F5</UserSecretsId>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
-  
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="12.1.2" />
