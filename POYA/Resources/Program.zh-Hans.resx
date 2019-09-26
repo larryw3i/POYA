@@ -92,9 +92,6 @@
   <data name="No files selected" xml:space="preserve">
 	<value>未选择文件</value>
   </data>
-  <data name="Description" xml:space="preserve">
-	<value>描述</value>
-  </data>
   <data name="The content file is duplicate in POYA" xml:space="preserve">
 	<value>这个内容文件重复了, 我们不允许上传已经上传过的内容文件哦 !</value>
   </data>
@@ -112,9 +109,6 @@
   </data>
   <data name="Check" xml:space="preserve">
 	<value>审查</value>
-  </data>
-  <data name="legal" xml:space="preserve">
-	<value>合法</value>
   </data>
   <data name="Legal" xml:space="preserve">
 	<value>合法</value>

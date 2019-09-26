@@ -92,9 +92,6 @@
   <data name="No files selected" xml:space="preserve">
 	<value>No files selected</value>
   </data>
-  <data name="Description" xml:space="preserve">
-	<value>Description</value>
-  </data>
   <data name="The content file is duplicate in POYA" xml:space="preserve">
 	<value>The content file is duplicate in POYA</value>
   </data>
@@ -112,9 +109,6 @@
   </data>
   <data name="Check" xml:space="preserve">
 	<value>Check</value>
-  </data>
-  <data name="legal" xml:space="preserve">
-	<value>legal</value>
   </data>
   <data name="Legal" xml:space="preserve">
 	<value>Legal</value>
