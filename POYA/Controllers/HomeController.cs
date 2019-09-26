@@ -90,7 +90,7 @@ namespace POYA.Controllers
      
         public async Task<IActionResult> GetAvatar(string UserId = "")
         {
-            var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var CurrentUserId = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id;  //    User.FindFirstValue(ClaimTypes.NameIdentifier);
             UserId = string.IsNullOrWhiteSpace(UserId) ? CurrentUserId : UserId;
             var AvatarFilePath = X_DOVEValues.AvatarStoragePath(_hostingEnv) + UserId;
             if (System.IO.File.Exists(AvatarFilePath))
