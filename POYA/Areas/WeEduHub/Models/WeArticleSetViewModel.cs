@@ -16,7 +16,7 @@ namespace POYA.Areas.WeEduHub.Models
         public Guid CoverFileId{get;set;}
         [Display(Name="Name")]
         public string Name{get;set;}
-        [Display(Name="Description")]
+        [Display(Name="description")]
         public string  Description{get;set;}
         public DateTimeOffset DOCreating{get;set;}=DateTimeOffset.Now;
         
