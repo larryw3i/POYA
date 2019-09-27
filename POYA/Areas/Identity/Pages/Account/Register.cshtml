@@ -1,7 +1,7 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = Localizer["Register"];
+    ViewData["Title"] = Localizer["Sign up"];
 }
 <h1>@(ViewData["Title"])</h1>
 <div class="row">
@@ -25,7 +25,7 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" placeholder='@Localizer["Type your password again"]' />
                 <span asp-validation-for="Input.ConfirmPassword" data-interval="5000" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">@(Localizer["Register"])</button>
+            <button type="submit" class="btn btn-primary">@(Localizer["Sign up"])</button>
         </form>
     </div>
 </div>

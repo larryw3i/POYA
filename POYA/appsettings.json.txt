@@ -21,5 +21,8 @@
   "Administration": {
     "AdminEmail": "xxxxxxxx@xxx.xxxx"
   },
+  "FunYourFiles":{
+    "AllowedLengthForPerUser":5368709120
+  },
   "IsInitialized": false
 } 
