@@ -45,7 +45,8 @@ namespace POYA
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews();    
+            services.AddRazorPages();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -97,7 +98,9 @@ namespace POYA
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddControllers()
-                .AddNewtonsoftJson()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ContractResolver =
+                        new CamelCasePropertyNamesContractResolver())
                 .AddDataAnnotationsLocalization(options =>
                 {
                     options.DataAnnotationLocalizerProvider =
@@ -141,7 +144,8 @@ namespace POYA
             services.AddAntiforgery(options => 
                 options.HeaderName =X_DOVEValues.CustomHeaderName
             );
-
+            services.AddMvc()
+                .AddNewtonsoftJson();
         }
 
 
@@ -169,11 +173,15 @@ namespace POYA
 
             app.UseCookiePolicy();
 
-            app.UseAuthentication();
 
             app.UseRequestLocalization();
 
-            app.UseRouting();
+            app.UseRouting();  
+
+            app.UseCors();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseSession();
 

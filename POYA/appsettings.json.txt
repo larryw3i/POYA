@@ -1,6 +1,7 @@
 ﻿{
   "ConnectionStrings": {
-    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=aspnet-POYA-0E28E843-176D-49F3-9739-6D5E6F1BC3F5;Trusted_Connection=True;MultipleActiveResultSets=true"
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=aspnet-POYA-0E28E843-176D-49F3-9739-6D5E6F1BC3F5;Trusted_Connection=True;MultipleActiveResultSets=true",
+    "MySqlConnection": "Server=xxx.xx.xx.xx;database=xxxx;uid=xxx;pwd=xxxxxxx;SslMode=None"
   },
   "Logging": {
     "LogLevel": {
