@@ -25,7 +25,7 @@ namespace POYA.Areas.FunAdmin.Controllers
     {
 
         #region DI
-        private readonly IWebHostEnvironment _hostingEnv;
+        private readonly IWebHostEnvironment _webHostEnv;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IEmailSender _emailSender;
@@ -46,11 +46,11 @@ namespace POYA.Areas.FunAdmin.Controllers
             IEmailSender emailSender,
             UserManager<IdentityUser> userManager,
             ApplicationDbContext context,
-            IWebHostEnvironment hostingEnv,
+            IWebHostEnvironment webHostEnv,
             IStringLocalizer<Program> localizer)
         {
             _configuration = configuration;
-            _hostingEnv = hostingEnv;
+            _webHostEnv = webHostEnv;
             _localizer = localizer;
             _context = context;
             _userManager = userManager;
@@ -60,7 +60,7 @@ namespace POYA.Areas.FunAdmin.Controllers
             _signInManager = signInManager;
             _funAdminHelper=new  FunAdminHelper(_localizer,_context);
             _weEduHubHelper=new WeEduHubHelper();
-            _weEduHubArticleClassHelper=new WeEduHubArticleClassHelper(_hostingEnv);
+            _weEduHubArticleClassHelper=new WeEduHubArticleClassHelper(_webHostEnv);
             _funFilesHelper=new FunFilesHelper();
         }
 

@@ -28,7 +28,7 @@ namespace POYA.Areas.WeEduHub.Controllers
     public class WeArticleController : Controller
     {  
         #region     DI
-        private readonly IWebHostEnvironment _hostingEnv;
+        private readonly IWebHostEnvironment _webHostEnv;
         private readonly IStringLocalizer<Program> _localizer;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -49,11 +49,11 @@ namespace POYA.Areas.WeEduHub.Controllers
             IEmailSender emailSender,
             UserManager<IdentityUser> userManager,
             ApplicationDbContext context,
-            IWebHostEnvironment hostingEnv,
+            IWebHostEnvironment webHostEnv,
             IStringLocalizer<Program> localizer)
         {
             _htmlSanitizer = htmlSanitizer;
-            _hostingEnv = hostingEnv;
+            _webHostEnv = webHostEnv;
             _localizer = localizer;
             _context = context;
             _userManager = userManager;
@@ -61,7 +61,7 @@ namespace POYA.Areas.WeEduHub.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
-            _weEduHubArticleClassHelper=new WeEduHubArticleClassHelper(_hostingEnv );
+            _weEduHubArticleClassHelper=new WeEduHubArticleClassHelper(_webHostEnv );
             _weEduHubHelper=new WeEduHubHelper();
             _funFilesHelper=new FunFilesHelper();
             _funAdminHelper=new FunAdminHelper(_localizer,_context);
@@ -173,7 +173,7 @@ namespace POYA.Areas.WeEduHub.Controllers
                         SHA256.Create().ComputeHash(_FormFileBytes)
                     );
                     
-                var WeEduHubFilesDirectoryInfo= new DirectoryInfo(_weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv));
+                var WeEduHubFilesDirectoryInfo= new DirectoryInfo(_weEduHubHelper.WeEduHubFilesDirectoryPath(_webHostEnv));
                 
                 if(WeEduHubFilesDirectoryInfo.GetFiles().ToList().Any(p=>p.Name==_FormFileSHA256HexString))
                 {
@@ -201,7 +201,7 @@ namespace POYA.Areas.WeEduHub.Controllers
                 await _context.WeArticleFile.AddAsync( _WeArticleFile );
 
                 await System.IO.File.WriteAllBytesAsync(
-                    _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_FormFileSHA256HexString,
+                    _weEduHubHelper.WeEduHubFilesDirectoryPath(_webHostEnv)+"/"+_FormFileSHA256HexString,
                     _FormFileBytes
                 );
 
@@ -266,7 +266,7 @@ namespace POYA.Areas.WeEduHub.Controllers
                         
                         var _FormFileBytes=_funFilesHelper.GetFormFileBytes(weArticle.WeArticleFormFile);
                         var _FormFileSHA256HexString=_funFilesHelper.SHA256BytesToHexString( SHA256.Create().ComputeHash(_FormFileBytes));
-                        var _WeEduHubFilesDirectoryInfo= new DirectoryInfo(_weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv));
+                        var _WeEduHubFilesDirectoryInfo= new DirectoryInfo(_weEduHubHelper.WeEduHubFilesDirectoryPath(_webHostEnv));
                         
                         if(
                             _WeEduHubFilesDirectoryInfo.GetFiles().ToList().Any(p=>p.Name==_FormFileSHA256HexString) && 
@@ -285,7 +285,7 @@ namespace POYA.Areas.WeEduHub.Controllers
                         };
 
                         await System.IO.File.WriteAllBytesAsync(
-                            _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_FormFileSHA256HexString,
+                            _weEduHubHelper.WeEduHubFilesDirectoryPath(_webHostEnv)+"/"+_FormFileSHA256HexString,
                             _FormFileBytes
                         );
 
@@ -367,7 +367,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         public IActionResult IsFileDuplicate(string FileSHA256HexString)
         {   
             FileSHA256HexString=FileSHA256HexString.ToLower();
-            var _DirectoryInfo=new DirectoryInfo(_weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv));
+            var _DirectoryInfo=new DirectoryInfo(_weEduHubHelper.WeEduHubFilesDirectoryPath(_webHostEnv));
 
             var _FileNames=_DirectoryInfo.GetFiles().Select(p=>p.Name.ToLower()).ToList();
             return Content(_FileNames.Any(p=>p==FileSHA256HexString).ToString());
@@ -436,7 +436,7 @@ namespace POYA.Areas.WeEduHub.Controllers
                 return NotFound();
             }
 
-            var _WeArticleFileBytes=await System.IO.File.ReadAllBytesAsync(_weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv)+"/"+_WeArticleFile.SHA256HexString);
+            var _WeArticleFileBytes=await System.IO.File.ReadAllBytesAsync(_weEduHubHelper.WeEduHubFilesDirectoryPath(_webHostEnv)+"/"+_WeArticleFile.SHA256HexString);
 
             return File(_WeArticleFileBytes,_funFilesHelper.GetContentType(_WeArticleFile.Name),true);
         }
@@ -456,8 +456,8 @@ namespace POYA.Areas.WeEduHub.Controllers
 
         private void WeArticleControllerInitial()
         {
-            if(!System.IO.Directory.Exists( _weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv))) 
-                System.IO.Directory.CreateDirectory(_weEduHubHelper.WeEduHubFilesDirectoryPath(_hostingEnv) );
+            if(!System.IO.Directory.Exists( _weEduHubHelper.WeEduHubFilesDirectoryPath(_webHostEnv))) 
+                System.IO.Directory.CreateDirectory(_weEduHubHelper.WeEduHubFilesDirectoryPath(_webHostEnv) );
             
         }
         #endregion

@@ -24,7 +24,7 @@ namespace POYA.Areas.FunFiles.Controllers
     {
        
         #region DI
-        private readonly IWebHostEnvironment _hostingEnv;
+        private readonly IWebHostEnvironment _webHostEnv;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IEmailSender _emailSender;
@@ -42,11 +42,11 @@ namespace POYA.Areas.FunFiles.Controllers
             IEmailSender emailSender,
             UserManager<IdentityUser> userManager,
             ApplicationDbContext context,
-            IWebHostEnvironment hostingEnv,
+            IWebHostEnvironment webHostEnv,
             IStringLocalizer<Program> localizer)
         {
             _configuration = configuration;
-            _hostingEnv = hostingEnv;
+            _webHostEnv = webHostEnv;
             _localizer = localizer;
             _context = context;
             _userManager = userManager;
@@ -77,7 +77,7 @@ namespace POYA.Areas.FunFiles.Controllers
                     o.FileSize=
                         _funFilesHelper.OptimizeFileSize(
                             new System.IO.FileInfo(
-                                    _funFilesHelper.FunFilesRootPath(_hostingEnv)+'/'+
+                                    _funFilesHelper.FunFilesRootPath(_webHostEnv)+'/'+
                                         _context.FunFileByte.Where(f=>f.Id==o.FileByteId).Select(p=>p.FileSHA256HexString)
                                             .FirstOrDefaultAsync()
                                             .GetAwaiter()

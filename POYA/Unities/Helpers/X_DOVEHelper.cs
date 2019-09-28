@@ -126,7 +126,7 @@ namespace POYA.Unities.Helpers
         /// env.ContentRootPath + $"/Data/LFiles/Avatars/"
         /// </summary>
         /// <param name="env">
-        /// The HostingEnvironment
+        /// The webHostEnvironment
         /// </param>
         /// <returns></returns>
         public static string AvatarStoragePath(IWebHostEnvironment env) => env.ContentRootPath + $"/Data/LFiles/Avatars/";
@@ -135,14 +135,14 @@ namespace POYA.Unities.Helpers
         /// <summary>
         ///  env.ContentRootPath + $"/Areas/EduHub/Data/EArticleFiles/"
         /// </summary>
-        /// <param name="env">The HostingEnvironment</param>
+        /// <param name="env">The webHostEnvironment</param>
         /// <returns>  env.ContentRootPath + $"/Areas/EduHub/Data/EArticleFiles/" </returns>
         public static string EduHubFileStoragePath(IWebHostEnvironment env) => env.ContentRootPath + $"/Areas/EduHub/Data/EArticleFiles/";
 
         /// <summary>
         /// env.ContentRootPath + $"/Data/LFiles/XUserFile/"
         /// </summary>
-        /// <param name="env">The HostingEnvironment</param>
+        /// <param name="env">The webHostEnvironment</param>
         /// <returns></returns>
         public static string FileStoragePath(IWebHostEnvironment env) => env.ContentRootPath + $"/Data/LFiles/XUserFile/";
 

@@ -4,8 +4,9 @@
     ViewData["Title"] = Localizer["Sign up"];
 }
 <h1>@(ViewData["Title"])</h1>
+<hr/>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col offset-sm-2 col-sm-8  offset-md-2 col-md-8 offset-lg-4 col-lg-4 register-col">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h4>@(Localizer["Create a new account"])</h4>
             <hr />
@@ -29,6 +30,18 @@
         </form>
     </div>
 </div>
-@section Scripts {
+
+@section Scripts 
+{
     <partial name="_ValidationScriptsPartial" />
+}
+
+@section Styles
+{
+    <style>
+        .register-col,.register-col input
+        {
+            text-align: center;
+        }
+    </style>
 }

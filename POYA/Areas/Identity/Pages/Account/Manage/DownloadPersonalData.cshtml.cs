@@ -18,7 +18,7 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
     public class DownloadPersonalDataModel : PageModel
     {
         #region
-        private readonly IWebHostEnvironment _hostingEnv;
+        private readonly IWebHostEnvironment _webHostEnv;
         private readonly IStringLocalizer<Program> _localizer;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -35,10 +35,10 @@ namespace POYA.Areas.Identity.Pages.Account.Manage
            IEmailSender emailSender,
            UserManager<IdentityUser> userManager,
            ApplicationDbContext context,
-           IWebHostEnvironment hostingEnv,
+           IWebHostEnvironment webHostEnv,
            IStringLocalizer<Program> localizer)
         {
-            _hostingEnv = hostingEnv;
+            _webHostEnv = webHostEnv;
             _localizer = localizer;
             _context = context;
             _userManager = userManager;

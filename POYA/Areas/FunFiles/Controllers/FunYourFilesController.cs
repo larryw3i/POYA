@@ -27,7 +27,7 @@ namespace POYA.Areas.FunFiles.Controllers
     {
         
         #region DI
-        private readonly IWebHostEnvironment _hostingEnv;
+        private readonly IWebHostEnvironment _webHostEnv;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IEmailSender _emailSender;
@@ -45,11 +45,11 @@ namespace POYA.Areas.FunFiles.Controllers
             IEmailSender emailSender,
             UserManager<IdentityUser> userManager,
             ApplicationDbContext context,
-            IWebHostEnvironment hostingEnv,
+            IWebHostEnvironment webHostEnv,
             IStringLocalizer<Program> localizer)
         {
             _configuration = configuration;
-            _hostingEnv = hostingEnv;
+            _webHostEnv = webHostEnv;
             _localizer = localizer;
             _context = context;
             _userManager = userManager;
@@ -342,7 +342,7 @@ namespace POYA.Areas.FunFiles.Controllers
                 var _SHA256HexString = _funFilesHelper.SHA256BytesToHexString(_SHA256);
 
                 System.IO.File.WriteAllBytesAsync(
-                        _funFilesHelper.FunFilesRootPath(_hostingEnv) + "/" + _SHA256HexString, _FileBytes)
+                        _funFilesHelper.FunFilesRootPath(_webHostEnv) + "/" + _SHA256HexString, _FileBytes)
                     .GetAwaiter()
                     .GetResult();
 
@@ -385,7 +385,7 @@ namespace POYA.Areas.FunFiles.Controllers
             var _FileSHA256HexStrings = await _context.FunFileByte.Where(p => _FileByteIds.Contains(p.Id)).Select(p => p.FileSHA256HexString).ToListAsync();
             var _AllowedLength=Convert.ToDouble(_configuration["FunYourFiles:AllowedLengthForPerUser"]);
 
-            var _FunYourFileSizeSum = new DirectoryInfo(_funFilesHelper.FunFilesRootPath(_hostingEnv)).GetFiles()
+            var _FunYourFileSizeSum = new DirectoryInfo(_funFilesHelper.FunFilesRootPath(_webHostEnv)).GetFiles()
                 .Where(p => _FileSHA256HexStrings.Contains(p.Name)).Select(p => p.Length).Sum();
 
             _FunYourFileSizeSum = _FunYourFileSizeSum + funUploadFileLengthSum;
@@ -407,7 +407,7 @@ namespace POYA.Areas.FunFiles.Controllers
             var _FunFileByte=await _context.FunFileByte.Where(p=>p.Id==_FunYourFile.FileByteId).Select(p=>new{p.FileSHA256HexString}).FirstOrDefaultAsync();
             
             var _FileBytes=await System.IO.File.ReadAllBytesAsync(
-                _funFilesHelper.FunFilesRootPath(_hostingEnv)+"/"+_FunFileByte.FileSHA256HexString
+                _funFilesHelper.FunFilesRootPath(_webHostEnv)+"/"+_FunFileByte.FileSHA256HexString
             );
 
             return File(_FileBytes,_funFilesHelper.GetContentType(_FunYourFile.Name),_FunYourFile.Name,true);

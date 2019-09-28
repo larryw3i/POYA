@@ -34,7 +34,7 @@ namespace POYA.Controllers
     public class HomeController : Controller
     {
         #region DI
-        private readonly IWebHostEnvironment _hostingEnv;
+        private readonly IWebHostEnvironment _webHostEnv;
         private readonly IStringLocalizer<Program> _localizer;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -52,11 +52,11 @@ namespace POYA.Controllers
             IEmailSender emailSender,
             UserManager<IdentityUser> userManager,
             ApplicationDbContext context,
-            IWebHostEnvironment hostingEnv,
+            IWebHostEnvironment webHostEnv,
             IStringLocalizer<Program> localizer)
         {
             _configuration = configuration;
-            _hostingEnv = hostingEnv;
+            _webHostEnv = webHostEnv;
             _localizer = localizer;
             _context = context;
             _userManager = userManager;
@@ -91,7 +91,7 @@ namespace POYA.Controllers
         {
             var CurrentUserId = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id;  //    User.FindFirstValue(ClaimTypes.NameIdentifier);
             UserId = string.IsNullOrWhiteSpace(UserId) ? CurrentUserId : UserId;
-            var AvatarFilePath = X_DOVEValues.AvatarStoragePath(_hostingEnv) + UserId;
+            var AvatarFilePath = X_DOVEValues.AvatarStoragePath(_webHostEnv) + UserId;
             if (System.IO.File.Exists(AvatarFilePath))
             {
                 var AvatarBytes = await System.IO.File.ReadAllBytesAsync(AvatarFilePath);
@@ -100,7 +100,7 @@ namespace POYA.Controllers
                     return File(AvatarBytes, "image/jpg");
                 }
             }
-            var DefauleAvatar = await System.IO.File.ReadAllBytesAsync(_hostingEnv.WebRootPath + @"/img/article_publish_ico.webp");
+            var DefauleAvatar = await System.IO.File.ReadAllBytesAsync(_webHostEnv.WebRootPath + @"/img/article_publish_ico.webp");
             return File(DefauleAvatar, "image/webp");
         }
 
@@ -127,7 +127,7 @@ namespace POYA.Controllers
             var memoryStream = new MemoryStream();
             await avatarFile.CopyToAsync(memoryStream);
             var AvatarBytes = memoryStream.ToArray();   //  MakeCircleImage(memoryStream);//  
-            var AvatarFilePath = X_DOVEValues.AvatarStoragePath(_hostingEnv) + _UserId;
+            var AvatarFilePath = X_DOVEValues.AvatarStoragePath(_webHostEnv) + _UserId;
             if (System.IO.File.Exists(AvatarFilePath))
             {
                 var AvatarFileBytes = await System.IO.File.ReadAllBytesAsync(AvatarFilePath);
@@ -137,7 +137,7 @@ namespace POYA.Controllers
                     return Json(new { status = true });  //  , X_DOVE_XSRF_TOKEN 
                 }
             }
-            await System.IO.File.WriteAllBytesAsync(X_DOVEValues.AvatarStoragePath(_hostingEnv) + _UserId, AvatarBytes);
+            await System.IO.File.WriteAllBytesAsync(X_DOVEValues.AvatarStoragePath(_webHostEnv) + _UserId, AvatarBytes);
             return Json(new { status = true });
         }
 
@@ -171,11 +171,11 @@ namespace POYA.Controllers
 
             if (!Convert.ToBoolean(_configuration["IsInitialized"]))
             {
-                var LFilesPath = _hostingEnv.ContentRootPath + "/Data/LFiles";
+                var LFilesPath = _webHostEnv.ContentRootPath + "/Data/LFiles";
                 var AvatarPath = $"{LFilesPath}/Avatars";
                 var XUserFilePath = $"{LFilesPath}/XUserFile";
-                var EArticleFilesPath = $"{_hostingEnv.ContentRootPath}/Areas/EduHub/Data/EArticleFiles";
-                var FunFilesRootPath=new FunFilesHelper().FunFilesRootPath(_hostingEnv);
+                var EArticleFilesPath = $"{_webHostEnv.ContentRootPath}/Areas/EduHub/Data/EArticleFiles";
+                var FunFilesRootPath=new FunFilesHelper().FunFilesRootPath(_webHostEnv);
                 var AdminEmail=_configuration["Administration:AdminEmail"];
 
                 var InitialPaths = new string[] 
@@ -194,7 +194,7 @@ namespace POYA.Controllers
                 }
 
                 #region MODIFY appsettings.json
-                var _appsettings_jsonPath = _hostingEnv.ContentRootPath + "/appsettings.json";
+                var _appsettings_jsonPath = _webHostEnv.ContentRootPath + "/appsettings.json";
 
                 _context.SaveChangesAsync().GetAwaiter().GetResult();
 

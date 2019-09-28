@@ -13,12 +13,12 @@ namespace POYA.Areas.WeEduHub.Controllers
 {
     public class WeEduHubArticleClassHelper
     {
-        private readonly IWebHostEnvironment _hostingEnv;
+        private readonly IWebHostEnvironment _webHostEnv;
         private readonly Regex _unicode2StringRegex=new Regex(@"\\u([0-9A-F]{4})", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         public WeEduHubArticleClassHelper(
-           IWebHostEnvironment hostingEnv
+           IWebHostEnvironment webHostEnv
         ){
-            _hostingEnv=hostingEnv;
+            _webHostEnv=webHostEnv;
         }
 
 
@@ -31,7 +31,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         private string Unicode2String(string source)=>_unicode2StringRegex.Replace(source, x => string.Empty + Convert.ToChar(Convert.ToUInt16(x.Result("$1"), 16)));
         
 
-        public string WeArticleClassCsvPath()=>_hostingEnv.WebRootPath+"/app_data/wearticle_class.csv";
+        public string WeArticleClassCsvPath()=>_webHostEnv.WebRootPath+"/app_data/wearticle_class.csv";
 
         public void InitialWeArticleClassName(ref WeArticle weArticle,Guid ClassId)
         {

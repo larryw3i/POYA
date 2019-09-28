@@ -85,11 +85,11 @@ namespace POYA.Areas.FunFiles.Controllers
             $"{(_byte / Math.Pow(1024, 3)).ToString("0.0")}G";
 
         /// <summary>
-        /// hostingEnv.ContentRootPath + "/Areas/FunFiles/Data"
+        /// webHostEnv.ContentRootPath + "/Areas/FunFiles/Data"
         /// </summary>
-        /// <param name="hostingEnv"></param>
+        /// <param name="webHostEnv"></param>
         /// <returns></returns>
-        public string FunFilesRootPath(IWebHostEnvironment hostingEnv) => hostingEnv.ContentRootPath + "/Areas/FunFiles/Data";
+        public string FunFilesRootPath(IWebHostEnvironment webHostEnv) => webHostEnv.ContentRootPath + "/Areas/FunFiles/Data";
 
         /// <summary>
         /// a0869b67-9268-479f-a20f-4e3872afe6b9

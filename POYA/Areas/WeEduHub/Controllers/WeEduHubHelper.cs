@@ -20,11 +20,11 @@ namespace POYA.Areas.WeEduHub.Controllers
         public string SortByModifying="83e2c8be-7d52-481d-8d20-9131b3c96c8f";
 
         /// <summary>
-        /// _hostingEnv.ContentRootPath+"/Areas/WeEduHub/Data/WeEduHubFiles"
+        /// _webHostEnv.ContentRootPath+"/Areas/WeEduHub/Data/WeEduHubFiles"
         /// </summary>
-        /// <param name="_hostingEnv"></param>
+        /// <param name="_webHostEnv"></param>
         /// <returns></returns>
-        public  string  WeEduHubFilesDirectoryPath(IWebHostEnvironment _hostingEnv)=>_hostingEnv.ContentRootPath+"/Areas/WeEduHub/Data/WeEduHubFiles";
+        public  string  WeEduHubFilesDirectoryPath(IWebHostEnvironment _webHostEnv)=>_webHostEnv.ContentRootPath+"/Areas/WeEduHub/Data/WeEduHubFiles";
 
     }
 
