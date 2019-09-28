@@ -1,14 +1,13 @@
 Name,en-US,zh-Hans
+Read finish,Read finish,读取结束
 Path,Path,路径
 No files selected,No files selected,未选择文件
-Description,Description,描述
 The content file is duplicate in POYA,The content file is duplicate in POYA,"这个内容文件重复了, 我们不允许上传已经上传过的内容文件哦 !"
 The title is empty,The title is empty,还没有标题哦!
 The field {0} must be a string with a minimum length of {2} and a maximum length of {1},The field {0} must be a string with a minimum length of {2} and a maximum length of {1},{0} 的字数要在 {2} ~ {1}之间哦
 The content file of article is empty,The content file of article is empty,文章的内容文件是空的哦!
 Your reports,Your reports,举报的内容
 Check,Check,审查
-legal,legal,合法
 Legal,Legal,合法
 Rename for,Rename for,重命名 : 
 The name of file is repeated,The name of file is repeated,文件命名重复了
@@ -94,7 +93,7 @@ Place an advertisement,Place an advertisement,刊登广告
 Your data,Your data,你的数据
 Your license images,Your license images,你的执照
 license image,license image,的执照
-privacy_policy,We promise and guarantee that your personal information will not be unlawfully infringed and we do not use your personal information and traces of this site for statistical analysis and data science and you are required to comply with the laws and regulations of your country or region when using this site,我们承诺并保证你的个人信息不受非法侵害我们也不会将你的个人信息和在本站的痕迹用于统计分析和数据科学你在使用本站时请遵守所在国家或地区的法律法规
+We promise and guarantee that your personal information will not be unlawfully infringed and we do not use your personal information and traces of this site for statistical analysis and data science and you are required to comply with the laws and regulations of your country or region when using this site,We promise and guarantee that your personal information will not be unlawfully infringed and we do not use your personal information and traces of this site for statistical analysis and data science and you are required to comply with the laws and regulations of your country or region when using this site,我们承诺并保证你的个人信息不受非法侵害我们也不会将你的个人信息和在本站的痕迹用于统计分析和数据科学你在使用本站时请遵守所在国家或地区的法律法规
 Current password,Current password,最近使用的密码
 The {0} must be at least {2} and at max {1} characters long,The {0} must be at least {2} and at max {1} characters long,{0} 的长度要在{2}~{1}之间哦
 New password,New password,新密码

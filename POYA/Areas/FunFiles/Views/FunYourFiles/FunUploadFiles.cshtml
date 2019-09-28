@@ -43,7 +43,6 @@
         var FileSizeArray=new Array();
 
         var _IsUploading=false;
-        
 
         var FileInput_String=(Id)=>`<input class='FunFileInput' id='${Id}' type='file' hidden/>`;
 
@@ -62,19 +61,9 @@
             $(document).on(`click`,`#FunUploadFileAlert>.alert`,(e)=>{$(e.target).remove();});
         });
 
-
-        function UploadFunFiles(){
-
-            if($(`.FunFileInput`).length<1){
-                $(`#SelectFiles,#UploadFiles`).removeAttr(`disabled`);
-
-                _IsUploading=false;
-                
-                return;
-            } 
-
+        function UploadFilesNow()
+        {
             let FunUploadFileFormData = new FormData();
-            
 
             $(`.FunFileInput`).each((index,elem)=>{
                 let _id=$(elem).attr(`id`);
@@ -94,9 +83,7 @@
             $.ajax({ 
                 url:`@(Url.Action("FunUploadFiles"))`,
                 data:FunUploadFileFormData,
-                headers: {
-                    "@(X_DOVEValues.CustomHeaderName)": "@(CSRF.GetAndStoreTokens(Context).RequestToken)"
-                },
+                headers: { '@(X_DOVEValues.CustomHeaderName)': `@(CSRF.GetAndStoreTokens(Context).RequestToken)`},
                 method:"POST",
                 processData: false,
                 contentType: false,
@@ -146,6 +133,49 @@
         }
 
 
+        function UploadFunFiles(){
+
+            if($(`.FunFileInput`).length<1){
+
+                $(`#SelectFiles,#UploadFiles`).removeAttr(`disabled`);
+
+                _IsUploading=false;
+                
+                return;
+            } 
+            
+            var _funUploadFileLengthSum=0;
+            $(`.FunFileInput`).each((index,elem)=>{
+                let _id=$(elem).attr(`id`);
+                let _file=document.getElementById( _id ).files[0];
+                _funUploadFileLengthSum+=_file.size;
+            });
+
+            $.get(
+                `@(Url.Action("IsLengthOfUserFilesExceeded"))?funUploadFileLengthSum=${_funUploadFileLengthSum}`,
+                (result)=>{
+                    if(result==`False`)
+                    {
+                        MakeLayoutAlert(
+                            `@(Localizer["The request has been denied, your disk will be full"])`,
+                            3500,
+                            `danger`
+                        );
+
+                        _IsUploading=false;
+                
+                        return;
+                    }
+                    else
+                    {
+                       UploadFilesNow();
+                    }
+                }
+            );
+
+        }
+
+        // Duplicate files will are added to _context
         function CompareSHA256(){
             $.ajax({
                 method:"POST",
@@ -192,7 +222,8 @@
             });
         }
 
-        function UploadFiles_Click(){
+        function UploadFiles_Click()
+        {
 
             if(
                 $(`.FunFileInput`).length<1 
