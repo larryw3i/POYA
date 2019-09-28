@@ -45,7 +45,17 @@ namespace POYA
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseMySql(Configuration.GetConnectionString("MySqlConnection")));
+
+
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()  
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddControllersWithViews();    
+
             services.AddRazorPages();
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -54,14 +64,6 @@ namespace POYA
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("MySqlConnection")));
-
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddRoles<IdentityRole>()  
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(
                 options =>
@@ -172,7 +174,6 @@ namespace POYA
             app.UseStaticFiles();
 
             app.UseCookiePolicy();
-
 
             app.UseRequestLocalization();
 
