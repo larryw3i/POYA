@@ -46,8 +46,7 @@ namespace POYA
         {
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("MySqlConnection")));
-
+                options.UseNpgsql(Configuration.GetConnectionString("NpgsqlConnection")));
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()  

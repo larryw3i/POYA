@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using POYA.Data;
-
 [assembly: HostingStartup(typeof(POYA.Areas.Identity.IdentityHostingStartup))]
 namespace POYA.Areas.Identity
 {
@@ -16,12 +15,6 @@ namespace POYA.Areas.Identity
         {
             builder.ConfigureServices((context, services) =>
             {
-                services.AddDbContext<ApplicationDbContext>(options =>
-                  options.UseSqlServer(
-                      context.Configuration.GetConnectionString("enjoyContextConnection")));
-
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<ApplicationDbContext>();
             });
         }
     }
