@@ -43,6 +43,15 @@ namespace POYA.Areas.WeEduHub.Models
         [StringLength(maximumLength:100,MinimumLength=0)]
         public string Comment{get;set;}
 
+        [Display(Name="Allow positive sign")]
+        public bool IsPositiveSignBeAllowed{get;set;}=false;
+
+        [Display(Name="Allow negative sign")]
+        public bool IsNegativeSignBeAllowed{get;set;}=false;
+
+        [Display(Name="Allow comment")]
+        public bool IsCommentBeAllowed{get;set;}=false;
+
         #region  NOTMAPPED
 
         /// <summary>

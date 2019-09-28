@@ -25,6 +25,7 @@ namespace POYA.Data
         public DbSet<POYA.Areas.WeEduHub.Models.WeArticle> WeArticle { get; set; }
         public DbSet<POYA.Areas.WeEduHub.Models.WeArticleSet> WeArticleSet { get; set; }
         public DbSet<POYA.Areas.WeEduHub.Models.WeArticleFile> WeArticleFile { get; set; }
+        public DbSet<POYA.Areas.WeEduHub.Models.FunComment> FunComment { get; set; }
 
     }
 }

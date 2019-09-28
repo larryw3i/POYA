@@ -1,0 +1,55 @@
+@model POYA.Areas.WeEduHub.Models.FunComment
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>FunComment</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CommentUserId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CommentUserId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.WeArticleId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.WeArticleId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CommentContent)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CommentContent)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DOCommenting)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DOCommenting)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsShielded)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsShielded)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DOShielding)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DOShielding)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
