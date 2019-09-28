@@ -17,16 +17,15 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using POYA.Unities.Helpers;
 using POYA.Unities.Services;
 using Microsoft.AspNetCore.Diagnostics;
 using Ganss.XSS;
-using Microsoft.AspNetCore.Identity.UI;
 using Newtonsoft.Json.Serialization;
 using System.IO;
-using POYA.Areas.XAd.Controllers;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Hosting;
 
 namespace POYA
 {
@@ -45,21 +44,25 @@ namespace POYA
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("NpgsqlConnection")));
+
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()  
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddControllersWithViews();    
+
+            services.AddRazorPages();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("MySqlConnection")));
-
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddRoles<IdentityRole>()  
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(
                 options =>
@@ -94,20 +97,19 @@ namespace POYA
             });
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.AddMvc()
-                .AddJsonOptions(
-                    options => { 
-                        options.SerializerSettings.ContractResolver = new DefaultContractResolver(); 
-                })
+
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ContractResolver =
+                        new CamelCasePropertyNamesContractResolver())
                 .AddDataAnnotationsLocalization(options =>
                 {
-                    options.DataAnnotationLocalizerProvider = 
+                    options.DataAnnotationLocalizerProvider =
                         (type, factory) =>
                             factory.Create(typeof(Program));
                 })
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                .AddSessionStateTempDataProvider()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .AddSessionStateTempDataProvider();
 
 
             services.Configure<RequestLocalizationOptions>(opts =>{
@@ -122,6 +124,7 @@ namespace POYA
                     new X_DOVERequestCultureProvider()
                 };
            });
+
 
             services.AddSingleton<IEmailSender, EmailSender>();
 
@@ -142,13 +145,14 @@ namespace POYA
             services.AddAntiforgery(options => 
                 options.HeaderName =X_DOVEValues.CustomHeaderName
             );
-
+            services.AddMvc()
+                .AddNewtonsoftJson();
         }
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         //  , IServiceProvider serviceProvider
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) 
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) 
         {
             if (env.IsDevelopment())
             {
@@ -170,22 +174,28 @@ namespace POYA
 
             app.UseCookiePolicy();
 
-            app.UseAuthentication();
-
             app.UseRequestLocalization();
+
+            app.UseRouting();  
+
+            app.UseCors();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseSession();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "areas",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-                    );
-                routes.MapRoute(
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
 
       
         }

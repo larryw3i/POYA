@@ -89,7 +89,7 @@ namespace POYA.Areas.FunFiles.Controllers
         /// </summary>
         /// <param name="hostingEnv"></param>
         /// <returns></returns>
-        public string FunFilesRootPath(IHostingEnvironment hostingEnv) => hostingEnv.ContentRootPath + "/Areas/FunFiles/Data";
+        public string FunFilesRootPath(IWebHostEnvironment hostingEnv) => hostingEnv.ContentRootPath + "/Areas/FunFiles/Data";
 
         /// <summary>
         /// a0869b67-9268-479f-a20f-4e3872afe6b9

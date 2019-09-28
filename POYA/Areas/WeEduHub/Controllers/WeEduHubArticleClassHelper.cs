@@ -13,10 +13,10 @@ namespace POYA.Areas.WeEduHub.Controllers
 {
     public class WeEduHubArticleClassHelper
     {
-        private readonly IHostingEnvironment _hostingEnv;
+        private readonly IWebHostEnvironment _hostingEnv;
         private readonly Regex _unicode2StringRegex=new Regex(@"\\u([0-9A-F]{4})", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         public WeEduHubArticleClassHelper(
-           IHostingEnvironment hostingEnv
+           IWebHostEnvironment hostingEnv
         ){
             _hostingEnv=hostingEnv;
         }

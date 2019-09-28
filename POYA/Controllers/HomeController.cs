@@ -23,7 +23,6 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using POYA.Areas.FunFiles.Controllers;
-using POYA.Areas.XAd.Controllers;
 using POYA.Data;
 using POYA.Models;
 using POYA.Unities.Attributes;
@@ -35,7 +34,7 @@ namespace POYA.Controllers
     public class HomeController : Controller
     {
         #region DI
-        private readonly IHostingEnvironment _hostingEnv;
+        private readonly IWebHostEnvironment _hostingEnv;
         private readonly IStringLocalizer<Program> _localizer;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -53,7 +52,7 @@ namespace POYA.Controllers
             IEmailSender emailSender,
             UserManager<IdentityUser> userManager,
             ApplicationDbContext context,
-            IHostingEnvironment hostingEnv,
+            IWebHostEnvironment hostingEnv,
             IStringLocalizer<Program> localizer)
         {
             _configuration = configuration;
@@ -183,7 +182,6 @@ namespace POYA.Controllers
                     { 
                         AvatarPath, 
                         XUserFilePath, 
-                        XAdCustomerHelper.XAdImgFilePath(_hostingEnv), 
                         EArticleFilesPath,FunFilesRootPath 
                     };
 
