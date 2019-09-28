@@ -86,14 +86,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Read finish" xml:space="preserve">
+	<value>Read finish</value>
+  </data>
   <data name="Path" xml:space="preserve">
 	<value>Path</value>
   </data>
   <data name="No files selected" xml:space="preserve">
 	<value>No files selected</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-	<value>Description</value>
   </data>
   <data name="The content file is duplicate in POYA" xml:space="preserve">
 	<value>The content file is duplicate in POYA</value>
@@ -112,9 +112,6 @@
   </data>
   <data name="Check" xml:space="preserve">
 	<value>Check</value>
-  </data>
-  <data name="legal" xml:space="preserve">
-	<value>legal</value>
   </data>
   <data name="Legal" xml:space="preserve">
 	<value>Legal</value>
@@ -371,7 +368,7 @@
   <data name="license image" xml:space="preserve">
 	<value>license image</value>
   </data>
-  <data name="privacy_policy" xml:space="preserve">
+  <data name="We promise and guarantee that your personal information will not be unlawfully infringed and we do not use your personal information and traces of this site for statistical analysis and data science and you are required to comply with the laws and regulations of your country or region when using this site" xml:space="preserve">
 	<value>We promise and guarantee that your personal information will not be unlawfully infringed and we do not use your personal information and traces of this site for statistical analysis and data science and you are required to comply with the laws and regulations of your country or region when using this site</value>
   </data>
   <data name="Current password" xml:space="preserve">

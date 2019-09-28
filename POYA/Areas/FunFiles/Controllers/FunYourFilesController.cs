@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -231,6 +232,14 @@ namespace POYA.Areas.FunFiles.Controllers
 
         #region DEPOLLUTION
 
+        [ActionName("IsLengthOfUserFilesExceeded")]
+        public async Task<IActionResult> IsLengthOfUserFilesExceededAsync(long funUploadFileLengthSum) => Content(
+                (
+                    await IsLengthOfUserFilesExceeded(
+                        funUploadFileLengthSum,
+                        _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id
+                )).ToString());
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CompareSHA256(SHA256Compare sHA256Compare)
@@ -295,59 +304,69 @@ namespace POYA.Areas.FunFiles.Controllers
         [RequestSizeLimit(1024*1024*1024)]
         public async Task<IActionResult> FunUploadFiles([FromForm]FunUploadFile funUploadFile)
         {
-            
 
-            if(funUploadFile.FunFiles.Count()<1)return NoContent();
 
-            var _InvalidPathChars=System.IO.Path.GetInvalidPathChars();
+            if (funUploadFile.FunFiles.Count() < 1) return NoContent();
 
-            if(
+            var _InvalidPathChars = System.IO.Path.GetInvalidPathChars();
+
+            if (
                 funUploadFile.FunFiles
-                    .Select(p=>p.FileName)
-                    .Any(p=>
+                    .Select(p => p.FileName)
+                    .Any(p =>
                         _InvalidPathChars
-                        .Any(i=>p.Contains(i)))
+                        .Any(i => p.Contains(i)))
             )
             {
                 return NoContent();
             }
+            var UserId_ = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
 
-            var UserId_= _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            if (await IsLengthOfUserFilesExceeded(
+                funUploadFile.FunFiles.Select(p=>p.Length).Sum(), 
+                UserId_))
+            {
+                return BadRequest();
+            }
 
-            var _FunFileBytes=new List<FunFileByte>();
-            var _FunYourFiles=new List<FunYourFile>();
 
-            funUploadFile.FunFiles.ForEach(p=>{
+            var _FunFileBytes = new List<FunFileByte>();
+            var _FunYourFiles = new List<FunYourFile>();
 
-                var _FileBytes=_funFilesHelper.GetFormFileBytes(p);
+            funUploadFile.FunFiles.ForEach(p =>
+            {
 
-                var _SHA256=SHA256.Create().ComputeHash(_FileBytes);
-                var _SHA256HexString=_funFilesHelper.SHA256BytesToHexString(_SHA256);
+                var _FileBytes = _funFilesHelper.GetFormFileBytes(p);
+
+                var _SHA256 = SHA256.Create().ComputeHash(_FileBytes);
+                var _SHA256HexString = _funFilesHelper.SHA256BytesToHexString(_SHA256);
 
                 System.IO.File.WriteAllBytesAsync(
-                        _funFilesHelper.FunFilesRootPath(_hostingEnv)+"/"+_SHA256HexString,_FileBytes)
+                        _funFilesHelper.FunFilesRootPath(_hostingEnv) + "/" + _SHA256HexString, _FileBytes)
                     .GetAwaiter()
                     .GetResult();
 
-                var _FunFileByte=new FunFileByte{
-                    DOUploading=DateTimeOffset.Now,
-                    FileSHA256HexString=_SHA256HexString,
-                    FirstUploaderId=UserId_,
-                    Id=Guid.NewGuid()
+                var _FunFileByte = new FunFileByte
+                {
+                    DOUploading = DateTimeOffset.Now,
+                    FileSHA256HexString = _SHA256HexString,
+                    FirstUploaderId = UserId_,
+                    Id = Guid.NewGuid()
                 };
 
                 _FunFileBytes.Add(_FunFileByte);
 
                 _FunYourFiles.Add(
 
-                    new FunYourFile{
+                    new FunYourFile
+                    {
 
-                        DOUploading=DateTimeOffset.Now,
-                        Id=Guid.NewGuid(),
-                        FileByteId=_FunFileByte.Id,
-                        Name=System.IO.Path.GetFileName( p.FileName),
-                        ParentDirId=funUploadFile.ParentDirId,
-                        UserId=UserId_
+                        DOUploading = DateTimeOffset.Now,
+                        Id = Guid.NewGuid(),
+                        FileByteId = _FunFileByte.Id,
+                        Name = System.IO.Path.GetFileName(p.FileName),
+                        ParentDirId = funUploadFile.ParentDirId,
+                        UserId = UserId_
 
                     }
                 );
@@ -357,8 +376,21 @@ namespace POYA.Areas.FunFiles.Controllers
             await _context.FunYourFile.AddRangeAsync(_FunYourFiles);
             await _context.SaveChangesAsync();
             
-
             return Ok();
+        }
+
+        private async Task<bool>  IsLengthOfUserFilesExceeded(long funUploadFileLengthSum, string UserId_)
+        {
+            var _FileByteIds = await _context.FunYourFile.Where(p => p.UserId == UserId_).Select(p => p.FileByteId).ToListAsync();
+            var _FileSHA256HexStrings = await _context.FunFileByte.Where(p => _FileByteIds.Contains(p.Id)).Select(p => p.FileSHA256HexString).ToListAsync();
+            var _AllowedLength=Convert.ToDouble(_configuration["FunYourFiles:AllowedLengthForPerUser"]);
+
+            var _FunYourFileSizeSum = new DirectoryInfo(_funFilesHelper.FunFilesRootPath(_hostingEnv)).GetFiles()
+                .Where(p => _FileSHA256HexStrings.Contains(p.Name)).Select(p => p.Length).Sum();
+
+            _FunYourFileSizeSum = _FunYourFileSizeSum + funUploadFileLengthSum;
+
+            return _FunYourFileSizeSum > _AllowedLength;
         }
 
         [ActionName("DownloadFunFile")]
