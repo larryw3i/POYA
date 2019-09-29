@@ -9,7 +9,9 @@
     @(Localizer["Details"]) 
     &raquo;
     <span class="FileName">
-        @(Model.Name)
+        <a asp-action="DownloadFunFile" asp-controller="FunYourFiles" asp-route-Id="@(Model.Id)" class="fun_file_download">
+            @(Model.Name)
+        </a>
     </span>
 </h1>
 
@@ -79,12 +81,7 @@
         .FileName{
             cursor: default;
             font-size: 80%;
-            border: solid;
-            border-color: crimson;
             border-radius: 6px;
-        }
-        .FileName:hover{
-            background-color: crimson;
         }
     </style>
 }
