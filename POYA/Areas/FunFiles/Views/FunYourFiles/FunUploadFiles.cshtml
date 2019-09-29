@@ -154,7 +154,7 @@
             $.get(
                 `@(Url.Action("IsLengthOfUserFilesExceeded"))?funUploadFileLengthSum=${_funUploadFileLengthSum}`,
                 (result)=>{
-                    if(result==`False`)
+                    if(result==`True`)
                     {
                         MakeLayoutAlert(
                             `@(Localizer["The request has been denied, your disk will be full"])`,

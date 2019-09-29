@@ -1,59 +1,21 @@
 @model POYA.Areas.WeEduHub.Models.FunComment
 
 @{
-    ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    
 }
 
-<h1>Create</h1>
-
-<h4>FunComment</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="CommentUserId" class="control-label"></label>
-                <input asp-for="CommentUserId" class="form-control" />
-                <span asp-validation-for="CommentUserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WeArticleId" class="control-label"></label>
-                <input asp-for="WeArticleId" class="form-control" />
-                <span asp-validation-for="WeArticleId" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="CommentContent" class="control-label"></label>
                 <input asp-for="CommentContent" class="form-control" />
                 <span asp-validation-for="CommentContent" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DOCommenting" class="control-label"></label>
-                <input asp-for="DOCommenting" class="form-control" />
-                <span asp-validation-for="DOCommenting" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsShielded" /> @Html.DisplayNameFor(model => model.IsShielded)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="DOShielding" class="control-label"></label>
-                <input asp-for="DOShielding" class="form-control" />
-                <span asp-validation-for="DOShielding" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <a id="FunComment_Create_Submit" class="btn btn-primary" >@(Localizer["Submit"])</a>
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

@@ -179,7 +179,7 @@ function MakeLayoutProgress(value,_type="info")
                 </div>
             </div>
         `);
-        $(`.poya-layout-progress:first`).focus();
+        $(`.poya-layout-progress-bar:first`).focus();
     }
     else
     {

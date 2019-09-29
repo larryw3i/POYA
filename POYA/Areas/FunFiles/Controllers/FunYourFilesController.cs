@@ -341,10 +341,18 @@ namespace POYA.Areas.FunFiles.Controllers
                 var _SHA256 = SHA256.Create().ComputeHash(_FileBytes);
                 var _SHA256HexString = _funFilesHelper.SHA256BytesToHexString(_SHA256);
 
-                System.IO.File.WriteAllBytesAsync(
-                        _funFilesHelper.FunFilesRootPath(_webHostEnv) + "/" + _SHA256HexString, _FileBytes)
-                    .GetAwaiter()
-                    .GetResult();
+                if(
+                    !new DirectoryInfo(_funFilesHelper.FunFilesRootPath(_webHostEnv)).GetFiles()
+                    .Select(p => p.Name)
+                    .Any(p=>p==_SHA256HexString)
+                )
+                {
+                    System.IO.File.WriteAllBytesAsync(
+                            _funFilesHelper.FunFilesRootPath(_webHostEnv) + "/" + _SHA256HexString, _FileBytes)
+                        .GetAwaiter()
+                        .GetResult();
+                }
+
 
                 var _FunFileByte = new FunFileByte
                 {

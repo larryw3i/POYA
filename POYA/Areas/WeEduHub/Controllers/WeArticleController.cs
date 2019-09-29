@@ -168,6 +168,15 @@ namespace POYA.Areas.WeEduHub.Controllers
                     return NotFound();
                 }
                 
+                if(
+                    !weArticle.WeArticleFormFile.ContentType.StartsWith("video/") &&
+                    !weArticle.WeArticleFormFile.FileName.EndsWith(".pdf")
+                )
+                {
+                    return NotFound();
+                }
+
+
                 var _FormFileBytes=_funFilesHelper.GetFormFileBytes(weArticle.WeArticleFormFile);
                 var _FormFileSHA256HexString=_funFilesHelper.SHA256BytesToHexString( 
                         SHA256.Create().ComputeHash(_FormFileBytes)
