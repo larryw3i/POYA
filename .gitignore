@@ -1,13 +1,3 @@
-﻿# Custom ignore rule of some files and directorie
-# Directories 
-/.vs/
-/POYATEST/
-/POYA/Areas/FunFiles/Data/
-/POYA/Areas/WeEduHub/Data/
+﻿
 
-# Files
-*.csv#
-
-# ******************* #
-/POYA/appsettings.json
-# ******************* #
+/.vscode/
