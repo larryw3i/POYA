@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using Ganss.XSS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using POYA.Areas.FunAdmin.Controllers;
@@ -41,6 +43,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         private readonly FunFilesHelper _funFilesHelper;
         private readonly WeEduHubArticleClassHelper _weEduHubArticleClassHelper;
         private readonly FunAdminHelper _funAdminHelper;
+        private readonly IConfiguration _configuration;
         public WeArticleController(
             HtmlSanitizer htmlSanitizer,
             SignInManager<IdentityUser> signInManager,
@@ -173,7 +176,12 @@ namespace POYA.Areas.WeEduHub.Controllers
                     !weArticle.WeArticleFormFile.FileName.EndsWith(".pdf")
                 )
                 {
-                    return NotFound();
+                    return BadRequest();
+                }
+
+                if(!IsFileLengthValid(weArticle.WeArticleFormFile))
+                {
+                    return BadRequest();
                 }
 
 
@@ -282,7 +290,12 @@ namespace POYA.Areas.WeEduHub.Controllers
                             !await _context.WeArticleFile.AnyAsync(p=>p.SHA256HexString==_FormFileSHA256HexString && p.UserId==_UserId)
                         )
                         {
-                            return NotFound();
+                            return BadRequest();
+                        }
+
+                        if(!IsFileLengthValid(weArticle.WeArticleFormFile))
+                        {
+                            return BadRequest();
                         }
 
                         var _WeArticleFile=new WeArticleFile{
@@ -368,6 +381,13 @@ namespace POYA.Areas.WeEduHub.Controllers
         }
 
         #region  DEPOLLUTION
+
+        private bool IsFileLengthValid(IFormFile _WeArticleFormFile)
+        {
+            return _WeArticleFormFile.ContentType.StartsWith("video/")?
+                _WeArticleFormFile.Length < Convert.ToInt32(_configuration["WeEduHub.WeArticle:AllowedVideoFileLength"]):
+                _WeArticleFormFile.Length < Convert.ToInt32(_configuration["WeEduHub.WeArticle:AllowedDocumentFileLength"]);
+        }
 
         /// <summary>
         /// Prevent file duplication

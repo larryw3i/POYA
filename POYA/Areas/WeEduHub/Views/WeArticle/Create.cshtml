@@ -1,5 +1,8 @@
-@model POYA.Areas.WeEduHub.Models.WeArticle
+
 @using POYA.Unities.Helpers
+@using Microsoft.Extensions.Configuration
+@model POYA.Areas.WeEduHub.Models.WeArticle
+@inject IConfiguration LConfiguration
 
 
 @{
@@ -88,11 +91,11 @@
         var IsEdit=Boolean(`@(IsEdit?" ":"")`)
         var _selected_file_content_object_string=(data,type)=>` <object  id="selected_file_content" data='${data}'  type='${type}'></object>`;
         var _selected_file_content_video_string=(src,type)=>`   <video   id="selected_file_content" src='${src}'    type='${type}'  controls></video>`;
+        var AllowedDocumentFileLength=Number(`@(LConfiguration["WeEduHub.WeArticle:AllowedDocumentFileLength"])`);
+        var AllowedVideoFileLength=Number(`@(LConfiguration["WeEduHub.WeArticle:AllowedVideoFileLength"])`);
 
         
         $(document).ready(()=>{
-
-            $(document).on(`click`,`#select_video`,()=>{ SelectVideo(); });
 
             $(document).on(`click`,`#select_file`,()=>{ SelectFileClick(); });
 
@@ -145,11 +148,38 @@
                 return;
             }
 
+            if(
+                $(`#WeArticleFormFile`).val().endsWith(`.pdf`) && 
+                (document.getElementById(`WeArticleFormFile`).files[0].size > AllowedDocumentFileLength)
+            )
+            {
+                MakeLayoutAlert(
+                    `@(Html.Raw(Localizer["The length of document should be less than "])) ${Math.round(AllowedDocumentFileLength/1048576)} M`,
+                    4500,
+                    "danger"
+                );
+                return;
+
+            } 
+            else if(
+                document.getElementById(`WeArticleFormFile`).files[0].type.startsWith(`video/`) && 
+                (document.getElementById(`WeArticleFormFile`).files[0].size > AllowedVideoFileLength)
+            )
+            {
+                MakeLayoutAlert(
+                    `@(Html.Raw(Localizer["The length of video should be less than "])) ${Math.round(AllowedVideoFileLength/1048576)} M`,
+                    4500,
+                    "danger"
+                );
+                return;
+
+            }
+
             if(IsEdit && ($(`#WeArticleFormFile`).val().length<1))
             {
-                
+                // Edit action without file
                 $.ajax({
-                    url:`@(Url.Action(IsEdit?"Edit":"Create"))`,
+                    url:`@(Url.Action("Edit"))`,
                     method:`POST`,
                     processData: false,
                     contentType: false,
@@ -174,7 +204,6 @@
                 });
                 return;
             }
-
 
             var _FileReader = new FileReader();
             
