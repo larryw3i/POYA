@@ -52,6 +52,9 @@
 </div>
 
 
+@await Component.InvokeAsync("FunComments", new { WeArticleId=Model.Id })}
+@await Component.InvokeAsync("FunComments", new { WeArticleId=Model.Id, ViewName="Index" })
+
 <div class="wearticle_details__">
     <a id="go_back" class="btn btn-info">&laquo; @(Localizer["Back"])</a>   
     @if(AuthorUserId==Model.AuthorUserId)
@@ -69,6 +72,9 @@
         });
     </script>
 }
+
+@(RenderSection("ComponentScripts", required: false))
+@(RenderSection("ComponentStyles", required: false))
 
 @section Styles
 {

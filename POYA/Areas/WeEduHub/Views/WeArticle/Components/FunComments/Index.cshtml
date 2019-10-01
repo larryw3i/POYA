@@ -1,0 +1,33 @@
+@model IEnumerable<POYA.Areas.WeEduHub.Models.FunComment>
+
+@{
+    
+}
+
+<style>
+    
+</style>
+
+
+<table class="table">
+    <tbody>
+        @foreach (var item in Model) 
+        {
+            <tr>
+                <td>
+                    @(Html.DisplayFor(modelItem => item.CommentContent))
+                </td>
+                <td>
+                    @(Html.DisplayFor(modelItem => item.DOCommenting))
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id">@(Localizer["Delete"])</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+
+</script>

@@ -8,6 +8,7 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="WeArticleId" type="hidden" />
             <div class="form-group">
                 <label asp-for="CommentContent" class="control-label"></label>
                 <input asp-for="CommentContent" class="form-control" />
