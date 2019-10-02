@@ -33,9 +33,8 @@ namespace POYA.Areas.Identity.Pages.Account
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ExternalLoginModel> _logger;
         private readonly IConfiguration _configuration;
-        //  private readonly AppInitialization _appInitialization;
+        
         public RegisterModel(
-            //  AppInitialization appInitialization,
             IConfiguration configuration,
             ILogger<ExternalLoginModel> logger,
             SignInManager<IdentityUser> signInManager,

@@ -20,7 +20,6 @@ using POYA.Unities.Helpers;
 
 namespace POYA.Areas.WeEduHub.Controllers
 {
-    [Authorize(Roles="dd124f0f-1aa5-4aee-9297-f87a1e7a4183")]
     [Area("WeEduHub")]
     public class FunCommentsController : Controller
     {
@@ -66,8 +65,10 @@ namespace POYA.Areas.WeEduHub.Controllers
         #endregion
 
         // GET: WeEduHub/FunComments
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Guid WeArticleId)
         {
+            var _FunComments=await _context.FunComment.Where(p=>p.WeArticleId==WeArticleId).ToListAsync();
+            
             return View(await _context.FunComment.ToListAsync());
         }
 

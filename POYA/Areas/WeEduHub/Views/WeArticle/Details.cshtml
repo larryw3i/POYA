@@ -51,13 +51,13 @@
     <div class="wearticle_comment">@(Model.Comment)</div>
 </div>
 
-
-@await Component.InvokeAsync("FunComments", new { WeArticleId=Model.Id })}
-
+<div class="row">
+    <div class="col col-12 FunCommentsCreate">
+    </div>
+</div>
 
 <div class="row">
     <div class="col col-12 FunCommentsIndex">
-        @await Component.InvokeAsync("FunComments", new { WeArticleId=Model.Id, ViewName="Index" })
     </div>
 </div>
 
@@ -74,7 +74,8 @@
 {
     <script>
         $(document).ready(()=>{
-            
+            $.get(`@(Url.Action("Create","FunComments"))`,(data)=>{ $(`.FunCommentsCreate`).html(data);  })
+            $.get(`@(Url.Action("Index","FunComments",new {Model.Id}))`,(data)=>{ $(`.FunCommentsIndex`).html(data);  })
         });
     </script>
 }
