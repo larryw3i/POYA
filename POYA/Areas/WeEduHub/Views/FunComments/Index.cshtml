@@ -1,7 +1,7 @@
 @model IEnumerable<POYA.Areas.WeEduHub.Models.FunComment>
 
 @{
-    
+    var UserId=ViewData["UserId"]?.ToString();
 }
 
 
@@ -11,13 +11,28 @@
         {
             <tr>
                 <td>
-                    @(Html.DisplayFor(modelItem => item.CommentContent))
-                </td>
-                <td>
-                    @(Html.DisplayFor(modelItem => item.DOCommenting))
-                </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@item.Id">@(Localizer["Delete"])</a>
+                    <table>
+                        <td>
+                            <img 
+                                src='/Home/GetAvatar?UserId=@(item.CommentUserId)' 
+                                width="50" height="50" 
+                                alt="@(item.CommentUserName)"  
+                                title="@(item.CommentUserName)" 
+                                class="rounded-circle"/>
+                        </td>
+                        <td>
+                            <a class="FunComment_UserName" asp-action="UserInfo" asp-route-id="@item.Id">@(item.CommentUserName)</a>
+                            <br/>
+                            <span class="CommentContent"> @(Html.DisplayFor(modelItem => item.CommentContent))</span> 
+                            @if(UserId==item.CommentUserId)
+                            {
+                                <br/>
+                                
+                                <span class="DOCommenting"> @(item.DOCommenting.LocalDateTime)</span> 
+                                <a class="FunComment_Delete" asp-action="Delete" asp-route-id="@item.Id">@(Localizer["Delete"])</a>
+                            }
+                        </td>
+                    </table>
                 </td>
             </tr>
         }

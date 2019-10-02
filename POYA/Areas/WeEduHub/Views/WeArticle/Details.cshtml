@@ -57,7 +57,9 @@
     <hr/>
     <div class="wearticle_comment">@(Model.Comment)</div>
 </div>
-
+<hr/>
+<span>@(Localizer["_Comment"])</span>
+<hr/>
 <div class="row">
     <div class="col col-12 FunCommentsCreate">
     </div>
@@ -114,10 +116,7 @@
                 contentType: false,
                 data:new FormData(document.getElementById(`FunComment_Create_Form`)),
                 headers: { '@(X_DOVEValues.CustomHeaderName)': `@(CSRF.GetAndStoreTokens(Context).RequestToken)`},
-                success:()=>{
-                    $.get(`@(Url.Action("Create","FunComments"))`,(data)=>{ $(`.FunCommentsCreate`).html(data);  })
-                    $.get(`@(Url.Action("Index","FunComments",new {WeArticleId=Model.Id}))`,(data)=>{ $(`.FunCommentsIndex`).html(data);  });
-                },
+                success:()=>{   InitialComment(); },
                 error:()=>{
 
                 }
@@ -130,6 +129,29 @@
 @section Styles
 {
     <style>
+        .DOCommenting{
+            font-size: 75%;
+            color: blue;
+        }
+        .CommentContent{
+            font-size: 120%;
+        }
+        .FunComment_UserName{
+            color: blue;
+            font-size: 75%;
+        }
+
+        .FunComment_Delete{
+            font-size: 75%;
+            color: red;
+        }
+        
+        table *{
+            border-color: transparent;
+        }
+        td{
+            border: 0px solid transparent !important;
+        }
         .wearticle_comment{
             text-align: left;
         }
@@ -164,9 +186,7 @@
             word-wrap: break-word;
             word-break: break-all;
         }
-        .wearticle_content{
-            margin-bottom: 20%;
-        }
+        
         .wearticle_details__{
             position: fixed;
             bottom: 8%;

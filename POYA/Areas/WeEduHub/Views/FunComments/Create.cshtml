@@ -10,12 +10,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="WeArticleId" type="hidden" />
             <div class="form-group">
-                <label asp-for="CommentContent" class="control-label"></label>
                 <textarea asp-for="CommentContent" class="form-control" rows="3"></textarea>
                 <span asp-validation-for="CommentContent" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <a id="FunComment_Create_Submit" class="btn btn-outline-info btn-sm" >@(Localizer["Submit"])</a>
+                <a id="FunComment_Create_Submit" class="btn btn-outline-info btn-sm" >@(Localizer["_Comment"])</a>
             </div>
         </form>
     </div>

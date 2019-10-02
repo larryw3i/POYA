@@ -88,6 +88,11 @@
   </resheader>
 
 
+  <data name="_Comment" xml:space="preserve">
+	  <value>评论</value>
+  </data>
+
+
 
   <data name="The request has been denied, your disk will be full" xml:space="preserve">
 	  <value>请求被拒绝了, 你的网盘容量要被耗尽了</value>

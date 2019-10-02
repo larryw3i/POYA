@@ -67,9 +67,15 @@ namespace POYA.Areas.WeEduHub.Controllers
         // GET: WeEduHub/FunComments
         public async Task<IActionResult> Index(Guid WeArticleId)
         {
-            var _FunComments=await _context.FunComment.Where(p=>p.WeArticleId==WeArticleId).ToListAsync();
+            var _UserId = _userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id;
+            var _FunComments=await _context.FunComment.Where(p=>p.WeArticleId==WeArticleId).OrderByDescending(p=>p.DOCommenting).ToListAsync();
+            _FunComments.ForEach(p=>{
+                p.CommentUserName=_userManager.FindByIdAsync(p.CommentUserId).GetAwaiter().GetResult().UserName;
+            });
+
+            ViewData["UserId"]=_UserId;
             
-            return View(await _context.FunComment.ToListAsync());
+            return View(_FunComments);
         }
 
         // GET: WeEduHub/FunComments/Details/5

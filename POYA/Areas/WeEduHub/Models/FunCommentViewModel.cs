@@ -1,6 +1,7 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace POYA.Areas.WeEduHub.Models
 {
@@ -15,6 +16,13 @@ namespace POYA.Areas.WeEduHub.Models
         public DateTimeOffset DOCommenting{get;set;}=DateTimeOffset.Now;
         public bool IsShielded{get;set;}=false;
         public DateTimeOffset? DOShielding{get;set;}
+
+        #region     DEPOLLUTION
+        
+        [NotMapped]
+        public string CommentUserName{get;set;}
+
+        #endregion
 
     }
 }

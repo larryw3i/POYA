@@ -88,6 +88,13 @@
   </resheader>
 
 
+  <data name="_Comment" xml:space="preserve">
+	  <value>Comment</value>
+  </data>
+
+
+
+
   <data name="The request has been denied, your disk will be full" xml:space="preserve">
 	  <value>The request has been denied, your disk will be full</value>
   </data>
