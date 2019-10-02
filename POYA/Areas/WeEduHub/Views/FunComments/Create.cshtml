@@ -5,17 +5,17 @@
 }
 
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col col-sm-10 col-md-8">
+        <form asp-action="Create" id="FunComment_Create_Form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="WeArticleId" type="hidden" />
             <div class="form-group">
                 <label asp-for="CommentContent" class="control-label"></label>
-                <input asp-for="CommentContent" class="form-control" />
+                <textarea asp-for="CommentContent" class="form-control" rows="3"></textarea>
                 <span asp-validation-for="CommentContent" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <a id="FunComment_Create_Submit" class="btn btn-primary" >@(Localizer["Submit"])</a>
+                <a id="FunComment_Create_Submit" class="btn btn-outline-info btn-sm" >@(Localizer["Submit"])</a>
             </div>
         </form>
     </div>

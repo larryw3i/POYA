@@ -1,4 +1,8 @@
 @model POYA.Areas.WeEduHub.Models.WeArticle
+@using POYA.Unities.Helpers
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 @{
     ViewData["Title"] = "Details";
@@ -6,6 +10,9 @@
     var AuthorUserId=ViewData["AuthorUserId"]?.ToString()??string.Empty;
     var AuthorUserEmail=ViewData["AuthorUserEmail"]?.ToString()??string.Empty;
     var _WeArticleFileContentType=ViewData["WeArticleFileContentType"]?.ToString()??string.Empty;
+    var _IsCommentBeAllowed=true;
+    var _IsSignedIn=SignInManager.IsSignedIn(User);
+
 }
 
 <div class="row">
@@ -61,6 +68,8 @@
     </div>
 </div>
 
+<div style="margin-bottom: 20px;"></div>
+
 <div class="wearticle_details__">
     <a id="go_back" class="btn btn-info">&laquo; @(Localizer["Back"])</a>   
     @if(AuthorUserId==Model.AuthorUserId)
@@ -73,10 +82,47 @@
 @section Scripts
 {
     <script>
+        var _IsCommentBeAllowed=Boolean(`@(_IsCommentBeAllowed?" ":"")`);
+        var IsSignedIn=Boolean(`@(_IsSignedIn?" ":"")`);
         $(document).ready(()=>{
-            $.get(`@(Url.Action("Create","FunComments"))`,(data)=>{ $(`.FunCommentsCreate`).html(data);  })
-            $.get(`@(Url.Action("Index","FunComments",new {Model.Id}))`,(data)=>{ $(`.FunCommentsIndex`).html(data);  })
+            InitialComment();
+            $(document).on(`click`,`#FunComment_Create_Submit`, (e)=>{   FunCommentCreateSubmitOnClick(e);})
+
         });
+
+        function InitialComment()
+        {
+            if(_IsCommentBeAllowed)
+            {   
+                if(IsSignedIn)
+                {
+                    $.get(`@(Url.Action("Create","FunComments",new {WeArticleId=Model.Id}))`,(data)=>{ $(`.FunCommentsCreate`).html(data);  })
+                }
+
+                $.get(`@(Url.Action("Index","FunComments",new {WeArticleId=Model.Id}))`,(data)=>{ $(`.FunCommentsIndex`).html(data);  })
+            }
+
+        }
+
+        function FunCommentCreateSubmitOnClick(e)
+        {
+            e.preventDefault();
+            $.ajax({
+                url:`@(Url.Action("Create","FunComments"))`,
+                method:`POST`,
+                processData: false,
+                contentType: false,
+                data:new FormData(document.getElementById(`FunComment_Create_Form`)),
+                headers: { '@(X_DOVEValues.CustomHeaderName)': `@(CSRF.GetAndStoreTokens(Context).RequestToken)`},
+                success:()=>{
+                    $.get(`@(Url.Action("Create","FunComments"))`,(data)=>{ $(`.FunCommentsCreate`).html(data);  })
+                    $.get(`@(Url.Action("Index","FunComments",new {WeArticleId=Model.Id}))`,(data)=>{ $(`.FunCommentsIndex`).html(data);  });
+                },
+                error:()=>{
+
+                }
+            });
+        }
     </script>
 }
 

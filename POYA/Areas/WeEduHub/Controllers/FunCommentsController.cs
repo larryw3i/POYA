@@ -91,9 +91,13 @@ namespace POYA.Areas.WeEduHub.Controllers
         }
 
         // GET: WeEduHub/FunComments/Create
-        public IActionResult Create()
+        public IActionResult Create(Guid WeArticleId)
         {
-            return View();
+            var funComment=new FunComment()
+            {
+                WeArticleId=WeArticleId
+            };
+            return View(funComment);
         }
 
         // POST: WeEduHub/FunComments/Create
