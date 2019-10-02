@@ -45,6 +45,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         private readonly FunAdminHelper _funAdminHelper;
         private readonly IConfiguration _configuration;
         public WeArticleController(
+            IConfiguration configuration,
             HtmlSanitizer htmlSanitizer,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
@@ -64,6 +65,7 @@ namespace POYA.Areas.WeEduHub.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
+            _configuration=configuration;
             _weEduHubArticleClassHelper=new WeEduHubArticleClassHelper(_webHostEnv );
             _weEduHubHelper=new WeEduHubHelper();
             _funFilesHelper=new FunFilesHelper();
@@ -381,6 +383,11 @@ namespace POYA.Areas.WeEduHub.Controllers
         }
 
         #region  DEPOLLUTION
+
+        public IActionResult FunCommentsIndex(Guid WeArticleId)
+        {
+            return ViewComponent("FunComments",new{ViewName="Index",WeArticleId});
+        }
 
         private bool IsFileLengthValid(IFormFile _WeArticleFormFile)
         {

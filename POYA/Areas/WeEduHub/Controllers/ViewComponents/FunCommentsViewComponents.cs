@@ -36,7 +36,6 @@ namespace POYA.Areas.WeEduHub.ViewComponents
         private readonly FunFilesHelper _funFilesHelper;
         private readonly WeEduHubArticleClassHelper _weEduHubArticleClassHelper;
         private readonly FunAdminHelper _funAdminHelper;
-        private readonly IConfiguration _configuration;
         public FunCommentsViewComponent(
             HtmlSanitizer htmlSanitizer,
             SignInManager<IdentityUser> signInManager,

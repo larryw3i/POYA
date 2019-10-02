@@ -2,12 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ganss.XSS;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Localization;
+using POYA.Areas.FunAdmin.Controllers;
+using POYA.Areas.FunFiles.Controllers;
 using POYA.Areas.WeEduHub.Models;
 using POYA.Data;
+using POYA.Unities.Helpers;
 
 namespace POYA.Areas.WeEduHub.Controllers
 {
@@ -15,12 +24,46 @@ namespace POYA.Areas.WeEduHub.Controllers
     [Area("WeEduHub")]
     public class FunCommentsController : Controller
     {
+        #region     DI
+        private readonly IWebHostEnvironment _webHostEnv;
+        private readonly IStringLocalizer<Program> _localizer;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
-
-        public FunCommentsController(ApplicationDbContext context)
+        private readonly X_DOVEHelper _x_DOVEHelper;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly HtmlSanitizer _htmlSanitizer;
+        private readonly WeEduHubHelper _weEduHubHelper;
+        private readonly FunFilesHelper _funFilesHelper;
+        private readonly WeEduHubArticleClassHelper _weEduHubArticleClassHelper;
+        private readonly FunAdminHelper _funAdminHelper;
+        public FunCommentsController(
+            HtmlSanitizer htmlSanitizer,
+            SignInManager<IdentityUser> signInManager,
+            X_DOVEHelper x_DOVEHelper,
+            RoleManager<IdentityRole> roleManager,
+            IEmailSender emailSender,
+            UserManager<IdentityUser> userManager,
+            ApplicationDbContext context,
+            IWebHostEnvironment webHostEnv,
+            IStringLocalizer<Program> localizer)
         {
+            _htmlSanitizer = htmlSanitizer;
+            _webHostEnv = webHostEnv;
+            _localizer = localizer;
             _context = context;
+            _userManager = userManager;
+            _emailSender = emailSender;
+            _roleManager = roleManager;
+            _x_DOVEHelper = x_DOVEHelper;
+            _signInManager = signInManager;
+            _weEduHubArticleClassHelper=new WeEduHubArticleClassHelper(_webHostEnv );
+            _weEduHubHelper=new WeEduHubHelper();
+            _funFilesHelper=new FunFilesHelper();
+            _funAdminHelper=new FunAdminHelper(_localizer,_context);
         }
+        #endregion
 
         // GET: WeEduHub/FunComments
         public async Task<IActionResult> Index()
@@ -56,15 +99,26 @@ namespace POYA.Areas.WeEduHub.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CommentUserId,WeArticleId,CommentContent,DOCommenting,IsShielded,DOShielding")] FunComment funComment)
+        public async Task<IActionResult> Create([Bind("WeArticleId,CommentContent")] FunComment funComment)
         {
             if (ModelState.IsValid)
             {
-                funComment.Id = Guid.NewGuid();
-                _context.Add(funComment);
+                var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+                var _funComment=new FunComment()
+                {
+                    Id=Guid.NewGuid(),
+                    CommentContent=funComment.CommentContent,
+                    CommentUserId=_UserId,
+                    DOCommenting=DateTimeOffset.Now,
+                    IsShielded=false,
+                    WeArticleId=funComment.WeArticleId,
+                };
+                
+                await _context.AddAsync(_funComment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Ok();    //   RedirectToAction(nameof(Index));
             }
             return View(funComment);
         }
