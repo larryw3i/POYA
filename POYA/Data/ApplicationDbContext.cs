@@ -18,7 +18,7 @@ namespace POYA.Data
         {
         }
         public DbSet<POYA.Models.X_doveUserInfo> X_DoveUserInfos { get; set; }
-        public DbSet<POYA.Areas.FunAdmin.Models.FContentCheck> FContentCheck { get; set; }
+        public DbSet<POYA.Areas.WeEduHub.Models.FContentCheck> FContentCheck { get; set; }
         public DbSet<POYA.Areas.FunFiles.Models.FunDir> FunDir { get; set; }
         public DbSet<POYA.Areas.FunFiles.Models.FunFileByte> FunFileByte { get; set; }
         public DbSet<POYA.Areas.FunFiles.Models.FunYourFile> FunYourFile { get; set; }

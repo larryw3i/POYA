@@ -1,0 +1,148 @@
+@model POYA.Areas.WeEduHub.Models.FContentCheck
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    var IsCurrentUserRoleInAdmin = Convert.ToBoolean(ViewData["IsCurrentUserRoleInAdmin"]);
+    var IsReportSubmittedByUser = Convert.ToBoolean(ViewData["IsReportSubmittedByUser"]);
+
+    ViewData["Title"] =IsCurrentUserRoleInAdmin?Localizer["Check a report"]: Localizer[ "Edit your report"];
+}
+
+<h1>@(ViewData["Title"])</h1>
+
+<hr />
+<div class="row">
+    <div class=" col col-sm-10 col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            
+            @if(IsReportSubmittedByUser)
+            {
+                <div class="form-group">
+                    <label  class="control-label">@(IsCurrentUserRoleInAdmin?Localizer["comment"]:Localizer["Comment"])</label>
+                    <textarea asp-for="AppellantComment" class="form-control" ></textarea>
+                    <span asp-validation-for="AppellantComment" class="text-danger"></span>
+                </div>
+
+            }
+
+            @if(IsCurrentUserRoleInAdmin)
+            {
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsLegal" />  @(Localizer["Is content legal"])
+                    </label>
+                </div>
+            }
+
+            <div class="form-group IllegalityType-form-group" >
+                <label asp-for="IllegalityType" class="control-label"></label>
+                <select asp-for="IllegalityType"  asp-items="@(Model.IllegalityTypeSelectListItems)" asp- class="form-control" ></select>
+            </div>
+            
+            @if (IsCurrentUserRoleInAdmin)
+            {
+                <div class="form-group">
+                    <label asp-for="ReceptionistComment" class="control-label"></label>
+                    <textarea asp-for="ReceptionistComment" class="form-control" ></textarea>
+                    <span asp-validation-for="ReceptionistComment" class="text-danger"></span>
+                </div>
+            }
+            
+            <div class="form-group">
+                <a class="btn btn-outline-info" id="BackEle">&laquo; @(Localizer["Back"])</a>
+                <input type="submit" value='@(Localizer["Save"])' class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    
+    <div class="col col-sm -10 col-md-7 offset-md-1 LContentEle">
+        <div id="LContentTitle"></div>
+        <div id="LContent"></div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        var IsCurrentUserRoleInAdmin=Boolean(`@(IsCurrentUserRoleInAdmin?"1":"")`);
+        $(document).ready(()=>{
+            IllegalityType_Change();
+            AddIllegalityTypeToAppellantComment();
+            InitialAppellantCommentReadonly();
+
+            $(`#IsLegal`).change(()=>{IsLegal_Change();});
+            $(`#IllegalityType`).change(()=>{IllegalityType_Change();});
+            $(`#LContent`).load(`@(Url.Action("GetContent","FContentChecks",new{ContentId=Model.ContentId,area="FunAdmin"}))`);
+            $(`#LContentTitle`).load(`@(Url.Action("GetContentTitle","FContentChecks",new{ContentId=Model.ContentId,area="FunAdmin"}))`);
+
+        });
+
+        function IsLegal_Change(){
+            if($(`#IsLegal`).is(':checked')){
+                $(`#IllegalityType`).parent().hide();
+            }else{
+                $(`#IllegalityType`).parent().show();
+            }
+            $(`#@(IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
+        }
+        
+        function InitialAppellantCommentReadonly(){
+            if(IsCurrentUserRoleInAdmin){
+                $(`#AppellantComment`).attr("readonly","readonly");
+            }
+        }
+
+        function AddIllegalityTypeToAppellantComment(){
+            if($(`#IllegalityType`).val()!=`110` && IsCurrentUserRoleInAdmin){
+                $(`#AppellantComment`).prepend($(`#IllegalityType`).find("option:selected").text()+' >> ');
+            }
+        }
+
+        function IllegalityType_Change(){ 
+            if($(`#IllegalityType`).val()==`110`){
+                $(`#@(IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments like:"]) (@(Localizer["reason"])) >  (@(Localizer["description"])) . . .');
+            }else{
+                $(`#@(IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Localizer["Type some comments"]). . .');
+            }
+        }
+    </script>
+}
+
+@section Styles{
+    @(Html.Raw(@"
+        <style>
+            .IllegalityType-form-group{
+                display:"+((Model.IsLegal && IsCurrentUserRoleInAdmin)?"none":"block")+@"
+            }
+        </style>
+    "));
+    <style>
+        #LContent{
+            width: min-content;
+        }
+
+        .LContentEle{
+            word-wrap: break-word;
+            width: max-content;
+        }
+
+        #LContent,#LContentTitle{
+            width: 100%;
+            cursor:default;
+        }
+
+        #LContentTitle{
+            font-size: 150%;
+            color:blue;
+            text-align:center;
+        }
+
+        .form-check-label{
+            cursor: pointer;
+        }
+    </style>
+}

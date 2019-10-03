@@ -1,0 +1,145 @@
+@model POYA.Areas.WeEduHub.Models.FContentCheck
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var IsCurrentUserRoleInAdmin=Convert.ToBoolean(ViewData["IsCurrentUserRoleInAdmin"]);
+    var IsChecked=Convert.ToBoolean(ViewData["IsChecked"]);
+    var UserId=ViewData["UserId"].ToString();
+}
+
+<h1>@(Localizer["Details"])</h1>
+<div class="col col-12">
+    <hr />
+    <div class="row">
+        <div class="col col-md-7" id="LContentEle">
+            <div class="col col-12" id="LContentTitle"></div>
+            <div class="col col-12" id="LContent"></div>
+        </div>
+        <div class="col col-md-4 offset-md-1">
+            <dl>
+                @if(!string.IsNullOrEmpty( Model.AppellantId))
+                {
+                    <dt class = "col-sm-auto">
+                        @(Html.DisplayNameFor(model => model.AppellantId))
+                    </dt>
+                    <dd class = "col-sm-auto" id="LAppellant" user_id='@(Model.AppellantId)'>
+                    </dd>
+                    <dt class = "col-sm-auto">
+                        @(Html.DisplayNameFor(model => model.AppellantComment))
+                    </dt>
+                    <dd class = "col-sm-auto">
+                        @(Html.DisplayFor(model => model.AppellantComment))
+                    </dd>
+                    <dt class = "col-sm-auto">
+                        @(Html.DisplayNameFor(model => model.DOSubmitting))
+                    </dt>
+                    <dd class = "col-sm-auto">
+                        @(Model.DOSubmitting?.LocalDateTime)
+                    </dd>
+                }
+
+                @if(!string.IsNullOrEmpty(Model.ReceptionistId))
+                {
+                    <dt class = "col-sm-auto">
+                        @(Html.DisplayNameFor(model => model.ReceptionistId))
+                    </dt>
+                    <dd class = "col-sm-auto" id="LReceptionist" user_id='@(Model.ReceptionistId)'>
+                    </dd>
+                    <dt class = "col-sm-auto">
+                        @(Html.DisplayNameFor(model => model.ReceptionistComment))
+                    </dt>
+                    <dd class = "col-sm-auto">
+                        @(Html.DisplayFor(model => model.ReceptionistComment))
+                    </dd>
+                    <dt class = "col-sm-auto">
+                        @(Html.DisplayNameFor(model => model.DOHandling))
+                    </dt>
+                    <dd class = "col-sm-auto">
+                        @(Model.DOHandling?.LocalDateTime)
+                    </dd>
+                    <dt class = "col-sm-auto">
+                        @(Localizer["Is content legal"]+" ?")  
+                        <span id="LIsLegal" >
+                            @(Model.IsLegal?Localizer["Yes"]:Localizer["No"])
+                        </span>
+                    </dt>
+                    <dd class = "col-sm-auto">
+                    </dd>
+                }
+                
+                <div>
+                    <a class="btn btn-outline-info" id="BackEle">&laquo; @(Localizer["Back"])</a>  
+                    @if(!IsChecked && Model.AppellantId==UserId)
+                    {
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success">@(Localizer["Edit"])</a>
+                    }
+                    else if(IsCurrentUserRoleInAdmin)
+                    {
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success">@(Localizer["Check"])</a>
+                    }
+                </div>
+            </dl>
+        </div>
+
+    </div>
+    
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(()=>{
+            GetUserName();
+            InitialIsLegalEleCss();
+            $(`#LContentTitle`).load(`@(Url.Action("GetContentTitle",new{Model.ContentId}))`);
+            $(`#LContent`).load(`@(Url.Action("GetContent",new{Model.ContentId}))`);
+        });
+
+        function InitialIsLegalEleCss(){
+            if(Boolean(`@(Model.IsLegal?"1":"")`)){
+                $(`#LIsLegal`).css({"color":"blue"});
+            }else{
+                $(`#LIsLegal`).css({"color":"red"});
+            }
+        }
+
+        function GetUserName(){
+            $(`#LAppellant,#LReceptionist`).each((index,elem)=>{
+                var _UserId=$(elem).attr(`user_id`);
+                $(elem).load(`@(Url.Action("GetUserName","FContentChecks",new{area="FunAdmin"}))?UserId=${_UserId}`);
+            });
+        }
+    </script>
+}
+
+@section Styles{
+    <style>
+
+        #LContent{
+            width: max-content;
+            height: 100%;
+        }
+        #OperationEle{
+            position: fixed;
+            bottom: 8%;
+
+        }
+
+        #LIsLegal{
+            font-size: 150%;
+        }
+
+        #LContentEle *{
+            width: 100%;
+            word-wrap: break-word;
+        }
+
+        #LContentTitle{
+            text-align: center;
+            width: 100%;
+            font-size: 150%;
+            color: mediumorchid;
+        }
+    </style>
+}

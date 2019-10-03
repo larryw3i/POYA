@@ -11,16 +11,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
-using POYA.Areas.FunAdmin.Models;
+using POYA.Areas.WeEduHub.Models;
 using POYA.Areas.FunFiles.Controllers;
 using POYA.Areas.WeEduHub.Controllers;
 using POYA.Data;
 using POYA.Unities.Helpers;
 
-namespace POYA.Areas.FunAdmin.Controllers
+namespace POYA.Areas.WeEduHub.Controllers
 {
-    [Authorize(Roles="7de6e18c-9fd7-432c-98fc-2a5172e7fbde")]
-    [Area("FunAdmin")]
+    [Authorize]
+    [Area("WeEduHub")]
     public class FContentChecksController : Controller
     {
 
@@ -271,7 +271,7 @@ namespace POYA.Areas.FunAdmin.Controllers
                         
                         if(IsReportSubmittedByUser && IsChecked )
                         {
-                            //  _FContentCheck.AppellantComment=AppellantCommentForSubsequentCheck(fContentCheck,_FContentCheck);
+                            _FContentCheck.AppellantComment=AppellantCommentForSubsequentCheck(fContentCheck,_FContentCheck);
                         }
 
                         _FContentCheck.DOHandling=DateTimeOffset.Now;

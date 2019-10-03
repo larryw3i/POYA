@@ -1,0 +1,150 @@
+@model IEnumerable<POYA.Areas.WeEduHub.Models.FContentCheck>
+@using POYA.Areas.WeEduHub.Controllers;
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var IsCurrentUserRoleInAdmin=Convert.ToBoolean(ViewData["IsCurrentUserRoleInAdmin"]);
+    var UserId=Convert.ToString(ViewData["UserId"]);
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @(Html.DisplayNameFor(model => model.ContentId))
+            </th>
+            <th>
+                @(Html.DisplayNameFor(model => model.AppellantId))
+            </th>
+            <th>
+                @(Html.DisplayNameFor(model => model.ReceptionistId))
+            </th>
+            <th>
+                @(Html.DisplayNameFor(model => model.DOSubmitting))
+            </th>
+            <th>
+                @(Html.DisplayNameFor(model => model.DOHandling))
+            </th>
+            <th>
+                @(Html.DisplayNameFor(model => model.AppellantComment))
+            </th>
+            <th>
+                @(Html.DisplayNameFor(model => model.ReceptionistComment))
+            </th>
+            <th>
+                @(Html.DisplayNameFor(model => model.IsLegal))
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) 
+    {
+        
+        var _IsChecked=!string.IsNullOrEmpty(item.ReceptionistId);
+        var _IsSubmittedByAdmin=string.IsNullOrEmpty(item.AppellantId) && item.ReceptionistId==UserId;
+        
+
+        
+        <tr>
+            <td >
+                @(item.ContentTitle)
+            </td>
+            <td>
+                @(item.AppellantName)
+            </td>
+            <td>
+                @(item.ReceptionistName)
+            </td>
+            <td>
+                @if(item.DOSubmitting==null)
+                {
+                    @("N/A")
+                }
+                else
+                {
+                    @(item.DOSubmitting?.LocalDateTime)
+                }
+            </td>
+            <td>
+                @(item.DOHandling?.LocalDateTime)
+            </td>
+            <td>
+                @((item.AppellantComment?.Length>0)?item.AppellantComment:"N/A")
+                @if(item.AppellantComment?.Length>0 && ((DateTimeOffset.Now - item.DOSubmitting).Value.Days<2) && ((item.ReceptionistComment?.Length??0)<1))
+                {
+                    <span class="badge badge-primary">@(Localizer["Newest"])</span>
+                }
+            </td>
+            <td>
+                @((item.ReceptionistComment?.Length>0)?item.ReceptionistComment:"N/A")
+            </td>
+            <td class="IsLegal_or_">
+                @(Html.Raw((!_IsChecked)? "\u2753": item.IsLegal?"\u2714\ufe0f":"\u274c"))
+            </td>
+            <td class="fcontent_check_operation">
+                @if(IsCurrentUserRoleInAdmin)
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">@(Html.Raw("\u2696\ufe0f"))</a>   
+                }
+                else if(!_IsChecked && !IsCurrentUserRoleInAdmin)
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">@(Html.Raw("\u2712\ufe0f"))</a>   
+                }
+
+                <a asp-action="Details" asp-route-id="@item.Id">@(Html.Raw("\ud83d\udd0d"))</a>     
+                @if(
+                    (!_IsChecked && item.AppellantId==UserId) || 
+                    _IsSubmittedByAdmin 
+                )
+                {
+                    <a asp-action="Delete" asp-route-id="@item.Id">@(Html.Raw("\ud83d\uddd1\ufe0f"))</a>
+                }
+            </td>  
+        </tr>
+    }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        $(document).ready(()=>{
+            GetContentTitle();
+           
+        });
+
+        function GetContentTitle(){
+            $(`.ContentTitle`).each((index,elem)=>{
+                var _ContentId=$(elem).attr(`content_id`);
+                $(elem).load(`@(Url.Action(nameof(FContentChecksController.GetContentTitle),"FContentChecks",new{area="FunAdmin"}))?ContentId=${_ContentId}`);
+            });
+        }
+
+    </script>
+}
+
+@section Styles{
+    <style>
+        .IsLegal_or_{
+            font-size: 130%;
+        }
+        .fcontent_check_operation a{
+            font-size:150%;
+        }
+        .ContentTitle{
+            width: 10%;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+        .AppellantName,.ReceptionistName{
+            width: 8%;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+        td{
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+    </style>
+}

@@ -1,0 +1,131 @@
+@model POYA.Areas.WeEduHub.Models.FContentCheck
+
+@{
+    ViewData["Title"] = Localizer["Delete"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var IsAdmin=Convert.ToBoolean(ViewData["IsAdmin"]);
+}
+
+<h1>@(ViewData["Title"])</h1>
+
+<h3>@(Localizer["Are you sure you want to delete"]) @(Localizer["this report"])?</h3>
+<div class="col col-12">
+    <hr />
+    <div class="row">
+        <div class="col col-md-7" id="LContentEle">
+            <div id="LContentTitle"></div>
+            <div id="LContent"></div>
+        </div>
+        <div class="col col-md-4 offset-md-1">
+            <dl>
+                @if(!string.IsNullOrEmpty( Model.AppellantId))
+                {
+                    <dt class = "col-sm-auto">
+                        @(Html.DisplayNameFor(model => model.AppellantId))
+                    </dt>
+                    <dd class = "col-sm-auto" id="LAppellant" user_id='@(Model.AppellantId)'>
+                    </dd>
+                    <dt class = "col-sm-auto">
+                        @(Html.DisplayNameFor(model => model.AppellantComment))
+                    </dt>
+                    <dd class = "col-sm-auto">
+                        @(Html.DisplayFor(model => model.AppellantComment))
+                    </dd>
+                    <dt class = "col-sm-auto">
+                        @(Html.DisplayNameFor(model => model.DOSubmitting))
+                    </dt>
+                    <dd class = "col-sm-auto">
+                        @(Model.DOSubmitting?.LocalDateTime)
+                    </dd>
+                }
+
+                @if(!string.IsNullOrEmpty(Model.ReceptionistId))
+                {
+                    <dt class = "col-sm-auto">
+                        @(Html.DisplayNameFor(model => model.ReceptionistId))
+                    </dt>
+                    <dd class = "col-sm-auto" id="LReceptionist" user_id='@(Model.ReceptionistId)'>
+                    </dd>
+                    <dt class = "col-sm-auto">
+                        @(Html.DisplayNameFor(model => model.ReceptionistComment))
+                    </dt>
+                    <dd class = "col-sm-auto">
+                        @(Html.DisplayFor(model => model.ReceptionistComment))
+                    </dd>
+                    <dt class = "col-sm-auto">
+                        @(Html.DisplayNameFor(model => model.DOHandling))
+                    </dt>
+                    <dd class = "col-sm-auto">
+                        @(Model.DOHandling?.LocalDateTime)
+                    </dd>
+                    <dt class = "col-sm-auto">
+                        @(Localizer["Is content legal"]+" ?")  
+                        <span id="LIsLegal" >
+                            @(Model.IsLegal?Localizer["Yes"]:Localizer["No"])
+                        </span>
+                    </dt>
+                    <dd class = "col-sm-auto">
+                    </dd>
+                }
+            </dl>
+        </div>
+    </div>
+    
+    <form asp-action="Delete" id="OperationEle">
+        <input type="hidden" asp-for="Id" />
+        <a class="btn btn-outline-info" id="BackEle">&laquo; @(Localizer["Back"])</a>  
+        <input type="submit" value='@(Localizer["Delete"])' class="btn btn-danger" />  
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(()=>{
+            $(`#LContentTitle`).load(`@(Url.Action("GetContentTitle",new{Model.ContentId}))`);
+            $(`#LContent`).load(`@(Url.Action("GetContent",new{Model.ContentId}))`);
+            GetUserName();
+            InitialIsLegalEleCss();
+        });
+
+        function InitialIsLegalEleCss(){
+            if(Boolean(`@(Model.IsLegal?"1":"")`)){
+                $(`#LIsLegal`).css({"color":"blue"});
+            }else{
+                $(`#LIsLegal`).css({"color":"red"});
+            }
+        }
+
+        function GetUserName(){
+            $(`#LAppellant,#LReceptionist`).each((index,elem)=>{
+                var _UserId=$(elem).attr(`user_id`);
+                $(elem).load(`@(Url.Action("GetUserName","FContentChecks",new{area="FunAdmin"}))?UserId=${_UserId}`);
+            });
+        }
+    </script>
+}
+
+@section Styles{
+    <style>
+        #OperationEle{
+            position: fixed;
+            bottom: 8%;
+
+        }
+
+        #LIsLegal{
+            font-size: 150%;
+        }
+
+        #LContentEle *{
+            width: 100%;
+            word-wrap: break-word;
+        }
+
+        #LContentTitle{
+            text-align: center;
+            width: 100%;
+            font-size: 150%;
+            color: mediumorchid;
+        }
+    </style>
+}

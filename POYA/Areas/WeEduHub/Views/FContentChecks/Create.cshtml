@@ -1,0 +1,163 @@
+@model POYA.Areas.WeEduHub.Models.FContentCheck
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    var _IsCurrentUserRoleInAdmin=Convert.ToBoolean(ViewData["IsCurrentUserRoleInAdmin"]);
+    var IsReportSubmittedByUser = Convert.ToBoolean(ViewData["IsReportSubmittedByUser"]);
+
+    var _IsEdit=Convert.ToBoolean(ViewData["IsEdit"]??false);
+
+    var _IsAdminChecking=_IsCurrentUserRoleInAdmin && IsReportSubmittedByUser;
+
+    ViewData["Title"] = _IsCurrentUserRoleInAdmin? Localizer["Check a report"]:
+                        _IsEdit? Localizer["Edit report"]: 
+                        Localizer["Make a report"];
+}
+
+<h1>@(ViewData["Title"])</h1>
+
+<hr />
+<div class="row">
+    <div class="col col-sm-10 offset-md-1 col-md-6 LContentEle">
+        <a asp-action="RedirectionByContentId" asp-route-ContentId="@(Model.ContentId)" id="LContentTitle" target="_blank"></a>
+        <div id="LContent"></div>
+    </div>
+    <div class="col col-sm-10 col-md-5">
+        <form asp-action='@(_IsEdit?"Edit":"Create")'>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ContentId"/>
+            
+            @if(IsReportSubmittedByUser)
+            {
+                <div class="form-group">
+                    <label  class="control-label">@(IsReportSubmittedByUser?Localizer["Appellant comment"]:Localizer["Comment"])</label>
+
+                    @if(_IsCurrentUserRoleInAdmin)
+                    {
+                        <textarea asp-for="AppellantComment" class="form-control" rows="5" readonly></textarea>
+                    }
+                    else
+                    {
+                        <textarea asp-for="AppellantComment" class="form-control" rows="5" ></textarea>
+                    }
+                    <span asp-validation-for="AppellantComment" class="text-danger"></span>
+                </div>
+
+            }
+
+            @if(_IsCurrentUserRoleInAdmin)
+            {
+                <div class="form-group form-check is_legal_form_group">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsLegal" />  @(Localizer["Is content legal"])
+                    </label>
+                </div>
+            }
+
+            @if(Model.IsLegal && _IsCurrentUserRoleInAdmin)
+            {
+
+                <div class="form-group" id="illegality_type_parent" style="display: none;">
+                    <label asp-for="IllegalityType" class="control-label"></label>
+                    <select asp-for="IllegalityType"  asp-items="@(Model.IllegalityTypeSelectListItems)" class="form-control" ></select>
+                </div>
+            }
+            else
+            {
+                <div class="form-group" id="illegality_type_parent">
+                    <label asp-for="IllegalityType" class="control-label"></label>
+                    <select asp-for="IllegalityType"  asp-items="@(Model.IllegalityTypeSelectListItems)" class="form-control" ></select>
+                </div>
+            }
+            
+            @if (_IsCurrentUserRoleInAdmin)
+            {
+                <div class="form-group">
+                    <label asp-for="ReceptionistComment" class="control-label"></label>
+                    <textarea asp-for="ReceptionistComment" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="ReceptionistComment" class="text-danger"></span>
+                </div>
+            }
+            
+            <div class="form-group">
+                <a class="btn btn-outline-info" id="BackEle">&laquo; @(Localizer["Back"])</a>
+                <input type="submit" value='@(Localizer["Save"])' class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        var _IsCurrentUserRoleInAdmin=Boolean(`@(_IsCurrentUserRoleInAdmin?" ":"")`);
+
+        $(document).ready(()=>{
+
+            IllegalityType_Change();
+            
+
+            $(`#IsLegal`).change(()=>{IsLegal_Change();});
+
+            $(`#IllegalityType`).change(()=>{IllegalityType_Change();});
+
+            $.get(`@(Url.Action("GetContent","FContentChecks",new{ContentId=Model.ContentId,area="WeEduHub"}))`,(data)=>{ $(`#LContent`).html(data); });
+
+            $.get(`@(Url.Action("GetContentTitle","FContentChecks",new{ContentId=Model.ContentId,area="WeEduHub"}))`,(data)=>{ $(`#LContentTitle`).text(data); });
+        });
+
+        function IsLegal_Change(){
+            if($(`#IsLegal`).is(':checked')){
+                $(`#IllegalityType`).parent().hide();
+            }else{
+                $(`#IllegalityType`).parent().show();
+            }
+            $(`#@(_IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Html.Raw(Localizer["Type some comments"])). . .');
+        }
+        
+        function IllegalityType_Change(){ 
+            if($(`#IllegalityType`).val()==`110`){
+                $(`#@(_IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Html.Raw(Localizer["Type some comments like"])): (@(Html.Raw(Localizer["reason"]))) >  (@(Html.Raw(Localizer["description"]))) . . .');
+            }else{
+                $(`#@(_IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Html.Raw(Localizer["Type some comments"])). . .');
+            }
+        }
+    </script>
+}
+
+@section Styles{
+    <style>
+
+        .is_legal_form_group{
+            -webkit-user-select:none;
+            -moz-user-select:none;
+            -ms-user-select:none;
+            user-select:none;
+        }
+
+        .LContentEle{
+            word-wrap: break-word;
+        }
+
+        #LContent{
+            height: 90%;
+        }
+        #LContent,#LContentTitle{
+            width: 100%;
+            cursor:default;
+        }
+
+        #LContentTitle{
+            font-size: 150%;
+            color:blue;
+            text-align:center;
+        }
+
+        .form-check-label{
+            cursor: pointer;
+        }
+    </style>
+}
