@@ -147,7 +147,10 @@ namespace POYA.Areas.WeEduHub.Controllers
             var _WeArticle = new WeArticle 
                 { 
                     SetId = SetId ?? Guid.Empty, 
-                    ClassId=_weEduHubArticleClassHelper.GetAllSecondClasses().Select(p=>p.Id).FirstOrDefault()
+                    ClassId=_weEduHubArticleClassHelper.GetAllSecondClasses().Select(p=>p.Id).FirstOrDefault(),
+                    IsCommentBeAllowed=false,
+                    IsNegativeSignBeAllowed=false,
+                    IsPositiveSignBeAllowed=false
                 };
 
             return View(_WeArticle);
@@ -159,7 +162,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [RequestSizeLimit(1024*1024*1024)]
-        public async Task<IActionResult> Create([Bind("SetId,Title,WeArticleFormFile,ClassId,CustomClass,Complex,Comment")]WeArticle weArticle)
+        public async Task<IActionResult> Create([Bind("SetId,Title,WeArticleFormFile,ClassId,CustomClass,Complex,Comment,IsCommentBeAllowed,IsNegativeSignBeAllowed,IsPositiveSignBeAllowed")]WeArticle weArticle)
         {
             if (ModelState.IsValid)
             {
@@ -265,7 +268,7 @@ namespace POYA.Areas.WeEduHub.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [RequestSizeLimit(1024*1024*1024)]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,SetId,Title,WeArticleFormFile,ClassId,CustomClass,Complex,Comment")] WeArticle weArticle)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,SetId,Title,WeArticleFormFile,ClassId,CustomClass,Complex,Comment,IsCommentBeAllowed,IsNegativeSignBeAllowed,IsPositiveSignBeAllowed")] WeArticle weArticle)
         {
             if (id != weArticle.Id)
             {
@@ -324,6 +327,9 @@ namespace POYA.Areas.WeEduHub.Controllers
                     _WeArticle.ClassId=weArticle.ClassId;
                     _WeArticle.CustomClass=weArticle.CustomClass;
                     _WeArticle.Comment=weArticle.Comment;
+                    _WeArticle.IsCommentBeAllowed=weArticle.IsCommentBeAllowed;
+                    _WeArticle.IsPositiveSignBeAllowed=weArticle.IsPositiveSignBeAllowed;
+                    _WeArticle.IsNegativeSignBeAllowed=weArticle.IsNegativeSignBeAllowed;
                     
                     await _context.SaveChangesAsync();
                 }

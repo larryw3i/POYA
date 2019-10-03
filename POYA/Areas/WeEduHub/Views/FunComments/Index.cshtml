@@ -5,34 +5,33 @@
 }
 
 
-<table class="table">
-    <tbody>
+<table >
+    <tbody >
         @foreach (var item in Model) 
         {
-            <tr>
-                <td>
-                    <table>
-                        <td>
-                            <img 
-                                src='/Home/GetAvatar?UserId=@(item.CommentUserId)' 
-                                width="50" height="50" 
-                                alt="@(item.CommentUserName)"  
-                                title="@(item.CommentUserName)" 
-                                class="rounded-circle"/>
-                        </td>
-                        <td>
-                            <a class="FunComment_UserName" asp-action="UserInfo" asp-route-id="@item.Id">@(item.CommentUserName)</a>
-                            <br/>
-                            <span class="CommentContent"> @(Html.DisplayFor(modelItem => item.CommentContent))</span> 
-                            @if(UserId==item.CommentUserId)
-                            {
-                                <br/>
-                                
-                                <span class="DOCommenting"> @(item.DOCommenting.LocalDateTime)</span> 
-                                <a class="FunComment_Delete" asp-action="Delete" asp-route-id="@item.Id">@(Localizer["Delete"])</a>
-                            }
-                        </td>
-                    </table>
+            <tr class="FunComment_tr">
+                <td >
+                    <img 
+                        src='/Home/GetAvatar?UserId=@(item.CommentUserId)' 
+                        width="50" height="50" 
+                        alt="@(item.CommentUserName)"  
+                        title="@(item.CommentUserName)" 
+                        class="rounded-circle  prevent-select FunComment_UserAvatar" user_id='@(item.CommentUserId)'/>
+                </td>
+                <td >
+                    <div style="padding-left: 10px;">
+                        <a class="FunComment_UserName prevent-select" asp-page="/Account/ViewUserInfo" asp-area="Identity" asp-route-UserId="@item.CommentUserId">@(item.CommentUserName)</a>
+                        <br/>
+                        <span class="CommentContent"> @(Html.DisplayFor(modelItem => item.CommentContent))</span> 
+                        <br/>
+                        <span class="DOCommenting"> @(item.DOCommenting.LocalDateTime)</span> 
+                        @if(UserId==item.CommentUserId)
+                        {
+                            <a class="FunComment_Delete " asp-action="Delete" asp-route-id="@item.Id">@(Localizer["Delete"])</a> 
+                            <a class="FunComment_Report " asp-action="Delete" asp-route-id="@item.Id">@(Localizer["Report"])</a>
+                        }
+
+                    </div>
                 </td>
             </tr>
         }

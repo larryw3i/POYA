@@ -23,3 +23,10 @@
 #_Language{
     width: min-content;
 }
+
+.prevent-select{
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}

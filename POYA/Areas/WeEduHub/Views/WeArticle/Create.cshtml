@@ -31,6 +31,9 @@
             <input asp-for="CustomClass" type="hidden"/>
             <input asp-for="Complex" type="hidden"/>
             <input asp-for="Comment" type="hidden"/>
+            <input asp-for="IsPositiveSignBeAllowed" type="hidden"/>
+            <input asp-for="IsNegativeSignBeAllowed" type="hidden"/>
+            <input asp-for="IsCommentBeAllowed" type="hidden"/>
 
             <div class="form-group">
                 <input asp-for="Title" class="form-control" placeholder='@(Localizer["Title"])' autocomplete="off"/>
@@ -76,6 +79,22 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col offset-sm-1 col-sm-10 offset-2 col-8" >
+        <div id="wearticle_class_and_" class="row">
+            <div class="col col-auto">
+                <input type="checkbox"  class="_IsCommentBeAllowed_" />@(Localizer["Is comment be allowed"])<br/>
+            </div>
+            <div class="col col-auto"> 
+                <input type="checkbox"  class="_IsNegativeSignBeAllowed_"/>@(Localizer["Is negative sign be allowed"])<br/>
+            </div>
+            <div class="col col-auto">
+                <input type="checkbox"  class="_IsPositiveSignBeAllowed_"/>@(Localizer["Is positive sign be allowed"])<br/>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div style="margin-bottom: 60px;"></div>
 
 @section Scripts 
@@ -93,35 +112,63 @@
         var _selected_file_content_video_string=(src,type)=>`   <video   id="selected_file_content" src='${src}'    type='${type}'  controls></video>`;
         var AllowedDocumentFileLength=Number(`@(LConfiguration["WeEduHub.WeArticle:AllowedDocumentFileLength"])`);
         var AllowedVideoFileLength=Number(`@(LConfiguration["WeEduHub.WeArticle:AllowedVideoFileLength"])`);
+        var IsPositiveSignBeAllowed=Boolean(`@(Model.IsPositiveSignBeAllowed?" ":"")`)
+        var IsNegativeSignBeAllowed=Boolean(`@(Model.IsNegativeSignBeAllowed?" ":"")`)
+        var IsCommentBeAllowed=Boolean(`@(Model.IsCommentBeAllowed?" ":"")`)
 
         
         $(document).ready(()=>{
 
             $(document).on(`click`,`#select_file`,()=>{ SelectFileClick(); });
 
-            $(document).on(`change`,`#WeArticleFormFile`,(e)=>{  WeArticleFormFileChange(e); })
+            $(document).on(`change`,`#WeArticleFormFile`,(e)=>{  WeArticleFormFileChange(e); });
             
-            $(document).on(`change`,`#first_class_select`,(e)=>{ FirstClassSelectChange(e); })
+            $(document).on(`change`,`#first_class_select`,(e)=>{ FirstClassSelectChange(e); });
 
-            $(document).on(`change`,`#second_class_select`,(e)=>{ SecondClassSelectChange(e); })
+            $(document).on(`change`,`#second_class_select`,(e)=>{ SecondClassSelectChange(e); });
 
-            $(document).on(`input propertychange`,`#custom_class_input`,(e)=>{ CustomClassInputPropertyChange(e); })
+            $(document).on(`input propertychange`,`#custom_class_input`,(e)=>{ CustomClassInputPropertyChange(e); });
 
-            $(document).on(`input propertychange`,`#comment_textarea`,(e)=>{ CommentTextareaInputPropertyChange(e); })
+            $(document).on(`input propertychange`,`#comment_textarea`,(e)=>{ CommentTextareaInputPropertyChange(e); });
 
             $(document).on(`change`,`#complex_select`,(e)=>{ ComplexSelectChange(e);  });
 
-            $(document).on(`click`,`#wearticle_create_and_edit_form_submit`,  (e)=>{  WearticleCreateAndEditFormSubmitOnClick(e) })
+            $(document).on(`click`,`#wearticle_create_and_edit_form_submit`,  (e)=>{  WearticleCreateAndEditFormSubmitOnClick(e) });
+
+            $(document).on(`change`,`._IsCommentBeAllowed_`,(e)=>{ IsCommentBeAllowedChange(e);  });
+            
+            $(document).on(`change`,`._IsNegativeSignBeAllowed_`,(e)=>{ IsNegativeSignBeAllowedChange(e);  });
+            
+            $(document).on(`change`,`._IsPositiveSignBeAllowed_`,(e)=>{ IsPositiveSignBeAllowedChange(e);  });
             
             if(_WeArticleFileContentType.length>0) $(`#complex_select`).find(`option[value='@(Model.Complex)']`).attr("selected",true);
 
             $(`#comment_textarea`).val($(`#Comment`).val());
+
+            if(IsCommentBeAllowed) $(`._IsCommentBeAllowed_`).attr("checked","checked");
+            if(IsNegativeSignBeAllowed) $(`._IsNegativeSignBeAllowed_`).attr("checked","checked");
+            if(IsPositiveSignBeAllowed) $(`._IsPositiveSignBeAllowed_`).attr("checked","checked");
 
             InitialWeArticleFirstClasses();
 
             InitialWeArticleContent();
 
         });
+
+        function IsCommentBeAllowedChange(e)
+        {
+            $(`#IsCommentBeAllowed`).val($(e.target).is(':checked'));
+        }
+
+        function IsNegativeSignBeAllowedChange(e)
+        {
+            $(`#IsNegativeSignBeAllowed`).val($(e.target).is(':checked'));
+        }
+
+        function IsPositiveSignBeAllowedChange(e)
+        {
+            $(`#IsPositiveSignBeAllowed`).val($(e.target).is(':checked'));
+        }
 
         
         function WearticleCreateAndEditFormSubmitOnClick(e)
@@ -138,6 +185,7 @@
                 return;
             }
 
+
             if( (!IsEdit) && ($(`#WeArticleFormFile`).val().length<1) )
             {
                 MakeLayoutAlert(
@@ -148,31 +196,36 @@
                 return;
             }
 
-            if(
-                $(`#WeArticleFormFile`).val().endsWith(`.pdf`) && 
-                (document.getElementById(`WeArticleFormFile`).files[0].size > AllowedDocumentFileLength)
-            )
+            if(!IsEdit || ($(`#WeArticleFormFile`).val().length>0))
             {
-                MakeLayoutAlert(
-                    `@(Html.Raw(Localizer["The length of document should be less than "])) ${Math.round(AllowedDocumentFileLength/1048576)} M`,
-                    4500,
-                    "danger"
-                );
-                return;
+                    
 
-            } 
-            else if(
-                document.getElementById(`WeArticleFormFile`).files[0].type.startsWith(`video/`) && 
-                (document.getElementById(`WeArticleFormFile`).files[0].size > AllowedVideoFileLength)
-            )
-            {
-                MakeLayoutAlert(
-                    `@(Html.Raw(Localizer["The length of video should be less than "])) ${Math.round(AllowedVideoFileLength/1048576)} M`,
-                    4500,
-                    "danger"
-                );
-                return;
+                if(
+                    $(`#WeArticleFormFile`).val().endsWith(`.pdf`) && 
+                    (document.getElementById(`WeArticleFormFile`).files[0].size > AllowedDocumentFileLength)
+                )
+                {
+                    MakeLayoutAlert(
+                        `@(Html.Raw(Localizer["The length of document should be less than "])) ${Math.round(AllowedDocumentFileLength/1048576)} M`,
+                        4500,
+                        "danger"
+                    );
+                    return;
 
+                } 
+                else if(
+                    document.getElementById(`WeArticleFormFile`).files[0].type.startsWith(`video/`) && 
+                    (document.getElementById(`WeArticleFormFile`).files[0].size > AllowedVideoFileLength)
+                )
+                {
+                    MakeLayoutAlert(
+                        `@(Html.Raw(Localizer["The length of video should be less than "])) ${Math.round(AllowedVideoFileLength/1048576)} M`,
+                        4500,
+                        "danger"
+                    );
+                    return;
+
+                }
             }
 
             if(IsEdit && ($(`#WeArticleFormFile`).val().length<1))

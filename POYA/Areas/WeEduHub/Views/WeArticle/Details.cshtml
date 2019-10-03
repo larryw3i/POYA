@@ -10,7 +10,6 @@
     var AuthorUserId=ViewData["AuthorUserId"]?.ToString()??string.Empty;
     var AuthorUserEmail=ViewData["AuthorUserEmail"]?.ToString()??string.Empty;
     var _WeArticleFileContentType=ViewData["WeArticleFileContentType"]?.ToString()??string.Empty;
-    var _IsCommentBeAllowed=true;
     var _IsSignedIn=SignInManager.IsSignedIn(User);
 
 }
@@ -58,19 +57,24 @@
     <div class="wearticle_comment">@(Model.Comment)</div>
 </div>
 <hr/>
-<span>@(Localizer["_Comment"])</span>
-<hr/>
-<div class="row">
-    <div class="col col-12 FunCommentsCreate">
-    </div>
-</div>
 
-<div class="row">
-    <div class="col col-12 FunCommentsIndex">
-    </div>
-</div>
+@if(Model.IsCommentBeAllowed)
+{
 
-<div style="margin-bottom: 20px;"></div>
+    <span>@(Localizer["_Comment"])</span>
+    <hr/>
+    <div class="row">
+        <div class="col col-12 FunCommentsCreate">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-12 FunCommentsIndex">
+        </div>
+    </div>
+
+}
+<div style="margin-bottom: 50px;"></div>
 
 <div class="wearticle_details__">
     <a id="go_back" class="btn btn-info">&laquo; @(Localizer["Back"])</a>   
@@ -84,13 +88,20 @@
 @section Scripts
 {
     <script>
-        var _IsCommentBeAllowed=Boolean(`@(_IsCommentBeAllowed?" ":"")`);
+        var _IsCommentBeAllowed=Boolean(`@(Model.IsCommentBeAllowed?" ":"")`);
         var IsSignedIn=Boolean(`@(_IsSignedIn?" ":"")`);
         $(document).ready(()=>{
             InitialComment();
-            $(document).on(`click`,`#FunComment_Create_Submit`, (e)=>{   FunCommentCreateSubmitOnClick(e);})
+            $(document).on(`click`,`#FunComment_Create_Submit`, (e)=>{  FunCommentCreateSubmitOnClick(e);})
+            $(document).on(`click`,`.FunComment_UserAvatar`,    (e)=>{  FunComment_UserAvatarOnClick(e); })
 
         });
+
+        function FunComment_UserAvatarOnClick(e)
+        {
+        　　window.location.href=`@(Url.Page("/Account/ViewUserInfo",new{area="Identity"}))?UserId=`+$(e.target).attr(`user_id`); 
+        }
+        
 
         function InitialComment()
         {
@@ -129,6 +140,14 @@
 @section Styles
 {
     <style>
+        .FunComment_tr:hover{
+            border: solid;
+            border-width: 2px;
+            border-radius: 10px;
+            border-color: blue;
+            box-shadow: 5px 5px 5px blue;
+            cursor: default;
+        }
         .DOCommenting{
             font-size: 75%;
             color: blue;
@@ -141,7 +160,7 @@
             font-size: 75%;
         }
 
-        .FunComment_Delete{
+        .FunComment_Delete,.FunComment_Report{
             font-size: 75%;
             color: red;
         }
