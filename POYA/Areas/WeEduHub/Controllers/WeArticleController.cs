@@ -116,7 +116,6 @@ namespace POYA.Areas.WeEduHub.Controllers
             {
                 return NotFound();
             }
-            var _User = _userManager.GetUserAsync(User).GetAwaiter().GetResult();
 
             var weArticle = await _context.WeArticle.Where(p=> p.Id==id).FirstOrDefaultAsync();
 
@@ -124,9 +123,10 @@ namespace POYA.Areas.WeEduHub.Controllers
             {
                 return NotFound();
             }
+            var _Author = _userManager.FindByIdAsync(weArticle.AuthorUserId).GetAwaiter().GetResult();
 
-            ViewData["AuthorUserId"]=_User?.Id??string.Empty;;
-            ViewData["AuthorUserEmail"]=_User?.Email??string.Empty;
+            ViewData["AuthorUserId"]=_Author.Id;
+            ViewData["AuthorUserEmail"]=_Author.Email;
 
             _weEduHubArticleClassHelper.InitialWeArticleClassName(ref weArticle,weArticle.ClassId);
 
@@ -327,9 +327,9 @@ namespace POYA.Areas.WeEduHub.Controllers
                     _WeArticle.ClassId=weArticle.ClassId;
                     _WeArticle.CustomClass=weArticle.CustomClass;
                     _WeArticle.Comment=weArticle.Comment;
-                    _WeArticle.IsCommentBeAllowed=weArticle.IsCommentBeAllowed;
-                    _WeArticle.IsPositiveSignBeAllowed=weArticle.IsPositiveSignBeAllowed;
-                    _WeArticle.IsNegativeSignBeAllowed=weArticle.IsNegativeSignBeAllowed;
+                    _WeArticle.IsCommentBeAllowed=false;  //  weArticle.IsCommentBeAllowed;
+                    _WeArticle.IsPositiveSignBeAllowed=false;   //   weArticle.IsPositiveSignBeAllowed;
+                    _WeArticle.IsNegativeSignBeAllowed=false; //  weArticle.IsNegativeSignBeAllowed;
                     
                     await _context.SaveChangesAsync();
                 }
