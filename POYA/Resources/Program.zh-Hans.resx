@@ -88,6 +88,30 @@
   </resheader>
 
 
+<!--
+
+  <data name="" xml:space="preserve">
+	  <value></value>
+  </data>
+
+-->
+
+  <data name="Is positive sign be allowed" xml:space="preserve">
+	  <value>应许点菜</value>
+  </data>
+
+  <data name="Is negative sign be allowed" xml:space="preserve">
+	  <value>应许加油</value>
+  </data>
+
+
+
+
+  <data name="Is comment be allowed" xml:space="preserve">
+	  <value>应许评论</value>
+  </data>
+
+
   <data name="_Comment" xml:space="preserve">
 	  <value>评论</value>
   </data>

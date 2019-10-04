@@ -117,6 +117,14 @@ namespace POYA.Areas.WeEduHub.Controllers
             if (ModelState.IsValid)
             {
                 var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
+                var _WeArticle=await _context.WeArticle.Where(p=>p.Id==funComment.WeArticleId).FirstOrDefaultAsync();
+
+                if(_WeArticle==null || !_WeArticle.IsCommentBeAllowed)
+                {
+                    return BadRequest();
+                }
+
                 var _funComment=new FunComment()
                 {
                     Id=Guid.NewGuid(),

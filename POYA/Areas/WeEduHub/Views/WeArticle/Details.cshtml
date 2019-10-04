@@ -8,6 +8,7 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var AuthorUserId=ViewData["AuthorUserId"]?.ToString()??string.Empty;
+    var CurrentUserId=ViewData["CurrentUserId"]?.ToString();
     var AuthorUserEmail=ViewData["AuthorUserEmail"]?.ToString()??string.Empty;
     var _WeArticleFileContentType=ViewData["WeArticleFileContentType"]?.ToString()??string.Empty;
     var _IsSignedIn=SignInManager.IsSignedIn(User);
@@ -41,20 +42,38 @@
         <object 
             id="selected_file_content" 
             data='@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}))' 
-            type='@_WeArticleFileContentType'>
+            type='@_WeArticleFileContentType'>@(Model.Title)
         </object>  
     }
     else if(_WeArticleFileContentType.StartsWith("video/"))
     {
         <video 
+            preload="metadata"
             id="selected_file_content" 
-            src='@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}))' 
-            type='@_WeArticleFileContentType' 
+            width="90%"
             controls >
+            <source src='@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}))', 
+            type='@_WeArticleFileContentType' />   
+            <track 
+                label='@(Localizer["Video"])'  
+                kind="captions"  
+                src='@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}))'/>
+
         </video> 
     }
     <hr/>
     <div class="wearticle_comment">@(Model.Comment)</div>
+    <div class="wearticle_sign float-right prevent-select">
+        @if(Model.IsPositiveSignBeAllowed)
+        {
+            <span id="PositiveSign">@(Html.Raw("\ud83d\udc4d"))</span>
+        }
+
+        @if(Model.IsNegativeSignBeAllowed)
+        {
+            <span  id="NegativeSign">@(Html.Raw("\ud83d\udc4e"))</span>
+        }
+    </div>
 </div>
 <hr/>
 
@@ -64,24 +83,25 @@
     <span>@(Localizer["_Comment"])</span>
     <hr/>
     <div class="row">
-        <div class="col col-12 FunCommentsCreate">
+        <div class="col col-10 FunCommentsCreate">
         </div>
     </div>
 
     <div class="row">
-        <div class="col col-12 FunCommentsIndex">
+        <div class="col col-10 FunCommentsIndex">
         </div>
     </div>
 
 }
+
 <div style="margin-bottom: 50px;"></div>
 
 <div class="wearticle_details__">
-    <a id="go_back" class="btn btn-info">&laquo; @(Localizer["Back"])</a>   
-    @if(AuthorUserId==Model.AuthorUserId)
+    <a id="go_back" class="btn btn-info btn-sm"> @(Localizer["Back"])</a>   
+    @if(CurrentUserId==Model.AuthorUserId)
     {
-        <a class="wearticle_edit btn btn-info" asp-action="Edit" asp-route-id="@Model.Id">@(Localizer["Edit"])</a>    
-        <a class="wearticle_delete btn btn-info" asp-action="Delete" asp-route-id="@Model.Id">@(Localizer["Delete"])</a>
+        <a class="wearticle_edit btn btn-info btn-sm" asp-action="Edit" asp-route-id="@Model.Id">@(Localizer["Edit"])</a>    
+        <a class="wearticle_delete btn btn-info btn-sm" asp-action="Delete" asp-route-id="@Model.Id">@(Localizer["Delete"])</a>
     }
 </div>
 
@@ -92,10 +112,38 @@
         var IsSignedIn=Boolean(`@(_IsSignedIn?" ":"")`);
         $(document).ready(()=>{
             InitialComment();
+            UpdateWeArticleSign();
             $(document).on(`click`,`#FunComment_Create_Submit`, (e)=>{  FunCommentCreateSubmitOnClick(e);})
             $(document).on(`click`,`.FunComment_UserAvatar`,    (e)=>{  FunComment_UserAvatarOnClick(e); })
+            $(document).on(`click`,`#NegativeSign`, (e)=>{  PositiveSignOnClick(e, IsPositive=false);})
+            $(document).on(`click`,`#PositiveSign`, (e)=>{  PositiveSignOnClick(e );})
 
         });
+
+        function UpdateWeArticleSign()
+        {
+            $.get(`@Url.Action("WeArticleSignCount")?WeArticleId=@(Model.Id)&IsPositive=true`,(data)=>{  $(`#PositiveSign`).text(`\ud83d\udc4d`+data);  });
+            $.get(`@Url.Action("WeArticleSignCount")?WeArticleId=@(Model.Id)&IsPositive=false`,(data)=>{  $(`#NegativeSign`).text(`\ud83d\udc4e`+data);  });
+        }
+
+        function PositiveSignOnClick(e, IsPositive=true)
+        {
+            if(!IsSignedIn)
+            {
+                window.location.href=`@(Url.Page("/Account/Login",new{area="Identity",returnUrl=Context.Request.Path}))`;
+            };
+            $.ajax({
+                url:`@Url.Action("WeArticleSignCreate")`,
+                method:`GET`,
+                data:{WeArticleId:`@(Model.Id)`,IsPositive:IsPositive},
+                success:()=>{
+                    UpdateWeArticleSign();
+                },
+                error:()=>{
+
+                }
+            });
+        }
 
         function FunComment_UserAvatarOnClick(e)
         {
@@ -140,6 +188,14 @@
 @section Styles
 {
     <style>
+        .CommentContent{
+            word-wrap: break-word;
+            word-break:break-all;
+        }
+        .wearticle_sign{
+            transform: scale(1.5);
+            cursor: pointer;
+        }
         .FunComment_tr:hover{
             border: solid;
             border-width: 2px;
@@ -184,14 +240,11 @@
             text-decoration: none;
         }
 
-        .wearticle_content object{
+        .wearticle_content>object{
             border-radius: 5px;
             width: 100%;
             height: 100%;
             background-color: transparent;
-        }
-        .wearticle_content video{
-            width: 90%;
         }
         .wearticle_class_and_{
             font-size: 80%;

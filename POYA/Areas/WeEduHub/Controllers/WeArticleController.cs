@@ -125,6 +125,8 @@ namespace POYA.Areas.WeEduHub.Controllers
             }
             var _Author = _userManager.FindByIdAsync(weArticle.AuthorUserId).GetAwaiter().GetResult();
 
+            ViewData["CurrentUserId"]=_userManager.GetUserAsync(User)?.GetAwaiter().GetResult()?.Id??string.Empty;
+
             ViewData["AuthorUserId"]=_Author.Id;
             ViewData["AuthorUserEmail"]=_Author.Email;
 
@@ -327,9 +329,9 @@ namespace POYA.Areas.WeEduHub.Controllers
                     _WeArticle.ClassId=weArticle.ClassId;
                     _WeArticle.CustomClass=weArticle.CustomClass;
                     _WeArticle.Comment=weArticle.Comment;
-                    _WeArticle.IsCommentBeAllowed=false;  //  weArticle.IsCommentBeAllowed;
-                    _WeArticle.IsPositiveSignBeAllowed=false;   //   weArticle.IsPositiveSignBeAllowed;
-                    _WeArticle.IsNegativeSignBeAllowed=false; //  weArticle.IsNegativeSignBeAllowed;
+                    _WeArticle.IsCommentBeAllowed= weArticle.IsCommentBeAllowed;
+                    _WeArticle.IsPositiveSignBeAllowed=weArticle.IsPositiveSignBeAllowed;
+                    _WeArticle.IsNegativeSignBeAllowed=  weArticle.IsNegativeSignBeAllowed;
                     
                     await _context.SaveChangesAsync();
                 }
@@ -389,6 +391,53 @@ namespace POYA.Areas.WeEduHub.Controllers
         }
 
         #region  DEPOLLUTION
+
+        [AllowAnonymous]
+        public async Task<IActionResult> WeArticleSignCountAsync(Guid WeArticleId, bool IsPositive=true)
+        {
+            return Content(
+                Convert.ToString(await _context.WeArticleSign.Where(p=>p.WeArticleId==WeArticleId && p.IsPositive==IsPositive).CountAsync())
+            );
+        }
+
+        public async Task<IActionResult> WeArticleSignCreateAsync(Guid WeArticleId, bool IsPositive=true)
+        {
+            if(!_signInManager.IsSignedIn(User))
+            {
+                return RedirectToPage("Account/Login",new{area="Identity"});
+            }
+            var _WeArticle=await _context.WeArticle.Where(p=>p.Id==WeArticleId).FirstOrDefaultAsync();
+
+            if(_WeArticle==null)
+            {
+                return BadRequest();
+            }
+
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
+            var _WeArticleSign=await _context.WeArticleSign.Where(p=>p.UserId==_UserId && p.WeArticleId==WeArticleId).FirstOrDefaultAsync();
+
+            if(_WeArticleSign==null)
+            {
+                await _context.WeArticleSign.AddAsync(
+                    new WeArticleSign{
+                        DOSigning=DateTimeOffset.Now,
+                        Id=Guid.NewGuid(),
+                        IsPositive=IsPositive,
+                        UserId=_UserId,
+                        WeArticleId=WeArticleId,
+                    }
+                );
+            }
+            else
+            {
+                _context.WeArticleSign.Remove(_WeArticleSign);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
 
         public IActionResult FunCommentsIndex(Guid WeArticleId)
         {

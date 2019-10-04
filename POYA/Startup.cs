@@ -95,7 +95,7 @@ namespace POYA
                 options.SlidingExpiration = true;
             });
 
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddLocalization(options => options.ResourcesPath = "Resources");  //  Resources
 
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
@@ -110,18 +110,15 @@ namespace POYA
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddSessionStateTempDataProvider();
 
-
             services.Configure<RequestLocalizationOptions>(opts =>{
                 var supportedCultures = new List<CultureInfo>
                 {
-                            new CultureInfo("en-US"),
-                            new CultureInfo("zh-Hans")
+                    new CultureInfo("en-US"),
+                    new CultureInfo("zh-Hans")
                 };
                 opts.SupportedCultures = supportedCultures;
                 opts.SupportedUICultures = supportedCultures;
-                opts.RequestCultureProviders =  new List<IRequestCultureProvider>{
-                    new X_DOVERequestCultureProvider()
-                };
+                opts.RequestCultureProviders =  new List<IRequestCultureProvider>{  new X_DOVERequestCultureProvider() };
            });
 
 

@@ -5,8 +5,11 @@
 }
 
 
-<table >
+<table >  
+    <caption></caption>
+
     <tbody >
+        <tr><th id="09082799-645c-4246-84f9-39ea3c4d51cb"></th></tr>
         @foreach (var item in Model) 
         {
             <tr class="FunComment_tr">
@@ -28,6 +31,9 @@
                         @if(UserId==item.CommentUserId)
                         {
                             <a class="FunComment_Delete " asp-action="Delete" asp-route-id="@item.Id">@(Localizer["Delete"])</a> 
+                        }
+                        else
+                        {
                             <a class="FunComment_Report " asp-action="Delete" asp-route-id="@item.Id">@(Localizer["Report"])</a>
                         }
 

@@ -88,6 +88,32 @@
   </resheader>
 
 
+<!--
+
+  <data name="" xml:space="preserve">
+	  <value></value>
+  </data>
+
+-->
+
+
+  <data name="Is positive sign be allowed" xml:space="preserve">
+	  <value>Is positive sign be allowed</value>
+  </data>
+
+
+  <data name="Is negative sign be allowed" xml:space="preserve">
+	  <value>Is negative sign be allowed</value>
+  </data>
+
+
+  <data name="Is comment be allowed" xml:space="preserve">
+	  <value>Is comment be allowed</value>
+  </data>
+
+
+
+
   <data name="_Comment" xml:space="preserve">
 	  <value>Comment</value>
   </data>

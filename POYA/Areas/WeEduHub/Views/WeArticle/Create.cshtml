@@ -79,23 +79,26 @@
     </div>
 </div>
 
-<!--
+
 <div class="row">
     <div class="col offset-sm-1 col-sm-10 offset-2 col-8" >
-        <div id="wearticle_class_and_" class="row">
+        <div id="wearticle_sign_and_" class="row">
             <div class="col col-auto">
-                <input type="checkbox"  class="_IsCommentBeAllowed_" />@(Localizer["Is comment be allowed"])<br/>
+                <input type="checkbox" id="_IsCommentBeAllowed_"  class="_IsCommentBeAllowed_" />
+                <label  class="prevent-select" for="_IsCommentBeAllowed_">@(Localizer["Is comment be allowed"])</label>
             </div>
             <div class="col col-auto"> 
-                <input type="checkbox"  class="_IsNegativeSignBeAllowed_"/>@(Localizer["Is negative sign be allowed"])<br/>
+                <input type="checkbox" id="_IsNegativeSignBeAllowed_"  class="_IsNegativeSignBeAllowed_"/>
+                <label class="prevent-select" for="_IsNegativeSignBeAllowed_">@(Localizer["Is negative sign be allowed"])</label>
             </div>
             <div class="col col-auto">
-                <input type="checkbox"  class="_IsPositiveSignBeAllowed_"/>@(Localizer["Is positive sign be allowed"])<br/>
+                <input type="checkbox" id="_IsPositiveSignBeAllowed_"  class="_IsPositiveSignBeAllowed_"/>
+                <label class="prevent-select" for="_IsPositiveSignBeAllowed_">@(Localizer["Is positive sign be allowed"])</label>
             </div>
         </div>
     </div>
 </div>
--->
+
 
 <div style="margin-bottom: 60px;"></div>
 
@@ -440,7 +443,8 @@
             overflow-y: auto;
             zoom: 0.8;
         }
-        #wearticle_class_and_{
+        
+        #wearticle_class_and_, #wearticle_sign_and_{
             margin-top: 10px;
             border: solid;
             border-color: rgba(89, 99, 200, 0.4);

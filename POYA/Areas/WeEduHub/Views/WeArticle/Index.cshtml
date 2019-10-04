@@ -64,8 +64,10 @@ else
 
 <div class="row">
     <div class="col col-10">
-        <table class="table wearticles_table">
+        <table class="table wearticles_table" aria-describedby="">  
+
             <tbody>
+                <tr><th id="841555b0-cacc-43d3-88c2-fa109951e66b"></th></tr>
                 @foreach (var item in ViewData["WeArticles"] as IPagedList<WeArticle>) 
                 {
                     <tr>
