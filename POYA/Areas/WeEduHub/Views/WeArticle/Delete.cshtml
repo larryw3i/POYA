@@ -27,16 +27,19 @@
         <object 
             id="selected_file_content" 
             data='@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}))' 
-            type='@_WeArticleFileContentType'>
+            type='@_WeArticleFileContentType'>@(Model.Title)
         </object>  
     }
     else if(_WeArticleFileContentType.StartsWith("video/"))
     {
         <video 
             id="selected_file_content" 
-            src='@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}))' 
-            type='@_WeArticleFileContentType' 
             controls >
+            <source 
+            src='@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}))' 
+            type='@_WeArticleFileContentType' />
+            <track label="English" kind="captions" srclang="en" src="" default>
+
         </video> 
     }
 </div>

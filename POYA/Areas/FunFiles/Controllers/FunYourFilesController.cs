@@ -396,7 +396,7 @@ namespace POYA.Areas.FunFiles.Controllers
             var _FunYourFileSizeSum = new DirectoryInfo(_funFilesHelper.FunFilesRootPath(_webHostEnv)).GetFiles()
                 .Where(p => _FileSHA256HexStrings.Contains(p.Name)).Select(p => p.Length).Sum();
 
-            _FunYourFileSizeSum = _FunYourFileSizeSum + funUploadFileLengthSum;
+            _FunYourFileSizeSum += funUploadFileLengthSum;
 
             return _FunYourFileSizeSum > _AllowedLength;
         }

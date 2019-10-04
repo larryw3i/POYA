@@ -163,7 +163,7 @@ namespace POYA.Areas.FunFiles.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(
                     nameof(Index),
-                    new{ ParentDirId=funDir.ParentDirId }
+                    new{ funDir.ParentDirId }
                 );
             }
             return View(funDir);
