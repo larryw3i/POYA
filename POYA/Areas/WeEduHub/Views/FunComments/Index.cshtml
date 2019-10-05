@@ -1,7 +1,12 @@
 @model IEnumerable<POYA.Areas.WeEduHub.Models.FunComment>
+    
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
 
 @{
     var UserId=ViewData["UserId"]?.ToString();
+    
+    var _IsSignedIn=SignInManager.IsSignedIn(User);
 }
 
 
@@ -12,7 +17,7 @@
         <tr><th id="09082799-645c-4246-84f9-39ea3c4d51cb"></th></tr>
         @foreach (var item in Model) 
         {
-            <tr class="FunComment_tr">
+            <tr class="FunComment_tr" id="FunComment_tr_@(item.Id)">
                 <td style="vertical-align: top; ">
                     <img 
                         src='/Home/GetAvatar?UserId=@(item.CommentUserId)' 
@@ -23,18 +28,28 @@
                 </td>
                 <td >
                     <div style="padding-left: 10px;">
-                        <a class="FunComment_UserName prevent-select" asp-page="/Account/ViewUserInfo" asp-area="Identity" asp-route-UserId="@item.CommentUserId">@(item.CommentUserName)</a>
+                        <a 
+                            class="FunComment_UserName prevent-select" 
+                            asp-page="/Account/ViewUserInfo" 
+                            asp-area="Identity" 
+                            asp-route-UserId="@item.CommentUserId">
+                            @(item.CommentUserName)
+                        </a>
                         <br/>
                         <span class="CommentContent"> @(Html.DisplayFor(modelItem => item.CommentContent))</span> 
                         <br/>
                         <span class="DOCommenting"> @(item.DOCommenting.LocalDateTime)</span> 
-                        @if(UserId==item.CommentUserId)
-                        {
-                            <a class="FunComment_Delete " asp-action="Delete" asp-route-id="@item.Id">@(Localizer["Delete"])</a> 
-                        }
-                        else
-                        {
-                            <a class="FunComment_Report " asp-action="Delete" asp-route-id="@item.Id">@(Localizer["Report"])</a>
+
+                        @if(_IsSignedIn)
+                        { 
+                            if(UserId==item.CommentUserId)
+                            {
+                                <a class="FunComment_Delete prevent-select" item_id="@(item.Id)" >@(Localizer["Delete"])</a> 
+                            }
+                            else
+                            {
+                                <a class="FunComment_Report prevent-select" item_id="@(item.Id)"  >@(Localizer["U_Report"])</a>
+                            }
                         }
 
                     </div>

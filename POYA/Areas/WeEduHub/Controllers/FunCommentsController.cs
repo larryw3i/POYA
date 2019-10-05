@@ -216,10 +216,16 @@ namespace POYA.Areas.WeEduHub.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var funComment = await _context.FunComment.FindAsync(id);
+            var _UserId = _userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+
+            var funComment = await _context.FunComment.Where(p=>p.CommentUserId==_UserId && p.Id==id).FirstOrDefaultAsync();
+
+            if(funComment==null)return BadRequest();
+
             _context.FunComment.Remove(funComment);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return Ok();    //   RedirectToAction(nameof(Index));
         }
 
         private bool FunCommentExists(Guid id)

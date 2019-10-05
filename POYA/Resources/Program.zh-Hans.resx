@@ -96,6 +96,19 @@
 
 -->
 
+
+  <data name="Sign up" xml:space="preserve">
+	  <value>注册</value>
+  </data>
+
+
+
+  <data name="U_Report" xml:space="preserve">
+	  <value> 举报</value>
+  </data>
+
+ 
+
   <data name="Is positive sign be allowed" xml:space="preserve">
 	  <value>应许点菜</value>
   </data>

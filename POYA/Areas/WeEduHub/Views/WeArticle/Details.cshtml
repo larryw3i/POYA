@@ -113,6 +113,7 @@
     <script>
         var _IsCommentBeAllowed=Boolean(`@(Model.IsCommentBeAllowed?" ":"")`);
         var IsSignedIn=Boolean(`@(_IsSignedIn?" ":"")`);
+        var IsAskingForDeleting=false;
         $(document).ready(()=>{
             InitialComment();
             UpdateWeArticleSign();
@@ -120,8 +121,56 @@
             $(document).on(`click`,`.FunComment_UserAvatar`,    (e)=>{  FunComment_UserAvatarOnClick(e); })
             $(document).on(`click`,`#NegativeSign`, (e)=>{  PositiveSignOnClick(e, IsPositive=false);})
             $(document).on(`click`,`#PositiveSign`, (e)=>{  PositiveSignOnClick(e );})
+            $(document).on(`click`,`.FunComment_Report`,    (e)=>{  FunComment_ReportOnCick(e);})
+            $(document).on(`click`,`.FunComment_Delete`,    (e)=>{  FunComment_DeleteOnClick(e)})
 
         });
+
+        function FunComment_ReportOnCick(e)
+        {
+            var _target= $(e.target);
+            if(_target.hasClass(`IsAskingForReporting`))
+            {
+
+            }
+            else
+            {
+                _target.text(`@(Html.Raw(Localizer["U_Report"])) ?`);
+                _target.addClass(`IsAskingForReporting`);
+                setTimeout(() => {
+                    _target.removeClass(`IsAskingForReporting`);
+                    _target.text(`@(Html.Raw(Localizer["U_Report"]))`);
+                }, 5000);
+
+            }
+        }
+
+        function FunComment_DeleteOnClick(e)
+        {
+            var _target= $(e.target);
+            if(_target.hasClass(`IsAskingForDeleting`))
+            {
+                $.ajax({
+                    url:`@(Url.Action("Delete","FunComments"))/`,
+                    method:`POST`,
+                    data:{id:_target.attr(`item_id`)},
+                    headers: { '@(X_DOVEValues.CustomHeaderName)': `@(CSRF.GetAndStoreTokens(Context).RequestToken)`},
+                    success:()=>{   _target.parents(`.FunComment_tr`).remove();    },
+                    error:()=>{}
+                });
+            }
+            else
+            {
+                _target.text(`@(Html.Raw(Localizer["Delete"])) ?`);
+                _target.addClass(`IsAskingForDeleting`);
+                setTimeout(() => {
+                    _target.removeClass(`IsAskingForDeleting`);
+                    _target.text(`@(Html.Raw(Localizer["Delete"]))`);
+                }, 5000);
+
+            }
+
+        }
 
         function UpdateWeArticleSign()
         {
@@ -153,7 +202,6 @@
         {
         　　window.location.href=`@(Url.Page("/Account/ViewUserInfo",new{area="Identity"}))?UserId=`+$(e.target).attr(`user_id`); 
         }
-        
 
         function InitialComment()
         {
@@ -234,7 +282,8 @@
         .FunComment_Delete,.FunComment_Report
         {
             font-size: 75%;
-            color: red;
+            color: rgb(199, 16, 16);
+            cursor: pointer;
         }
         
         table *
