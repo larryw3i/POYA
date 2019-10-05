@@ -24,7 +24,8 @@
     width: min-content;
 }
 
-.prevent-select{
+.prevent-select
+{
     -webkit-user-select:none;
     -moz-user-select:none;
     -ms-user-select:none;

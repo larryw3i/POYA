@@ -77,11 +77,13 @@
     </div>
 </div>
 <hr/>
+<br/>
+<br/>
 
 @if(Model.IsCommentBeAllowed)
 {
 
-    <span>@(Localizer["_Comment"])</span>
+    <h4>@(Localizer["_Comment"])</h4>
     <hr/>
     <div class="row">
         <div class="col col-10 FunCommentsCreate">
@@ -248,28 +250,33 @@
         .content_check_and_{
             transform: scale(1.6);
         }
-        .content_check_and_:hover{
+        .content_check_and_:hover
+        {
             transform: scale(1.8);
         }
-        .content_check_and_ :hover{
+        .content_check_and_ :hover
+        {
             text-decoration: none;
         }
-        .wearticle_content{
+        .wearticle_content
+        {
             text-align: center;
-            height: max-content;
+            height: 70%;
         }
 
-        .wearticle_content object{
+        .wearticle_content object
+        {
             border-radius: 5px;
-            height: 600px;
             width: 100%;
+            height: 100%;
             background-color: transparent;
         }
         
         .wearticle_content video{
             width: 90%;
         }
-        .wearticle_class_and_{
+        .wearticle_class_and_
+        {
             font-size: 80%;
         }
         .wearticle_title
@@ -280,7 +287,8 @@
             word-break: break-all;
         }
         
-        .wearticle_details__{
+        .wearticle_details__
+        {
             position: fixed;
             bottom: 8%;
         }
