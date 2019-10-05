@@ -15,7 +15,7 @@
 
 }
 
-<div class="row">
+<div class="row" style="height: max-content;">
     <div class="col col-12">
         <div class="wearticle_title">@(Model.Title)</div>
         <span class="wearticle_class_and_">
@@ -36,21 +36,22 @@
 
 <hr/>
 
-<div class="wearticle_content">
+
+<div class="wearticle_content" >
     @if(_WeArticleFileContentType.EndsWith("/pdf"))
     {
         <object 
             id="selected_file_content" 
-            data='@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}))' 
-            type='@_WeArticleFileContentType'>@(Model.Title)
+            type='@(_WeArticleFileContentType)'
+            data='@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}))' >
+            @(Model.Title)
         </object>  
     }
     else if(_WeArticleFileContentType.StartsWith("video/"))
     {
         <video 
-            preload="metadata"
             id="selected_file_content" 
-            width="90%"
+            preload="metadata"
             controls >
             <source src='@(Url.Action("GetWeArticleFile",new{Id=Model.WeArticleContentFileId,area="WeEduHub"}))', 
             type='@_WeArticleFileContentType' />   
@@ -131,6 +132,7 @@
             if(!IsSignedIn)
             {
                 window.location.href=`@(Url.Page("/Account/Login",new{area="Identity",returnUrl=Context.Request.Path}))`;
+                return;
             };
             $.ajax({
                 url:`@Url.Action("WeArticleSignCreate")`,
@@ -188,40 +190,53 @@
 @section Styles
 {
     <style>
-        .CommentContent{
+        .CommentContent
+        {
             word-wrap: break-word;
             word-break:break-all;
         }
-        .wearticle_sign{
+        .wearticle_sign
+        {
             transform: scale(1.5);
             cursor: pointer;
         }
-        .FunComment_tr:hover{
+        .FunComment_tr
+        {
             border: solid;
-            border-width: 2px;
+            border-width: 1px;
+            border-color: rgba(203, 71, 243, 0.418);
             border-radius: 10px;
-            border-color: blue;
+        }
+        .FunComment_tr:hover
+        {
+            border-width: 2px;
+            border-color: rgb(216, 14, 243);
             box-shadow: 5px 5px 5px blue;
             cursor: default;
         }
-        .DOCommenting{
+        .DOCommenting
+        {
             font-size: 75%;
-            color: blue;
+            color: rgb(28, 28, 224);
         }
-        .CommentContent{
+        .CommentContent
+        {
             font-size: 120%;
         }
-        .FunComment_UserName{
+        .FunComment_UserName
+        {
             color: blue;
             font-size: 75%;
         }
 
-        .FunComment_Delete,.FunComment_Report{
+        .FunComment_Delete,.FunComment_Report
+        {
             font-size: 75%;
             color: red;
         }
         
-        table *{
+        table *
+        {
             border-color: transparent;
         }
         td{
@@ -239,20 +254,26 @@
         .content_check_and_ :hover{
             text-decoration: none;
         }
+        .wearticle_content{
+            text-align: center;
+            height: max-content;
+        }
 
-        .wearticle_content>object{
+        .wearticle_content object{
             border-radius: 5px;
+            height: 600px;
             width: 100%;
-            height: 100%;
             background-color: transparent;
+        }
+        
+        .wearticle_content video{
+            width: 90%;
         }
         .wearticle_class_and_{
             font-size: 80%;
         }
-        .wearticle_content{
-            text-align: center;
-        }
-        .wearticle_title{
+        .wearticle_title
+        {
             font-size: 160%;
             width: 80%;
             word-wrap: break-word;

@@ -109,9 +109,12 @@
         });
 
         function IsLegal_Change(){
-            if($(`#IsLegal`).is(':checked')){
+            if($(`#IsLegal`).is(':checked'))
+            {
                 $(`#IllegalityType`).parent().hide();
-            }else{
+            }
+            else
+            {
                 $(`#IllegalityType`).parent().show();
             }
             $(`#@(_IsCurrentUserRoleInAdmin?"ReceptionistComment":"AppellantComment")`).attr("placeholder",'@(Html.Raw(Localizer["Type some comments"])). . .');
