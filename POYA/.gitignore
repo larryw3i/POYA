@@ -15,6 +15,7 @@
 /app.db
 /app.db-journal
 /ScaffoldingReadme.txt
+*.min.js
 
 
 /Areas/FunFiles/Data/
