@@ -5,20 +5,7 @@
     var _IsSignedIn=SignInManager.IsSignedIn(User);
 }
 
-<style>
-    .NavAvatar {
-        height: 50px;
-        width: 50px;
-        position: absolute;
-        box-shadow: 0px 0px 0px 1px #ff6a00;
-    }
 
-        .NavAvatar:hover {
-            animation: NavAvatarZoomIn 0.2s linear 1 forwards;
-            opacity:1.0;
-        }
-
-</style>
 
 <ul class="navbar-nav float-right" style="margin-right:20px">
     @if (_IsSignedIn)

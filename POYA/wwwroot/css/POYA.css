@@ -31,3 +31,35 @@
     -ms-user-select:none;
     user-select:none;
 }
+
+
+.NavAvatar {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    box-shadow: 0px 0px 0px 1px #ff6a00;
+}
+
+    .NavAvatar:hover {
+        animation: NavAvatarZoomIn 0.2s linear 1 forwards;
+        opacity:1.0;
+    }
+
+
+#DonateEle {
+    position: fixed;
+    bottom: 42px;
+    right: 1px;
+    width: 45px;
+    height: 45px;
+    cursor:pointer;
+}
+
+    #DonateEle > img {
+        width: inherit;
+        height: inherit;
+    }
+
+        #DonateEle > img:hover {
+            animation: DonateImgHover 0.2s linear 1 forwards;
+        }

@@ -116,7 +116,7 @@ function NewGuid() {
  * @param {string} value - The querystring value of value
  * @returns {string} Return the new url
  * */
-function SetQueryString(uri = window.location.href, key, value) {
+function SetQueryString( key, value,uri = window.location.href) {
     var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
     var separator = uri.indexOf('?') !== -1 ? "&" : "?";
     if (uri.match(re)) {
