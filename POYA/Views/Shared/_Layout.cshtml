@@ -56,19 +56,13 @@
               integrity="MD5-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
 
-    <link rel="stylesheet" href="~/css/PagedList.css"  asp-append-version="true"/>
-
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-
-    <link rel="stylesheet" href="~/css/POYA.css"  asp-append-version="true"/>
-
-    <link rel="stylesheet" href="~/css/ikeyframes.css"  asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true"/>
     
-    <link rel="stylesheet" href="~/lib/jQuery-contextMenu-2.8.0/dist/jquery.contextMenu.min.css" />
-
     @(RenderSection("Styles", required: false))
 
     <partial name="_LayoutCssPartial"/>
+
+    <style>html{overflow-y:scroll;}</style>
 
     <link href='~/img/chat_with_friends_ico.webp' rel="icon" type="image/webp"/>
     
@@ -214,16 +208,11 @@
 
     <script src="~/lib/js-cookie/js.cookie.min.js"></script>
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
     
-    <script src="~/lib/jQuery-contextMenu-2.8.0/dist/jquery.contextMenu.min.js"></script>
-
-    <script src="~/lib/jQuery-contextMenu-2.8.0/dist/jquery.ui.position.min.js"></script>
-
     <script src="~/lib/popper.min.js"></script>
     
     @(RenderSection("Scripts", required: false))
 
-    <partial name="_LayoutJsPartial"/>
 </body>
 </html>

@@ -63,3 +63,50 @@
         #DonateEle > img:hover {
             animation: DonateImgHover 0.2s linear 1 forwards;
         }
+
+
+.home-carousel {
+    border-radius: 10px;
+    background-color: rgba(25,25,112,0.1);
+    margin-top: 20px;
+}
+
+.carousel-caption h5, .carousel-caption p {
+    color: blue;
+    text-shadow: 1px 1px 2px #CDB5CD;
+}
+
+.carousel-caption h5 {
+    zoom: 150%;
+    font-weight: bold;
+}
+
+.carousel-item {
+    height: 500px;
+    overflow: hidden;
+}
+
+    .carousel-item img {
+        margin: auto;
+        object-fit: cover;
+    }
+
+/**--------
+    *  FROM    https://blog.csdn.net/ly305750665/article/details/71499497
+    *  THANK   https://blog.csdn.net/ly305750665
+    */
+.rotate-img {
+    animation: rotateImg 50s linear infinite;
+    vertical-align: middle;
+}
+
+.zoom-out-img {
+    width: 100%;
+    animation: zoomOutImg 20s linear infinite;
+    vertical-align: middle;
+}
+
+.zoom-in-img {
+    animation: zoomInImg 20s linear infinite;
+    vertical-align: middle;
+}

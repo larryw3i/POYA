@@ -1,4 +1,14 @@
-﻿.pagination {
+﻿
+/**
+ * FROM     https://github.com/troygoode/PagedList/blob/master/src/PagedList.Mvc4.Example/Content/PagedList.css
+ * LICENSE  https://github.com/twbs/bootstrap/blob/master/LICENSE
+ *          https://github.com/troygoode/PagedList/blob/master/LICENSE.txt
+ * ** The file will be bundled to wwwroot/css/site.min.css **
+ */
+
+
+
+.pagination {
     display: inline-block;
     padding-left: 0;
     margin: 20px 0;
@@ -164,9 +174,3 @@
         cursor: not-allowed;
         background-color: #ffffff;
     }
-
-/**
- * FROM     https://github.com/troygoode/PagedList/blob/master/src/PagedList.Mvc4.Example/Content/PagedList.css
- * LICENSE  https://github.com/twbs/bootstrap/blob/master/LICENSE
- *          https://github.com/troygoode/PagedList/blob/master/LICENSE.txt
- */
