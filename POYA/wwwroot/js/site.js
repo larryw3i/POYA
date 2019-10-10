@@ -3,7 +3,7 @@
 // Write your JavaScript code.
 //  site.js will be used in all view maybe
 
-
+(function(){
 var THEME_String = "THEME";
 
 var CULTURE_String=`CULTURE`;
@@ -220,4 +220,4 @@ $(document).ready(function () {
     
     KeepLogin();
     
-});
+})})();
