@@ -6,8 +6,10 @@
     var White_String="white";
     var Black_String="black";
     var THEME_String=Context.Request.Cookies["THEME"]??Light_String;
+    //  minify
     var _pwq_css=
         "<style>"+
+            "html{overflow-y:scroll;}"+
             ".pagination>li>a,[name='UserAvatarImg']{"+
                 "background-color:"+(THEME_String==Dark_String?Black_String:THEME_String==Light_String?White_String:C7EDCC_String)+";"+
             "}"+
