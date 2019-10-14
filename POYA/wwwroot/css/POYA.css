@@ -110,3 +110,9 @@
     animation: zoomInImg 20s linear infinite;
     vertical-align: middle;
 }
+
+
+.register-col,.register-col input
+{
+    text-align: center;
+}
