@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
-using POYA.Areas.LarryUserManagement.Models;
 using POYA.Data;
 using POYA.Unities.Helpers;
 
@@ -16,7 +15,7 @@ namespace POYA.Areas.LarryUserManagement.Controllers
 {
     [Authorize]
     [Area("LarryUserManagement")]
-    public class LarryUserManagementController : Controller
+    public class LarryRoleManagementController : Controller
     {
 
         #region DI
@@ -29,7 +28,7 @@ namespace POYA.Areas.LarryUserManagement.Controllers
         private readonly X_DOVEHelper _x_DOVEHelper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IConfiguration _configuration;
-        public LarryUserManagementController(
+        public LarryRoleManagementController(
             IConfiguration configuration,
             SignInManager<IdentityUser> signInManager,
             X_DOVEHelper x_DOVEHelper,
@@ -54,10 +53,9 @@ namespace POYA.Areas.LarryUserManagement.Controllers
         #endregion
 
         [ActionName("Index")]
-        public async System.Threading.Tasks.Task<IActionResult> UserIndexAsync()
+        public async System.Threading.Tasks.Task<IActionResult> RoleIndexAsync()
         {
-            var _Users = await _context.Users.ToListAsync();
-            
+            var _Users = await _context.Roles.ToListAsync();
 
             return View("Index", _Users);
         }

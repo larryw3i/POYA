@@ -4,10 +4,11 @@
 @model IEnumerable<IdentityUser>
 
 @{
+    ViewData["Title"]=Localizer["User index"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@(Localizer["User index"])</h2>
+<h2>@(ViewData["Title"])</h2>
 <hr/>
 <table class="table">
     <tr>
