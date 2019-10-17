@@ -176,7 +176,7 @@ namespace POYA.Controllers
                 var XUserFilePath = $"{LFilesPath}/XUserFile";
                 var EArticleFilesPath = $"{_webHostEnv.ContentRootPath}/Areas/EduHub/Data/EArticleFiles";
                 var FunFilesRootPath=new FunFilesHelper().FunFilesRootPath(_webHostEnv);
-                var AdminEmail=_configuration["Administration:AdminEmail"];
+                
 
                 var InitialPaths = new string[] 
                     { 

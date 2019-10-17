@@ -10,8 +10,8 @@
 
 }
 <div class="row">
-    <div class="col col-auto text-center">
-        <img src="/Home/GetAvatar?UserId=@(_UserId)" id="_UserAvatar" class="rounded-circle" title='@Localizer["Send a email"]' /><br />
+    <div class="col col-auto text-center view-user-info">
+        <img src="/Home/GetAvatar?UserId=@(_UserId)" id="_UserAvatar" data-mailto='@(_UserEmail)' onclick='mailto:@(_UserEmail)' class="rounded-circle user-avatar" title='@Localizer["Send a email"]' /><br />
         <span>@(_UserName)</span>
     </div>
     <div class="col col-auto" id="UserInfoEle">
@@ -93,41 +93,6 @@
 </div>
 
 @section Scripts{
-    <script>
-        $(document).on("click", "#_UserAvatar", function () {
-            window.location = "mailto:@(_UserEmail)";
-        });
-    </script>
+    
 }
 
-@section Styles{
-    <style>
-        th {
-            text-align: right;
-        }
-
-        tr:hover {
-            background-color: rgba(255, 0, 220,0.8);
-            animation: TrAnimation 0.5s linear forwards;
-        }
-
-        #UserInfoEle {
-            cursor: default;
-            border-radius: 8px;
-            border: dotted;
-            border-color: rgb(255, 216, 0);
-            animation: UserInfoEleAnimation 5s linear infinite alternate;
-        }
-
-        #_UserAvatar {
-            height: 100px;
-            width: 100px;
-            border: #EE7AE9 solid;
-        }
-
-            #_UserAvatar:hover {
-                animation: _UserAvatarAnimation 0.2s linear forwards;
-            }
-
-    </style>
-}

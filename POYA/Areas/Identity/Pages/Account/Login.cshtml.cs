@@ -15,6 +15,8 @@ using POYA.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using POYA.Unities.Helpers;
 using System.Text.Encodings.Web;
+using Microsoft.EntityFrameworkCore;
+
 namespace POYA.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
@@ -89,16 +91,21 @@ namespace POYA.Areas.Identity.Pages.Account
                     nameof(Input.Email), 
                     _localizer["Your email is already registered in POYA, log in Now"] + " (^_^)");
 
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
+
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             ReturnUrl = returnUrl;
             ViewData[nameof(Input.Email)]=TempData[nameof(Input.Email)];
+
+            var _SuperUserId = await _context.Roles.Where(p=>p.NormalizedName == X_DOVEValues.SUPERUSER_String).Select(p=>p.Id).FirstOrDefaultAsync();
+            var IsSuperUserCreated = await _context.UserRoles.AnyAsync(p=>p.RoleId == _SuperUserId);
+            ViewData[nameof(IsSuperUserCreated)]=IsSuperUserCreated;
         }
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
             if (ModelState.IsValid)
             {
                 var _user = await _userManager.FindByEmailAsync(Input.Email);
@@ -121,11 +128,13 @@ namespace POYA.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, _localizer["We have sent a confirmation email to you, you can login after confirming it"]);
                     return Page();
                 }
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(
                     _userManager.FindByEmailAsync(Input.Email).GetAwaiter().GetResult().UserName,
                     Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                    
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in");

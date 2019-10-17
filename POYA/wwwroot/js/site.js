@@ -3,14 +3,69 @@
 // Write your JavaScript code.
 //  site.js will be used in all view maybe
 
+
+
+
+/**
+ * 
+ * @param {String} _type 
+ * @param {String} content 
+ * @param {Number} timeout in millisecond
+ */
+function MakeLayoutAlert(content,timeout=2500,_type="info")
+{
+    $(`.xbody`).prepend(`<div tabindex="999" class="alert alert-${_type} poya-layout-alert" role="alert">${content}</div>`);
+    $(`.poya-layout-alert:last`).focus();
+    setTimeout(()=>{
+        $(`.poya-layout-alert`).remove();
+    },timeout);
+}
+
+
+/**
+ * 
+ * @param {String} _type 
+ * @param {Number} value 1~100
+ */
+function MakeLayoutProgress(value,_type="info")
+{
+    if($(`.poya-layout-progress`).length<1)
+    {
+        $(`.xbody`).prepend(`
+            <div class="progress poya-layout-progress" > 
+                <div class="progress-bar bg-${_type}  poya-layout-progress-bar" role="progressbar" tabindex="998" style="width: ${value}%" aria-valuenow="${value}" aria-valuemin="0" aria-valuemax="100">
+                    ${value}%
+                </div>
+            </div>
+        `);
+        $(`.poya-layout-progress-bar:first`).focus();
+    }
+    else
+    {
+        $(`.poya-layout-progress-bar`).css(`width`,`${value}%`);
+        $(`.poya-layout-progress-bar`).attr(`aria-valuenow`,value);
+        $(`.poya-layout-progress-bar`).text(`${value}%`);
+    }
+    
+    if(value==100)
+    {
+        setTimeout(()=>{
+            $(`.poya-layout-progress`).remove();
+        },3500);
+    }
+    
+}
+
+
+
 (function(){
+
+
 var THEME_String = "THEME";
 
 var CULTURE_String=`CULTURE`;
 
 var _Language_String=`_Language`;
-
-var AspNetCore_Culture_String=`.AspNetCore.Culture`;
 
 
 
@@ -108,34 +163,6 @@ function NewGuid() {
         }`.toLowerCase();
 }
 
-/**Set key and value in querystring
- * REFERENCE    https://stackoverflow.com/questions/5999118/how-can-i-add-or-update-a-query-string-parameter
- * THANK        https://stackoverflow.com/users/184/niyaz
- * @param {string} uri - The url, default value is window.location.href
- * @param {string} key - The querystring key
- * @param {string} value - The querystring value of value
- * @returns {string} Return the new url
- * */
-function SetQueryString( key, value,uri = window.location.href) {
-    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-    if (uri.match(re)) {
-        return uri.replace(re, '$1' + key + "=" + value + '$2');
-    }
-    return uri + separator + key + "=" + value;
-}
-
-
-/**Optime the storage size for showing
- * @param {number} byte -The byte
- * @returns {string} -Return the optimized string
- */
-function OptimizeFileSizeShow (byte) {
-    return byte < 1024 ? `${byte}b`
-        : byte < Math.pow(1024, 2) ? `${(byte / 1024).toFixed(1)}k`
-            : byte < Math.pow(1024, 3) ? `${(byte / Math.pow(1024, 2)).toFixed(1)}M`
-                : `${(byte / Math.pow(1024, 3)).toFixed(1)}G`;
-};
 
 
 function ThemeDropdownItemClick()
@@ -146,57 +173,6 @@ function ThemeDropdownItemClick()
         location.reload()
      });
 }
-
-/**
- * 
- * @param {String} _type 
- * @param {String} content 
- * @param {Number} timeout in millisecond
- */
-function MakeLayoutAlert(content,timeout=2500,_type="info")
-{
-    $(`.xbody`).prepend(`<div tabindex="999" class="alert alert-${_type} poya-layout-alert" role="alert">${content}</div>`);
-    $(`.poya-layout-alert:last`).focus();
-    setTimeout(()=>{
-        $(`.poya-layout-alert`).remove();
-    },timeout);
-}
-
-
-/**
- * 
- * @param {String} _type 
- * @param {Number} value 1~100
- */
-function MakeLayoutProgress(value,_type="info")
-{
-    if($(`.poya-layout-progress`).length<1)
-    {
-        $(`.xbody`).prepend(`
-            <div class="progress poya-layout-progress" > 
-                <div class="progress-bar bg-${_type}  poya-layout-progress-bar" role="progressbar" tabindex="998" style="width: ${value}%" aria-valuenow="${value}" aria-valuemin="0" aria-valuemax="100">
-                    ${value}%
-                </div>
-            </div>
-        `);
-        $(`.poya-layout-progress-bar:first`).focus();
-    }
-    else
-    {
-        $(`.poya-layout-progress-bar`).css(`width`,`${value}%`);
-        $(`.poya-layout-progress-bar`).attr(`aria-valuenow`,value);
-        $(`.poya-layout-progress-bar`).text(`${value}%`);
-    }
-    
-    if(value==100)
-    {
-        setTimeout(()=>{
-            $(`.poya-layout-progress`).remove();
-        },3500);
-    }
-    
-}
-
 
 
 $(document).ready(function () {

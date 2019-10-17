@@ -120,3 +120,82 @@
 {
     background-color: rgba(255, 30, 255, 0.062);
 }
+
+
+
+#account{
+    text-align: center;
+}
+
+input[class='form-control']{
+    text-align:center;
+    margin:8px;
+}
+
+
+.User-Avatar {
+    text-align: center;
+}
+
+#profile-form .form-group:hover, #update-profile-button:hover {
+    border: solid;
+    border-color: rgba(222, 13, 154,0.6);
+    background-color: rgba(222, 13, 154,0.6);
+    padding: 8px;
+    border-radius: 8px;
+    animation: InputControlAnimation 0.2s linear forwards;
+}
+
+#_UploadAvatarMsgEle {
+    font-size: 90%;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.form-group .checkbox label {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#User_Avatar_Img {
+    height: 100px;
+    width: 100px;
+    border: solid;
+    border-color: #EE7AE9;
+    box-shadow: 2px 2px 8px #EE7AE9;
+}
+
+    #User_Avatar_Img:hover {
+        animation: AvatarAnimation 0.2s linear 1 forwards;
+    }
+
+
+
+    th {
+        text-align: right;
+    }
+
+    tr:hover {
+        background-color: rgba(255, 0, 220,0.8);
+        animation: TrAnimation 0.5s linear forwards;
+    }
+
+    #UserInfoEle {
+        cursor: default;
+        border-radius: 8px;
+        border: dotted;
+        border-color: rgb(255, 216, 0);
+        animation: UserInfoEleAnimation 5s linear infinite alternate;
+    }
+
+    #_UserAvatar {
+        height: 100px;
+        width: 100px;
+        border: #EE7AE9 solid;
+    }
+
+        #_UserAvatar:hover {
+            animation: _UserAvatarAnimation 0.2s linear forwards;
+        }

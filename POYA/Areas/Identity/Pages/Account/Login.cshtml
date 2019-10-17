@@ -2,60 +2,53 @@
 @model LoginModel
 @{
     ViewData["Title"] = Localizer["Log in"];
+    var IsSuperUserCreated = Convert.ToBoolean( ViewData["IsSuperUserCreated"]);
 }
 <h1>@(ViewData["Title"])</h1>
 <hr/>
 <div class="row">
     <div class="col offset-sm-2 col-sm-8  offset-md-2 col-md-8 offset-lg-4 col-lg-4">
-        <section>
-            <form id="account" method="post">
-                <h4>@(Localizer["Use a local account to log in"])</h4>
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <input asp-for="Input.Email" value='@(TempData["Email"])' class="form-control" placeholder='@Localizer["Type your email here"]' />
-                    <span asp-validation-for="Input.Email" data-interval="5000" class="text-danger"></span>
+        <form id="account" method="post">
+            <h4>@(Localizer["Use a local account to log in"])</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="Input.Email" value='@(TempData["Email"])' class="form-control" placeholder='@Localizer["Type your email here"]' />
+                <span asp-validation-for="Input.Email" data-interval="5000" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Input.Password" class="form-control" placeholder='@Localizer["Type your password here"]' />
+                <span asp-validation-for="Input.Password" data-interval="5000" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label asp-for="Input.RememberMe">
+                        <input asp-for="Input.RememberMe" />
+                        @(Html.DisplayNameFor(m => m.Input.RememberMe)) ?
+                    </label>
                 </div>
-                <div class="form-group">
-                    <input asp-for="Input.Password" class="form-control" placeholder='@Localizer["Type your password here"]' />
-                    <span asp-validation-for="Input.Password" data-interval="5000" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
-                            @(Html.DisplayNameFor(m => m.Input.RememberMe)) ?
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">@(Localizer["Log in"])</button>
-                </div>
-                <div class="form-group">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">@(Localizer["Log in"])</button>
+            </div>
+            <div class="form-group">
+                <p>
+                    <a id="forgot-password" asp-page="./ForgotPassword">@(Localizer["Forgot your password"]) ?</a>
+                </p>
+                <p>
+                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">@(Localizer["Register as a new user"])</a>
+                </p>
+                @if(IsSuperUserCreated)
+                {
+
                     <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">@(Localizer["Forgot your password"]) ?</a>
+                        <a asp-page="./CreateSuperUser" >@(Localizer["Create super user"])</a>
                     </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">@(Localizer["Register as a new user"])</a>
-                    </p>
-                </div>
-            </form>
-        </section>
+                }
+            </div>
+        </form>
     </div>
 </div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-}
-
-@section Styles
-{
-    <style>
-        #account{
-            text-align: center;
-        }
-        input[class='form-control']{
-            text-align:center;
-            margin:8px;
-        }
-    </style>
 }

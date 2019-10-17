@@ -7,8 +7,17 @@
     ViewData["ActivePage"] = ManageNavPages.UserInfo;
 }
 <h4>@(ViewData["Title"])</h4>
+
 <partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
+
+<div class="row user-info-row" 
+    data-extension-limit_='@(Localizer["The extension of the file can only be"])'
+    data-custom-header-name="@(X_DOVEValues.CustomHeaderName)"
+    data-csrf='@(CSRF.GetAndStoreTokens(HttpContext).RequestToken)'
+    data-upload-successfully='@Localizer["Uploaded successfully"]'
+    data-error='@Localizer["An error has occurred. . . , engineers are on their way"]'
+    data-extension-limit='@Localizer["The extension of the file can only be jpg, jpeg or png"]' 
+    data-avatar-size-limit='@Localizer["Oops...., the size of avatar should be less than 1M"]'>
     <div class="col col-4 col-sm-4 col-md-3 User-Avatar">
         <form id="_UserAvatarForm">
             <img name="User_Avatar_Img" id="User_Avatar_Img" class="rounded-circle ZoomAvatar" title='@Localizer["The extension of the file can only be jpg, jpeg or png"]'
@@ -102,141 +111,8 @@
         </form>
     </div>
 </div>
-@section Scripts {
+@section Scripts 
+{
     <partial name="_ValidationScriptsPartial" />
 
-    <script>
-        
-        var IsAvatarUploaded = false;
-        var _allowedAvatarFileExtensions = ["jpg", "jpeg","gif"];
-        var _isExtensionNeedChecking=false;
-
-
-        function _UserAvatarFormClick() {
-            if (IsAvatarUploaded) return;
-            $('#_UserAvatarInput').click();
-        }
-        
-        
-        function UpdateUserAvatar() {
-            $("[name='User_Avatar_Img']").attr("src", "/Home/GetAvatar?random=" + Math.floor(Math.random() * 100 + 1));
-            $("[name='UserAvatarImg']").attr("src", "/Home/GetAvatar?random=" + Math.floor(Math.random() * 100 + 1));
-        }
-
-        function _UserAvatarInputOnChange() {
-            var _file_ = document.getElementById("_UserAvatarInput").files[0];
-            var _UploadAvatarMsgEle_ = $("#_UploadAvatarMsgEle");
-            if (_file_.size > 1024 * 1024) {
-                _UploadAvatarMsgEle_.html('@Localizer["Oops...., the size of avatar should be less than 1M"]');
-                return;
-            }
-            var _value_ = $("#_UserAvatarInput").val();
-            var index = _value_.lastIndexOf(".");
-            var _extension = String(_value_.substr(index + 1)).toLowerCase();
-            if(_isExtensionNeedChecking){
-                var _isExtensionAllowed = false;
-                _allowedAvatarFileExtensions.forEach((value, index, array) => {
-                    if (_extension == value) {
-                        _isExtensionAllowed = true;
-                        return false;
-                    }
-                });
-                if (!_isExtensionAllowed) {
-                    var _tip=`@(Localizer["The extension of the file can only be"])`;
-                    _allowedAvatarFileExtensions.forEach((value, index, array)=>{_tip+=`&#128504; ${value} `;});
-                    _UploadAvatarMsgEle_.html(_tip);
-                    return;
-                }
-            }
-
-            if ($("#_UserAvatarInput").val() == "") return;
-            var AvatarForm = new FormData();
-            AvatarForm.append("avatarFile", _file_);
-            $.ajax({
-                url: "/Home/UploadAvatar",
-                type: "POST",
-                data: AvatarForm,
-                contentType: false,
-                processData: false,
-                dataType: "json",
-                headers: {
-                "@(X_DOVEValues.CustomHeaderName)": "@(CSRF.GetAndStoreTokens(HttpContext).RequestToken)"
-                },
-                success: function (data) {
-                    if (data["status"] == true) {
-                        _UploadAvatarMsgEle_.html(`@Localizer["Uploaded successfully"]!`);
-                        UpdateUserAvatar();
-                    } else {
-                        if (data["msg"] == "ExceedSize") {
-                            _UploadAvatarMsgEle_.html(`@Localizer["Oops...., the size of avatar should be less than 1M"]`);
-                        } else if (data["msg"] == "RefuseExtension") {
-                            _UploadAvatarMsgEle_.html(`@Localizer["The extension of the file can only be jpg, jpeg or png"]`);
-                        }
-                    }
-                },
-                error: function (msg) {
-                    _UploadAvatarMsgEle_.html(`@Localizer["An error has occurred. . . , engineers are on their way"]`);
-                }
-            });
-            $("#_UserAvatarInput").val(null);
-        }
-
-
-        $(document).ready(function () {
-            $("input").attr("autocomplete", "off");
-            $("#_UserAvatarForm img:first").on("click", function () {
-                _UserAvatarFormClick();
-                event.preventDefault();
-            });
-            $("#_UserAvatarInput").on("change", function () {
-                _UserAvatarInputOnChange();
-                event.preventDefault();
-            });
-            if(!_isExtensionNeedChecking)$(`#_UserAvatarInput`).attr(`accept`,`image/*`);
-        });
-
-    </script>
-}
-@section Styles {
-    <style>
-        .User-Avatar {
-            text-align: center;
-        }
-
-        #profile-form .form-group:hover, #update-profile-button:hover {
-            border: solid;
-            border-color: rgba(222, 13, 154,0.6);
-            background-color: rgba(222, 13, 154,0.6);
-            padding: 8px;
-            border-radius: 8px;
-            animation: InputControlAnimation 0.2s linear forwards;
-        }
-
-        #_UploadAvatarMsgEle {
-            font-size: 90%;
-            word-break: break-all;
-            word-wrap: break-word;
-        }
-
-        .form-group .checkbox label {
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        #User_Avatar_Img {
-            height: 100px;
-            width: 100px;
-            border: solid;
-            border-color: #EE7AE9;
-            box-shadow: 2px 2px 8px #EE7AE9;
-        }
-
-            #User_Avatar_Img:hover {
-                animation: AvatarAnimation 0.2s linear 1 forwards;
-            }
-
-     
-    </style>
 }

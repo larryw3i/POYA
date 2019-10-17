@@ -17,15 +17,16 @@
         <th>@(Localizer["Email"])</th>
         <th>@(Localizer["Email confirmed"])?</th>
     </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@(item.Id)</td>
-                <td>@(item.UserName)</td>
-                <td>@(item.Email)</td>
-                <td>@(item.EmailConfirmed?Localizer["Yes"]:Localizer["No"])</td>
-            
-            </tr>    
-        }
+    
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@(item.Id)</td>
+            <td>@(item.UserName)</td>
+            <td>@(item.Email)</td>
+            <td>@(item.EmailConfirmed?Localizer["Yes"]:Localizer["No"])</td>
+        
+        </tr>
+    }
     
 </table>
