@@ -15,6 +15,8 @@ using POYA.Data;
 using POYA.Unities.Helpers;
 using POYA.Models;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace POYA.Areas.Identity.Pages.Account
 {
@@ -83,16 +85,22 @@ namespace POYA.Areas.Identity.Pages.Account
         }
 
 
-        public void OnGet(string returnUrl = null, bool IsFromLogin = false)
+        public async Task OnGetAsync(string returnUrl = null, bool IsFromLogin = false)
         {
             if (IsFromLogin) ModelState.AddModelError(nameof(Input.Email), _localizer["Your e-mail is not registered in POYA yet, register it Now"] + " (^_^)");
+
+            var _SuperUserId = await _context.Roles.Where(p=>p.NormalizedName == X_DOVEValues.SUPERUSER_String).Select(p=>p.Id).FirstOrDefaultAsync();
+            var IsSuperUserCreated = await _context.UserRoles.AnyAsync(p=>p.RoleId == _SuperUserId);
+            ViewData[nameof(IsSuperUserCreated)]=IsSuperUserCreated;
+            
+
             ReturnUrl = returnUrl;
         }
 
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
             if (ModelState.IsValid)
             {
                 var _user = await _userManager.FindByEmailAsync(Input.Email);
@@ -106,41 +114,8 @@ namespace POYA.Areas.Identity.Pages.Account
 
                 var _CreateUserResult = await _userManager.CreateAsync(user, Input.Password);
 
-                var _IsResultSucceeded = _CreateUserResult.Succeeded;
 
-                if (_CreateUserResult.Succeeded && Input.Email == _configuration["Administration:AdminEmail"])
-                {
-
-                    if(!await _roleManager.RoleExistsAsync(X_DOVEValues._administrator))
-                    {
-                        await _roleManager.CreateAsync(
-                            new IdentityRole{ 
-                                Name=X_DOVEValues._administrator, 
-                                NormalizedName=X_DOVEValues._administrator 
-                        });
-                    }
-
-                    var _AddToRoleResult=await _userManager.AddToRoleAsync(user, X_DOVEValues._administrator);
-                    
-                    _IsResultSucceeded = _CreateUserResult.Succeeded &&_AddToRoleResult.Succeeded;
-
-                    if(!_IsResultSucceeded){
-
-                        foreach (var error in _CreateUserResult.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
-
-                        foreach (var error in _AddToRoleResult.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
-                        return Page();
-
-                    }
-                }
-
-                if (_IsResultSucceeded)
+                if (_CreateUserResult.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password");
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -154,13 +129,24 @@ namespace POYA.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(
                         Input.Email, 
                         _localizer["Confirm your email"],
-                        _localizer["Please confirm your account by"]+"<a href='" + HtmlEncoder.Default.Encode(callbackUrl) + "'>"+_localizer["clicking here"]+"</a>");
+                        _localizer["Please confirm your account by"]+"<a href='" + HtmlEncoder.Default.Encode(callbackUrl) + "'>"+_localizer["clicking here"]+"</a>"
+                    );
                     
                     //  await _signInManager.SignInAsync(user, isPersistent: false);
                     //  ModelState.AddModelError(nameof(Input.Email),_localizer["We have sent a confirmation email to you, you can login after confirming it"]);
 
                     TempData[nameof(Input.Email)] = Input.Email;
                     return RedirectToPage("Login", new { IsFromRegister = true, returnUrl, IsEmailConfirmed = false });
+                }
+                else
+                {
+
+                    foreach (var error in _CreateUserResult.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+
+                    return Page();
                 }
 
             }

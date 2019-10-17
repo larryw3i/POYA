@@ -99,9 +99,6 @@ namespace POYA.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             ViewData[nameof(Input.Email)]=TempData[nameof(Input.Email)];
 
-            var _SuperUserId = await _context.Roles.Where(p=>p.NormalizedName == X_DOVEValues.SUPERUSER_String).Select(p=>p.Id).FirstOrDefaultAsync();
-            var IsSuperUserCreated = await _context.UserRoles.AnyAsync(p=>p.RoleId == _SuperUserId);
-            ViewData[nameof(IsSuperUserCreated)]=IsSuperUserCreated;
         }
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {

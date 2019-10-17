@@ -14,7 +14,7 @@ using Microsoft.Extensions.Localization;
 using POYA.Data;
 using POYA.Models;
 using POYA.Unities.Helpers;
-namespace POYA.Areas.Identity.Pages.Account
+namespace POYA.Areas.Identity.Pages.SuperManage
 {
     public partial class CreateSuperUserModel : PageModel
     {
@@ -51,6 +51,7 @@ namespace POYA.Areas.Identity.Pages.Account
         public bool IsEmailConfirmed { get; set; }
         [TempData]
         public string StatusMessage { get; set; }
+        public string ReturnUrl { get; set; }
         [BindProperty]
         public InputModel Input { get; set; }
 
@@ -82,8 +83,9 @@ namespace POYA.Areas.Identity.Pages.Account
             
         }
 
-        public async Task<IActionResult> OnGetAsync(string returnUrl = null)
+        public IActionResult OnGet(string returnUrl = null)
         {
+            ReturnUrl = returnUrl;
             return Page();
         }
 
@@ -97,11 +99,12 @@ namespace POYA.Areas.Identity.Pages.Account
                     await _context.Users.AnyAsync(p=>p.Email==Input.Email)    
                 )
                 {
+                    ModelState.AddModelError( nameof(Input.Email), _localizer["Email is register"] );
                     return Page();
                 }
                 
                 if(
-                    await _roleManager.RoleExistsAsync(X_DOVEValues.SUPERUSER_String)
+                    ! await _roleManager.RoleExistsAsync(X_DOVEValues.SUPERUSER_String)
                 )
                 {
                     await _roleManager.CreateAsync(
@@ -111,14 +114,21 @@ namespace POYA.Areas.Identity.Pages.Account
                     });
                 }
 
-                await _userManager.CreateAsync(
-                    new IdentityUser{
+                var _SuperUser = new IdentityUser{
                         Email=Input.Email,
                         UserName = Input.UserName,
                         PhoneNumber=Input.PhoneNumber??"",
                         EmailConfirmed=true,
-                    },
+                    };
+
+                await _userManager.CreateAsync(
+                    _SuperUser,
                     Input.Password
+                );
+
+                await _userManager.AddToRoleAsync(
+                    _SuperUser,
+                    X_DOVEValues.SUPERUSER_String
                 );
 
                 return Redirect(returnUrl);

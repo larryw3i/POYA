@@ -2,7 +2,6 @@
 @model LoginModel
 @{
     ViewData["Title"] = Localizer["Log in"];
-    var IsSuperUserCreated = Convert.ToBoolean( ViewData["IsSuperUserCreated"]);
 }
 <h1>@(ViewData["Title"])</h1>
 <hr/>
@@ -38,13 +37,6 @@
                 <p>
                     <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">@(Localizer["Register as a new user"])</a>
                 </p>
-                @if(IsSuperUserCreated)
-                {
-
-                    <p>
-                        <a asp-page="./CreateSuperUser" >@(Localizer["Create super user"])</a>
-                    </p>
-                }
             </div>
         </form>
     </div>
