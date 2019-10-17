@@ -9,21 +9,21 @@
 }
 
 <h2>@(ViewData["Title"])</h2>
+
+<a class="float-right" asp-action="Create">@(Localizer["Add user"])</a>
 <hr/>
 <table class="table">
     <tr>
-        <th>@(Localizer["User ID"])</th>
-        <th>@(Localizer["User name"])</th>
         <th>@(Localizer["Email"])</th>
+        <th>@(Localizer["User name"])</th>
         <th>@(Localizer["Email confirmed"])?</th>
     </tr>
     
     @foreach (var item in Model)
     {
         <tr>
-            <td>@(item.Id)</td>
-            <td>@(item.UserName)</td>
             <td>@(item.Email)</td>
+            <td>@(item.UserName)</td>
             <td>@(item.EmailConfirmed?Localizer["Yes"]:Localizer["No"])</td>
         
         </tr>

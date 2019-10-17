@@ -13,7 +13,7 @@ using POYA.Unities.Helpers;
 
 namespace POYA.Areas.LarryUserManagement.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "SUPERUSER")]
     [Area("LarryUserManagement")]
     public class LarryRoleManagementController : Controller
     {

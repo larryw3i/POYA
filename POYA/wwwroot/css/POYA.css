@@ -173,15 +173,6 @@ input[class='form-control']{
 
 
 
-    th {
-        text-align: right;
-    }
-
-    tr:hover {
-        background-color: rgba(255, 0, 220,0.8);
-        animation: TrAnimation 0.5s linear forwards;
-    }
-
     #UserInfoEle {
         cursor: default;
         border-radius: 8px;

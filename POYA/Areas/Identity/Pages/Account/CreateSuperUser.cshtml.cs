@@ -14,7 +14,7 @@ using Microsoft.Extensions.Localization;
 using POYA.Data;
 using POYA.Models;
 using POYA.Unities.Helpers;
-namespace POYA.Areas.Identity.Pages.SuperManage
+namespace POYA.Areas.Identity.Pages.Account
 {
     public partial class CreateSuperUserModel : PageModel
     {

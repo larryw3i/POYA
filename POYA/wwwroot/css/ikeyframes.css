@@ -130,11 +130,7 @@
     }
 }
 
-@keyframes TrAnimation {
-    100% {
-        transform: scale(1.1);
-    }
-}
+
 
 @keyframes StoreIconFileImgAnimation {
     100% {

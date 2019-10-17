@@ -14,7 +14,8 @@ using POYA.Unities.Helpers;
 
 namespace POYA.Areas.LarryUserManagement.Controllers
 {
-    [Authorize]
+    
+    [Authorize(Roles = "SUPERUSER")]
     [Area("LarryUserManagement")]
     public class LarryUserManagementController : Controller
     {
@@ -52,6 +53,12 @@ namespace POYA.Areas.LarryUserManagement.Controllers
         }
 
         #endregion
+
+        [ActionName("Create")]
+        public  IActionResult UserCreate()
+        {
+            return View();
+        }
 
         [ActionName("Index")]
         public async System.Threading.Tasks.Task<IActionResult> UserIndexAsync()

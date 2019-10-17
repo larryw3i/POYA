@@ -1,14 +1,18 @@
-﻿@page
-@model RegisterModel
+
+
+@using Microsoft.AspNetCore.Identity
+@model IdentityUser
+
 @{
-    ViewData["Title"] = Localizer["Sign up"];
-    var IsSuperUserCreated = Convert.ToBoolean( ViewData["IsSuperUserCreated"]);
+    ViewData["Title"]=Localizer["User create"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>@(ViewData["Title"])</h1>
-<hr/>
+
+<h2>@(ViewData["Title"])</h2>
+
 <div class="row">
     <div class="col offset-sm-2 col-sm-8  offset-md-2 col-md-8 offset-lg-4 col-lg-4 register-col">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <form  method="post">
             <h4>@(Localizer["Create a new account"])</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -30,14 +34,6 @@
             <button type="submit" class="btn btn-primary">@(Localizer["Sign up"])</button>
         </form>
 
-        @if(!IsSuperUserCreated)
-        {
-
-            <div class="align-content-center">
-                <a asp-page="./CreateSuperUser" asp-route-returnUrl="@(HttpContext.Request.Path)" >@(Localizer["Create super user"])</a>    
-            </div>
-
-        }
     </div>
 </div>
 
