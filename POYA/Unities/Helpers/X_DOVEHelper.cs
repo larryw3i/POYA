@@ -173,6 +173,8 @@ namespace POYA.Unities.Helpers
         
         public static string SUPERUSER_String="SUPERUSER";
 
+        public static string ADMINISTRATOR_String = "ADMINISTRATOR";
+
 
 
     }

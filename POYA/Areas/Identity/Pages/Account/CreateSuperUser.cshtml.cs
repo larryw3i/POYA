@@ -111,7 +111,14 @@ namespace POYA.Areas.Identity.Pages.Account
                         new IdentityRole{
                             Name = X_DOVEValues.SUPERUSER_String,
                             NormalizedName = X_DOVEValues.SUPERUSER_String
-                    });
+                        }
+                    );
+                    await _roleManager.CreateAsync(
+                        new IdentityRole{
+                            Name = X_DOVEValues.SUPERUSER_String,
+                            NormalizedName = X_DOVEValues.ADMINISTRATOR_String
+                        }
+                    );
                 }
 
                 var _SuperUser = new IdentityUser{
@@ -126,9 +133,9 @@ namespace POYA.Areas.Identity.Pages.Account
                     Input.Password
                 );
 
-                await _userManager.AddToRoleAsync(
+                await _userManager.AddToRolesAsync(
                     _SuperUser,
-                    X_DOVEValues.SUPERUSER_String
+                    new string[]{X_DOVEValues.SUPERUSER_String, X_DOVEValues.ADMINISTRATOR_String}
                 );
 
                 return Redirect(returnUrl);

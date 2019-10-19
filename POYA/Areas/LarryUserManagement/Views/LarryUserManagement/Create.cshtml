@@ -1,7 +1,7 @@
 
 
-@using Microsoft.AspNetCore.Identity
-@model IdentityUser
+@using POYA.Areas.LarryUserManagement.Models
+@model LarryUser
 
 @{
     ViewData["Title"]=Localizer["User create"];
@@ -17,19 +17,19 @@
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" placeholder='@Localizer["Type your email here"]' />
-                <span asp-validation-for="Input.Email" data-interval="5000" class="text-danger"></span>
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" placeholder='@Localizer["Type your email here"]' />
+                <span asp-validation-for="Email" data-interval="5000" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" placeholder='@Localizer["Type your password here"]' />
-                <span asp-validation-for="Input.Password" data-interval="5000" class="text-danger"></span>
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" placeholder='@Localizer["Type your password here"]' />
+                <span asp-validation-for="Password" data-interval="5000" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" placeholder='@Localizer["Type your password again"]' />
-                <span asp-validation-for="Input.ConfirmPassword" data-interval="5000" class="text-danger"></span>
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control" placeholder='@Localizer["Type your password again"]' />
+                <span asp-validation-for="ConfirmPassword" data-interval="5000" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">@(Localizer["Sign up"])</button>
         </form>

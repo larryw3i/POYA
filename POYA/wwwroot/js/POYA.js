@@ -1,8 +1,7 @@
 
 (function () {
-    var cookieConsentButton = $("#cookieConsent button[data-cookie-string]");
-    cookieConsentButton.on("click",(e)=>{    document.cookie = button.dataset.cookieString;} );
-    
+    var cookieConsentButton = document.querySelector("#cookieConsent button[data-cookie-string]");
+    if(cookieConsentButton){ cookieConsentButton.addEventListener('click',()=>{    document.cookie = cookieConsentButton.dataset.cookieString;   });}
 })();
 
 (function(){

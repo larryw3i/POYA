@@ -64,7 +64,7 @@ namespace POYA.Controllers
             _roleManager = roleManager;
             _x_DOVEHelper = x_DOVEHelper;
             _signInManager = signInManager;
-            AppInitializationAsync().GetAwaiter().GetResult();
+            
         }
 
         #endregion
@@ -165,50 +165,6 @@ namespace POYA.Controllers
             return LocalRedirect(returnUrl);
         }
 
-        private async Task AppInitializationAsync()
-        {
-            
-
-            if (!Convert.ToBoolean(_configuration["IsInitialized"]))
-            {
-                var LFilesPath = _webHostEnv.ContentRootPath + "/Data/LFiles";
-                var AvatarPath = $"{LFilesPath}/Avatars";
-                var XUserFilePath = $"{LFilesPath}/XUserFile";
-                var EArticleFilesPath = $"{_webHostEnv.ContentRootPath}/Areas/EduHub/Data/EArticleFiles";
-                var FunFilesRootPath=new FunFilesHelper().FunFilesRootPath(_webHostEnv);
-                
-
-                var InitialPaths = new string[] 
-                    { 
-                        AvatarPath, 
-                        XUserFilePath, 
-                        EArticleFilesPath,FunFilesRootPath 
-                    };
-
-                foreach (var p in InitialPaths)
-                {
-                    if (!Directory.Exists(p))
-                    {
-                        Directory.CreateDirectory(p);
-                    }
-                }
-
-                #region MODIFY appsettings.json
-                var _appsettings_jsonPath = _webHostEnv.ContentRootPath + "/appsettings.json";
-
-                _context.SaveChangesAsync().GetAwaiter().GetResult();
-
-                var jo = JObject.Parse(await System.IO.File.ReadAllTextAsync(_appsettings_jsonPath));
-                jo["IsInitialized"] = true;
-
-                await System.IO.File.WriteAllTextAsync(_appsettings_jsonPath, Convert.ToString(jo));
-                
-                #endregion
-
-                #region SOME MIGRATION
-                #endregion
-            }
-        }
 
         #endregion
 
