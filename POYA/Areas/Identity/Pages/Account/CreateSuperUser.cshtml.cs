@@ -113,9 +113,16 @@ namespace POYA.Areas.Identity.Pages.Account
                             NormalizedName = X_DOVEValues.SUPERUSER_String
                         }
                     );
+                }
+
+                if(
+                    ! await _roleManager.RoleExistsAsync(X_DOVEValues.ADMINISTRATOR_String)
+                )
+                {
+                    
                     await _roleManager.CreateAsync(
                         new IdentityRole{
-                            Name = X_DOVEValues.SUPERUSER_String,
+                            Name = X_DOVEValues.ADMINISTRATOR_String,
                             NormalizedName = X_DOVEValues.ADMINISTRATOR_String
                         }
                     );
