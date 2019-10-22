@@ -1,5 +1,6 @@
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
@@ -15,9 +16,11 @@ namespace POYA.Areas.LarryUserManagement.Models
         #region  NotMapped
 
         [NotMapped]
+        [StringLength(maximumLength:20)]
         public string RoleName{get;set;}
 
         [NotMapped]
+        [StringLength(maximumLength:20)]
         public string ROleNormalizedName{get;set;}
 
         #endregion

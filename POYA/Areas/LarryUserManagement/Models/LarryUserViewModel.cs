@@ -15,19 +15,20 @@ namespace POYA.Areas.LarryUserManagement.Models
         #region  NotMapped
         
         [NotMapped]
+        [StringLength(maximumLength:50,MinimumLength=1)]
         public string UserName{get;set;}
 
-        [NotMapped]
         [Required]
+        [NotMapped]
         [EmailAddress]
         public string Email{get;set;}
 
         [NotMapped]
-        public bool IsEmailConfirmed{get;set;}=false;
+        public bool IsEmailConfirmed{get;set;}=true;
 
 
-        [NotMapped]
         [Required]
+        [NotMapped]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -39,6 +40,12 @@ namespace POYA.Areas.LarryUserManagement.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match")]
         public string ConfirmPassword { get; set; }
+        
+
+        [NotMapped]
+        [StringLength(maximumLength:25)]
+        [Display(Name = "Telphone number")]
+        public string TelphoneNumber{get;set;}
 
         #endregion
         
