@@ -1,8 +1,10 @@
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace POYA.Areas.LarryUserManagement.Models
 {
@@ -10,20 +12,24 @@ namespace POYA.Areas.LarryUserManagement.Models
     {
         public Guid Id{get;set;}
         public string UserId{get;set;}
+        [Display(Name = "Comment")]
         public string Comment{get;set;}
 
         #region  NotMapped
         
         [NotMapped]
+        [Display(Name = "User name")]
         [StringLength(maximumLength:50,MinimumLength=1)]
         public string UserName{get;set;}
 
         [Required]
         [NotMapped]
         [EmailAddress]
+        [Display(Name = "Email")]
         public string Email{get;set;}
 
         [NotMapped]
+        [Display(Name = "Is email confirmed")]
         public bool IsEmailConfirmed{get;set;}=true;
 
 
@@ -46,6 +52,13 @@ namespace POYA.Areas.LarryUserManagement.Models
         [StringLength(maximumLength:25)]
         [Display(Name = "Telphone number")]
         public string TelphoneNumber{get;set;}
+
+        [NotMapped]
+        public List<SelectListItem> RoleSelectListItems{get;set;} = new List<SelectListItem>{
+            new SelectListItem{
+                Text = ""
+            }
+        };
 
         #endregion
         

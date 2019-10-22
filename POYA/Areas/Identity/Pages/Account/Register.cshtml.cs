@@ -89,7 +89,7 @@ namespace POYA.Areas.Identity.Pages.Account
         {
             if (IsFromLogin) ModelState.AddModelError(nameof(Input.Email), _localizer["Your e-mail is not registered in POYA yet, register it Now"] + " (^_^)");
 
-            var _SuperUserId = await _context.Roles.Where(p=>p.NormalizedName == X_DOVEValues.SUPERUSER_String).Select(p=>p.Id).FirstOrDefaultAsync();
+            var _SuperUserId = await _context.Roles.Where(p=>p.NormalizedName == X_DOVEValues.ROLE_SUPERUSER_String).Select(p=>p.Id).FirstOrDefaultAsync();
             var IsSuperUserCreated = await _context.UserRoles.AnyAsync(p=>p.RoleId == _SuperUserId);
             ViewData[nameof(IsSuperUserCreated)]=IsSuperUserCreated;
             

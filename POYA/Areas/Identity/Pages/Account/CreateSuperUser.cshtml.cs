@@ -104,26 +104,26 @@ namespace POYA.Areas.Identity.Pages.Account
                 }
                 
                 if(
-                    ! await _roleManager.RoleExistsAsync(X_DOVEValues.SUPERUSER_String)
+                    ! await _roleManager.RoleExistsAsync(X_DOVEValues.ROLE_SUPERUSER_String)
                 )
                 {
                     await _roleManager.CreateAsync(
                         new IdentityRole{
-                            Name = X_DOVEValues.SUPERUSER_String,
-                            NormalizedName = X_DOVEValues.SUPERUSER_String
+                            Name = X_DOVEValues.ROLE_SUPERUSER_String,
+                            NormalizedName = X_DOVEValues.ROLE_SUPERUSER_String
                         }
                     );
                 }
 
                 if(
-                    ! await _roleManager.RoleExistsAsync(X_DOVEValues.ADMINISTRATOR_String)
+                    ! await _roleManager.RoleExistsAsync(X_DOVEValues.ROLE_ADMINISTRATOR_String)
                 )
                 {
                     
                     await _roleManager.CreateAsync(
                         new IdentityRole{
-                            Name = X_DOVEValues.ADMINISTRATOR_String,
-                            NormalizedName = X_DOVEValues.ADMINISTRATOR_String
+                            Name = X_DOVEValues.ROLE_ADMINISTRATOR_String,
+                            NormalizedName = X_DOVEValues.ROLE_ADMINISTRATOR_String
                         }
                     );
                 }
@@ -142,7 +142,7 @@ namespace POYA.Areas.Identity.Pages.Account
 
                 await _userManager.AddToRolesAsync(
                     _SuperUser,
-                    new string[]{X_DOVEValues.SUPERUSER_String, X_DOVEValues.ADMINISTRATOR_String}
+                    new string[]{X_DOVEValues.ROLE_SUPERUSER_String, X_DOVEValues.ROLE_ADMINISTRATOR_String}
                 );
 
                 return Redirect(returnUrl);

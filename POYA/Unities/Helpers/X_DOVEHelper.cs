@@ -171,9 +171,9 @@ namespace POYA.Unities.Helpers
         // Areas/Identity/Pages/Account/Manage/UserInfo.cshtml
         public static string CustomHeaderName = "L-XSRF-TOKEN";
         
-        public static string SUPERUSER_String="SUPERUSER";
+        public static string ROLE_SUPERUSER_String="SUPERUSER";
 
-        public static string ADMINISTRATOR_String = "ADMINISTRATOR";
+        public static string ROLE_ADMINISTRATOR_String = "ADMINISTRATOR";
 
 
 

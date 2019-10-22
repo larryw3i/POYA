@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,10 @@ using POYA.Data;
 
 namespace POYA.Areas.LarryUserManagement.Controllers
 {
+    
     [Area("LarryUserManagement")]
+    //  [Authorize(Roles="ADMINISTRATOR")]
+    [Authorize( Roles = "4d4cba08-0e1d-497a-a649-45adf418835d")]
     public class LarryRolesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -151,5 +155,15 @@ namespace POYA.Areas.LarryUserManagement.Controllers
         {
             return _context.LarryRoles.Any(e => e.Id == id);
         }
+
+
+        #region     DEPOLLUTION
+        
+        public IActionResult GetAllRoles()
+        {
+            return NoContent();
+        }
+
+        #endregion
     }
 }

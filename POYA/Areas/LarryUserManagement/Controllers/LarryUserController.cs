@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,9 @@ using POYA.Data;
 
 namespace POYA.Areas.LarryUserManagement.Controllers
 {
+    
     [Area("LarryUserManagement")]
+    [Authorize(Roles="ADMINISTRATOR")]
     public class LarryUsersController : Controller
     {
         private readonly ApplicationDbContext _context;

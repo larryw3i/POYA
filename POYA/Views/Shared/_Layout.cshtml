@@ -17,8 +17,8 @@
     var _User=await UserManager.GetUserAsync(User);
 
     var _IsAdministrator=_User==null?false: 
-        ((await UserManager.IsInRoleAsync( _User, X_DOVEValues.ADMINISTRATOR_String)) || 
-        (await UserManager.IsInRoleAsync( _User, X_DOVEValues.SUPERUSER_String)));
+        ((await UserManager.IsInRoleAsync( _User, X_DOVEValues.ROLE_ADMINISTRATOR_String)) || 
+        (await UserManager.IsInRoleAsync( _User, X_DOVEValues.ROLE_SUPERUSER_String)));
     
 }
 
