@@ -12,13 +12,6 @@
 @inject IOptions<RequestLocalizationOptions> LocOptions
 
 @{
-    var _THEME = Context.Request.Cookies["THEME"] ?? "Light";
-
-    var _User=await UserManager.GetUserAsync(User);
-
-    var _IsAdministrator=_User==null?false: 
-        ((await UserManager.IsInRoleAsync( _User, X_DOVEValues.ROLE_ADMINISTRATOR_String)) || 
-        (await UserManager.IsInRoleAsync( _User, X_DOVEValues.ROLE_SUPERUSER_String)));
     
 }
 
@@ -69,87 +62,9 @@
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex flex-sm-row-reverse" id="navbarSupportedContent">
                     
-                    <partial name="_LoginPartial" />
+                    <partial name="_LayoutLoginPartial" />
+                    <partial name="_LayoutNavbarNavPartial" />
 
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
-                                @(Localizer["Home"])
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " asp-area="WeEduHub" asp-controller="WeArticle" asp-action="Index">
-                                @(Localizer["EduHub"])
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link " 
-                                asp-area='@(nameof(POYA.Areas.FunFiles))' 
-                                asp-controller='@(nameof(POYA.Areas.FunFiles.Controllers.FunDirsController).Replace("Controller",""))' 
-                                asp-action="Index">
-                                    @(Localizer["iStorage"])
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller=""  asp-action="Index">
-                                @(Localizer["Developers"])
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @(Localizer["More"])
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-action="Index" asp-controller="WeArticleSet" asp-area="WeEduHub">
-                                    @(Localizer["WeEdu"])
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="" asp-area="">
-                                    @(Localizer["Developers"])
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Donate">
-                                    @(Localizer["Donate"])
-                                </a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Privacy">
-                                    @(Localizer["Privacy"])
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="XAd" asp-controller="XAdCustomers" asp-action="Index">
-                                    @(Localizer["Ad"])
-                                </a> 
-                                @if (_IsAdministrator)
-                                {
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" asp-area="WeEduHub" asp-controller="FContentChecks" asp-action="Index">
-                                        @(Localizer["Ministration"])
-                                    </a>
-                                    <a class="dropdown-item" asp-area="LarryUserManagement" asp-controller="LarryUsers" asp-action="Index">
-                                        @(Localizer["Users"]) & @(Localizer["Roles"])
-                                    </a>
-                                }
-                            </div>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="ThemeDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @(Localizer[_THEME])
-                            </a>
-
-                            <div class="dropdown-menu" aria-labelledby="ThemeDropdown">
-                                <a class="dropdown-item poya-theme" theme='Light'>
-                                    @(Localizer["Light"])
-                                </a>
-                                <a class="dropdown-item poya-theme" theme='Dark'>
-                                    @(Localizer["Dark"])
-                                </a>
-                                <a class="dropdown-item poya-theme" theme='Care'>
-                                    @(Localizer["Care"])
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
                 </div>
             </div>
         </nav>
