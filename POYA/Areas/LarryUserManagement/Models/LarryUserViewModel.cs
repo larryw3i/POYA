@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using POYA.Unities.Helpers;
 
 namespace POYA.Areas.LarryUserManagement.Models
 {
@@ -17,22 +18,38 @@ namespace POYA.Areas.LarryUserManagement.Models
 
         #region  NotMapped
         
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
         [NotMapped]
         [Display(Name = "User name")]
         [StringLength(maximumLength:50,MinimumLength=1)]
         public string UserName{get;set;}
 
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
         [Required]
         [NotMapped]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email{get;set;}
 
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
         [NotMapped]
         [Display(Name = "Is email confirmed")]
         public bool IsEmailConfirmed{get;set;}=true;
 
 
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
         [Required]
         [NotMapped]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long", MinimumLength = 6)]
@@ -41,6 +58,10 @@ namespace POYA.Areas.LarryUserManagement.Models
         public string Password { get; set; }
 
 
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
         [NotMapped]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
@@ -48,17 +69,28 @@ namespace POYA.Areas.LarryUserManagement.Models
         public string ConfirmPassword { get; set; }
         
 
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
         [NotMapped]
         [StringLength(maximumLength:25)]
         [Display(Name = "Telphone number")]
         public string TelphoneNumber{get;set;}
 
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
         [NotMapped]
-        public List<SelectListItem> RoleSelectListItems{get;set;} = new List<SelectListItem>{
-            new SelectListItem{
-                Text = ""
-            }
-        };
+        public List<SelectListItem> RoleSelectListItems{get;set;} 
+
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
+        [NotMapped]
+        public Guid RoleId{get;set;} 
 
         #endregion
         
