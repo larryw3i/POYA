@@ -7,9 +7,12 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="row">
+    <div class="col col-12">
+        <a asp-action="Create" class="float-right">@(Localizer["Add new role"])</a>
+    </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>

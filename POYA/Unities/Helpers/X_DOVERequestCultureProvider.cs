@@ -15,15 +15,21 @@ namespace POYA.Unities.Helpers
         public override Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
         {
             var CULTURE_String="CULTURE";
-            var CultureCookie = httpContext.Request.Cookies[CULTURE_String]?.ToString() ?? "";    
+            var CultureCookie = httpContext.Request.Cookies[CULTURE_String]?.ToString() ?? "";  
+
             var _SupportedUICultures = httpContext.RequestServices
-                                        .GetService<IOptions<RequestLocalizationOptions>>()
-                                        .Value.SupportedUICultures.Select(c => c.Name).ToList();
-            if (string.IsNullOrWhiteSpace(CultureCookie)|| !_SupportedUICultures.Contains(CultureCookie))
-            {
-                CultureCookie = "zh-Hans";
-                httpContext.Response.Cookies.Append(key:CULTURE_String, value:CultureCookie, options: new CookieOptions() { Expires = DateTime.Now.AddYears(1) });
-            }
+                    .GetService<IOptions<RequestLocalizationOptions>>()
+                    .Value.SupportedUICultures.Select(c => c.Name).ToList();
+
+            CultureCookie =( string.IsNullOrEmpty(CultureCookie) || !_SupportedUICultures.Contains(CultureCookie))?"zh-Hans":CultureCookie;  
+
+            httpContext.Response.Cookies.Append(
+                key:CULTURE_String, 
+                value:CultureCookie, 
+                options: new CookieOptions() { 
+                    Expires = DateTime.Now.AddYears(1)
+                });
+                
             return Task.FromResult(new ProviderCultureResult(CultureCookie));
         }
     }

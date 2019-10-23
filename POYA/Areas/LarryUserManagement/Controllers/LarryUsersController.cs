@@ -64,7 +64,26 @@ namespace POYA.Areas.LarryUserManagement.Controllers
         // GET: LarryUserManagement/LarryUser
         public async Task<IActionResult> Index()
         {
-            return View(await _context.LarryUsers.ToListAsync());
+            var _LarryUsers = await _context.Users.Select(p=>new LarryUser{
+                    IsEmailConfirmed = p.EmailConfirmed, 
+                    Email = p.Email, 
+                    TelphoneNumber = p.PhoneNumber, 
+                    UserName = p.UserName, 
+                    UserId = p.Id, 
+                }).ToListAsync();
+
+            if(_LarryUsers!=null) 
+                _LarryUsers.ForEach(
+                    p=>{
+                        var LarryUsers = _context.LarryUsers.Where(p=>p.UserId==p.UserId).FirstOrDefaultAsync().GetAwaiter().GetResult();
+                        var _RoleId = _context.UserRoles.Where(a => a.UserId ==p.UserId).Select(o =>o.RoleId).FirstOrDefaultAsync().GetAwaiter().GetResult();
+                        p.Id =LarryUsers?.Id??Guid.NewGuid();
+                        p.Comment = LarryUsers?.Comment??string.Empty;
+                        p.RoleName = _context.Roles.Where(p=>p.Id == _RoleId).Select(p=>p.Name).FirstOrDefaultAsync()?.GetAwaiter().GetResult()??string.Empty;
+                    }
+                );
+            
+            return View(_LarryUsers);
         }
 
         // GET: LarryUserManagement/LarryUser/Details/5
@@ -86,9 +105,14 @@ namespace POYA.Areas.LarryUserManagement.Controllers
         }
 
         // GET: LarryUserManagement/LarryUser/Create
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
-            return View();
+
+            var _LarryUser = new LarryUser{
+                RoleSelectListItems= await GetRoleSelectListItemsAsync()
+
+            };
+            return View(_LarryUser);
         }
 
         // POST: LarryUserManagement/LarryUser/Create
@@ -209,5 +233,29 @@ namespace POYA.Areas.LarryUserManagement.Controllers
         {
             return _context.LarryUsers.Any(e => e.Id == id);
         }
+
+        #region     DEPOLLUTION
+
+        public async Task<List<SelectListItem>> GetRoleSelectListItemsAsync()
+        {
+            return await _context.Roles.Select(p=>new SelectListItem{
+                Text = p.Name,
+                Value = p.Id.ToString()
+            }).ToListAsync();
+        }
+
+        [AcceptVerbs("Get", "Post")]
+        [ActionName("RepetitionEmailCheck")]
+        public async Task<IActionResult> RepetitionEmailCheckAsync(string Email)
+        {
+            if (await _context.Users.AnyAsync(p=>p.Email.ToLower()== Email.ToLower()))
+            {
+                return Json(false);
+            }
+
+            return Json(true);
+        }
+
+        #endregion
     }
 }

@@ -174,8 +174,8 @@ namespace POYA.Unities.Helpers
         public static string ROLE_SUPERUSER_String="SUPERUSER";
 
         public static string ROLE_ADMINISTRATOR_String = "ADMINISTRATOR";
-
-
+        
+        public static string ROLE_USER_String = "USER";
 
     }
 

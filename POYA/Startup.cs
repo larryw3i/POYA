@@ -77,23 +77,13 @@ namespace POYA
                     options.Password.RequiredUniqueChars = 1;
 
                     // Lockout settings
-                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                    options.Lockout.MaxFailedAccessAttempts = 5;
                     options.Lockout.AllowedForNewUsers = true;
+
                     options.User.AllowedUserNameCharacters = null;
                     options.User.RequireUniqueEmail = true;
                 });
 
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                // Cookie settings
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(6);
-                options.LoginPath = "/Identity/Account/Login";
-                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-                options.SlidingExpiration = true;
-            });
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");  //  Resources
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using POYA.Unities.Helpers;
 
@@ -35,6 +36,7 @@ namespace POYA.Areas.LarryUserManagement.Models
         [NotMapped]
         [EmailAddress]
         [Display(Name = "Email")]
+        [Remote(action: "RepetitionEmailCheck", controller: "LarryUsers", ErrorMessage = "This email is used")]
         public string Email{get;set;}
 
         /// <summary>
@@ -91,6 +93,13 @@ namespace POYA.Areas.LarryUserManagement.Models
         /// <value></value>
         [NotMapped]
         public Guid RoleId{get;set;} 
+
+        /// <summary>
+        /// NotMapped
+        /// </summary>
+        /// <value></value>
+        [NotMapped]
+        public string RoleName{get;set;} 
 
         #endregion
         

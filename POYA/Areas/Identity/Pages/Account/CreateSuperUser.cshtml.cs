@@ -127,6 +127,19 @@ namespace POYA.Areas.Identity.Pages.Account
                         }
                     );
                 }
+                
+                if(
+                    ! await _roleManager.RoleExistsAsync(X_DOVEValues.ROLE_USER_String)
+                )
+                {
+                    
+                    await _roleManager.CreateAsync(
+                        new IdentityRole{
+                            Name = X_DOVEValues.ROLE_USER_String,
+                            NormalizedName = X_DOVEValues.ROLE_USER_String
+                        }
+                    );
+                }
 
                 var _SuperUser = new IdentityUser{
                         Email=Input.Email,
