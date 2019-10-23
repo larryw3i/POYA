@@ -26,6 +26,7 @@ namespace POYA.Areas.LarryUserManagement.Models
         [NotMapped]
         [Display(Name = "User name")]
         [StringLength(maximumLength:50,MinimumLength=1)]
+        [Remote(action: "RepetitionUserNameCheck", controller: "LarryUsers", ErrorMessage = "This user name is used")]
         public string UserName{get;set;}
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace POYA.Areas.LarryUserManagement.Models
         /// <value></value>
         [NotMapped]
         [Display(Name = "Is email confirmed")]
-        public bool IsEmailConfirmed{get;set;}=true;
+        public bool EmailConfirmed{get;set;}=true;
 
 
         /// <summary>
@@ -78,7 +79,7 @@ namespace POYA.Areas.LarryUserManagement.Models
         [NotMapped]
         [StringLength(maximumLength:25)]
         [Display(Name = "Telphone number")]
-        public string TelphoneNumber{get;set;}
+        public string PhoneNumber{get;set;}
 
         /// <summary>
         /// NotMapped
@@ -92,7 +93,7 @@ namespace POYA.Areas.LarryUserManagement.Models
         /// </summary>
         /// <value></value>
         [NotMapped]
-        public Guid RoleId{get;set;} 
+        public string RoleId{get;set;} 
 
         /// <summary>
         /// NotMapped

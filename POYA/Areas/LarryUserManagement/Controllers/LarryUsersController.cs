@@ -65,9 +65,9 @@ namespace POYA.Areas.LarryUserManagement.Controllers
         public async Task<IActionResult> Index()
         {
             var _LarryUsers = await _context.Users.Select(p=>new LarryUser{
-                    IsEmailConfirmed = p.EmailConfirmed, 
+                    EmailConfirmed = p.EmailConfirmed, 
                     Email = p.Email, 
-                    TelphoneNumber = p.PhoneNumber, 
+                    PhoneNumber = p.PhoneNumber, 
                     UserName = p.UserName, 
                     UserId = p.Id, 
                 }).ToListAsync();
@@ -121,7 +121,7 @@ namespace POYA.Areas.LarryUserManagement.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            [Bind("Id,UserId,Comment,TelphoneNumber,Password,Email,UserName,RoleId,")] 
+            [Bind("Id,UserId,Comment,PhoneNumber,Password,Email,UserName,RoleId,")] 
             LarryUser larryUser
         )
         {
@@ -130,7 +130,7 @@ namespace POYA.Areas.LarryUserManagement.Controllers
                 larryUser.Id = Guid.NewGuid();
                 var _CreatedUser = new IdentityUser{
                         Email=larryUser.Email,
-                        EmailConfirmed = larryUser.IsEmailConfirmed, 
+                        EmailConfirmed = larryUser.EmailConfirmed, 
                         UserName = larryUser.UserName,
                     };
 
@@ -150,16 +150,13 @@ namespace POYA.Areas.LarryUserManagement.Controllers
         // GET: LarryUserManagement/LarryUser/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            
+            var larryUser =id == null?  
+                new LarryUser{
+                    RoleSelectListItems= await GetRoleSelectListItemsAsync()
+                }
+                : await _context.LarryUsers.FindAsync(id);
 
-            var larryUser = await _context.LarryUsers.FindAsync(id);
-            if (larryUser == null)
-            {
-                return NotFound();
-            }
             return View(larryUser);
         }
 
@@ -169,7 +166,7 @@ namespace POYA.Areas.LarryUserManagement.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, 
-            [Bind("Id,UserId,Comment,TelphoneNumber,Password,Email,UserName,RoleId,")] 
+            [Bind("Id,UserId,Comment,PhoneNumber,Password,Email,UserName,RoleId,")] 
             LarryUser larryUser)
         {
             if (id != larryUser.Id)
@@ -179,24 +176,90 @@ namespace POYA.Areas.LarryUserManagement.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                if(!await _context.Roles.AnyAsync(p=>p.Id == larryUser.RoleId))
+                    return NotFound();
+
+                if(LarryUserExists(id))
                 {
-                    _context.Update(larryUser);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!LarryUserExists(larryUser.Id))
+                    try
                     {
-                        return NotFound();
+                        var _UserId = await _context.LarryUsers.Where(p=>p.Id == id).Select(p=>p.UserId).FirstOrDefaultAsync();
+                        var _User = await _context.Users.Where(p=>p.Id == _UserId).FirstOrDefaultAsync();
+                        _User.Email = larryUser.Email;
+                        _User.PhoneNumber = larryUser.PhoneNumber;
+                        _User.NormalizedEmail = larryUser.Email.ToUpper();
+                        _User.UserName = larryUser.UserName;
+
+                        var _RoleName = await _context.Roles.Where(p=>p.Id == larryUser.RoleId).Select(p=>p.Name).FirstOrDefaultAsync();
+
+                        if(! await _context.UserRoles.AnyAsync(p=>p.UserId == _UserId ))
+                        {
+                            await _userManager.AddToRoleAsync(
+                                _User,
+                                _RoleName
+                            );
+                        }
+                        else
+                        {
+                            var UserRole = await _context.UserRoles.Where(p=>p.UserId == _UserId).FirstOrDefaultAsync();
+                            UserRole.RoleId = larryUser.RoleId;
+                        }
+
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!LarryUserExists(larryUser.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                }
+                else
+                {
+                    larryUser.Id = Guid.NewGuid();
+                    var _CreatedUser = new IdentityUser{
+                            Email=larryUser.Email,
+                            EmailConfirmed = larryUser.EmailConfirmed, 
+                            UserName = larryUser.UserName,
+                        };
+
+                    await _userManager.CreateAsync(
+                        _CreatedUser,
+                        larryUser.Password
+                    );
+
+                    larryUser.UserId = _CreatedUser.Id;
+
+                    var _RoleName = await _context.Roles.Where(p=>p.Id == larryUser.RoleId).Select(p=>p.Name).FirstOrDefaultAsync();
+                
+                    if(! await _context.UserRoles.AnyAsync(p=>p.UserId == _CreatedUser.Id ))
+                    {
+                        await _userManager.AddToRoleAsync(
+                            _CreatedUser,
+                            _RoleName
+                        );
                     }
                     else
                     {
-                        throw;
+                        var UserRole = await _context.UserRoles.Where(p=>p.UserId == _CreatedUser.Id).FirstOrDefaultAsync();
+                        UserRole.RoleId = larryUser.RoleId;
                     }
+
+                    await _context.AddAsync(larryUser);
+
                 }
+
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
+
+            larryUser.RoleSelectListItems = await GetRoleSelectListItemsAsync();
             return View(larryUser);
         }
 
@@ -248,12 +311,14 @@ namespace POYA.Areas.LarryUserManagement.Controllers
         [ActionName("RepetitionEmailCheck")]
         public async Task<IActionResult> RepetitionEmailCheckAsync(string Email)
         {
-            if (await _context.Users.AnyAsync(p=>p.Email.ToLower()== Email.ToLower()))
-            {
-                return Json(false);
-            }
+            return Json(!await _context.Users.AnyAsync(p=>p.Email.ToLower()== Email.ToLower()));
+        }
 
-            return Json(true);
+        [AcceptVerbs("Get", "Post")]
+        [ActionName("RepetitionUserNameCheck")]
+        public async Task<IActionResult> RepetitionUserNameCheckAsync(string UserName)
+        {
+            return Json(!await _context.Users.AnyAsync(p=>p.UserName == UserName));
         }
 
         #endregion

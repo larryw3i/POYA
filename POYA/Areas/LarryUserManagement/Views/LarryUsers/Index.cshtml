@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col col-12">
-        <a asp-action="Create" class="float-right">@(Localizer["Add new user"])</a>
+        <a asp-action="Edit" class="float-right">@(Localizer["Add new user"])</a>
     </div>
 </div>
 
@@ -23,7 +23,7 @@
                 @(Html.DisplayNameFor(model => model.Email))
             </th>
             <th>
-                @(Html.DisplayNameFor(model => model.TelphoneNumber))
+                @(Html.DisplayNameFor(model => model.PhoneNumber))
             </th>
             <th>
                 @(Html.DisplayNameFor(model => model.RoleName))
@@ -41,7 +41,7 @@
                 @(Html.DisplayFor(modelItem => item.Email))
             </td>
             <td>
-                @(Html.DisplayFor(modelItem => item.TelphoneNumber))
+                @(Html.DisplayFor(modelItem => item.PhoneNumber))
             </td>
             <td>
                 @(Html.DisplayFor(modelItem => item.RoleName))
